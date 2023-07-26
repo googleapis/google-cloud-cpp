@@ -18,6 +18,7 @@
 
 #include "google/cloud/composer/v1/internal/environments_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/orchestration/airflow/service/v1/environments.grpc.pb.h>
@@ -29,8 +30,10 @@ namespace composer_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 EnvironmentsMetadata::EnvironmentsMetadata(
-    std::shared_ptr<EnvironmentsStub> child)
+    std::shared_ptr<EnvironmentsStub> child,
+    std::multimap<std::string, std::string> fixed_metadata)
     : child_(std::move(child)),
+      fixed_metadata_(std::move(fixed_metadata)),
       api_client_header_(
           google::cloud::internal::ApiClientHeader("generator")) {}
 
@@ -40,7 +43,7 @@ EnvironmentsMetadata::AsyncCreateEnvironment(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::orchestration::airflow::service::v1::
         CreateEnvironmentRequest const& request) {
-  SetMetadata(*context, "parent=" + request.parent());
+  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
   return child_->AsyncCreateEnvironment(cq, std::move(context), request);
 }
 
@@ -49,7 +52,7 @@ EnvironmentsMetadata::GetEnvironment(
     grpc::ClientContext& context,
     google::cloud::orchestration::airflow::service::v1::
         GetEnvironmentRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetEnvironment(context, request);
 }
 
@@ -59,7 +62,7 @@ EnvironmentsMetadata::ListEnvironments(
     grpc::ClientContext& context,
     google::cloud::orchestration::airflow::service::v1::
         ListEnvironmentsRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListEnvironments(context, request);
 }
 
@@ -69,7 +72,7 @@ EnvironmentsMetadata::AsyncUpdateEnvironment(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::orchestration::airflow::service::v1::
         UpdateEnvironmentRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncUpdateEnvironment(cq, std::move(context), request);
 }
 
@@ -79,8 +82,38 @@ EnvironmentsMetadata::AsyncDeleteEnvironment(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::orchestration::airflow::service::v1::
         DeleteEnvironmentRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncDeleteEnvironment(cq, std::move(context), request);
+}
+
+StatusOr<google::cloud::orchestration::airflow::service::v1::
+             ExecuteAirflowCommandResponse>
+EnvironmentsMetadata::ExecuteAirflowCommand(
+    grpc::ClientContext& context,
+    google::cloud::orchestration::airflow::service::v1::
+        ExecuteAirflowCommandRequest const& request) {
+  SetMetadata(context, absl::StrCat("environment=", request.environment()));
+  return child_->ExecuteAirflowCommand(context, request);
+}
+
+StatusOr<google::cloud::orchestration::airflow::service::v1::
+             StopAirflowCommandResponse>
+EnvironmentsMetadata::StopAirflowCommand(
+    grpc::ClientContext& context,
+    google::cloud::orchestration::airflow::service::v1::
+        StopAirflowCommandRequest const& request) {
+  SetMetadata(context, absl::StrCat("environment=", request.environment()));
+  return child_->StopAirflowCommand(context, request);
+}
+
+StatusOr<google::cloud::orchestration::airflow::service::v1::
+             PollAirflowCommandResponse>
+EnvironmentsMetadata::PollAirflowCommand(
+    grpc::ClientContext& context,
+    google::cloud::orchestration::airflow::service::v1::
+        PollAirflowCommandRequest const& request) {
+  SetMetadata(context, absl::StrCat("environment=", request.environment()));
+  return child_->PollAirflowCommand(context, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -89,7 +122,7 @@ EnvironmentsMetadata::AsyncSaveSnapshot(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::orchestration::airflow::service::v1::
         SaveSnapshotRequest const& request) {
-  SetMetadata(*context, "environment=" + request.environment());
+  SetMetadata(*context, absl::StrCat("environment=", request.environment()));
   return child_->AsyncSaveSnapshot(cq, std::move(context), request);
 }
 
@@ -99,8 +132,28 @@ EnvironmentsMetadata::AsyncLoadSnapshot(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::orchestration::airflow::service::v1::
         LoadSnapshotRequest const& request) {
-  SetMetadata(*context, "environment=" + request.environment());
+  SetMetadata(*context, absl::StrCat("environment=", request.environment()));
   return child_->AsyncLoadSnapshot(cq, std::move(context), request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+EnvironmentsMetadata::AsyncDatabaseFailover(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::orchestration::airflow::service::v1::
+        DatabaseFailoverRequest const& request) {
+  SetMetadata(*context, absl::StrCat("environment=", request.environment()));
+  return child_->AsyncDatabaseFailover(cq, std::move(context), request);
+}
+
+StatusOr<google::cloud::orchestration::airflow::service::v1::
+             FetchDatabasePropertiesResponse>
+EnvironmentsMetadata::FetchDatabaseProperties(
+    grpc::ClientContext& context,
+    google::cloud::orchestration::airflow::service::v1::
+        FetchDatabasePropertiesRequest const& request) {
+  SetMetadata(context, absl::StrCat("environment=", request.environment()));
+  return child_->FetchDatabaseProperties(context, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -127,6 +180,9 @@ void EnvironmentsMetadata::SetMetadata(grpc::ClientContext& context,
 }
 
 void EnvironmentsMetadata::SetMetadata(grpc::ClientContext& context) {
+  for (auto const& kv : fixed_metadata_) {
+    context.AddMetadata(kv.first, kv.second);
+  }
   context.AddMetadata("x-goog-api-client", api_client_header_);
   auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {

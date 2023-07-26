@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_V2_MINIMAL_INTERNAL_JOB_H
 
 #include "google/cloud/bigquery/v2/minimal/internal/job_configuration.h"
+#include "google/cloud/bigquery/v2/minimal/internal/job_stats.h"
 #include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
 #include "absl/strings/string_view.h"
@@ -28,15 +29,17 @@ namespace cloud {
 namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-// Disabling clang-tidy here as the namespace is needed for using the
-// NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT.
-using namespace nlohmann::literals;  // NOLINT
-
 struct JobStatus {
   ErrorProto error_result;
   std::vector<ErrorProto> errors;
   std::string state;
+
+  std::string DebugString(absl::string_view name,
+                          TracingOptions const& options = {},
+                          int indent = 0) const;
 };
+void to_json(nlohmann::json& j, JobStatus const& jb);
+void from_json(nlohmann::json const& j, JobStatus& jb);
 
 struct JobReference {
   std::string project_id;
@@ -47,6 +50,8 @@ struct JobReference {
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
+void to_json(nlohmann::json& j, JobReference const& jb);
+void from_json(nlohmann::json const& j, JobReference& jb);
 
 struct Job {
   std::string kind;
@@ -56,13 +61,16 @@ struct Job {
   std::string user_email;
 
   JobStatus status;
-  JobReference reference;
+  JobReference job_reference;
   JobConfiguration configuration;
+  JobStatistics statistics;
 
   std::string DebugString(absl::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
+void to_json(nlohmann::json& j, Job const& jb);
+void from_json(nlohmann::json const& j, Job& jb);
 
 struct ListFormatJob {
   std::string id;
@@ -71,9 +79,10 @@ struct ListFormatJob {
   std::string state;
   std::string principal_subject;
 
-  JobReference reference;
+  JobReference job_reference;
   JobConfiguration configuration;
   JobStatus status;
+  JobStatistics statistics;
 
   ErrorProto error_result;
 
@@ -81,19 +90,8 @@ struct ListFormatJob {
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
-
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(JobStatus, error_result, errors,
-                                                state);
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(JobReference, project_id,
-                                                job_id, location);
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(Job, kind, etag, id, self_link,
-                                                user_email, status, reference,
-                                                configuration);
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(ListFormatJob, id, kind,
-                                                user_email, state,
-                                                principal_subject, reference,
-                                                configuration, status,
-                                                error_result);
+void to_json(nlohmann::json& j, ListFormatJob const& l);
+void from_json(nlohmann::json const& j, ListFormatJob& l);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_v2_minimal_internal

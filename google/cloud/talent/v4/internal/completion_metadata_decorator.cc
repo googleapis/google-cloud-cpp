@@ -18,6 +18,7 @@
 
 #include "google/cloud/talent/v4/internal/completion_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/talent/v4/completion_service.grpc.pb.h>
@@ -28,8 +29,11 @@ namespace cloud {
 namespace talent_v4_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-CompletionMetadata::CompletionMetadata(std::shared_ptr<CompletionStub> child)
+CompletionMetadata::CompletionMetadata(
+    std::shared_ptr<CompletionStub> child,
+    std::multimap<std::string, std::string> fixed_metadata)
     : child_(std::move(child)),
+      fixed_metadata_(std::move(fixed_metadata)),
       api_client_header_(
           google::cloud::internal::ApiClientHeader("generator")) {}
 
@@ -37,7 +41,7 @@ StatusOr<google::cloud::talent::v4::CompleteQueryResponse>
 CompletionMetadata::CompleteQuery(
     grpc::ClientContext& context,
     google::cloud::talent::v4::CompleteQueryRequest const& request) {
-  SetMetadata(context, "tenant=" + request.tenant());
+  SetMetadata(context, absl::StrCat("tenant=", request.tenant()));
   return child_->CompleteQuery(context, request);
 }
 
@@ -48,6 +52,9 @@ void CompletionMetadata::SetMetadata(grpc::ClientContext& context,
 }
 
 void CompletionMetadata::SetMetadata(grpc::ClientContext& context) {
+  for (auto const& kv : fixed_metadata_) {
+    context.AddMetadata(kv.first, kv.second);
+  }
   context.AddMetadata("x-goog-api-client", api_client_header_);
   auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {

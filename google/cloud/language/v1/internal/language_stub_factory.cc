@@ -52,7 +52,8 @@ std::shared_ptr<LanguageServiceStub> CreateDefaultLanguageServiceStub(
     stub =
         std::make_shared<LanguageServiceAuth>(std::move(auth), std::move(stub));
   }
-  stub = std::make_shared<LanguageServiceMetadata>(std::move(stub));
+  stub = std::make_shared<LanguageServiceMetadata>(
+      std::move(stub), std::multimap<std::string, std::string>{});
   if (internal::Contains(options.get<TracingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<LanguageServiceLogging>(

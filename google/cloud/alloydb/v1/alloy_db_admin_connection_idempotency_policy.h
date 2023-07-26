@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ALLOYDB_V1_ALLOY_DB_ADMIN_CONNECTION_IDEMPOTENCY_POLICY_H
 
 #include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
 #include "google/cloud/version.h"
 #include <google/cloud/alloydb/v1/service.grpc.pb.h>
 #include <memory>
@@ -53,8 +52,14 @@ class AlloyDBAdminConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency DeleteCluster(
       google::cloud::alloydb::v1::DeleteClusterRequest const& request);
 
+  virtual google::cloud::Idempotency PromoteCluster(
+      google::cloud::alloydb::v1::PromoteClusterRequest const& request);
+
   virtual google::cloud::Idempotency RestoreCluster(
       google::cloud::alloydb::v1::RestoreClusterRequest const& request);
+
+  virtual google::cloud::Idempotency CreateSecondaryCluster(
+      google::cloud::alloydb::v1::CreateSecondaryClusterRequest const& request);
 
   virtual google::cloud::Idempotency ListInstances(
       google::cloud::alloydb::v1::ListInstancesRequest request);
@@ -64,6 +69,10 @@ class AlloyDBAdminConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency CreateInstance(
       google::cloud::alloydb::v1::CreateInstanceRequest const& request);
+
+  virtual google::cloud::Idempotency CreateSecondaryInstance(
+      google::cloud::alloydb::v1::CreateSecondaryInstanceRequest const&
+          request);
 
   virtual google::cloud::Idempotency BatchCreateInstances(
       google::cloud::alloydb::v1::BatchCreateInstancesRequest const& request);
@@ -76,6 +85,9 @@ class AlloyDBAdminConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency FailoverInstance(
       google::cloud::alloydb::v1::FailoverInstanceRequest const& request);
+
+  virtual google::cloud::Idempotency InjectFault(
+      google::cloud::alloydb::v1::InjectFaultRequest const& request);
 
   virtual google::cloud::Idempotency RestartInstance(
       google::cloud::alloydb::v1::RestartInstanceRequest const& request);
@@ -97,6 +109,21 @@ class AlloyDBAdminConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency ListSupportedDatabaseFlags(
       google::cloud::alloydb::v1::ListSupportedDatabaseFlagsRequest request);
+
+  virtual google::cloud::Idempotency ListUsers(
+      google::cloud::alloydb::v1::ListUsersRequest request);
+
+  virtual google::cloud::Idempotency GetUser(
+      google::cloud::alloydb::v1::GetUserRequest const& request);
+
+  virtual google::cloud::Idempotency CreateUser(
+      google::cloud::alloydb::v1::CreateUserRequest const& request);
+
+  virtual google::cloud::Idempotency UpdateUser(
+      google::cloud::alloydb::v1::UpdateUserRequest const& request);
+
+  virtual google::cloud::Idempotency DeleteUser(
+      google::cloud::alloydb::v1::DeleteUserRequest const& request);
 };
 
 std::unique_ptr<AlloyDBAdminConnectionIdempotencyPolicy>

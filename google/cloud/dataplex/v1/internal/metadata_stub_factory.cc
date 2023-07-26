@@ -52,7 +52,8 @@ std::shared_ptr<MetadataServiceStub> CreateDefaultMetadataServiceStub(
     stub =
         std::make_shared<MetadataServiceAuth>(std::move(auth), std::move(stub));
   }
-  stub = std::make_shared<MetadataServiceMetadata>(std::move(stub));
+  stub = std::make_shared<MetadataServiceMetadata>(
+      std::move(stub), std::multimap<std::string, std::string>{});
   if (internal::Contains(options.get<TracingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<MetadataServiceLogging>(

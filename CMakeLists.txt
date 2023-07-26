@@ -14,14 +14,14 @@
 # limitations under the License.
 # ~~~
 
-cmake_minimum_required(VERSION 3.10...3.24)
+cmake_minimum_required(VERSION 3.13...3.24)
 
 # Define the project name and where to report bugs.
 set(PACKAGE_BUGREPORT "https://github.com/googleapis/google-cloud-cpp/issues")
 
 project(
     google-cloud-cpp
-    VERSION 2.11.0
+    VERSION 2.14.0
     LANGUAGES CXX)
 set(PROJECT_VERSION_PRE_RELEASE "rc")
 
@@ -91,7 +91,6 @@ if (GOOGLE_CLOUD_CPP_ENABLE_CCACHE)
     if (GOOGLE_CLOUD_CPP_CCACHE_PROGRAM)
         message(STATUS "ccache found: ${GOOGLE_CLOUD_CPP_CCACHE_PROGRAM}")
         set(CMAKE_CXX_COMPILER_LAUNCHER "${GOOGLE_CLOUD_CPP_CCACHE_PROGRAM}")
-        set(CMAKE_CC_COMPILER_LAUNCHER "${GOOGLE_CLOUD_CPP_CCACHE_PROGRAM}")
     endif ()
 endif ()
 
@@ -122,7 +121,7 @@ option(
     [==[Enable the workarounds for [ctype = CORD] when using Protobuf < v23.
 More details at
 
-https://github.com/googleapis/google-cloud-cpp/blob/main/doc/ctype-cord-workaround.md
+https://github.com/googleapis/google-cloud-cpp/blob/main/doc/ctype-cord-workarounds.md
 ]==]
     OFF)
 mark_as_advanced(GOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND)
@@ -156,6 +155,17 @@ GOOGLE_CLOUD_CPP_OVERRIDE_GOOGLEAPIS_URL for details.
 ]==])
 mark_as_advanced(GOOGLE_CLOUD_CPP_OVERRIDE_GOOGLEAPIS_URL_HASH)
 
+option(
+    GOOGLE_CLOUD_CPP_USE_INSTALLED_COMMON
+    [==[
+Use a pre-installed version of the common libraries and proto files.
+
+This option is required to support package maintainers that split
+`google-cloud-cpp` into multiple packages.
+]==]
+    OFF)
+mark_as_advanced(GOOGLE_CLOUD_CPP_USE_INSTALLED_COMMON)
+
 include(GoogleCloudCppFeatures)
 
 # Controls the list of features compiled by `google-cloud-cpp`.
@@ -180,8 +190,25 @@ add_custom_target(doxygen-docs)
 add_custom_target(all-docfx)
 
 find_package(absl CONFIG REQUIRED)
-if (${GOOGLE_CLOUD_CPP_ENABLE_GRPC})
+if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
     find_package(gRPC REQUIRED QUIET)
+    # `Protobuf_PROTOC_EXECUTABLE` is pretty standard. It has been in use by
+    # CMake's FindProtobuf module for years, and it is defined by Protobuf's
+    # CMake configuration files. There is no obvious analog for the gRPC plugin.
+    # gRPC only exports the targets (e.g. `gRPC::grpc_cpp_plugin`) when
+    # applicable. We define our own variable.
+    set(GOOGLE_CLOUD_CPP_GRPC_PLUGIN_EXECUTABLE
+        $<TARGET_FILE:gRPC::grpc_cpp_plugin>
+        CACHE
+            STRING
+            [==[Override gRPC's protoc plugin location.
+`google-cloud-cpp` uses the gRPC's protoc plugin to generate gRPC stub code.
+One may need to override the default location when cross-compiling, as the gRPC
+package will point to the target environment and the plugin won't run on the
+host environment.
+]==])
+    mark_as_advanced(GOOGLE_CLOUD_CPP_GRPC_PLUGIN_EXECUTABLE)
+
     set(GOOGLE_CLOUD_CPP_FIND_DEPENDENCY_PROTOBUF
         "find_dependency(Protobuf CONFIG)")
     find_package(Protobuf CONFIG QUIET)
@@ -190,7 +217,6 @@ if (${GOOGLE_CLOUD_CPP_ENABLE_GRPC})
             "find_dependency(Protobuf)")
         find_package(Protobuf REQUIRED)
     endif ()
-    add_subdirectory(external/googleapis)
 endif ()
 
 # Enable testing in this directory so we can do a top-level `make test`. This
@@ -215,23 +241,34 @@ cmake_dependent_option(
 mark_as_advanced(GOOGLE_CLOUD_CPP_ENABLE_EXAMPLES)
 
 # Add any subdirectories configured in the application.
-if (GOOGLE_CLOUD_CPP_INTERNAL_DOCFX)
-    # `docfx/` must be included before any library directories. The tool is used
-    # to generate the library documentation.
-    add_subdirectory(docfx)
-endif ()
+
+# `docfx/` must be included before any library directories. The tool is used to
+# generate the library documentation.
+add_subdirectory(docfx)
+
+# We always include the external protos. If this is not needed it immediately
+# returns.
+add_subdirectory(external/googleapis)
 add_subdirectory(google/cloud)
+
+if (GOOGLE_CLOUD_CPP_USE_INSTALLED_COMMON)
+    find_package(google_cloud_cpp_common CONFIG REQUIRED)
+    if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
+        find_package(google_cloud_cpp_grpc_utils CONFIG REQUIRED)
+        find_package(google_cloud_cpp_googleapis CONFIG REQUIRED)
+    endif ()
+    if (GOOGLE_CLOUD_CPP_ENABLE_REST)
+        find_package(google_cloud_cpp_rest_internal CONFIG REQUIRED)
+        find_package(google_cloud_cpp_oauth2 CONFIG REQUIRED)
+    endif ()
+    if (GOOGLE_CLOUD_CPP_ENABLE_REST AND GOOGLE_CLOUD_CPP_ENABLE_GRPC)
+        find_package(google_cloud_cpp_rest_protobuf_internal CONFIG REQUIRED)
+    endif ()
+endif ()
+
 google_cloud_cpp_enable_features()
 
-# The examples are more readable if we use exceptions for error handling. We had
-# to tradeoff readability vs. "making them compile everywhere".
-if (GOOGLE_CLOUD_CPP_ENABLE_EXAMPLES
-    AND bigtable IN_LIST GOOGLE_CLOUD_CPP_ENABLE
-    AND iam IN_LIST GOOGLE_CLOUD_CPP_ENABLE
-    AND spanner IN_LIST GOOGLE_CLOUD_CPP_ENABLE
-    AND storage IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
-    add_subdirectory(examples)
-endif ()
+add_subdirectory(examples)
 
 # Obsolete / retired flags and options. Removing them just cleans up a bit of
 # our code at the cost of breaking customers, while putting them here makes them

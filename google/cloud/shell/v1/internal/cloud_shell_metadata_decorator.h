@@ -22,6 +22,7 @@
 #include "google/cloud/shell/v1/internal/cloud_shell_stub.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
+#include <map>
 #include <memory>
 #include <string>
 
@@ -33,8 +34,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class CloudShellServiceMetadata : public CloudShellServiceStub {
  public:
   ~CloudShellServiceMetadata() override = default;
-  explicit CloudShellServiceMetadata(
-      std::shared_ptr<CloudShellServiceStub> child);
+  CloudShellServiceMetadata(
+      std::shared_ptr<CloudShellServiceStub> child,
+      std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::shell::v1::Environment> GetEnvironment(
       grpc::ClientContext& context,
@@ -78,6 +80,7 @@ class CloudShellServiceMetadata : public CloudShellServiceStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<CloudShellServiceStub> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

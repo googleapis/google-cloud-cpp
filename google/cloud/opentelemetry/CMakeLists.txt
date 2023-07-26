@@ -21,7 +21,8 @@ set(DOXYGEN_PROJECT_BRIEF
     "Provides exporters for sending telemetry to Google Cloud services in C++.")
 set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION}")
 set(DOXYGEN_EXCLUDE_SYMBOLS "internal" "otel_internal")
-set(DOXYGEN_EXAMPLE_PATH "")
+set(DOXYGEN_EXAMPLE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/quickstart"
+                         "${CMAKE_CURRENT_SOURCE_DIR}/samples")
 
 include(GoogleCloudCppDoxygen)
 google_cloud_cpp_doxygen_targets("opentelemetry" DEPENDS cloud-docs
@@ -29,10 +30,22 @@ google_cloud_cpp_doxygen_targets("opentelemetry" DEPENDS cloud-docs
 
 add_library(
     google_cloud_cpp_opentelemetry # cmake-format: sort
-    configure_basic_tracing.cc configure_basic_tracing.h internal/recordable.cc
-    internal/recordable.h trace_exporter.cc trace_exporter.h)
-target_link_libraries(google_cloud_cpp_opentelemetry
-                      PUBLIC google-cloud-cpp::trace opentelemetry-cpp::trace)
+    configure_basic_tracing.cc
+    configure_basic_tracing.h
+    internal/monitored_resource.cc
+    internal/monitored_resource.h
+    internal/recordable.cc
+    internal/recordable.h
+    internal/resource_detector_impl.cc
+    internal/resource_detector_impl.h
+    resource_detector.cc
+    resource_detector.h
+    trace_exporter.cc
+    trace_exporter.h)
+target_link_libraries(
+    google_cloud_cpp_opentelemetry
+    PUBLIC google-cloud-cpp::rest_internal google-cloud-cpp::trace
+           opentelemetry-cpp::trace)
 google_cloud_cpp_add_common_options(google_cloud_cpp_opentelemetry)
 target_include_directories(
     google_cloud_cpp_opentelemetry
@@ -81,7 +94,7 @@ google_cloud_cpp_install_headers(google_cloud_cpp_opentelemetry
 google_cloud_cpp_add_pkgconfig(
     opentelemetry "OpenTelemetry Exporters for Google Cloud"
     "Provides exporters for sending telemetry to Google Cloud services."
-    "google_cloud_cpp_trace")
+    "google_cloud_cpp_rest_internal" " google_cloud_cpp_trace")
 
 # Create and install the CMake configuration files.
 configure_file("config.cmake.in" "google_cloud_cpp_opentelemetry-config.cmake"
@@ -103,9 +116,12 @@ if (NOT BUILD_TESTING)
 endif ()
 
 add_subdirectory(integration_tests)
+add_subdirectory(samples)
 
-set(opentelemetry_unit_tests # cmake-format: sort
-                             internal/recordable_test.cc trace_exporter_test.cc)
+set(opentelemetry_unit_tests
+    # cmake-format: sort
+    internal/monitored_resource_test.cc internal/recordable_test.cc
+    internal/resource_detector_impl_test.cc trace_exporter_test.cc)
 
 export_list_to_bazel("opentelemetry_unit_tests.bzl" "opentelemetry_unit_tests"
                      YEAR "2023")
@@ -120,6 +136,7 @@ foreach (fname ${opentelemetry_unit_tests})
         ${target}
         PRIVATE google_cloud_cpp_testing
                 google_cloud_cpp_testing_grpc
+                google_cloud_cpp_testing_rest
                 google-cloud-cpp::experimental-opentelemetry
                 google_cloud_cpp_trace_mocks
                 GTest::gmock_main

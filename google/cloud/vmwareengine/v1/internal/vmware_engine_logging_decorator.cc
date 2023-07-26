@@ -29,10 +29,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 VmwareEngineLogging::VmwareEngineLogging(
     std::shared_ptr<VmwareEngineStub> child, TracingOptions tracing_options,
-    std::set<std::string> components)
+    std::set<std::string> const& components)
     : child_(std::move(child)),
       tracing_options_(std::move(tracing_options)),
-      components_(std::move(components)) {}
+      stream_logging_(components.find("rpc-streams") != components.end()) {}
 
 StatusOr<google::cloud::vmwareengine::v1::ListPrivateCloudsResponse>
 VmwareEngineLogging::ListPrivateClouds(
@@ -202,6 +202,33 @@ VmwareEngineLogging::ListSubnets(
         return child_->ListSubnets(context, request);
       },
       context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::vmwareengine::v1::Subnet>
+VmwareEngineLogging::GetSubnet(
+    grpc::ClientContext& context,
+    google::cloud::vmwareengine::v1::GetSubnetRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::vmwareengine::v1::GetSubnetRequest const& request) {
+        return child_->GetSubnet(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+VmwareEngineLogging::AsyncUpdateSubnet(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::vmwareengine::v1::UpdateSubnetRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::vmwareengine::v1::UpdateSubnetRequest const& request) {
+        return child_->AsyncUpdateSubnet(cq, std::move(context), request);
+      },
+      cq, std::move(context), request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::vmwareengine::v1::ListNodeTypesResponse>
@@ -492,6 +519,104 @@ VmwareEngineLogging::ListVmwareEngineNetworks(
              google::cloud::vmwareengine::v1::
                  ListVmwareEngineNetworksRequest const& request) {
         return child_->ListVmwareEngineNetworks(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+VmwareEngineLogging::AsyncCreatePrivateConnection(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::vmwareengine::v1::CreatePrivateConnectionRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::vmwareengine::v1::CreatePrivateConnectionRequest const&
+              request) {
+        return child_->AsyncCreatePrivateConnection(cq, std::move(context),
+                                                    request);
+      },
+      cq, std::move(context), request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::vmwareengine::v1::PrivateConnection>
+VmwareEngineLogging::GetPrivateConnection(
+    grpc::ClientContext& context,
+    google::cloud::vmwareengine::v1::GetPrivateConnectionRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::vmwareengine::v1::GetPrivateConnectionRequest const&
+                 request) {
+        return child_->GetPrivateConnection(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::vmwareengine::v1::ListPrivateConnectionsResponse>
+VmwareEngineLogging::ListPrivateConnections(
+    grpc::ClientContext& context,
+    google::cloud::vmwareengine::v1::ListPrivateConnectionsRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context,
+          google::cloud::vmwareengine::v1::ListPrivateConnectionsRequest const&
+              request) {
+        return child_->ListPrivateConnections(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+VmwareEngineLogging::AsyncUpdatePrivateConnection(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::vmwareengine::v1::UpdatePrivateConnectionRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::vmwareengine::v1::UpdatePrivateConnectionRequest const&
+              request) {
+        return child_->AsyncUpdatePrivateConnection(cq, std::move(context),
+                                                    request);
+      },
+      cq, std::move(context), request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+VmwareEngineLogging::AsyncDeletePrivateConnection(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::vmwareengine::v1::DeletePrivateConnectionRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::vmwareengine::v1::DeletePrivateConnectionRequest const&
+              request) {
+        return child_->AsyncDeletePrivateConnection(cq, std::move(context),
+                                                    request);
+      },
+      cq, std::move(context), request, __func__, tracing_options_);
+}
+
+StatusOr<
+    google::cloud::vmwareengine::v1::ListPrivateConnectionPeeringRoutesResponse>
+VmwareEngineLogging::ListPrivateConnectionPeeringRoutes(
+    grpc::ClientContext& context,
+    google::cloud::vmwareengine::v1::
+        ListPrivateConnectionPeeringRoutesRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::vmwareengine::v1::
+                 ListPrivateConnectionPeeringRoutesRequest const& request) {
+        return child_->ListPrivateConnectionPeeringRoutes(context, request);
       },
       context, request, __func__, tracing_options_);
 }

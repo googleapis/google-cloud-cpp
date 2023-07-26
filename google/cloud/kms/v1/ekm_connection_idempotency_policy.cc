@@ -64,6 +64,11 @@ Idempotency EkmServiceConnectionIdempotencyPolicy::UpdateEkmConfig(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency EkmServiceConnectionIdempotencyPolicy::VerifyConnectivity(
+    google::cloud::kms::v1::VerifyConnectivityRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
 std::unique_ptr<EkmServiceConnectionIdempotencyPolicy>
 MakeDefaultEkmServiceConnectionIdempotencyPolicy() {
   return std::make_unique<EkmServiceConnectionIdempotencyPolicy>();

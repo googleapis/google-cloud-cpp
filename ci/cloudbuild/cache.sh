@@ -138,11 +138,14 @@ function restore_cache() {
   for url in "${urls[@]}"; do
     if gsutil stat "${url}"; then
       io::log "Fetching cache url ${url}"
-      (gcloud --quiet storage cp "${url}" "${tmpf}" && tar -zxf "${tmpf}") || continue
+      (timeout -s SIGKILL 5m gcloud --quiet storage cp "${url}" "${tmpf}" && tar -zxf "${tmpf}") || continue
       break
     fi
   done
   rm -fr "${tmpd}" || true
+  mkdir -p "${HOME}/.ccache"
+  [[ -f "${HOME}/.ccache/ccache.conf" ]] ||
+    echo "max_size = 8.0G" >"${HOME}/.ccache/ccache.conf"
   return 0
 }
 

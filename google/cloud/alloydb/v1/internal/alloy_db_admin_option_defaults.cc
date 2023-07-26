@@ -45,8 +45,9 @@ Options AlloyDBAdminDefaultOptions(Options options) {
   }
   if (!options.has<alloydb_v1::AlloyDBAdminBackoffPolicyOption>()) {
     options.set<alloydb_v1::AlloyDBAdminBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options.has<alloydb_v1::AlloyDBAdminPollingPolicyOption>()) {
@@ -54,7 +55,9 @@ Options AlloyDBAdminDefaultOptions(Options options) {
         GenericPollingPolicy<alloydb_v1::AlloyDBAdminRetryPolicyOption::Type,
                              alloydb_v1::AlloyDBAdminBackoffPolicyOption::Type>(
             options.get<alloydb_v1::AlloyDBAdminRetryPolicyOption>()->clone(),
-            options.get<alloydb_v1::AlloyDBAdminBackoffPolicyOption>()->clone())
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
             .clone());
   }
   if (!options

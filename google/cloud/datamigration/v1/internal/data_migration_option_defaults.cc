@@ -48,8 +48,9 @@ Options DataMigrationServiceDefaultOptions(Options options) {
   if (!options
            .has<datamigration_v1::DataMigrationServiceBackoffPolicyOption>()) {
     options.set<datamigration_v1::DataMigrationServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options
@@ -61,10 +62,9 @@ Options DataMigrationServiceDefaultOptions(Options options) {
             options
                 .get<datamigration_v1::DataMigrationServiceRetryPolicyOption>()
                 ->clone(),
-            options
-                .get<
-                    datamigration_v1::DataMigrationServiceBackoffPolicyOption>()
-                ->clone())
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
             .clone());
   }
   if (!options

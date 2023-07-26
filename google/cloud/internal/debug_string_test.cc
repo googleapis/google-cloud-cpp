@@ -26,12 +26,14 @@ namespace internal {
 namespace {
 
 struct SubMessage {
-  double value;
+  double sub_field;
 
   std::string DebugString(absl::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const {
-    return DebugFormatter(name, options, indent).Field("value", value).Build();
+    return DebugFormatter(name, options, indent)
+        .Field("sub_field", sub_field)
+        .Build();
   }
 };
 
@@ -46,7 +48,7 @@ TEST(DebugFormatter, SingleLine) {
             R"(message_name {)"
             R"( field1: 42)"
             R"( sub_message {)"
-            R"( value: 3.14159)"
+            R"( sub_field: 3.14159)"
             R"( })"
             R"( field2: "foobar")"
             R"( field3: true)"
@@ -64,7 +66,7 @@ TEST(DebugFormatter, MultiLine) {
             R"(message_name {
   field1: 42
   sub_message {
-    value: 3.14159
+    sub_field: 3.14159
   }
   field2: "foobar"
   field3: true
@@ -83,7 +85,7 @@ TEST(DebugFormatter, Truncated) {
       R"(message_name {)"
       R"( field1: 42)"
       R"( sub_message {)"
-      R"( value: 3.14159)"
+      R"( sub_field: 3.14159)"
       R"( })"
       R"( field2: "foo...<truncated>...")"
       R"( field3: true)"
@@ -131,6 +133,34 @@ TEST(DebugFormatter, Duration) {
 }
 
 TEST(DebugFormatter, Map) {
+  std::map<std::string, SubMessage> m = {{"k1", SubMessage{3.1}},
+                                         {"k2", SubMessage{4.2}}};
+  EXPECT_EQ(DebugFormatter("message_name", TracingOptions{})
+                .Field("field1", m)
+                .Build(),
+            R"(message_name {)"
+            R"( field1 {)"
+            R"( key: "k1")"
+            R"( value {)"
+            R"( sub_field: 3.1)"
+            R"( })"
+            R"( })"
+            R"( field1 {)"
+            R"( key: "k2")"
+            R"( value {)"
+            R"( sub_field: 4.2)"
+            R"( })"
+            R"( })"
+            R"( })");
+  m.clear();
+  EXPECT_EQ(DebugFormatter("message_name", TracingOptions{})
+                .Field("field1", m)
+                .Build(),
+            R"(message_name {)"
+            R"( })");
+}
+
+TEST(DebugFormatter, MapString) {
   std::map<std::string, std::string> m = {{"k1", "v1"}, {"k2", "v2"}};
   EXPECT_EQ(DebugFormatter("message_name", TracingOptions{})
                 .Field("field1", m)
@@ -183,7 +213,7 @@ TEST(DebugFormatter, Optional) {
                 .Build(),
             R"(message_name {)"
             R"( field1 {)"
-            R"( value: 3.14159)"
+            R"( sub_field: 3.14159)"
             R"( })"
             R"( })");
   m = absl::nullopt;
@@ -201,13 +231,13 @@ TEST(DebugFormatter, Vector) {
                 .Build(),
             R"(message_name {)"
             R"( field1 {)"
-            R"( value: 1)"
+            R"( sub_field: 1)"
             R"( })"
             R"( field1 {)"
-            R"( value: 2)"
+            R"( sub_field: 2)"
             R"( })"
             R"( field1 {)"
-            R"( value: 3)"
+            R"( sub_field: 3)"
             R"( })"
             R"( })");
   v.clear();

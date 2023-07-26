@@ -1,0 +1,138 @@
+name: macOS-CMake-Builds
+
+on:
+  workflow_call:
+    inputs:
+      checkout-ref:
+        required: true
+        description: "The ref we want to compile"
+        type: string
+      full-matrix:
+        required: true
+        description: "Build the full matrix"
+        type: boolean
+
+permissions:
+  contents: read
+
+jobs:
+  cmake:
+    name: cmake + ${{ matrix.os }} + ${{ matrix.shard }}
+    runs-on: ${{ matrix.os }}-xl
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+    strategy:
+      # Continue other builds even if one fails
+      fail-fast: false
+      matrix:
+        exclude-from-full-trick: [ true ]
+        os: [ macos-12 ]
+        shard: [ Core, Compute, Shard1, Other ]
+        exclude:
+        # Only full builds include shards with generated code.
+        - exclude-from-full-trick: ${{ ! inputs.full-matrix }}
+          shard: Compute
+        - exclude-from-full-trick: ${{ ! inputs.full-matrix }}
+          shard: Shard1
+        - exclude-from-full-trick: ${{ ! inputs.full-matrix }}
+          shard: Other
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        ref: ${{ inputs.checkout-ref }}
+    - uses: google-github-actions/auth@v1
+      with:
+        create_credentials_file: true
+        credentials_json: ${{ secrets.BUILD_CACHE_KEY }}
+    - uses: google-github-actions/setup-gcloud@v1
+    - name: Dynamic Configuration
+      id: dynamic
+      shell: bash
+      run: |
+        echo "vcpkg-version=$(cat ci/etc/vcpkg-version.txt)" >> "${GITHUB_OUTPUT}"
+        core_features=(
+          bigtable
+          pubsub
+          pubsublite
+          spanner
+          storage
+        )
+        # These are the libraries with the most "clients". To build the list
+        # run something like this and find the midpoint:
+        #
+        # git grep -l 'class.*Client' 'google/cloud/**_client.h' |
+        #    egrep -v "(bigtable/|internal/|pubsub/|spanner/|storage/)" |
+        #    cut -f -3 -d/| sort | uniq -c | sort -n |
+        #    awk '{ s += $1; print s, $0}'
+        #
+        shard1_features=(
+          servicecontrol
+          support
+          video
+          datacatalog
+          iam
+          kms
+          beyondcorp
+          contentwarehouse
+          dataproc
+          talent
+          retail
+          bigquery
+          appengine
+          monitoring
+          sql
+          dialogflow_cx
+          aiplatform
+          dialogflow_es
+        )
+        if [[ "${{ matrix.shard }}" == "Core" ]]; then
+          features="$(printf ",%s" "${core_features[@]}")"
+          echo "features=${features:1}" >> "${GITHUB_OUTPUT}"
+        elif [[ "${{matrix.shard}}" == "Compute" ]]; then
+          echo "features=compute" >> "${GITHUB_OUTPUT}"
+        elif [[ "${{ matrix.shard }}" == "Shard1" ]]; then
+          features="$(printf ",%s" "${shard1_features[@]}")"
+          echo "features=${features:1}" >> "${GITHUB_OUTPUT}"
+        else
+          skipped_features=("${core_features[@]}")
+          skipped_features+=(compute)
+          skipped_features+=("${shard1_features[@]}")
+          # Disable `storagetranster` on macOS+CMake because:
+          # - we use vcpkg in this build
+          # - vcpkg ships with Protobuf v21
+          # - GID_MAX is generated in the *.pb.h file
+          # - GID_MAX is a system macro on macOS
+          # - Protobuf v21 does not protect against this macro
+          skipped_features+=(storagetransfer)
+          skipped="$(printf ",-%s" "${skipped_features[@]}")"
+          echo "features=__ga_libraries__,__experimental_libraries__,${skipped:2}" >> "${GITHUB_OUTPUT}"
+        fi
+    - name: Install bash >= 5.x and Ninja
+      run: brew install bash ninja
+    - name: Download and Install sccache
+      working-directory: "${{runner.temp}}"
+      run: |
+        curl -fsSL https://github.com/mozilla/sccache/releases/download/v0.5.4/sccache-v0.5.4-x86_64-apple-darwin.tar.gz | \
+          tar -zxf - --strip-components=1 && \
+        chmod +x sccache && \
+        mv sccache /Users/runner/.cargo/bin/sccache
+    - name: Download and Install vcpkg
+      working-directory: "${{runner.temp}}"
+      run: |
+        mkdir -p vcpkg
+        curl -fsSL "https://github.com/microsoft/vcpkg/archive/${{ steps.dynamic.outputs.vcpkg-version }}.tar.gz" |
+            tar -C vcpkg --strip-components=1 -zxf -
+        vcpkg/bootstrap-vcpkg.sh -disableMetrics
+    - name: Build google-cloud-cpp
+      run: |
+        export VCPKG_ROOT="${{ runner.temp }}/vcpkg"
+        /usr/local/bin/bash ci/gha/builds/macos-cmake.sh ${{ steps.dynamic.outputs.features }}
+    env:
+      USE_BAZEL_VERSION: 6.2.1
+      BAZEL_REMOTE_CACHE: https://storage.googleapis.com/cloud-cpp-gha-cache/bazel-cache/${{ matrix.os }}
+      SCCACHE_GCS_BUCKET: cloud-cpp-gha-cache
+      SCCACHE_GCS_KEY_PREFIX: sccache/${{ matrix.os }}
+      SCCACHE_GCS_RW_MODE: READ_WRITE
+      SCCACHE_IGNORE_SERVER_IO_ERROR: 1
+      VCPKG_BINARY_SOURCES: x-gcs,gs://cloud-cpp-gha-cache/vcpkg-cache/${{ matrix.os }},readwrite

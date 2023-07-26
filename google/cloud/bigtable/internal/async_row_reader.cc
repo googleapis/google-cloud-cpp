@@ -14,6 +14,7 @@
 
 #include "google/cloud/bigtable/internal/async_row_reader.h"
 #include "google/cloud/bigtable/version.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
 #include "google/cloud/log.h"
 
 namespace google {
@@ -29,6 +30,7 @@ void AsyncRowReader::MakeRequest() {
 
   request.set_app_profile_id(app_profile_id_);
   request.set_table_name(table_name_);
+  request.set_reversed(reverse_);
   auto row_set_proto = row_set_.as_proto();
   request.mutable_rows()->Swap(&row_set_proto);
 
@@ -38,9 +40,9 @@ void AsyncRowReader::MakeRequest() {
   if (rows_limit_ != NO_ROWS_LIMIT) {
     request.set_rows_limit(rows_limit_ - rows_count_);
   }
-  parser_ = bigtable::internal::ReadRowsParserFactory().Create();
+  parser_ = bigtable::internal::ReadRowsParserFactory().Create(reverse_);
 
-  internal::OptionsSpan span(options_);
+  internal::ScopedCallContext scope(call_context_);
   auto context = std::make_shared<grpc::ClientContext>();
   internal::ConfigureContext(*context, internal::CurrentOptions());
 
@@ -182,8 +184,14 @@ void AsyncRowReader::OnStreamFinished(Status status) {
   if (!last_read_row_key_.empty()) {
     // We've returned some rows and need to make sure we don't
     // request them again.
-    row_set_ =
-        row_set_.Intersect(bigtable::RowRange::Open(last_read_row_key_, ""));
+    if (reverse_) {
+      google::bigtable::v2::RowRange range;
+      range.set_end_key_open(last_read_row_key_);
+      row_set_ = row_set_.Intersect(bigtable::RowRange(std::move(range)));
+    } else {
+      row_set_ =
+          row_set_.Intersect(bigtable::RowRange::Open(last_read_row_key_, ""));
+    }
   }
 
   // If we receive an error, but the retryable set is empty, consider it a
@@ -206,7 +214,7 @@ void AsyncRowReader::OnStreamFinished(Status status) {
     return;
   }
   auto self = this->shared_from_this();
-  cq_.MakeRelativeTimer(backoff_policy_->OnCompletion())
+  internal::TracedAsyncBackoff(cq_, backoff_policy_->OnCompletion())
       .then(
           [self](
               future<StatusOr<std::chrono::system_clock::time_point>> result) {

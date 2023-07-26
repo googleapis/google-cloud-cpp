@@ -22,6 +22,7 @@
 #include "google/cloud/workstations/v1/internal/workstations_stub.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
+#include <map>
 #include <memory>
 #include <string>
 
@@ -33,7 +34,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class WorkstationsMetadata : public WorkstationsStub {
  public:
   ~WorkstationsMetadata() override = default;
-  explicit WorkstationsMetadata(std::shared_ptr<WorkstationsStub> child);
+  WorkstationsMetadata(std::shared_ptr<WorkstationsStub> child,
+                       std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::workstations::v1::WorkstationCluster>
   GetWorkstationCluster(
@@ -174,6 +176,7 @@ class WorkstationsMetadata : public WorkstationsStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<WorkstationsStub> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

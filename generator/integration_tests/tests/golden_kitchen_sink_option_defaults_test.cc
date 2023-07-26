@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "generator/integration_tests/golden/v1/internal/golden_kitchen_sink_option_defaults.h"
+#include "generator/integration_tests/golden/v1/golden_kitchen_sink_options.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/testing_util/scoped_environment.h"
@@ -25,6 +26,10 @@ namespace golden_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+using ::google::cloud::golden_v1::GoldenKitchenSinkBackoffPolicyOption;
+using ::google::cloud::golden_v1::
+    GoldenKitchenSinkConnectionIdempotencyPolicyOption;
+using ::google::cloud::golden_v1::GoldenKitchenSinkRetryPolicyOption;
 using ::google::cloud::testing_util::ScopedEnvironment;
 
 TEST(GoldenKitchenSinkDefaultOptions, DefaultEndpoint) {
@@ -78,6 +83,25 @@ TEST(GoldenKitchenSinkDefaultOptions, UserProjectOptionAndEnvVar) {
   auto options = Options{}.set<UserProjectOption>("another-project");
   auto updated_options = GoldenKitchenSinkDefaultOptions(options);
   EXPECT_EQ("test-project", updated_options.get<UserProjectOption>());
+}
+
+TEST(GoldenKitchenSinkDefaultOptions, RetryPolicySet) {
+  auto options = Options{};
+  auto updated_options = GoldenKitchenSinkDefaultOptions(options);
+  EXPECT_TRUE(updated_options.has<GoldenKitchenSinkRetryPolicyOption>());
+}
+
+TEST(GoldenKitchenSinkDefaultOptions, BackoffPolicySet) {
+  auto options = Options{};
+  auto updated_options = GoldenKitchenSinkDefaultOptions(options);
+  EXPECT_TRUE(updated_options.has<GoldenKitchenSinkBackoffPolicyOption>());
+}
+
+TEST(GoldenKitchenSinkDefaultOptions, IdempotencyPolicySet) {
+  auto options = Options{};
+  auto updated_options = GoldenKitchenSinkDefaultOptions(options);
+  EXPECT_TRUE(updated_options
+                  .has<GoldenKitchenSinkConnectionIdempotencyPolicyOption>());
 }
 
 }  // namespace

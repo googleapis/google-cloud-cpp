@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "generator/internal/discovery_type_vertex.h"
+#include "generator/testing/descriptor_pool_fixture.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 
@@ -24,6 +25,8 @@ namespace {
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::Eq;
 using ::testing::HasSubstr;
+using ::testing::IsEmpty;
+using ::testing::NotNull;
 
 TEST(DiscoveryTypeVertexTest, DetermineIntroducerEmpty) {
   auto constexpr kOptionalEmptyFieldJson = R"""({})""";
@@ -141,23 +144,26 @@ TEST(DiscoveryTypeVertexTest, FormatFieldOptionsRequiredIsResource) {
   auto json =
       nlohmann::json::parse(kRequiredIsResourceFieldJson, nullptr, false);
   ASSERT_TRUE(json.is_object());
-  EXPECT_THAT(
-      DiscoveryTypeVertex::FormatFieldOptions("test_field", json),
-      Eq(" [(google.api.field_behavior) = REQUIRED,json_name=\"resource\"]"));
+  EXPECT_THAT(DiscoveryTypeVertex::FormatFieldOptions("test_field", json),
+              Eq(" [(google.api.field_behavior) = "
+                 "REQUIRED,json_name=\"__json_request_body\"]"));
 }
 
 struct DetermineTypesSuccess {
+  std::string name;
   std::string json;
   std::string expected_name;
   bool expected_properties_is_null;
   bool expected_is_map;
   bool expected_compare_package_name;
+  bool expected_is_message;
 };
 
-class DiscoveryTypeVertexSuccessTest
+class DiscoveryTypeVertexDetermineTypesSuccessTest
     : public ::testing::TestWithParam<DetermineTypesSuccess> {};
 
-TEST_P(DiscoveryTypeVertexSuccessTest, DetermineTypesAndSynthesisSuccess) {
+TEST_P(DiscoveryTypeVertexDetermineTypesSuccessTest,
+       DetermineTypesAndSynthesisSuccess) {
   auto json = nlohmann::json::parse(GetParam().json, nullptr, false);
   ASSERT_TRUE(json.is_object());
 
@@ -170,46 +176,61 @@ TEST_P(DiscoveryTypeVertexSuccessTest, DetermineTypesAndSynthesisSuccess) {
   EXPECT_THAT(result->is_map, Eq(GetParam().expected_is_map));
   EXPECT_THAT(result->compare_package_name,
               Eq(GetParam().expected_compare_package_name));
+  EXPECT_THAT(result->is_message, Eq(GetParam().expected_is_message));
 }
 
 INSTANTIATE_TEST_SUITE_P(
-    DetermineTypesSuccess, DiscoveryTypeVertexSuccessTest,
+    DetermineTypesSuccess, DiscoveryTypeVertexDetermineTypesSuccessTest,
     testing::Values(
-        DetermineTypesSuccess{R"""({"$ref":"Foo"})""", "Foo", true, false,
-                              true},
-        DetermineTypesSuccess{R"""({"type":"string"})""", "string", true, false,
-                              false},
-        DetermineTypesSuccess{R"""({"type":"boolean"})""", "bool", true, false,
-                              false},
-        DetermineTypesSuccess{R"""({"type":"integer"})""", "int32", true, false,
-                              false},
-        DetermineTypesSuccess{R"""({"type":"integer","format":"uint8"})""",
-                              "uint8", true, false, false},
-        DetermineTypesSuccess{R"""({"type":"number"})""", "float", true, false,
-                              false},
-        DetermineTypesSuccess{R"""({"type":"number","format":"double"})""",
-                              "double", true, false, false},
-        DetermineTypesSuccess{R"""({"type":"integer"})""", "int32", true, false,
-                              false},
-        DetermineTypesSuccess{R"""({"type":"array","items":{"$ref":"Foo"}})""",
-                              "Foo", true, false, true},
+        DetermineTypesSuccess{"message", R"""({"$ref":"Foo"})""", "Foo", true,
+                              false, true, true},
+        DetermineTypesSuccess{"string", R"""({"type":"string"})""", "string",
+                              true, false, false, false},
+        DetermineTypesSuccess{"boolean", R"""({"type":"boolean"})""", "bool",
+                              true, false, false, false},
+        DetermineTypesSuccess{"integer_no_format", R"""({"type":"integer"})""",
+                              "int32", true, false, false, false},
+        DetermineTypesSuccess{"integer_uint8",
+                              R"""({"type":"integer","format":"uint8"})""",
+                              "uint8", true, false, false, false},
+        DetermineTypesSuccess{"number_no_format", R"""({"type":"number"})""",
+                              "float", true, false, false, false},
+        DetermineTypesSuccess{"number_double",
+                              R"""({"type":"number","format":"double"})""",
+                              "double", true, false, false, false},
+        DetermineTypesSuccess{"array_message",
+                              R"""({"type":"array","items":{"$ref":"Foo"}})""",
+                              "Foo", true, false, true, true},
         DetermineTypesSuccess{
-            R"""({"type":"array","items":{"type":"string"}})""", "string", true,
-            false, false},
+            "array_string", R"""({"type":"array","items":{"type":"string"}})""",
+            "string", true, false, false, false},
         DetermineTypesSuccess{
+            "array_int64",
+            R"""({"type":"array","items":{"type":"integer","format":"int64"}})""",
+            "int64", true, false, false, false},
+        DetermineTypesSuccess{
+            "array_nested_message",
             R"""({"type":"array","items":{"type":"object", "properties":{}}})""",
-            "TestFieldItem", false, false, false},
-        DetermineTypesSuccess{R"""({"type":"object","properties":{}})""",
-                              "TestField", false, false, false},
+            "TestFieldItem", false, false, false, true},
+        DetermineTypesSuccess{"nested_message",
+                              R"""({"type":"object","properties":{}})""",
+                              "TestField", false, false, false, true},
         DetermineTypesSuccess{
+            "map_message",
             R"""({"type":"object","additionalProperties":{"$ref":"Foo"}})""",
-            "Foo", true, true, true},
+            "Foo", true, true, true, false},
         DetermineTypesSuccess{
+            "map_string",
             R"""({"type":"object","additionalProperties":{"type":"string"}})""",
-            "string", true, true, false},
+            "string", true, true, false, false},
         DetermineTypesSuccess{
+            "map_nested_message",
             R"""({"type":"object","additionalProperties":{"type":"object", "properties":{}}})""",
-            "TestFieldItem", false, true, false}));
+            "TestFieldItem", false, true, false, true}),
+    [](testing::TestParamInfo<
+        DiscoveryTypeVertexDetermineTypesSuccessTest::ParamType> const& info) {
+      return info.param.name;
+    });
 
 struct DetermineTypesError {
   std::string json;
@@ -271,7 +292,10 @@ INSTANTIATE_TEST_SUITE_P(
             "field: testField is array with items having neither $ref nor "
             "type."}));
 
-TEST(DiscoveryTypeVertexTest, JsonToProtobufScalarTypes) {
+class DiscoveryTypeVertexDescriptorTest
+    : public generator_testing::DescriptorPoolFixture {};
+
+TEST_F(DiscoveryTypeVertexDescriptorTest, JsonToProtobufScalarTypes) {
   auto constexpr kSchemaJson = R"""(
 {
   "id": "TestSchema",
@@ -336,15 +360,15 @@ TEST(DiscoveryTypeVertexTest, JsonToProtobufScalarTypes) {
 
   auto json = nlohmann::json::parse(kSchemaJson, nullptr, false);
   ASSERT_TRUE(json.is_object());
-  DiscoveryTypeVertex t("TestSchema", "test.package", json);
+  DiscoveryTypeVertex t("TestSchema", "test.package", json, &pool());
   std::map<std::string, DiscoveryTypeVertex> types;
-  types.emplace("Foo", DiscoveryTypeVertex{"Foo", "test.package", {}});
+  types.emplace("Foo", DiscoveryTypeVertex{"Foo", "test.package", {}, &pool()});
   auto result = t.JsonToProtobufMessage(types, "test.package");
   ASSERT_STATUS_OK(result);
   EXPECT_THAT(*result, Eq(kExpectedProto));
 }
 
-TEST(DiscoveryTypeVertexTest, JsonToProtobufMapType) {
+TEST_F(DiscoveryTypeVertexDescriptorTest, JsonToProtobufMapType) {
   auto constexpr kSchemaJson = R"""(
 {
   "id": "TestSchema",
@@ -402,15 +426,15 @@ TEST(DiscoveryTypeVertexTest, JsonToProtobufMapType) {
 
   auto json = nlohmann::json::parse(kSchemaJson, nullptr, false);
   ASSERT_TRUE(json.is_object());
-  DiscoveryTypeVertex t("TestSchema", "test.package", json);
+  DiscoveryTypeVertex t("TestSchema", "test.package", json, &pool());
   std::map<std::string, DiscoveryTypeVertex> types;
-  types.emplace("Foo", DiscoveryTypeVertex{"Foo", "test.package", {}});
+  types.emplace("Foo", DiscoveryTypeVertex{"Foo", "test.package", {}, &pool()});
   auto result = t.JsonToProtobufMessage(types, "test.package");
   ASSERT_STATUS_OK(result);
   EXPECT_THAT(*result, Eq(kExpectedProto));
 }
 
-TEST(DiscoveryTypeVertexTest, JsonToProtobufArrayTypes) {
+TEST_F(DiscoveryTypeVertexDescriptorTest, JsonToProtobufArrayTypes) {
   auto constexpr kSchemaJson = R"""(
 {
   "id": "TestSchema",
@@ -528,15 +552,15 @@ TEST(DiscoveryTypeVertexTest, JsonToProtobufArrayTypes) {
 
   auto json = nlohmann::json::parse(kSchemaJson, nullptr, false);
   ASSERT_TRUE(json.is_object());
-  DiscoveryTypeVertex t("TestSchema", "test.package", json);
+  DiscoveryTypeVertex t("TestSchema", "test.package", json, &pool());
   std::map<std::string, DiscoveryTypeVertex> types;
-  types.emplace("Foo", DiscoveryTypeVertex{"Foo", "test.package", {}});
+  types.emplace("Foo", DiscoveryTypeVertex{"Foo", "test.package", {}, &pool()});
   auto result = t.JsonToProtobufMessage(types, "test.package");
   ASSERT_STATUS_OK(result);
   EXPECT_THAT(*result, Eq(kExpectedProto));
 }
 
-TEST(DiscoveryTypeVertexTest, JsonToProtobufMessageNoDescription) {
+TEST_F(DiscoveryTypeVertexDescriptorTest, JsonToProtobufMessageNoDescription) {
   auto constexpr kSchemaJson = R"""(
 {
   "type": "object",
@@ -632,16 +656,18 @@ TEST(DiscoveryTypeVertexTest, JsonToProtobufMessageNoDescription) {
 
   auto json = nlohmann::json::parse(kSchemaJson, nullptr, false);
   ASSERT_TRUE(json.is_object());
-  DiscoveryTypeVertex t("TestSchema", "test.package", json);
+  DiscoveryTypeVertex t("TestSchema", "test.package", json, &pool());
   std::map<std::string, DiscoveryTypeVertex> types;
-  types.emplace("Foo", DiscoveryTypeVertex{"Foo", "test.package", {}});
-  types.emplace("Bar", DiscoveryTypeVertex{"Bar", "other.package", {}});
+  types.emplace("Foo", DiscoveryTypeVertex{"Foo", "test.package", {}, &pool()});
+  types.emplace("Bar",
+                DiscoveryTypeVertex{"Bar", "other.package", {}, &pool()});
   auto result = t.JsonToProtobufMessage(types, "test.package");
   ASSERT_STATUS_OK(result);
   EXPECT_THAT(*result, Eq(kExpectedProto));
 }
 
-TEST(DiscoveryTypeVertexTest, JsonToProtobufMessageWithDescription) {
+TEST_F(DiscoveryTypeVertexDescriptorTest,
+       JsonToProtobufMessageWithDescription) {
   auto constexpr kSchemaJson = R"""(
 {
   "description": "Description of the message.",
@@ -665,15 +691,84 @@ message TestSchema {
 
   auto json = nlohmann::json::parse(kSchemaJson, nullptr, false);
   ASSERT_TRUE(json.is_object());
-  DiscoveryTypeVertex t("TestSchema", "test.package", json);
+  DiscoveryTypeVertex t("TestSchema", "test.package", json, &pool());
   std::map<std::string, DiscoveryTypeVertex> types;
-  types.emplace("Foo", DiscoveryTypeVertex{"Foo", "test.package", {}});
+  types.emplace("Foo", DiscoveryTypeVertex{"Foo", "test.package", {}, &pool()});
   auto result = t.JsonToProtobufMessage(types, "test.package");
   ASSERT_STATUS_OK(result);
   EXPECT_THAT(*result, Eq(kExpectedProto));
+}
+
+TEST_F(DiscoveryTypeVertexDescriptorTest, DetermineReservedAndMaxFieldNumbers) {
+  auto constexpr kProtoFile = R"""(
+syntax = "proto3";
+package generator.test;
+
+message FieldsOnly {
+  string field1 = 1;
+  string field2 = 2;
+}
+
+message ReservedOnly {
+  reserved 25, 4 to 6;
+}
+
+message FieldHighest {
+  reserved 25, 4 to 6;
+  string field26 = 26;
+}
+
+message ReservedHighest {
+  reserved 25, 4 to 6;
+  string field7 = 7;
+}
+)""";
+
+  ASSERT_TRUE(AddProtoFile("test.proto", kProtoFile));
+  auto const* file_descriptor = pool().FindFileByName("test.proto");
+  ASSERT_THAT(file_descriptor, NotNull());
+
+  auto const* message_descriptor =
+      file_descriptor->FindMessageTypeByName("FieldsOnly");
+  ASSERT_THAT(message_descriptor, NotNull());
+  auto message_properties =
+      DiscoveryTypeVertex::DetermineReservedAndMaxFieldNumbers(
+          *message_descriptor);
+  EXPECT_THAT(message_properties.next_available_field_number, Eq(3));
+  EXPECT_THAT(message_properties.reserved_numbers, IsEmpty());
+
+  message_descriptor = file_descriptor->FindMessageTypeByName("ReservedOnly");
+  ASSERT_THAT(message_descriptor, NotNull());
+  message_properties = DiscoveryTypeVertex::DetermineReservedAndMaxFieldNumbers(
+      *message_descriptor);
+  EXPECT_THAT(message_properties.next_available_field_number, Eq(26));
+  EXPECT_THAT(message_properties.reserved_numbers,
+              testing::ElementsAre(4, 5, 6, 25));
+
+  message_descriptor = file_descriptor->FindMessageTypeByName("FieldHighest");
+  ASSERT_THAT(message_descriptor, NotNull());
+  message_properties = DiscoveryTypeVertex::DetermineReservedAndMaxFieldNumbers(
+      *message_descriptor);
+  EXPECT_THAT(message_properties.next_available_field_number, Eq(27));
+  EXPECT_THAT(message_properties.reserved_numbers,
+              testing::ElementsAre(4, 5, 6, 25));
+
+  message_descriptor =
+      file_descriptor->FindMessageTypeByName("ReservedHighest");
+  ASSERT_THAT(message_descriptor, NotNull());
+  message_properties = DiscoveryTypeVertex::DetermineReservedAndMaxFieldNumbers(
+      *message_descriptor);
+  EXPECT_THAT(message_properties.next_available_field_number, Eq(26));
+  EXPECT_THAT(message_properties.reserved_numbers,
+              testing::ElementsAre(4, 5, 6, 25));
 }
 
 }  // namespace
 }  // namespace generator_internal
 }  // namespace cloud
 }  // namespace google
+
+int main(int argc, char** argv) {
+  ::testing::InitGoogleTest(&argc, argv);
+  return RUN_ALL_TESTS();
+}

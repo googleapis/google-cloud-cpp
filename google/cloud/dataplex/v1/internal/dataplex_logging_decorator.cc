@@ -29,10 +29,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 DataplexServiceLogging::DataplexServiceLogging(
     std::shared_ptr<DataplexServiceStub> child, TracingOptions tracing_options,
-    std::set<std::string> components)
+    std::set<std::string> const& components)
     : child_(std::move(child)),
       tracing_options_(std::move(tracing_options)),
-      components_(std::move(components)) {}
+      stream_logging_(components.find("rpc-streams") != components.end()) {}
 
 future<StatusOr<google::longrunning::Operation>>
 DataplexServiceLogging::AsyncCreateLake(
@@ -341,6 +341,18 @@ DataplexServiceLogging::ListJobs(
       [this](grpc::ClientContext& context,
              google::cloud::dataplex::v1::ListJobsRequest const& request) {
         return child_->ListJobs(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::dataplex::v1::RunTaskResponse>
+DataplexServiceLogging::RunTask(
+    grpc::ClientContext& context,
+    google::cloud::dataplex::v1::RunTaskRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::dataplex::v1::RunTaskRequest const& request) {
+        return child_->RunTask(context, request);
       },
       context, request, __func__, tracing_options_);
 }

@@ -77,6 +77,23 @@ DatabaseAdminRestLogging::GetDatabase(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+DatabaseAdminRestLogging::AsyncUpdateDatabase(
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::spanner::admin::database::v1::UpdateDatabaseRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](CompletionQueue& cq,
+             std::unique_ptr<rest_internal::RestContext> rest_context,
+             google::spanner::admin::database::v1::UpdateDatabaseRequest const&
+                 request) {
+        return child_->AsyncUpdateDatabase(cq, std::move(rest_context),
+                                           request);
+      },
+      cq, std::move(rest_context), request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
 DatabaseAdminRestLogging::AsyncUpdateDatabaseDdl(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,

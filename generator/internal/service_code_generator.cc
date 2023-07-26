@@ -14,6 +14,7 @@
 
 #include "generator/internal/service_code_generator.h"
 #include "generator/internal/codegen_utils.h"
+#include "generator/internal/longrunning.h"
 #include "generator/internal/pagination.h"
 #include "generator/internal/printer.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
@@ -104,6 +105,13 @@ bool ServiceCodeGenerator::HasLongrunningMethod() const {
   return std::any_of(methods_.begin(), methods_.end(),
                      [](google::protobuf::MethodDescriptor const& m) {
                        return IsLongrunningOperation(m);
+                     });
+}
+
+bool ServiceCodeGenerator::HasGRPCLongrunningOperation() const {
+  return std::any_of(methods_.begin(), methods_.end(),
+                     [](google::protobuf::MethodDescriptor const& m) {
+                       return IsGRPCLongrunningOperation(m);
                      });
 }
 
@@ -460,6 +468,11 @@ void ServiceCodeGenerator::SetMethods() {
       async_methods_.emplace_back(*method);
     }
   }
+}
+
+std::string ServiceCodeGenerator::GetPbIncludeByTransport() const {
+  if (HasGenerateGrpcTransport()) return vars("proto_grpc_header_path");
+  return vars("proto_header_path");
 }
 
 }  // namespace generator_internal

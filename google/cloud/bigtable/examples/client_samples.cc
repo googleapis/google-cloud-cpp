@@ -45,6 +45,53 @@ void TableSetEndpoint(std::vector<std::string> const& argv) {
   (argv.at(0), argv.at(1), argv.at(2));
 }
 
+void SetRetryPolicy(std::vector<std::string> const& argv) {
+  if (argv.size() != 3) {
+    throw google::cloud::testing_util::Usage{
+        "set-retry-policy <project-id> <instance-id> <table-id>"};
+  }
+  //! [set-retry-policy]
+  namespace cbt = google::cloud::bigtable;
+  [](std::string const& project_id, std::string const& instance_id,
+     std::string const& table_id) {
+    auto options = google::cloud::Options{}
+                       .set<cbt::IdempotentMutationPolicyOption>(
+                           cbt::AlwaysRetryMutationPolicy().clone())
+                       .set<cbt::DataRetryPolicyOption>(
+                           cbt::DataLimitedErrorCountRetryPolicy(3).clone())
+                       .set<cbt::DataBackoffPolicyOption>(
+                           google::cloud::ExponentialBackoffPolicy(
+                               /*initial_delay=*/std::chrono::milliseconds(200),
+                               /*maximum_delay=*/std::chrono::seconds(45),
+                               /*scaling=*/2.0)
+                               .clone());
+    auto connection = cbt::MakeDataConnection(options);
+
+    auto const table_name =
+        cbt::TableResource(project_id, instance_id, table_id);
+    // c1 and c2 share the same retry policies
+    auto c1 = cbt::Table(connection, table_name);
+    auto c2 = cbt::Table(connection, table_name);
+
+    // You can override any of the policies in a new client. This new client
+    // will share the policies from c1 (or c2) *except* from the retry policy.
+    auto c3 = cbt::Table(
+        connection, table_name,
+        google::cloud::Options{}.set<cbt::DataRetryPolicyOption>(
+            cbt::DataLimitedTimeRetryPolicy(std::chrono::minutes(5)).clone()));
+
+    // You can also override the policies in a single call. In this case, we
+    // allow no retries.
+    auto result =
+        c3.ReadRow("my-key", cbt::Filter::PassAllFilter(),
+                   google::cloud::Options{}.set<cbt::DataRetryPolicyOption>(
+                       cbt::DataLimitedErrorCountRetryPolicy(0).clone()));
+    (void)result;  // ignore errors in this example
+  }
+  //! [set-retry-policy]
+  (argv.at(0), argv.at(1), argv.at(2));
+}
+
 void TableWithServiceAccount(std::vector<std::string> const& argv) {
   namespace examples = ::google::cloud::testing_util;
   if (argv.size() != 4) {
@@ -94,6 +141,9 @@ void AutoRun(std::vector<std::string> const& argv) {
   std::cout << "\nRunning TableWithServiceAccount() sample" << std::endl;
   TableWithServiceAccount({project_id, instance_id, table_id, keyfile});
 
+  std::cout << "\nRunning SetRetryPolicy() sample" << std::endl;
+  SetRetryPolicy({project_id, instance_id, table_id});
+
   std::cout << "\nAutoRun done" << std::endl;
 }
 
@@ -102,6 +152,7 @@ void AutoRun(std::vector<std::string> const& argv) {
 int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
   google::cloud::testing_util::Example example({
       {"table-set-endpoint", TableSetEndpoint},
+      {"set-retry-policy", SetRetryPolicy},
       {"table-with-service-account", TableWithServiceAccount},
       {"auto", AutoRun},
   });

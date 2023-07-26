@@ -27,23 +27,50 @@
 
 namespace google {
 namespace cloud {
-namespace spanner_internal {
+namespace spanner {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+/**
+ * Defines the interface for `RowStream` implementations.
+ *
+ * The `RowStream` class represents a stream of `Rows` returned from
+ * `spanner::Client::Read()` or `spanner::Client::ExecuteQuery()`. There are
+ * different implementations depending the the RPC. Applications can also
+ * mock this class when testing their code and mocking the `spanner::Client`
+ * behavior.
+ */
 class ResultSourceInterface {
  public:
   virtual ~ResultSourceInterface() = default;
-  // Returns OK Status with an empty Row to indicate end-of-stream.
+
+  /**
+   * Returns the next row in the stream.
+   *
+   * @return if the stream is interrupted due to a failure the
+   *   `StatusOr<spanner::Row>` contains the error.  The function returns a
+   *   successful `StatusOr<>` with an empty `spanner::Row` to indicate
+   *   end-of-stream.
+   */
   virtual StatusOr<spanner::Row> NextRow() = 0;
+
+  /**
+   * Returns metadata about the result set, such as the field types and the
+   * transaction id created by the request.
+   *
+   * @see https://cloud.google.com/spanner/docs/reference/rpc/google.spanner.v1#resultsetmetadata
+   *     for more information.
+   */
   virtual absl::optional<google::spanner::v1::ResultSetMetadata> Metadata() = 0;
+
+  /**
+   * Returns statistics about the result set, such as the number of rows, and
+   * the query plan used to compute the results.
+   *
+   * @see https://cloud.google.com/spanner/docs/reference/rpc/google.spanner.v1#resultsetstats
+   *     for more information.
+   */
   virtual absl::optional<google::spanner::v1::ResultSetStats> Stats() const = 0;
 };
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace spanner_internal
-
-namespace spanner {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /**
  * Contains a hierarchical representation of the operations the database server
@@ -74,8 +101,7 @@ using ExecutionPlan = ::google::spanner::v1::QueryPlan;
 class RowStream {
  public:
   RowStream() = default;
-  explicit RowStream(
-      std::unique_ptr<spanner_internal::ResultSourceInterface> source)
+  explicit RowStream(std::unique_ptr<ResultSourceInterface> source)
       : source_(std::move(source)) {}
 
   // This class is movable but not copyable.
@@ -102,7 +128,7 @@ class RowStream {
   absl::optional<Timestamp> ReadTimestamp() const;
 
  private:
-  std::unique_ptr<spanner_internal::ResultSourceInterface> source_;
+  std::unique_ptr<ResultSourceInterface> source_;
 };
 
 /**
@@ -120,8 +146,7 @@ class RowStream {
 class DmlResult {
  public:
   DmlResult() = default;
-  explicit DmlResult(
-      std::unique_ptr<spanner_internal::ResultSourceInterface> source)
+  explicit DmlResult(std::unique_ptr<ResultSourceInterface> source)
       : source_(std::move(source)) {}
 
   // This class is movable but not copyable.
@@ -137,7 +162,7 @@ class DmlResult {
   std::int64_t RowsModified() const;
 
  private:
-  std::unique_ptr<spanner_internal::ResultSourceInterface> source_;
+  std::unique_ptr<ResultSourceInterface> source_;
 };
 
 /**
@@ -161,8 +186,7 @@ class DmlResult {
 class ProfileQueryResult {
  public:
   ProfileQueryResult() = default;
-  explicit ProfileQueryResult(
-      std::unique_ptr<spanner_internal::ResultSourceInterface> source)
+  explicit ProfileQueryResult(std::unique_ptr<ResultSourceInterface> source)
       : source_(std::move(source)) {}
 
   // This class is movable but not copyable.
@@ -201,7 +225,7 @@ class ProfileQueryResult {
   absl::optional<spanner::ExecutionPlan> ExecutionPlan() const;
 
  private:
-  std::unique_ptr<spanner_internal::ResultSourceInterface> source_;
+  std::unique_ptr<ResultSourceInterface> source_;
 };
 
 /**
@@ -220,8 +244,7 @@ class ProfileQueryResult {
 class ProfileDmlResult {
  public:
   ProfileDmlResult() = default;
-  explicit ProfileDmlResult(
-      std::unique_ptr<spanner_internal::ResultSourceInterface> source)
+  explicit ProfileDmlResult(std::unique_ptr<ResultSourceInterface> source)
       : source_(std::move(source)) {}
 
   // This class is movable but not copyable.
@@ -251,11 +274,20 @@ class ProfileDmlResult {
   absl::optional<spanner::ExecutionPlan> ExecutionPlan() const;
 
  private:
-  std::unique_ptr<spanner_internal::ResultSourceInterface> source_;
+  std::unique_ptr<ResultSourceInterface> source_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner
+
+namespace spanner_internal {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+/// @deprecated Prefer using `spanner::ResultSourceInterface` directly.
+using ResultSourceInterface = spanner::ResultSourceInterface;
+
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google
 

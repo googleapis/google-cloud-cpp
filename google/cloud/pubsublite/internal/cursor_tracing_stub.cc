@@ -17,6 +17,7 @@
 // source: google/cloud/pubsublite/v1/cursor.proto
 
 #include "google/cloud/pubsublite/internal/cursor_tracing_stub.h"
+#include "google/cloud/internal/async_read_write_stream_tracing.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
 
 namespace google {
@@ -30,13 +31,20 @@ CursorServiceTracingStub::CursorServiceTracingStub(
     std::shared_ptr<CursorServiceStub> child)
     : child_(std::move(child)) {}
 
-std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+std::unique_ptr<AsyncStreamingReadWriteRpc<
     google::cloud::pubsublite::v1::StreamingCommitCursorRequest,
     google::cloud::pubsublite::v1::StreamingCommitCursorResponse>>
 CursorServiceTracingStub::AsyncStreamingCommitCursor(
-    google::cloud::CompletionQueue const& cq,
-    std::shared_ptr<grpc::ClientContext> context) {
-  return child_->AsyncStreamingCommitCursor(cq, std::move(context));
+    CompletionQueue const& cq, std::shared_ptr<grpc::ClientContext> context) {
+  auto span = internal::MakeSpanGrpc("google.cloud.pubsublite.v1.CursorService",
+                                     "StreamingCommitCursor");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(*context, internal::CurrentOptions());
+  auto stream = child_->AsyncStreamingCommitCursor(cq, context);
+  return std::make_unique<internal::AsyncStreamingReadWriteRpcTracing<
+      google::cloud::pubsublite::v1::StreamingCommitCursorRequest,
+      google::cloud::pubsublite::v1::StreamingCommitCursorResponse>>(
+      std::move(context), std::move(stream), std::move(span));
 }
 
 StatusOr<google::cloud::pubsublite::v1::CommitCursorResponse>

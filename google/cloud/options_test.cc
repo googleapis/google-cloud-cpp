@@ -26,6 +26,8 @@ namespace {
 using ::testing::AllOf;
 using ::testing::Contains;
 using ::testing::ContainsRegex;
+using ::testing::Optional;
+using ::testing::StrEq;
 using ::testing::UnorderedElementsAre;
 
 struct IntOption {
@@ -268,6 +270,28 @@ TEST(MergeOptions, Basics) {
   EXPECT_EQ(a.get<StringOption>(), "from a");  // From a
   EXPECT_EQ(a.get<BoolOption>(), true);        // From b
   EXPECT_EQ(a.get<IntOption>(), 42);           // From a
+}
+
+TEST(ExtractOption, Basics) {
+  auto opts = Options{}.set<StringOption>("foo").set<IntOption>(42);
+
+  auto b = internal::ExtractOption<BoolOption>(opts);
+  EXPECT_FALSE(opts.has<BoolOption>());
+  EXPECT_TRUE(opts.has<IntOption>());
+  EXPECT_TRUE(opts.has<StringOption>());
+  EXPECT_FALSE(b.has_value());
+
+  auto i = internal::ExtractOption<IntOption>(opts);
+  EXPECT_FALSE(opts.has<BoolOption>());
+  EXPECT_FALSE(opts.has<IntOption>());
+  EXPECT_TRUE(opts.has<StringOption>());
+  EXPECT_THAT(i, Optional(42));
+
+  auto s = internal::ExtractOption<StringOption>(opts);
+  EXPECT_FALSE(opts.has<BoolOption>());
+  EXPECT_FALSE(opts.has<IntOption>());
+  EXPECT_FALSE(opts.has<StringOption>());
+  EXPECT_THAT(s, Optional(StrEq("foo")));
 }
 
 TEST(OptionsSpan, Basics) {

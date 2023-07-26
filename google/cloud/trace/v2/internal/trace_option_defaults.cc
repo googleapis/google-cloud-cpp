@@ -45,8 +45,9 @@ Options TraceServiceDefaultOptions(Options options) {
   }
   if (!options.has<trace_v2::TraceServiceBackoffPolicyOption>()) {
     options.set<trace_v2::TraceServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options.has<trace_v2::TraceServiceConnectionIdempotencyPolicyOption>()) {

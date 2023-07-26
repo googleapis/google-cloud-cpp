@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPEECH_V2_SPEECH_CLIENT_H
 
 #include "google/cloud/speech/v2/speech_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -63,8 +62,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class SpeechClient {
  public:
-  explicit SpeechClient(ExperimentalTag,
-                        std::shared_ptr<SpeechConnection> connection,
+  explicit SpeechClient(std::shared_ptr<SpeechConnection> connection,
                         Options opts = {});
   ~SpeechClient();
 
@@ -86,274 +84,466 @@ class SpeechClient {
   }
   ///@}
 
+  // clang-format off
   ///
   /// Creates a [Recognizer][google.cloud.speech.v2.Recognizer].
   ///
-  /// @param parent  Required. The project and location where this Recognizer
-  /// will be created.
+  /// @param parent  Required. The project and location where this Recognizer will be created.
   ///  The expected format is `projects/{project}/locations/{location}`.
   /// @param recognizer  Required. The Recognizer to create.
-  /// @param recognizer_id  The ID to use for the Recognizer, which will become
-  /// the final component of
+  /// @param recognizer_id  The ID to use for the Recognizer, which will become the final component of
   ///  the Recognizer's resource name.
+  ///  @n
   ///  This value should be 4-63 characters, and valid characters
   ///  are /[a-z][0-9]-/.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::speech::v2::Recognizer,google/cloud/speech/v2/cloud_speech.proto#L558}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.speech.v2.Recognizer] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.speech.v2.CreateRecognizerRequest]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L323}
-  /// [google.cloud.speech.v2.Recognizer]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L558}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.speech.v2.CreateRecognizerRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L323}
+  /// [google.cloud.speech.v2.Recognizer]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L558}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::speech::v2::Recognizer>> CreateRecognizer(
       std::string const& parent,
       google::cloud::speech::v2::Recognizer const& recognizer,
       std::string const& recognizer_id, Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a [Recognizer][google.cloud.speech.v2.Recognizer].
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::speech::v2::CreateRecognizerRequest,google/cloud/speech/v2/cloud_speech.proto#L323}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.speech.v2.CreateRecognizerRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::speech::v2::Recognizer,google/cloud/speech/v2/cloud_speech.proto#L558}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.speech.v2.Recognizer] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.speech.v2.CreateRecognizerRequest]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L323}
-  /// [google.cloud.speech.v2.Recognizer]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L558}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.speech.v2.CreateRecognizerRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L323}
+  /// [google.cloud.speech.v2.Recognizer]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L558}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::speech::v2::Recognizer>> CreateRecognizer(
       google::cloud::speech::v2::CreateRecognizerRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists Recognizers.
   ///
-  /// @param parent  Required. The project and location of Recognizers to list.
-  /// The expected
+  /// @param parent  Required. The project and location of Recognizers to list. The expected
   ///  format is `projects/{project}/locations/{location}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::speech::v2::Recognizer,google/cloud/speech/v2/cloud_speech.proto#L558}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.speech.v2.Recognizer], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.speech.v2.ListRecognizersRequest]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L436}
-  /// [google.cloud.speech.v2.Recognizer]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L558}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.speech.v2.ListRecognizersRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L436}
+  /// [google.cloud.speech.v2.Recognizer]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L558}
   ///
+  // clang-format on
   StreamRange<google::cloud::speech::v2::Recognizer> ListRecognizers(
       std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Lists Recognizers.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::speech::v2::ListRecognizersRequest,google/cloud/speech/v2/cloud_speech.proto#L436}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.speech.v2.ListRecognizersRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::speech::v2::Recognizer,google/cloud/speech/v2/cloud_speech.proto#L558}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.speech.v2.Recognizer], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.speech.v2.ListRecognizersRequest]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L436}
-  /// [google.cloud.speech.v2.Recognizer]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L558}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.speech.v2.ListRecognizersRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L436}
+  /// [google.cloud.speech.v2.Recognizer]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L558}
   ///
+  // clang-format on
   StreamRange<google::cloud::speech::v2::Recognizer> ListRecognizers(
       google::cloud::speech::v2::ListRecognizersRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Returns the requested
   /// [Recognizer][google.cloud.speech.v2.Recognizer]. Fails with
   /// [NOT_FOUND][google.rpc.Code.NOT_FOUND] if the requested Recognizer doesn't
   /// exist.
   ///
-  /// @param name  Required. The name of the Recognizer to retrieve. The
-  /// expected format is
+  /// @param name  Required. The name of the Recognizer to retrieve. The expected format is
   ///  `projects/{project}/locations/{location}/recognizers/{recognizer}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::speech::v2::Recognizer,google/cloud/speech/v2/cloud_speech.proto#L558}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.speech.v2.Recognizer])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.speech.v2.GetRecognizerRequest]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L479}
-  /// [google.cloud.speech.v2.Recognizer]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L558}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.speech.v2.GetRecognizerRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L479}
+  /// [google.cloud.speech.v2.Recognizer]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L558}
   ///
+  // clang-format on
   StatusOr<google::cloud::speech::v2::Recognizer> GetRecognizer(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Returns the requested
   /// [Recognizer][google.cloud.speech.v2.Recognizer]. Fails with
   /// [NOT_FOUND][google.rpc.Code.NOT_FOUND] if the requested Recognizer doesn't
   /// exist.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::speech::v2::GetRecognizerRequest,google/cloud/speech/v2/cloud_speech.proto#L479}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.speech.v2.GetRecognizerRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::speech::v2::Recognizer,google/cloud/speech/v2/cloud_speech.proto#L558}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.speech.v2.Recognizer])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.speech.v2.GetRecognizerRequest]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L479}
-  /// [google.cloud.speech.v2.Recognizer]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L558}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.speech.v2.GetRecognizerRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L479}
+  /// [google.cloud.speech.v2.Recognizer]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L558}
   ///
+  // clang-format on
   StatusOr<google::cloud::speech::v2::Recognizer> GetRecognizer(
       google::cloud::speech::v2::GetRecognizerRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Updates the [Recognizer][google.cloud.speech.v2.Recognizer].
   ///
   /// @param recognizer  Required. The Recognizer to update.
-  ///  The Recognizer's `name` field is used to identify the Recognizer to
-  ///  update. Format:
-  ///  `projects/{project}/locations/{location}/recognizers/{recognizer}`.
-  /// @param update_mask  The list of fields to update. If empty, all
-  /// non-default valued fields are
+  ///  @n
+  ///  The Recognizer's `name` field is used to identify the Recognizer to update.
+  ///  Format: `projects/{project}/locations/{location}/recognizers/{recognizer}`.
+  /// @param update_mask  The list of fields to update. If empty, all non-default valued fields are
   ///  considered for update. Use `*` to update the entire Recognizer resource.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::speech::v2::Recognizer,google/cloud/speech/v2/cloud_speech.proto#L558}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.speech.v2.Recognizer] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.speech.v2.Recognizer]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L558}
-  /// [google.cloud.speech.v2.UpdateRecognizerRequest]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L492}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.speech.v2.Recognizer]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L558}
+  /// [google.cloud.speech.v2.UpdateRecognizerRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L492}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::speech::v2::Recognizer>> UpdateRecognizer(
       google::cloud::speech::v2::Recognizer const& recognizer,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
   ///
   /// Updates the [Recognizer][google.cloud.speech.v2.Recognizer].
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::speech::v2::UpdateRecognizerRequest,google/cloud/speech/v2/cloud_speech.proto#L492}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.speech.v2.UpdateRecognizerRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::speech::v2::Recognizer,google/cloud/speech/v2/cloud_speech.proto#L558}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.speech.v2.Recognizer] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.speech.v2.Recognizer]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L558}
-  /// [google.cloud.speech.v2.UpdateRecognizerRequest]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L492}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.speech.v2.Recognizer]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L558}
+  /// [google.cloud.speech.v2.UpdateRecognizerRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L492}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::speech::v2::Recognizer>> UpdateRecognizer(
       google::cloud::speech::v2::UpdateRecognizerRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes the [Recognizer][google.cloud.speech.v2.Recognizer].
   ///
   /// @param name  Required. The name of the Recognizer to delete.
-  ///  Format:
-  ///  `projects/{project}/locations/{location}/recognizers/{recognizer}`
+  ///  Format: `projects/{project}/locations/{location}/recognizers/{recognizer}`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::speech::v2::Recognizer,google/cloud/speech/v2/cloud_speech.proto#L558}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.speech.v2.Recognizer] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.speech.v2.DeleteRecognizerRequest]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L510}
-  /// [google.cloud.speech.v2.Recognizer]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L558}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.speech.v2.DeleteRecognizerRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L510}
+  /// [google.cloud.speech.v2.Recognizer]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L558}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::speech::v2::Recognizer>> DeleteRecognizer(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes the [Recognizer][google.cloud.speech.v2.Recognizer].
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::speech::v2::DeleteRecognizerRequest,google/cloud/speech/v2/cloud_speech.proto#L510}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.speech.v2.DeleteRecognizerRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::speech::v2::Recognizer,google/cloud/speech/v2/cloud_speech.proto#L558}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.speech.v2.Recognizer] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.speech.v2.DeleteRecognizerRequest]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L510}
-  /// [google.cloud.speech.v2.Recognizer]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L558}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.speech.v2.DeleteRecognizerRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L510}
+  /// [google.cloud.speech.v2.Recognizer]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L558}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::speech::v2::Recognizer>> DeleteRecognizer(
       google::cloud::speech::v2::DeleteRecognizerRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Undeletes the [Recognizer][google.cloud.speech.v2.Recognizer].
   ///
   /// @param name  Required. The name of the Recognizer to undelete.
-  ///  Format:
-  ///  `projects/{project}/locations/{location}/recognizers/{recognizer}`
+  ///  Format: `projects/{project}/locations/{location}/recognizers/{recognizer}`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::speech::v2::Recognizer,google/cloud/speech/v2/cloud_speech.proto#L558}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.speech.v2.Recognizer] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.speech.v2.Recognizer]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L558}
-  /// [google.cloud.speech.v2.UndeleteRecognizerRequest]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L537}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.speech.v2.Recognizer]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L558}
+  /// [google.cloud.speech.v2.UndeleteRecognizerRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L537}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::speech::v2::Recognizer>> UndeleteRecognizer(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Undeletes the [Recognizer][google.cloud.speech.v2.Recognizer].
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::speech::v2::UndeleteRecognizerRequest,google/cloud/speech/v2/cloud_speech.proto#L537}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.speech.v2.UndeleteRecognizerRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::speech::v2::Recognizer,google/cloud/speech/v2/cloud_speech.proto#L558}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.speech.v2.Recognizer] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.speech.v2.Recognizer]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L558}
-  /// [google.cloud.speech.v2.UndeleteRecognizerRequest]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L537}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.speech.v2.Recognizer]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L558}
+  /// [google.cloud.speech.v2.UndeleteRecognizerRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L537}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::speech::v2::Recognizer>> UndeleteRecognizer(
       google::cloud::speech::v2::UndeleteRecognizerRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Performs synchronous Speech recognition: receive results after all audio
   /// has been sent and processed.
   ///
-  /// @param recognizer  Required. The name of the Recognizer to use during
-  /// recognition. The
+  /// @param recognizer  Required. The name of the Recognizer to use during recognition. The
   ///  expected format is
-  ///  `projects/{project}/locations/{location}/recognizers/{recognizer}`.
-  /// @param config  Features and audio metadata to use for the Automatic Speech
-  /// Recognition.
+  ///  `projects/{project}/locations/{location}/recognizers/{recognizer}`. The
+  ///  {recognizer} segment may be set to `_` to use an empty implicit Recognizer.
+  /// @param config  Features and audio metadata to use for the Automatic Speech Recognition.
   ///  This field in combination with the
   ///  [config_mask][google.cloud.speech.v2.RecognizeRequest.config_mask] field
   ///  can be used to override parts of the
   ///  [default_recognition_config][google.cloud.speech.v2.Recognizer.default_recognition_config]
   ///  of the Recognizer resource.
   /// @param config_mask  The list of fields in
-  ///  [config][google.cloud.speech.v2.RecognizeRequest.config] that override
-  ///  the values in the
+  ///  [config][google.cloud.speech.v2.RecognizeRequest.config] that override the
+  ///  values in the
   ///  [default_recognition_config][google.cloud.speech.v2.Recognizer.default_recognition_config]
-  ///  of the recognizer during this recognition request. If no mask is
-  ///  provided, all non-default valued fields in
+  ///  of the recognizer during this recognition request. If no mask is provided,
+  ///  all non-default valued fields in
   ///  [config][google.cloud.speech.v2.RecognizeRequest.config] override the
   ///  values in the recognizer for this recognition request. If a mask is
   ///  provided, only the fields listed in the mask override the config in the
@@ -367,83 +557,117 @@ class SpeechClient {
   ///  whereas JSON representations use base64.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::speech::v2::RecognizeResponse,google/cloud/speech/v2/cloud_speech.proto#L1067}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.speech.v2.RecognizeResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.speech.v2.RecognizeRequest]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L920}
-  /// [google.cloud.speech.v2.RecognizeResponse]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1067}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.speech.v2.RecognizeRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L908}
+  /// [google.cloud.speech.v2.RecognizeResponse]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1056}
   ///
+  // clang-format on
   StatusOr<google::cloud::speech::v2::RecognizeResponse> Recognize(
       std::string const& recognizer,
       google::cloud::speech::v2::RecognitionConfig const& config,
       google::protobuf::FieldMask const& config_mask,
       std::string const& content, Options opts = {});
 
+  // clang-format off
   ///
   /// Performs synchronous Speech recognition: receive results after all audio
   /// has been sent and processed.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::speech::v2::RecognizeRequest,google/cloud/speech/v2/cloud_speech.proto#L920}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.speech.v2.RecognizeRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::speech::v2::RecognizeResponse,google/cloud/speech/v2/cloud_speech.proto#L1067}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.speech.v2.RecognizeResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.speech.v2.RecognizeRequest]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L920}
-  /// [google.cloud.speech.v2.RecognizeResponse]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1067}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.speech.v2.RecognizeRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L908}
+  /// [google.cloud.speech.v2.RecognizeResponse]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1056}
   ///
+  // clang-format on
   StatusOr<google::cloud::speech::v2::RecognizeResponse> Recognize(
       google::cloud::speech::v2::RecognizeRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Performs bidirectional streaming speech recognition: receive results while
   /// sending audio. This method is only available via the gRPC API (not REST).
   ///
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return A bidirectional streaming interface with request (write) type:
-  /// @googleapis_link{google::cloud::speech::v2::StreamingRecognizeRequest,google/cloud/speech/v2/cloud_speech.proto#L1151}
-  /// and response (read) type:
-  /// @googleapis_link{google::cloud::speech::v2::StreamingRecognizeResponse,google/cloud/speech/v2/cloud_speech.proto#L1428}
+  /// @return An object representing the bidirectional streaming
+  ///     RPC. Applications can send multiple request messages and receive
+  ///     multiple response messages through this API. Bidirectional streaming
+  ///     RPCs can impose restrictions on the sequence of request and response
+  ///     messages. Please consult the service documentation for details.
+  ///     The request message type ([google.cloud.speech.v2.StreamingRecognizeRequest]) and response messages
+  ///     ([google.cloud.speech.v2.StreamingRecognizeResponse]) are mapped to C++ classes using the
+  ///     [Protobuf mapping rules].
   ///
-  /// [google.cloud.speech.v2.StreamingRecognizeRequest]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1151}
-  /// [google.cloud.speech.v2.StreamingRecognizeResponse]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1428}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.speech.v2.StreamingRecognizeRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1145}
+  /// [google.cloud.speech.v2.StreamingRecognizeResponse]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1437}
   ///
+  // clang-format on
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::speech::v2::StreamingRecognizeRequest,
       google::cloud::speech::v2::StreamingRecognizeResponse>>
   AsyncStreamingRecognize(Options opts = {});
 
+  // clang-format off
   ///
   /// Performs batch asynchronous speech recognition: send a request with N
   /// audio files and receive a long running operation that can be polled to see
   /// when the transcriptions are finished.
   ///
-  /// @param recognizer  Required. Resource name of the recognizer to be used
-  /// for ASR.
-  /// @param config  Features and audio metadata to use for the Automatic Speech
-  /// Recognition.
+  /// @param recognizer  Required. The name of the Recognizer to use during recognition. The
+  ///  expected format is
+  ///  `projects/{project}/locations/{location}/recognizers/{recognizer}`. The
+  ///  {recognizer} segment may be set to `_` to use an empty implicit Recognizer.
+  /// @param config  Features and audio metadata to use for the Automatic Speech Recognition.
   ///  This field in combination with the
   ///  [config_mask][google.cloud.speech.v2.BatchRecognizeRequest.config_mask]
   ///  field can be used to override parts of the
   ///  [default_recognition_config][google.cloud.speech.v2.Recognizer.default_recognition_config]
   ///  of the Recognizer resource.
   /// @param config_mask  The list of fields in
-  ///  [config][google.cloud.speech.v2.BatchRecognizeRequest.config] that
-  ///  override the values in the
+  ///  [config][google.cloud.speech.v2.BatchRecognizeRequest.config] that override
+  ///  the values in the
   ///  [default_recognition_config][google.cloud.speech.v2.Recognizer.default_recognition_config]
-  ///  of the recognizer during this recognition request. If no mask is
-  ///  provided, all given fields in
-  ///  [config][google.cloud.speech.v2.BatchRecognizeRequest.config] override
-  ///  the values in the recognizer for this recognition request. If a mask is
+  ///  of the recognizer during this recognition request. If no mask is provided,
+  ///  all given fields in
+  ///  [config][google.cloud.speech.v2.BatchRecognizeRequest.config] override the
+  ///  values in the recognizer for this recognition request. If a mask is
   ///  provided, only the fields listed in the mask override the config in the
   ///  recognizer for this recognition request. If a wildcard (`*`) is provided,
   ///  [config][google.cloud.speech.v2.BatchRecognizeRequest.config] completely
@@ -453,14 +677,28 @@ class SpeechClient {
   ///  The maximum number of files allowed to be specified is 5.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::speech::v2::BatchRecognizeResponse,google/cloud/speech/v2/cloud_speech.proto#L1249}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.speech.v2.BatchRecognizeResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.speech.v2.BatchRecognizeRequest]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1180}
-  /// [google.cloud.speech.v2.BatchRecognizeResponse]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1249}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.speech.v2.BatchRecognizeRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1172}
+  /// [google.cloud.speech.v2.BatchRecognizeResponse]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1258}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::speech::v2::BatchRecognizeResponse>>
   BatchRecognize(
       std::string const& recognizer,
@@ -470,274 +708,465 @@ class SpeechClient {
           files,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Performs batch asynchronous speech recognition: send a request with N
   /// audio files and receive a long running operation that can be polled to see
   /// when the transcriptions are finished.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::speech::v2::BatchRecognizeRequest,google/cloud/speech/v2/cloud_speech.proto#L1180}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.speech.v2.BatchRecognizeRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::speech::v2::BatchRecognizeResponse,google/cloud/speech/v2/cloud_speech.proto#L1249}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.speech.v2.BatchRecognizeResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.speech.v2.BatchRecognizeRequest]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1180}
-  /// [google.cloud.speech.v2.BatchRecognizeResponse]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1249}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.speech.v2.BatchRecognizeRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1172}
+  /// [google.cloud.speech.v2.BatchRecognizeResponse]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1258}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::speech::v2::BatchRecognizeResponse>>
   BatchRecognize(
       google::cloud::speech::v2::BatchRecognizeRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Returns the requested [Config][google.cloud.speech.v2.Config].
   ///
-  /// @param name  Required. The name of the config to retrieve. There is
-  /// exactly one config
+  /// @param name  Required. The name of the config to retrieve. There is exactly one config
   ///  resource per project per location. The expected format is
   ///  `projects/{project}/locations/{location}/config`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::speech::v2::Config,google/cloud/speech/v2/cloud_speech.proto#L1477}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.speech.v2.Config])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.speech.v2.Config]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1477}
-  /// [google.cloud.speech.v2.GetConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1508}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.speech.v2.Config]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1486}
+  /// [google.cloud.speech.v2.GetConfigRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1517}
   ///
+  // clang-format on
   StatusOr<google::cloud::speech::v2::Config> GetConfig(std::string const& name,
                                                         Options opts = {});
 
+  // clang-format off
   ///
   /// Returns the requested [Config][google.cloud.speech.v2.Config].
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::speech::v2::GetConfigRequest,google/cloud/speech/v2/cloud_speech.proto#L1508}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.speech.v2.GetConfigRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::speech::v2::Config,google/cloud/speech/v2/cloud_speech.proto#L1477}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.speech.v2.Config])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.speech.v2.Config]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1477}
-  /// [google.cloud.speech.v2.GetConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1508}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.speech.v2.Config]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1486}
+  /// [google.cloud.speech.v2.GetConfigRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1517}
   ///
+  // clang-format on
   StatusOr<google::cloud::speech::v2::Config> GetConfig(
       google::cloud::speech::v2::GetConfigRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Updates the [Config][google.cloud.speech.v2.Config].
   ///
   /// @param config  Required. The config to update.
+  ///  @n
   ///  The config's `name` field is used to identify the config to be updated.
   ///  The expected format is `projects/{project}/locations/{location}/config`.
   /// @param update_mask  The list of fields to be updated.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::speech::v2::Config,google/cloud/speech/v2/cloud_speech.proto#L1477}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.speech.v2.Config])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.speech.v2.Config]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1477}
-  /// [google.cloud.speech.v2.UpdateConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1520}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.speech.v2.Config]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1486}
+  /// [google.cloud.speech.v2.UpdateConfigRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1529}
   ///
+  // clang-format on
   StatusOr<google::cloud::speech::v2::Config> UpdateConfig(
       google::cloud::speech::v2::Config const& config,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
   ///
   /// Updates the [Config][google.cloud.speech.v2.Config].
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::speech::v2::UpdateConfigRequest,google/cloud/speech/v2/cloud_speech.proto#L1520}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.speech.v2.UpdateConfigRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::speech::v2::Config,google/cloud/speech/v2/cloud_speech.proto#L1477}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.speech.v2.Config])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.speech.v2.Config]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1477}
-  /// [google.cloud.speech.v2.UpdateConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1520}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.speech.v2.Config]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1486}
+  /// [google.cloud.speech.v2.UpdateConfigRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1529}
   ///
+  // clang-format on
   StatusOr<google::cloud::speech::v2::Config> UpdateConfig(
       google::cloud::speech::v2::UpdateConfigRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a [CustomClass][google.cloud.speech.v2.CustomClass].
   ///
-  /// @param parent  Required. The project and location where this CustomClass
-  /// will be created.
+  /// @param parent  Required. The project and location where this CustomClass will be created.
   ///  The expected format is `projects/{project}/locations/{location}`.
   /// @param custom_class  Required. The CustomClass to create.
-  /// @param custom_class_id  The ID to use for the CustomClass, which will
-  /// become the final component of
+  /// @param custom_class_id  The ID to use for the CustomClass, which will become the final component of
   ///  the CustomClass's resource name.
+  ///  @n
   ///  This value should be 4-63 characters, and valid characters
   ///  are /[a-z][0-9]-/.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::speech::v2::CustomClass,google/cloud/speech/v2/cloud_speech.proto#L1534}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.speech.v2.CustomClass] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.speech.v2.CreateCustomClassRequest]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1759}
-  /// [google.cloud.speech.v2.CustomClass]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1534}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.speech.v2.CreateCustomClassRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1768}
+  /// [google.cloud.speech.v2.CustomClass]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1543}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::speech::v2::CustomClass>> CreateCustomClass(
       std::string const& parent,
       google::cloud::speech::v2::CustomClass const& custom_class,
       std::string const& custom_class_id, Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a [CustomClass][google.cloud.speech.v2.CustomClass].
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::speech::v2::CreateCustomClassRequest,google/cloud/speech/v2/cloud_speech.proto#L1759}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.speech.v2.CreateCustomClassRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::speech::v2::CustomClass,google/cloud/speech/v2/cloud_speech.proto#L1534}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.speech.v2.CustomClass] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.speech.v2.CreateCustomClassRequest]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1759}
-  /// [google.cloud.speech.v2.CustomClass]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1534}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.speech.v2.CreateCustomClassRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1768}
+  /// [google.cloud.speech.v2.CustomClass]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1543}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::speech::v2::CustomClass>> CreateCustomClass(
       google::cloud::speech::v2::CreateCustomClassRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists CustomClasses.
   ///
-  /// @param parent  Required. The project and location of CustomClass resources
-  /// to list. The
+  /// @param parent  Required. The project and location of CustomClass resources to list. The
   ///  expected format is `projects/{project}/locations/{location}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::speech::v2::CustomClass,google/cloud/speech/v2/cloud_speech.proto#L1534}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.speech.v2.CustomClass], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.speech.v2.CustomClass]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1534}
-  /// [google.cloud.speech.v2.ListCustomClassesRequest]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1786}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.speech.v2.CustomClass]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1543}
+  /// [google.cloud.speech.v2.ListCustomClassesRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1795}
   ///
+  // clang-format on
   StreamRange<google::cloud::speech::v2::CustomClass> ListCustomClasses(
       std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Lists CustomClasses.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::speech::v2::ListCustomClassesRequest,google/cloud/speech/v2/cloud_speech.proto#L1786}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.speech.v2.ListCustomClassesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::speech::v2::CustomClass,google/cloud/speech/v2/cloud_speech.proto#L1534}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.speech.v2.CustomClass], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.speech.v2.CustomClass]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1534}
-  /// [google.cloud.speech.v2.ListCustomClassesRequest]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1786}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.speech.v2.CustomClass]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1543}
+  /// [google.cloud.speech.v2.ListCustomClassesRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1795}
   ///
+  // clang-format on
   StreamRange<google::cloud::speech::v2::CustomClass> ListCustomClasses(
       google::cloud::speech::v2::ListCustomClassesRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Returns the requested
   /// [CustomClass][google.cloud.speech.v2.CustomClass].
   ///
-  /// @param name  Required. The name of the CustomClass to retrieve. The
-  /// expected format is
+  /// @param name  Required. The name of the CustomClass to retrieve. The expected format is
   ///  `projects/{project}/locations/{location}/customClasses/{custom_class}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::speech::v2::CustomClass,google/cloud/speech/v2/cloud_speech.proto#L1534}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.speech.v2.CustomClass])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.speech.v2.CustomClass]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1534}
-  /// [google.cloud.speech.v2.GetCustomClassRequest]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1830}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.speech.v2.CustomClass]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1543}
+  /// [google.cloud.speech.v2.GetCustomClassRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1839}
   ///
+  // clang-format on
   StatusOr<google::cloud::speech::v2::CustomClass> GetCustomClass(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Returns the requested
   /// [CustomClass][google.cloud.speech.v2.CustomClass].
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::speech::v2::GetCustomClassRequest,google/cloud/speech/v2/cloud_speech.proto#L1830}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.speech.v2.GetCustomClassRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::speech::v2::CustomClass,google/cloud/speech/v2/cloud_speech.proto#L1534}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.speech.v2.CustomClass])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.speech.v2.CustomClass]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1534}
-  /// [google.cloud.speech.v2.GetCustomClassRequest]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1830}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.speech.v2.CustomClass]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1543}
+  /// [google.cloud.speech.v2.GetCustomClassRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1839}
   ///
+  // clang-format on
   StatusOr<google::cloud::speech::v2::CustomClass> GetCustomClass(
       google::cloud::speech::v2::GetCustomClassRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Updates the [CustomClass][google.cloud.speech.v2.CustomClass].
   ///
   /// @param custom_class  Required. The CustomClass to update.
+  ///  @n
   ///  The CustomClass's `name` field is used to identify the CustomClass to
   ///  update. Format:
   ///  `projects/{project}/locations/{location}/customClasses/{custom_class}`.
-  /// @param update_mask  The list of fields to be updated. If empty, all fields
-  /// are considered for
+  /// @param update_mask  The list of fields to be updated. If empty, all fields are considered for
   ///  update.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::speech::v2::CustomClass,google/cloud/speech/v2/cloud_speech.proto#L1534}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.speech.v2.CustomClass] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.speech.v2.CustomClass]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1534}
-  /// [google.cloud.speech.v2.UpdateCustomClassRequest]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1843}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.speech.v2.CustomClass]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1543}
+  /// [google.cloud.speech.v2.UpdateCustomClassRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1852}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::speech::v2::CustomClass>> UpdateCustomClass(
       google::cloud::speech::v2::CustomClass const& custom_class,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
   ///
   /// Updates the [CustomClass][google.cloud.speech.v2.CustomClass].
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::speech::v2::UpdateCustomClassRequest,google/cloud/speech/v2/cloud_speech.proto#L1843}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.speech.v2.UpdateCustomClassRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::speech::v2::CustomClass,google/cloud/speech/v2/cloud_speech.proto#L1534}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.speech.v2.CustomClass] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.speech.v2.CustomClass]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1534}
-  /// [google.cloud.speech.v2.UpdateCustomClassRequest]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1843}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.speech.v2.CustomClass]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1543}
+  /// [google.cloud.speech.v2.UpdateCustomClassRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1852}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::speech::v2::CustomClass>> UpdateCustomClass(
       google::cloud::speech::v2::UpdateCustomClassRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes the [CustomClass][google.cloud.speech.v2.CustomClass].
   ///
@@ -746,36 +1175,70 @@ class SpeechClient {
   ///  `projects/{project}/locations/{location}/customClasses/{custom_class}`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::speech::v2::CustomClass,google/cloud/speech/v2/cloud_speech.proto#L1534}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.speech.v2.CustomClass] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.speech.v2.CustomClass]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1534}
-  /// [google.cloud.speech.v2.DeleteCustomClassRequest]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1862}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.speech.v2.CustomClass]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1543}
+  /// [google.cloud.speech.v2.DeleteCustomClassRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1871}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::speech::v2::CustomClass>> DeleteCustomClass(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes the [CustomClass][google.cloud.speech.v2.CustomClass].
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::speech::v2::DeleteCustomClassRequest,google/cloud/speech/v2/cloud_speech.proto#L1862}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.speech.v2.DeleteCustomClassRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::speech::v2::CustomClass,google/cloud/speech/v2/cloud_speech.proto#L1534}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.speech.v2.CustomClass] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.speech.v2.CustomClass]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1534}
-  /// [google.cloud.speech.v2.DeleteCustomClassRequest]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1862}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.speech.v2.CustomClass]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1543}
+  /// [google.cloud.speech.v2.DeleteCustomClassRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1871}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::speech::v2::CustomClass>> DeleteCustomClass(
       google::cloud::speech::v2::DeleteCustomClassRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Undeletes the [CustomClass][google.cloud.speech.v2.CustomClass].
   ///
@@ -784,203 +1247,363 @@ class SpeechClient {
   ///  `projects/{project}/locations/{location}/customClasses/{custom_class}`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::speech::v2::CustomClass,google/cloud/speech/v2/cloud_speech.proto#L1534}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.speech.v2.CustomClass] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.speech.v2.CustomClass]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1534}
-  /// [google.cloud.speech.v2.UndeleteCustomClassRequest]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1890}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.speech.v2.CustomClass]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1543}
+  /// [google.cloud.speech.v2.UndeleteCustomClassRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1899}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::speech::v2::CustomClass>> UndeleteCustomClass(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Undeletes the [CustomClass][google.cloud.speech.v2.CustomClass].
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::speech::v2::UndeleteCustomClassRequest,google/cloud/speech/v2/cloud_speech.proto#L1890}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.speech.v2.UndeleteCustomClassRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::speech::v2::CustomClass,google/cloud/speech/v2/cloud_speech.proto#L1534}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.speech.v2.CustomClass] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.speech.v2.CustomClass]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1534}
-  /// [google.cloud.speech.v2.UndeleteCustomClassRequest]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1890}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.speech.v2.CustomClass]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1543}
+  /// [google.cloud.speech.v2.UndeleteCustomClassRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1899}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::speech::v2::CustomClass>> UndeleteCustomClass(
       google::cloud::speech::v2::UndeleteCustomClassRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a [PhraseSet][google.cloud.speech.v2.PhraseSet].
   ///
-  /// @param parent  Required. The project and location where this PhraseSet
-  /// will be created.
+  /// @param parent  Required. The project and location where this PhraseSet will be created.
   ///  The expected format is `projects/{project}/locations/{location}`.
   /// @param phrase_set  Required. The PhraseSet to create.
-  /// @param phrase_set_id  The ID to use for the PhraseSet, which will become
-  /// the final component of
+  /// @param phrase_set_id  The ID to use for the PhraseSet, which will become the final component of
   ///  the PhraseSet's resource name.
+  ///  @n
   ///  This value should be 4-63 characters, and valid characters
   ///  are /[a-z][0-9]-/.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::speech::v2::PhraseSet,google/cloud/speech/v2/cloud_speech.proto#L1634}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.speech.v2.PhraseSet] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.speech.v2.CreatePhraseSetRequest]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1913}
-  /// [google.cloud.speech.v2.PhraseSet]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1634}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.speech.v2.CreatePhraseSetRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1922}
+  /// [google.cloud.speech.v2.PhraseSet]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1643}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::speech::v2::PhraseSet>> CreatePhraseSet(
       std::string const& parent,
       google::cloud::speech::v2::PhraseSet const& phrase_set,
       std::string const& phrase_set_id, Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a [PhraseSet][google.cloud.speech.v2.PhraseSet].
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::speech::v2::CreatePhraseSetRequest,google/cloud/speech/v2/cloud_speech.proto#L1913}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.speech.v2.CreatePhraseSetRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::speech::v2::PhraseSet,google/cloud/speech/v2/cloud_speech.proto#L1634}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.speech.v2.PhraseSet] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.speech.v2.CreatePhraseSetRequest]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1913}
-  /// [google.cloud.speech.v2.PhraseSet]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1634}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.speech.v2.CreatePhraseSetRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1922}
+  /// [google.cloud.speech.v2.PhraseSet]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1643}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::speech::v2::PhraseSet>> CreatePhraseSet(
       google::cloud::speech::v2::CreatePhraseSetRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists PhraseSets.
   ///
-  /// @param parent  Required. The project and location of PhraseSet resources
-  /// to list. The
+  /// @param parent  Required. The project and location of PhraseSet resources to list. The
   ///  expected format is `projects/{project}/locations/{location}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::speech::v2::PhraseSet,google/cloud/speech/v2/cloud_speech.proto#L1634}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.speech.v2.PhraseSet], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.speech.v2.ListPhraseSetsRequest]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1940}
-  /// [google.cloud.speech.v2.PhraseSet]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1634}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.speech.v2.ListPhraseSetsRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1949}
+  /// [google.cloud.speech.v2.PhraseSet]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1643}
   ///
+  // clang-format on
   StreamRange<google::cloud::speech::v2::PhraseSet> ListPhraseSets(
       std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Lists PhraseSets.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::speech::v2::ListPhraseSetsRequest,google/cloud/speech/v2/cloud_speech.proto#L1940}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.speech.v2.ListPhraseSetsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::speech::v2::PhraseSet,google/cloud/speech/v2/cloud_speech.proto#L1634}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.speech.v2.PhraseSet], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.speech.v2.ListPhraseSetsRequest]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1940}
-  /// [google.cloud.speech.v2.PhraseSet]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1634}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.speech.v2.ListPhraseSetsRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1949}
+  /// [google.cloud.speech.v2.PhraseSet]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1643}
   ///
+  // clang-format on
   StreamRange<google::cloud::speech::v2::PhraseSet> ListPhraseSets(
       google::cloud::speech::v2::ListPhraseSetsRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Returns the requested
   /// [PhraseSet][google.cloud.speech.v2.PhraseSet].
   ///
-  /// @param name  Required. The name of the PhraseSet to retrieve. The expected
-  /// format is
+  /// @param name  Required. The name of the PhraseSet to retrieve. The expected format is
   ///  `projects/{project}/locations/{location}/phraseSets/{phrase_set}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::speech::v2::PhraseSet,google/cloud/speech/v2/cloud_speech.proto#L1634}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.speech.v2.PhraseSet])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.speech.v2.GetPhraseSetRequest]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1983}
-  /// [google.cloud.speech.v2.PhraseSet]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1634}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.speech.v2.GetPhraseSetRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1992}
+  /// [google.cloud.speech.v2.PhraseSet]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1643}
   ///
+  // clang-format on
   StatusOr<google::cloud::speech::v2::PhraseSet> GetPhraseSet(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Returns the requested
   /// [PhraseSet][google.cloud.speech.v2.PhraseSet].
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::speech::v2::GetPhraseSetRequest,google/cloud/speech/v2/cloud_speech.proto#L1983}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.speech.v2.GetPhraseSetRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::speech::v2::PhraseSet,google/cloud/speech/v2/cloud_speech.proto#L1634}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.speech.v2.PhraseSet])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.speech.v2.GetPhraseSetRequest]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1983}
-  /// [google.cloud.speech.v2.PhraseSet]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1634}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.speech.v2.GetPhraseSetRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1992}
+  /// [google.cloud.speech.v2.PhraseSet]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1643}
   ///
+  // clang-format on
   StatusOr<google::cloud::speech::v2::PhraseSet> GetPhraseSet(
       google::cloud::speech::v2::GetPhraseSetRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Updates the [PhraseSet][google.cloud.speech.v2.PhraseSet].
   ///
   /// @param phrase_set  Required. The PhraseSet to update.
+  ///  @n
   ///  The PhraseSet's `name` field is used to identify the PhraseSet to update.
-  ///  Format:
-  ///  `projects/{project}/locations/{location}/phraseSets/{phrase_set}`.
-  /// @param update_mask  The list of fields to update. If empty, all
-  /// non-default valued fields are
+  ///  Format: `projects/{project}/locations/{location}/phraseSets/{phrase_set}`.
+  /// @param update_mask  The list of fields to update. If empty, all non-default valued fields are
   ///  considered for update. Use `*` to update the entire PhraseSet resource.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::speech::v2::PhraseSet,google/cloud/speech/v2/cloud_speech.proto#L1634}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.speech.v2.PhraseSet] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.speech.v2.PhraseSet]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1634}
-  /// [google.cloud.speech.v2.UpdatePhraseSetRequest]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1996}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.speech.v2.PhraseSet]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1643}
+  /// [google.cloud.speech.v2.UpdatePhraseSetRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L2005}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::speech::v2::PhraseSet>> UpdatePhraseSet(
       google::cloud::speech::v2::PhraseSet const& phrase_set,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
   ///
   /// Updates the [PhraseSet][google.cloud.speech.v2.PhraseSet].
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::speech::v2::UpdatePhraseSetRequest,google/cloud/speech/v2/cloud_speech.proto#L1996}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.speech.v2.UpdatePhraseSetRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::speech::v2::PhraseSet,google/cloud/speech/v2/cloud_speech.proto#L1634}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.speech.v2.PhraseSet] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.speech.v2.PhraseSet]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1634}
-  /// [google.cloud.speech.v2.UpdatePhraseSetRequest]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1996}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.speech.v2.PhraseSet]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1643}
+  /// [google.cloud.speech.v2.UpdatePhraseSetRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L2005}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::speech::v2::PhraseSet>> UpdatePhraseSet(
       google::cloud::speech::v2::UpdatePhraseSetRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes the [PhraseSet][google.cloud.speech.v2.PhraseSet].
   ///
@@ -988,36 +1611,70 @@ class SpeechClient {
   ///  Format: `projects/{project}/locations/{location}/phraseSets/{phrase_set}`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::speech::v2::PhraseSet,google/cloud/speech/v2/cloud_speech.proto#L1634}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.speech.v2.PhraseSet] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.speech.v2.DeletePhraseSetRequest]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L2014}
-  /// [google.cloud.speech.v2.PhraseSet]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1634}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.speech.v2.DeletePhraseSetRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L2023}
+  /// [google.cloud.speech.v2.PhraseSet]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1643}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::speech::v2::PhraseSet>> DeletePhraseSet(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes the [PhraseSet][google.cloud.speech.v2.PhraseSet].
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::speech::v2::DeletePhraseSetRequest,google/cloud/speech/v2/cloud_speech.proto#L2014}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.speech.v2.DeletePhraseSetRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::speech::v2::PhraseSet,google/cloud/speech/v2/cloud_speech.proto#L1634}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.speech.v2.PhraseSet] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.speech.v2.DeletePhraseSetRequest]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L2014}
-  /// [google.cloud.speech.v2.PhraseSet]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1634}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.speech.v2.DeletePhraseSetRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L2023}
+  /// [google.cloud.speech.v2.PhraseSet]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1643}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::speech::v2::PhraseSet>> DeletePhraseSet(
       google::cloud::speech::v2::DeletePhraseSetRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Undeletes the [PhraseSet][google.cloud.speech.v2.PhraseSet].
   ///
@@ -1025,32 +1682,65 @@ class SpeechClient {
   ///  Format: `projects/{project}/locations/{location}/phraseSets/{phrase_set}`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::speech::v2::PhraseSet,google/cloud/speech/v2/cloud_speech.proto#L1634}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.speech.v2.PhraseSet] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.speech.v2.PhraseSet]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1634}
-  /// [google.cloud.speech.v2.UndeletePhraseSetRequest]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L2041}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.speech.v2.PhraseSet]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1643}
+  /// [google.cloud.speech.v2.UndeletePhraseSetRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L2050}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::speech::v2::PhraseSet>> UndeletePhraseSet(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Undeletes the [PhraseSet][google.cloud.speech.v2.PhraseSet].
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::speech::v2::UndeletePhraseSetRequest,google/cloud/speech/v2/cloud_speech.proto#L2041}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.speech.v2.UndeletePhraseSetRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::speech::v2::PhraseSet,google/cloud/speech/v2/cloud_speech.proto#L1634}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.speech.v2.PhraseSet] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.speech.v2.PhraseSet]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1634}
-  /// [google.cloud.speech.v2.UndeletePhraseSetRequest]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L2041}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.speech.v2.PhraseSet]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1643}
+  /// [google.cloud.speech.v2.UndeletePhraseSetRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L2050}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::speech::v2::PhraseSet>> UndeletePhraseSet(
       google::cloud::speech::v2::UndeletePhraseSetRequest const& request,
       Options opts = {});

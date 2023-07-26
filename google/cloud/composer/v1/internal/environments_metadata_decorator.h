@@ -22,6 +22,7 @@
 #include "google/cloud/composer/v1/internal/environments_stub.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
+#include <map>
 #include <memory>
 #include <string>
 
@@ -33,7 +34,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class EnvironmentsMetadata : public EnvironmentsStub {
  public:
   ~EnvironmentsMetadata() override = default;
-  explicit EnvironmentsMetadata(std::shared_ptr<EnvironmentsStub> child);
+  EnvironmentsMetadata(std::shared_ptr<EnvironmentsStub> child,
+                       std::multimap<std::string, std::string> fixed_metadata);
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateEnvironment(
       google::cloud::CompletionQueue& cq,
@@ -64,6 +66,25 @@ class EnvironmentsMetadata : public EnvironmentsStub {
       google::cloud::orchestration::airflow::service::v1::
           DeleteEnvironmentRequest const& request) override;
 
+  StatusOr<google::cloud::orchestration::airflow::service::v1::
+               ExecuteAirflowCommandResponse>
+  ExecuteAirflowCommand(
+      grpc::ClientContext& context,
+      google::cloud::orchestration::airflow::service::v1::
+          ExecuteAirflowCommandRequest const& request) override;
+
+  StatusOr<google::cloud::orchestration::airflow::service::v1::
+               StopAirflowCommandResponse>
+  StopAirflowCommand(grpc::ClientContext& context,
+                     google::cloud::orchestration::airflow::service::v1::
+                         StopAirflowCommandRequest const& request) override;
+
+  StatusOr<google::cloud::orchestration::airflow::service::v1::
+               PollAirflowCommandResponse>
+  PollAirflowCommand(grpc::ClientContext& context,
+                     google::cloud::orchestration::airflow::service::v1::
+                         PollAirflowCommandRequest const& request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncSaveSnapshot(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -75,6 +96,19 @@ class EnvironmentsMetadata : public EnvironmentsStub {
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::orchestration::airflow::service::v1::
           LoadSnapshotRequest const& request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncDatabaseFailover(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::orchestration::airflow::service::v1::
+          DatabaseFailoverRequest const& request) override;
+
+  StatusOr<google::cloud::orchestration::airflow::service::v1::
+               FetchDatabasePropertiesResponse>
+  FetchDatabaseProperties(
+      grpc::ClientContext& context,
+      google::cloud::orchestration::airflow::service::v1::
+          FetchDatabasePropertiesRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
@@ -92,6 +126,7 @@ class EnvironmentsMetadata : public EnvironmentsStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<EnvironmentsStub> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

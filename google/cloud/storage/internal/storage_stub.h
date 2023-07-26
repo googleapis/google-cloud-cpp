@@ -168,6 +168,11 @@ class StorageStub {
       grpc::ClientContext& context,
       google::storage::v2::UpdateHmacKeyRequest const& request) = 0;
 
+  virtual future<StatusOr<google::storage::v2::Object>> AsyncComposeObject(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::storage::v2::ComposeObjectRequest const& request) = 0;
+
   virtual future<Status> AsyncDeleteObject(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -333,6 +338,11 @@ class DefaultStorageStub : public StorageStub {
   StatusOr<google::storage::v2::HmacKeyMetadata> UpdateHmacKey(
       grpc::ClientContext& client_context,
       google::storage::v2::UpdateHmacKeyRequest const& request) override;
+
+  future<StatusOr<google::storage::v2::Object>> AsyncComposeObject(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::storage::v2::ComposeObjectRequest const& request) override;
 
   future<Status> AsyncDeleteObject(
       google::cloud::CompletionQueue& cq,

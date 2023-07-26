@@ -254,6 +254,90 @@ Status LivestreamServiceAuth::DeleteEvent(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+LivestreamServiceAuth::AsyncCreateAsset(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::video::livestream::v1::CreateAssetRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  auto& child = child_;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child,
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncCreateAsset(cq, *std::move(context), request);
+      });
+}
+
+future<StatusOr<google::longrunning::Operation>>
+LivestreamServiceAuth::AsyncDeleteAsset(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::video::livestream::v1::DeleteAssetRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  auto& child = child_;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child,
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncDeleteAsset(cq, *std::move(context), request);
+      });
+}
+
+StatusOr<google::cloud::video::livestream::v1::Asset>
+LivestreamServiceAuth::GetAsset(
+    grpc::ClientContext& context,
+    google::cloud::video::livestream::v1::GetAssetRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetAsset(context, request);
+}
+
+StatusOr<google::cloud::video::livestream::v1::ListAssetsResponse>
+LivestreamServiceAuth::ListAssets(
+    grpc::ClientContext& context,
+    google::cloud::video::livestream::v1::ListAssetsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListAssets(context, request);
+}
+
+StatusOr<google::cloud::video::livestream::v1::Pool>
+LivestreamServiceAuth::GetPool(
+    grpc::ClientContext& context,
+    google::cloud::video::livestream::v1::GetPoolRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetPool(context, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+LivestreamServiceAuth::AsyncUpdatePool(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::video::livestream::v1::UpdatePoolRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  auto& child = child_;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child,
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncUpdatePool(cq, *std::move(context), request);
+      });
+}
+
+future<StatusOr<google::longrunning::Operation>>
 LivestreamServiceAuth::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,

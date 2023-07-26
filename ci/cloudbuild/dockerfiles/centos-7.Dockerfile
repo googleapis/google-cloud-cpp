@@ -23,7 +23,7 @@ RUN rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.
 RUN yum install -y centos-release-scl yum-utils
 RUN yum-config-manager --enable rhel-server-rhscl-7-rpms
 RUN yum makecache && \
-    yum install -y automake ccache cmake3 curl-devel devtoolset-7 gcc gcc-c++ \
+    yum install -y automake cmake3 curl-devel devtoolset-7 gcc gcc-c++ \
         git libtool make ninja-build openssl-devel patch re2-devel tar wget \
         which zlib-devel
 RUN ln -sf /usr/bin/cmake3 /usr/bin/cmake && ln -sf /usr/bin/ctest3 /usr/bin/ctest
@@ -45,7 +45,7 @@ ENV LD_LIBRARY_PATH /opt/rh/devtoolset-7/root/usr/lib64:/opt/rh/devtoolset-7/roo
 # invocations take extremely long to complete.
 
 WORKDIR /var/tmp/build/pkg-config-cpp
-RUN curl -sSL https://pkgconfig.freedesktop.org/releases/pkg-config-0.29.2.tar.gz | \
+RUN curl -fsSL https://pkgconfig.freedesktop.org/releases/pkg-config-0.29.2.tar.gz | \
     tar -xzf - --strip-components=1 && \
     ./configure --with-internal-glib && \
     make -j "$(nproc)" && \
@@ -63,7 +63,7 @@ ENV PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:/usr/local/lib64/pkgconfig:/usr/lib
 ENV PATH=/usr/local/bin:${PATH}
 
 WORKDIR /var/tmp/build/abseil-cpp
-RUN curl -sSL https://github.com/abseil/abseil-cpp/archive/20230125.3.tar.gz | \
+RUN curl -fsSL https://github.com/abseil/abseil-cpp/archive/20230125.3.tar.gz | \
     tar -xzf - --strip-components=1 && \
     sed -i 's/^#define ABSL_OPTION_USE_\(.*\) 2/#define ABSL_OPTION_USE_\1 0/' "absl/base/options.h" && \
     cmake \
@@ -76,7 +76,7 @@ RUN curl -sSL https://github.com/abseil/abseil-cpp/archive/20230125.3.tar.gz | \
     ldconfig && cd /var/tmp && rm -fr build
 
 WORKDIR /var/tmp/build/protobuf
-RUN curl -sSL https://github.com/protocolbuffers/protobuf/archive/v21.12.tar.gz | \
+RUN curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v23.4.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -89,14 +89,14 @@ RUN curl -sSL https://github.com/protocolbuffers/protobuf/archive/v21.12.tar.gz 
     ldconfig && cd /var/tmp && rm -fr build
 
 WORKDIR /var/tmp/build/c-ares
-RUN curl -sSL https://github.com/c-ares/c-ares/archive/cares-1_14_0.tar.gz | \
+RUN curl -fsSL https://github.com/c-ares/c-ares/archive/cares-1_14_0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     ./buildconf && ./configure && make -j "$(nproc)" && \
     make install && \
     ldconfig && cd /var/tmp && rm -fr build
 
 WORKDIR /var/tmp/build/grpc
-RUN curl -sSL https://github.com/grpc/grpc/archive/v1.54.0.tar.gz | \
+RUN curl -fsSL https://github.com/grpc/grpc/archive/v1.56.2.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -115,7 +115,7 @@ RUN curl -sSL https://github.com/grpc/grpc/archive/v1.54.0.tar.gz | \
     ldconfig && cd /var/tmp && rm -fr build
 
 WORKDIR /var/tmp/build/crc32c
-RUN curl -sSL https://github.com/google/crc32c/archive/1.1.2.tar.gz | \
+RUN curl -fsSL https://github.com/google/crc32c/archive/1.1.2.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -129,7 +129,7 @@ RUN curl -sSL https://github.com/google/crc32c/archive/1.1.2.tar.gz | \
     ldconfig && cd /var/tmp && rm -fr build
 
 WORKDIR /var/tmp/build/json
-RUN curl -sSL https://github.com/nlohmann/json/archive/v3.11.2.tar.gz | \
+RUN curl -fsSL https://github.com/nlohmann/json/archive/v3.11.2.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
@@ -143,7 +143,7 @@ RUN curl -sSL https://github.com/nlohmann/json/archive/v3.11.2.tar.gz | \
 # Install googletest, remove the downloaded files and the temporary artifacts
 # after a successful build to keep the image smaller (and with fewer layers)
 WORKDIR /var/tmp/build
-RUN curl -sSL https://github.com/google/googletest/archive/v1.13.0.tar.gz | \
+RUN curl -fsSL https://github.com/google/googletest/archive/v1.13.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_BUILD_TYPE="Release" \
@@ -154,7 +154,7 @@ RUN curl -sSL https://github.com/google/googletest/archive/v1.13.0.tar.gz | \
 
 # Download and compile Google microbenchmark support library:
 WORKDIR /var/tmp/build
-RUN curl -sSL https://github.com/google/benchmark/archive/v1.8.0.tar.gz | \
+RUN curl -fsSL https://github.com/google/benchmark/archive/v1.8.2.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE="Release" \
@@ -165,7 +165,7 @@ RUN curl -sSL https://github.com/google/benchmark/archive/v1.8.0.tar.gz | \
     ldconfig && cd /var/tmp && rm -fr build
 
 WORKDIR /var/tmp/build/
-RUN curl -sSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.9.0.tar.gz | \
+RUN curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.9.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_CXX_STANDARD=14 \
@@ -176,8 +176,16 @@ RUN curl -sSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.9.0
         -DWITH_ABSEIL=ON \
         -DBUILD_TESTING=OFF \
         -DOPENTELEMETRY_INSTALL=ON \
-        -H. -Bcmake-out -GNinja && \
+        -GNinja -S . -B cmake-out && \
     cmake --build cmake-out --target install && \
     ldconfig && cd /var/tmp && rm -fr build
 
+WORKDIR /var/tmp/sccache
+RUN curl -fsSL https://github.com/mozilla/sccache/releases/download/v0.5.4/sccache-v0.5.4-x86_64-unknown-linux-musl.tar.gz | \
+    tar -zxf - --strip-components=1 && \
+    mkdir -p /usr/local/bin && \
+    mv sccache /usr/local/bin/sccache && \
+    chmod +x /usr/local/bin/sccache
+
+# Update the ld.conf cache in case any libraries were installed in /usr/local/lib*
 RUN ldconfig /usr/local/lib*

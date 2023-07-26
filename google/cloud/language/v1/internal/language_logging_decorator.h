@@ -36,7 +36,7 @@ class LanguageServiceLogging : public LanguageServiceStub {
   ~LanguageServiceLogging() override = default;
   LanguageServiceLogging(std::shared_ptr<LanguageServiceStub> child,
                          TracingOptions tracing_options,
-                         std::set<std::string> components);
+                         std::set<std::string> const& components);
 
   StatusOr<google::cloud::language::v1::AnalyzeSentimentResponse>
   AnalyzeSentiment(grpc::ClientContext& context,
@@ -63,6 +63,10 @@ class LanguageServiceLogging : public LanguageServiceStub {
       grpc::ClientContext& context,
       google::cloud::language::v1::ClassifyTextRequest const& request) override;
 
+  StatusOr<google::cloud::language::v1::ModerateTextResponse> ModerateText(
+      grpc::ClientContext& context,
+      google::cloud::language::v1::ModerateTextRequest const& request) override;
+
   StatusOr<google::cloud::language::v1::AnnotateTextResponse> AnnotateText(
       grpc::ClientContext& context,
       google::cloud::language::v1::AnnotateTextRequest const& request) override;
@@ -70,7 +74,7 @@ class LanguageServiceLogging : public LanguageServiceStub {
  private:
   std::shared_ptr<LanguageServiceStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // LanguageServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

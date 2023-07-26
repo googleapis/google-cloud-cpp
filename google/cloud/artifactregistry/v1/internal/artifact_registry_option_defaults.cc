@@ -48,8 +48,9 @@ Options ArtifactRegistryDefaultOptions(Options options) {
   if (!options
            .has<artifactregistry_v1::ArtifactRegistryBackoffPolicyOption>()) {
     options.set<artifactregistry_v1::ArtifactRegistryBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options
@@ -61,9 +62,9 @@ Options ArtifactRegistryDefaultOptions(Options options) {
             options
                 .get<artifactregistry_v1::ArtifactRegistryRetryPolicyOption>()
                 ->clone(),
-            options
-                .get<artifactregistry_v1::ArtifactRegistryBackoffPolicyOption>()
-                ->clone())
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
             .clone());
   }
   if (!options.has<artifactregistry_v1::

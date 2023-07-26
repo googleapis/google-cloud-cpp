@@ -18,6 +18,7 @@
 #include "google/cloud/storage/testing/constants.h"
 #include "google/cloud/storage/testing/mock_http_request.h"
 #include "google/cloud/storage/testing/write_base64.h"
+#include "google/cloud/internal/base64_transforms.h"
 #include "google/cloud/internal/filesystem.h"
 #include "google/cloud/internal/openssl_util.h"
 #include "google/cloud/internal/random.h"

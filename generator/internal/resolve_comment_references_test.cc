@@ -132,6 +132,43 @@ service Service {
                                            "test/v1/service.proto"))));
 }
 
+TEST_F(ResolveCommentsReferenceTest, EnumValueInMessage) {
+  auto constexpr kContents = R"""(
+syntax = "proto3";
+import "test/v1/common.proto";
+package test.v1;
+
+message Container {
+  enum State {
+    STATE_0 = 0;
+    STATE_1 = 1;
+  }
+
+  // The current state
+  State state  = 1;
+}
+
+// Test service.
+service Service {
+    rpc Unary(Request) returns (Response) {}
+}
+)""";
+
+  auto constexpr kComment = R"""(// Test comment.
+// Reference a enum value [STATE_0][test.v1.Container.State.STATE_0]
+  )""";
+
+  ASSERT_THAT(FindFile("test/v1/common.proto"), NotNull());
+  ASSERT_TRUE(AddProtoFile("test/v1/service.proto", kContents));
+
+  auto const actual = ResolveCommentReferences(kComment, pool());
+  EXPECT_THAT(
+      actual,
+      UnorderedElementsAre(Pair(
+          "test.v1.Container.State.STATE_0",
+          Field(&ProtoDefinitionLocation::filename, "test/v1/service.proto"))));
+}
+
 TEST_F(ResolveCommentsReferenceTest, Field) {
   auto constexpr kContents = R"""(
 syntax = "proto3";
@@ -291,3 +328,8 @@ service Service {
 }  // namespace generator_internal
 }  // namespace cloud
 }  // namespace google
+
+int main(int argc, char** argv) {
+  ::testing::InitGoogleTest(&argc, argv);
+  return RUN_ALL_TESTS();
+}

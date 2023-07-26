@@ -88,6 +88,7 @@ class SessionsClient {
   }
   ///@}
 
+  // clang-format off
   ///
   /// Processes a natural language query and returns structured, actionable data
   /// as a result. This method is not idempotent, because it may cause session
@@ -98,23 +99,36 @@ class SessionsClient {
   /// See [Versions and
   /// environments](https://cloud.google.com/dialogflow/cx/docs/concept/version).
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::DetectIntentRequest,google/cloud/dialogflow/cx/v3/session.proto#L119}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dialogflow.cx.v3.DetectIntentRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::DetectIntentResponse,google/cloud/dialogflow/cx/v3/session.proto#L154}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.dialogflow.cx.v3.DetectIntentResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.dialogflow.cx.v3.DetectIntentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L119}
-  /// [google.cloud.dialogflow.cx.v3.DetectIntentResponse]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L154}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dialogflow.cx.v3.DetectIntentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L119}
+  /// [google.cloud.dialogflow.cx.v3.DetectIntentResponse]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L154}
   ///
+  // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::DetectIntentResponse>
   DetectIntent(
       google::cloud::dialogflow::cx::v3::DetectIntentRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Processes a natural language query in audio format in a streaming fashion
   /// and returns structured, actionable data as a result. This method is only
@@ -126,41 +140,65 @@ class SessionsClient {
   ///
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return A bidirectional streaming interface with request (write) type:
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::StreamingDetectIntentRequest,google/cloud/dialogflow/cx/v3/session.proto#L234}
-  /// and response (read) type:
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::StreamingDetectIntentResponse,google/cloud/dialogflow/cx/v3/session.proto#L300}
+  /// @return An object representing the bidirectional streaming
+  ///     RPC. Applications can send multiple request messages and receive
+  ///     multiple response messages through this API. Bidirectional streaming
+  ///     RPCs can impose restrictions on the sequence of request and response
+  ///     messages. Please consult the service documentation for details.
+  ///     The request message type ([google.cloud.dialogflow.cx.v3.StreamingDetectIntentRequest]) and response messages
+  ///     ([google.cloud.dialogflow.cx.v3.StreamingDetectIntentResponse]) are mapped to C++ classes using the
+  ///     [Protobuf mapping rules].
   ///
-  /// [google.cloud.dialogflow.cx.v3.StreamingDetectIntentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L234}
-  /// [google.cloud.dialogflow.cx.v3.StreamingDetectIntentResponse]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L300}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dialogflow.cx.v3.StreamingDetectIntentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L234}
+  /// [google.cloud.dialogflow.cx.v3.StreamingDetectIntentResponse]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L368}
   ///
+  // clang-format on
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::dialogflow::cx::v3::StreamingDetectIntentRequest,
       google::cloud::dialogflow::cx::v3::StreamingDetectIntentResponse>>
   AsyncStreamingDetectIntent(Options opts = {});
 
+  // clang-format off
   ///
   /// Returns preliminary intent match results, doesn't change the session
   /// status.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::MatchIntentRequest,google/cloud/dialogflow/cx/v3/session.proto#L811}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dialogflow.cx.v3.MatchIntentRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::MatchIntentResponse,google/cloud/dialogflow/cx/v3/session.proto#L842}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.dialogflow.cx.v3.MatchIntentResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.dialogflow.cx.v3.MatchIntentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L811}
-  /// [google.cloud.dialogflow.cx.v3.MatchIntentResponse]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L842}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dialogflow.cx.v3.MatchIntentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L892}
+  /// [google.cloud.dialogflow.cx.v3.MatchIntentResponse]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L923}
   ///
+  // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::MatchIntentResponse> MatchIntent(
       google::cloud::dialogflow::cx::v3::MatchIntentRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Fulfills a matched intent returned by
   /// [MatchIntent][google.cloud.dialogflow.cx.v3.Sessions.MatchIntent]. Must be
@@ -170,22 +208,32 @@ class SessionsClient {
   /// [MatchIntentResponse][google.cloud.dialogflow.cx.v3.MatchIntentResponse].
   /// Otherwise, the behavior is undefined.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::FulfillIntentRequest,google/cloud/dialogflow/cx/v3/session.proto#L878}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dialogflow.cx.v3.FulfillIntentRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::FulfillIntentResponse,google/cloud/dialogflow/cx/v3/session.proto#L891}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.dialogflow.cx.v3.FulfillIntentResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.dialogflow.cx.v3.FulfillIntentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L878}
-  /// [google.cloud.dialogflow.cx.v3.FulfillIntentResponse]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L891}
-  /// [google.cloud.dialogflow.cx.v3.MatchIntentResponse]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L842}
-  /// [google.cloud.dialogflow.cx.v3.Sessions.MatchIntent]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L88}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dialogflow.cx.v3.FulfillIntentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L959}
+  /// [google.cloud.dialogflow.cx.v3.FulfillIntentResponse]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L972}
+  /// [google.cloud.dialogflow.cx.v3.MatchIntentResponse]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L923}
+  /// [google.cloud.dialogflow.cx.v3.Sessions.MatchIntent]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L88}
   ///
+  // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::FulfillIntentResponse>
   FulfillIntent(
       google::cloud::dialogflow::cx::v3::FulfillIntentRequest const& request,

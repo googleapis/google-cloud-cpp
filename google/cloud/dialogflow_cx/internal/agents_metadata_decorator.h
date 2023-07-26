@@ -22,6 +22,7 @@
 #include "google/cloud/dialogflow_cx/internal/agents_stub.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
+#include <map>
 #include <memory>
 #include <string>
 
@@ -33,7 +34,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class AgentsMetadata : public AgentsStub {
  public:
   ~AgentsMetadata() override = default;
-  explicit AgentsMetadata(std::shared_ptr<AgentsStub> child);
+  AgentsMetadata(std::shared_ptr<AgentsStub> child,
+                 std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::dialogflow::cx::v3::ListAgentsResponse> ListAgents(
       grpc::ClientContext& context,
@@ -99,6 +101,7 @@ class AgentsMetadata : public AgentsStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<AgentsStub> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

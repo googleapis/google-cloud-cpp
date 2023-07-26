@@ -23,6 +23,7 @@ namespace google {
 namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
+using ::google::cloud::testing_util::IsOkAndHolds;
 using ::testing::HasSubstr;
 
 TEST(StatusOrTest, ValueType) {
@@ -188,6 +189,15 @@ TEST(StatusOrTest, MovedFromState) {
   EXPECT_EQ(a, StatusOr<int>{});  // NOLINT(bugprone-use-after-move)
   a = std::move(b);
   EXPECT_EQ(b, StatusOr<int>{});  // NOLINT(bugprone-use-after-move)
+}
+
+TEST(StatusOrTest, AssignmentNotAmbiguous) {
+  StatusOr<std::string> actual(std::string{"42"});
+  EXPECT_THAT(actual, IsOkAndHolds("42"));
+  actual = "7";
+  EXPECT_THAT(actual, IsOkAndHolds("7"));
+  actual = StatusOr<std::string>("42");
+  EXPECT_THAT(actual, IsOkAndHolds("42"));
 }
 
 using testing_util::NoDefaultConstructor;

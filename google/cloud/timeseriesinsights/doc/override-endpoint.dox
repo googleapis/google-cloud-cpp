@@ -1,0 +1,25 @@
+/*!
+@page timeseriesinsights-override-endpoint How to Override the Default Endpoint
+
+In some cases, you may need to override the default endpoint used by the client
+library. Use the
+[EndpointOption](@ref google::cloud::EndpointOption) when initializing the
+client library to change this default.
+
+<!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `timeseriesinsights_v1::TimeseriesInsightsControllerClient`:
+
+@snippet timeseries_insights_controller_client_samples.cc set-client-endpoint
+
+<!-- inject-endpoint-snippet-end -->
+
+*/
+
+// <!-- inject-endpoint-pages-start -->
+
+/*! @page timeseriesinsights_v1::TimeseriesInsightsControllerClient-endpoint-snippet Override timeseriesinsights_v1::TimeseriesInsightsControllerClient Endpoint Configuration
+
+@snippet google/cloud/timeseriesinsights/v1/samples/timeseries_insights_controller_client_samples.cc set-client-endpoint
+
+*/
+// <!-- inject-endpoint-pages-end -->

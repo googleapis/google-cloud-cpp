@@ -15,6 +15,7 @@
 #include "google/cloud/bigtable/internal/data_connection_impl.h"
 #include "google/cloud/bigtable/data_connection.h"
 #include "google/cloud/bigtable/internal/defaults.h"
+#include "google/cloud/bigtable/options.h"
 #include "google/cloud/bigtable/testing/mock_bigtable_stub.h"
 #include "google/cloud/bigtable/testing/mock_policies.h"
 #include "google/cloud/common_options.h"
@@ -22,7 +23,6 @@
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/async_streaming_read_rpc_impl.h"
 #include "google/cloud/testing_util/mock_backoff_policy.h"
-#include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
@@ -41,6 +41,7 @@ using ::google::cloud::bigtable::DataBackoffPolicyOption;
 using ::google::cloud::bigtable::DataLimitedErrorCountRetryPolicy;
 using ::google::cloud::bigtable::DataRetryPolicyOption;
 using ::google::cloud::bigtable::IdempotentMutationPolicyOption;
+using ::google::cloud::bigtable::ReverseScanOption;
 using ::google::cloud::bigtable::testing::MockAsyncReadRowsStream;
 using ::google::cloud::bigtable::testing::MockBigtableStub;
 using ::google::cloud::bigtable::testing::MockIdempotentMutationPolicy;
@@ -693,6 +694,7 @@ TEST(DataConnectionTest, ReadRows) {
         EXPECT_EQ(42, request.rows_limit());
         EXPECT_THAT(request, HasTestRowSet());
         EXPECT_THAT(request.filter(), IsTestFilter());
+        EXPECT_FALSE(request.reversed());
 
         auto stream = std::make_unique<MockReadRowsStream>();
         EXPECT_CALL(*stream, Read).WillOnce(Return(Status()));
@@ -702,6 +704,48 @@ TEST(DataConnectionTest, ReadRows) {
   auto conn = TestConnection(std::move(mock));
   internal::OptionsSpan span(CallOptions());
   auto reader = conn->ReadRows(kTableName, TestRowSet(), 42, TestFilter());
+  EXPECT_EQ(reader.begin(), reader.end());
+}
+
+TEST(DataConnectionTest, ReadRowsReverseScan) {
+  auto mock = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*mock, ReadRows)
+      .WillOnce([](auto, google::bigtable::v2::ReadRowsRequest const& request) {
+        EXPECT_TRUE(request.reversed());
+
+        auto stream = std::make_unique<MockReadRowsStream>();
+        EXPECT_CALL(*stream, Read).WillOnce(Return(Status()));
+        return stream;
+      });
+
+  auto conn = TestConnection(std::move(mock));
+  internal::OptionsSpan span(CallOptions().set<ReverseScanOption>(true));
+  auto reader = conn->ReadRows(kTableName, TestRowSet(), 42, TestFilter());
+  EXPECT_EQ(reader.begin(), reader.end());
+}
+
+// The DefaultRowReader is tested extensively in `default_row_reader_test.cc`.
+// In this test, we just verify that the configuration is passed along.
+TEST(DataConnectionTest, ReadRowsFull) {
+  auto mock = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*mock, ReadRows)
+      .WillOnce([](auto, google::bigtable::v2::ReadRowsRequest const& request) {
+        EXPECT_EQ(kAppProfile, request.app_profile_id());
+        EXPECT_EQ(kTableName, request.table_name());
+        EXPECT_EQ(42, request.rows_limit());
+        EXPECT_THAT(request, HasTestRowSet());
+        EXPECT_THAT(request.filter(), IsTestFilter());
+        EXPECT_TRUE(request.reversed());
+
+        auto stream = std::make_unique<MockReadRowsStream>();
+        EXPECT_CALL(*stream, Read).WillOnce(Return(Status()));
+        return stream;
+      });
+
+  auto conn = TestConnection(std::move(mock));
+  internal::OptionsSpan span(CallOptions());
+  auto reader = conn->ReadRowsFull(bigtable::ReadRowsParams{
+      kTableName, kAppProfile, TestRowSet(), 42, TestFilter(), true});
   EXPECT_EQ(reader.begin(), reader.end());
 }
 
@@ -1453,6 +1497,32 @@ TEST(DataConnectionTest, AsyncReadRows) {
                       TestFilter());
 }
 
+TEST(DataConnectionTest, AsyncReadRowsReverseScan) {
+  auto mock = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*mock, AsyncReadRows)
+      .WillOnce(
+          [](CompletionQueue const&, auto, v2::ReadRowsRequest const& request) {
+            EXPECT_TRUE(request.reversed());
+            using ErrorStream =
+                internal::AsyncStreamingReadRpcError<v2::ReadRowsResponse>;
+            return std::make_unique<ErrorStream>(PermanentError());
+          });
+
+  MockFunction<future<bool>(bigtable::Row const&)> on_row;
+  EXPECT_CALL(on_row, Call).Times(0);
+
+  MockFunction<void(Status)> on_finish;
+  EXPECT_CALL(on_finish, Call).WillOnce([](Status const& status) {
+    EXPECT_THAT(status, StatusIs(StatusCode::kPermissionDenied));
+  });
+
+  auto conn = TestConnection(std::move(mock));
+  internal::OptionsSpan span(CallOptions().set<ReverseScanOption>(true));
+  conn->AsyncReadRows(kTableName, on_row.AsStdFunction(),
+                      on_finish.AsStdFunction(), TestRowSet(), 42,
+                      TestFilter());
+}
+
 TEST(DataConnectionTest, AsyncReadRowEmpty) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncReadRows)
@@ -1547,24 +1617,6 @@ TEST(DataConnectionTest, AsyncReadRowFailure) {
   internal::OptionsSpan span(CallOptions());
   auto resp = conn->AsyncReadRow(kTableName, "row", TestFilter()).get();
   EXPECT_THAT(resp, StatusIs(StatusCode::kPermissionDenied));
-}
-
-TEST(MakeDataConnection, DefaultsOptions) {
-  using ::google::cloud::testing_util::ScopedEnvironment;
-  ScopedEnvironment emulator_host("BIGTABLE_EMULATOR_HOST", "localhost:1");
-
-  auto conn = bigtable::MakeDataConnection(
-      Options{}
-          .set<bigtable::AppProfileIdOption>("user-supplied")
-          // Disable channel refreshing, which is not under test.
-          .set<bigtable::MaxConnectionRefreshOption>(ms(0))
-          // Create the minimum number of stubs.
-          .set<GrpcNumChannelsOption>(1));
-  auto options = conn->options();
-  EXPECT_TRUE(options.has<bigtable::DataRetryPolicyOption>())
-      << "Options are not defaulted in MakeDataConnection()";
-  EXPECT_EQ(options.get<bigtable::AppProfileIdOption>(), "user-supplied")
-      << "User supplied Options are overridden in MakeDataConnection()";
 }
 
 }  // namespace

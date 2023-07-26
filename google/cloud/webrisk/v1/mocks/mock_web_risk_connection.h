@@ -40,7 +40,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * While the example showcases types from the BigQuery library, the underlying
  * principles apply for any pair of `*Client` and `*Connection`.
  *
- * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
+ * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
 class MockWebRiskServiceConnection
     : public webrisk_v1::WebRiskServiceConnection {
@@ -67,6 +67,11 @@ class MockWebRiskServiceConnection
       StatusOr<google::cloud::webrisk::v1::Submission>, CreateSubmission,
       (google::cloud::webrisk::v1::CreateSubmissionRequest const& request),
       (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::webrisk::v1::Submission>>,
+              SubmitUri,
+              (google::cloud::webrisk::v1::SubmitUriRequest const& request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

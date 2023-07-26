@@ -17,10 +17,11 @@
 
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/grpc_options.h"
+#include "google/cloud/idempotency.h"
 #include "google/cloud/internal/invoke_result.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/internal/retry_loop_helpers.h"
-#include "google/cloud/internal/retry_policy.h"
+#include "google/cloud/retry_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <grpcpp/grpcpp.h>

@@ -104,7 +104,7 @@ https://cloud.google.com/docs/authentication/production
 
    ```bash
    cd $HOME/google-cloud-cpp/google/cloud/redis/quickstart
-   cmake -H. -B.build -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake
+   cmake -S . -B .build -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake
    cmake --build .build
    ```
 

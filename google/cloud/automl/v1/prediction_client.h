@@ -90,6 +90,7 @@ class PredictionServiceClient {
   }
   ///@}
 
+  // clang-format off
   ///
   /// Perform an online prediction. The prediction result is directly
   /// returned in the response.
@@ -128,50 +129,37 @@ class PredictionServiceClient {
   ///   the columns of the model, up to 5MB. Not available for FORECASTING
   ///   `prediction_type`.
   ///
-  /// @param name  Required. Name of the model requested to serve the
-  /// prediction.
-  /// @param payload  Required. Payload to perform a prediction on. The payload
-  /// must match the
+  /// @param name  Required. Name of the model requested to serve the prediction.
+  /// @param payload  Required. Payload to perform a prediction on. The payload must match the
   ///  problem type that the model was trained to solve.
-  /// @param params  Additional domain-specific parameters, any string must be
-  /// up to 25000
+  /// @param params  Additional domain-specific parameters, any string must be up to 25000
   ///  characters long.
-  ///  AutoML Vision Classification
-  ///  `score_threshold`
-  ///  : (float) A value from 0.0 to 1.0. When the model
-  ///    makes predictions for an image, it will only produce results that have
-  ///    at least this confidence score. The default is 0.5.
-  ///  AutoML Vision Object Detection
-  ///  `score_threshold`
-  ///  : (float) When Model detects objects on the image,
-  ///    it will only produce bounding boxes which have at least this
-  ///    confidence score. Value in 0 to 1 range, default is 0.5.
-  ///  `max_bounding_box_count`
-  ///  : (int64) The maximum number of bounding
-  ///    boxes returned. The default is 100. The
-  ///    number of returned bounding boxes might be limited by the server.
-  ///  AutoML Tables
-  ///  `feature_importance`
-  ///  : (boolean) Whether
-  ///  [feature_importance][google.cloud.automl.v1.TablesModelColumnInfo.feature_importance]
-  ///    is populated in the returned list of
-  ///    [TablesAnnotation][google.cloud.automl.v1.TablesAnnotation]
-  ///    objects. The default is false.
+  ///  @n
+  ///  For more information, see [PredictRequest][google.cloud.automl.v1.PredictRequest].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::automl::v1::PredictResponse,google/cloud/automl/v1/prediction_service.proto#L164}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.automl.v1.PredictResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.automl.v1.PredictRequest]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/prediction_service.proto#L117}
-  /// [google.cloud.automl.v1.PredictResponse]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/prediction_service.proto#L164}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.automl.v1.PredictRequest]: @googleapis_reference_link{google/cloud/automl/v1/prediction_service.proto#L117}
+  /// [google.cloud.automl.v1.PredictResponse]: @googleapis_reference_link{google/cloud/automl/v1/prediction_service.proto#L164}
   ///
+  // clang-format on
   StatusOr<google::cloud::automl::v1::PredictResponse> Predict(
       std::string const& name,
       google::cloud::automl::v1::ExamplePayload const& payload,
       std::map<std::string, std::string> const& params, Options opts = {});
 
+  // clang-format off
   ///
   /// Perform an online prediction. The prediction result is directly
   /// returned in the response.
@@ -210,177 +198,144 @@ class PredictionServiceClient {
   ///   the columns of the model, up to 5MB. Not available for FORECASTING
   ///   `prediction_type`.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::automl::v1::PredictRequest,google/cloud/automl/v1/prediction_service.proto#L117}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.automl.v1.PredictRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::automl::v1::PredictResponse,google/cloud/automl/v1/prediction_service.proto#L164}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.automl.v1.PredictResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.automl.v1.PredictRequest]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/prediction_service.proto#L117}
-  /// [google.cloud.automl.v1.PredictResponse]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/prediction_service.proto#L164}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.automl.v1.PredictRequest]: @googleapis_reference_link{google/cloud/automl/v1/prediction_service.proto#L117}
+  /// [google.cloud.automl.v1.PredictResponse]: @googleapis_reference_link{google/cloud/automl/v1/prediction_service.proto#L164}
   ///
+  // clang-format on
   StatusOr<google::cloud::automl::v1::PredictResponse> Predict(
       google::cloud::automl::v1::PredictRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
-  /// Perform a batch prediction. Unlike the online
-  /// [Predict][google.cloud.automl.v1.PredictionService.Predict], batch
+  /// Perform a batch prediction. Unlike the online [Predict][google.cloud.automl.v1.PredictionService.Predict], batch
   /// prediction result won't be immediately available in the response. Instead,
   /// a long running operation object is returned. User can poll the operation
   /// result via [GetOperation][google.longrunning.Operations.GetOperation]
-  /// method. Once the operation is done,
-  /// [BatchPredictResult][google.cloud.automl.v1.BatchPredictResult] is
-  /// returned in the [response][google.longrunning.Operation.response] field.
+  /// method. Once the operation is done, [BatchPredictResult][google.cloud.automl.v1.BatchPredictResult] is returned in
+  /// the [response][google.longrunning.Operation.response] field.
   /// Available for following ML scenarios:
   ///
   /// * AutoML Vision Classification
   /// * AutoML Vision Object Detection
   /// * AutoML Video Intelligence Classification
-  /// * AutoML Video Intelligence Object Tracking * AutoML Natural Language
-  /// Classification
+  /// * AutoML Video Intelligence Object Tracking * AutoML Natural Language Classification
   /// * AutoML Natural Language Entity Extraction
   /// * AutoML Natural Language Sentiment Analysis
   /// * AutoML Tables
   ///
-  /// @param name  Required. Name of the model requested to serve the batch
-  /// prediction.
-  /// @param input_config  Required. The input configuration for batch
-  /// prediction.
-  /// @param output_config  Required. The Configuration specifying where output
-  /// predictions should
+  /// @param name  Required. Name of the model requested to serve the batch prediction.
+  /// @param input_config  Required. The input configuration for batch prediction.
+  /// @param output_config  Required. The Configuration specifying where output predictions should
   ///  be written.
-  /// @param params  Additional domain-specific parameters for the predictions,
-  /// any string must
+  /// @param params  Additional domain-specific parameters for the predictions, any string must
   ///  be up to 25000 characters long.
-  ///  AutoML Natural Language Classification
-  ///  `score_threshold`
-  ///  : (float) A value from 0.0 to 1.0. When the model
-  ///    makes predictions for a text snippet, it will only produce results
-  ///    that have at least this confidence score. The default is 0.5.
-  ///
-  ///  AutoML Vision Classification
-  ///  `score_threshold`
-  ///  : (float) A value from 0.0 to 1.0. When the model
-  ///    makes predictions for an image, it will only produce results that
-  ///    have at least this confidence score. The default is 0.5.
-  ///  AutoML Vision Object Detection
-  ///  `score_threshold`
-  ///  : (float) When Model detects objects on the image,
-  ///    it will only produce bounding boxes which have at least this
-  ///    confidence score. Value in 0 to 1 range, default is 0.5.
-  ///  `max_bounding_box_count`
-  ///  : (int64) The maximum number of bounding
-  ///    boxes returned per image. The default is 100, the
-  ///    number of bounding boxes returned might be limited by the server.
-  ///  AutoML Video Intelligence Classification
-  ///  `score_threshold`
-  ///  : (float) A value from 0.0 to 1.0. When the model
-  ///    makes predictions for a video, it will only produce results that
-  ///    have at least this confidence score. The default is 0.5.
-  ///  `segment_classification`
-  ///  : (boolean) Set to true to request
-  ///    segment-level classification. AutoML Video Intelligence returns
-  ///    labels and their confidence scores for the entire segment of the
-  ///    video that user specified in the request configuration.
-  ///    The default is true.
-  ///  `shot_classification`
-  ///  : (boolean) Set to true to request shot-level
-  ///    classification. AutoML Video Intelligence determines the boundaries
-  ///    for each camera shot in the entire segment of the video that user
-  ///    specified in the request configuration. AutoML Video Intelligence
-  ///    then returns labels and their confidence scores for each detected
-  ///    shot, along with the start and end time of the shot.
-  ///    The default is false.
-  ///    WARNING: Model evaluation is not done for this classification type,
-  ///    the quality of it depends on training data, but there are no metrics
-  ///    provided to describe that quality.
-  ///  `1s_interval_classification`
-  ///  : (boolean) Set to true to request
-  ///    classification for a video at one-second intervals. AutoML Video
-  ///    Intelligence returns labels and their confidence scores for each
-  ///    second of the entire segment of the video that user specified in the
-  ///    request configuration. The default is false.
-  ///    WARNING: Model evaluation is not done for this classification
-  ///    type, the quality of it depends on training data, but there are no
-  ///    metrics provided to describe that quality.
-  ///  AutoML Video Intelligence Object Tracking
-  ///  `score_threshold`
-  ///  : (float) When Model detects objects on video frames,
-  ///    it will only produce bounding boxes which have at least this
-  ///    confidence score. Value in 0 to 1 range, default is 0.5.
-  ///  `max_bounding_box_count`
-  ///  : (int64) The maximum number of bounding
-  ///    boxes returned per image. The default is 100, the
-  ///    number of bounding boxes returned might be limited by the server.
-  ///  `min_bounding_box_size`
-  ///  : (float) Only bounding boxes with shortest edge
-  ///    at least that long as a relative value of video frame size are
-  ///    returned. Value in 0 to 1 range. Default is 0.
-  ///
+  ///  @n
+  ///  For more information, see [BatchPredictRequest][google.cloud.automl.v1.BatchPredictRequest].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::automl::v1::BatchPredictResult,google/cloud/automl/v1/prediction_service.proto#L308}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.automl.v1.BatchPredictResult] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.automl.v1.BatchPredictRequest]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/prediction_service.proto#L202}
-  /// [google.cloud.automl.v1.BatchPredictResult]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/prediction_service.proto#L308}
-  /// [google.cloud.automl.v1.PredictionService.Predict]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/prediction_service.proto#L80}
-  /// [google.longrunning.Operation.response]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L160}
-  /// [google.longrunning.Operations.GetOperation]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.automl.v1.BatchPredictRequest]: @googleapis_reference_link{google/cloud/automl/v1/prediction_service.proto#L202}
+  /// [google.cloud.automl.v1.BatchPredictResult]: @googleapis_reference_link{google/cloud/automl/v1/prediction_service.proto#L308}
+  /// [google.cloud.automl.v1.PredictionService.Predict]: @googleapis_reference_link{google/cloud/automl/v1/prediction_service.proto#L80}
+  /// [google.longrunning.Operation.response]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::automl::v1::BatchPredictResult>> BatchPredict(
       std::string const& name,
       google::cloud::automl::v1::BatchPredictInputConfig const& input_config,
       google::cloud::automl::v1::BatchPredictOutputConfig const& output_config,
       std::map<std::string, std::string> const& params, Options opts = {});
 
+  // clang-format off
   ///
-  /// Perform a batch prediction. Unlike the online
-  /// [Predict][google.cloud.automl.v1.PredictionService.Predict], batch
+  /// Perform a batch prediction. Unlike the online [Predict][google.cloud.automl.v1.PredictionService.Predict], batch
   /// prediction result won't be immediately available in the response. Instead,
   /// a long running operation object is returned. User can poll the operation
   /// result via [GetOperation][google.longrunning.Operations.GetOperation]
-  /// method. Once the operation is done,
-  /// [BatchPredictResult][google.cloud.automl.v1.BatchPredictResult] is
-  /// returned in the [response][google.longrunning.Operation.response] field.
+  /// method. Once the operation is done, [BatchPredictResult][google.cloud.automl.v1.BatchPredictResult] is returned in
+  /// the [response][google.longrunning.Operation.response] field.
   /// Available for following ML scenarios:
   ///
   /// * AutoML Vision Classification
   /// * AutoML Vision Object Detection
   /// * AutoML Video Intelligence Classification
-  /// * AutoML Video Intelligence Object Tracking * AutoML Natural Language
-  /// Classification
+  /// * AutoML Video Intelligence Object Tracking * AutoML Natural Language Classification
   /// * AutoML Natural Language Entity Extraction
   /// * AutoML Natural Language Sentiment Analysis
   /// * AutoML Tables
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::automl::v1::BatchPredictRequest,google/cloud/automl/v1/prediction_service.proto#L202}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.automl.v1.BatchPredictRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::automl::v1::BatchPredictResult,google/cloud/automl/v1/prediction_service.proto#L308}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.automl.v1.BatchPredictResult] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.automl.v1.BatchPredictRequest]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/prediction_service.proto#L202}
-  /// [google.cloud.automl.v1.BatchPredictResult]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/prediction_service.proto#L308}
-  /// [google.cloud.automl.v1.PredictionService.Predict]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/prediction_service.proto#L80}
-  /// [google.longrunning.Operation.response]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L160}
-  /// [google.longrunning.Operations.GetOperation]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.automl.v1.BatchPredictRequest]: @googleapis_reference_link{google/cloud/automl/v1/prediction_service.proto#L202}
+  /// [google.cloud.automl.v1.BatchPredictResult]: @googleapis_reference_link{google/cloud/automl/v1/prediction_service.proto#L308}
+  /// [google.cloud.automl.v1.PredictionService.Predict]: @googleapis_reference_link{google/cloud/automl/v1/prediction_service.proto#L80}
+  /// [google.longrunning.Operation.response]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::automl::v1::BatchPredictResult>> BatchPredict(
       google::cloud::automl::v1::BatchPredictRequest const& request,
       Options opts = {});

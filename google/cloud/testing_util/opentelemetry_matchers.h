@@ -16,7 +16,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_OPENTELEMETRY_MATCHERS_H
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-#include "google/cloud/internal/opentelemetry_options.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <gmock/gmock.h>
@@ -27,6 +26,7 @@
 #include <opentelemetry/trace/span.h>
 #include <opentelemetry/trace/span_metadata.h>
 #include <opentelemetry/trace/tracer.h>
+#include <opentelemetry/trace/tracer_provider.h>
 #include <iosfwd>
 #include <memory>
 #include <string>
@@ -53,17 +53,18 @@ namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace testing_util_internal {
 
-using SpanAttributeMap =
+using OTelAttributeMap =
     std::unordered_map<std::string,
                        opentelemetry::sdk::common::OwnedAttributeValue>;
+
 MATCHER_P(SpanAttributesImpl, matcher,
-          ::testing::DescribeMatcher<SpanAttributeMap>(matcher)) {
+          ::testing::DescribeMatcher<OTelAttributeMap>(matcher)) {
   return ::testing::ExplainMatchResult(matcher, arg->GetAttributes(),
                                        result_listener);
 }
 
 MATCHER_P(EventAttributesImpl, matcher,
-          ::testing::DescribeMatcher<SpanAttributeMap>(matcher)) {
+          ::testing::DescribeMatcher<OTelAttributeMap>(matcher)) {
   return ::testing::ExplainMatchResult(matcher, arg.GetAttributes(),
                                        result_listener);
 }
@@ -151,7 +152,7 @@ template <typename... Args>
 template <typename T>
 ::testing::Matcher<
     std::pair<std::string, opentelemetry::sdk::common::OwnedAttributeValue>>
-SpanAttribute(std::string const& key, ::testing::Matcher<T const&> matcher) {
+OTelAttribute(std::string const& key, ::testing::Matcher<T const&> matcher) {
   return ::testing::Pair(key, ::testing::VariantWith<T>(matcher));
 }
 
@@ -185,22 +186,32 @@ template <typename... Args>
   return SpanEventsAreImpl(::testing::ElementsAre(matchers...));
 }
 
+class SpanCatcher {
+ public:
+  SpanCatcher();
+  ~SpanCatcher();
+
+  std::vector<std::unique_ptr<opentelemetry::sdk::trace::SpanData>> GetSpans();
+
+ private:
+  std::shared_ptr<opentelemetry::exporter::memory::InMemorySpanData> span_data_;
+  opentelemetry::nostd::shared_ptr<opentelemetry::trace::TracerProvider>
+      previous_;
+};
+
 /**
  * Provides access to created spans.
  *
  * Calling this method will install an in-memory trace exporter. It returns a
  * type that provides access to captured spans.
  *
- * To extract the spans, call `InMemorySpanData::GetSpans()`. Note that each
+ * To extract the spans, call `SpanCatcher::GetSpans()`. Note that each
  * call to `GetSpans()` will clear the previously collected spans.
  *
- * Also note that this sets the global trace exporter, which will persist from
- * one test in a test fixture to the next. Thus it is important that:
- * 1. a new exporter is installed for each test
- * 2. the tests within a fixture do not execute in parallel
+ * Also note that this sets the global trace exporter. Thus it is important that
+ * the tests within a fixture do not execute in parallel.
  */
-std::shared_ptr<opentelemetry::exporter::memory::InMemorySpanData>
-InstallSpanCatcher();
+std::shared_ptr<SpanCatcher> InstallSpanCatcher();
 
 class MockTextMapPropagator
     : public opentelemetry::context::propagation::TextMapPropagator {

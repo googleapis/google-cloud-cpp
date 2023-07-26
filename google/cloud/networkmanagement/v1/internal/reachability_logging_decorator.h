@@ -37,7 +37,7 @@ class ReachabilityServiceLogging : public ReachabilityServiceStub {
   ~ReachabilityServiceLogging() override = default;
   ReachabilityServiceLogging(std::shared_ptr<ReachabilityServiceStub> child,
                              TracingOptions tracing_options,
-                             std::set<std::string> components);
+                             std::set<std::string> const& components);
 
   StatusOr<google::cloud::networkmanagement::v1::ListConnectivityTestsResponse>
   ListConnectivityTests(
@@ -88,7 +88,7 @@ class ReachabilityServiceLogging : public ReachabilityServiceStub {
  private:
   std::shared_ptr<ReachabilityServiceStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // ReachabilityServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

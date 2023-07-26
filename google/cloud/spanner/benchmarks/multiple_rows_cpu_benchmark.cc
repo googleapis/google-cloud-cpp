@@ -18,7 +18,7 @@
 #include "google/cloud/spanner/internal/defaults.h"
 #include "google/cloud/spanner/internal/route_to_leader.h"
 #include "google/cloud/spanner/internal/session_pool.h"
-#include "google/cloud/spanner/internal/spanner_stub.h"
+#include "google/cloud/spanner/internal/spanner_stub_factory.h"
 #include "google/cloud/spanner/testing/pick_random_instance.h"
 #include "google/cloud/spanner/testing/random_database_name.h"
 #include "google/cloud/grpc_error_delegate.h"
@@ -589,15 +589,25 @@ class ReadExperiment : public BasicExperiment<Traits> {
       int row_count = 0;
       google::spanner::v1::PartialResultSet result;
       std::vector<google::protobuf::Value> row;
-      grpc::ClientContext context;
-      auto stream = stub->StreamingRead(context, request);
-      for (bool success = stream->Read(&result); success;
-           success = stream->Read(&result)) {
+      row.resize(columns.size());
+      auto stream =
+          stub->StreamingRead(std::make_shared<grpc::ClientContext>(), request);
+      for (;;) {
+        auto read = stream->Read();
+        if (absl::holds_alternative<Status>(read)) {
+          auto status = absl::get<Status>(std::move(read));
+          auto const usage = timer.Sample();
+          samples.push_back(RowCpuSample{channel_count, thread_count, true,
+                                         row_count, usage.elapsed_time,
+                                         usage.cpu_time, std::move(status)});
+          break;
+        }
+        auto result =
+            absl::get<google::spanner::v1::PartialResultSet>(std::move(read));
         if (result.chunked_value()) {
           // We do not handle chunked values in the benchmark.
           continue;
         }
-        row.resize(columns.size());
         std::size_t index = 0;
         for (auto& value : *result.mutable_values()) {
           row[index] = std::move(value);
@@ -607,11 +617,6 @@ class ReadExperiment : public BasicExperiment<Traits> {
           }
         }
       }
-      auto final = stream->Finish();
-      auto const usage = timer.Sample();
-      samples.push_back(RowCpuSample{
-          channel_count, thread_count, true, row_count, usage.elapsed_time,
-          usage.cpu_time, google::cloud::MakeStatusFromRpcError(final)});
     }
     return samples;
   }
@@ -733,15 +738,25 @@ class SelectExperiment : public BasicExperiment<Traits> {
       int row_count = 0;
       google::spanner::v1::PartialResultSet result;
       std::vector<google::protobuf::Value> row;
-      grpc::ClientContext context;
-      auto stream = stub->ExecuteStreamingSql(context, request);
-      for (bool success = stream->Read(&result); success;
-           success = stream->Read(&result)) {
+      row.resize(ExperimentImpl<Traits>::kColumnCount);
+      auto stream = stub->ExecuteStreamingSql(
+          std::make_shared<grpc::ClientContext>(), request);
+      for (;;) {
+        auto read = stream->Read();
+        if (absl::holds_alternative<Status>(read)) {
+          auto status = absl::get<Status>(std::move(read));
+          auto const usage = timer.Sample();
+          samples.push_back(RowCpuSample{channel_count, thread_count, true,
+                                         row_count, usage.elapsed_time,
+                                         usage.cpu_time, std::move(status)});
+          break;
+        }
+        auto result =
+            absl::get<google::spanner::v1::PartialResultSet>(std::move(read));
         if (result.chunked_value()) {
           // We do not handle chunked values in the benchmark.
           continue;
         }
-        row.resize(ExperimentImpl<Traits>::kColumnCount);
         std::size_t index = 0;
         for (auto& value : *result.mutable_values()) {
           row[index] = std::move(value);
@@ -751,11 +766,6 @@ class SelectExperiment : public BasicExperiment<Traits> {
           }
         }
       }
-      auto final = stream->Finish();
-      auto const usage = timer.Sample();
-      samples.push_back(RowCpuSample{
-          channel_count, thread_count, true, row_count, usage.elapsed_time,
-          usage.cpu_time, google::cloud::MakeStatusFromRpcError(final)});
     }
     return samples;
   }

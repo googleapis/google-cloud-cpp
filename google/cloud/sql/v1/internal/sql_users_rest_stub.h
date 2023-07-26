@@ -40,6 +40,10 @@ class SqlUsersServiceRestStub {
       google::cloud::rest_internal::RestContext& rest_context,
       google::cloud::sql::v1::SqlUsersDeleteRequest const& request) = 0;
 
+  virtual StatusOr<google::cloud::sql::v1::User> Get(
+      google::cloud::rest_internal::RestContext& rest_context,
+      google::cloud::sql::v1::SqlUsersGetRequest const& request) = 0;
+
   virtual StatusOr<google::cloud::sql::v1::Operation> Insert(
       google::cloud::rest_internal::RestContext& rest_context,
       google::cloud::sql::v1::SqlUsersInsertRequest const& request) = 0;
@@ -64,6 +68,10 @@ class DefaultSqlUsersServiceRestStub : public SqlUsersServiceRestStub {
   StatusOr<google::cloud::sql::v1::Operation> Delete(
       google::cloud::rest_internal::RestContext& rest_context,
       google::cloud::sql::v1::SqlUsersDeleteRequest const& request) override;
+
+  StatusOr<google::cloud::sql::v1::User> Get(
+      google::cloud::rest_internal::RestContext& rest_context,
+      google::cloud::sql::v1::SqlUsersGetRequest const& request) override;
 
   StatusOr<google::cloud::sql::v1::Operation> Insert(
       google::cloud::rest_internal::RestContext& rest_context,

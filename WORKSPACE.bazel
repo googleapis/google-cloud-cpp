@@ -14,7 +14,9 @@
 
 workspace(name = "google_cloud_cpp")
 
-load("//bazel:google_cloud_cpp_deps.bzl", "google_cloud_cpp_deps")
+load("//bazel:google_cloud_cpp_deps.bzl", "google_cloud_cpp_deps", "google_cloud_cpp_development_deps")
+
+google_cloud_cpp_development_deps()
 
 google_cloud_cpp_deps()
 

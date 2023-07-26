@@ -34,6 +34,7 @@ namespace generator_internal {
 /**
  * Create a formatted doxygen link referencing the @p message_type.
  */
+// TODO(#11545): relocate this function to a separate header.
 std::string FormatDoxygenLink(google::protobuf::Descriptor const& message_type);
 
 /**
@@ -50,15 +51,6 @@ VarsDictionary CreateServiceVars(
 std::map<std::string, VarsDictionary> CreateMethodVars(
     google::protobuf::ServiceDescriptor const& service,
     VarsDictionary const& service_vars);
-
-/**
- * Creates and initializes the collection of ClassGenerators necessary to
- * generate all code for the given service.
- */
-std::vector<std::unique_ptr<GeneratorInterface>> MakeGenerators(
-    google::protobuf::ServiceDescriptor const* service,
-    google::protobuf::compiler::GeneratorContext* context,
-    std::vector<std::pair<std::string, std::string>> const& vars);
 
 /**
  * Determines which `MethodPattern` to use from patterns for the given method
@@ -99,64 +91,6 @@ std::string FormatMethodCommentsProtobufRequest(
  * errors about them and return false. Otherwise do nothing and return true.
  */
 bool CheckParameterCommentSubstitutions();
-
-/// Our representation for a `google.api.RoutingParameter` message.
-struct RoutingParameter {
-  /**
-   * A processed `field` string from a `RoutingParameter` proto.
-   *
-   * It has potentially been modified to avoid naming conflicts (e.g. a proto
-   * field named "namespace" will be stored here as "namespace_").
-   *
-   * We will generate code like: `"request." + field_name + "();"` in our
-   * metadata decorator to access the field's value.
-   */
-  std::string field_name;
-
-  /**
-   * A processed `path_template` string from a `RoutingParameter` proto.
-   *
-   * It is translated for use as a `std::regex`. We make the following
-   * substitutions, simultaneously:
-   *   - "**"    => ".*"
-   *   - "*"     => "[^/]+"
-   *   - "{foo=" => "("
-   *   - "}"     => ")"
-   *
-   * Note that we do not store the routing parameter key ("foo" in this example)
-   * in this struct. It is instead stored as a key in the `ExplicitRoutingInfo`
-   * map.
-   */
-  std::string pattern;
-};
-
-/**
- * A data structure to represent the logic of a `google.api.RoutingRule`, in a
- * form that facilitates code generation.
- *
- * The keys of the map are the extracted routing param keys. They map to an
- * ordered list of matching rules. For this object, the first match will win.
- */
-using ExplicitRoutingInfo =
-    std::unordered_map<std::string, std::vector<RoutingParameter>>;
-
-/**
- * Parses the explicit resource routing info as defined in the
- * google.api.routing annotation.
- *
- * This method processes the `google.api.RoutingRule` proto. It groups the
- * `google.api.RoutingParameters` by the extracted routing parameter key.
- *
- * Each `google.api.RoutingParameter` message is translated into a form that is
- * easier for our generator to work with (see `RoutingParameter` above).
- *
- * We reverse the order of the `RoutingParameter`s. The rule (as defined in
- * go/actools-dynamic-routing-proposal) is that "last wins". We would like to
- * order them such that "first wins", so we can stop iterating when we have
- * found a match.
- */
-ExplicitRoutingInfo ParseExplicitRoutingHeader(
-    google::protobuf::MethodDescriptor const& method);
 
 }  // namespace generator_internal
 }  // namespace cloud

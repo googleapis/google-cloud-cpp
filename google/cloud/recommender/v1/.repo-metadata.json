@@ -1,0 +1,13 @@
+{
+    "api_id": "recommender.googleapis.com",
+    "api_shortname": "recommender",
+    "client_documentation": "https://cloud.google.com/cpp/docs/reference/recommender/latest",
+    "distribution_name": "google-cloud-cpp",
+    "language": "cpp",
+    "library_type": "GAPIC_AUTO",
+    "name_pretty": "Recommender API",
+    "product_documentation": "https://cloud.google.com/recommender/docs",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-cpp",
+    "requires_billing": true
+}

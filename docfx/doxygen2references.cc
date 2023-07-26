@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "docfx/doxygen2references.h"
+#include "docfx/node_name.h"
 #include "docfx/public_docs.h"
 #include "docfx/yaml_emit.h"
 #include <iterator>
@@ -69,6 +70,7 @@ std::list<Reference> ExtractReferences(YamlContext const& ctx,
     return recurse;
   }
   if (name == "memberdef") {
+    if (IsSkippedChild(ctx, node)) return {};
     auto const uid = std::string{node.attribute("id").as_string()};
     if (ctx.mocked_ids.count(uid) != 0) return {};
     auto const name = [&] {

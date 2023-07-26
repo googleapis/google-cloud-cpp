@@ -18,6 +18,7 @@
 
 #include "google/cloud/dialogflow_cx/internal/experiments_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/dialogflow/cx/v3/experiment.grpc.pb.h>
@@ -28,8 +29,11 @@ namespace cloud {
 namespace dialogflow_cx_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-ExperimentsMetadata::ExperimentsMetadata(std::shared_ptr<ExperimentsStub> child)
+ExperimentsMetadata::ExperimentsMetadata(
+    std::shared_ptr<ExperimentsStub> child,
+    std::multimap<std::string, std::string> fixed_metadata)
     : child_(std::move(child)),
+      fixed_metadata_(std::move(fixed_metadata)),
       api_client_header_(
           google::cloud::internal::ApiClientHeader("generator")) {}
 
@@ -37,7 +41,7 @@ StatusOr<google::cloud::dialogflow::cx::v3::ListExperimentsResponse>
 ExperimentsMetadata::ListExperiments(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::ListExperimentsRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListExperiments(context, request);
 }
 
@@ -45,7 +49,7 @@ StatusOr<google::cloud::dialogflow::cx::v3::Experiment>
 ExperimentsMetadata::GetExperiment(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::GetExperimentRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetExperiment(context, request);
 }
 
@@ -53,7 +57,7 @@ StatusOr<google::cloud::dialogflow::cx::v3::Experiment>
 ExperimentsMetadata::CreateExperiment(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::CreateExperimentRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->CreateExperiment(context, request);
 }
 
@@ -61,14 +65,15 @@ StatusOr<google::cloud::dialogflow::cx::v3::Experiment>
 ExperimentsMetadata::UpdateExperiment(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::UpdateExperimentRequest const& request) {
-  SetMetadata(context, "experiment.name=" + request.experiment().name());
+  SetMetadata(context,
+              absl::StrCat("experiment.name=", request.experiment().name()));
   return child_->UpdateExperiment(context, request);
 }
 
 Status ExperimentsMetadata::DeleteExperiment(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::DeleteExperimentRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->DeleteExperiment(context, request);
 }
 
@@ -76,7 +81,7 @@ StatusOr<google::cloud::dialogflow::cx::v3::Experiment>
 ExperimentsMetadata::StartExperiment(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::StartExperimentRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->StartExperiment(context, request);
 }
 
@@ -84,7 +89,7 @@ StatusOr<google::cloud::dialogflow::cx::v3::Experiment>
 ExperimentsMetadata::StopExperiment(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::StopExperimentRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->StopExperiment(context, request);
 }
 
@@ -95,6 +100,9 @@ void ExperimentsMetadata::SetMetadata(grpc::ClientContext& context,
 }
 
 void ExperimentsMetadata::SetMetadata(grpc::ClientContext& context) {
+  for (auto const& kv : fixed_metadata_) {
+    context.AddMetadata(kv.first, kv.second);
+  }
   context.AddMetadata("x-goog-api-client", api_client_header_);
   auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {

@@ -37,7 +37,7 @@ class VmwareEngineLogging : public VmwareEngineStub {
   ~VmwareEngineLogging() override = default;
   VmwareEngineLogging(std::shared_ptr<VmwareEngineStub> child,
                       TracingOptions tracing_options,
-                      std::set<std::string> components);
+                      std::set<std::string> const& components);
 
   StatusOr<google::cloud::vmwareengine::v1::ListPrivateCloudsResponse>
   ListPrivateClouds(
@@ -105,6 +105,17 @@ class VmwareEngineLogging : public VmwareEngineStub {
   StatusOr<google::cloud::vmwareengine::v1::ListSubnetsResponse> ListSubnets(
       grpc::ClientContext& context,
       google::cloud::vmwareengine::v1::ListSubnetsRequest const& request)
+      override;
+
+  StatusOr<google::cloud::vmwareengine::v1::Subnet> GetSubnet(
+      grpc::ClientContext& context,
+      google::cloud::vmwareengine::v1::GetSubnetRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncUpdateSubnet(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::vmwareengine::v1::UpdateSubnetRequest const& request)
       override;
 
   StatusOr<google::cloud::vmwareengine::v1::ListNodeTypesResponse>
@@ -219,6 +230,43 @@ class VmwareEngineLogging : public VmwareEngineStub {
       google::cloud::vmwareengine::v1::ListVmwareEngineNetworksRequest const&
           request) override;
 
+  future<StatusOr<google::longrunning::Operation>> AsyncCreatePrivateConnection(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::vmwareengine::v1::CreatePrivateConnectionRequest const&
+          request) override;
+
+  StatusOr<google::cloud::vmwareengine::v1::PrivateConnection>
+  GetPrivateConnection(
+      grpc::ClientContext& context,
+      google::cloud::vmwareengine::v1::GetPrivateConnectionRequest const&
+          request) override;
+
+  StatusOr<google::cloud::vmwareengine::v1::ListPrivateConnectionsResponse>
+  ListPrivateConnections(
+      grpc::ClientContext& context,
+      google::cloud::vmwareengine::v1::ListPrivateConnectionsRequest const&
+          request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncUpdatePrivateConnection(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::vmwareengine::v1::UpdatePrivateConnectionRequest const&
+          request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncDeletePrivateConnection(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::vmwareengine::v1::DeletePrivateConnectionRequest const&
+          request) override;
+
+  StatusOr<google::cloud::vmwareengine::v1::
+               ListPrivateConnectionPeeringRoutesResponse>
+  ListPrivateConnectionPeeringRoutes(
+      grpc::ClientContext& context,
+      google::cloud::vmwareengine::v1::
+          ListPrivateConnectionPeeringRoutesRequest const& request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -232,7 +280,7 @@ class VmwareEngineLogging : public VmwareEngineStub {
  private:
   std::shared_ptr<VmwareEngineStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // VmwareEngineLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

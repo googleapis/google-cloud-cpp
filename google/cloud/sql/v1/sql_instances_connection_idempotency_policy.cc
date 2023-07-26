@@ -65,6 +65,11 @@ Idempotency SqlInstancesServiceConnectionIdempotencyPolicy::Failover(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency SqlInstancesServiceConnectionIdempotencyPolicy::Reencrypt(
+    google::cloud::sql::v1::SqlInstancesReencryptRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency SqlInstancesServiceConnectionIdempotencyPolicy::Get(
     google::cloud::sql::v1::SqlInstancesGetRequest const&) {
   return Idempotency::kIdempotent;
@@ -160,6 +165,21 @@ SqlInstancesServiceConnectionIdempotencyPolicy::VerifyExternalSyncSettings(
 
 Idempotency SqlInstancesServiceConnectionIdempotencyPolicy::StartExternalSync(
     google::cloud::sql::v1::SqlInstancesStartExternalSyncRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency SqlInstancesServiceConnectionIdempotencyPolicy::PerformDiskShrink(
+    google::cloud::sql::v1::SqlInstancesPerformDiskShrinkRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency SqlInstancesServiceConnectionIdempotencyPolicy::GetDiskShrinkConfig(
+    google::cloud::sql::v1::SqlInstancesGetDiskShrinkConfigRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency SqlInstancesServiceConnectionIdempotencyPolicy::ResetReplicaSize(
+    google::cloud::sql::v1::SqlInstancesResetReplicaSizeRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 

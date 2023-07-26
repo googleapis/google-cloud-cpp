@@ -22,6 +22,7 @@
 #include "google/cloud/gkemulticloud/v1/internal/attached_clusters_stub.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
+#include <map>
 #include <memory>
 #include <string>
 
@@ -33,8 +34,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class AttachedClustersMetadata : public AttachedClustersStub {
  public:
   ~AttachedClustersMetadata() override = default;
-  explicit AttachedClustersMetadata(
-      std::shared_ptr<AttachedClustersStub> child);
+  AttachedClustersMetadata(
+      std::shared_ptr<AttachedClustersStub> child,
+      std::multimap<std::string, std::string> fixed_metadata);
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateAttachedCluster(
       google::cloud::CompletionQueue& cq,
@@ -102,6 +104,7 @@ class AttachedClustersMetadata : public AttachedClustersStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<AttachedClustersStub> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

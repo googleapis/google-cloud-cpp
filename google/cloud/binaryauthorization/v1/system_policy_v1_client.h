@@ -85,40 +85,61 @@ class SystemPolicyV1Client {
   }
   ///@}
 
+  // clang-format off
   ///
   /// Gets the current system policy in the specified location.
   ///
-  /// @param name  Required. The resource name, in the format
-  /// `locations/*/policy`.
+  /// @param name  Required. The resource name, in the format `locations/*/policy`.
   ///  Note that the system policy is not associated with a project.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::binaryauthorization::v1::Policy,google/cloud/binaryauthorization/v1/resources.proto#L32}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.binaryauthorization.v1.Policy])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.binaryauthorization.v1.GetSystemPolicyRequest]:
-  /// @googleapis_reference_link{google/cloud/binaryauthorization/v1/service.proto#L258}
-  /// [google.cloud.binaryauthorization.v1.Policy]:
-  /// @googleapis_reference_link{google/cloud/binaryauthorization/v1/resources.proto#L32}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.binaryauthorization.v1.GetSystemPolicyRequest]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/service.proto#L258}
+  /// [google.cloud.binaryauthorization.v1.Policy]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/resources.proto#L32}
   ///
+  // clang-format on
   StatusOr<google::cloud::binaryauthorization::v1::Policy> GetSystemPolicy(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Gets the current system policy in the specified location.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::binaryauthorization::v1::GetSystemPolicyRequest,google/cloud/binaryauthorization/v1/service.proto#L258}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.binaryauthorization.v1.GetSystemPolicyRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::binaryauthorization::v1::Policy,google/cloud/binaryauthorization/v1/resources.proto#L32}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.binaryauthorization.v1.Policy])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.binaryauthorization.v1.GetSystemPolicyRequest]:
-  /// @googleapis_reference_link{google/cloud/binaryauthorization/v1/service.proto#L258}
-  /// [google.cloud.binaryauthorization.v1.Policy]:
-  /// @googleapis_reference_link{google/cloud/binaryauthorization/v1/resources.proto#L32}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.binaryauthorization.v1.GetSystemPolicyRequest]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/service.proto#L258}
+  /// [google.cloud.binaryauthorization.v1.Policy]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/resources.proto#L32}
   ///
+  // clang-format on
   StatusOr<google::cloud::binaryauthorization::v1::Policy> GetSystemPolicy(
       google::cloud::binaryauthorization::v1::GetSystemPolicyRequest const&
           request,

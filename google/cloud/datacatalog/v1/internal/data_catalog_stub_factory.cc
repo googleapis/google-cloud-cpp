@@ -52,7 +52,8 @@ std::shared_ptr<DataCatalogStub> CreateDefaultDataCatalogStub(
   if (auth->RequiresConfigureContext()) {
     stub = std::make_shared<DataCatalogAuth>(std::move(auth), std::move(stub));
   }
-  stub = std::make_shared<DataCatalogMetadata>(std::move(stub));
+  stub = std::make_shared<DataCatalogMetadata>(
+      std::move(stub), std::multimap<std::string, std::string>{});
   if (internal::Contains(options.get<TracingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<DataCatalogLogging>(

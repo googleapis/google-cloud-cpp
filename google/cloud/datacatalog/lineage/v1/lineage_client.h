@@ -92,204 +92,343 @@ class LineageClient {
   }
   ///@}
 
+  // clang-format off
   ///
   /// Creates a new process.
   ///
-  /// @param parent  Required. The name of the project and its location that
-  /// should own the
+  /// @param parent  Required. The name of the project and its location that should own the
   ///  process.
   /// @param process  Required. The process to create.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::datacatalog::lineage::v1::Process,google/cloud/datacatalog/lineage/v1/lineage.proto#L217}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.datacatalog.lineage.v1.Process])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.datacatalog.lineage.v1.CreateProcessRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L411}
-  /// [google.cloud.datacatalog.lineage.v1.Process]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L217}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.datacatalog.lineage.v1.CreateProcessRequest]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L411}
+  /// [google.cloud.datacatalog.lineage.v1.Process]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L217}
   ///
+  // clang-format on
   StatusOr<google::cloud::datacatalog::lineage::v1::Process> CreateProcess(
       std::string const& parent,
       google::cloud::datacatalog::lineage::v1::Process const& process,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a new process.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::datacatalog::lineage::v1::CreateProcessRequest,google/cloud/datacatalog/lineage/v1/lineage.proto#L411}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.datacatalog.lineage.v1.CreateProcessRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::datacatalog::lineage::v1::Process,google/cloud/datacatalog/lineage/v1/lineage.proto#L217}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.datacatalog.lineage.v1.Process])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.datacatalog.lineage.v1.CreateProcessRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L411}
-  /// [google.cloud.datacatalog.lineage.v1.Process]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L217}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.datacatalog.lineage.v1.CreateProcessRequest]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L411}
+  /// [google.cloud.datacatalog.lineage.v1.Process]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L217}
   ///
+  // clang-format on
   StatusOr<google::cloud::datacatalog::lineage::v1::Process> CreateProcess(
       google::cloud::datacatalog::lineage::v1::CreateProcessRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Updates a process.
   ///
   /// @param process  Required. The lineage process to update.
+  ///  @n
   ///  The process's `name` field is used to identify the process to update.
-  /// @param update_mask  The list of fields to update. Currently not used. The
-  /// whole message is
+  /// @param update_mask  The list of fields to update. Currently not used. The whole message is
   ///  updated.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::datacatalog::lineage::v1::Process,google/cloud/datacatalog/lineage/v1/lineage.proto#L217}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.datacatalog.lineage.v1.Process])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.datacatalog.lineage.v1.Process]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L217}
-  /// [google.cloud.datacatalog.lineage.v1.UpdateProcessRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L432}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.datacatalog.lineage.v1.Process]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L217}
+  /// [google.cloud.datacatalog.lineage.v1.UpdateProcessRequest]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L432}
   ///
+  // clang-format on
   StatusOr<google::cloud::datacatalog::lineage::v1::Process> UpdateProcess(
       google::cloud::datacatalog::lineage::v1::Process const& process,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
   ///
   /// Updates a process.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::datacatalog::lineage::v1::UpdateProcessRequest,google/cloud/datacatalog/lineage/v1/lineage.proto#L432}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.datacatalog.lineage.v1.UpdateProcessRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::datacatalog::lineage::v1::Process,google/cloud/datacatalog/lineage/v1/lineage.proto#L217}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.datacatalog.lineage.v1.Process])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.datacatalog.lineage.v1.Process]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L217}
-  /// [google.cloud.datacatalog.lineage.v1.UpdateProcessRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L432}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.datacatalog.lineage.v1.Process]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L217}
+  /// [google.cloud.datacatalog.lineage.v1.UpdateProcessRequest]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L432}
   ///
+  // clang-format on
   StatusOr<google::cloud::datacatalog::lineage::v1::Process> UpdateProcess(
       google::cloud::datacatalog::lineage::v1::UpdateProcessRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Gets the details of the specified process.
   ///
   /// @param name  Required. The name of the process to get.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::datacatalog::lineage::v1::Process,google/cloud/datacatalog/lineage/v1/lineage.proto#L217}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.datacatalog.lineage.v1.Process])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.datacatalog.lineage.v1.GetProcessRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L448}
-  /// [google.cloud.datacatalog.lineage.v1.Process]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L217}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.datacatalog.lineage.v1.GetProcessRequest]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L448}
+  /// [google.cloud.datacatalog.lineage.v1.Process]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L217}
   ///
+  // clang-format on
   StatusOr<google::cloud::datacatalog::lineage::v1::Process> GetProcess(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Gets the details of the specified process.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::datacatalog::lineage::v1::GetProcessRequest,google/cloud/datacatalog/lineage/v1/lineage.proto#L448}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.datacatalog.lineage.v1.GetProcessRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::datacatalog::lineage::v1::Process,google/cloud/datacatalog/lineage/v1/lineage.proto#L217}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.datacatalog.lineage.v1.Process])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.datacatalog.lineage.v1.GetProcessRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L448}
-  /// [google.cloud.datacatalog.lineage.v1.Process]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L217}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.datacatalog.lineage.v1.GetProcessRequest]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L448}
+  /// [google.cloud.datacatalog.lineage.v1.Process]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L217}
   ///
+  // clang-format on
   StatusOr<google::cloud::datacatalog::lineage::v1::Process> GetProcess(
       google::cloud::datacatalog::lineage::v1::GetProcessRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// List processes in the given project and location. List order is descending
   /// by insertion time.
   ///
-  /// @param parent  Required. The name of the project and its location that
-  /// owns this
+  /// @param parent  Required. The name of the project and its location that owns this
   ///  collection of processes.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::datacatalog::lineage::v1::Process,google/cloud/datacatalog/lineage/v1/lineage.proto#L217}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.datacatalog.lineage.v1.Process], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.datacatalog.lineage.v1.ListProcessesRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L460}
-  /// [google.cloud.datacatalog.lineage.v1.Process]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L217}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.datacatalog.lineage.v1.ListProcessesRequest]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L460}
+  /// [google.cloud.datacatalog.lineage.v1.Process]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L217}
   ///
+  // clang-format on
   StreamRange<google::cloud::datacatalog::lineage::v1::Process> ListProcesses(
       std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// List processes in the given project and location. List order is descending
   /// by insertion time.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::datacatalog::lineage::v1::ListProcessesRequest,google/cloud/datacatalog/lineage/v1/lineage.proto#L460}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.datacatalog.lineage.v1.ListProcessesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::datacatalog::lineage::v1::Process,google/cloud/datacatalog/lineage/v1/lineage.proto#L217}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.datacatalog.lineage.v1.Process], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.datacatalog.lineage.v1.ListProcessesRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L460}
-  /// [google.cloud.datacatalog.lineage.v1.Process]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L217}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.datacatalog.lineage.v1.ListProcessesRequest]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L460}
+  /// [google.cloud.datacatalog.lineage.v1.Process]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L217}
   ///
+  // clang-format on
   StreamRange<google::cloud::datacatalog::lineage::v1::Process> ListProcesses(
       google::cloud::datacatalog::lineage::v1::ListProcessesRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes the process with the specified name.
   ///
   /// @param name  Required. The name of the process to delete.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::datacatalog::lineage::v1::OperationMetadata,google/cloud/datacatalog/lineage/v1/lineage.proto#L357}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.datacatalog.lineage.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.datacatalog.lineage.v1.DeleteProcessRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L497}
-  /// [google.cloud.datacatalog.lineage.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L357}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.datacatalog.lineage.v1.DeleteProcessRequest]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L497}
+  /// [google.cloud.datacatalog.lineage.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L357}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::datacatalog::lineage::v1::OperationMetadata>>
   DeleteProcess(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes the process with the specified name.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::datacatalog::lineage::v1::DeleteProcessRequest,google/cloud/datacatalog/lineage/v1/lineage.proto#L497}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.datacatalog.lineage.v1.DeleteProcessRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::datacatalog::lineage::v1::OperationMetadata,google/cloud/datacatalog/lineage/v1/lineage.proto#L357}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.datacatalog.lineage.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.datacatalog.lineage.v1.DeleteProcessRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L497}
-  /// [google.cloud.datacatalog.lineage.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L357}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.datacatalog.lineage.v1.DeleteProcessRequest]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L497}
+  /// [google.cloud.datacatalog.lineage.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L357}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::datacatalog::lineage::v1::OperationMetadata>>
   DeleteProcess(
       google::cloud::datacatalog::lineage::v1::DeleteProcessRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a new run.
   ///
@@ -297,209 +436,356 @@ class LineageClient {
   /// @param run  Required. The run to create.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::datacatalog::lineage::v1::Run,google/cloud/datacatalog/lineage/v1/lineage.proto#L246}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.datacatalog.lineage.v1.Run])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.datacatalog.lineage.v1.CreateRunRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L513}
-  /// [google.cloud.datacatalog.lineage.v1.Run]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L246}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.datacatalog.lineage.v1.CreateRunRequest]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L513}
+  /// [google.cloud.datacatalog.lineage.v1.Run]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L246}
   ///
+  // clang-format on
   StatusOr<google::cloud::datacatalog::lineage::v1::Run> CreateRun(
       std::string const& parent,
       google::cloud::datacatalog::lineage::v1::Run const& run,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a new run.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::datacatalog::lineage::v1::CreateRunRequest,google/cloud/datacatalog/lineage/v1/lineage.proto#L513}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.datacatalog.lineage.v1.CreateRunRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::datacatalog::lineage::v1::Run,google/cloud/datacatalog/lineage/v1/lineage.proto#L246}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.datacatalog.lineage.v1.Run])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.datacatalog.lineage.v1.CreateRunRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L513}
-  /// [google.cloud.datacatalog.lineage.v1.Run]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L246}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.datacatalog.lineage.v1.CreateRunRequest]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L513}
+  /// [google.cloud.datacatalog.lineage.v1.Run]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L246}
   ///
+  // clang-format on
   StatusOr<google::cloud::datacatalog::lineage::v1::Run> CreateRun(
       google::cloud::datacatalog::lineage::v1::CreateRunRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Updates a run.
   ///
   /// @param run  Required. The lineage run to update.
+  ///  @n
   ///  The run's `name` field is used to identify the run to update.
+  ///  @n
   ///  Format:
   ///  `projects/{project}/locations/{location}/processes/{process}/runs/{run}`.
-  /// @param update_mask  The list of fields to update. Currently not used. The
-  /// whole message is
+  /// @param update_mask  The list of fields to update. Currently not used. The whole message is
   ///  updated.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::datacatalog::lineage::v1::Run,google/cloud/datacatalog/lineage/v1/lineage.proto#L246}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.datacatalog.lineage.v1.Run])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.datacatalog.lineage.v1.Run]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L246}
-  /// [google.cloud.datacatalog.lineage.v1.UpdateRunRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L533}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.datacatalog.lineage.v1.Run]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L246}
+  /// [google.cloud.datacatalog.lineage.v1.UpdateRunRequest]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L533}
   ///
+  // clang-format on
   StatusOr<google::cloud::datacatalog::lineage::v1::Run> UpdateRun(
       google::cloud::datacatalog::lineage::v1::Run const& run,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
   ///
   /// Updates a run.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::datacatalog::lineage::v1::UpdateRunRequest,google/cloud/datacatalog/lineage/v1/lineage.proto#L533}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.datacatalog.lineage.v1.UpdateRunRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::datacatalog::lineage::v1::Run,google/cloud/datacatalog/lineage/v1/lineage.proto#L246}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.datacatalog.lineage.v1.Run])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.datacatalog.lineage.v1.Run]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L246}
-  /// [google.cloud.datacatalog.lineage.v1.UpdateRunRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L533}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.datacatalog.lineage.v1.Run]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L246}
+  /// [google.cloud.datacatalog.lineage.v1.UpdateRunRequest]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L533}
   ///
+  // clang-format on
   StatusOr<google::cloud::datacatalog::lineage::v1::Run> UpdateRun(
       google::cloud::datacatalog::lineage::v1::UpdateRunRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Gets the details of the specified run.
   ///
   /// @param name  Required. The name of the run to get.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::datacatalog::lineage::v1::Run,google/cloud/datacatalog/lineage/v1/lineage.proto#L246}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.datacatalog.lineage.v1.Run])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.datacatalog.lineage.v1.GetRunRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L549}
-  /// [google.cloud.datacatalog.lineage.v1.Run]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L246}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.datacatalog.lineage.v1.GetRunRequest]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L549}
+  /// [google.cloud.datacatalog.lineage.v1.Run]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L246}
   ///
+  // clang-format on
   StatusOr<google::cloud::datacatalog::lineage::v1::Run> GetRun(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Gets the details of the specified run.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::datacatalog::lineage::v1::GetRunRequest,google/cloud/datacatalog/lineage/v1/lineage.proto#L549}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.datacatalog.lineage.v1.GetRunRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::datacatalog::lineage::v1::Run,google/cloud/datacatalog/lineage/v1/lineage.proto#L246}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.datacatalog.lineage.v1.Run])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.datacatalog.lineage.v1.GetRunRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L549}
-  /// [google.cloud.datacatalog.lineage.v1.Run]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L246}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.datacatalog.lineage.v1.GetRunRequest]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L549}
+  /// [google.cloud.datacatalog.lineage.v1.Run]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L246}
   ///
+  // clang-format on
   StatusOr<google::cloud::datacatalog::lineage::v1::Run> GetRun(
       google::cloud::datacatalog::lineage::v1::GetRunRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists runs in the given project and location. List order is descending by
   /// `start_time`.
   ///
-  /// @param parent  Required. The name of process that owns this collection of
-  /// runs.
+  /// @param parent  Required. The name of process that owns this collection of runs.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::datacatalog::lineage::v1::Run,google/cloud/datacatalog/lineage/v1/lineage.proto#L246}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.datacatalog.lineage.v1.Run], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.datacatalog.lineage.v1.ListRunsRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L559}
-  /// [google.cloud.datacatalog.lineage.v1.Run]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L246}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.datacatalog.lineage.v1.ListRunsRequest]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L559}
+  /// [google.cloud.datacatalog.lineage.v1.Run]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L246}
   ///
+  // clang-format on
   StreamRange<google::cloud::datacatalog::lineage::v1::Run> ListRuns(
       std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Lists runs in the given project and location. List order is descending by
   /// `start_time`.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::datacatalog::lineage::v1::ListRunsRequest,google/cloud/datacatalog/lineage/v1/lineage.proto#L559}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.datacatalog.lineage.v1.ListRunsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::datacatalog::lineage::v1::Run,google/cloud/datacatalog/lineage/v1/lineage.proto#L246}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.datacatalog.lineage.v1.Run], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.datacatalog.lineage.v1.ListRunsRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L559}
-  /// [google.cloud.datacatalog.lineage.v1.Run]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L246}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.datacatalog.lineage.v1.ListRunsRequest]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L559}
+  /// [google.cloud.datacatalog.lineage.v1.Run]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L246}
   ///
+  // clang-format on
   StreamRange<google::cloud::datacatalog::lineage::v1::Run> ListRuns(
       google::cloud::datacatalog::lineage::v1::ListRunsRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes the run with the specified name.
   ///
   /// @param name  Required. The name of the run to delete.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::datacatalog::lineage::v1::OperationMetadata,google/cloud/datacatalog/lineage/v1/lineage.proto#L357}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.datacatalog.lineage.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.datacatalog.lineage.v1.DeleteRunRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L595}
-  /// [google.cloud.datacatalog.lineage.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L357}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.datacatalog.lineage.v1.DeleteRunRequest]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L595}
+  /// [google.cloud.datacatalog.lineage.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L357}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::datacatalog::lineage::v1::OperationMetadata>>
   DeleteRun(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes the run with the specified name.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::datacatalog::lineage::v1::DeleteRunRequest,google/cloud/datacatalog/lineage/v1/lineage.proto#L595}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.datacatalog.lineage.v1.DeleteRunRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::datacatalog::lineage::v1::OperationMetadata,google/cloud/datacatalog/lineage/v1/lineage.proto#L357}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.datacatalog.lineage.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.datacatalog.lineage.v1.DeleteRunRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L595}
-  /// [google.cloud.datacatalog.lineage.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L357}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.datacatalog.lineage.v1.DeleteRunRequest]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L595}
+  /// [google.cloud.datacatalog.lineage.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L357}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::datacatalog::lineage::v1::OperationMetadata>>
   DeleteRun(
       google::cloud::datacatalog::lineage::v1::DeleteRunRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a new lineage event.
   ///
-  /// @param parent  Required. The name of the run that should own the lineage
-  /// event.
+  /// @param parent  Required. The name of the run that should own the lineage event.
   /// @param lineage_event  Required. The lineage event to create.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::datacatalog::lineage::v1::LineageEvent,google/cloud/datacatalog/lineage/v1/lineage.proto#L302}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.datacatalog.lineage.v1.LineageEvent])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.datacatalog.lineage.v1.CreateLineageEventRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L609}
-  /// [google.cloud.datacatalog.lineage.v1.LineageEvent]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L302}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.datacatalog.lineage.v1.CreateLineageEventRequest]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L609}
+  /// [google.cloud.datacatalog.lineage.v1.LineageEvent]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L302}
   ///
+  // clang-format on
   StatusOr<google::cloud::datacatalog::lineage::v1::LineageEvent>
   CreateLineageEvent(
       std::string const& parent,
@@ -507,134 +793,233 @@ class LineageClient {
           lineage_event,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a new lineage event.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::datacatalog::lineage::v1::CreateLineageEventRequest,google/cloud/datacatalog/lineage/v1/lineage.proto#L609}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.datacatalog.lineage.v1.CreateLineageEventRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::datacatalog::lineage::v1::LineageEvent,google/cloud/datacatalog/lineage/v1/lineage.proto#L302}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.datacatalog.lineage.v1.LineageEvent])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.datacatalog.lineage.v1.CreateLineageEventRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L609}
-  /// [google.cloud.datacatalog.lineage.v1.LineageEvent]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L302}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.datacatalog.lineage.v1.CreateLineageEventRequest]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L609}
+  /// [google.cloud.datacatalog.lineage.v1.LineageEvent]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L302}
   ///
+  // clang-format on
   StatusOr<google::cloud::datacatalog::lineage::v1::LineageEvent>
   CreateLineageEvent(
       google::cloud::datacatalog::lineage::v1::CreateLineageEventRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Gets details of a specified lineage event.
   ///
   /// @param name  Required. The name of the lineage event to get.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::datacatalog::lineage::v1::LineageEvent,google/cloud/datacatalog/lineage/v1/lineage.proto#L302}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.datacatalog.lineage.v1.LineageEvent])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.datacatalog.lineage.v1.GetLineageEventRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L629}
-  /// [google.cloud.datacatalog.lineage.v1.LineageEvent]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L302}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.datacatalog.lineage.v1.GetLineageEventRequest]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L629}
+  /// [google.cloud.datacatalog.lineage.v1.LineageEvent]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L302}
   ///
+  // clang-format on
   StatusOr<google::cloud::datacatalog::lineage::v1::LineageEvent>
   GetLineageEvent(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Gets details of a specified lineage event.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::datacatalog::lineage::v1::GetLineageEventRequest,google/cloud/datacatalog/lineage/v1/lineage.proto#L629}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.datacatalog.lineage.v1.GetLineageEventRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::datacatalog::lineage::v1::LineageEvent,google/cloud/datacatalog/lineage/v1/lineage.proto#L302}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.datacatalog.lineage.v1.LineageEvent])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.datacatalog.lineage.v1.GetLineageEventRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L629}
-  /// [google.cloud.datacatalog.lineage.v1.LineageEvent]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L302}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.datacatalog.lineage.v1.GetLineageEventRequest]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L629}
+  /// [google.cloud.datacatalog.lineage.v1.LineageEvent]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L302}
   ///
+  // clang-format on
   StatusOr<google::cloud::datacatalog::lineage::v1::LineageEvent>
   GetLineageEvent(
       google::cloud::datacatalog::lineage::v1::GetLineageEventRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists lineage events in the given project and location. The list order is
   /// not defined.
   ///
-  /// @param parent  Required. The name of the run that owns the collection of
-  /// lineage events to
+  /// @param parent  Required. The name of the run that owns the collection of lineage events to
   ///  get.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::datacatalog::lineage::v1::LineageEvent,google/cloud/datacatalog/lineage/v1/lineage.proto#L302}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.datacatalog.lineage.v1.LineageEvent], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.datacatalog.lineage.v1.LineageEvent]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L302}
-  /// [google.cloud.datacatalog.lineage.v1.ListLineageEventsRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L641}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.datacatalog.lineage.v1.LineageEvent]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L302}
+  /// [google.cloud.datacatalog.lineage.v1.ListLineageEventsRequest]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L641}
   ///
+  // clang-format on
   StreamRange<google::cloud::datacatalog::lineage::v1::LineageEvent>
   ListLineageEvents(std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Lists lineage events in the given project and location. The list order is
   /// not defined.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::datacatalog::lineage::v1::ListLineageEventsRequest,google/cloud/datacatalog/lineage/v1/lineage.proto#L641}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.datacatalog.lineage.v1.ListLineageEventsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::datacatalog::lineage::v1::LineageEvent,google/cloud/datacatalog/lineage/v1/lineage.proto#L302}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.datacatalog.lineage.v1.LineageEvent], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.datacatalog.lineage.v1.LineageEvent]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L302}
-  /// [google.cloud.datacatalog.lineage.v1.ListLineageEventsRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L641}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.datacatalog.lineage.v1.LineageEvent]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L302}
+  /// [google.cloud.datacatalog.lineage.v1.ListLineageEventsRequest]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L641}
   ///
+  // clang-format on
   StreamRange<google::cloud::datacatalog::lineage::v1::LineageEvent>
   ListLineageEvents(
       google::cloud::datacatalog::lineage::v1::ListLineageEventsRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes the lineage event with the specified name.
   ///
   /// @param name  Required. The name of the lineage event to delete.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.datacatalog.lineage.v1.DeleteLineageEventRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L679}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.datacatalog.lineage.v1.DeleteLineageEventRequest]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L679}
   ///
+  // clang-format on
   Status DeleteLineageEvent(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes the lineage event with the specified name.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::datacatalog::lineage::v1::DeleteLineageEventRequest,google/cloud/datacatalog/lineage/v1/lineage.proto#L679}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.datacatalog.lineage.v1.DeleteLineageEventRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.datacatalog.lineage.v1.DeleteLineageEventRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L679}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.datacatalog.lineage.v1.DeleteLineageEventRequest]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L679}
   ///
+  // clang-format on
   Status DeleteLineageEvent(
       google::cloud::datacatalog::lineage::v1::DeleteLineageEventRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Retrieve a list of links connected to a specific asset.
   /// Links represent the data flow between **source** (upstream)
@@ -646,22 +1031,44 @@ class LineageClient {
   /// `datalineage.events.get` permission. The project provided in the URL
   /// is used for Billing and Quota.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::datacatalog::lineage::v1::SearchLinksRequest,google/cloud/datacatalog/lineage/v1/lineage.proto#L695}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.datacatalog.lineage.v1.SearchLinksRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::datacatalog::lineage::v1::Link,google/cloud/datacatalog/lineage/v1/lineage.proto#L748}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.datacatalog.lineage.v1.Link], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.datacatalog.lineage.v1.Link]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L748}
-  /// [google.cloud.datacatalog.lineage.v1.SearchLinksRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L695}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.datacatalog.lineage.v1.Link]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L748}
+  /// [google.cloud.datacatalog.lineage.v1.SearchLinksRequest]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L695}
   ///
+  // clang-format on
   StreamRange<google::cloud::datacatalog::lineage::v1::Link> SearchLinks(
       google::cloud::datacatalog::lineage::v1::SearchLinksRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Retrieve information about LineageProcesses associated with specific
   /// links. LineageProcesses are transformation pipelines that result in data
@@ -678,20 +1085,40 @@ class LineageClient {
   /// have the `datalineage.events.get` permission. The project provided in the
   /// URL is used for Billing and Quota.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::datacatalog::lineage::v1::BatchSearchLinkProcessesRequest,google/cloud/datacatalog/lineage/v1/lineage.proto#L771}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.datacatalog.lineage.v1.BatchSearchLinkProcessesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::datacatalog::lineage::v1::ProcessLinks,google/cloud/datacatalog/lineage/v1/lineage.proto#L814}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.datacatalog.lineage.v1.ProcessLinks], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.datacatalog.lineage.v1.BatchSearchLinkProcessesRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L771}
-  /// [google.cloud.datacatalog.lineage.v1.Lineage.SearchLinks]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L186}
-  /// [google.cloud.datacatalog.lineage.v1.ProcessLinks]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L814}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.datacatalog.lineage.v1.BatchSearchLinkProcessesRequest]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L771}
+  /// [google.cloud.datacatalog.lineage.v1.Lineage.SearchLinks]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L186}
+  /// [google.cloud.datacatalog.lineage.v1.ProcessLinks]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L814}
   ///
+  // clang-format on
   StreamRange<google::cloud::datacatalog::lineage::v1::ProcessLinks>
   BatchSearchLinkProcesses(
       google::cloud::datacatalog::lineage::v1::BatchSearchLinkProcessesRequest

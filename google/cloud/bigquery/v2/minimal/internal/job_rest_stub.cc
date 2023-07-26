@@ -17,6 +17,7 @@
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/status_or.h"
+#include <nlohmann/json.hpp>
 
 namespace google {
 namespace cloud {
@@ -46,6 +47,68 @@ StatusOr<ListJobsResponse> DefaultBigQueryJobRestStub::ListJobs(
   rest_internal::RestContext context;
   return ParseFromRestResponse<ListJobsResponse>(
       rest_stub_->Get(context, std::move(*rest_request)));
+}
+
+StatusOr<InsertJobResponse> DefaultBigQueryJobRestStub::InsertJob(
+    rest_internal::RestContext& rest_context, InsertJobRequest const& request) {
+  // Prepare the RestRequest from InsertJobRequest.
+  // This  does the following:
+  // 1) Sets the request url path.
+  // 2) Adds any query parameters and headers.
+  auto rest_request =
+      PrepareRestRequest<InsertJobRequest>(rest_context, request);
+
+  rest_request->AddHeader("Content-Type", "application/json");
+
+  // 3) Get the request body as json payload.
+  nlohmann::json json_payload;
+  to_json(json_payload, request.job());
+
+  // 4) Call the rest stub and parse the RestResponse.
+  rest_internal::RestContext context;
+  return ParseFromRestResponse<InsertJobResponse>(
+      rest_stub_->Post(context, std::move(*rest_request),
+                       {absl::MakeConstSpan(json_payload.dump())}));
+}
+
+StatusOr<CancelJobResponse> DefaultBigQueryJobRestStub::CancelJob(
+    rest_internal::RestContext& rest_context, CancelJobRequest const& request) {
+  // Prepare the RestRequest from CancelJobRequest.
+  auto rest_request =
+      PrepareRestRequest<CancelJobRequest>(rest_context, request);
+
+  rest_request->AddHeader("Content-Type", "application/json");
+
+  // For cancel jobs, request body is empty:
+  // https://cloud.google.com/bigquery/docs/reference/rest/v2/jobs/cancel#request-body
+  absl::Span<char const> empty_span = absl::MakeConstSpan("");
+
+  // Call the rest stub and parse the RestResponse.
+  rest_internal::RestContext context;
+  return ParseFromRestResponse<CancelJobResponse>(
+      rest_stub_->Post(context, std::move(*rest_request), {empty_span}));
+}
+
+StatusOr<QueryResponse> DefaultBigQueryJobRestStub::Query(
+    rest_internal::RestContext& rest_context, PostQueryRequest const& request) {
+  // Prepare the RestRequest from PostQueryRequest.
+  // This  does the following:
+  // 1) Sets the request url path.
+  // 2) Adds any query parameters and headers.
+  auto rest_request =
+      PrepareRestRequest<PostQueryRequest>(rest_context, request);
+
+  rest_request->AddHeader("Content-Type", "application/json");
+
+  // 3) Get the request body as json payload.
+  nlohmann::json json_payload;
+  to_json(json_payload, request.query_request());
+
+  // 4) Call the rest stub and parse the RestResponse.
+  rest_internal::RestContext context;
+  return ParseFromRestResponse<QueryResponse>(
+      rest_stub_->Post(context, std::move(*rest_request),
+                       {absl::MakeConstSpan(json_payload.dump())}));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

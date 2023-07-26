@@ -10,6 +10,10 @@ environment variables are convenient when troubleshooting problems.
 
 <!-- inject-endpoint-env-vars-start -->
 
+- `GOOGLE_CLOUD_CPP_CLOUD_CHANNEL_REPORTS_SERVICE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "cloudchannel.googleapis.com")
+  used by `MakeCloudChannelReportsServiceConnection()`.
+
 - `GOOGLE_CLOUD_CPP_CLOUD_CHANNEL_SERVICE_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "cloudchannel.googleapis.com")
   used by `MakeCloudChannelServiceConnection()`.
@@ -32,7 +36,7 @@ the program's console.
 including whether messages will be output on multiple lines, or whether
 string/bytes fields will be truncated.
 
-@see google::cloud::TracingOptionsOption
+@see google::cloud::GrpcTracingOptionsOption
 
 `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes`: turns on logging in the library, basically
 the library always "logs" but the logging infrastructure has no backend to

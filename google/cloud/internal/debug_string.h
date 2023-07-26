@@ -99,6 +99,20 @@ class DebugFormatter {
     return *this;
   }
 
+  template <typename T>
+  DebugFormatter& Field(absl::string_view field_name,
+                        std::map<std::string, T> const& value) {
+    for (auto const& e : value) {
+      absl::StrAppend(&str_, Sep(), field_name, " {");
+      ++indent_;
+      absl::StrAppend(&str_, Sep(), "key: ", "\"", e.first, "\"");
+      absl::StrAppend(&str_, e.second.DebugString("value", options_, indent_));
+      --indent_;
+      absl::StrAppend(&str_, Sep(), "}");
+    }
+    return *this;
+  }
+
   DebugFormatter& StringField(absl::string_view field_name, std::string value);
 
   std::string Build();

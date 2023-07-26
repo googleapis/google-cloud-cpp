@@ -35,7 +35,7 @@ class PagesLogging : public PagesStub {
  public:
   ~PagesLogging() override = default;
   PagesLogging(std::shared_ptr<PagesStub> child, TracingOptions tracing_options,
-               std::set<std::string> components);
+               std::set<std::string> const& components);
 
   StatusOr<google::cloud::dialogflow::cx::v3::ListPagesResponse> ListPages(
       grpc::ClientContext& context,
@@ -64,7 +64,7 @@ class PagesLogging : public PagesStub {
  private:
   std::shared_ptr<PagesStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // PagesLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

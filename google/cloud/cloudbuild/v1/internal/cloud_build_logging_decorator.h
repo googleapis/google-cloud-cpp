@@ -37,7 +37,7 @@ class CloudBuildLogging : public CloudBuildStub {
   ~CloudBuildLogging() override = default;
   CloudBuildLogging(std::shared_ptr<CloudBuildStub> child,
                     TracingOptions tracing_options,
-                    std::set<std::string> components);
+                    std::set<std::string> const& components);
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateBuild(
       google::cloud::CompletionQueue& cq,
@@ -152,7 +152,7 @@ class CloudBuildLogging : public CloudBuildStub {
  private:
   std::shared_ptr<CloudBuildStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // CloudBuildLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

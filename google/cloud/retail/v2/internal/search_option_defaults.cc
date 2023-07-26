@@ -45,8 +45,9 @@ Options SearchServiceDefaultOptions(Options options) {
   }
   if (!options.has<retail_v2::SearchServiceBackoffPolicyOption>()) {
     options.set<retail_v2::SearchServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options

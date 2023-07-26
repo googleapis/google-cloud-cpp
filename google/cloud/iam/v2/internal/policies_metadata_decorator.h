@@ -22,6 +22,7 @@
 #include "google/cloud/iam/v2/internal/policies_stub.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
+#include <map>
 #include <memory>
 #include <string>
 
@@ -33,7 +34,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class PoliciesMetadata : public PoliciesStub {
  public:
   ~PoliciesMetadata() override = default;
-  explicit PoliciesMetadata(std::shared_ptr<PoliciesStub> child);
+  PoliciesMetadata(std::shared_ptr<PoliciesStub> child,
+                   std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::iam::v2::ListPoliciesResponse> ListPolicies(
       grpc::ClientContext& context,
@@ -74,6 +76,7 @@ class PoliciesMetadata : public PoliciesStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<PoliciesStub> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

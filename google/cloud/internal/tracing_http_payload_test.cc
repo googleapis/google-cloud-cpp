@@ -31,7 +31,7 @@ namespace {
 using ::google::cloud::testing_util::InstallSpanCatcher;
 using ::google::cloud::testing_util::MakeMockHttpPayloadSuccess;
 using ::google::cloud::testing_util::MockHttpPayload;
-using ::google::cloud::testing_util::SpanAttribute;
+using ::google::cloud::testing_util::OTelAttribute;
 using ::google::cloud::testing_util::SpanHasAttributes;
 using ::google::cloud::testing_util::SpanHasInstrumentationScope;
 using ::google::cloud::testing_util::SpanKindIsClient;
@@ -63,15 +63,15 @@ TEST(TracingHttpPayload, Success) {
     return AllOf(SpanNamed("Read"), SpanHasInstrumentationScope(),
                  SpanKindIsClient(),
                  SpanHasAttributes(
-                     SpanAttribute<std::int32_t>("gcloud.status_code", 0),
-                     SpanAttribute<std::int64_t>("read.buffer.size", bs),
-                     SpanAttribute<std::int64_t>("read.returned.size", rs)));
+                     OTelAttribute<std::int32_t>("gcloud.status_code", 0),
+                     OTelAttribute<std::int64_t>("read.buffer.size", bs),
+                     OTelAttribute<std::int64_t>("read.returned.size", rs)));
   };
   EXPECT_THAT(
       spans, UnorderedElementsAre(
                  AllOf(SpanNamed("HTTP/GET"), SpanHasInstrumentationScope(),
                        SpanKindIsClient(),
-                       SpanHasAttributes(SpanAttribute<std::string>(
+                       SpanHasAttributes(OTelAttribute<std::string>(
                            sc::kNetTransport, sc::NetTransportValues::kIpTcp))),
                  make_read_matcher(16, 16), make_read_matcher(16, 16),
                  make_read_matcher(16, 11), make_read_matcher(16, 0)));
@@ -102,17 +102,17 @@ TEST(TracingHttpPayload, Failure) {
     return AllOf(SpanNamed("Read"), SpanHasInstrumentationScope(),
                  SpanKindIsClient(),
                  SpanHasAttributes(
-                     SpanAttribute<std::int32_t>("gcloud.status_code", 0),
-                     SpanAttribute<std::int64_t>("read.buffer.size", bs),
-                     SpanAttribute<std::int64_t>("read.returned.size", rs)));
+                     OTelAttribute<std::int32_t>("gcloud.status_code", 0),
+                     OTelAttribute<std::int64_t>("read.buffer.size", bs),
+                     OTelAttribute<std::int64_t>("read.returned.size", rs)));
   };
   auto make_read_error_matcher = [](auto bs, StatusCode code) {
     return AllOf(SpanNamed("Read"), SpanHasInstrumentationScope(),
                  SpanKindIsClient(),
                  SpanHasAttributes(
-                     SpanAttribute<std::int32_t>(
+                     OTelAttribute<std::int32_t>(
                          "gcloud.status_code", static_cast<std::int32_t>(code)),
-                     SpanAttribute<std::int64_t>("read.buffer.size", bs)));
+                     OTelAttribute<std::int64_t>("read.buffer.size", bs)));
   };
   EXPECT_THAT(
       spans,
@@ -120,9 +120,9 @@ TEST(TracingHttpPayload, Failure) {
           AllOf(SpanNamed("HTTP/GET"), SpanHasInstrumentationScope(),
                 SpanKindIsClient(),
                 SpanHasAttributes(
-                    SpanAttribute<std::string>(sc::kNetTransport,
+                    OTelAttribute<std::string>(sc::kNetTransport,
                                                sc::NetTransportValues::kIpTcp),
-                    SpanAttribute<int>(
+                    OTelAttribute<int>(
                         "gcloud.status_code",
                         static_cast<int>(StatusCode::kUnavailable)))),
           make_read_success_matcher(16, 16),

@@ -97,157 +97,273 @@ class AutoMlClient {
   }
   ///@}
 
+  // clang-format off
   ///
   /// Creates a dataset.
   ///
-  /// @param parent  Required. The resource name of the project to create the
-  /// dataset for.
+  /// @param parent  Required. The resource name of the project to create the dataset for.
   /// @param dataset  Required. The dataset to create.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::automl::v1::Dataset,google/cloud/automl/v1/dataset.proto#L34}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.automl.v1.Dataset] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.automl.v1.CreateDatasetRequest]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L294}
-  /// [google.cloud.automl.v1.Dataset]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/dataset.proto#L34}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.automl.v1.CreateDatasetRequest]: @googleapis_reference_link{google/cloud/automl/v1/service.proto#L294}
+  /// [google.cloud.automl.v1.Dataset]: @googleapis_reference_link{google/cloud/automl/v1/dataset.proto#L34}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::automl::v1::Dataset>> CreateDataset(
       std::string const& parent,
       google::cloud::automl::v1::Dataset const& dataset, Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a dataset.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::automl::v1::CreateDatasetRequest,google/cloud/automl/v1/service.proto#L294}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.automl.v1.CreateDatasetRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::automl::v1::Dataset,google/cloud/automl/v1/dataset.proto#L34}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.automl.v1.Dataset] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.automl.v1.CreateDatasetRequest]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L294}
-  /// [google.cloud.automl.v1.Dataset]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/dataset.proto#L34}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.automl.v1.CreateDatasetRequest]: @googleapis_reference_link{google/cloud/automl/v1/service.proto#L294}
+  /// [google.cloud.automl.v1.Dataset]: @googleapis_reference_link{google/cloud/automl/v1/dataset.proto#L34}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::automl::v1::Dataset>> CreateDataset(
       google::cloud::automl::v1::CreateDatasetRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Gets a dataset.
   ///
   /// @param name  Required. The resource name of the dataset to retrieve.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::automl::v1::Dataset,google/cloud/automl/v1/dataset.proto#L34}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.automl.v1.Dataset])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.automl.v1.Dataset]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/dataset.proto#L34}
-  /// [google.cloud.automl.v1.GetDatasetRequest]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L308}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.automl.v1.Dataset]: @googleapis_reference_link{google/cloud/automl/v1/dataset.proto#L34}
+  /// [google.cloud.automl.v1.GetDatasetRequest]: @googleapis_reference_link{google/cloud/automl/v1/service.proto#L308}
   ///
+  // clang-format on
   StatusOr<google::cloud::automl::v1::Dataset> GetDataset(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Gets a dataset.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::automl::v1::GetDatasetRequest,google/cloud/automl/v1/service.proto#L308}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.automl.v1.GetDatasetRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::automl::v1::Dataset,google/cloud/automl/v1/dataset.proto#L34}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.automl.v1.Dataset])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.automl.v1.Dataset]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/dataset.proto#L34}
-  /// [google.cloud.automl.v1.GetDatasetRequest]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L308}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.automl.v1.Dataset]: @googleapis_reference_link{google/cloud/automl/v1/dataset.proto#L34}
+  /// [google.cloud.automl.v1.GetDatasetRequest]: @googleapis_reference_link{google/cloud/automl/v1/service.proto#L308}
   ///
+  // clang-format on
   StatusOr<google::cloud::automl::v1::Dataset> GetDataset(
       google::cloud::automl::v1::GetDatasetRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists datasets in a project.
   ///
-  /// @param parent  Required. The resource name of the project from which to
-  /// list datasets.
+  /// @param parent  Required. The resource name of the project from which to list datasets.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::automl::v1::Dataset,google/cloud/automl/v1/dataset.proto#L34}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.automl.v1.Dataset], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.automl.v1.Dataset]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/dataset.proto#L34}
-  /// [google.cloud.automl.v1.ListDatasetsRequest]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L319}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.automl.v1.Dataset]: @googleapis_reference_link{google/cloud/automl/v1/dataset.proto#L34}
+  /// [google.cloud.automl.v1.ListDatasetsRequest]: @googleapis_reference_link{google/cloud/automl/v1/service.proto#L319}
   ///
+  // clang-format on
   StreamRange<google::cloud::automl::v1::Dataset> ListDatasets(
       std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Lists datasets in a project.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::automl::v1::ListDatasetsRequest,google/cloud/automl/v1/service.proto#L319}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.automl.v1.ListDatasetsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::automl::v1::Dataset,google/cloud/automl/v1/dataset.proto#L34}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.automl.v1.Dataset], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.automl.v1.Dataset]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/dataset.proto#L34}
-  /// [google.cloud.automl.v1.ListDatasetsRequest]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L319}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.automl.v1.Dataset]: @googleapis_reference_link{google/cloud/automl/v1/dataset.proto#L34}
+  /// [google.cloud.automl.v1.ListDatasetsRequest]: @googleapis_reference_link{google/cloud/automl/v1/service.proto#L319}
   ///
+  // clang-format on
   StreamRange<google::cloud::automl::v1::Dataset> ListDatasets(
       google::cloud::automl::v1::ListDatasetsRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Updates a dataset.
   ///
-  /// @param dataset  Required. The dataset which replaces the resource on the
-  /// server.
+  /// @param dataset  Required. The dataset which replaces the resource on the server.
   /// @param update_mask  Required. The update mask applies to the resource.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::automl::v1::Dataset,google/cloud/automl/v1/dataset.proto#L34}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.automl.v1.Dataset])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.automl.v1.Dataset]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/dataset.proto#L34}
-  /// [google.cloud.automl.v1.UpdateDatasetRequest]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L359}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.automl.v1.Dataset]: @googleapis_reference_link{google/cloud/automl/v1/dataset.proto#L34}
+  /// [google.cloud.automl.v1.UpdateDatasetRequest]: @googleapis_reference_link{google/cloud/automl/v1/service.proto#L359}
   ///
+  // clang-format on
   StatusOr<google::cloud::automl::v1::Dataset> UpdateDataset(
       google::cloud::automl::v1::Dataset const& dataset,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
   ///
   /// Updates a dataset.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::automl::v1::UpdateDatasetRequest,google/cloud/automl/v1/service.proto#L359}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.automl.v1.UpdateDatasetRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::automl::v1::Dataset,google/cloud/automl/v1/dataset.proto#L34}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.automl.v1.Dataset])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.automl.v1.Dataset]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/dataset.proto#L34}
-  /// [google.cloud.automl.v1.UpdateDatasetRequest]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L359}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.automl.v1.Dataset]: @googleapis_reference_link{google/cloud/automl/v1/dataset.proto#L34}
+  /// [google.cloud.automl.v1.UpdateDatasetRequest]: @googleapis_reference_link{google/cloud/automl/v1/service.proto#L359}
   ///
+  // clang-format on
   StatusOr<google::cloud::automl::v1::Dataset> UpdateDataset(
       google::cloud::automl::v1::UpdateDatasetRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes a dataset and all of its contents.
   /// Returns empty response in the
@@ -258,21 +374,34 @@ class AutoMlClient {
   /// @param name  Required. The resource name of the dataset to delete.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::automl::v1::OperationMetadata,google/cloud/automl/v1/operations.proto#L31}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.automl.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.automl.v1.DeleteDatasetRequest]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L368}
-  /// [google.cloud.automl.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/operations.proto#L31}
-  /// [google.longrunning.Operation.metadata]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L138}
-  /// [google.longrunning.Operation.response]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.automl.v1.DeleteDatasetRequest]: @googleapis_reference_link{google/cloud/automl/v1/service.proto#L368}
+  /// [google.cloud.automl.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/automl/v1/operations.proto#L31}
+  /// [google.longrunning.Operation.metadata]: @googleapis_reference_link{google/longrunning/operations.proto#L138}
+  /// [google.longrunning.Operation.response]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::automl::v1::OperationMetadata>> DeleteDataset(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes a dataset and all of its contents.
   /// Returns empty response in the
@@ -280,26 +409,43 @@ class AutoMlClient {
   /// and `delete_details` in the
   /// [metadata][google.longrunning.Operation.metadata] field.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::automl::v1::DeleteDatasetRequest,google/cloud/automl/v1/service.proto#L368}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.automl.v1.DeleteDatasetRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::automl::v1::OperationMetadata,google/cloud/automl/v1/operations.proto#L31}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.automl.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.automl.v1.DeleteDatasetRequest]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L368}
-  /// [google.cloud.automl.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/operations.proto#L31}
-  /// [google.longrunning.Operation.metadata]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L138}
-  /// [google.longrunning.Operation.response]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.automl.v1.DeleteDatasetRequest]: @googleapis_reference_link{google/cloud/automl/v1/service.proto#L368}
+  /// [google.cloud.automl.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/automl/v1/operations.proto#L31}
+  /// [google.longrunning.Operation.metadata]: @googleapis_reference_link{google/longrunning/operations.proto#L138}
+  /// [google.longrunning.Operation.response]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::automl::v1::OperationMetadata>> DeleteDataset(
       google::cloud::automl::v1::DeleteDatasetRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Imports data into a dataset.
   /// For Tables this method can only be called on an empty Dataset.
@@ -311,31 +457,42 @@ class AutoMlClient {
   /// Returns an empty response in the
   /// [response][google.longrunning.Operation.response] field when it completes.
   ///
-  /// @param name  Required. Dataset name. Dataset must already exist. All
-  /// imported
+  /// @param name  Required. Dataset name. Dataset must already exist. All imported
   ///  annotations and examples will be added.
-  /// @param input_config  Required. The desired input location and its domain
-  /// specific semantics,
+  /// @param input_config  Required. The desired input location and its domain specific semantics,
   ///  if any.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::automl::v1::OperationMetadata,google/cloud/automl/v1/operations.proto#L31}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.automl.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.automl.v1.ImportDataRequest]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L379}
-  /// [google.cloud.automl.v1.InputConfig.params]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/io.proto#L660}
-  /// [google.cloud.automl.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/operations.proto#L31}
-  /// [google.longrunning.Operation.response]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.automl.v1.ImportDataRequest]: @googleapis_reference_link{google/cloud/automl/v1/service.proto#L379}
+  /// [google.cloud.automl.v1.InputConfig.params]: @googleapis_reference_link{google/cloud/automl/v1/io.proto#L660}
+  /// [google.cloud.automl.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/automl/v1/operations.proto#L31}
+  /// [google.longrunning.Operation.response]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::automl::v1::OperationMetadata>> ImportData(
       std::string const& name,
       google::cloud::automl::v1::InputConfig const& input_config,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Imports data into a dataset.
   /// For Tables this method can only be called on an empty Dataset.
@@ -347,26 +504,43 @@ class AutoMlClient {
   /// Returns an empty response in the
   /// [response][google.longrunning.Operation.response] field when it completes.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::automl::v1::ImportDataRequest,google/cloud/automl/v1/service.proto#L379}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.automl.v1.ImportDataRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::automl::v1::OperationMetadata,google/cloud/automl/v1/operations.proto#L31}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.automl.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.automl.v1.ImportDataRequest]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L379}
-  /// [google.cloud.automl.v1.InputConfig.params]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/io.proto#L660}
-  /// [google.cloud.automl.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/operations.proto#L31}
-  /// [google.longrunning.Operation.response]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.automl.v1.ImportDataRequest]: @googleapis_reference_link{google/cloud/automl/v1/service.proto#L379}
+  /// [google.cloud.automl.v1.InputConfig.params]: @googleapis_reference_link{google/cloud/automl/v1/io.proto#L660}
+  /// [google.cloud.automl.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/automl/v1/operations.proto#L31}
+  /// [google.longrunning.Operation.response]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::automl::v1::OperationMetadata>> ImportData(
       google::cloud::automl::v1::ImportDataRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Exports dataset's data to the provided output location.
   /// Returns an empty response in the
@@ -376,81 +550,134 @@ class AutoMlClient {
   /// @param output_config  Required. The desired output location.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::automl::v1::OperationMetadata,google/cloud/automl/v1/operations.proto#L31}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.automl.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.automl.v1.ExportDataRequest]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L395}
-  /// [google.cloud.automl.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/operations.proto#L31}
-  /// [google.longrunning.Operation.response]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.automl.v1.ExportDataRequest]: @googleapis_reference_link{google/cloud/automl/v1/service.proto#L395}
+  /// [google.cloud.automl.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/automl/v1/operations.proto#L31}
+  /// [google.longrunning.Operation.response]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::automl::v1::OperationMetadata>> ExportData(
       std::string const& name,
       google::cloud::automl::v1::OutputConfig const& output_config,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Exports dataset's data to the provided output location.
   /// Returns an empty response in the
   /// [response][google.longrunning.Operation.response] field when it completes.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::automl::v1::ExportDataRequest,google/cloud/automl/v1/service.proto#L395}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.automl.v1.ExportDataRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::automl::v1::OperationMetadata,google/cloud/automl/v1/operations.proto#L31}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.automl.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.automl.v1.ExportDataRequest]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L395}
-  /// [google.cloud.automl.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/operations.proto#L31}
-  /// [google.longrunning.Operation.response]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.automl.v1.ExportDataRequest]: @googleapis_reference_link{google/cloud/automl/v1/service.proto#L395}
+  /// [google.cloud.automl.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/automl/v1/operations.proto#L31}
+  /// [google.longrunning.Operation.response]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::automl::v1::OperationMetadata>> ExportData(
       google::cloud::automl::v1::ExportDataRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Gets an annotation spec.
   ///
-  /// @param name  Required. The resource name of the annotation spec to
-  /// retrieve.
+  /// @param name  Required. The resource name of the annotation spec to retrieve.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::automl::v1::AnnotationSpec,google/cloud/automl/v1/annotation_spec.proto#L29}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.automl.v1.AnnotationSpec])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.automl.v1.AnnotationSpec]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/annotation_spec.proto#L29}
-  /// [google.cloud.automl.v1.GetAnnotationSpecRequest]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L409}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.automl.v1.AnnotationSpec]: @googleapis_reference_link{google/cloud/automl/v1/annotation_spec.proto#L29}
+  /// [google.cloud.automl.v1.GetAnnotationSpecRequest]: @googleapis_reference_link{google/cloud/automl/v1/service.proto#L409}
   ///
+  // clang-format on
   StatusOr<google::cloud::automl::v1::AnnotationSpec> GetAnnotationSpec(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Gets an annotation spec.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::automl::v1::GetAnnotationSpecRequest,google/cloud/automl/v1/service.proto#L409}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.automl.v1.GetAnnotationSpecRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::automl::v1::AnnotationSpec,google/cloud/automl/v1/annotation_spec.proto#L29}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.automl.v1.AnnotationSpec])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.automl.v1.AnnotationSpec]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/annotation_spec.proto#L29}
-  /// [google.cloud.automl.v1.GetAnnotationSpecRequest]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L409}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.automl.v1.AnnotationSpec]: @googleapis_reference_link{google/cloud/automl/v1/annotation_spec.proto#L29}
+  /// [google.cloud.automl.v1.GetAnnotationSpecRequest]: @googleapis_reference_link{google/cloud/automl/v1/service.proto#L409}
   ///
+  // clang-format on
   StatusOr<google::cloud::automl::v1::AnnotationSpec> GetAnnotationSpec(
       google::cloud::automl::v1::GetAnnotationSpecRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a model.
   /// Returns a Model in the [response][google.longrunning.Operation.response]
@@ -458,25 +685,38 @@ class AutoMlClient {
   /// When you create a model, several model evaluations are created for it:
   /// a global evaluation, and one evaluation for each annotation spec.
   ///
-  /// @param parent  Required. Resource name of the parent project where the
-  /// model is being created.
+  /// @param parent  Required. Resource name of the parent project where the model is being created.
   /// @param model  Required. The model to create.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::automl::v1::Model,google/cloud/automl/v1/model.proto#L33}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.automl.v1.Model] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.automl.v1.CreateModelRequest]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L420}
-  /// [google.cloud.automl.v1.Model]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/model.proto#L33}
-  /// [google.longrunning.Operation.response]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.automl.v1.CreateModelRequest]: @googleapis_reference_link{google/cloud/automl/v1/service.proto#L420}
+  /// [google.cloud.automl.v1.Model]: @googleapis_reference_link{google/cloud/automl/v1/model.proto#L33}
+  /// [google.longrunning.Operation.response]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::automl::v1::Model>> CreateModel(
       std::string const& parent, google::cloud::automl::v1::Model const& model,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a model.
   /// Returns a Model in the [response][google.longrunning.Operation.response]
@@ -484,96 +724,175 @@ class AutoMlClient {
   /// When you create a model, several model evaluations are created for it:
   /// a global evaluation, and one evaluation for each annotation spec.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::automl::v1::CreateModelRequest,google/cloud/automl/v1/service.proto#L420}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.automl.v1.CreateModelRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::automl::v1::Model,google/cloud/automl/v1/model.proto#L33}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.automl.v1.Model] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.automl.v1.CreateModelRequest]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L420}
-  /// [google.cloud.automl.v1.Model]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/model.proto#L33}
-  /// [google.longrunning.Operation.response]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.automl.v1.CreateModelRequest]: @googleapis_reference_link{google/cloud/automl/v1/service.proto#L420}
+  /// [google.cloud.automl.v1.Model]: @googleapis_reference_link{google/cloud/automl/v1/model.proto#L33}
+  /// [google.longrunning.Operation.response]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::automl::v1::Model>> CreateModel(
       google::cloud::automl::v1::CreateModelRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Gets a model.
   ///
   /// @param name  Required. Resource name of the model.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::automl::v1::Model,google/cloud/automl/v1/model.proto#L33}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.automl.v1.Model])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.automl.v1.GetModelRequest]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L434}
-  /// [google.cloud.automl.v1.Model]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/model.proto#L33}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.automl.v1.GetModelRequest]: @googleapis_reference_link{google/cloud/automl/v1/service.proto#L434}
+  /// [google.cloud.automl.v1.Model]: @googleapis_reference_link{google/cloud/automl/v1/model.proto#L33}
   ///
+  // clang-format on
   StatusOr<google::cloud::automl::v1::Model> GetModel(std::string const& name,
                                                       Options opts = {});
 
+  // clang-format off
   ///
   /// Gets a model.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::automl::v1::GetModelRequest,google/cloud/automl/v1/service.proto#L434}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.automl.v1.GetModelRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::automl::v1::Model,google/cloud/automl/v1/model.proto#L33}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.automl.v1.Model])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.automl.v1.GetModelRequest]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L434}
-  /// [google.cloud.automl.v1.Model]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/model.proto#L33}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.automl.v1.GetModelRequest]: @googleapis_reference_link{google/cloud/automl/v1/service.proto#L434}
+  /// [google.cloud.automl.v1.Model]: @googleapis_reference_link{google/cloud/automl/v1/model.proto#L33}
   ///
+  // clang-format on
   StatusOr<google::cloud::automl::v1::Model> GetModel(
       google::cloud::automl::v1::GetModelRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists models.
   ///
-  /// @param parent  Required. Resource name of the project, from which to list
-  /// the models.
+  /// @param parent  Required. Resource name of the project, from which to list the models.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::automl::v1::Model,google/cloud/automl/v1/model.proto#L33}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.automl.v1.Model], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.automl.v1.ListModelsRequest]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L445}
-  /// [google.cloud.automl.v1.Model]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/model.proto#L33}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.automl.v1.ListModelsRequest]: @googleapis_reference_link{google/cloud/automl/v1/service.proto#L445}
+  /// [google.cloud.automl.v1.Model]: @googleapis_reference_link{google/cloud/automl/v1/model.proto#L33}
   ///
+  // clang-format on
   StreamRange<google::cloud::automl::v1::Model> ListModels(
       std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Lists models.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::automl::v1::ListModelsRequest,google/cloud/automl/v1/service.proto#L445}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.automl.v1.ListModelsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::automl::v1::Model,google/cloud/automl/v1/model.proto#L33}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.automl.v1.Model], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.automl.v1.ListModelsRequest]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L445}
-  /// [google.cloud.automl.v1.Model]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/model.proto#L33}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.automl.v1.ListModelsRequest]: @googleapis_reference_link{google/cloud/automl/v1/service.proto#L445}
+  /// [google.cloud.automl.v1.Model]: @googleapis_reference_link{google/cloud/automl/v1/model.proto#L33}
   ///
+  // clang-format on
   StreamRange<google::cloud::automl::v1::Model> ListModels(
       google::cloud::automl::v1::ListModelsRequest request, Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes a model.
   /// Returns `google.protobuf.Empty` in the
@@ -584,21 +903,34 @@ class AutoMlClient {
   /// @param name  Required. Resource name of the model being deleted.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::automl::v1::OperationMetadata,google/cloud/automl/v1/operations.proto#L31}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.automl.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.automl.v1.DeleteModelRequest]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L486}
-  /// [google.cloud.automl.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/operations.proto#L31}
-  /// [google.longrunning.Operation.metadata]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L138}
-  /// [google.longrunning.Operation.response]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.automl.v1.DeleteModelRequest]: @googleapis_reference_link{google/cloud/automl/v1/service.proto#L486}
+  /// [google.cloud.automl.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/automl/v1/operations.proto#L31}
+  /// [google.longrunning.Operation.metadata]: @googleapis_reference_link{google/longrunning/operations.proto#L138}
+  /// [google.longrunning.Operation.response]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::automl::v1::OperationMetadata>> DeleteModel(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes a model.
   /// Returns `google.protobuf.Empty` in the
@@ -606,65 +938,103 @@ class AutoMlClient {
   /// and `delete_details` in the
   /// [metadata][google.longrunning.Operation.metadata] field.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::automl::v1::DeleteModelRequest,google/cloud/automl/v1/service.proto#L486}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.automl.v1.DeleteModelRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::automl::v1::OperationMetadata,google/cloud/automl/v1/operations.proto#L31}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.automl.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.automl.v1.DeleteModelRequest]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L486}
-  /// [google.cloud.automl.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/operations.proto#L31}
-  /// [google.longrunning.Operation.metadata]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L138}
-  /// [google.longrunning.Operation.response]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.automl.v1.DeleteModelRequest]: @googleapis_reference_link{google/cloud/automl/v1/service.proto#L486}
+  /// [google.cloud.automl.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/automl/v1/operations.proto#L31}
+  /// [google.longrunning.Operation.metadata]: @googleapis_reference_link{google/longrunning/operations.proto#L138}
+  /// [google.longrunning.Operation.response]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::automl::v1::OperationMetadata>> DeleteModel(
       google::cloud::automl::v1::DeleteModelRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Updates a model.
   ///
-  /// @param model  Required. The model which replaces the resource on the
-  /// server.
+  /// @param model  Required. The model which replaces the resource on the server.
   /// @param update_mask  Required. The update mask applies to the resource.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::automl::v1::Model,google/cloud/automl/v1/model.proto#L33}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.automl.v1.Model])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.automl.v1.Model]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/model.proto#L33}
-  /// [google.cloud.automl.v1.UpdateModelRequest]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L497}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.automl.v1.Model]: @googleapis_reference_link{google/cloud/automl/v1/model.proto#L33}
+  /// [google.cloud.automl.v1.UpdateModelRequest]: @googleapis_reference_link{google/cloud/automl/v1/service.proto#L497}
   ///
+  // clang-format on
   StatusOr<google::cloud::automl::v1::Model> UpdateModel(
       google::cloud::automl::v1::Model const& model,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
   ///
   /// Updates a model.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::automl::v1::UpdateModelRequest,google/cloud/automl/v1/service.proto#L497}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.automl.v1.UpdateModelRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::automl::v1::Model,google/cloud/automl/v1/model.proto#L33}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.automl.v1.Model])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.automl.v1.Model]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/model.proto#L33}
-  /// [google.cloud.automl.v1.UpdateModelRequest]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L497}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.automl.v1.Model]: @googleapis_reference_link{google/cloud/automl/v1/model.proto#L33}
+  /// [google.cloud.automl.v1.UpdateModelRequest]: @googleapis_reference_link{google/cloud/automl/v1/service.proto#L497}
   ///
+  // clang-format on
   StatusOr<google::cloud::automl::v1::Model> UpdateModel(
       google::cloud::automl::v1::UpdateModelRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Deploys a model. If a model is already deployed, deploying it with the
   /// same parameters has no effect. Deploying with different parametrs
@@ -672,8 +1042,8 @@ class AutoMlClient {
   /// [node_number][google.cloud.automl.v1p1beta.ImageObjectDetectionModelDeploymentMetadata.node_number])
   ///  will reset the deployment state without pausing the model's availability.
   ///
-  /// Only applicable for Text Classification, Image Object Detection , Tables,
-  /// and Image Segmentation; all other domains manage deployment automatically.
+  /// Only applicable for Text Classification, Image Object Detection , Tables, and Image Segmentation; all other domains manage
+  /// deployment automatically.
   ///
   /// Returns an empty response in the
   /// [response][google.longrunning.Operation.response] field when it completes.
@@ -681,19 +1051,33 @@ class AutoMlClient {
   /// @param name  Required. Resource name of the model to deploy.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::automl::v1::OperationMetadata,google/cloud/automl/v1/operations.proto#L31}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.automl.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.automl.v1.DeployModelRequest]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L506}
-  /// [google.cloud.automl.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/operations.proto#L31}
-  /// [google.longrunning.Operation.response]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.automl.v1.DeployModelRequest]: @googleapis_reference_link{google/cloud/automl/v1/service.proto#L506}
+  /// [google.cloud.automl.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/automl/v1/operations.proto#L31}
+  /// [google.longrunning.Operation.response]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::automl::v1::OperationMetadata>> DeployModel(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Deploys a model. If a model is already deployed, deploying it with the
   /// same parameters has no effect. Deploying with different parametrs
@@ -701,35 +1085,53 @@ class AutoMlClient {
   /// [node_number][google.cloud.automl.v1p1beta.ImageObjectDetectionModelDeploymentMetadata.node_number])
   ///  will reset the deployment state without pausing the model's availability.
   ///
-  /// Only applicable for Text Classification, Image Object Detection , Tables,
-  /// and Image Segmentation; all other domains manage deployment automatically.
+  /// Only applicable for Text Classification, Image Object Detection , Tables, and Image Segmentation; all other domains manage
+  /// deployment automatically.
   ///
   /// Returns an empty response in the
   /// [response][google.longrunning.Operation.response] field when it completes.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::automl::v1::DeployModelRequest,google/cloud/automl/v1/service.proto#L506}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.automl.v1.DeployModelRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::automl::v1::OperationMetadata,google/cloud/automl/v1/operations.proto#L31}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.automl.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.automl.v1.DeployModelRequest]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L506}
-  /// [google.cloud.automl.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/operations.proto#L31}
-  /// [google.longrunning.Operation.response]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.automl.v1.DeployModelRequest]: @googleapis_reference_link{google/cloud/automl/v1/service.proto#L506}
+  /// [google.cloud.automl.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/automl/v1/operations.proto#L31}
+  /// [google.longrunning.Operation.response]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::automl::v1::OperationMetadata>> DeployModel(
       google::cloud::automl::v1::DeployModelRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Undeploys a model. If the model is not deployed this method has no effect.
   ///
-  /// Only applicable for Text Classification, Image Object Detection and
-  /// Tables; all other domains manage deployment automatically.
+  /// Only applicable for Text Classification, Image Object Detection and Tables;
+  /// all other domains manage deployment automatically.
   ///
   /// Returns an empty response in the
   /// [response][google.longrunning.Operation.response] field when it completes.
@@ -737,46 +1139,78 @@ class AutoMlClient {
   /// @param name  Required. Resource name of the model to undeploy.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::automl::v1::OperationMetadata,google/cloud/automl/v1/operations.proto#L31}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.automl.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.automl.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/operations.proto#L31}
-  /// [google.cloud.automl.v1.UndeployModelRequest]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L526}
-  /// [google.longrunning.Operation.response]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.automl.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/automl/v1/operations.proto#L31}
+  /// [google.cloud.automl.v1.UndeployModelRequest]: @googleapis_reference_link{google/cloud/automl/v1/service.proto#L526}
+  /// [google.longrunning.Operation.response]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::automl::v1::OperationMetadata>> UndeployModel(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Undeploys a model. If the model is not deployed this method has no effect.
   ///
-  /// Only applicable for Text Classification, Image Object Detection and
-  /// Tables; all other domains manage deployment automatically.
+  /// Only applicable for Text Classification, Image Object Detection and Tables;
+  /// all other domains manage deployment automatically.
   ///
   /// Returns an empty response in the
   /// [response][google.longrunning.Operation.response] field when it completes.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::automl::v1::UndeployModelRequest,google/cloud/automl/v1/service.proto#L526}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.automl.v1.UndeployModelRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::automl::v1::OperationMetadata,google/cloud/automl/v1/operations.proto#L31}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.automl.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.automl.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/operations.proto#L31}
-  /// [google.cloud.automl.v1.UndeployModelRequest]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L526}
-  /// [google.longrunning.Operation.response]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.automl.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/automl/v1/operations.proto#L31}
+  /// [google.cloud.automl.v1.UndeployModelRequest]: @googleapis_reference_link{google/cloud/automl/v1/service.proto#L526}
+  /// [google.longrunning.Operation.response]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::automl::v1::OperationMetadata>> UndeployModel(
       google::cloud::automl::v1::UndeployModelRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Exports a trained, "export-able", model to a user specified Google Cloud
   /// Storage location. A model is considered export-able if and only if it has
@@ -787,27 +1221,39 @@ class AutoMlClient {
   /// [response][google.longrunning.Operation.response] field when it completes.
   ///
   /// @param name  Required. The resource name of the model to export.
-  /// @param output_config  Required. The desired output location and
-  /// configuration.
+  /// @param output_config  Required. The desired output location and configuration.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::automl::v1::OperationMetadata,google/cloud/automl/v1/operations.proto#L31}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.automl.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.automl.v1.ExportModelRequest]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L539}
-  /// [google.cloud.automl.v1.ModelExportOutputConfig]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/io.proto#L1256}
-  /// [google.cloud.automl.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/operations.proto#L31}
-  /// [google.longrunning.Operation.response]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.automl.v1.ExportModelRequest]: @googleapis_reference_link{google/cloud/automl/v1/service.proto#L539}
+  /// [google.cloud.automl.v1.ModelExportOutputConfig]: @googleapis_reference_link{google/cloud/automl/v1/io.proto#L1256}
+  /// [google.cloud.automl.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/automl/v1/operations.proto#L31}
+  /// [google.longrunning.Operation.response]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::automl::v1::OperationMetadata>> ExportModel(
       std::string const& name,
       google::cloud::automl::v1::ModelExportOutputConfig const& output_config,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Exports a trained, "export-able", model to a user specified Google Cloud
   /// Storage location. A model is considered export-able if and only if it has
@@ -817,106 +1263,185 @@ class AutoMlClient {
   /// Returns an empty response in the
   /// [response][google.longrunning.Operation.response] field when it completes.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::automl::v1::ExportModelRequest,google/cloud/automl/v1/service.proto#L539}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.automl.v1.ExportModelRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::automl::v1::OperationMetadata,google/cloud/automl/v1/operations.proto#L31}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.automl.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.automl.v1.ExportModelRequest]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L539}
-  /// [google.cloud.automl.v1.ModelExportOutputConfig]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/io.proto#L1256}
-  /// [google.cloud.automl.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/operations.proto#L31}
-  /// [google.longrunning.Operation.response]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.automl.v1.ExportModelRequest]: @googleapis_reference_link{google/cloud/automl/v1/service.proto#L539}
+  /// [google.cloud.automl.v1.ModelExportOutputConfig]: @googleapis_reference_link{google/cloud/automl/v1/io.proto#L1256}
+  /// [google.cloud.automl.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/automl/v1/operations.proto#L31}
+  /// [google.longrunning.Operation.response]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::automl::v1::OperationMetadata>> ExportModel(
       google::cloud::automl::v1::ExportModelRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Gets a model evaluation.
   ///
   /// @param name  Required. Resource name for the model evaluation.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::automl::v1::ModelEvaluation,google/cloud/automl/v1/model_evaluation.proto#L35}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.automl.v1.ModelEvaluation])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.automl.v1.GetModelEvaluationRequest]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L553}
-  /// [google.cloud.automl.v1.ModelEvaluation]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/model_evaluation.proto#L35}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.automl.v1.GetModelEvaluationRequest]: @googleapis_reference_link{google/cloud/automl/v1/service.proto#L553}
+  /// [google.cloud.automl.v1.ModelEvaluation]: @googleapis_reference_link{google/cloud/automl/v1/model_evaluation.proto#L35}
   ///
+  // clang-format on
   StatusOr<google::cloud::automl::v1::ModelEvaluation> GetModelEvaluation(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Gets a model evaluation.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::automl::v1::GetModelEvaluationRequest,google/cloud/automl/v1/service.proto#L553}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.automl.v1.GetModelEvaluationRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::automl::v1::ModelEvaluation,google/cloud/automl/v1/model_evaluation.proto#L35}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.automl.v1.ModelEvaluation])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.automl.v1.GetModelEvaluationRequest]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L553}
-  /// [google.cloud.automl.v1.ModelEvaluation]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/model_evaluation.proto#L35}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.automl.v1.GetModelEvaluationRequest]: @googleapis_reference_link{google/cloud/automl/v1/service.proto#L553}
+  /// [google.cloud.automl.v1.ModelEvaluation]: @googleapis_reference_link{google/cloud/automl/v1/model_evaluation.proto#L35}
   ///
+  // clang-format on
   StatusOr<google::cloud::automl::v1::ModelEvaluation> GetModelEvaluation(
       google::cloud::automl::v1::GetModelEvaluationRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists model evaluations.
   ///
-  /// @param parent  Required. Resource name of the model to list the model
-  /// evaluations for.
-  ///  If modelId is set as "-", this will list model evaluations from across
-  ///  all models of the parent location.
-  /// @param filter  Required. An expression for filtering the results of the
-  /// request.
+  /// @param parent  Required. Resource name of the model to list the model evaluations for.
+  ///  If modelId is set as "-", this will list model evaluations from across all
+  ///  models of the parent location.
+  /// @param filter  Required. An expression for filtering the results of the request.
+  ///  @n
   ///    * `annotation_spec_id` - for =, !=  or existence. See example below for
   ///                           the last.
+  ///  @n
   ///  Some examples of using the filter are:
+  ///  @n
   ///    * `annotation_spec_id!=4` --> The model evaluation was done for
   ///                              annotation spec with ID different than 4.
   ///    * `NOT annotation_spec_id:*` --> The model evaluation was done for
   ///                                 aggregate of all annotation specs.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::automl::v1::ModelEvaluation,google/cloud/automl/v1/model_evaluation.proto#L35}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.automl.v1.ModelEvaluation], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.automl.v1.ListModelEvaluationsRequest]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L564}
-  /// [google.cloud.automl.v1.ModelEvaluation]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/model_evaluation.proto#L35}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.automl.v1.ListModelEvaluationsRequest]: @googleapis_reference_link{google/cloud/automl/v1/service.proto#L564}
+  /// [google.cloud.automl.v1.ModelEvaluation]: @googleapis_reference_link{google/cloud/automl/v1/model_evaluation.proto#L35}
   ///
+  // clang-format on
   StreamRange<google::cloud::automl::v1::ModelEvaluation> ListModelEvaluations(
       std::string const& parent, std::string const& filter, Options opts = {});
 
+  // clang-format off
   ///
   /// Lists model evaluations.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::automl::v1::ListModelEvaluationsRequest,google/cloud/automl/v1/service.proto#L564}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.automl.v1.ListModelEvaluationsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::automl::v1::ModelEvaluation,google/cloud/automl/v1/model_evaluation.proto#L35}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.automl.v1.ModelEvaluation], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.automl.v1.ListModelEvaluationsRequest]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L564}
-  /// [google.cloud.automl.v1.ModelEvaluation]:
-  /// @googleapis_reference_link{google/cloud/automl/v1/model_evaluation.proto#L35}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.automl.v1.ListModelEvaluationsRequest]: @googleapis_reference_link{google/cloud/automl/v1/service.proto#L564}
+  /// [google.cloud.automl.v1.ModelEvaluation]: @googleapis_reference_link{google/cloud/automl/v1/model_evaluation.proto#L35}
   ///
+  // clang-format on
   StreamRange<google::cloud::automl::v1::ModelEvaluation> ListModelEvaluations(
       google::cloud::automl::v1::ListModelEvaluationsRequest request,
       Options opts = {});

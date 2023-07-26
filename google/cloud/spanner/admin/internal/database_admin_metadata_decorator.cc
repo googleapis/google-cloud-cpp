@@ -18,6 +18,7 @@
 
 #include "google/cloud/spanner/admin/internal/database_admin_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/spanner/admin/database/v1/spanner_database_admin.grpc.pb.h>
@@ -29,8 +30,10 @@ namespace spanner_admin_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 DatabaseAdminMetadata::DatabaseAdminMetadata(
-    std::shared_ptr<DatabaseAdminStub> child)
+    std::shared_ptr<DatabaseAdminStub> child,
+    std::multimap<std::string, std::string> fixed_metadata)
     : child_(std::move(child)),
+      fixed_metadata_(std::move(fixed_metadata)),
       api_client_header_(
           google::cloud::internal::ApiClientHeader("generator")) {}
 
@@ -38,7 +41,7 @@ StatusOr<google::spanner::admin::database::v1::ListDatabasesResponse>
 DatabaseAdminMetadata::ListDatabases(
     grpc::ClientContext& context,
     google::spanner::admin::database::v1::ListDatabasesRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListDatabases(context, request);
 }
 
@@ -48,7 +51,7 @@ DatabaseAdminMetadata::AsyncCreateDatabase(
     std::shared_ptr<grpc::ClientContext> context,
     google::spanner::admin::database::v1::CreateDatabaseRequest const&
         request) {
-  SetMetadata(*context, "parent=" + request.parent());
+  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
   return child_->AsyncCreateDatabase(cq, std::move(context), request);
 }
 
@@ -56,8 +59,19 @@ StatusOr<google::spanner::admin::database::v1::Database>
 DatabaseAdminMetadata::GetDatabase(
     grpc::ClientContext& context,
     google::spanner::admin::database::v1::GetDatabaseRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetDatabase(context, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DatabaseAdminMetadata::AsyncUpdateDatabase(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::spanner::admin::database::v1::UpdateDatabaseRequest const&
+        request) {
+  SetMetadata(*context,
+              absl::StrCat("database.name=", request.database().name()));
+  return child_->AsyncUpdateDatabase(cq, std::move(context), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -66,14 +80,14 @@ DatabaseAdminMetadata::AsyncUpdateDatabaseDdl(
     std::shared_ptr<grpc::ClientContext> context,
     google::spanner::admin::database::v1::UpdateDatabaseDdlRequest const&
         request) {
-  SetMetadata(*context, "database=" + request.database());
+  SetMetadata(*context, absl::StrCat("database=", request.database()));
   return child_->AsyncUpdateDatabaseDdl(cq, std::move(context), request);
 }
 
 Status DatabaseAdminMetadata::DropDatabase(
     grpc::ClientContext& context,
     google::spanner::admin::database::v1::DropDatabaseRequest const& request) {
-  SetMetadata(context, "database=" + request.database());
+  SetMetadata(context, absl::StrCat("database=", request.database()));
   return child_->DropDatabase(context, request);
 }
 
@@ -82,21 +96,21 @@ DatabaseAdminMetadata::GetDatabaseDdl(
     grpc::ClientContext& context,
     google::spanner::admin::database::v1::GetDatabaseDdlRequest const&
         request) {
-  SetMetadata(context, "database=" + request.database());
+  SetMetadata(context, absl::StrCat("database=", request.database()));
   return child_->GetDatabaseDdl(context, request);
 }
 
 StatusOr<google::iam::v1::Policy> DatabaseAdminMetadata::SetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::SetIamPolicyRequest const& request) {
-  SetMetadata(context, "resource=" + request.resource());
+  SetMetadata(context, absl::StrCat("resource=", request.resource()));
   return child_->SetIamPolicy(context, request);
 }
 
 StatusOr<google::iam::v1::Policy> DatabaseAdminMetadata::GetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::GetIamPolicyRequest const& request) {
-  SetMetadata(context, "resource=" + request.resource());
+  SetMetadata(context, absl::StrCat("resource=", request.resource()));
   return child_->GetIamPolicy(context, request);
 }
 
@@ -104,7 +118,7 @@ StatusOr<google::iam::v1::TestIamPermissionsResponse>
 DatabaseAdminMetadata::TestIamPermissions(
     grpc::ClientContext& context,
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  SetMetadata(context, "resource=" + request.resource());
+  SetMetadata(context, absl::StrCat("resource=", request.resource()));
   return child_->TestIamPermissions(context, request);
 }
 
@@ -113,7 +127,7 @@ DatabaseAdminMetadata::AsyncCreateBackup(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::spanner::admin::database::v1::CreateBackupRequest const& request) {
-  SetMetadata(*context, "parent=" + request.parent());
+  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
   return child_->AsyncCreateBackup(cq, std::move(context), request);
 }
 
@@ -122,7 +136,7 @@ DatabaseAdminMetadata::AsyncCopyBackup(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::spanner::admin::database::v1::CopyBackupRequest const& request) {
-  SetMetadata(*context, "parent=" + request.parent());
+  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
   return child_->AsyncCopyBackup(cq, std::move(context), request);
 }
 
@@ -130,7 +144,7 @@ StatusOr<google::spanner::admin::database::v1::Backup>
 DatabaseAdminMetadata::GetBackup(
     grpc::ClientContext& context,
     google::spanner::admin::database::v1::GetBackupRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetBackup(context, request);
 }
 
@@ -138,14 +152,14 @@ StatusOr<google::spanner::admin::database::v1::Backup>
 DatabaseAdminMetadata::UpdateBackup(
     grpc::ClientContext& context,
     google::spanner::admin::database::v1::UpdateBackupRequest const& request) {
-  SetMetadata(context, "backup.name=" + request.backup().name());
+  SetMetadata(context, absl::StrCat("backup.name=", request.backup().name()));
   return child_->UpdateBackup(context, request);
 }
 
 Status DatabaseAdminMetadata::DeleteBackup(
     grpc::ClientContext& context,
     google::spanner::admin::database::v1::DeleteBackupRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->DeleteBackup(context, request);
 }
 
@@ -153,7 +167,7 @@ StatusOr<google::spanner::admin::database::v1::ListBackupsResponse>
 DatabaseAdminMetadata::ListBackups(
     grpc::ClientContext& context,
     google::spanner::admin::database::v1::ListBackupsRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListBackups(context, request);
 }
 
@@ -163,7 +177,7 @@ DatabaseAdminMetadata::AsyncRestoreDatabase(
     std::shared_ptr<grpc::ClientContext> context,
     google::spanner::admin::database::v1::RestoreDatabaseRequest const&
         request) {
-  SetMetadata(*context, "parent=" + request.parent());
+  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
   return child_->AsyncRestoreDatabase(cq, std::move(context), request);
 }
 
@@ -172,7 +186,7 @@ DatabaseAdminMetadata::ListDatabaseOperations(
     grpc::ClientContext& context,
     google::spanner::admin::database::v1::ListDatabaseOperationsRequest const&
         request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListDatabaseOperations(context, request);
 }
 
@@ -181,7 +195,7 @@ DatabaseAdminMetadata::ListBackupOperations(
     grpc::ClientContext& context,
     google::spanner::admin::database::v1::ListBackupOperationsRequest const&
         request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListBackupOperations(context, request);
 }
 
@@ -190,7 +204,7 @@ DatabaseAdminMetadata::ListDatabaseRoles(
     grpc::ClientContext& context,
     google::spanner::admin::database::v1::ListDatabaseRolesRequest const&
         request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListDatabaseRoles(context, request);
 }
 
@@ -218,6 +232,9 @@ void DatabaseAdminMetadata::SetMetadata(grpc::ClientContext& context,
 }
 
 void DatabaseAdminMetadata::SetMetadata(grpc::ClientContext& context) {
+  for (auto const& kv : fixed_metadata_) {
+    context.AddMetadata(kv.first, kv.second);
+  }
   context.AddMetadata("x-goog-api-client", api_client_header_);
   auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {

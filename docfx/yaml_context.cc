@@ -60,10 +60,10 @@ std::unordered_map<std::string, std::string> MockingFunctions(
   return mocked;
 }
 
-std::unordered_set<std::string> MockedIds(
+std::unordered_map<std::string, std::string> MockedIds(
     std::unordered_map<std::string, std::string> const& mocked_functions,
     Config const& config, pugi::xml_node node) {
-  std::unordered_set<std::string> mocked;
+  std::unordered_map<std::string, std::string> mocked;
   for (auto const child : node.children("sectiondef")) {
     if (!IncludeInPublicDocuments(config, node)) continue;
     auto more = MockedIds(mocked_functions, config, child);
@@ -77,7 +77,7 @@ std::unordered_set<std::string> MockedIds(
     auto const member_name = std::string{child.child_value("name")};
     auto const it = mocked_functions.find(member_name);
     if (it == mocked_functions.end()) continue;
-    mocked.emplace(id);
+    mocked.emplace(id, it->second);
   }
   return mocked;
 }
@@ -95,6 +95,36 @@ YamlContext NestedYamlContext(YamlContext const& ctx, pugi::xml_node node) {
   }
   nested.mocked_ids = MockedIds(nested.mocking_functions, ctx.config, node);
   return nested;
+}
+
+bool IsSkippedChild(YamlContext const& ctx, pugi::xml_node node) {
+  // Mocked functions are not children.
+  auto id = std::string{node.attribute("id").as_string()};
+  if (ctx.mocked_ids.count(id) != 0) return true;
+
+  // Things that are not MOCK_METHOD() are always present.
+  auto qname = std::string_view{node.child("qualifiedname").child_value()};
+  auto const p = qname.find("::MOCK_METHOD");
+  if (p == std::string_view::npos) return false;
+
+  // In a few places we kept a MOCK_METHOD() definition for a function that
+  // does not exist in the base class. These only exist for backwards
+  // compatibility. Skip them as there is no need to document those.
+  auto const m = ctx.mocking_functions_by_id.find(id);
+  return m == ctx.mocking_functions_by_id.end();
+}
+
+pugi::xml_node MockingNode(YamlContext const& ctx, pugi::xml_node node) {
+  auto const id = std::string{node.attribute("id").as_string()};
+  auto const m = ctx.mocked_ids.find(id);
+  if (m == ctx.mocked_ids.end()) return node;
+  pugi::xpath_variable_set vars;
+  vars.add("id", pugi::xpath_type_string);
+  vars.set("id", m->second.c_str());
+  auto found = node.select_node(
+      pugi::xpath_query("//memberdef[@id = string($id)]", &vars));
+  if (!found) return node;
+  return found.node();
 }
 
 }  // namespace docfx

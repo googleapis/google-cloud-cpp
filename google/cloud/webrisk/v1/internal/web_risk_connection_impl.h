@@ -26,9 +26,12 @@
 #include "google/cloud/webrisk/v1/web_risk_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/future.h"
 #include "google/cloud/options.h"
+#include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
+#include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 
 namespace google {
@@ -63,6 +66,9 @@ class WebRiskServiceConnectionImpl
       google::cloud::webrisk::v1::CreateSubmissionRequest const& request)
       override;
 
+  future<StatusOr<google::cloud::webrisk::v1::Submission>> SubmitUri(
+      google::cloud::webrisk::v1::SubmitUriRequest const& request) override;
+
  private:
   std::unique_ptr<webrisk_v1::WebRiskServiceRetryPolicy> retry_policy() {
     auto const& options = internal::CurrentOptions();
@@ -94,6 +100,16 @@ class WebRiskServiceConnectionImpl
     }
     return options_
         .get<webrisk_v1::WebRiskServiceConnectionIdempotencyPolicyOption>()
+        ->clone();
+  }
+
+  std::unique_ptr<PollingPolicy> polling_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<webrisk_v1::WebRiskServicePollingPolicyOption>()) {
+      return options.get<webrisk_v1::WebRiskServicePollingPolicyOption>()
+          ->clone();
+    }
+    return options_.get<webrisk_v1::WebRiskServicePollingPolicyOption>()
         ->clone();
   }
 

@@ -1,0 +1,13 @@
+{
+    "api_id": "timeseriesinsights.googleapis.com",
+    "api_shortname": "timeseriesinsights",
+    "client_documentation": "https://cloud.google.com/cpp/docs/reference/timeseriesinsights/latest",
+    "distribution_name": "google-cloud-cpp",
+    "language": "cpp",
+    "library_type": "GAPIC_AUTO",
+    "name_pretty": "Timeseries Insights API",
+    "product_documentation": "https://cloud.google.com/timeseries-insights",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-cpp",
+    "requires_billing": true
+}

@@ -37,7 +37,7 @@ class EnvironmentsLogging : public EnvironmentsStub {
   ~EnvironmentsLogging() override = default;
   EnvironmentsLogging(std::shared_ptr<EnvironmentsStub> child,
                       TracingOptions tracing_options,
-                      std::set<std::string> components);
+                      std::set<std::string> const& components);
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateEnvironment(
       google::cloud::CompletionQueue& cq,
@@ -68,6 +68,25 @@ class EnvironmentsLogging : public EnvironmentsStub {
       google::cloud::orchestration::airflow::service::v1::
           DeleteEnvironmentRequest const& request) override;
 
+  StatusOr<google::cloud::orchestration::airflow::service::v1::
+               ExecuteAirflowCommandResponse>
+  ExecuteAirflowCommand(
+      grpc::ClientContext& context,
+      google::cloud::orchestration::airflow::service::v1::
+          ExecuteAirflowCommandRequest const& request) override;
+
+  StatusOr<google::cloud::orchestration::airflow::service::v1::
+               StopAirflowCommandResponse>
+  StopAirflowCommand(grpc::ClientContext& context,
+                     google::cloud::orchestration::airflow::service::v1::
+                         StopAirflowCommandRequest const& request) override;
+
+  StatusOr<google::cloud::orchestration::airflow::service::v1::
+               PollAirflowCommandResponse>
+  PollAirflowCommand(grpc::ClientContext& context,
+                     google::cloud::orchestration::airflow::service::v1::
+                         PollAirflowCommandRequest const& request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncSaveSnapshot(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -79,6 +98,19 @@ class EnvironmentsLogging : public EnvironmentsStub {
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::orchestration::airflow::service::v1::
           LoadSnapshotRequest const& request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncDatabaseFailover(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::orchestration::airflow::service::v1::
+          DatabaseFailoverRequest const& request) override;
+
+  StatusOr<google::cloud::orchestration::airflow::service::v1::
+               FetchDatabasePropertiesResponse>
+  FetchDatabaseProperties(
+      grpc::ClientContext& context,
+      google::cloud::orchestration::airflow::service::v1::
+          FetchDatabasePropertiesRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
@@ -93,7 +125,7 @@ class EnvironmentsLogging : public EnvironmentsStub {
  private:
   std::shared_ptr<EnvironmentsStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // EnvironmentsLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

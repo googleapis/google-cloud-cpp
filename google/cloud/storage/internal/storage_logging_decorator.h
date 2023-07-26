@@ -36,7 +36,7 @@ class StorageLogging : public StorageStub {
   ~StorageLogging() override = default;
   StorageLogging(std::shared_ptr<StorageStub> child,
                  TracingOptions tracing_options,
-                 std::set<std::string> components);
+                 std::set<std::string> const& components);
 
   Status DeleteBucket(
       grpc::ClientContext& context,
@@ -168,6 +168,11 @@ class StorageLogging : public StorageStub {
       grpc::ClientContext& context,
       google::storage::v2::UpdateHmacKeyRequest const& request) override;
 
+  future<StatusOr<google::storage::v2::Object>> AsyncComposeObject(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::storage::v2::ComposeObjectRequest const& request) override;
+
   future<Status> AsyncDeleteObject(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -201,7 +206,7 @@ class StorageLogging : public StorageStub {
  private:
   std::shared_ptr<StorageStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // StorageLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

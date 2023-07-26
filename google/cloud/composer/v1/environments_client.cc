@@ -138,6 +138,36 @@ EnvironmentsClient::DeleteEnvironment(
   return connection_->DeleteEnvironment(request);
 }
 
+StatusOr<google::cloud::orchestration::airflow::service::v1::
+             ExecuteAirflowCommandResponse>
+EnvironmentsClient::ExecuteAirflowCommand(
+    google::cloud::orchestration::airflow::service::v1::
+        ExecuteAirflowCommandRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ExecuteAirflowCommand(request);
+}
+
+StatusOr<google::cloud::orchestration::airflow::service::v1::
+             StopAirflowCommandResponse>
+EnvironmentsClient::StopAirflowCommand(
+    google::cloud::orchestration::airflow::service::v1::
+        StopAirflowCommandRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->StopAirflowCommand(request);
+}
+
+StatusOr<google::cloud::orchestration::airflow::service::v1::
+             PollAirflowCommandResponse>
+EnvironmentsClient::PollAirflowCommand(
+    google::cloud::orchestration::airflow::service::v1::
+        PollAirflowCommandRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->PollAirflowCommand(request);
+}
+
 future<StatusOr<
     google::cloud::orchestration::airflow::service::v1::SaveSnapshotResponse>>
 EnvironmentsClient::SaveSnapshot(
@@ -156,6 +186,26 @@ EnvironmentsClient::LoadSnapshot(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->LoadSnapshot(request);
+}
+
+future<StatusOr<google::cloud::orchestration::airflow::service::v1::
+                    DatabaseFailoverResponse>>
+EnvironmentsClient::DatabaseFailover(
+    google::cloud::orchestration::airflow::service::v1::
+        DatabaseFailoverRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DatabaseFailover(request);
+}
+
+StatusOr<google::cloud::orchestration::airflow::service::v1::
+             FetchDatabasePropertiesResponse>
+EnvironmentsClient::FetchDatabaseProperties(
+    google::cloud::orchestration::airflow::service::v1::
+        FetchDatabasePropertiesRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->FetchDatabaseProperties(request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

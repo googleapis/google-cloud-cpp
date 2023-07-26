@@ -53,7 +53,8 @@ std::shared_ptr<MigrationServiceStub> CreateDefaultMigrationServiceStub(
     stub = std::make_shared<MigrationServiceAuth>(std::move(auth),
                                                   std::move(stub));
   }
-  stub = std::make_shared<MigrationServiceMetadata>(std::move(stub));
+  stub = std::make_shared<MigrationServiceMetadata>(
+      std::move(stub), std::multimap<std::string, std::string>{});
   if (internal::Contains(options.get<TracingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<MigrationServiceLogging>(

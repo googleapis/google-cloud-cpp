@@ -18,6 +18,7 @@
 
 #include "google/cloud/accessapproval/v1/internal/access_approval_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/accessapproval/v1/accessapproval.grpc.pb.h>
@@ -29,8 +30,10 @@ namespace accessapproval_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 AccessApprovalMetadata::AccessApprovalMetadata(
-    std::shared_ptr<AccessApprovalStub> child)
+    std::shared_ptr<AccessApprovalStub> child,
+    std::multimap<std::string, std::string> fixed_metadata)
     : child_(std::move(child)),
+      fixed_metadata_(std::move(fixed_metadata)),
       api_client_header_(
           google::cloud::internal::ApiClientHeader("generator")) {}
 
@@ -39,7 +42,7 @@ AccessApprovalMetadata::ListApprovalRequests(
     grpc::ClientContext& context,
     google::cloud::accessapproval::v1::ListApprovalRequestsMessage const&
         request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListApprovalRequests(context, request);
 }
 
@@ -48,7 +51,7 @@ AccessApprovalMetadata::GetApprovalRequest(
     grpc::ClientContext& context,
     google::cloud::accessapproval::v1::GetApprovalRequestMessage const&
         request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetApprovalRequest(context, request);
 }
 
@@ -57,7 +60,7 @@ AccessApprovalMetadata::ApproveApprovalRequest(
     grpc::ClientContext& context,
     google::cloud::accessapproval::v1::ApproveApprovalRequestMessage const&
         request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->ApproveApprovalRequest(context, request);
 }
 
@@ -66,7 +69,7 @@ AccessApprovalMetadata::DismissApprovalRequest(
     grpc::ClientContext& context,
     google::cloud::accessapproval::v1::DismissApprovalRequestMessage const&
         request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->DismissApprovalRequest(context, request);
 }
 
@@ -75,7 +78,7 @@ AccessApprovalMetadata::InvalidateApprovalRequest(
     grpc::ClientContext& context,
     google::cloud::accessapproval::v1::InvalidateApprovalRequestMessage const&
         request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->InvalidateApprovalRequest(context, request);
 }
 
@@ -84,7 +87,7 @@ AccessApprovalMetadata::GetAccessApprovalSettings(
     grpc::ClientContext& context,
     google::cloud::accessapproval::v1::GetAccessApprovalSettingsMessage const&
         request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetAccessApprovalSettings(context, request);
 }
 
@@ -93,7 +96,8 @@ AccessApprovalMetadata::UpdateAccessApprovalSettings(
     grpc::ClientContext& context,
     google::cloud::accessapproval::v1::
         UpdateAccessApprovalSettingsMessage const& request) {
-  SetMetadata(context, "settings.name=" + request.settings().name());
+  SetMetadata(context,
+              absl::StrCat("settings.name=", request.settings().name()));
   return child_->UpdateAccessApprovalSettings(context, request);
 }
 
@@ -101,7 +105,7 @@ Status AccessApprovalMetadata::DeleteAccessApprovalSettings(
     grpc::ClientContext& context,
     google::cloud::accessapproval::v1::
         DeleteAccessApprovalSettingsMessage const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->DeleteAccessApprovalSettings(context, request);
 }
 
@@ -110,7 +114,7 @@ AccessApprovalMetadata::GetAccessApprovalServiceAccount(
     grpc::ClientContext& context,
     google::cloud::accessapproval::v1::
         GetAccessApprovalServiceAccountMessage const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetAccessApprovalServiceAccount(context, request);
 }
 
@@ -121,6 +125,9 @@ void AccessApprovalMetadata::SetMetadata(grpc::ClientContext& context,
 }
 
 void AccessApprovalMetadata::SetMetadata(grpc::ClientContext& context) {
+  for (auto const& kv : fixed_metadata_) {
+    context.AddMetadata(kv.first, kv.second);
+  }
   context.AddMetadata("x-goog-api-client", api_client_header_);
   auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {

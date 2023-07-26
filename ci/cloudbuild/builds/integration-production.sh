@@ -24,7 +24,6 @@ source module ci/lib/io.sh
 
 export CC=clang
 export CXX=clang++
-export HTTP_TRANSCODING_TEST=yes
 
 mapfile -t args < <(bazel::common_args)
 bazel test "${args[@]}" --test_tag_filters=-integration-test ...
@@ -39,10 +38,6 @@ excluded_rules=(
 
 io::log_h2 "Running the integration tests against prod"
 mapfile -t integration_args < <(integration::bazel_args)
-# TODO(#6268) - disable the GCS+gRPC integration tests for now.  Eventually they
-# should run here, but they are too unstable. A custom build (gcs-grpc), which
-# is not required for PRs, runs them.
 io::run bazel test "${args[@]}" "${integration_args[@]}" \
-  --cache_test_results="auto" \
-  --test_tag_filters="integration-test,-integration-test-grpc-media,-integration-test-grpc-metadata" \
+  --cache_test_results="auto" --test_tag_filters="integration-test" \
   -- ... "${excluded_rules[@]}"

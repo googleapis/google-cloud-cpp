@@ -48,6 +48,17 @@ RUN /var/tmp/ci/install-cloud-sdk.sh
 ENV CLOUD_SDK_LOCATION=/usr/local/google-cloud-sdk
 ENV PATH=${CLOUD_SDK_LOCATION}/bin:${PATH}
 
-RUN curl -o /usr/bin/bazelisk -sSL "https://github.com/bazelbuild/bazelisk/releases/download/v1.16.0/bazelisk-linux-${ARCH}" && \
+RUN curl -o /usr/bin/bazelisk -sSL "https://github.com/bazelbuild/bazelisk/releases/download/v1.17.0/bazelisk-linux-${ARCH}" && \
     chmod +x /usr/bin/bazelisk && \
     ln -s /usr/bin/bazelisk /usr/bin/bazel
+
+# Download the packages needed to run Bigtable conformance tests.
+WORKDIR /var/tmp/downloads
+RUN wget -O go.tgz https://go.dev/dl/go1.20.5.linux-amd64.tar.gz
+RUN tar -C /usr/local/ -xzf go.tgz
+ENV GO_LOCATION=/usr/local/go
+ENV PATH=${GO_LOCATION}/bin:${PATH}
+RUN go version
+WORKDIR /var/tmp/downloads/cloud-bigtable-clients-test
+RUN curl -fsSL https://github.com/googleapis/cloud-bigtable-clients-test/archive/v0.0.1.tar.gz | \
+    tar -xzf - --strip-components=1

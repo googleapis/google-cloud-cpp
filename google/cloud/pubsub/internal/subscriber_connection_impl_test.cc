@@ -409,6 +409,51 @@ TEST(SubscriberConnectionTest, Pull) {
   t.join();
 }
 
+TEST(SubscriberConnectionTest, PullReturnsNoMessage) {
+  auto const subscription = Subscription("test-project", "test-subscription");
+  auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
+  auto constexpr kNumRetries = 4;
+  EXPECT_CALL(*mock, AsyncModifyAckDeadline)
+      .WillRepeatedly([](google::cloud::CompletionQueue&, auto,
+                         google::pubsub::v1::ModifyAckDeadlineRequest const&) {
+        return make_ready_future(Status{});
+      });
+  EXPECT_CALL(*mock, AsyncAcknowledge)
+      .WillRepeatedly([](google::cloud::CompletionQueue&, auto,
+                         google::pubsub::v1::AcknowledgeRequest const&) {
+        return make_ready_future(Status{});
+      });
+  EXPECT_CALL(*mock, Pull(_, AllOf(Property(&PullRequest::max_messages, 1),
+                                   Property(&PullRequest::subscription,
+                                            subscription.FullName()))))
+      .Times(kNumRetries + 1)
+      .WillRepeatedly([](auto&, google::pubsub::v1::PullRequest const&) {
+        google::pubsub::v1::PullResponse response;
+        return response;
+      });
+
+  CompletionQueue cq;
+  std::thread t([&cq] { cq.Run(); });
+
+  auto subscriber = std::make_shared<SubscriberConnectionImpl>(
+      MakeTestOptions(
+          subscription,
+          Options{}
+              .set<GrpcCompletionQueueOption>(cq)
+              .set<google::cloud::pubsub::RetryPolicyOption>(
+                  google::cloud::pubsub::LimitedErrorCountRetryPolicy(
+                      kNumRetries)
+                      .clone())),
+      mock);
+  google::cloud::internal::OptionsSpan span(subscriber->options());
+  auto response = subscriber->Pull();
+  EXPECT_THAT(response, StatusIs(StatusCode::kUnavailable,
+                                 HasSubstr("no messages returned")));
+
+  cq.Shutdown();
+  t.join();
+}
+
 TEST(SubscriberConnectionTest, PullOverrideSubscription) {
   auto const s1 = Subscription("test-project", "test-subscription");
   auto const s2 = Subscription("test-project", "test-override-subscription");

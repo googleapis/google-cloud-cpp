@@ -75,7 +75,7 @@ enum class StatusCode {
   /// user-based access control, use `kPermissionDenied` instead.
   kNotFound = 5,
 
-  /// `kAlreadyExists (gRPC code `ALREADY_EXISTS`) indicates that the entity a
+  /// `kAlreadyExists` (gRPC code `ALREADY_EXISTS`) indicates that the entity a
   /// caller attempted to create (such as a file or directory) is already
   /// present.
   kAlreadyExists = 6,

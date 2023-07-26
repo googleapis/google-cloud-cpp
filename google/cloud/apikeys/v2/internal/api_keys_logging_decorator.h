@@ -37,7 +37,7 @@ class ApiKeysLogging : public ApiKeysStub {
   ~ApiKeysLogging() override = default;
   ApiKeysLogging(std::shared_ptr<ApiKeysStub> child,
                  TracingOptions tracing_options,
-                 std::set<std::string> components);
+                 std::set<std::string> const& components);
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateKey(
       google::cloud::CompletionQueue& cq,
@@ -88,7 +88,7 @@ class ApiKeysLogging : public ApiKeysStub {
  private:
   std::shared_ptr<ApiKeysStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // ApiKeysLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -18,6 +18,7 @@
 
 #include "google/cloud/datacatalog/v1/internal/policy_tag_manager_serialization_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/datacatalog/v1/policytagmanagerserialization.grpc.pb.h>
@@ -29,8 +30,10 @@ namespace datacatalog_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 PolicyTagManagerSerializationMetadata::PolicyTagManagerSerializationMetadata(
-    std::shared_ptr<PolicyTagManagerSerializationStub> child)
+    std::shared_ptr<PolicyTagManagerSerializationStub> child,
+    std::multimap<std::string, std::string> fixed_metadata)
     : child_(std::move(child)),
+      fixed_metadata_(std::move(fixed_metadata)),
       api_client_header_(
           google::cloud::internal::ApiClientHeader("generator")) {}
 
@@ -38,7 +41,7 @@ StatusOr<google::cloud::datacatalog::v1::Taxonomy>
 PolicyTagManagerSerializationMetadata::ReplaceTaxonomy(
     grpc::ClientContext& context,
     google::cloud::datacatalog::v1::ReplaceTaxonomyRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->ReplaceTaxonomy(context, request);
 }
 
@@ -46,7 +49,7 @@ StatusOr<google::cloud::datacatalog::v1::ImportTaxonomiesResponse>
 PolicyTagManagerSerializationMetadata::ImportTaxonomies(
     grpc::ClientContext& context,
     google::cloud::datacatalog::v1::ImportTaxonomiesRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ImportTaxonomies(context, request);
 }
 
@@ -54,7 +57,7 @@ StatusOr<google::cloud::datacatalog::v1::ExportTaxonomiesResponse>
 PolicyTagManagerSerializationMetadata::ExportTaxonomies(
     grpc::ClientContext& context,
     google::cloud::datacatalog::v1::ExportTaxonomiesRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ExportTaxonomies(context, request);
 }
 
@@ -66,6 +69,9 @@ void PolicyTagManagerSerializationMetadata::SetMetadata(
 
 void PolicyTagManagerSerializationMetadata::SetMetadata(
     grpc::ClientContext& context) {
+  for (auto const& kv : fixed_metadata_) {
+    context.AddMetadata(kv.first, kv.second);
+  }
   context.AddMetadata("x-goog-api-client", api_client_header_);
   auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {

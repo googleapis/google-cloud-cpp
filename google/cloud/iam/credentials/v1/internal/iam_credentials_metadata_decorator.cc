@@ -18,6 +18,7 @@
 
 #include "google/cloud/iam/credentials/v1/internal/iam_credentials_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/iam/credentials/v1/iamcredentials.grpc.pb.h>
@@ -29,8 +30,10 @@ namespace iam_credentials_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 IAMCredentialsMetadata::IAMCredentialsMetadata(
-    std::shared_ptr<IAMCredentialsStub> child)
+    std::shared_ptr<IAMCredentialsStub> child,
+    std::multimap<std::string, std::string> fixed_metadata)
     : child_(std::move(child)),
+      fixed_metadata_(std::move(fixed_metadata)),
       api_client_header_(
           google::cloud::internal::ApiClientHeader("generator")) {}
 
@@ -38,7 +41,7 @@ StatusOr<google::iam::credentials::v1::GenerateAccessTokenResponse>
 IAMCredentialsMetadata::GenerateAccessToken(
     grpc::ClientContext& context,
     google::iam::credentials::v1::GenerateAccessTokenRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GenerateAccessToken(context, request);
 }
 
@@ -46,7 +49,7 @@ StatusOr<google::iam::credentials::v1::GenerateIdTokenResponse>
 IAMCredentialsMetadata::GenerateIdToken(
     grpc::ClientContext& context,
     google::iam::credentials::v1::GenerateIdTokenRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GenerateIdToken(context, request);
 }
 
@@ -54,7 +57,7 @@ StatusOr<google::iam::credentials::v1::SignBlobResponse>
 IAMCredentialsMetadata::SignBlob(
     grpc::ClientContext& context,
     google::iam::credentials::v1::SignBlobRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->SignBlob(context, request);
 }
 
@@ -62,7 +65,7 @@ StatusOr<google::iam::credentials::v1::SignJwtResponse>
 IAMCredentialsMetadata::SignJwt(
     grpc::ClientContext& context,
     google::iam::credentials::v1::SignJwtRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->SignJwt(context, request);
 }
 
@@ -73,6 +76,9 @@ void IAMCredentialsMetadata::SetMetadata(grpc::ClientContext& context,
 }
 
 void IAMCredentialsMetadata::SetMetadata(grpc::ClientContext& context) {
+  for (auto const& kv : fixed_metadata_) {
+    context.AddMetadata(kv.first, kv.second);
+  }
   context.AddMetadata("x-goog-api-client", api_client_header_);
   auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {

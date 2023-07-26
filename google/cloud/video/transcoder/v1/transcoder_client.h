@@ -91,82 +91,144 @@ class TranscoderServiceClient {
   }
   ///@}
 
+  // clang-format off
   ///
   /// Creates a job in the specified region.
   ///
-  /// @param parent  Required. The parent location to create and process this
-  /// job.
+  /// @param parent  Required. The parent location to create and process this job.
   ///  Format: `projects/{project}/locations/{location}`
   /// @param job  Required. Parameters for creating transcoding job.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::video::transcoder::v1::Job,google/cloud/video/transcoder/v1/resources.proto#L31}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.video.transcoder.v1.Job])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.video.transcoder.v1.CreateJobRequest]:
-  /// @googleapis_reference_link{google/cloud/video/transcoder/v1/services.proto#L116}
-  /// [google.cloud.video.transcoder.v1.Job]:
-  /// @googleapis_reference_link{google/cloud/video/transcoder/v1/resources.proto#L31}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.transcoder.v1.CreateJobRequest]: @googleapis_reference_link{google/cloud/video/transcoder/v1/services.proto#L116}
+  /// [google.cloud.video.transcoder.v1.Job]: @googleapis_reference_link{google/cloud/video/transcoder/v1/resources.proto#L31}
   ///
+  // clang-format on
   StatusOr<google::cloud::video::transcoder::v1::Job> CreateJob(
       std::string const& parent,
       google::cloud::video::transcoder::v1::Job const& job, Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a job in the specified region.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::video::transcoder::v1::CreateJobRequest,google/cloud/video/transcoder/v1/services.proto#L116}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.video.transcoder.v1.CreateJobRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::video::transcoder::v1::Job,google/cloud/video/transcoder/v1/resources.proto#L31}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.video.transcoder.v1.Job])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.video.transcoder.v1.CreateJobRequest]:
-  /// @googleapis_reference_link{google/cloud/video/transcoder/v1/services.proto#L116}
-  /// [google.cloud.video.transcoder.v1.Job]:
-  /// @googleapis_reference_link{google/cloud/video/transcoder/v1/resources.proto#L31}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.transcoder.v1.CreateJobRequest]: @googleapis_reference_link{google/cloud/video/transcoder/v1/services.proto#L116}
+  /// [google.cloud.video.transcoder.v1.Job]: @googleapis_reference_link{google/cloud/video/transcoder/v1/resources.proto#L31}
   ///
+  // clang-format on
   StatusOr<google::cloud::video::transcoder::v1::Job> CreateJob(
       google::cloud::video::transcoder::v1::CreateJobRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists jobs in the specified region.
   ///
   /// @param parent  Required. Format: `projects/{project}/locations/{location}`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::video::transcoder::v1::Job,google/cloud/video/transcoder/v1/resources.proto#L31}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.video.transcoder.v1.Job], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.video.transcoder.v1.Job]:
-  /// @googleapis_reference_link{google/cloud/video/transcoder/v1/resources.proto#L31}
-  /// [google.cloud.video.transcoder.v1.ListJobsRequest]:
-  /// @googleapis_reference_link{google/cloud/video/transcoder/v1/services.proto#L132}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.transcoder.v1.Job]: @googleapis_reference_link{google/cloud/video/transcoder/v1/resources.proto#L31}
+  /// [google.cloud.video.transcoder.v1.ListJobsRequest]: @googleapis_reference_link{google/cloud/video/transcoder/v1/services.proto#L132}
   ///
+  // clang-format on
   StreamRange<google::cloud::video::transcoder::v1::Job> ListJobs(
       std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Lists jobs in the specified region.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::video::transcoder::v1::ListJobsRequest,google/cloud/video/transcoder/v1/services.proto#L132}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.video.transcoder.v1.ListJobsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::video::transcoder::v1::Job,google/cloud/video/transcoder/v1/resources.proto#L31}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.video.transcoder.v1.Job], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.video.transcoder.v1.Job]:
-  /// @googleapis_reference_link{google/cloud/video/transcoder/v1/resources.proto#L31}
-  /// [google.cloud.video.transcoder.v1.ListJobsRequest]:
-  /// @googleapis_reference_link{google/cloud/video/transcoder/v1/services.proto#L132}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.transcoder.v1.Job]: @googleapis_reference_link{google/cloud/video/transcoder/v1/resources.proto#L31}
+  /// [google.cloud.video.transcoder.v1.ListJobsRequest]: @googleapis_reference_link{google/cloud/video/transcoder/v1/services.proto#L132}
   ///
+  // clang-format on
   StreamRange<google::cloud::video::transcoder::v1::Job> ListJobs(
       google::cloud::video::transcoder::v1::ListJobsRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Returns the job data.
   ///
@@ -174,36 +236,58 @@ class TranscoderServiceClient {
   ///  Format: `projects/{project}/locations/{location}/jobs/{job}`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::video::transcoder::v1::Job,google/cloud/video/transcoder/v1/resources.proto#L31}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.video.transcoder.v1.Job])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.video.transcoder.v1.GetJobRequest]:
-  /// @googleapis_reference_link{google/cloud/video/transcoder/v1/services.proto#L158}
-  /// [google.cloud.video.transcoder.v1.Job]:
-  /// @googleapis_reference_link{google/cloud/video/transcoder/v1/resources.proto#L31}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.transcoder.v1.GetJobRequest]: @googleapis_reference_link{google/cloud/video/transcoder/v1/services.proto#L158}
+  /// [google.cloud.video.transcoder.v1.Job]: @googleapis_reference_link{google/cloud/video/transcoder/v1/resources.proto#L31}
   ///
+  // clang-format on
   StatusOr<google::cloud::video::transcoder::v1::Job> GetJob(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Returns the job data.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::video::transcoder::v1::GetJobRequest,google/cloud/video/transcoder/v1/services.proto#L158}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.video.transcoder.v1.GetJobRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::video::transcoder::v1::Job,google/cloud/video/transcoder/v1/resources.proto#L31}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.video.transcoder.v1.Job])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.video.transcoder.v1.GetJobRequest]:
-  /// @googleapis_reference_link{google/cloud/video/transcoder/v1/services.proto#L158}
-  /// [google.cloud.video.transcoder.v1.Job]:
-  /// @googleapis_reference_link{google/cloud/video/transcoder/v1/resources.proto#L31}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.transcoder.v1.GetJobRequest]: @googleapis_reference_link{google/cloud/video/transcoder/v1/services.proto#L158}
+  /// [google.cloud.video.transcoder.v1.Job]: @googleapis_reference_link{google/cloud/video/transcoder/v1/resources.proto#L31}
   ///
+  // clang-format on
   StatusOr<google::cloud::video::transcoder::v1::Job> GetJob(
       google::cloud::video::transcoder::v1::GetJobRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes a job.
   ///
@@ -211,112 +295,197 @@ class TranscoderServiceClient {
   ///  Format: `projects/{project}/locations/{location}/jobs/{job}`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.video.transcoder.v1.DeleteJobRequest]:
-  /// @googleapis_reference_link{google/cloud/video/transcoder/v1/services.proto#L168}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.transcoder.v1.DeleteJobRequest]: @googleapis_reference_link{google/cloud/video/transcoder/v1/services.proto#L168}
   ///
+  // clang-format on
   Status DeleteJob(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes a job.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::video::transcoder::v1::DeleteJobRequest,google/cloud/video/transcoder/v1/services.proto#L168}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.video.transcoder.v1.DeleteJobRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.video.transcoder.v1.DeleteJobRequest]:
-  /// @googleapis_reference_link{google/cloud/video/transcoder/v1/services.proto#L168}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.transcoder.v1.DeleteJobRequest]: @googleapis_reference_link{google/cloud/video/transcoder/v1/services.proto#L168}
   ///
+  // clang-format on
   Status DeleteJob(
       google::cloud::video::transcoder::v1::DeleteJobRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a job template in the specified region.
   ///
   /// @param parent  Required. The parent location to create this job template.
   ///  Format: `projects/{project}/locations/{location}`
   /// @param job_template  Required. Parameters for creating job template.
-  /// @param job_template_id  Required. The ID to use for the job template,
-  /// which will become the final
+  /// @param job_template_id  Required. The ID to use for the job template, which will become the final
   ///  component of the job template's resource name.
+  ///  @n
   ///  This value should be 4-63 characters, and valid characters must match the
   ///  regular expression `[a-zA-Z][a-zA-Z0-9_-]*`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::video::transcoder::v1::JobTemplate,google/cloud/video/transcoder/v1/resources.proto#L139}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.video.transcoder.v1.JobTemplate])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.video.transcoder.v1.CreateJobTemplateRequest]:
-  /// @googleapis_reference_link{google/cloud/video/transcoder/v1/services.proto#L194}
-  /// [google.cloud.video.transcoder.v1.JobTemplate]:
-  /// @googleapis_reference_link{google/cloud/video/transcoder/v1/resources.proto#L139}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.transcoder.v1.CreateJobTemplateRequest]: @googleapis_reference_link{google/cloud/video/transcoder/v1/services.proto#L194}
+  /// [google.cloud.video.transcoder.v1.JobTemplate]: @googleapis_reference_link{google/cloud/video/transcoder/v1/resources.proto#L162}
   ///
+  // clang-format on
   StatusOr<google::cloud::video::transcoder::v1::JobTemplate> CreateJobTemplate(
       std::string const& parent,
       google::cloud::video::transcoder::v1::JobTemplate const& job_template,
       std::string const& job_template_id, Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a job template in the specified region.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::video::transcoder::v1::CreateJobTemplateRequest,google/cloud/video/transcoder/v1/services.proto#L194}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.video.transcoder.v1.CreateJobTemplateRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::video::transcoder::v1::JobTemplate,google/cloud/video/transcoder/v1/resources.proto#L139}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.video.transcoder.v1.JobTemplate])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.video.transcoder.v1.CreateJobTemplateRequest]:
-  /// @googleapis_reference_link{google/cloud/video/transcoder/v1/services.proto#L194}
-  /// [google.cloud.video.transcoder.v1.JobTemplate]:
-  /// @googleapis_reference_link{google/cloud/video/transcoder/v1/resources.proto#L139}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.transcoder.v1.CreateJobTemplateRequest]: @googleapis_reference_link{google/cloud/video/transcoder/v1/services.proto#L194}
+  /// [google.cloud.video.transcoder.v1.JobTemplate]: @googleapis_reference_link{google/cloud/video/transcoder/v1/resources.proto#L162}
   ///
+  // clang-format on
   StatusOr<google::cloud::video::transcoder::v1::JobTemplate> CreateJobTemplate(
       google::cloud::video::transcoder::v1::CreateJobTemplateRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists job templates in the specified region.
   ///
-  /// @param parent  Required. The parent location from which to retrieve the
-  /// collection of job
+  /// @param parent  Required. The parent location from which to retrieve the collection of job
   ///  templates. Format: `projects/{project}/locations/{location}`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::video::transcoder::v1::JobTemplate,google/cloud/video/transcoder/v1/resources.proto#L139}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.video.transcoder.v1.JobTemplate], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.video.transcoder.v1.JobTemplate]:
-  /// @googleapis_reference_link{google/cloud/video/transcoder/v1/resources.proto#L139}
-  /// [google.cloud.video.transcoder.v1.ListJobTemplatesRequest]:
-  /// @googleapis_reference_link{google/cloud/video/transcoder/v1/services.proto#L216}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.transcoder.v1.JobTemplate]: @googleapis_reference_link{google/cloud/video/transcoder/v1/resources.proto#L162}
+  /// [google.cloud.video.transcoder.v1.ListJobTemplatesRequest]: @googleapis_reference_link{google/cloud/video/transcoder/v1/services.proto#L216}
   ///
+  // clang-format on
   StreamRange<google::cloud::video::transcoder::v1::JobTemplate>
   ListJobTemplates(std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Lists job templates in the specified region.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::video::transcoder::v1::ListJobTemplatesRequest,google/cloud/video/transcoder/v1/services.proto#L216}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.video.transcoder.v1.ListJobTemplatesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::video::transcoder::v1::JobTemplate,google/cloud/video/transcoder/v1/resources.proto#L139}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.video.transcoder.v1.JobTemplate], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.video.transcoder.v1.JobTemplate]:
-  /// @googleapis_reference_link{google/cloud/video/transcoder/v1/resources.proto#L139}
-  /// [google.cloud.video.transcoder.v1.ListJobTemplatesRequest]:
-  /// @googleapis_reference_link{google/cloud/video/transcoder/v1/services.proto#L216}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.transcoder.v1.JobTemplate]: @googleapis_reference_link{google/cloud/video/transcoder/v1/resources.proto#L162}
+  /// [google.cloud.video.transcoder.v1.ListJobTemplatesRequest]: @googleapis_reference_link{google/cloud/video/transcoder/v1/services.proto#L216}
   ///
+  // clang-format on
   StreamRange<google::cloud::video::transcoder::v1::JobTemplate>
   ListJobTemplates(
       google::cloud::video::transcoder::v1::ListJobTemplatesRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Returns the job template data.
   ///
@@ -325,37 +494,59 @@ class TranscoderServiceClient {
   ///  `projects/{project}/locations/{location}/jobTemplates/{job_template}`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::video::transcoder::v1::JobTemplate,google/cloud/video/transcoder/v1/resources.proto#L139}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.video.transcoder.v1.JobTemplate])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.video.transcoder.v1.GetJobTemplateRequest]:
-  /// @googleapis_reference_link{google/cloud/video/transcoder/v1/services.proto#L243}
-  /// [google.cloud.video.transcoder.v1.JobTemplate]:
-  /// @googleapis_reference_link{google/cloud/video/transcoder/v1/resources.proto#L139}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.transcoder.v1.GetJobTemplateRequest]: @googleapis_reference_link{google/cloud/video/transcoder/v1/services.proto#L243}
+  /// [google.cloud.video.transcoder.v1.JobTemplate]: @googleapis_reference_link{google/cloud/video/transcoder/v1/resources.proto#L162}
   ///
+  // clang-format on
   StatusOr<google::cloud::video::transcoder::v1::JobTemplate> GetJobTemplate(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Returns the job template data.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::video::transcoder::v1::GetJobTemplateRequest,google/cloud/video/transcoder/v1/services.proto#L243}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.video.transcoder.v1.GetJobTemplateRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::video::transcoder::v1::JobTemplate,google/cloud/video/transcoder/v1/resources.proto#L139}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.video.transcoder.v1.JobTemplate])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.video.transcoder.v1.GetJobTemplateRequest]:
-  /// @googleapis_reference_link{google/cloud/video/transcoder/v1/services.proto#L243}
-  /// [google.cloud.video.transcoder.v1.JobTemplate]:
-  /// @googleapis_reference_link{google/cloud/video/transcoder/v1/resources.proto#L139}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.transcoder.v1.GetJobTemplateRequest]: @googleapis_reference_link{google/cloud/video/transcoder/v1/services.proto#L243}
+  /// [google.cloud.video.transcoder.v1.JobTemplate]: @googleapis_reference_link{google/cloud/video/transcoder/v1/resources.proto#L162}
   ///
+  // clang-format on
   StatusOr<google::cloud::video::transcoder::v1::JobTemplate> GetJobTemplate(
       google::cloud::video::transcoder::v1::GetJobTemplateRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes a job template.
   ///
@@ -363,23 +554,46 @@ class TranscoderServiceClient {
   ///  `projects/{project}/locations/{location}/jobTemplates/{job_template}`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.video.transcoder.v1.DeleteJobTemplateRequest]:
-  /// @googleapis_reference_link{google/cloud/video/transcoder/v1/services.proto#L256}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.transcoder.v1.DeleteJobTemplateRequest]: @googleapis_reference_link{google/cloud/video/transcoder/v1/services.proto#L256}
   ///
+  // clang-format on
   Status DeleteJobTemplate(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes a job template.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::video::transcoder::v1::DeleteJobTemplateRequest,google/cloud/video/transcoder/v1/services.proto#L256}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.video.transcoder.v1.DeleteJobTemplateRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.video.transcoder.v1.DeleteJobTemplateRequest]:
-  /// @googleapis_reference_link{google/cloud/video/transcoder/v1/services.proto#L256}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.transcoder.v1.DeleteJobTemplateRequest]: @googleapis_reference_link{google/cloud/video/transcoder/v1/services.proto#L256}
   ///
+  // clang-format on
   Status DeleteJobTemplate(
       google::cloud::video::transcoder::v1::DeleteJobTemplateRequest const&
           request,

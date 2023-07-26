@@ -19,7 +19,6 @@
 #include "generator/integration_tests/tests/mock_golden_kitchen_sink_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
-#include "google/cloud/internal/opentelemetry_options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/testing_util/scoped_log.h"

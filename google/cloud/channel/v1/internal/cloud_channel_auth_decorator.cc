@@ -480,6 +480,25 @@ Status CloudChannelServiceAuth::DeleteChannelPartnerRepricingConfig(
   return child_->DeleteChannelPartnerRepricingConfig(context, request);
 }
 
+StatusOr<google::cloud::channel::v1::ListSkuGroupsResponse>
+CloudChannelServiceAuth::ListSkuGroups(
+    grpc::ClientContext& context,
+    google::cloud::channel::v1::ListSkuGroupsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListSkuGroups(context, request);
+}
+
+StatusOr<google::cloud::channel::v1::ListSkuGroupBillableSkusResponse>
+CloudChannelServiceAuth::ListSkuGroupBillableSkus(
+    grpc::ClientContext& context,
+    google::cloud::channel::v1::ListSkuGroupBillableSkusRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListSkuGroupBillableSkus(context, request);
+}
+
 StatusOr<google::cloud::channel::v1::Offer>
 CloudChannelServiceAuth::LookupOffer(
     grpc::ClientContext& context,

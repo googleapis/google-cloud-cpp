@@ -21,19 +21,20 @@ which should give you a taste of the Cloud Logging API C++ client library API.
 ## Main classes
 
 <!-- inject-client-list-start -->
-The main class in this library is
-[\c logging_v2::LoggingServiceV2Client](@ref google::cloud::logging_v2::LoggingServiceV2Client).
-All RPCs are exposed as member functions of this class. Other classes provide
-helpers, retry policies, configuration parameters, and infrastructure to mock
-[\c logging_v2::LoggingServiceV2Client](@ref google::cloud::logging_v2::LoggingServiceV2Client) when testing your
+This library offers multiple `*Client` classes, which are listed below. Each
+one of these classes exposes all the RPCs for a gRPC `service` as member
+functions of the class. This library groups multiple gRPC services because they
+are part of the same product or are often used together. A typical example may
+be the administrative and data plane operations for a single product.
+
+The library also has other classes that provide helpers, configuration
+parameters, and infrastructure to mock the `*Client` classes when testing your
 application.
+
+- [\c logging_v2::ConfigServiceV2Client](@ref google::cloud::logging_v2::ConfigServiceV2Client)
+- [\c logging_v2::LoggingServiceV2Client](@ref google::cloud::logging_v2::LoggingServiceV2Client)
+- [\c logging_v2::MetricsServiceV2Client](@ref google::cloud::logging_v2::MetricsServiceV2Client)
 <!-- inject-client-list-end -->
-
-## Retry, Backoff, and Idempotency Policies.
-
-The library automatically retries requests that fail with transient errors, and
-uses [exponential backoff] to backoff between retries. Application developers
-can override the default policies.
 
 ## More Information
 
@@ -42,7 +43,8 @@ can override the default policies.
   endpoint.
 - @ref logging-override-authentication - describes how to change the
   authentication credentials used by the library.
-
-[exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff
+- @ref logging-override-retry - describes how to change the default retry
+  policies.
+- @ref logging-env - describes environment variables that can configure the behavior of the library.
 
 */

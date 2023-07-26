@@ -18,6 +18,7 @@
 
 #include "google/cloud/dialogflow_cx/internal/changelogs_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/dialogflow/cx/v3/changelog.grpc.pb.h>
@@ -28,8 +29,11 @@ namespace cloud {
 namespace dialogflow_cx_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-ChangelogsMetadata::ChangelogsMetadata(std::shared_ptr<ChangelogsStub> child)
+ChangelogsMetadata::ChangelogsMetadata(
+    std::shared_ptr<ChangelogsStub> child,
+    std::multimap<std::string, std::string> fixed_metadata)
     : child_(std::move(child)),
+      fixed_metadata_(std::move(fixed_metadata)),
       api_client_header_(
           google::cloud::internal::ApiClientHeader("generator")) {}
 
@@ -37,7 +41,7 @@ StatusOr<google::cloud::dialogflow::cx::v3::ListChangelogsResponse>
 ChangelogsMetadata::ListChangelogs(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::ListChangelogsRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListChangelogs(context, request);
 }
 
@@ -45,7 +49,7 @@ StatusOr<google::cloud::dialogflow::cx::v3::Changelog>
 ChangelogsMetadata::GetChangelog(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::GetChangelogRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetChangelog(context, request);
 }
 
@@ -56,6 +60,9 @@ void ChangelogsMetadata::SetMetadata(grpc::ClientContext& context,
 }
 
 void ChangelogsMetadata::SetMetadata(grpc::ClientContext& context) {
+  for (auto const& kv : fixed_metadata_) {
+    context.AddMetadata(kv.first, kv.second);
+  }
   context.AddMetadata("x-goog-api-client", api_client_header_);
   auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {

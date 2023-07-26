@@ -92,6 +92,16 @@ ConversationsTracingConnection::SuggestConversationSummary(
   return internal::EndSpan(*span, child_->SuggestConversationSummary(request));
 }
 
+StatusOr<google::cloud::dialogflow::v2::GenerateStatelessSummaryResponse>
+ConversationsTracingConnection::GenerateStatelessSummary(
+    google::cloud::dialogflow::v2::GenerateStatelessSummaryRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "dialogflow_es::ConversationsConnection::GenerateStatelessSummary");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GenerateStatelessSummary(request));
+}
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<dialogflow_es::ConversationsConnection>

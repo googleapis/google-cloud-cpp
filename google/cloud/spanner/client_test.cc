@@ -709,7 +709,7 @@ MATCHER_P(HasTag, value, "bound to expected transaction tag") {
       });
 }
 
-MATCHER(HasBegin, "not bound to a transaction-id nor invalidated") {
+MATCHER(HasBegin, "bound to a new (begin) transaction") {
   return spanner_internal::Visit(
       arg, [&](spanner_internal::SessionHolder&,
                StatusOr<google::spanner::v1::TransactionSelector>& s,
@@ -721,6 +721,27 @@ MATCHER(HasBegin, "not bound to a transaction-id nor invalidated") {
         if (!s->has_begin()) {
           if (s->has_single_use()) {
             *result_listener << "is single-use";
+          } else {
+            *result_listener << "has transaction-id " << s->id();
+          }
+          return false;
+        }
+        return true;
+      });
+}
+
+MATCHER(HasSingleUse, "bound to a temporary (single-use) transaction") {
+  return spanner_internal::Visit(
+      arg, [&](spanner_internal::SessionHolder&,
+               StatusOr<google::spanner::v1::TransactionSelector>& s,
+               spanner_internal::TransactionContext const&) {
+        if (!s) {
+          *result_listener << "has status " << s.status();
+          return false;
+        }
+        if (!s->has_single_use()) {
+          if (s->has_begin()) {
+            *result_listener << "is begin";
           } else {
             *result_listener << "has transaction-id " << s->id();
           }
@@ -928,6 +949,33 @@ TEST(ClientTest, CommitStats) {
   EXPECT_EQ(*timestamp, result->commit_timestamp);
   ASSERT_TRUE(result->commit_stats.has_value());
   EXPECT_EQ(42, result->commit_stats->mutation_count);
+}
+
+TEST(ClientTest, CommitAtLeastOnce) {
+  auto timestamp =
+      spanner_internal::TimestampFromRFC3339("2023-06-02T07:36:52.808Z");
+  ASSERT_STATUS_OK(timestamp);
+  auto mutation = MakeDeleteMutation("table", KeySet::All());
+  std::string const transaction_tag = "app=cart,env=dev";
+
+  auto conn = std::make_shared<MockConnection>();
+  EXPECT_CALL(*conn, Commit)
+      .WillOnce([&mutation, &transaction_tag,
+                 &timestamp](Connection::CommitParams const& cp) {
+        EXPECT_THAT(cp.transaction, HasSingleUse());
+        EXPECT_EQ(cp.mutations, Mutations{mutation});
+        EXPECT_FALSE(cp.options.return_stats());
+        EXPECT_FALSE(cp.options.request_priority().has_value());
+        EXPECT_EQ(cp.options.transaction_tag(), transaction_tag);
+        return CommitResult{*timestamp, absl::nullopt};
+      });
+
+  Client client(conn);
+  auto result = client.CommitAtLeastOnce(
+      Transaction::ReadWriteOptions{}, {mutation},
+      Options{}.set<TransactionTagOption>(transaction_tag));
+  ASSERT_STATUS_OK(result);
+  EXPECT_EQ(*timestamp, result->commit_timestamp);
 }
 
 TEST(ClientTest, ProfileQuerySuccess) {

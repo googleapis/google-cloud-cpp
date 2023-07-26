@@ -49,8 +49,9 @@ Options MigrationServiceDefaultOptions(Options options) {
   if (!options
            .has<bigquery_migration_v2::MigrationServiceBackoffPolicyOption>()) {
     options.set<bigquery_migration_v2::MigrationServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options.has<bigquery_migration_v2::

@@ -23,6 +23,7 @@
 #include "google/cloud/alloydb/v1/internal/alloy_db_admin_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
+#include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -37,17 +38,134 @@ namespace cloud {
 namespace alloydb_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using AlloyDBAdminRetryPolicy =
-    ::google::cloud::internal::TraitBasedRetryPolicy<
-        alloydb_v1_internal::AlloyDBAdminRetryTraits>;
+/// The retry policy for `AlloyDBAdminConnection`.
+class AlloyDBAdminRetryPolicy : public ::google::cloud::RetryPolicy {
+ public:
+  /// Creates a new instance of the policy, reset to the initial state.
+  virtual std::unique_ptr<AlloyDBAdminRetryPolicy> clone() const = 0;
+};
 
-using AlloyDBAdminLimitedTimeRetryPolicy =
-    ::google::cloud::internal::LimitedTimeRetryPolicy<
-        alloydb_v1_internal::AlloyDBAdminRetryTraits>;
+/**
+ * A retry policy for `AlloyDBAdminConnection` based on counting errors.
+ *
+ * This policy stops retrying if:
+ * - An RPC returns a non-transient error.
+ * - More than a prescribed number of transient failures is detected.
+ *
+ * In this class the following status codes are treated as transient errors:
+ * - [`kUnavailable`](@ref google::cloud::StatusCode)
+ */
+class AlloyDBAdminLimitedErrorCountRetryPolicy
+    : public AlloyDBAdminRetryPolicy {
+ public:
+  /**
+   * Create an instance that tolerates up to @p maximum_failures transient
+   * errors.
+   *
+   * @note Disable the retry loop by providing an instance of this policy with
+   *     @p maximum_failures == 0.
+   */
+  explicit AlloyDBAdminLimitedErrorCountRetryPolicy(int maximum_failures)
+      : impl_(maximum_failures) {}
 
-using AlloyDBAdminLimitedErrorCountRetryPolicy =
-    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        alloydb_v1_internal::AlloyDBAdminRetryTraits>;
+  AlloyDBAdminLimitedErrorCountRetryPolicy(
+      AlloyDBAdminLimitedErrorCountRetryPolicy&& rhs) noexcept
+      : AlloyDBAdminLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+  AlloyDBAdminLimitedErrorCountRetryPolicy(
+      AlloyDBAdminLimitedErrorCountRetryPolicy const& rhs) noexcept
+      : AlloyDBAdminLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+
+  int maximum_failures() const { return impl_.maximum_failures(); }
+
+  bool OnFailure(Status const& status) override {
+    return impl_.OnFailure(status);
+  }
+  bool IsExhausted() const override { return impl_.IsExhausted(); }
+  bool IsPermanentFailure(Status const& status) const override {
+    return impl_.IsPermanentFailure(status);
+  }
+  std::unique_ptr<AlloyDBAdminRetryPolicy> clone() const override {
+    return std::make_unique<AlloyDBAdminLimitedErrorCountRetryPolicy>(
+        maximum_failures());
+  }
+
+  // This is provided only for backwards compatibility.
+  using BaseType = AlloyDBAdminRetryPolicy;
+
+ private:
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      alloydb_v1_internal::AlloyDBAdminRetryTraits>
+      impl_;
+};
+
+/**
+ * A retry policy for `AlloyDBAdminConnection` based on elapsed time.
+ *
+ * This policy stops retrying if:
+ * - An RPC returns a non-transient error.
+ * - The elapsed time in the retry loop exceeds a prescribed duration.
+ *
+ * In this class the following status codes are treated as transient errors:
+ * - [`kUnavailable`](@ref google::cloud::StatusCode)
+ */
+class AlloyDBAdminLimitedTimeRetryPolicy : public AlloyDBAdminRetryPolicy {
+ public:
+  /**
+   * Constructor given a `std::chrono::duration<>` object.
+   *
+   * @tparam DurationRep a placeholder to match the `Rep` tparam for @p
+   *     duration's type. The semantics of this template parameter are
+   *     documented in `std::chrono::duration<>`. In brief, the underlying
+   *     arithmetic type used to store the number of ticks. For our purposes it
+   *     is simply a formal parameter.
+   * @tparam DurationPeriod a placeholder to match the `Period` tparam for @p
+   *     duration's type. The semantics of this template parameter are
+   *     documented in `std::chrono::duration<>`. In brief, the length of the
+   *     tick in seconds, expressed as a `std::ratio<>`. For our purposes it is
+   *     simply a formal parameter.
+   * @param maximum_duration the maximum time allowed before the policy expires.
+   *     While the application can express this time in any units they desire,
+   *     the class truncates to milliseconds.
+   *
+   * @see https://en.cppreference.com/w/cpp/chrono/duration for more information
+   *     about `std::chrono::duration`.
+   */
+  template <typename DurationRep, typename DurationPeriod>
+  explicit AlloyDBAdminLimitedTimeRetryPolicy(
+      std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
+      : impl_(maximum_duration) {}
+
+  AlloyDBAdminLimitedTimeRetryPolicy(
+      AlloyDBAdminLimitedTimeRetryPolicy&& rhs) noexcept
+      : AlloyDBAdminLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  AlloyDBAdminLimitedTimeRetryPolicy(
+      AlloyDBAdminLimitedTimeRetryPolicy const& rhs) noexcept
+      : AlloyDBAdminLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+
+  std::chrono::milliseconds maximum_duration() const {
+    return impl_.maximum_duration();
+  }
+
+  bool OnFailure(Status const& status) override {
+    return impl_.OnFailure(status);
+  }
+  bool IsExhausted() const override { return impl_.IsExhausted(); }
+  bool IsPermanentFailure(Status const& status) const override {
+    return impl_.IsPermanentFailure(status);
+  }
+  std::unique_ptr<AlloyDBAdminRetryPolicy> clone() const override {
+    return std::make_unique<AlloyDBAdminLimitedTimeRetryPolicy>(
+        maximum_duration());
+  }
+
+  // This is provided only for backwards compatibility.
+  using BaseType = AlloyDBAdminRetryPolicy;
+
+ private:
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      alloydb_v1_internal::AlloyDBAdminRetryTraits>
+      impl_;
+};
 
 /**
  * The `AlloyDBAdminConnection` object for `AlloyDBAdminClient`.
@@ -83,8 +201,15 @@ class AlloyDBAdminConnection {
   DeleteCluster(
       google::cloud::alloydb::v1::DeleteClusterRequest const& request);
 
+  virtual future<StatusOr<google::cloud::alloydb::v1::Cluster>> PromoteCluster(
+      google::cloud::alloydb::v1::PromoteClusterRequest const& request);
+
   virtual future<StatusOr<google::cloud::alloydb::v1::Cluster>> RestoreCluster(
       google::cloud::alloydb::v1::RestoreClusterRequest const& request);
+
+  virtual future<StatusOr<google::cloud::alloydb::v1::Cluster>>
+  CreateSecondaryCluster(
+      google::cloud::alloydb::v1::CreateSecondaryClusterRequest const& request);
 
   virtual StreamRange<google::cloud::alloydb::v1::Instance> ListInstances(
       google::cloud::alloydb::v1::ListInstancesRequest request);
@@ -94,6 +219,11 @@ class AlloyDBAdminConnection {
 
   virtual future<StatusOr<google::cloud::alloydb::v1::Instance>> CreateInstance(
       google::cloud::alloydb::v1::CreateInstanceRequest const& request);
+
+  virtual future<StatusOr<google::cloud::alloydb::v1::Instance>>
+  CreateSecondaryInstance(
+      google::cloud::alloydb::v1::CreateSecondaryInstanceRequest const&
+          request);
 
   virtual future<
       StatusOr<google::cloud::alloydb::v1::BatchCreateInstancesResponse>>
@@ -110,6 +240,9 @@ class AlloyDBAdminConnection {
   virtual future<StatusOr<google::cloud::alloydb::v1::Instance>>
   FailoverInstance(
       google::cloud::alloydb::v1::FailoverInstanceRequest const& request);
+
+  virtual future<StatusOr<google::cloud::alloydb::v1::Instance>> InjectFault(
+      google::cloud::alloydb::v1::InjectFaultRequest const& request);
 
   virtual future<StatusOr<google::cloud::alloydb::v1::Instance>>
   RestartInstance(
@@ -133,6 +266,21 @@ class AlloyDBAdminConnection {
   virtual StreamRange<google::cloud::alloydb::v1::SupportedDatabaseFlag>
   ListSupportedDatabaseFlags(
       google::cloud::alloydb::v1::ListSupportedDatabaseFlagsRequest request);
+
+  virtual StreamRange<google::cloud::alloydb::v1::User> ListUsers(
+      google::cloud::alloydb::v1::ListUsersRequest request);
+
+  virtual StatusOr<google::cloud::alloydb::v1::User> GetUser(
+      google::cloud::alloydb::v1::GetUserRequest const& request);
+
+  virtual StatusOr<google::cloud::alloydb::v1::User> CreateUser(
+      google::cloud::alloydb::v1::CreateUserRequest const& request);
+
+  virtual StatusOr<google::cloud::alloydb::v1::User> UpdateUser(
+      google::cloud::alloydb::v1::UpdateUserRequest const& request);
+
+  virtual Status DeleteUser(
+      google::cloud::alloydb::v1::DeleteUserRequest const& request);
 };
 
 /**

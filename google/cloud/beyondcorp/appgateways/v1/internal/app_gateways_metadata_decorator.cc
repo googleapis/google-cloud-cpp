@@ -18,6 +18,7 @@
 
 #include "google/cloud/beyondcorp/appgateways/v1/internal/app_gateways_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/beyondcorp/appgateways/v1/app_gateways_service.grpc.pb.h>
@@ -29,8 +30,10 @@ namespace beyondcorp_appgateways_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 AppGatewaysServiceMetadata::AppGatewaysServiceMetadata(
-    std::shared_ptr<AppGatewaysServiceStub> child)
+    std::shared_ptr<AppGatewaysServiceStub> child,
+    std::multimap<std::string, std::string> fixed_metadata)
     : child_(std::move(child)),
+      fixed_metadata_(std::move(fixed_metadata)),
       api_client_header_(
           google::cloud::internal::ApiClientHeader("generator")) {}
 
@@ -39,7 +42,7 @@ AppGatewaysServiceMetadata::ListAppGateways(
     grpc::ClientContext& context,
     google::cloud::beyondcorp::appgateways::v1::ListAppGatewaysRequest const&
         request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListAppGateways(context, request);
 }
 
@@ -48,7 +51,7 @@ AppGatewaysServiceMetadata::GetAppGateway(
     grpc::ClientContext& context,
     google::cloud::beyondcorp::appgateways::v1::GetAppGatewayRequest const&
         request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetAppGateway(context, request);
 }
 
@@ -58,7 +61,7 @@ AppGatewaysServiceMetadata::AsyncCreateAppGateway(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::beyondcorp::appgateways::v1::CreateAppGatewayRequest const&
         request) {
-  SetMetadata(*context, "parent=" + request.parent());
+  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
   return child_->AsyncCreateAppGateway(cq, std::move(context), request);
 }
 
@@ -68,7 +71,7 @@ AppGatewaysServiceMetadata::AsyncDeleteAppGateway(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::beyondcorp::appgateways::v1::DeleteAppGatewayRequest const&
         request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncDeleteAppGateway(cq, std::move(context), request);
 }
 
@@ -96,6 +99,9 @@ void AppGatewaysServiceMetadata::SetMetadata(
 }
 
 void AppGatewaysServiceMetadata::SetMetadata(grpc::ClientContext& context) {
+  for (auto const& kv : fixed_metadata_) {
+    context.AddMetadata(kv.first, kv.second);
+  }
   context.AddMetadata("x-goog-api-client", api_client_header_);
   auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {

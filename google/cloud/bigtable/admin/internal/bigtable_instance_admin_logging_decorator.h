@@ -37,7 +37,7 @@ class BigtableInstanceAdminLogging : public BigtableInstanceAdminStub {
   ~BigtableInstanceAdminLogging() override = default;
   BigtableInstanceAdminLogging(std::shared_ptr<BigtableInstanceAdminStub> child,
                                TracingOptions tracing_options,
-                               std::set<std::string> components);
+                               std::set<std::string> const& components);
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateInstance(
       google::cloud::CompletionQueue& cq,
@@ -154,7 +154,7 @@ class BigtableInstanceAdminLogging : public BigtableInstanceAdminStub {
  private:
   std::shared_ptr<BigtableInstanceAdminStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // BigtableInstanceAdminLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -1,0 +1,14 @@
+{
+    "api_id": "metastore.googleapis.com",
+    "api_shortname": "metastore",
+    "client_documentation": "https://cloud.google.com/cpp/docs/reference/metastore/latest",
+    "distribution_name": "google-cloud-cpp",
+    "issue_tracker": "https://issuetracker.google.com/savedsearches/6123403",
+    "language": "cpp",
+    "library_type": "GAPIC_AUTO",
+    "name_pretty": "Dataproc Metastore API",
+    "product_documentation": "https://cloud.google.com/dataproc-metastore/docs/",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-cpp",
+    "requires_billing": true
+}

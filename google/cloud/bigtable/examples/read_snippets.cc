@@ -248,7 +248,7 @@ void ReadRows(google::cloud::bigtable::Table table,
   using ::google::cloud::StatusOr;
   [](cbt::Table table) {
     // Read and print the rows.
-    for (auto& row : table.ReadRows(
+    for (StatusOr<cbt::Row>& row : table.ReadRows(
              cbt::RowSet("phone#4c410523#20190501", "phone#4c410523#20190502"),
              cbt::Filter::PassAllFilter())) {
       if (!row) throw std::move(row).status();
@@ -266,7 +266,7 @@ void ReadRowRange(google::cloud::bigtable::Table table,
   using ::google::cloud::StatusOr;
   [](cbt::Table table) {
     // Read and print the rows.
-    for (auto& row :
+    for (StatusOr<cbt::Row>& row :
          table.ReadRows(cbt::RowRange::Range("phone#4c410523#20190501",
                                              "phone#4c410523#201906201"),
                         cbt::Filter::PassAllFilter())) {
@@ -285,7 +285,7 @@ void ReadRowRanges(google::cloud::bigtable::Table table,
   using ::google::cloud::StatusOr;
   [](cbt::Table table) {
     // Read and print the rows.
-    for (auto& row : table.ReadRows(
+    for (StatusOr<cbt::Row>& row : table.ReadRows(
              cbt::RowSet({cbt::RowRange::Range("phone#4c410523#20190501",
                                                "phone#4c410523#20190601"),
                           cbt::RowRange::Range("phone#5c10102#20190501",
@@ -306,8 +306,8 @@ void ReadRowPrefix(google::cloud::bigtable::Table table,
   using ::google::cloud::StatusOr;
   [](cbt::Table table) {
     // Read and print the rows.
-    for (auto& row : table.ReadRows(cbt::RowRange::Prefix("phone"),
-                                    cbt::Filter::PassAllFilter())) {
+    for (StatusOr<cbt::Row>& row : table.ReadRows(
+             cbt::RowRange::Prefix("phone"), cbt::Filter::PassAllFilter())) {
       if (!row) throw std::move(row).status();
       PrintRow(*row);
     }
@@ -323,13 +323,35 @@ void ReadFilter(google::cloud::bigtable::Table table,
   using ::google::cloud::StatusOr;
   [](cbt::Table table) {
     // Read and print the rows.
-    for (auto& row : table.ReadRows(cbt::RowRange::InfiniteRange(),
-                                    cbt::Filter::ValueRegex("PQ2A.*"))) {
+    for (StatusOr<cbt::Row>& row :
+         table.ReadRows(cbt::RowRange::InfiniteRange(),
+                        cbt::Filter::ValueRegex("PQ2A.*"))) {
       if (!row) throw std::move(row).status();
       PrintRow(*row);
     }
   }
   //! [END bigtable_reads_filter]
+  (std::move(table));
+}
+
+void ReadRowsReverse(google::cloud::bigtable::Table table,
+                     std::vector<std::string> const&) {
+  //! [reverse scan] [START bigtable_reverse_scan]
+  namespace cbt = ::google::cloud::bigtable;
+  using ::google::cloud::Options;
+  using ::google::cloud::StatusOr;
+  [](cbt::Table table) {
+    // Read and print the rows.
+    auto reader = table.ReadRows(
+        cbt::RowRange::RightOpen("phone#5c10102", "phone#5c10103"), 3,
+        cbt::Filter::PassAllFilter(),
+        Options{}.set<cbt::ReverseScanOption>(true));
+    for (StatusOr<cbt::Row>& row : reader) {
+      if (!row) throw std::move(row).status();
+      PrintRow(*row);
+    }
+  }
+  //! [reverse scan] [END bigtable_reverse_scan]
   (std::move(table));
 }
 
@@ -390,6 +412,10 @@ void RunAll(std::vector<std::string> const& argv) {
   ReadFilter(table, {});
   std::cout << "Running ReadRowsWithLimit() example" << std::endl;
   ReadRowsWithLimit(table, {"5"});
+  if (!google::cloud::bigtable::examples::UsingEmulator()) {
+    std::cout << "Running ReadRowsReverse() example" << std::endl;
+    ReadRowsReverse(table, {});
+  }
 
   std::cout << "Running ReadKeySet() example" << std::endl;
   ReadKeysSet({table.project_id(), table.instance_id(), table.table_id(),
@@ -414,6 +440,7 @@ int main(int argc, char* argv[]) try {
       MakeCommandEntry("read-row-ranges", {}, ReadRowRanges),
       MakeCommandEntry("read-row-prefix", {}, ReadRowPrefix),
       MakeCommandEntry("read-filter", {}, ReadFilter),
+      MakeCommandEntry("read-rows-reverse", {}, ReadRowsReverse),
       {"auto", RunAll},
   };
 

@@ -29,10 +29,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 LanguageServiceLogging::LanguageServiceLogging(
     std::shared_ptr<LanguageServiceStub> child, TracingOptions tracing_options,
-    std::set<std::string> components)
+    std::set<std::string> const& components)
     : child_(std::move(child)),
       tracing_options_(std::move(tracing_options)),
-      components_(std::move(components)) {}
+      stream_logging_(components.find("rpc-streams") != components.end()) {}
 
 StatusOr<google::cloud::language::v1::AnalyzeSentimentResponse>
 LanguageServiceLogging::AnalyzeSentiment(
@@ -93,6 +93,18 @@ LanguageServiceLogging::ClassifyText(
       [this](grpc::ClientContext& context,
              google::cloud::language::v1::ClassifyTextRequest const& request) {
         return child_->ClassifyText(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::language::v1::ModerateTextResponse>
+LanguageServiceLogging::ModerateText(
+    grpc::ClientContext& context,
+    google::cloud::language::v1::ModerateTextRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::language::v1::ModerateTextRequest const& request) {
+        return child_->ModerateText(context, request);
       },
       context, request, __func__, tracing_options_);
 }

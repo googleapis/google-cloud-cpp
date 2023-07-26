@@ -40,7 +40,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * While the example showcases types from the BigQuery library, the underlying
  * principles apply for any pair of `*Client` and `*Connection`.
  *
- * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
+ * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
 class MockSqlUsersServiceConnection : public sql_v1::SqlUsersServiceConnection {
  public:
@@ -48,6 +48,10 @@ class MockSqlUsersServiceConnection : public sql_v1::SqlUsersServiceConnection {
 
   MOCK_METHOD(StatusOr<google::cloud::sql::v1::Operation>, Delete,
               (google::cloud::sql::v1::SqlUsersDeleteRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::sql::v1::User>, Get,
+              (google::cloud::sql::v1::SqlUsersGetRequest const& request),
               (override));
 
   MOCK_METHOD(StatusOr<google::cloud::sql::v1::Operation>, Insert,

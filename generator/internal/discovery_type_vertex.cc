@@ -36,11 +36,9 @@ absl::optional<std::string> CheckForScalarType(nlohmann::json const& j) {
 
 }  // namespace
 
-DiscoveryTypeVertex::DiscoveryTypeVertex() : json_("") {}
-
-DiscoveryTypeVertex::DiscoveryTypeVertex(std::string name,
-                                         std::string package_name,
-                                         nlohmann::json json)
+DiscoveryTypeVertex::DiscoveryTypeVertex(
+    std::string name, std::string package_name, nlohmann::json json,
+    google::protobuf::DescriptorPool const*)
     : name_(std::move(name)),
       package_name_(std::move(package_name)),
       json_(std::move(json)) {}
@@ -75,9 +73,10 @@ DiscoveryTypeVertex::DetermineTypeAndSynthesis(nlohmann::json const& v,
                                                std::string const& field_name) {
   nlohmann::json const* properties_for_synthesis = nullptr;
   bool compare_package_name = false;
+  bool is_message = false;
   if (v.contains("$ref"))
     return TypeInfo{std::string(v["$ref"]), true, properties_for_synthesis,
-                    false};
+                    false, true};
   if (!v.contains("type")) {
     return internal::InvalidArgumentError(
         absl::StrFormat("field: %s has neither $ref nor type.", field_name));
@@ -87,7 +86,7 @@ DiscoveryTypeVertex::DetermineTypeAndSynthesis(nlohmann::json const& v,
   auto scalar_type = CheckForScalarType(v);
   if (scalar_type) {
     return TypeInfo{*scalar_type, compare_package_name,
-                    properties_for_synthesis, false};
+                    properties_for_synthesis, false, false};
   }
 
   if (type == "object" &&
@@ -101,7 +100,7 @@ DiscoveryTypeVertex::DetermineTypeAndSynthesis(nlohmann::json const& v,
   if (type == "object" && v.contains("properties")) {
     // Synthesize nested type for this struct.
     type = CapitalizeFirstLetter(field_name);
-    return TypeInfo{type, compare_package_name, &v, false};
+    return TypeInfo{type, compare_package_name, &v, false, true};
   }
 
   if (type == "object" && v.contains("additionalProperties")) {
@@ -119,6 +118,7 @@ DiscoveryTypeVertex::DetermineTypeAndSynthesis(nlohmann::json const& v,
                  additional_properties.contains("properties")) {
         map_type = CapitalizeFirstLetter(field_name + "Item");
         properties_for_synthesis = &additional_properties;
+        is_message = true;
       } else {
         return internal::InvalidArgumentError(absl::StrFormat(
             "field: %s unknown type: %s for map field.", field_name, map_type));
@@ -128,7 +128,8 @@ DiscoveryTypeVertex::DetermineTypeAndSynthesis(nlohmann::json const& v,
       return internal::InvalidArgumentError(absl::StrFormat(
           "field: %s is a map with neither $ref nor type.", field_name));
     }
-    return TypeInfo{type, compare_package_name, properties_for_synthesis, true};
+    return TypeInfo{type, compare_package_name, properties_for_synthesis, true,
+                    is_message};
   }
 
   if (type == "array") {
@@ -140,6 +141,7 @@ DiscoveryTypeVertex::DetermineTypeAndSynthesis(nlohmann::json const& v,
     if (items.contains("$ref")) {
       type = items["$ref"];
       compare_package_name = true;
+      is_message = true;
     } else if (items.contains("type")) {
       type = items["type"];
       scalar_type = CheckForScalarType(items);
@@ -148,7 +150,7 @@ DiscoveryTypeVertex::DetermineTypeAndSynthesis(nlohmann::json const& v,
       } else if (type == "object" && items.contains("properties")) {
         // Synthesize a nested type for this array.
         type = CapitalizeFirstLetter(field_name + "Item");
-        return TypeInfo{type, compare_package_name, &items, false};
+        return TypeInfo{type, compare_package_name, &items, false, true};
       } else {
         return internal::InvalidArgumentError(absl::StrFormat(
             "field: %s unknown type: %s for array field.", field_name, type));
@@ -158,8 +160,8 @@ DiscoveryTypeVertex::DetermineTypeAndSynthesis(nlohmann::json const& v,
           "field: %s is array with items having neither $ref nor type.",
           field_name));
     }
-    return TypeInfo{type, compare_package_name, properties_for_synthesis,
-                    false};
+    return TypeInfo{type, compare_package_name, properties_for_synthesis, false,
+                    is_message};
   }
 
   return internal::InvalidArgumentError(
@@ -181,6 +183,31 @@ StatusOr<std::string> DiscoveryTypeVertex::FormatMessage(
   if (!lines) return std::move(lines).status();
   return absl::StrCat(indent, absl::StrFormat("message %s {\n", name),
                       absl::StrJoin(*lines, "\n\n"), "\n", indent, "}");
+}
+
+DiscoveryTypeVertex::MessageProperties
+DiscoveryTypeVertex::DetermineReservedAndMaxFieldNumbers(
+    google::protobuf::Descriptor const& message_descriptor) {
+  MessageProperties message_properties{{}, 0};
+  for (auto r = 0; r != message_descriptor.reserved_range_count(); ++r) {
+    auto const* reserved_range = message_descriptor.reserved_range(r);
+    for (int j = reserved_range->start; j < reserved_range->end; ++j) {
+      message_properties.reserved_numbers.insert(j);
+    }
+    // google::protobuf::ReservedRange.end returns the next available value, not
+    // the actual end reserved value.
+    message_properties.next_available_field_number =
+        std::max(message_properties.next_available_field_number,
+                 message_descriptor.reserved_range(r)->end);
+  }
+
+  for (auto i = 0; i != message_descriptor.field_count(); ++i) {
+    message_properties.next_available_field_number =
+        std::max(message_properties.next_available_field_number,
+                 message_descriptor.field(i)->number() + 1);
+  }
+
+  return message_properties;
 }
 
 // NOLINTNEXTLINE(misc-no-recursion)
@@ -273,7 +300,7 @@ std::string DiscoveryTypeVertex::FormatFieldOptions(
                                absl::StrCat("\"", field_name, "\""));
   }
   if (field_json.value("is_resource", false)) {
-    field_options.emplace_back("json_name", "resource");
+    field_options.emplace_back("json_name", "__json_request_body");
   }
 
   if (!field_options.empty()) {

@@ -36,6 +36,20 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  */
 class MockDataConnection : public bigtable::DataConnection {
  public:
+  MockDataConnection() {
+    ON_CALL(*this, ReadRows)
+        .WillByDefault([this](std::string const& table_name,
+                              bigtable::RowSet const& row_set,
+                              std::int64_t rows_limit,
+                              bigtable::Filter const& filter) {
+          bigtable::ReadRowsParams params{
+              table_name,
+              internal::CurrentOptions().get<bigtable::AppProfileIdOption>(),
+              row_set, rows_limit, filter};
+          return this->ReadRowsFull(params);
+        });
+  }
+
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(Status, Apply,
@@ -54,9 +68,13 @@ class MockDataConnection : public bigtable::DataConnection {
               (std::string const& table_name, bigtable::BulkMutation mut),
               (override));
 
+  /// Prefer to use `ReadRowsFull()`.
   MOCK_METHOD(bigtable::RowReader, ReadRows,
               (std::string const& table_name, bigtable::RowSet row_set,
                std::int64_t rows_limit, bigtable::Filter filter),
+              (override));
+
+  MOCK_METHOD(bigtable::RowReader, ReadRowsFull, (bigtable::ReadRowsParams),
               (override));
 
   MOCK_METHOD((StatusOr<std::pair<bool, bigtable::Row>>), ReadRow,

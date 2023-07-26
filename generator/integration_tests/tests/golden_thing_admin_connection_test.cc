@@ -19,7 +19,6 @@
 #include "generator/integration_tests/tests/mock_golden_thing_admin_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
-#include "google/cloud/internal/opentelemetry_options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/testing_util/async_sequencer.h"
 #include "google/cloud/testing_util/is_proto_equal.h"

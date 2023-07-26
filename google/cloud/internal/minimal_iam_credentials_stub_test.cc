@@ -40,7 +40,6 @@ using ::google::iam::credentials::v1::GenerateAccessTokenRequest;
 using ::google::iam::credentials::v1::GenerateAccessTokenResponse;
 using ::google::iam::credentials::v1::SignBlobRequest;
 using ::google::iam::credentials::v1::SignBlobResponse;
-using ::testing::_;
 using ::testing::Contains;
 using ::testing::HasSubstr;
 using ::testing::Return;
@@ -191,13 +190,14 @@ TEST_F(MinimalIamCredentialsStubTest,
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 using ::google::cloud::testing_util::DisableTracing;
 using ::google::cloud::testing_util::EnableTracing;
-using ::google::cloud::testing_util::SpanAttribute;
+using ::google::cloud::testing_util::OTelAttribute;
 using ::google::cloud::testing_util::SpanHasAttributes;
 using ::google::cloud::testing_util::SpanHasInstrumentationScope;
 using ::google::cloud::testing_util::SpanKindIsClient;
 using ::google::cloud::testing_util::SpanNamed;
 using ::google::cloud::testing_util::SpanWithStatus;
 using ::google::cloud::testing_util::ThereIsAnActiveSpan;
+using ::testing::_;
 using ::testing::IsEmpty;
 
 auto constexpr kErrorCode = static_cast<int>(StatusCode::kAborted);
@@ -256,8 +256,8 @@ TEST_F(MinimalIamCredentialsStubTest, AsyncGenerateAccessTokenTracing) {
               "google.iam.credentials.v1.IAMCredentials/GenerateAccessToken"),
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
           SpanHasAttributes(
-              SpanAttribute<std::string>("grpc.peer", _),
-              SpanAttribute<int>("gcloud.status_code", kErrorCode)))));
+              OTelAttribute<std::string>("grpc.peer", _),
+              OTelAttribute<int>("gcloud.status_code", kErrorCode)))));
 }
 
 TEST_F(MinimalIamCredentialsStubTest, SignBlobNoTracing) {
@@ -307,8 +307,8 @@ TEST_F(MinimalIamCredentialsStubTest, SignBlobTracing) {
           SpanNamed("google.iam.credentials.v1.IAMCredentials/SignBlob"),
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
           SpanHasAttributes(
-              SpanAttribute<std::string>("grpc.peer", _),
-              SpanAttribute<int>("gcloud.status_code", kErrorCode)))));
+              OTelAttribute<std::string>("grpc.peer", _),
+              OTelAttribute<int>("gcloud.status_code", kErrorCode)))));
 }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 

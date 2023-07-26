@@ -21,6 +21,7 @@
 
 #include "google/cloud/dialogflow_es/internal/contexts_stub.h"
 #include "google/cloud/version.h"
+#include <map>
 #include <memory>
 #include <string>
 
@@ -32,7 +33,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class ContextsMetadata : public ContextsStub {
  public:
   ~ContextsMetadata() override = default;
-  explicit ContextsMetadata(std::shared_ptr<ContextsStub> child);
+  ContextsMetadata(std::shared_ptr<ContextsStub> child,
+                   std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::dialogflow::v2::ListContextsResponse> ListContexts(
       grpc::ClientContext& context,
@@ -69,6 +71,7 @@ class ContextsMetadata : public ContextsStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<ContextsStub> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

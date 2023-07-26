@@ -21,6 +21,7 @@
 
 #include "google/cloud/trace/v1/internal/trace_stub.h"
 #include "google/cloud/version.h"
+#include <map>
 #include <memory>
 #include <string>
 
@@ -32,7 +33,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class TraceServiceMetadata : public TraceServiceStub {
  public:
   ~TraceServiceMetadata() override = default;
-  explicit TraceServiceMetadata(std::shared_ptr<TraceServiceStub> child);
+  TraceServiceMetadata(std::shared_ptr<TraceServiceStub> child,
+                       std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::devtools::cloudtrace::v1::ListTracesResponse> ListTraces(
       grpc::ClientContext& context,
@@ -54,6 +56,7 @@ class TraceServiceMetadata : public TraceServiceStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<TraceServiceStub> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

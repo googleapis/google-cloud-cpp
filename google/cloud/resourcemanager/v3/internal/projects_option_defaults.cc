@@ -47,8 +47,9 @@ Options ProjectsDefaultOptions(Options options) {
   }
   if (!options.has<resourcemanager_v3::ProjectsBackoffPolicyOption>()) {
     options.set<resourcemanager_v3::ProjectsBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options.has<resourcemanager_v3::ProjectsPollingPolicyOption>()) {
@@ -58,8 +59,9 @@ Options ProjectsDefaultOptions(Options options) {
             resourcemanager_v3::ProjectsBackoffPolicyOption::Type>(
             options.get<resourcemanager_v3::ProjectsRetryPolicyOption>()
                 ->clone(),
-            options.get<resourcemanager_v3::ProjectsBackoffPolicyOption>()
-                ->clone())
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
             .clone());
   }
   if (!options.has<

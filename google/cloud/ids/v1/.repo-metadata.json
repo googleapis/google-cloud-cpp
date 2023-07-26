@@ -1,0 +1,13 @@
+{
+    "api_id": "ids.googleapis.com",
+    "api_shortname": "ids",
+    "client_documentation": "https://cloud.google.com/cpp/docs/reference/ids/latest",
+    "distribution_name": "google-cloud-cpp",
+    "language": "cpp",
+    "library_type": "GAPIC_AUTO",
+    "name_pretty": "Cloud IDS API",
+    "product_documentation": "https://cloud.google.com/ids",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-cpp",
+    "requires_billing": true
+}

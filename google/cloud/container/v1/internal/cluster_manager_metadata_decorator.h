@@ -21,6 +21,7 @@
 
 #include "google/cloud/container/v1/internal/cluster_manager_stub.h"
 #include "google/cloud/version.h"
+#include <map>
 #include <memory>
 #include <string>
 
@@ -32,7 +33,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class ClusterManagerMetadata : public ClusterManagerStub {
  public:
   ~ClusterManagerMetadata() override = default;
-  explicit ClusterManagerMetadata(std::shared_ptr<ClusterManagerStub> child);
+  ClusterManagerMetadata(
+      std::shared_ptr<ClusterManagerStub> child,
+      std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::container::v1::ListClustersResponse> ListClusters(
       grpc::ClientContext& context,
@@ -174,12 +177,19 @@ class ClusterManagerMetadata : public ClusterManagerStub {
       google::container::v1::ListUsableSubnetworksRequest const& request)
       override;
 
+  StatusOr<google::container::v1::CheckAutopilotCompatibilityResponse>
+  CheckAutopilotCompatibility(
+      grpc::ClientContext& context,
+      google::container::v1::CheckAutopilotCompatibilityRequest const& request)
+      override;
+
  private:
   void SetMetadata(grpc::ClientContext& context,
                    std::string const& request_params);
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<ClusterManagerStub> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

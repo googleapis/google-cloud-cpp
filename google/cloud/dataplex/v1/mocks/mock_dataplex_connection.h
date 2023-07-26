@@ -40,7 +40,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * While the example showcases types from the BigQuery library, the underlying
  * principles apply for any pair of `*Client` and `*Connection`.
  *
- * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
+ * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
 class MockDataplexServiceConnection
     : public dataplex_v1::DataplexServiceConnection {
@@ -146,6 +146,10 @@ class MockDataplexServiceConnection
 
   MOCK_METHOD(StreamRange<google::cloud::dataplex::v1::Job>, ListJobs,
               (google::cloud::dataplex::v1::ListJobsRequest request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::dataplex::v1::RunTaskResponse>, RunTask,
+              (google::cloud::dataplex::v1::RunTaskRequest const& request),
               (override));
 
   MOCK_METHOD(StatusOr<google::cloud::dataplex::v1::Job>, GetJob,

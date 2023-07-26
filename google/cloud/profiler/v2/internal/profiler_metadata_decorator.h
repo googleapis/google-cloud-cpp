@@ -21,6 +21,7 @@
 
 #include "google/cloud/profiler/v2/internal/profiler_stub.h"
 #include "google/cloud/version.h"
+#include <map>
 #include <memory>
 #include <string>
 
@@ -32,7 +33,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class ProfilerServiceMetadata : public ProfilerServiceStub {
  public:
   ~ProfilerServiceMetadata() override = default;
-  explicit ProfilerServiceMetadata(std::shared_ptr<ProfilerServiceStub> child);
+  ProfilerServiceMetadata(
+      std::shared_ptr<ProfilerServiceStub> child,
+      std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::devtools::cloudprofiler::v2::Profile> CreateProfile(
       grpc::ClientContext& context,
@@ -55,6 +58,7 @@ class ProfilerServiceMetadata : public ProfilerServiceStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<ProfilerServiceStub> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

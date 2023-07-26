@@ -86,23 +86,36 @@ class SqlTiersServiceClient {
   }
   ///@}
 
+  // clang-format off
   ///
   /// Lists all available machine types (tiers) for Cloud SQL, for example,
-  /// db-custom-1-3840. For more information, see
+  /// `db-custom-1-3840`. For more information, see
   /// https://cloud.google.com/sql/pricing.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::sql::v1::SqlTiersListRequest,google/cloud/sql/v1/cloud_sql_tiers.proto#L47}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.sql.v1.SqlTiersListRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::sql::v1::TiersListResponse,google/cloud/sql/v1/cloud_sql_tiers.proto#L53}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.sql.v1.TiersListResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.sql.v1.SqlTiersListRequest]:
-  /// @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_tiers.proto#L47}
-  /// [google.cloud.sql.v1.TiersListResponse]:
-  /// @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_tiers.proto#L53}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.sql.v1.SqlTiersListRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_tiers.proto#L47}
+  /// [google.cloud.sql.v1.TiersListResponse]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_tiers.proto#L53}
   ///
+  // clang-format on
   StatusOr<google::cloud::sql::v1::TiersListResponse> List(
       google::cloud::sql::v1::SqlTiersListRequest const& request,
       Options opts = {});

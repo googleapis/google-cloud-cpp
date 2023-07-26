@@ -47,8 +47,9 @@ Options ManagedNotebookServiceDefaultOptions(Options options) {
   }
   if (!options.has<notebooks_v1::ManagedNotebookServiceBackoffPolicyOption>()) {
     options.set<notebooks_v1::ManagedNotebookServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options.has<notebooks_v1::ManagedNotebookServicePollingPolicyOption>()) {
@@ -59,9 +60,9 @@ Options ManagedNotebookServiceDefaultOptions(Options options) {
             options
                 .get<notebooks_v1::ManagedNotebookServiceRetryPolicyOption>()
                 ->clone(),
-            options
-                .get<notebooks_v1::ManagedNotebookServiceBackoffPolicyOption>()
-                ->clone())
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
             .clone());
   }
   if (!options.has<

@@ -85,88 +85,127 @@ class LanguageServiceClient {
   }
   ///@}
 
+  // clang-format off
   ///
   /// Analyzes the sentiment of the provided text.
   ///
   /// @param document  Required. Input document.
-  /// @param encoding_type  The encoding type used by the API to calculate
-  /// sentence offsets.
+  /// @param encoding_type  The encoding type used by the API to calculate sentence offsets.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::language::v1::AnalyzeSentimentResponse,google/cloud/language/v1/language_service.proto#L1025}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.language.v1.AnalyzeSentimentResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.language.v1.AnalyzeSentimentRequest]:
-  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1016}
-  /// [google.cloud.language.v1.AnalyzeSentimentResponse]:
-  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1025}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.language.v1.AnalyzeSentimentRequest]: @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1024}
+  /// [google.cloud.language.v1.AnalyzeSentimentResponse]: @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1033}
   ///
+  // clang-format on
   StatusOr<google::cloud::language::v1::AnalyzeSentimentResponse>
   AnalyzeSentiment(google::cloud::language::v1::Document const& document,
                    google::cloud::language::v1::EncodingType encoding_type,
                    Options opts = {});
 
+  // clang-format off
   ///
   /// Analyzes the sentiment of the provided text.
   ///
   /// @param document  Required. Input document.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::language::v1::AnalyzeSentimentResponse,google/cloud/language/v1/language_service.proto#L1025}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.language.v1.AnalyzeSentimentResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.language.v1.AnalyzeSentimentRequest]:
-  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1016}
-  /// [google.cloud.language.v1.AnalyzeSentimentResponse]:
-  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1025}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.language.v1.AnalyzeSentimentRequest]: @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1024}
+  /// [google.cloud.language.v1.AnalyzeSentimentResponse]: @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1033}
   ///
+  // clang-format on
   StatusOr<google::cloud::language::v1::AnalyzeSentimentResponse>
   AnalyzeSentiment(google::cloud::language::v1::Document const& document,
                    Options opts = {});
 
+  // clang-format off
   ///
   /// Analyzes the sentiment of the provided text.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::language::v1::AnalyzeSentimentRequest,google/cloud/language/v1/language_service.proto#L1016}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.language.v1.AnalyzeSentimentRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::language::v1::AnalyzeSentimentResponse,google/cloud/language/v1/language_service.proto#L1025}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.language.v1.AnalyzeSentimentResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.language.v1.AnalyzeSentimentRequest]:
-  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1016}
-  /// [google.cloud.language.v1.AnalyzeSentimentResponse]:
-  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1025}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.language.v1.AnalyzeSentimentRequest]: @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1024}
+  /// [google.cloud.language.v1.AnalyzeSentimentResponse]: @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1033}
   ///
+  // clang-format on
   StatusOr<google::cloud::language::v1::AnalyzeSentimentResponse>
   AnalyzeSentiment(
       google::cloud::language::v1::AnalyzeSentimentRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Finds named entities (currently proper names and common nouns) in the text
   /// along with entity types, salience, mentions for each entity, and
   /// other properties.
   ///
   /// @param document  Required. Input document.
-  /// @param encoding_type  The encoding type used by the API to calculate
-  /// offsets.
+  /// @param encoding_type  The encoding type used by the API to calculate offsets.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::language::v1::AnalyzeEntitiesResponse,google/cloud/language/v1/language_service.proto#L1070}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.language.v1.AnalyzeEntitiesResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.language.v1.AnalyzeEntitiesRequest]:
-  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1061}
-  /// [google.cloud.language.v1.AnalyzeEntitiesResponse]:
-  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1070}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.language.v1.AnalyzeEntitiesRequest]: @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1069}
+  /// [google.cloud.language.v1.AnalyzeEntitiesResponse]: @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1078}
   ///
+  // clang-format on
   StatusOr<google::cloud::language::v1::AnalyzeEntitiesResponse>
   AnalyzeEntities(google::cloud::language::v1::Document const& document,
                   google::cloud::language::v1::EncodingType encoding_type,
                   Options opts = {});
 
+  // clang-format off
   ///
   /// Finds named entities (currently proper names and common nouns) in the text
   /// along with entity types, salience, mentions for each entity, and
@@ -175,40 +214,62 @@ class LanguageServiceClient {
   /// @param document  Required. Input document.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::language::v1::AnalyzeEntitiesResponse,google/cloud/language/v1/language_service.proto#L1070}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.language.v1.AnalyzeEntitiesResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.language.v1.AnalyzeEntitiesRequest]:
-  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1061}
-  /// [google.cloud.language.v1.AnalyzeEntitiesResponse]:
-  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1070}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.language.v1.AnalyzeEntitiesRequest]: @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1069}
+  /// [google.cloud.language.v1.AnalyzeEntitiesResponse]: @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1078}
   ///
+  // clang-format on
   StatusOr<google::cloud::language::v1::AnalyzeEntitiesResponse>
   AnalyzeEntities(google::cloud::language::v1::Document const& document,
                   Options opts = {});
 
+  // clang-format off
   ///
   /// Finds named entities (currently proper names and common nouns) in the text
   /// along with entity types, salience, mentions for each entity, and
   /// other properties.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::language::v1::AnalyzeEntitiesRequest,google/cloud/language/v1/language_service.proto#L1061}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.language.v1.AnalyzeEntitiesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::language::v1::AnalyzeEntitiesResponse,google/cloud/language/v1/language_service.proto#L1070}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.language.v1.AnalyzeEntitiesResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.language.v1.AnalyzeEntitiesRequest]:
-  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1061}
-  /// [google.cloud.language.v1.AnalyzeEntitiesResponse]:
-  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1070}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.language.v1.AnalyzeEntitiesRequest]: @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1069}
+  /// [google.cloud.language.v1.AnalyzeEntitiesResponse]: @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1078}
   ///
+  // clang-format on
   StatusOr<google::cloud::language::v1::AnalyzeEntitiesResponse>
   AnalyzeEntities(
       google::cloud::language::v1::AnalyzeEntitiesRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Finds entities, similar to
   /// [AnalyzeEntities][google.cloud.language.v1.LanguageService.AnalyzeEntities]
@@ -216,26 +277,33 @@ class LanguageServiceClient {
   /// mentions.
   ///
   /// @param document  Required. Input document.
-  /// @param encoding_type  The encoding type used by the API to calculate
-  /// offsets.
+  /// @param encoding_type  The encoding type used by the API to calculate offsets.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::language::v1::AnalyzeEntitySentimentResponse,google/cloud/language/v1/language_service.proto#L1049}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.language.v1.AnalyzeEntitySentimentResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.language.v1.AnalyzeEntitySentimentRequest]:
-  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1040}
-  /// [google.cloud.language.v1.AnalyzeEntitySentimentResponse]:
-  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1049}
-  /// [google.cloud.language.v1.LanguageService.AnalyzeEntities]:
-  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L50}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.language.v1.AnalyzeEntitySentimentRequest]: @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1048}
+  /// [google.cloud.language.v1.AnalyzeEntitySentimentResponse]: @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1057}
+  /// [google.cloud.language.v1.LanguageService.AnalyzeEntities]: @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L50}
   ///
+  // clang-format on
   StatusOr<google::cloud::language::v1::AnalyzeEntitySentimentResponse>
   AnalyzeEntitySentiment(
       google::cloud::language::v1::Document const& document,
       google::cloud::language::v1::EncodingType encoding_type,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Finds entities, similar to
   /// [AnalyzeEntities][google.cloud.language.v1.LanguageService.AnalyzeEntities]
@@ -245,68 +313,96 @@ class LanguageServiceClient {
   /// @param document  Required. Input document.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::language::v1::AnalyzeEntitySentimentResponse,google/cloud/language/v1/language_service.proto#L1049}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.language.v1.AnalyzeEntitySentimentResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.language.v1.AnalyzeEntitySentimentRequest]:
-  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1040}
-  /// [google.cloud.language.v1.AnalyzeEntitySentimentResponse]:
-  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1049}
-  /// [google.cloud.language.v1.LanguageService.AnalyzeEntities]:
-  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L50}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.language.v1.AnalyzeEntitySentimentRequest]: @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1048}
+  /// [google.cloud.language.v1.AnalyzeEntitySentimentResponse]: @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1057}
+  /// [google.cloud.language.v1.LanguageService.AnalyzeEntities]: @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L50}
   ///
+  // clang-format on
   StatusOr<google::cloud::language::v1::AnalyzeEntitySentimentResponse>
   AnalyzeEntitySentiment(google::cloud::language::v1::Document const& document,
                          Options opts = {});
 
+  // clang-format off
   ///
   /// Finds entities, similar to
   /// [AnalyzeEntities][google.cloud.language.v1.LanguageService.AnalyzeEntities]
   /// in the text and analyzes sentiment associated with each entity and its
   /// mentions.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::language::v1::AnalyzeEntitySentimentRequest,google/cloud/language/v1/language_service.proto#L1040}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.language.v1.AnalyzeEntitySentimentRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::language::v1::AnalyzeEntitySentimentResponse,google/cloud/language/v1/language_service.proto#L1049}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.language.v1.AnalyzeEntitySentimentResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.language.v1.AnalyzeEntitySentimentRequest]:
-  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1040}
-  /// [google.cloud.language.v1.AnalyzeEntitySentimentResponse]:
-  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1049}
-  /// [google.cloud.language.v1.LanguageService.AnalyzeEntities]:
-  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L50}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.language.v1.AnalyzeEntitySentimentRequest]: @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1048}
+  /// [google.cloud.language.v1.AnalyzeEntitySentimentResponse]: @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1057}
+  /// [google.cloud.language.v1.LanguageService.AnalyzeEntities]: @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L50}
   ///
+  // clang-format on
   StatusOr<google::cloud::language::v1::AnalyzeEntitySentimentResponse>
   AnalyzeEntitySentiment(
       google::cloud::language::v1::AnalyzeEntitySentimentRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Analyzes the syntax of the text and provides sentence boundaries and
   /// tokenization along with part of speech tags, dependency trees, and other
   /// properties.
   ///
   /// @param document  Required. Input document.
-  /// @param encoding_type  The encoding type used by the API to calculate
-  /// offsets.
+  /// @param encoding_type  The encoding type used by the API to calculate offsets.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::language::v1::AnalyzeSyntaxResponse,google/cloud/language/v1/language_service.proto#L1091}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.language.v1.AnalyzeSyntaxResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.language.v1.AnalyzeSyntaxRequest]:
-  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1082}
-  /// [google.cloud.language.v1.AnalyzeSyntaxResponse]:
-  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1091}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.language.v1.AnalyzeSyntaxRequest]: @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1090}
+  /// [google.cloud.language.v1.AnalyzeSyntaxResponse]: @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1099}
   ///
+  // clang-format on
   StatusOr<google::cloud::language::v1::AnalyzeSyntaxResponse> AnalyzeSyntax(
       google::cloud::language::v1::Document const& document,
       google::cloud::language::v1::EncodingType encoding_type,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Analyzes the syntax of the text and provides sentence boundaries and
   /// tokenization along with part of speech tags, dependency trees, and other
@@ -315,92 +411,201 @@ class LanguageServiceClient {
   /// @param document  Required. Input document.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::language::v1::AnalyzeSyntaxResponse,google/cloud/language/v1/language_service.proto#L1091}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.language.v1.AnalyzeSyntaxResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.language.v1.AnalyzeSyntaxRequest]:
-  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1082}
-  /// [google.cloud.language.v1.AnalyzeSyntaxResponse]:
-  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1091}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.language.v1.AnalyzeSyntaxRequest]: @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1090}
+  /// [google.cloud.language.v1.AnalyzeSyntaxResponse]: @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1099}
   ///
+  // clang-format on
   StatusOr<google::cloud::language::v1::AnalyzeSyntaxResponse> AnalyzeSyntax(
       google::cloud::language::v1::Document const& document, Options opts = {});
 
+  // clang-format off
   ///
   /// Analyzes the syntax of the text and provides sentence boundaries and
   /// tokenization along with part of speech tags, dependency trees, and other
   /// properties.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::language::v1::AnalyzeSyntaxRequest,google/cloud/language/v1/language_service.proto#L1082}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.language.v1.AnalyzeSyntaxRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::language::v1::AnalyzeSyntaxResponse,google/cloud/language/v1/language_service.proto#L1091}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.language.v1.AnalyzeSyntaxResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.language.v1.AnalyzeSyntaxRequest]:
-  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1082}
-  /// [google.cloud.language.v1.AnalyzeSyntaxResponse]:
-  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1091}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.language.v1.AnalyzeSyntaxRequest]: @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1090}
+  /// [google.cloud.language.v1.AnalyzeSyntaxResponse]: @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1099}
   ///
+  // clang-format on
   StatusOr<google::cloud::language::v1::AnalyzeSyntaxResponse> AnalyzeSyntax(
       google::cloud::language::v1::AnalyzeSyntaxRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Classifies a document into categories.
   ///
   /// @param document  Required. Input document.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::language::v1::ClassifyTextResponse,google/cloud/language/v1/language_service.proto#L1116}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.language.v1.ClassifyTextResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.language.v1.ClassifyTextRequest]:
-  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1106}
-  /// [google.cloud.language.v1.ClassifyTextResponse]:
-  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1116}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.language.v1.ClassifyTextRequest]: @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1114}
+  /// [google.cloud.language.v1.ClassifyTextResponse]: @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1124}
   ///
+  // clang-format on
   StatusOr<google::cloud::language::v1::ClassifyTextResponse> ClassifyText(
       google::cloud::language::v1::Document const& document, Options opts = {});
 
+  // clang-format off
   ///
   /// Classifies a document into categories.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::language::v1::ClassifyTextRequest,google/cloud/language/v1/language_service.proto#L1106}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.language.v1.ClassifyTextRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::language::v1::ClassifyTextResponse,google/cloud/language/v1/language_service.proto#L1116}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.language.v1.ClassifyTextResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.language.v1.ClassifyTextRequest]:
-  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1106}
-  /// [google.cloud.language.v1.ClassifyTextResponse]:
-  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1116}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.language.v1.ClassifyTextRequest]: @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1114}
+  /// [google.cloud.language.v1.ClassifyTextResponse]: @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1124}
   ///
+  // clang-format on
   StatusOr<google::cloud::language::v1::ClassifyTextResponse> ClassifyText(
       google::cloud::language::v1::ClassifyTextRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// Moderates a document for harmful and sensitive categories.
+  ///
+  /// @param document  Required. Input document.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.language.v1.ModerateTextResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.language.v1.ModerateTextRequest]: @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1130}
+  /// [google.cloud.language.v1.ModerateTextResponse]: @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1136}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::language::v1::ModerateTextResponse> ModerateText(
+      google::cloud::language::v1::Document const& document, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Moderates a document for harmful and sensitive categories.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.language.v1.ModerateTextRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.language.v1.ModerateTextResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.language.v1.ModerateTextRequest]: @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1130}
+  /// [google.cloud.language.v1.ModerateTextResponse]: @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1136}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::language::v1::ModerateTextResponse> ModerateText(
+      google::cloud::language::v1::ModerateTextRequest const& request,
+      Options opts = {});
+
+  // clang-format off
   ///
   /// A convenience method that provides all the features that analyzeSentiment,
   /// analyzeEntities, and analyzeSyntax provide in one call.
   ///
   /// @param document  Required. Input document.
   /// @param features  Required. The enabled features.
-  /// @param encoding_type  The encoding type used by the API to calculate
-  /// offsets.
+  /// @param encoding_type  The encoding type used by the API to calculate offsets.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::language::v1::AnnotateTextResponse,google/cloud/language/v1/language_service.proto#L1158}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.language.v1.AnnotateTextResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.language.v1.AnnotateTextRequest]:
-  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1123}
-  /// [google.cloud.language.v1.AnnotateTextResponse]:
-  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1158}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.language.v1.AnnotateTextRequest]: @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1143}
+  /// [google.cloud.language.v1.AnnotateTextResponse]: @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1181}
   ///
+  // clang-format on
   StatusOr<google::cloud::language::v1::AnnotateTextResponse> AnnotateText(
       google::cloud::language::v1::Document const& document,
       google::cloud::language::v1::AnnotateTextRequest::Features const&
@@ -408,6 +613,7 @@ class LanguageServiceClient {
       google::cloud::language::v1::EncodingType encoding_type,
       Options opts = {});
 
+  // clang-format off
   ///
   /// A convenience method that provides all the features that analyzeSentiment,
   /// analyzeEntities, and analyzeSyntax provide in one call.
@@ -416,36 +622,57 @@ class LanguageServiceClient {
   /// @param features  Required. The enabled features.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::language::v1::AnnotateTextResponse,google/cloud/language/v1/language_service.proto#L1158}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.language.v1.AnnotateTextResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.language.v1.AnnotateTextRequest]:
-  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1123}
-  /// [google.cloud.language.v1.AnnotateTextResponse]:
-  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1158}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.language.v1.AnnotateTextRequest]: @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1143}
+  /// [google.cloud.language.v1.AnnotateTextResponse]: @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1181}
   ///
+  // clang-format on
   StatusOr<google::cloud::language::v1::AnnotateTextResponse> AnnotateText(
       google::cloud::language::v1::Document const& document,
       google::cloud::language::v1::AnnotateTextRequest::Features const&
           features,
       Options opts = {});
 
+  // clang-format off
   ///
   /// A convenience method that provides all the features that analyzeSentiment,
   /// analyzeEntities, and analyzeSyntax provide in one call.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::language::v1::AnnotateTextRequest,google/cloud/language/v1/language_service.proto#L1123}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.language.v1.AnnotateTextRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::language::v1::AnnotateTextResponse,google/cloud/language/v1/language_service.proto#L1158}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.language.v1.AnnotateTextResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.language.v1.AnnotateTextRequest]:
-  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1123}
-  /// [google.cloud.language.v1.AnnotateTextResponse]:
-  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1158}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.language.v1.AnnotateTextRequest]: @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1143}
+  /// [google.cloud.language.v1.AnnotateTextResponse]: @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1181}
   ///
+  // clang-format on
   StatusOr<google::cloud::language::v1::AnnotateTextResponse> AnnotateText(
       google::cloud::language::v1::AnnotateTextRequest const& request,
       Options opts = {});

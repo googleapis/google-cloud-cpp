@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# This is a minimal Makefile to show how to use the Stackdriver Trace API C++ client
+# This is a minimal Makefile to show how to use the Cloud Trace API C++ client
 # for developers who use make(1) as their build system.
 
 # The CXX, CXXFLAGS and CXXLD variables are hard-coded. These values work for
@@ -24,7 +24,7 @@ BIN=.
 
 all: $(BIN)/quickstart
 
-# Configuration variables to compile and link against the Stackdriver Trace API C++
+# Configuration variables to compile and link against the Cloud Trace API C++
 # client library.
 CLIENT_MODULE     := google_cloud_cpp_trace
 CLIENT_CXXFLAGS   := $(shell pkg-config $(CLIENT_MODULE) --cflags)

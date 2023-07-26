@@ -53,8 +53,9 @@ Options AppConnectionsServiceDefaultOptions(Options options) {
                        AppConnectionsServiceBackoffPolicyOption>()) {
     options.set<
         beyondcorp_appconnections_v1::AppConnectionsServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options.has<beyondcorp_appconnections_v1::
@@ -70,10 +71,9 @@ Options AppConnectionsServiceDefaultOptions(Options options) {
                 .get<beyondcorp_appconnections_v1::
                          AppConnectionsServiceRetryPolicyOption>()
                 ->clone(),
-            options
-                .get<beyondcorp_appconnections_v1::
-                         AppConnectionsServiceBackoffPolicyOption>()
-                ->clone())
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
             .clone());
   }
   if (!options

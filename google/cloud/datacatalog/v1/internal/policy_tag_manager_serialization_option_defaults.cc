@@ -51,8 +51,9 @@ Options PolicyTagManagerSerializationDefaultOptions(Options options) {
           datacatalog_v1::PolicyTagManagerSerializationBackoffPolicyOption>()) {
     options
         .set<datacatalog_v1::PolicyTagManagerSerializationBackoffPolicyOption>(
-            ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                     std::chrono::minutes(5), kBackoffScaling)
+            ExponentialBackoffPolicy(
+                std::chrono::seconds(0), std::chrono::seconds(1),
+                std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
                 .clone());
   }
   if (!options.has<

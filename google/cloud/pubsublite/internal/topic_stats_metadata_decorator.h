@@ -21,6 +21,7 @@
 
 #include "google/cloud/pubsublite/internal/topic_stats_stub.h"
 #include "google/cloud/version.h"
+#include <map>
 #include <memory>
 #include <string>
 
@@ -32,8 +33,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class TopicStatsServiceMetadata : public TopicStatsServiceStub {
  public:
   ~TopicStatsServiceMetadata() override = default;
-  explicit TopicStatsServiceMetadata(
-      std::shared_ptr<TopicStatsServiceStub> child);
+  TopicStatsServiceMetadata(
+      std::shared_ptr<TopicStatsServiceStub> child,
+      std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::pubsublite::v1::ComputeMessageStatsResponse>
   ComputeMessageStats(
@@ -59,6 +61,7 @@ class TopicStatsServiceMetadata : public TopicStatsServiceStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<TopicStatsServiceStub> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

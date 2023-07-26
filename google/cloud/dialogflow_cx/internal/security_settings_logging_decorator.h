@@ -36,7 +36,7 @@ class SecuritySettingsServiceLogging : public SecuritySettingsServiceStub {
   ~SecuritySettingsServiceLogging() override = default;
   SecuritySettingsServiceLogging(
       std::shared_ptr<SecuritySettingsServiceStub> child,
-      TracingOptions tracing_options, std::set<std::string> components);
+      TracingOptions tracing_options, std::set<std::string> const& components);
 
   StatusOr<google::cloud::dialogflow::cx::v3::SecuritySettings>
   CreateSecuritySettings(
@@ -70,7 +70,7 @@ class SecuritySettingsServiceLogging : public SecuritySettingsServiceStub {
  private:
   std::shared_ptr<SecuritySettingsServiceStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // SecuritySettingsServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

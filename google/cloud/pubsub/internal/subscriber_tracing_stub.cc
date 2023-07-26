@@ -17,6 +17,7 @@
 // source: google/pubsub/v1/pubsub.proto
 
 #include "google/cloud/pubsub/internal/subscriber_tracing_stub.h"
+#include "google/cloud/internal/async_read_write_stream_tracing.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
 
 namespace google {
@@ -98,13 +99,20 @@ StatusOr<google::pubsub::v1::PullResponse> SubscriberTracingStub::Pull(
   return internal::EndSpan(context, *span, child_->Pull(context, request));
 }
 
-std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
-    google::pubsub::v1::StreamingPullRequest,
-    google::pubsub::v1::StreamingPullResponse>>
+std::unique_ptr<
+    AsyncStreamingReadWriteRpc<google::pubsub::v1::StreamingPullRequest,
+                               google::pubsub::v1::StreamingPullResponse>>
 SubscriberTracingStub::AsyncStreamingPull(
-    google::cloud::CompletionQueue const& cq,
-    std::shared_ptr<grpc::ClientContext> context) {
-  return child_->AsyncStreamingPull(cq, std::move(context));
+    CompletionQueue const& cq, std::shared_ptr<grpc::ClientContext> context) {
+  auto span =
+      internal::MakeSpanGrpc("google.pubsub.v1.Subscriber", "StreamingPull");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(*context, internal::CurrentOptions());
+  auto stream = child_->AsyncStreamingPull(cq, context);
+  return std::make_unique<internal::AsyncStreamingReadWriteRpcTracing<
+      google::pubsub::v1::StreamingPullRequest,
+      google::pubsub::v1::StreamingPullResponse>>(
+      std::move(context), std::move(stream), std::move(span));
 }
 
 Status SubscriberTracingStub::ModifyPushConfig(

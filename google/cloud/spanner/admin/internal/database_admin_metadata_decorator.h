@@ -22,6 +22,7 @@
 #include "google/cloud/spanner/admin/internal/database_admin_stub.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
+#include <map>
 #include <memory>
 #include <string>
 
@@ -33,7 +34,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class DatabaseAdminMetadata : public DatabaseAdminStub {
  public:
   ~DatabaseAdminMetadata() override = default;
-  explicit DatabaseAdminMetadata(std::shared_ptr<DatabaseAdminStub> child);
+  DatabaseAdminMetadata(std::shared_ptr<DatabaseAdminStub> child,
+                        std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::spanner::admin::database::v1::ListDatabasesResponse>
   ListDatabases(
@@ -51,6 +53,12 @@ class DatabaseAdminMetadata : public DatabaseAdminStub {
       grpc::ClientContext& context,
       google::spanner::admin::database::v1::GetDatabaseRequest const& request)
       override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncUpdateDatabase(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::spanner::admin::database::v1::UpdateDatabaseRequest const&
+          request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateDatabaseDdl(
       google::cloud::CompletionQueue& cq,
@@ -153,6 +161,7 @@ class DatabaseAdminMetadata : public DatabaseAdminStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<DatabaseAdminStub> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

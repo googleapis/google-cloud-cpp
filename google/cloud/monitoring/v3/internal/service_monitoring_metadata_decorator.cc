@@ -18,6 +18,7 @@
 
 #include "google/cloud/monitoring/v3/internal/service_monitoring_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/monitoring/v3/service_service.grpc.pb.h>
@@ -29,8 +30,10 @@ namespace monitoring_v3_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ServiceMonitoringServiceMetadata::ServiceMonitoringServiceMetadata(
-    std::shared_ptr<ServiceMonitoringServiceStub> child)
+    std::shared_ptr<ServiceMonitoringServiceStub> child,
+    std::multimap<std::string, std::string> fixed_metadata)
     : child_(std::move(child)),
+      fixed_metadata_(std::move(fixed_metadata)),
       api_client_header_(
           google::cloud::internal::ApiClientHeader("generator")) {}
 
@@ -38,7 +41,7 @@ StatusOr<google::monitoring::v3::Service>
 ServiceMonitoringServiceMetadata::CreateService(
     grpc::ClientContext& context,
     google::monitoring::v3::CreateServiceRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->CreateService(context, request);
 }
 
@@ -46,7 +49,7 @@ StatusOr<google::monitoring::v3::Service>
 ServiceMonitoringServiceMetadata::GetService(
     grpc::ClientContext& context,
     google::monitoring::v3::GetServiceRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetService(context, request);
 }
 
@@ -54,7 +57,7 @@ StatusOr<google::monitoring::v3::ListServicesResponse>
 ServiceMonitoringServiceMetadata::ListServices(
     grpc::ClientContext& context,
     google::monitoring::v3::ListServicesRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListServices(context, request);
 }
 
@@ -62,14 +65,14 @@ StatusOr<google::monitoring::v3::Service>
 ServiceMonitoringServiceMetadata::UpdateService(
     grpc::ClientContext& context,
     google::monitoring::v3::UpdateServiceRequest const& request) {
-  SetMetadata(context, "service.name=" + request.service().name());
+  SetMetadata(context, absl::StrCat("service.name=", request.service().name()));
   return child_->UpdateService(context, request);
 }
 
 Status ServiceMonitoringServiceMetadata::DeleteService(
     grpc::ClientContext& context,
     google::monitoring::v3::DeleteServiceRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->DeleteService(context, request);
 }
 
@@ -77,7 +80,7 @@ StatusOr<google::monitoring::v3::ServiceLevelObjective>
 ServiceMonitoringServiceMetadata::CreateServiceLevelObjective(
     grpc::ClientContext& context,
     google::monitoring::v3::CreateServiceLevelObjectiveRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->CreateServiceLevelObjective(context, request);
 }
 
@@ -85,7 +88,7 @@ StatusOr<google::monitoring::v3::ServiceLevelObjective>
 ServiceMonitoringServiceMetadata::GetServiceLevelObjective(
     grpc::ClientContext& context,
     google::monitoring::v3::GetServiceLevelObjectiveRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetServiceLevelObjective(context, request);
 }
 
@@ -93,7 +96,7 @@ StatusOr<google::monitoring::v3::ListServiceLevelObjectivesResponse>
 ServiceMonitoringServiceMetadata::ListServiceLevelObjectives(
     grpc::ClientContext& context,
     google::monitoring::v3::ListServiceLevelObjectivesRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListServiceLevelObjectives(context, request);
 }
 
@@ -101,15 +104,15 @@ StatusOr<google::monitoring::v3::ServiceLevelObjective>
 ServiceMonitoringServiceMetadata::UpdateServiceLevelObjective(
     grpc::ClientContext& context,
     google::monitoring::v3::UpdateServiceLevelObjectiveRequest const& request) {
-  SetMetadata(context, "service_level_objective.name=" +
-                           request.service_level_objective().name());
+  SetMetadata(context, absl::StrCat("service_level_objective.name=",
+                                    request.service_level_objective().name()));
   return child_->UpdateServiceLevelObjective(context, request);
 }
 
 Status ServiceMonitoringServiceMetadata::DeleteServiceLevelObjective(
     grpc::ClientContext& context,
     google::monitoring::v3::DeleteServiceLevelObjectiveRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->DeleteServiceLevelObjective(context, request);
 }
 
@@ -121,6 +124,9 @@ void ServiceMonitoringServiceMetadata::SetMetadata(
 
 void ServiceMonitoringServiceMetadata::SetMetadata(
     grpc::ClientContext& context) {
+  for (auto const& kv : fixed_metadata_) {
+    context.AddMetadata(kv.first, kv.second);
+  }
   context.AddMetadata("x-goog-api-client", api_client_header_);
   auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {

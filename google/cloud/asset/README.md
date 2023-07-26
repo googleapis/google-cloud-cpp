@@ -60,5 +60,5 @@ int main(int argc, char* argv[]) try {
 - Detailed header comments in our [public `.h`][source-link] files
 
 [cloud-service-docs]: https://cloud.google.com/asset-inventory
-[doxygen-link]: https://googleapis.dev/cpp/google-cloud-asset/latest/
+[doxygen-link]: https://cloud.google.com/cpp/docs/reference/asset/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/asset

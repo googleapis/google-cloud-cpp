@@ -87,6 +87,7 @@ class FulfillmentsClient {
   }
   ///@}
 
+  // clang-format off
   ///
   /// Retrieves the fulfillment.
   ///
@@ -94,72 +95,114 @@ class FulfillmentsClient {
   ///  Format: `projects/<Project ID>/agent/fulfillment`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::Fulfillment,google/cloud/dialogflow/v2/fulfillment.proto#L75}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.dialogflow.v2.Fulfillment])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.dialogflow.v2.Fulfillment]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/fulfillment.proto#L75}
-  /// [google.cloud.dialogflow.v2.GetFulfillmentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/fulfillment.proto#L161}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dialogflow.v2.Fulfillment]: @googleapis_reference_link{google/cloud/dialogflow/v2/fulfillment.proto#L75}
+  /// [google.cloud.dialogflow.v2.GetFulfillmentRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/fulfillment.proto#L161}
   ///
+  // clang-format on
   StatusOr<google::cloud::dialogflow::v2::Fulfillment> GetFulfillment(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Retrieves the fulfillment.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::v2::GetFulfillmentRequest,google/cloud/dialogflow/v2/fulfillment.proto#L161}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dialogflow.v2.GetFulfillmentRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::Fulfillment,google/cloud/dialogflow/v2/fulfillment.proto#L75}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.dialogflow.v2.Fulfillment])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.dialogflow.v2.Fulfillment]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/fulfillment.proto#L75}
-  /// [google.cloud.dialogflow.v2.GetFulfillmentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/fulfillment.proto#L161}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dialogflow.v2.Fulfillment]: @googleapis_reference_link{google/cloud/dialogflow/v2/fulfillment.proto#L75}
+  /// [google.cloud.dialogflow.v2.GetFulfillmentRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/fulfillment.proto#L161}
   ///
+  // clang-format on
   StatusOr<google::cloud::dialogflow::v2::Fulfillment> GetFulfillment(
       google::cloud::dialogflow::v2::GetFulfillmentRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Updates the fulfillment.
   ///
   /// @param fulfillment  Required. The fulfillment to update.
-  /// @param update_mask  Required. The mask to control which fields get
-  /// updated. If the mask is not
+  /// @param update_mask  Required. The mask to control which fields get updated. If the mask is not
   ///  present, all fields will be updated.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::Fulfillment,google/cloud/dialogflow/v2/fulfillment.proto#L75}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.dialogflow.v2.Fulfillment])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.dialogflow.v2.Fulfillment]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/fulfillment.proto#L75}
-  /// [google.cloud.dialogflow.v2.UpdateFulfillmentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/fulfillment.proto#L174}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dialogflow.v2.Fulfillment]: @googleapis_reference_link{google/cloud/dialogflow/v2/fulfillment.proto#L75}
+  /// [google.cloud.dialogflow.v2.UpdateFulfillmentRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/fulfillment.proto#L174}
   ///
+  // clang-format on
   StatusOr<google::cloud::dialogflow::v2::Fulfillment> UpdateFulfillment(
       google::cloud::dialogflow::v2::Fulfillment const& fulfillment,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
   ///
   /// Updates the fulfillment.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::v2::UpdateFulfillmentRequest,google/cloud/dialogflow/v2/fulfillment.proto#L174}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dialogflow.v2.UpdateFulfillmentRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::Fulfillment,google/cloud/dialogflow/v2/fulfillment.proto#L75}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.dialogflow.v2.Fulfillment])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.dialogflow.v2.Fulfillment]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/fulfillment.proto#L75}
-  /// [google.cloud.dialogflow.v2.UpdateFulfillmentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/fulfillment.proto#L174}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dialogflow.v2.Fulfillment]: @googleapis_reference_link{google/cloud/dialogflow/v2/fulfillment.proto#L75}
+  /// [google.cloud.dialogflow.v2.UpdateFulfillmentRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/fulfillment.proto#L174}
   ///
+  // clang-format on
   StatusOr<google::cloud::dialogflow::v2::Fulfillment> UpdateFulfillment(
       google::cloud::dialogflow::v2::UpdateFulfillmentRequest const& request,
       Options opts = {});

@@ -35,6 +35,20 @@ class MockBigQueryJobRestStub
               (rest_internal::RestContext & rest_context,
                bigquery_v2_minimal_internal::ListJobsRequest const& request),
               (override));
+  MOCK_METHOD(StatusOr<bigquery_v2_minimal_internal::InsertJobResponse>,
+              InsertJob,
+              (rest_internal::RestContext & rest_context,
+               bigquery_v2_minimal_internal::InsertJobRequest const& request),
+              (override));
+  MOCK_METHOD(StatusOr<bigquery_v2_minimal_internal::CancelJobResponse>,
+              CancelJob,
+              (rest_internal::RestContext & rest_context,
+               bigquery_v2_minimal_internal::CancelJobRequest const& request),
+              (override));
+  MOCK_METHOD(StatusOr<bigquery_v2_minimal_internal::QueryResponse>, Query,
+              (rest_internal::RestContext & rest_context,
+               bigquery_v2_minimal_internal::PostQueryRequest const& request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -87,6 +87,7 @@ class ConversationModelsClient {
   }
   ///@}
 
+  // clang-format off
   ///
   /// Creates a model.
   ///
@@ -104,16 +105,29 @@ class ConversationModelsClient {
   /// @param conversation_model  Required. The conversation model to create.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::ConversationModel,google/cloud/dialogflow/v2/conversation_model.proto#L218}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.dialogflow.v2.ConversationModel] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dialogflow.v2.ConversationModel]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L218}
-  /// [google.cloud.dialogflow.v2.CreateConversationModelOperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L587}
-  /// [google.cloud.dialogflow.v2.CreateConversationModelRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L463}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dialogflow.v2.ConversationModel]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L218}
+  /// [google.cloud.dialogflow.v2.CreateConversationModelOperationMetadata]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L587}
+  /// [google.cloud.dialogflow.v2.CreateConversationModelRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L463}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::dialogflow::v2::ConversationModel>>
   CreateConversationModel(
       std::string const& parent,
@@ -121,6 +135,7 @@ class ConversationModelsClient {
           conversation_model,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a model.
   ///
@@ -133,26 +148,44 @@ class ConversationModelsClient {
   /// - `response`:
   /// [ConversationModel][google.cloud.dialogflow.v2.ConversationModel]
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::v2::CreateConversationModelRequest,google/cloud/dialogflow/v2/conversation_model.proto#L463}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dialogflow.v2.CreateConversationModelRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::ConversationModel,google/cloud/dialogflow/v2/conversation_model.proto#L218}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.dialogflow.v2.ConversationModel] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dialogflow.v2.ConversationModel]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L218}
-  /// [google.cloud.dialogflow.v2.CreateConversationModelOperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L587}
-  /// [google.cloud.dialogflow.v2.CreateConversationModelRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L463}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dialogflow.v2.ConversationModel]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L218}
+  /// [google.cloud.dialogflow.v2.CreateConversationModelOperationMetadata]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L587}
+  /// [google.cloud.dialogflow.v2.CreateConversationModelRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L463}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::dialogflow::v2::ConversationModel>>
   CreateConversationModel(
       google::cloud::dialogflow::v2::CreateConversationModelRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Gets conversation model.
   ///
@@ -160,37 +193,59 @@ class ConversationModelsClient {
   ///  `projects/<Project ID>/conversationModels/<Conversation Model ID>`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::ConversationModel,google/cloud/dialogflow/v2/conversation_model.proto#L218}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.dialogflow.v2.ConversationModel])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.dialogflow.v2.ConversationModel]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L218}
-  /// [google.cloud.dialogflow.v2.GetConversationModelRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L475}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dialogflow.v2.ConversationModel]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L218}
+  /// [google.cloud.dialogflow.v2.GetConversationModelRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L475}
   ///
+  // clang-format on
   StatusOr<google::cloud::dialogflow::v2::ConversationModel>
   GetConversationModel(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Gets conversation model.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::v2::GetConversationModelRequest,google/cloud/dialogflow/v2/conversation_model.proto#L475}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dialogflow.v2.GetConversationModelRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::ConversationModel,google/cloud/dialogflow/v2/conversation_model.proto#L218}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.dialogflow.v2.ConversationModel])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.dialogflow.v2.ConversationModel]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L218}
-  /// [google.cloud.dialogflow.v2.GetConversationModelRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L475}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dialogflow.v2.ConversationModel]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L218}
+  /// [google.cloud.dialogflow.v2.GetConversationModelRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L475}
   ///
+  // clang-format on
   StatusOr<google::cloud::dialogflow::v2::ConversationModel>
   GetConversationModel(
       google::cloud::dialogflow::v2::GetConversationModelRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists conversation models.
   ///
@@ -198,37 +253,77 @@ class ConversationModelsClient {
   ///  Format: `projects/<Project ID>`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::ConversationModel,google/cloud/dialogflow/v2/conversation_model.proto#L218}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.dialogflow.v2.ConversationModel], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dialogflow.v2.ConversationModel]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L218}
-  /// [google.cloud.dialogflow.v2.ListConversationModelsRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L483}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dialogflow.v2.ConversationModel]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L218}
+  /// [google.cloud.dialogflow.v2.ListConversationModelsRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L483}
   ///
+  // clang-format on
   StreamRange<google::cloud::dialogflow::v2::ConversationModel>
   ListConversationModels(std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Lists conversation models.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::v2::ListConversationModelsRequest,google/cloud/dialogflow/v2/conversation_model.proto#L483}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dialogflow.v2.ListConversationModelsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::ConversationModel,google/cloud/dialogflow/v2/conversation_model.proto#L218}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.dialogflow.v2.ConversationModel], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dialogflow.v2.ConversationModel]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L218}
-  /// [google.cloud.dialogflow.v2.ListConversationModelsRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L483}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dialogflow.v2.ConversationModel]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L218}
+  /// [google.cloud.dialogflow.v2.ListConversationModelsRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L483}
   ///
+  // clang-format on
   StreamRange<google::cloud::dialogflow::v2::ConversationModel>
   ListConversationModels(
       google::cloud::dialogflow::v2::ListConversationModelsRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes a model.
   ///
@@ -245,18 +340,33 @@ class ConversationModelsClient {
   ///  `projects/<Project ID>/conversationModels/<Conversation Model ID>`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::DeleteConversationModelOperationMetadata,google/cloud/dialogflow/v2/conversation_model.proto#L655}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.dialogflow.v2.DeleteConversationModelOperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dialogflow.v2.DeleteConversationModelOperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L655}
-  /// [google.cloud.dialogflow.v2.DeleteConversationModelRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L509}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dialogflow.v2.DeleteConversationModelOperationMetadata]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L655}
+  /// [google.cloud.dialogflow.v2.DeleteConversationModelRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L509}
   ///
+  // clang-format on
   future<StatusOr<
       google::cloud::dialogflow::v2::DeleteConversationModelOperationMetadata>>
   DeleteConversationModel(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes a model.
   ///
@@ -269,18 +379,36 @@ class ConversationModelsClient {
   /// - `response`: An [Empty
   ///   message](https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#empty)
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::v2::DeleteConversationModelRequest,google/cloud/dialogflow/v2/conversation_model.proto#L509}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dialogflow.v2.DeleteConversationModelRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::DeleteConversationModelOperationMetadata,google/cloud/dialogflow/v2/conversation_model.proto#L655}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.dialogflow.v2.DeleteConversationModelOperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dialogflow.v2.DeleteConversationModelOperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L655}
-  /// [google.cloud.dialogflow.v2.DeleteConversationModelRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L509}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dialogflow.v2.DeleteConversationModelOperationMetadata]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L655}
+  /// [google.cloud.dialogflow.v2.DeleteConversationModelRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L509}
   ///
+  // clang-format on
   future<StatusOr<
       google::cloud::dialogflow::v2::DeleteConversationModelOperationMetadata>>
   DeleteConversationModel(
@@ -288,6 +416,7 @@ class ConversationModelsClient {
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Deploys a model. If a model is already deployed, deploying it
   /// has no effect. A model can only serve prediction requests after it gets
@@ -303,18 +432,36 @@ class ConversationModelsClient {
   /// - `response`: An [Empty
   ///   message](https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#empty)
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::v2::DeployConversationModelRequest,google/cloud/dialogflow/v2/conversation_model.proto#L517}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dialogflow.v2.DeployConversationModelRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::DeployConversationModelOperationMetadata,google/cloud/dialogflow/v2/conversation_model.proto#L629}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.dialogflow.v2.DeployConversationModelOperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dialogflow.v2.DeployConversationModelOperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L629}
-  /// [google.cloud.dialogflow.v2.DeployConversationModelRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L517}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dialogflow.v2.DeployConversationModelOperationMetadata]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L629}
+  /// [google.cloud.dialogflow.v2.DeployConversationModelRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L517}
   ///
+  // clang-format on
   future<StatusOr<
       google::cloud::dialogflow::v2::DeployConversationModelOperationMetadata>>
   DeployConversationModel(
@@ -322,11 +469,11 @@ class ConversationModelsClient {
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Undeploys a model. If the model is not deployed this method has no effect.
   /// If the model is currently being used:
-  ///   - For article suggestion, article suggestion will fallback to the
-  ///   default
+  ///   - For article suggestion, article suggestion will fallback to the default
   ///     model if model is undeployed.
   ///
   /// This method is a [long-running
@@ -338,18 +485,36 @@ class ConversationModelsClient {
   /// - `response`: An [Empty
   ///   message](https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#empty)
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::v2::UndeployConversationModelRequest,google/cloud/dialogflow/v2/conversation_model.proto#L525}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dialogflow.v2.UndeployConversationModelRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::UndeployConversationModelOperationMetadata,google/cloud/dialogflow/v2/conversation_model.proto#L642}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.dialogflow.v2.UndeployConversationModelOperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dialogflow.v2.UndeployConversationModelOperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L642}
-  /// [google.cloud.dialogflow.v2.UndeployConversationModelRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L525}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dialogflow.v2.UndeployConversationModelOperationMetadata]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L642}
+  /// [google.cloud.dialogflow.v2.UndeployConversationModelRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L525}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::dialogflow::v2::
                       UndeployConversationModelOperationMetadata>>
   UndeployConversationModel(
@@ -357,47 +522,69 @@ class ConversationModelsClient {
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Gets an evaluation of conversation model.
   ///
-  /// @param name  Required. The conversation model evaluation resource name.
-  /// Format:
+  /// @param name  Required. The conversation model evaluation resource name. Format:
   ///  `projects/<Project ID>/conversationModels/<Conversation Model
   ///  ID>/evaluations/<Evaluation ID>`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::ConversationModelEvaluation,google/cloud/dialogflow/v2/conversation_model.proto#L307}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.dialogflow.v2.ConversationModelEvaluation])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.dialogflow.v2.ConversationModelEvaluation]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L307}
-  /// [google.cloud.dialogflow.v2.GetConversationModelEvaluationRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L533}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dialogflow.v2.ConversationModelEvaluation]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L307}
+  /// [google.cloud.dialogflow.v2.GetConversationModelEvaluationRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L533}
   ///
+  // clang-format on
   StatusOr<google::cloud::dialogflow::v2::ConversationModelEvaluation>
   GetConversationModelEvaluation(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Gets an evaluation of conversation model.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::v2::GetConversationModelEvaluationRequest,google/cloud/dialogflow/v2/conversation_model.proto#L533}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dialogflow.v2.GetConversationModelEvaluationRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::ConversationModelEvaluation,google/cloud/dialogflow/v2/conversation_model.proto#L307}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.dialogflow.v2.ConversationModelEvaluation])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.dialogflow.v2.ConversationModelEvaluation]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L307}
-  /// [google.cloud.dialogflow.v2.GetConversationModelEvaluationRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L533}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dialogflow.v2.ConversationModelEvaluation]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L307}
+  /// [google.cloud.dialogflow.v2.GetConversationModelEvaluationRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L533}
   ///
+  // clang-format on
   StatusOr<google::cloud::dialogflow::v2::ConversationModelEvaluation>
   GetConversationModelEvaluation(
       google::cloud::dialogflow::v2::
           GetConversationModelEvaluationRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists evaluations of a conversation model.
   ///
@@ -405,57 +592,110 @@ class ConversationModelsClient {
   ///  `projects/<Project ID>/conversationModels/<Conversation Model ID>`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::ConversationModelEvaluation,google/cloud/dialogflow/v2/conversation_model.proto#L307}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.dialogflow.v2.ConversationModelEvaluation], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dialogflow.v2.ConversationModelEvaluation]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L307}
-  /// [google.cloud.dialogflow.v2.ListConversationModelEvaluationsRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L542}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dialogflow.v2.ConversationModelEvaluation]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L307}
+  /// [google.cloud.dialogflow.v2.ListConversationModelEvaluationsRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L542}
   ///
+  // clang-format on
   StreamRange<google::cloud::dialogflow::v2::ConversationModelEvaluation>
   ListConversationModelEvaluations(std::string const& parent,
                                    Options opts = {});
 
+  // clang-format off
   ///
   /// Lists evaluations of a conversation model.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::v2::ListConversationModelEvaluationsRequest,google/cloud/dialogflow/v2/conversation_model.proto#L542}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dialogflow.v2.ListConversationModelEvaluationsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::ConversationModelEvaluation,google/cloud/dialogflow/v2/conversation_model.proto#L307}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.dialogflow.v2.ConversationModelEvaluation], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dialogflow.v2.ConversationModelEvaluation]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L307}
-  /// [google.cloud.dialogflow.v2.ListConversationModelEvaluationsRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L542}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dialogflow.v2.ConversationModelEvaluation]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L307}
+  /// [google.cloud.dialogflow.v2.ListConversationModelEvaluationsRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L542}
   ///
+  // clang-format on
   StreamRange<google::cloud::dialogflow::v2::ConversationModelEvaluation>
   ListConversationModelEvaluations(
       google::cloud::dialogflow::v2::ListConversationModelEvaluationsRequest
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates evaluation of a conversation model.
   ///
   /// @param parent  Required. The conversation model resource name. Format:
   ///  `projects/<Project ID>/locations/<Location
   ///  ID>/conversationModels/<Conversation Model ID>`
-  /// @param conversation_model_evaluation  Required. The conversation model
-  /// evaluation to be created.
+  /// @param conversation_model_evaluation  Required. The conversation model evaluation to be created.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::ConversationModelEvaluation,google/cloud/dialogflow/v2/conversation_model.proto#L307}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.dialogflow.v2.ConversationModelEvaluation] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dialogflow.v2.ConversationModelEvaluation]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L307}
-  /// [google.cloud.dialogflow.v2.CreateConversationModelEvaluationRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L568}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dialogflow.v2.ConversationModelEvaluation]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L307}
+  /// [google.cloud.dialogflow.v2.CreateConversationModelEvaluationRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L568}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::dialogflow::v2::ConversationModelEvaluation>>
   CreateConversationModelEvaluation(
       std::string const& parent,
@@ -463,21 +703,40 @@ class ConversationModelsClient {
           conversation_model_evaluation,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates evaluation of a conversation model.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::v2::CreateConversationModelEvaluationRequest,google/cloud/dialogflow/v2/conversation_model.proto#L568}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dialogflow.v2.CreateConversationModelEvaluationRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::ConversationModelEvaluation,google/cloud/dialogflow/v2/conversation_model.proto#L307}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.dialogflow.v2.ConversationModelEvaluation] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dialogflow.v2.ConversationModelEvaluation]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L307}
-  /// [google.cloud.dialogflow.v2.CreateConversationModelEvaluationRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L568}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dialogflow.v2.ConversationModelEvaluation]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L307}
+  /// [google.cloud.dialogflow.v2.CreateConversationModelEvaluationRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L568}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::dialogflow::v2::ConversationModelEvaluation>>
   CreateConversationModelEvaluation(
       google::cloud::dialogflow::v2::

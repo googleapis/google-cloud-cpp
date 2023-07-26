@@ -231,6 +231,24 @@ KeyManagementServiceTracingConnection::Decrypt(
   return internal::EndSpan(*span, child_->Decrypt(request));
 }
 
+StatusOr<google::cloud::kms::v1::RawEncryptResponse>
+KeyManagementServiceTracingConnection::RawEncrypt(
+    google::cloud::kms::v1::RawEncryptRequest const& request) {
+  auto span =
+      internal::MakeSpan("kms_v1::KeyManagementServiceConnection::RawEncrypt");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->RawEncrypt(request));
+}
+
+StatusOr<google::cloud::kms::v1::RawDecryptResponse>
+KeyManagementServiceTracingConnection::RawDecrypt(
+    google::cloud::kms::v1::RawDecryptRequest const& request) {
+  auto span =
+      internal::MakeSpan("kms_v1::KeyManagementServiceConnection::RawDecrypt");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->RawDecrypt(request));
+}
+
 StatusOr<google::cloud::kms::v1::AsymmetricSignResponse>
 KeyManagementServiceTracingConnection::AsymmetricSign(
     google::cloud::kms::v1::AsymmetricSignRequest const& request) {

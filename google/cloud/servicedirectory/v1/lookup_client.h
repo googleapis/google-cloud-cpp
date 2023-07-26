@@ -84,25 +84,37 @@ class LookupServiceClient {
   }
   ///@}
 
+  // clang-format off
   ///
   /// Returns a [service][google.cloud.servicedirectory.v1.Service] and its
   /// associated endpoints.
   /// Resolving a service is not considered an active developer method.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::servicedirectory::v1::ResolveServiceRequest,google/cloud/servicedirectory/v1/lookup_service.proto#L54}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.servicedirectory.v1.ResolveServiceRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::servicedirectory::v1::ResolveServiceResponse,google/cloud/servicedirectory/v1/lookup_service.proto#L91}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.servicedirectory.v1.ResolveServiceResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.servicedirectory.v1.ResolveServiceRequest]:
-  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/lookup_service.proto#L54}
-  /// [google.cloud.servicedirectory.v1.ResolveServiceResponse]:
-  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/lookup_service.proto#L91}
-  /// [google.cloud.servicedirectory.v1.Service]:
-  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/service.proto#L36}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.servicedirectory.v1.ResolveServiceRequest]: @googleapis_reference_link{google/cloud/servicedirectory/v1/lookup_service.proto#L54}
+  /// [google.cloud.servicedirectory.v1.ResolveServiceResponse]: @googleapis_reference_link{google/cloud/servicedirectory/v1/lookup_service.proto#L109}
+  /// [google.cloud.servicedirectory.v1.Service]: @googleapis_reference_link{google/cloud/servicedirectory/v1/service.proto#L36}
   ///
+  // clang-format on
   StatusOr<google::cloud::servicedirectory::v1::ResolveServiceResponse>
   ResolveService(
       google::cloud::servicedirectory::v1::ResolveServiceRequest const& request,

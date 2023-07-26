@@ -18,6 +18,7 @@
 
 #include "google/cloud/dialogflow_es/internal/conversation_profiles_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/dialogflow/v2/conversation_profile.grpc.pb.h>
@@ -29,8 +30,10 @@ namespace dialogflow_es_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ConversationProfilesMetadata::ConversationProfilesMetadata(
-    std::shared_ptr<ConversationProfilesStub> child)
+    std::shared_ptr<ConversationProfilesStub> child,
+    std::multimap<std::string, std::string> fixed_metadata)
     : child_(std::move(child)),
+      fixed_metadata_(std::move(fixed_metadata)),
       api_client_header_(
           google::cloud::internal::ApiClientHeader("generator")) {}
 
@@ -39,7 +42,7 @@ ConversationProfilesMetadata::ListConversationProfiles(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::ListConversationProfilesRequest const&
         request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListConversationProfiles(context, request);
 }
 
@@ -48,7 +51,7 @@ ConversationProfilesMetadata::GetConversationProfile(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::GetConversationProfileRequest const&
         request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetConversationProfile(context, request);
 }
 
@@ -57,7 +60,7 @@ ConversationProfilesMetadata::CreateConversationProfile(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::CreateConversationProfileRequest const&
         request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->CreateConversationProfile(context, request);
 }
 
@@ -66,8 +69,8 @@ ConversationProfilesMetadata::UpdateConversationProfile(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::UpdateConversationProfileRequest const&
         request) {
-  SetMetadata(context, "conversation_profile.name=" +
-                           request.conversation_profile().name());
+  SetMetadata(context, absl::StrCat("conversation_profile.name=",
+                                    request.conversation_profile().name()));
   return child_->UpdateConversationProfile(context, request);
 }
 
@@ -75,7 +78,7 @@ Status ConversationProfilesMetadata::DeleteConversationProfile(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::DeleteConversationProfileRequest const&
         request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->DeleteConversationProfile(context, request);
 }
 
@@ -85,8 +88,8 @@ ConversationProfilesMetadata::AsyncSetSuggestionFeatureConfig(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dialogflow::v2::SetSuggestionFeatureConfigRequest const&
         request) {
-  SetMetadata(*context,
-              "conversation_profile=" + request.conversation_profile());
+  SetMetadata(*context, absl::StrCat("conversation_profile=",
+                                     request.conversation_profile()));
   return child_->AsyncSetSuggestionFeatureConfig(cq, std::move(context),
                                                  request);
 }
@@ -97,8 +100,8 @@ ConversationProfilesMetadata::AsyncClearSuggestionFeatureConfig(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dialogflow::v2::ClearSuggestionFeatureConfigRequest const&
         request) {
-  SetMetadata(*context,
-              "conversation_profile=" + request.conversation_profile());
+  SetMetadata(*context, absl::StrCat("conversation_profile=",
+                                     request.conversation_profile()));
   return child_->AsyncClearSuggestionFeatureConfig(cq, std::move(context),
                                                    request);
 }
@@ -127,6 +130,9 @@ void ConversationProfilesMetadata::SetMetadata(
 }
 
 void ConversationProfilesMetadata::SetMetadata(grpc::ClientContext& context) {
+  for (auto const& kv : fixed_metadata_) {
+    context.AddMetadata(kv.first, kv.second);
+  }
   context.AddMetadata("x-goog-api-client", api_client_header_);
   auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {

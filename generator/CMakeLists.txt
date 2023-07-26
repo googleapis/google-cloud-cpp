@@ -14,6 +14,11 @@
 # limitations under the License.
 # ~~~
 
+if (APPLE OR WIN32)
+    message(STATUS "The generator directory is only used and tested on Linux")
+    return()
+endif ()
+
 set(DOXYGEN_EXCLUDE_SYMBOLS "generator_internal")
 set(DOXYGEN_EXAMPLE_PATH "")
 
@@ -23,6 +28,7 @@ if (NOT Protobuf_FOUND)
     find_package(Protobuf REQUIRED)
 endif ()
 include(IncludeNlohmannJson)
+find_package(yaml-cpp CONFIG REQUIRED)
 
 add_library(
     google_cloud_cpp_generator # cmake-format: sort
@@ -68,6 +74,8 @@ add_library(
     internal/forwarding_options_generator.cc
     internal/forwarding_options_generator.h
     internal/generator_interface.h
+    internal/http_annotation_parser.cc
+    internal/http_annotation_parser.h
     internal/http_option_utils.cc
     internal/http_option_utils.h
     internal/idempotency_policy_generator.cc
@@ -76,6 +84,10 @@ add_library(
     internal/logging_decorator_generator.h
     internal/logging_decorator_rest_generator.cc
     internal/logging_decorator_rest_generator.h
+    internal/longrunning.cc
+    internal/longrunning.h
+    internal/make_generators.cc
+    internal/make_generators.h
     internal/metadata_decorator_generator.cc
     internal/metadata_decorator_generator.h
     internal/metadata_decorator_rest_generator.cc
@@ -100,6 +112,8 @@ add_library(
     internal/retry_traits_generator.h
     internal/round_robin_decorator_generator.cc
     internal/round_robin_decorator_generator.h
+    internal/routing.cc
+    internal/routing.h
     internal/sample_generator.cc
     internal/sample_generator.h
     internal/scaffold_generator.cc
@@ -130,9 +144,11 @@ target_link_libraries(
            nlohmann_json::nlohmann_json
            google-cloud-cpp::api_client_protos
            google-cloud-cpp::api_routing_protos
+           google-cloud-cpp::cloud_extended_operations_protos
            google-cloud-cpp::longrunning_operations_protos
            absl::str_format
-           protobuf::libprotoc)
+           protobuf::libprotoc
+           yaml-cpp)
 google_cloud_cpp_add_common_options(google_cloud_cpp_generator)
 target_compile_options(google_cloud_cpp_generator
                        PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
@@ -153,7 +169,7 @@ target_link_libraries(
 
 # Generate protobuf code and library
 if (COMMAND protobuf_generate)
-    set(protobuf_PROTOC_EXE $<TARGET_FILE:protobuf::protoc>)
+    set(protobuf_PROTOC_EXE ${Protobuf_PROTOC_EXECUTABLE})
     add_library(google_cloud_cpp_generator_config)
     protobuf_generate(LANGUAGE cpp TARGET google_cloud_cpp_generator_config
                       PROTOS generator_config.proto)
@@ -195,8 +211,8 @@ function (google_cloud_cpp_generator_define_tests)
     google_cloud_cpp_add_common_options(google_cloud_cpp_generator_testing)
     target_link_libraries(
         google_cloud_cpp_generator_testing
-        PUBLIC google_cloud_cpp_testing GTest::gmock_main GTest::gmock
-               GTest::gtest google-cloud-cpp::longrunning_operations_protos
+        PUBLIC google_cloud_cpp_testing GTest::gmock GTest::gtest
+               google-cloud-cpp::longrunning_operations_protos
                protobuf::libprotoc)
     create_bazel_config(google_cloud_cpp_generator_testing YEAR "2020")
     target_include_directories(
@@ -216,12 +232,16 @@ function (google_cloud_cpp_generator_define_tests)
         internal/discovery_type_vertex_test.cc
         internal/format_class_comments_test.cc
         internal/format_method_comments_test.cc
+        internal/http_annotation_parser_test.cc
         internal/http_option_utils_test.cc
+        internal/longrunning_test.cc
+        internal/make_generators_test.cc
         internal/pagination_test.cc
         internal/predicate_utils_test.cc
         internal/printer_test.cc
         internal/resolve_comment_references_test.cc
         internal/resolve_method_return_test.cc
+        internal/routing_test.cc
         internal/scaffold_generator_test.cc
         internal/service_code_generator_test.cc)
 
@@ -240,7 +260,6 @@ function (google_cloud_cpp_generator_define_tests)
                     google_cloud_cpp_generator_testing
                     google_cloud_cpp_testing
                     google_cloud_cpp_testing_grpc
-                    GTest::gmock_main
                     GTest::gmock
                     GTest::gtest
                     protobuf::libprotoc)

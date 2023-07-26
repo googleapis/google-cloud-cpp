@@ -1,0 +1,14 @@
+filename: ci/cloudbuild/cloudbuild.yaml
+github:
+  name: google-cloud-cpp
+  owner: googleapis
+  push:
+    branch: ^main$
+name: clang-7-0-ci
+substitutions:
+  _BUILD_NAME: clang-7.0
+  _DISTRO: ubuntu-20.04-install
+  _TRIGGER_TYPE: ci
+includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
+tags:
+- ci

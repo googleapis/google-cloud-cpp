@@ -404,7 +404,7 @@ TEST(Doxygen2Yaml, EnumValue) {
   auto constexpr kExpected = R"yml(### YamlMime:UniversalReference
 items:
   - uid: namespacegoogle_1_1cloud_1a7d65fd569564712b7cfe652613f30d9caf8bb1d9c7cccc450ecd06167c7422bfa
-    name: kIdempotent
+    name: "kIdempotent"
     id: namespacegoogle_1_1cloud_1a7d65fd569564712b7cfe652613f30d9caf8bb1d9c7cccc450ecd06167c7422bfa
     parent: namespacegoogle_1_1cloud_1a7d65fd569564712b7cfe652613f30d9c
     type: enumvalue
@@ -435,7 +435,7 @@ TEST(Doxygen2Yaml, Enum) {
   auto constexpr kExpected = R"yml(### YamlMime:UniversalReference
 items:
   - uid: namespacegoogle_1_1cloud_1a7d65fd569564712b7cfe652613f30d9c
-    name: Idempotency
+    name: "Idempotency"
     fullName: |
       google::cloud::Idempotency
     id: namespacegoogle_1_1cloud_1a7d65fd569564712b7cfe652613f30d9c
@@ -489,7 +489,7 @@ items:
       - namespacegoogle_1_1cloud_1a7d65fd569564712b7cfe652613f30d9caf8bb1d9c7cccc450ecd06167c7422bfa
       - namespacegoogle_1_1cloud_1a7d65fd569564712b7cfe652613f30d9cae75d33e94f2dc4028d4d67bdaab75190
   - uid: namespacegoogle_1_1cloud_1a7d65fd569564712b7cfe652613f30d9caf8bb1d9c7cccc450ecd06167c7422bfa
-    name: kIdempotent
+    name: "kIdempotent"
     id: namespacegoogle_1_1cloud_1a7d65fd569564712b7cfe652613f30d9caf8bb1d9c7cccc450ecd06167c7422bfa
     parent: namespacegoogle_1_1cloud_1a7d65fd569564712b7cfe652613f30d9c
     type: enumvalue
@@ -498,7 +498,7 @@ items:
     summary: |
       The operation is idempotent and can be retried after a transient failure.
   - uid: namespacegoogle_1_1cloud_1a7d65fd569564712b7cfe652613f30d9cae75d33e94f2dc4028d4d67bdaab75190
-    name: kNonIdempotent
+    name: "kNonIdempotent"
     id: namespacegoogle_1_1cloud_1a7d65fd569564712b7cfe652613f30d9cae75d33e94f2dc4028d4d67bdaab75190
     parent: namespacegoogle_1_1cloud_1a7d65fd569564712b7cfe652613f30d9c
     type: enumvalue
@@ -551,19 +551,19 @@ TEST(Doxygen2Yaml, Typedef) {
   auto constexpr kExpected = R"yml(### YamlMime:UniversalReference
 items:
   - uid: namespacegoogle_1_1cloud_1a1498c1ea55d81842f37bbc42d003df1f
-    name: |
-      BackgroundThreadsFactory
-    fullName: |
-      google::cloud::BackgroundThreadsFactory
+    name: "BackgroundThreadsFactory"
+    fullName: "google::cloud::BackgroundThreadsFactory"
     id: namespacegoogle_1_1cloud_1a1498c1ea55d81842f37bbc42d003df1f
     parent: test-only-parent-id
-    type: typedef
+    type: typealias
     langs:
       - cpp
     syntax:
       contents: |
         using google::cloud::BackgroundThreadsFactory =
           std::function< std::unique_ptr< BackgroundThreads >()>;
+      aliasof: |
+        <code>std::function&lt; std::unique_ptr&lt; BackgroundThreads &gt;()&gt;</code>
       source:
         id: BackgroundThreadsFactory
         path: google/cloud/grpc_options.h
@@ -626,8 +626,7 @@ TEST(Doxygen2Yaml, Friend) {
   auto constexpr kExpected = R"yml(### YamlMime:UniversalReference
 items:
   - uid: classgoogle_1_1cloud_1_1ErrorInfo_1a3e7a9be9a728e13d3333784f63270555
-    name: |
-      operator==
+    name: "operator==(ErrorInfo const &, ErrorInfo const &)"
     fullName: |
       google::cloud::ErrorInfo::operator==
     id: classgoogle_1_1cloud_1_1ErrorInfo_1a3e7a9be9a728e13d3333784f63270555
@@ -677,8 +676,7 @@ TEST(Doxygen2Yaml, Variable) {
   auto constexpr kExpected = R"yml(### YamlMime:UniversalReference
 items:
   - uid: structgoogle_1_1cloud_1_1LogRecord_1a830f8xx5fe86e1581dddbbb2cd922cbc
-    name: |
-      severity
+    name: "severity"
     fullName: |
       google::cloud::LogRecord::severity
     id: structgoogle_1_1cloud_1_1LogRecord_1a830f8xx5fe86e1581dddbbb2cd922cbc
@@ -720,7 +718,7 @@ TEST(Doxygen2Yaml, Function) {
   auto constexpr kExpected = R"yml(### YamlMime:UniversalReference
 items:
   - uid: classgoogle_1_1cloud_1_1CompletionQueue_1a760d68ec606a03ab8cc80eea8bd965b3
-    name: MakeRelativeTimer
+    name: "MakeRelativeTimer(std::chrono::duration< Rep, Period >)"
     fullName: |
       google::cloud::CompletionQueue::MakeRelativeTimer
     id: classgoogle_1_1cloud_1_1CompletionQueue_1a760d68ec606a03ab8cc80eea8bd965b3
@@ -737,10 +735,11 @@ items:
         google::cloud::CompletionQueue::MakeRelativeTimer (
             std::chrono::duration< Rep, Period > duration
           )
-      returns:
-        - var_type: "future&lt; StatusOr&lt; std::chrono::system_clock::time_point &gt; &gt;"
-          description: |
-            a future that becomes satisfied after `duration` time has elapsed. The result of the future is the time at which it expired, or an error [Status](xref:classgoogle_1_1cloud_1_1Status) if the timer did not run to expiration (e.g. it was cancelled).
+      return:
+        type:
+          - "future< StatusOr< std::chrono::system_clock::time_point > >"
+        description: |
+          a future that becomes satisfied after `duration` time has elapsed. The result of the future is the time at which it expired, or an error [Status](xref:classgoogle_1_1cloud_1_1Status) if the timer did not run to expiration (e.g. it was cancelled).
       parameters:
         - id: duration
           var_type: "std::chrono::duration&lt; Rep, Period &gt;"
@@ -781,11 +780,102 @@ items:
   EXPECT_EQ(actual, kExpected);
 }
 
+TEST(Doxygen2Yaml, InheritSectionDefSummary) {
+  auto constexpr kXml = R"xml(xml(<?xml version="1.0" standalone="yes"?>
+    <doxygen version="1.9.1" xml:lang="en-US">
+      <compounddef xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="classgoogle_1_1cloud_1_1StatusOr" kind="class" language="C++" prot="public" final="yes">
+        <compoundname>google::cloud::StatusOr</compoundname>
+        <includes refid="status__or_8h" local="no">google/cloud/status_or.h</includes>
+        <templateparamlist>
+          <param>
+            <type>typename T</type>
+          </param>
+        </templateparamlist>
+        <sectiondef kind="user-defined">
+          <header>Dereference operators.</header>
+            <memberdef kind="function" id="classgoogle_1_1cloud_1_1StatusOr_1a95250d82418ed95673d41377347a3dbd" prot="public" static="no" const="no" explicit="no" inline="yes" refqual="lvalue" virt="non-virtual">
+              <type>T &amp;</type>
+              <definition>T &amp; google::cloud::StatusOr&lt; T &gt;::operator*</definition>
+              <argsstring>() &amp;</argsstring>
+              <name>operator*</name>
+              <qualifiedname>google::cloud::StatusOr::operator*</qualifiedname>
+              <briefdescription>
+              </briefdescription>
+              <detaileddescription>
+              </detaileddescription>
+              <inbodydescription>
+              </inbodydescription>
+              <location file="status_or.h" line="208" column="5" bodyfile="status_or.h" bodystart="208" bodyend="208"/>
+            </memberdef>
+        </sectiondef>
+      </compounddef>
+    </doxygen>)xml";
+
+  auto constexpr kExpected = R"yml(### YamlMime:UniversalReference
+items:
+  - uid: classgoogle_1_1cloud_1_1StatusOr
+    name: "StatusOr<T>"
+    id: classgoogle_1_1cloud_1_1StatusOr
+    parent: test-only-parent-id
+    type: class
+    langs:
+      - cpp
+    syntax:
+      contents: |
+        // Found in #include <google/cloud/status_or.h>
+        template <
+            typename T>
+        class google::cloud::StatusOr { ... };
+    children:
+      - classgoogle_1_1cloud_1_1StatusOr_1a95250d82418ed95673d41377347a3dbd
+  - uid: classgoogle_1_1cloud_1_1StatusOr_1a95250d82418ed95673d41377347a3dbd
+    name: "operator*() &"
+    fullName: |
+      google::cloud::StatusOr::operator*
+    id: classgoogle_1_1cloud_1_1StatusOr_1a95250d82418ed95673d41377347a3dbd
+    parent: classgoogle_1_1cloud_1_1StatusOr
+    type: operator
+    langs:
+      - cpp
+    syntax:
+      contents: |
+        T &
+        google::cloud::StatusOr::operator* ()
+      return:
+        type:
+          - "T &"
+      source:
+        id: operator*
+        path: google/cloud/status_or.h
+        startLine: 208
+        remote:
+          repo: https://github.com/googleapis/google-cloud-cpp/
+          branch: main
+          path: google/cloud/status_or.h
+    summary: |
+      Dereference operators.
+)yml";
+
+  pugi::xml_document doc;
+  doc.load_string(kXml);
+  auto selected =
+      doc.select_node("//*[@id='classgoogle_1_1cloud_1_1StatusOr']");
+  ASSERT_TRUE(selected);
+  YAML::Emitter yaml;
+  TestPre(yaml);
+  YamlContext ctx;
+  ctx.parent_id = "test-only-parent-id";
+  ASSERT_TRUE(AppendIfClass(yaml, ctx, selected.node()));
+  TestPost(yaml);
+  auto const actual = EndDocFxYaml(yaml);
+  EXPECT_EQ(actual, kExpected);
+}
+
 TEST(Doxygen2Yaml, MockedFunction) {
   auto constexpr kExpected = R"yml(### YamlMime:UniversalReference
 items:
   - uid: classgoogle_1_1cloud_1_1kms__inventory__v1__mocks_1_1MockKeyDashboardServiceConnection_1a789db998d71abf9016b64832d0c7a99e
-    name: ListCryptoKeys
+    name: "virtual ListCryptoKeys(google::cloud::kms::inventory::v1::ListCryptoKeysRequest)"
     fullName: |
       google::cloud::kms_inventory_v1::KeyDashboardServiceConnection::ListCryptoKeys
     id: classgoogle_1_1cloud_1_1kms__inventory__v1__mocks_1_1MockKeyDashboardServiceConnection_1a789db998d71abf9016b64832d0c7a99e
@@ -799,8 +889,9 @@ items:
         google::cloud::kms_inventory_v1::KeyDashboardServiceConnection::ListCryptoKeys (
             google::cloud::kms::inventory::v1::ListCryptoKeysRequest request
           )
-      returns:
-        - var_type: "StreamRange&lt; google::cloud::kms::v1::CryptoKey &gt;"
+      return:
+        type:
+          - "StreamRange< google::cloud::kms::v1::CryptoKey >"
       parameters:
         - id: request
           var_type: "google::cloud::kms::inventory::v1::ListCryptoKeysRequest"
@@ -842,19 +933,19 @@ TEST(Doxygen2Yaml, SectionDef) {
   auto constexpr kExpected = R"yml(### YamlMime:UniversalReference
 items:
   - uid: structgoogle_1_1cloud_1_1AccessTokenLifetimeOption_1ad6b8a4672f1c196926849229f62d0de2
-    name: |
-      Type
-    fullName: |
-      google::cloud::AccessTokenLifetimeOption::Type
+    name: "Type"
+    fullName: "google::cloud::AccessTokenLifetimeOption::Type"
     id: structgoogle_1_1cloud_1_1AccessTokenLifetimeOption_1ad6b8a4672f1c196926849229f62d0de2
     parent: test-only-parent-id
-    type: typedef
+    type: typealias
     langs:
       - cpp
     syntax:
       contents: |
         using google::cloud::AccessTokenLifetimeOption::Type =
           std::chrono::seconds;
+      aliasof: |
+        <code>std::chrono::seconds</code>
       source:
         id: Type
         path: google/cloud/credentials.h
@@ -883,7 +974,7 @@ TEST(Doxygen2Yaml, Namespace) {
   auto constexpr kExpected = R"yml(### YamlMime:UniversalReference
 items:
   - uid: namespacegoogle_1_1cloud_1_1mocks
-    name: google::cloud::mocks
+    name: "google::cloud::mocks"
     id: namespacegoogle_1_1cloud_1_1mocks
     parent: test-only-parent-id
     type: namespace
@@ -924,11 +1015,75 @@ items:
   EXPECT_EQ(actual, kExpected);
 }
 
+TEST(Doxygen2Yaml, NamespaceDeprecated) {
+  auto constexpr kXml = R"xml(<?xml version="1.0" standalone="yes"?>
+    <doxygen version="1.9.1" xml:lang="en-US">
+      <compounddef xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="namespacegoogle_1_1cloud_1_1kms" kind="namespace" language="C++">
+        <compoundname>google::cloud::kms</compoundname>
+          <sectiondef kind="func">
+          </sectiondef>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para><xrefsect id="deprecated_1_deprecated000001"><xreftitle>Deprecated</xreftitle><xrefdescription><para>This namespace exists for backwards compatibility. Use the types defined in <ref refid="namespacegoogle_1_1cloud_1_1kms__v1" kindref="compound">kms_v1</ref> instead of the aliases defined in this namespace. </para>
+</xrefdescription></xrefsect></para>
+<para><xrefsect id="deprecated_1_deprecated000014"><xreftitle>Deprecated</xreftitle><xrefdescription><para>This namespace exists for backwards compatibility. Use the types defined in <ref refid="namespacegoogle_1_1cloud_1_1kms__v1" kindref="compound">kms_v1</ref> instead of the aliases defined in this namespace. </para>
+</xrefdescription></xrefsect></para>
+        </detaileddescription>
+        <location file="ekm_client.h" line="30" column="1"/>
+      </compounddef>
+    </doxygen>)xml";
+
+  auto constexpr kExpected = R"yml(### YamlMime:UniversalReference
+items:
+  - uid: namespacegoogle_1_1cloud_1_1kms
+    name: "google::cloud::kms"
+    id: namespacegoogle_1_1cloud_1_1kms
+    parent: test-only-parent-id
+    type: namespace
+    langs:
+      - cpp
+    syntax:
+      contents: |
+        namespace google::cloud::kms { ... };
+      source:
+        id: google::cloud::kms
+        path: google/cloud/kms/ekm_client.h
+        startLine: 30
+        remote:
+          repo: https://github.com/googleapis/google-cloud-cpp/
+          branch: main
+          path: google/cloud/kms/ekm_client.h
+    conceptual: |
+
+
+
+
+      <aside class="deprecated">
+          <b>Deprecated:</b> This namespace is deprecated, prefer the types defined in [`kms_v1`](xref:namespacegoogle_1_1cloud_1_1kms__v1).
+      </aside>
+)yml";
+
+  pugi::xml_document doc;
+  doc.load_string(kXml);
+  auto selected = doc.select_node("//*[@id='namespacegoogle_1_1cloud_1_1kms']");
+  ASSERT_TRUE(selected);
+  YAML::Emitter yaml;
+  TestPre(yaml);
+  YamlContext ctx;
+  ctx.parent_id = "test-only-parent-id";
+  ctx.library_root = "google/cloud/kms/";
+  ASSERT_TRUE(AppendIfNamespace(yaml, ctx, selected.node()));
+  TestPost(yaml);
+  auto const actual = EndDocFxYaml(yaml);
+  EXPECT_EQ(actual, kExpected);
+}
+
 TEST(Doxygen2Yaml, Class) {
   auto constexpr kExpected = R"yml(### YamlMime:UniversalReference
 items:
   - uid: classgoogle_1_1cloud_1_1RuntimeStatusError
-    name: google::cloud::RuntimeStatusError
+    name: "RuntimeStatusError"
     id: classgoogle_1_1cloud_1_1RuntimeStatusError
     parent: test-only-parent-id
     type: class
@@ -952,7 +1107,7 @@ items:
       - classgoogle_1_1cloud_1_1RuntimeStatusError_1aac6b78160cce6468696ce77eb1276a95
       - classgoogle_1_1cloud_1_1RuntimeStatusError_1ac30dbdb272a62aee4eb8f9bf45966c7e
   - uid: classgoogle_1_1cloud_1_1RuntimeStatusError_1aac6b78160cce6468696ce77eb1276a95
-    name: RuntimeStatusError
+    name: "RuntimeStatusError(Status)"
     fullName: |
       google::cloud::RuntimeStatusError::RuntimeStatusError
     id: classgoogle_1_1cloud_1_1RuntimeStatusError_1aac6b78160cce6468696ce77eb1276a95
@@ -977,7 +1132,7 @@ items:
           branch: main
           path: google/cloud/status.h
   - uid: classgoogle_1_1cloud_1_1RuntimeStatusError_1ac30dbdb272a62aee4eb8f9bf45966c7e
-    name: status
+    name: "status() const"
     fullName: |
       google::cloud::RuntimeStatusError::status
     id: classgoogle_1_1cloud_1_1RuntimeStatusError_1ac30dbdb272a62aee4eb8f9bf45966c7e
@@ -989,8 +1144,9 @@ items:
       contents: |
         Status const &
         google::cloud::RuntimeStatusError::status ()
-      returns:
-        - var_type: "Status const &"
+      return:
+        type:
+          - "Status const &"
       source:
         id: status
         path: google/cloud/status.h
@@ -1020,7 +1176,7 @@ TEST(Doxygen2Yaml, Struct) {
   auto constexpr kExpected = R"yml(### YamlMime:UniversalReference
 items:
   - uid: structgoogle_1_1cloud_1_1LogRecord
-    name: google::cloud::LogRecord
+    name: "LogRecord"
     id: structgoogle_1_1cloud_1_1LogRecord
     parent: test-only-parent-id
     type: struct
@@ -1049,8 +1205,7 @@ items:
       - structgoogle_1_1cloud_1_1LogRecord_1a949e7b4cb62d085ee13b107e63f83152
       - structgoogle_1_1cloud_1_1LogRecord_1a95652739567b944a4ffbbb6d31b3f2e0
   - uid: structgoogle_1_1cloud_1_1LogRecord_1a830f8xx5fe86e1581dddbbb2cd922cbc
-    name: |
-      severity
+    name: "severity"
     fullName: |
       google::cloud::LogRecord::severity
     id: structgoogle_1_1cloud_1_1LogRecord_1a830f8xx5fe86e1581dddbbb2cd922cbc
@@ -1070,8 +1225,7 @@ items:
           branch: main
           path: google/cloud/log.h
   - uid: structgoogle_1_1cloud_1_1LogRecord_1a8a04caf649e69b55404abf2d3b72d4a6
-    name: |
-      function
+    name: "function"
     fullName: |
       google::cloud::LogRecord::function
     id: structgoogle_1_1cloud_1_1LogRecord_1a8a04caf649e69b55404abf2d3b72d4a6
@@ -1091,8 +1245,7 @@ items:
           branch: main
           path: google/cloud/log.h
   - uid: structgoogle_1_1cloud_1_1LogRecord_1a46bc9a3adab542be80be9671d2ff82e6
-    name: |
-      filename
+    name: "filename"
     fullName: |
       google::cloud::LogRecord::filename
     id: structgoogle_1_1cloud_1_1LogRecord_1a46bc9a3adab542be80be9671d2ff82e6
@@ -1112,8 +1265,7 @@ items:
           branch: main
           path: google/cloud/log.h
   - uid: structgoogle_1_1cloud_1_1LogRecord_1a29f2cf2bafa97addc548c26xx48a4fe0
-    name: |
-      lineno
+    name: "lineno"
     fullName: |
       google::cloud::LogRecord::lineno
     id: structgoogle_1_1cloud_1_1LogRecord_1a29f2cf2bafa97addc548c26xx48a4fe0
@@ -1133,8 +1285,7 @@ items:
           branch: main
           path: google/cloud/log.h
   - uid: structgoogle_1_1cloud_1_1LogRecord_1a9acea199684809e231263a486559f834
-    name: |
-      thread_id
+    name: "thread_id"
     fullName: |
       google::cloud::LogRecord::thread_id
     id: structgoogle_1_1cloud_1_1LogRecord_1a9acea199684809e231263a486559f834
@@ -1154,8 +1305,7 @@ items:
           branch: main
           path: google/cloud/log.h
   - uid: structgoogle_1_1cloud_1_1LogRecord_1a949e7b4cb62d085ee13b107e63f83152
-    name: |
-      timestamp
+    name: "timestamp"
     fullName: |
       google::cloud::LogRecord::timestamp
     id: structgoogle_1_1cloud_1_1LogRecord_1a949e7b4cb62d085ee13b107e63f83152
@@ -1175,8 +1325,7 @@ items:
           branch: main
           path: google/cloud/log.h
   - uid: structgoogle_1_1cloud_1_1LogRecord_1a95652739567b944a4ffbbb6d31b3f2e0
-    name: |
-      message
+    name: "message"
     fullName: |
       google::cloud::LogRecord::message
     id: structgoogle_1_1cloud_1_1LogRecord_1a95652739567b944a4ffbbb6d31b3f2e0

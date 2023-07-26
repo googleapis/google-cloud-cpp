@@ -289,6 +289,22 @@ Status CloudChannelServiceConnection::DeleteChannelPartnerRepricingConfig(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StreamRange<google::cloud::channel::v1::SkuGroup>
+CloudChannelServiceConnection::ListSkuGroups(
+    google::cloud::channel::v1::
+        ListSkuGroupsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::channel::v1::SkuGroup>>();
+}
+
+StreamRange<google::cloud::channel::v1::BillableSku>
+CloudChannelServiceConnection::ListSkuGroupBillableSkus(
+    google::cloud::channel::v1::
+        ListSkuGroupBillableSkusRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::channel::v1::BillableSku>>();
+}
+
 StatusOr<google::cloud::channel::v1::Offer>
 CloudChannelServiceConnection::LookupOffer(
     google::cloud::channel::v1::LookupOfferRequest const&) {

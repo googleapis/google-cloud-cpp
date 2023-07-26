@@ -124,6 +124,15 @@ Transaction::Transaction(SingleUseOptions opts) {
       std::move(selector), route_to_leader, std::string());
 }
 
+Transaction::Transaction(ReadWriteOptions opts, SingleUseCommitTag) {
+  google::spanner::v1::TransactionSelector selector;
+  *selector.mutable_single_use() = MakeOpts(std::move(opts.rw_opts_));
+  auto const route_to_leader = true;  // write
+  impl_ = std::make_shared<spanner_internal::TransactionImpl>(
+      std::move(selector), route_to_leader,
+      std::move(opts.tag_).value_or(std::string()));
+}
+
 Transaction::Transaction(std::string session_id, std::string transaction_id,
                          bool route_to_leader, std::string transaction_tag) {
   google::spanner::v1::TransactionSelector selector;

@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CHANNEL_V1_CLOUD_CHANNEL_CONNECTION_IDEMPOTENCY_POLICY_H
 
 #include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
 #include "google/cloud/version.h"
 #include <google/cloud/channel/v1/service.grpc.pb.h>
 #include <memory>
@@ -158,6 +157,12 @@ class CloudChannelServiceConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency DeleteChannelPartnerRepricingConfig(
       google::cloud::channel::v1::
           DeleteChannelPartnerRepricingConfigRequest const& request);
+
+  virtual google::cloud::Idempotency ListSkuGroups(
+      google::cloud::channel::v1::ListSkuGroupsRequest request);
+
+  virtual google::cloud::Idempotency ListSkuGroupBillableSkus(
+      google::cloud::channel::v1::ListSkuGroupBillableSkusRequest request);
 
   virtual google::cloud::Idempotency LookupOffer(
       google::cloud::channel::v1::LookupOfferRequest const& request);

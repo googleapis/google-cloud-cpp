@@ -1,0 +1,14 @@
+{
+    "api_id": "dialogflow.googleapis.com",
+    "api_shortname": "dialogflow",
+    "client_documentation": "https://cloud.google.com/cpp/docs/reference/dialogflow_cx/latest",
+    "distribution_name": "google-cloud-cpp",
+    "issue_tracker": "https://issuetracker.google.com/savedsearches/6123401",
+    "language": "cpp",
+    "library_type": "GAPIC_AUTO",
+    "name_pretty": "Dialogflow API",
+    "product_documentation": "https://cloud.google.com/dialogflow",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-cpp",
+    "requires_billing": true
+}

@@ -81,15 +81,31 @@ class GoldenRestOnlyClient {
   }
   ///@}
 
+  // clang-format off
   ///
   /// Does nothing.
   ///
-  /// @param request @googleapis_link{google::protobuf::Empty,google/protobuf/empty.proto#L51}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.protobuf.Empty].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
   ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
   /// [google.protobuf.Empty]: @googleapis_reference_link{google/protobuf/empty.proto#L51}
   ///
+  // clang-format on
   Status
   Noop(google::protobuf::Empty const& request, Options opts = {});
 

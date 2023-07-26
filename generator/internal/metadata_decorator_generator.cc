@@ -15,8 +15,10 @@
 #include "generator/internal/metadata_decorator_generator.h"
 #include "generator/internal/codegen_utils.h"
 #include "generator/internal/http_option_utils.h"
+#include "generator/internal/longrunning.h"
 #include "generator/internal/predicate_utils.h"
 #include "generator/internal/printer.h"
+#include "generator/internal/routing.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "absl/strings/str_split.h"
 #include <google/protobuf/descriptor.h>
@@ -39,8 +41,7 @@ std::string SetMetadataText(google::protobuf::MethodDescriptor const& method,
   if (info.empty()) {
     if (HasHttpRoutingHeader(method)) {
       return "  SetMetadata(" + context +
-             ", \"$method_request_param_key$=\" + "
-             "request.$method_request_param_value$);";
+             ", absl::StrCat($method_request_params$));";
     }
     // If the method does not have a `google.api.routing` or `google.api.http`
     // annotation, we do not send the "x-goog-request-params" header.
@@ -124,19 +125,20 @@ Status MetadataDecoratorGenerator::GenerateHeader() {
   HeaderLocalIncludes({vars("stub_header_path"), "google/cloud/version.h"});
   HeaderSystemIncludes(
       {HasLongrunningMethod() ? "google/longrunning/operations.grpc.pb.h" : "",
-       "memory", "string"});
+       "map", "memory", "string"});
 
   auto result = HeaderOpenNamespaces(NamespaceType::kInternal);
   if (!result.ok()) return result;
 
   // metadata decorator class
-  HeaderPrint(  // clang-format off
-    "\n"
-    "class $metadata_class_name$ : public $stub_class_name$ {\n"
-    " public:\n"
-    "  ~$metadata_class_name$() override = default;\n"
-    "  explicit $metadata_class_name$(std::shared_ptr<$stub_class_name$> child);\n");
-  // clang-format on
+  HeaderPrint(R"""(
+class $metadata_class_name$ : public $stub_class_name$ {
+ public:
+  ~$metadata_class_name$() override = default;
+  $metadata_class_name$(
+      std::shared_ptr<$stub_class_name$> child,
+      std::multimap<std::string, std::string> fixed_metadata);
+)""");
 
   HeaderPrintPublicMethods();
 
@@ -147,6 +149,7 @@ Status MetadataDecoratorGenerator::GenerateHeader() {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<$stub_class_name$> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 )""");
@@ -170,6 +173,7 @@ Status MetadataDecoratorGenerator::GenerateCc() {
   CcPrint("\n");
   CcLocalIncludes(
       {vars("metadata_header_path"),
+       "google/cloud/internal/absl_str_cat_quiet.h",
        HasExplicitRoutingMethod()
            ? "google/cloud/internal/absl_str_join_quiet.h"
            : "",
@@ -183,13 +187,14 @@ Status MetadataDecoratorGenerator::GenerateCc() {
   if (!result.ok()) return result;
 
   // constructor
-  CcPrint(  // clang-format off
-    "\n"
-    "$metadata_class_name$::$metadata_class_name$(\n"
-    "    std::shared_ptr<$stub_class_name$> child)\n"
-    "    : child_(std::move(child)),\n"
-    "      api_client_header_(google::cloud::internal::ApiClientHeader(\"generator\")) {}\n");
-  // clang-format on
+  CcPrint(R"""(
+$metadata_class_name$::$metadata_class_name$(
+    std::shared_ptr<$stub_class_name$> child,
+    std::multimap<std::string, std::string> fixed_metadata)
+    : child_(std::move(child)),
+      fixed_metadata_(std::move(fixed_metadata)),
+      api_client_header_(google::cloud::internal::ApiClientHeader("generator")) {}
+)""");
 
   // metadata decorator class member methods
   for (auto const& method : methods()) {
@@ -362,6 +367,9 @@ void $metadata_class_name$::SetMetadata(grpc::ClientContext& context,
 }
 
 void $metadata_class_name$::SetMetadata(grpc::ClientContext& context) {
+  for (auto const& kv : fixed_metadata_) {
+    context.AddMetadata(kv.first, kv.second);
+  }
   context.AddMetadata("x-goog-api-client", api_client_header_);
   auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {

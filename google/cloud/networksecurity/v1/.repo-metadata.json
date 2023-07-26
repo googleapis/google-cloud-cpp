@@ -1,0 +1,13 @@
+{
+    "api_id": "networksecurity.googleapis.com",
+    "api_shortname": "networksecurity",
+    "client_documentation": "https://cloud.google.com/cpp/docs/reference/networksecurity/latest",
+    "distribution_name": "google-cloud-cpp",
+    "language": "cpp",
+    "library_type": "GAPIC_AUTO",
+    "name_pretty": "Network Security API",
+    "product_documentation": "https://cloud.google.com/secure-web-proxy/docs",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-cpp",
+    "requires_billing": true
+}

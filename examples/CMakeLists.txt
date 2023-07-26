@@ -14,18 +14,29 @@
 # limitations under the License.
 # ~~~
 
+# The examples are more readable if we use exceptions for error handling. We had
+# to tradeoff readability vs. "making them compile everywhere".
+if (NOT GOOGLE_CLOUD_CPP_ENABLE_EXAMPLES)
+    return()
+endif ()
+
 # Pick the right MSVC runtime libraries.
 include(SelectMSVCRuntime)
 
-add_executable(gcs2cbt gcs2cbt.cc)
-target_link_libraries(gcs2cbt google-cloud-cpp::bigtable
-                      google-cloud-cpp::storage google-cloud-cpp::grpc_utils)
-google_cloud_cpp_add_common_options(gcs2cbt)
+if (bigtable IN_LIST GOOGLE_CLOUD_CPP_ENABLE AND storage IN_LIST
+                                                 GOOGLE_CLOUD_CPP_ENABLE)
+    add_executable(gcs2cbt gcs2cbt.cc)
+    target_link_libraries(
+        gcs2cbt google-cloud-cpp::bigtable google-cloud-cpp::storage
+        google-cloud-cpp::grpc_utils)
+    google_cloud_cpp_add_common_options(gcs2cbt)
+endif ()
 
-if (BUILD_TESTING)
-    include(FindCurlWithTargets)
-    include(FindgRPC)
+include(FindCurlWithTargets)
+include(FindgRPC)
 
+if (spanner IN_LIST GOOGLE_CLOUD_CPP_ENABLE AND iam IN_LIST
+                                                GOOGLE_CLOUD_CPP_ENABLE)
     google_cloud_cpp_grpcpp_library(
         hello_world_protos "hello_world_grpc/hello_world.proto"
         PROTO_PATH_DIRECTORIES ${CMAKE_CURRENT_SOURCE_DIR})
@@ -38,11 +49,28 @@ if (BUILD_TESTING)
         PRIVATE hello_world_protos google_cloud_cpp_testing
                 google-cloud-cpp::iam google-cloud-cpp::spanner CURL::libcurl)
     google_cloud_cpp_add_common_options(grpc_credential_types)
-
-    foreach (test gcs2cbt grpc_credential_types)
-        add_test(NAME ${test} COMMAND ${test})
-        set_tests_properties(
-            ${test} PROPERTIES LABELS
-                               "integration-test;integration-test-production")
-    endforeach ()
 endif ()
+
+if (batch IN_LIST GOOGLE_CLOUD_CPP_ENABLE AND logging IN_LIST
+                                              GOOGLE_CLOUD_CPP_ENABLE)
+    add_executable(batch_logging batch_logging.cc)
+    target_link_libraries(
+        batch_logging PRIVATE google_cloud_cpp_testing google-cloud-cpp::batch
+                              google-cloud-cpp::logging)
+    google_cloud_cpp_add_common_options(batch_logging)
+endif ()
+
+# Label all the binaries as "tests", so they run in our CI builds.
+if (NOT BUILD_TESTING)
+    return()
+endif ()
+
+foreach (test batch_logging gcs2cbt grpc_credential_types)
+    if (NOT TARGET "${test}")
+        continue()
+    endif ()
+    add_test(NAME ${test} COMMAND ${test})
+    set_tests_properties(
+        ${test} PROPERTIES LABELS
+                           "integration-test;integration-test-production")
+endforeach ()

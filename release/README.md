@@ -98,16 +98,10 @@ The `publish-docs` build should start automatically when you create the release
 branch. This build will upload the docs for the new release to the following
 URLs:
 
-- https://googleapis.dev/cpp/google-cloud-bigquery/latest/
-- https://googleapis.dev/cpp/google-cloud-bigtable/latest/
-- https://googleapis.dev/cpp/google-cloud-iam/latest/
-- https://googleapis.dev/cpp/google-cloud-pubsub/latest/
-- https://googleapis.dev/cpp/google-cloud-spanner/latest/
-- https://googleapis.dev/cpp/google-cloud-storage/latest/
-- https://googleapis.dev/cpp/google-cloud-common/latest/
+- https://cloud.google.com/cpp/docs/reference/
 
-It can take up to an hour after the build finishes for the new docs to show up
-at the above URLs. You can watch the status of the build at
+It can take up to a day after the build finishes for the new docs to show up
+at the above URL. You can watch the status of the build at
 https://console.cloud.google.com/cloud-build/builds;region=us-east1?project=cloud-cpp-testing-resources&query=tags%3D%22publish-docs%22
 
 ## Bump the version number in `main`
@@ -159,10 +153,93 @@ Please note that we use more strict settings for release branches than for
 
 ## Push the release to Microsoft vcpkg
 
-Nudge `coryan@` to update our [vcpkg port]. These updates are not difficult, but
-contributing to this repository requires SVP approval. If you want, you can
-seek approval to make such updates yourself, just keep in mind that this may
-take several weeks.
+[PR#32391] is probably a good example of the changes you will need to make.
+
+- Create a fork of https://github.com/Microsoft/vcpkg.git.
+- Clone the fork and/or sync the `master` branch in your fork to the upstream
+  version.
+- Create a feature branch.
+  ```shell
+  git checkout -b google-cloud-cpp-update-to-v2.13.0
+  ```
+- Update the version and list of features (any new GA libraries) in these files:
+  ```
+  ports/google-cloud-cpp/portfile.cmake
+  ports/google-cloud-cpp/vcpkg.json
+  ```
+- Commit the changes
+  ```shell
+  git commit -m"[google-cloud-cpp] update to latest release (v2.13.0)" ports
+  ```
+- Update the version information (you really do need two commits)
+  ```shell
+  ./vcpkg x-add-version --all --overwrite-version
+  git commit --amend ---no-edit .
+  ```
+- Remove any older versions
+  ```shell
+  ./bootstrap-vcpkg.sh
+  ./vcpkg remove --outdated --recurse
+  ```
+- Test the changes
+  ```shell
+  ./vcpkg install 'google-cloud-cpp[*]'
+  ```
+
+## Monitor the automation on Conda
+
+On [Conda](https://conda.io) things are mostly automated. A robot will create a
+PR, similar to [PR#138]. If you want, subscribe to notifications in the
+[conda feedstock repository] or just look at the PRs in that repository over
+the next 24 hours.
+
+## Push the release to Conan
+
+(Optional) Create a PR to update the `google-cloud-cpp` package in
+[Conan](https://conan.io). These PRs are more involved.
+
+This package manager requires patches to our code. These patches need to be
+updated on each release. Package management systems tend to apply patches with
+very strict settings, so even small changes around the patches break them.
+Sometimes one can use `patch(1)` manually, with looser settings, and use that
+to update the patches.
+
+[PR#17988] is probably a good example of the changes you will need to make.
+
+- Start by creating a git repository based on the release, for example:
+  ```shell
+  curl -sSL https://github.com/googleapis/google-cloud-cpp/archive/v2.12.0.tar.gz | tar -C $HOME -zxf -
+  git -C $HOME/google-cloud-cpp-2.13.0/ init
+  git -C $HOME/google-cloud-cpp-2.13.0/ add .
+  git -C $HOME/google-cloud-cpp-2.13.0/ commit -q -m"Prepare for conan patches"
+  ```
+- Create a fork of [conan-center-index](https://github.com/conan-io/conan-center-index.git)
+- Clone the fork:
+  ```shell
+  git clone git@github.com:${GITHUB_USERNAME}/conan-center-index
+  cd conan-center-index
+  ```
+- Apply the existing patches and use the modified code to generate new versions:
+  ```shell
+  env -C $HOME/google-cloud-cpp-2.13.0/ patch -p1 \
+      <recipes/google-cloud-cpp/2.x/patches/2.12.0/001-use-conan-msvc-runtime.patch
+  mkdir -p recipes/google-cloud-cpp/2.x/patches/2.13.0
+  git -C $HOME/google-cloud-cpp-2.13.0/ diff \
+      >recipes/google-cloud-cpp/2.x/patches/2.13.0/001-use-conan-msvc-runtime.patch
+  git -C $HOME/google-cloud-cpp-2.13.0/ commit -m"001-use-conan-msvc-runtime.patch" .
+  ```
+- Create the support files:
+  ```shell
+  recipes/google-cloud-cpp/2.x/extract_dependencies.py \
+      --source-folder=$HOME/google-cloud-cpp-2.13.0 \
+      >recipes/google-cloud-cpp/2.x/components_2_13_0.py
+  ```
+- Manually patch these files:
+  ```shell
+  recipes/google-cloud-cpp/config.yml
+  recipes/google-cloud-cpp/2.x/conandata.yml
+  recipes/google-cloud-cpp/2.x/conanfile.py
+  ```
 
 # Creating a patch release of google-cloud-cpp on an existing release branch
 
@@ -227,9 +304,13 @@ ______________________________________________________________________
 - After review, publish the release.
 - Nudge `coryan@` to update our [vcpkg port].
 
+[conda feedstock repository]: https://github.com/conda-forge/google-cloud-cpp-feedstock
 [git-docs]: https://git-scm.com/doc
 [github-branch-settings]: https://github.com/googleapis/google-cloud-cpp/settings/branches
 [github-guides]: https://guides.github.com/
+[pr#138]: https://github.com/conda-forge/google-cloud-cpp-feedstock/pull/138
+[pr#17988]: https://github.com/conan-io/conan-center-index/pull/17988
+[pr#32391]: https://github.com/microsoft/vcpkg/pull/32391
 [vcpkg port]: https://github.com/Microsoft/vcpkg/tree/master/ports/google-cloud-cpp
 [`changelog.md`]: /CHANGELOG.md
 [`release/release.sh`]: https://github.com/googleapis/google-cloud-cpp/blob/main/release/release.sh

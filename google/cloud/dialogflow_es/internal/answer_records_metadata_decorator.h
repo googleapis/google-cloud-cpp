@@ -21,6 +21,7 @@
 
 #include "google/cloud/dialogflow_es/internal/answer_records_stub.h"
 #include "google/cloud/version.h"
+#include <map>
 #include <memory>
 #include <string>
 
@@ -32,7 +33,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class AnswerRecordsMetadata : public AnswerRecordsStub {
  public:
   ~AnswerRecordsMetadata() override = default;
-  explicit AnswerRecordsMetadata(std::shared_ptr<AnswerRecordsStub> child);
+  AnswerRecordsMetadata(std::shared_ptr<AnswerRecordsStub> child,
+                        std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::dialogflow::v2::ListAnswerRecordsResponse>
   ListAnswerRecords(
@@ -51,6 +53,7 @@ class AnswerRecordsMetadata : public AnswerRecordsStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<AnswerRecordsStub> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

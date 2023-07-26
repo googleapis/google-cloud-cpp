@@ -49,8 +49,9 @@ Options AttachedClustersDefaultOptions(std::string const& location,
   }
   if (!options.has<gkemulticloud_v1::AttachedClustersBackoffPolicyOption>()) {
     options.set<gkemulticloud_v1::AttachedClustersBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options.has<gkemulticloud_v1::AttachedClustersPollingPolicyOption>()) {
@@ -60,9 +61,9 @@ Options AttachedClustersDefaultOptions(std::string const& location,
             gkemulticloud_v1::AttachedClustersBackoffPolicyOption::Type>(
             options.get<gkemulticloud_v1::AttachedClustersRetryPolicyOption>()
                 ->clone(),
-            options
-                .get<gkemulticloud_v1::AttachedClustersBackoffPolicyOption>()
-                ->clone())
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
             .clone());
   }
   if (!options.has<gkemulticloud_v1::

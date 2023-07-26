@@ -29,22 +29,17 @@ functions of the class. This library groups multiple gRPC services because they
 are part of the same product or are often used together. A typical example may
 be the administrative and data plane operations for a single product.
 
-The library also has other classes that provide helpers, retry policies,
-configuration parameters, and infrastructure to mock the `*Client` classes
-when testing your application.
+The library also has other classes that provide helpers, configuration
+parameters, and infrastructure to mock the `*Client` classes when testing your
+application.
 
 - [\c dataproc_v1::AutoscalingPolicyServiceClient](@ref google::cloud::dataproc_v1::AutoscalingPolicyServiceClient)
 - [\c dataproc_v1::BatchControllerClient](@ref google::cloud::dataproc_v1::BatchControllerClient)
 - [\c dataproc_v1::ClusterControllerClient](@ref google::cloud::dataproc_v1::ClusterControllerClient)
 - [\c dataproc_v1::JobControllerClient](@ref google::cloud::dataproc_v1::JobControllerClient)
+- [\c dataproc_v1::NodeGroupControllerClient](@ref google::cloud::dataproc_v1::NodeGroupControllerClient)
 - [\c dataproc_v1::WorkflowTemplateServiceClient](@ref google::cloud::dataproc_v1::WorkflowTemplateServiceClient)
 <!-- inject-client-list-end -->
-
-## Retry, Backoff, and Idempotency Policies.
-
-The library automatically retries requests that fail with transient errors, and
-uses [exponential backoff] to backoff between retries. Application developers
-can override the default policies.
 
 ## More Information
 
@@ -53,8 +48,10 @@ can override the default policies.
   endpoint.
 - @ref dataproc-override-authentication - describes how to change the
   authentication credentials used by the library.
+- @ref dataproc-override-retry - describes how to change the default retry
+  policies.
+- @ref dataproc-env - describes environment variables that can configure the behavior of the library.
 
 [cloud-service-docs]: https://cloud.google.com/dataproc
-[exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff
 
 */

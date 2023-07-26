@@ -18,6 +18,7 @@
 
 #include "google/cloud/monitoring/dashboard/v1/internal/dashboards_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/monitoring/dashboard/v1/dashboards_service.grpc.pb.h>
@@ -29,8 +30,10 @@ namespace monitoring_dashboard_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 DashboardsServiceMetadata::DashboardsServiceMetadata(
-    std::shared_ptr<DashboardsServiceStub> child)
+    std::shared_ptr<DashboardsServiceStub> child,
+    std::multimap<std::string, std::string> fixed_metadata)
     : child_(std::move(child)),
+      fixed_metadata_(std::move(fixed_metadata)),
       api_client_header_(
           google::cloud::internal::ApiClientHeader("generator")) {}
 
@@ -38,7 +41,7 @@ StatusOr<google::monitoring::dashboard::v1::Dashboard>
 DashboardsServiceMetadata::CreateDashboard(
     grpc::ClientContext& context,
     google::monitoring::dashboard::v1::CreateDashboardRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->CreateDashboard(context, request);
 }
 
@@ -46,7 +49,7 @@ StatusOr<google::monitoring::dashboard::v1::ListDashboardsResponse>
 DashboardsServiceMetadata::ListDashboards(
     grpc::ClientContext& context,
     google::monitoring::dashboard::v1::ListDashboardsRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListDashboards(context, request);
 }
 
@@ -54,14 +57,14 @@ StatusOr<google::monitoring::dashboard::v1::Dashboard>
 DashboardsServiceMetadata::GetDashboard(
     grpc::ClientContext& context,
     google::monitoring::dashboard::v1::GetDashboardRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetDashboard(context, request);
 }
 
 Status DashboardsServiceMetadata::DeleteDashboard(
     grpc::ClientContext& context,
     google::monitoring::dashboard::v1::DeleteDashboardRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->DeleteDashboard(context, request);
 }
 
@@ -69,7 +72,8 @@ StatusOr<google::monitoring::dashboard::v1::Dashboard>
 DashboardsServiceMetadata::UpdateDashboard(
     grpc::ClientContext& context,
     google::monitoring::dashboard::v1::UpdateDashboardRequest const& request) {
-  SetMetadata(context, "dashboard.name=" + request.dashboard().name());
+  SetMetadata(context,
+              absl::StrCat("dashboard.name=", request.dashboard().name()));
   return child_->UpdateDashboard(context, request);
 }
 
@@ -80,6 +84,9 @@ void DashboardsServiceMetadata::SetMetadata(grpc::ClientContext& context,
 }
 
 void DashboardsServiceMetadata::SetMetadata(grpc::ClientContext& context) {
+  for (auto const& kv : fixed_metadata_) {
+    context.AddMetadata(kv.first, kv.second);
+  }
   context.AddMetadata("x-goog-api-client", api_client_header_);
   auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {

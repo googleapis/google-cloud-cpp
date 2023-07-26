@@ -92,458 +92,779 @@ class VideoStitcherServiceClient {
   }
   ///@}
 
+  // clang-format off
   ///
   /// Creates a new CDN key.
   ///
-  /// @param parent  Required. The project in which the CDN key should be
-  /// created, in the form
+  /// @param parent  Required. The project in which the CDN key should be created, in the form
   ///  of `projects/{project_number}/locations/{location}`.
   /// @param cdn_key  Required. The CDN key resource to create.
-  /// @param cdn_key_id  Required. The ID to use for the CDN key, which will
-  /// become the final
+  /// @param cdn_key_id  Required. The ID to use for the CDN key, which will become the final
   ///  component of the CDN key's resource name.
+  ///  @n
   ///  This value should conform to RFC-1034, which restricts to
   ///  lower-case letters, numbers, and hyphen, with the first character a
   ///  letter, the last a letter or a number, and a 63 character maximum.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::video::stitcher::v1::CdnKey,google/cloud/video/stitcher/v1/cdn_keys.proto#L30}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.video.stitcher.v1.CdnKey] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.video.stitcher.v1.CdnKey]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/cdn_keys.proto#L30}
-  /// [google.cloud.video.stitcher.v1.CreateCdnKeyRequest]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L295}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.stitcher.v1.CdnKey]: @googleapis_reference_link{google/cloud/video/stitcher/v1/cdn_keys.proto#L30}
+  /// [google.cloud.video.stitcher.v1.CreateCdnKeyRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L295}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::video::stitcher::v1::CdnKey>> CreateCdnKey(
       std::string const& parent,
       google::cloud::video::stitcher::v1::CdnKey const& cdn_key,
       std::string const& cdn_key_id, Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a new CDN key.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::video::stitcher::v1::CreateCdnKeyRequest,google/cloud/video/stitcher/v1/video_stitcher_service.proto#L295}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.video.stitcher.v1.CreateCdnKeyRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::video::stitcher::v1::CdnKey,google/cloud/video/stitcher/v1/cdn_keys.proto#L30}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.video.stitcher.v1.CdnKey] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.video.stitcher.v1.CdnKey]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/cdn_keys.proto#L30}
-  /// [google.cloud.video.stitcher.v1.CreateCdnKeyRequest]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L295}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.stitcher.v1.CdnKey]: @googleapis_reference_link{google/cloud/video/stitcher/v1/cdn_keys.proto#L30}
+  /// [google.cloud.video.stitcher.v1.CreateCdnKeyRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L295}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::video::stitcher::v1::CdnKey>> CreateCdnKey(
       google::cloud::video::stitcher::v1::CreateCdnKeyRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists all CDN keys in the specified project and location.
   ///
-  /// @param parent  Required. The project that contains the list of CDN keys,
-  /// in the form of
+  /// @param parent  Required. The project that contains the list of CDN keys, in the form of
   ///  `projects/{project_number}/locations/{location}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::video::stitcher::v1::CdnKey,google/cloud/video/stitcher/v1/cdn_keys.proto#L30}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.video.stitcher.v1.CdnKey], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.video.stitcher.v1.CdnKey]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/cdn_keys.proto#L30}
-  /// [google.cloud.video.stitcher.v1.ListCdnKeysRequest]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L318}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.stitcher.v1.CdnKey]: @googleapis_reference_link{google/cloud/video/stitcher/v1/cdn_keys.proto#L30}
+  /// [google.cloud.video.stitcher.v1.ListCdnKeysRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L318}
   ///
+  // clang-format on
   StreamRange<google::cloud::video::stitcher::v1::CdnKey> ListCdnKeys(
       std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Lists all CDN keys in the specified project and location.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::video::stitcher::v1::ListCdnKeysRequest,google/cloud/video/stitcher/v1/video_stitcher_service.proto#L318}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.video.stitcher.v1.ListCdnKeysRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::video::stitcher::v1::CdnKey,google/cloud/video/stitcher/v1/cdn_keys.proto#L30}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.video.stitcher.v1.CdnKey], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.video.stitcher.v1.CdnKey]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/cdn_keys.proto#L30}
-  /// [google.cloud.video.stitcher.v1.ListCdnKeysRequest]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L318}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.stitcher.v1.CdnKey]: @googleapis_reference_link{google/cloud/video/stitcher/v1/cdn_keys.proto#L30}
+  /// [google.cloud.video.stitcher.v1.ListCdnKeysRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L318}
   ///
+  // clang-format on
   StreamRange<google::cloud::video::stitcher::v1::CdnKey> ListCdnKeys(
       google::cloud::video::stitcher::v1::ListCdnKeysRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Returns the specified CDN key.
   ///
-  /// @param name  Required. The name of the CDN key to be retrieved, in the
-  /// form of
+  /// @param name  Required. The name of the CDN key to be retrieved, in the form of
   ///  `projects/{project}/locations/{location}/cdnKeys/{id}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::video::stitcher::v1::CdnKey,google/cloud/video/stitcher/v1/cdn_keys.proto#L30}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.video.stitcher.v1.CdnKey])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.video.stitcher.v1.CdnKey]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/cdn_keys.proto#L30}
-  /// [google.cloud.video.stitcher.v1.GetCdnKeyRequest]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L355}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.stitcher.v1.CdnKey]: @googleapis_reference_link{google/cloud/video/stitcher/v1/cdn_keys.proto#L30}
+  /// [google.cloud.video.stitcher.v1.GetCdnKeyRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L355}
   ///
+  // clang-format on
   StatusOr<google::cloud::video::stitcher::v1::CdnKey> GetCdnKey(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Returns the specified CDN key.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::video::stitcher::v1::GetCdnKeyRequest,google/cloud/video/stitcher/v1/video_stitcher_service.proto#L355}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.video.stitcher.v1.GetCdnKeyRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::video::stitcher::v1::CdnKey,google/cloud/video/stitcher/v1/cdn_keys.proto#L30}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.video.stitcher.v1.CdnKey])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.video.stitcher.v1.CdnKey]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/cdn_keys.proto#L30}
-  /// [google.cloud.video.stitcher.v1.GetCdnKeyRequest]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L355}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.stitcher.v1.CdnKey]: @googleapis_reference_link{google/cloud/video/stitcher/v1/cdn_keys.proto#L30}
+  /// [google.cloud.video.stitcher.v1.GetCdnKeyRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L355}
   ///
+  // clang-format on
   StatusOr<google::cloud::video::stitcher::v1::CdnKey> GetCdnKey(
       google::cloud::video::stitcher::v1::GetCdnKeyRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes the specified CDN key.
   ///
-  /// @param name  Required. The name of the CDN key to be deleted, in the form
-  /// of
+  /// @param name  Required. The name of the CDN key to be deleted, in the form of
   ///  `projects/{project_number}/locations/{location}/cdnKeys/{id}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::video::stitcher::v1::OperationMetadata,google/cloud/video/stitcher/v1/video_stitcher_service.proto#L768}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.video.stitcher.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.video.stitcher.v1.DeleteCdnKeyRequest]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L367}
-  /// [google.cloud.video.stitcher.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L768}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.stitcher.v1.DeleteCdnKeyRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L367}
+  /// [google.cloud.video.stitcher.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L768}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>
   DeleteCdnKey(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes the specified CDN key.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::video::stitcher::v1::DeleteCdnKeyRequest,google/cloud/video/stitcher/v1/video_stitcher_service.proto#L367}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.video.stitcher.v1.DeleteCdnKeyRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::video::stitcher::v1::OperationMetadata,google/cloud/video/stitcher/v1/video_stitcher_service.proto#L768}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.video.stitcher.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.video.stitcher.v1.DeleteCdnKeyRequest]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L367}
-  /// [google.cloud.video.stitcher.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L768}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.stitcher.v1.DeleteCdnKeyRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L367}
+  /// [google.cloud.video.stitcher.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L768}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>
   DeleteCdnKey(
       google::cloud::video::stitcher::v1::DeleteCdnKeyRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Updates the specified CDN key. Only update fields specified
   /// in the call method body.
   ///
-  /// @param cdn_key  Required. The CDN key resource which replaces the resource
-  /// on the server.
+  /// @param cdn_key  Required. The CDN key resource which replaces the resource on the server.
   /// @param update_mask  Required. The update mask applies to the resource.
   ///  For the `FieldMask` definition, see
   ///  https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::video::stitcher::v1::CdnKey,google/cloud/video/stitcher/v1/cdn_keys.proto#L30}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.video.stitcher.v1.CdnKey] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.video.stitcher.v1.CdnKey]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/cdn_keys.proto#L30}
-  /// [google.cloud.video.stitcher.v1.UpdateCdnKeyRequest]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L379}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.stitcher.v1.CdnKey]: @googleapis_reference_link{google/cloud/video/stitcher/v1/cdn_keys.proto#L30}
+  /// [google.cloud.video.stitcher.v1.UpdateCdnKeyRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L379}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::video::stitcher::v1::CdnKey>> UpdateCdnKey(
       google::cloud::video::stitcher::v1::CdnKey const& cdn_key,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
   ///
   /// Updates the specified CDN key. Only update fields specified
   /// in the call method body.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::video::stitcher::v1::UpdateCdnKeyRequest,google/cloud/video/stitcher/v1/video_stitcher_service.proto#L379}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.video.stitcher.v1.UpdateCdnKeyRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::video::stitcher::v1::CdnKey,google/cloud/video/stitcher/v1/cdn_keys.proto#L30}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.video.stitcher.v1.CdnKey] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.video.stitcher.v1.CdnKey]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/cdn_keys.proto#L30}
-  /// [google.cloud.video.stitcher.v1.UpdateCdnKeyRequest]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L379}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.stitcher.v1.CdnKey]: @googleapis_reference_link{google/cloud/video/stitcher/v1/cdn_keys.proto#L30}
+  /// [google.cloud.video.stitcher.v1.UpdateCdnKeyRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L379}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::video::stitcher::v1::CdnKey>> UpdateCdnKey(
       google::cloud::video::stitcher::v1::UpdateCdnKeyRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a client side playback VOD session and returns the full
   /// tracking and playback metadata of the session.
   ///
-  /// @param parent  Required. The project and location in which the VOD session
-  /// should be
+  /// @param parent  Required. The project and location in which the VOD session should be
   ///  created, in the form of `projects/{project_number}/locations/{location}`.
   /// @param vod_session  Required. Parameters for creating a session.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::video::stitcher::v1::VodSession,google/cloud/video/stitcher/v1/sessions.proto#L32}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.video.stitcher.v1.VodSession])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.video.stitcher.v1.CreateVodSessionRequest]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L391}
-  /// [google.cloud.video.stitcher.v1.VodSession]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/sessions.proto#L32}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.stitcher.v1.CreateVodSessionRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L391}
+  /// [google.cloud.video.stitcher.v1.VodSession]: @googleapis_reference_link{google/cloud/video/stitcher/v1/sessions.proto#L32}
   ///
+  // clang-format on
   StatusOr<google::cloud::video::stitcher::v1::VodSession> CreateVodSession(
       std::string const& parent,
       google::cloud::video::stitcher::v1::VodSession const& vod_session,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a client side playback VOD session and returns the full
   /// tracking and playback metadata of the session.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::video::stitcher::v1::CreateVodSessionRequest,google/cloud/video/stitcher/v1/video_stitcher_service.proto#L391}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.video.stitcher.v1.CreateVodSessionRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::video::stitcher::v1::VodSession,google/cloud/video/stitcher/v1/sessions.proto#L32}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.video.stitcher.v1.VodSession])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.video.stitcher.v1.CreateVodSessionRequest]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L391}
-  /// [google.cloud.video.stitcher.v1.VodSession]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/sessions.proto#L32}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.stitcher.v1.CreateVodSessionRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L391}
+  /// [google.cloud.video.stitcher.v1.VodSession]: @googleapis_reference_link{google/cloud/video/stitcher/v1/sessions.proto#L32}
   ///
+  // clang-format on
   StatusOr<google::cloud::video::stitcher::v1::VodSession> CreateVodSession(
       google::cloud::video::stitcher::v1::CreateVodSessionRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Returns the full tracking, playback metadata, and relevant ad-ops
   /// logs for the specified VOD session.
   ///
-  /// @param name  Required. The name of the VOD session to be retrieved, in the
-  /// form of
+  /// @param name  Required. The name of the VOD session to be retrieved, in the form of
   ///  `projects/{project_number}/locations/{location}/vodSessions/{id}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::video::stitcher::v1::VodSession,google/cloud/video/stitcher/v1/sessions.proto#L32}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.video.stitcher.v1.VodSession])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.video.stitcher.v1.GetVodSessionRequest]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L406}
-  /// [google.cloud.video.stitcher.v1.VodSession]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/sessions.proto#L32}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.stitcher.v1.GetVodSessionRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L406}
+  /// [google.cloud.video.stitcher.v1.VodSession]: @googleapis_reference_link{google/cloud/video/stitcher/v1/sessions.proto#L32}
   ///
+  // clang-format on
   StatusOr<google::cloud::video::stitcher::v1::VodSession> GetVodSession(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Returns the full tracking, playback metadata, and relevant ad-ops
   /// logs for the specified VOD session.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::video::stitcher::v1::GetVodSessionRequest,google/cloud/video/stitcher/v1/video_stitcher_service.proto#L406}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.video.stitcher.v1.GetVodSessionRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::video::stitcher::v1::VodSession,google/cloud/video/stitcher/v1/sessions.proto#L32}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.video.stitcher.v1.VodSession])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.video.stitcher.v1.GetVodSessionRequest]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L406}
-  /// [google.cloud.video.stitcher.v1.VodSession]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/sessions.proto#L32}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.stitcher.v1.GetVodSessionRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L406}
+  /// [google.cloud.video.stitcher.v1.VodSession]: @googleapis_reference_link{google/cloud/video/stitcher/v1/sessions.proto#L32}
   ///
+  // clang-format on
   StatusOr<google::cloud::video::stitcher::v1::VodSession> GetVodSession(
       google::cloud::video::stitcher::v1::GetVodSessionRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Returns a list of detailed stitching information of the specified VOD
   /// session.
   ///
-  /// @param parent  Required. The VOD session where the stitch details belong
-  /// to, in the form
+  /// @param parent  Required. The VOD session where the stitch details belong to, in the form
   ///  of `projects/{project}/locations/{location}/vodSessions/{id}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::video::stitcher::v1::VodStitchDetail,google/cloud/video/stitcher/v1/stitch_details.proto#L30}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.video.stitcher.v1.VodStitchDetail], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.video.stitcher.v1.ListVodStitchDetailsRequest]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L418}
-  /// [google.cloud.video.stitcher.v1.VodStitchDetail]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/stitch_details.proto#L30}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.stitcher.v1.ListVodStitchDetailsRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L418}
+  /// [google.cloud.video.stitcher.v1.VodStitchDetail]: @googleapis_reference_link{google/cloud/video/stitcher/v1/stitch_details.proto#L30}
   ///
+  // clang-format on
   StreamRange<google::cloud::video::stitcher::v1::VodStitchDetail>
   ListVodStitchDetails(std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Returns a list of detailed stitching information of the specified VOD
   /// session.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::video::stitcher::v1::ListVodStitchDetailsRequest,google/cloud/video/stitcher/v1/video_stitcher_service.proto#L418}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.video.stitcher.v1.ListVodStitchDetailsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::video::stitcher::v1::VodStitchDetail,google/cloud/video/stitcher/v1/stitch_details.proto#L30}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.video.stitcher.v1.VodStitchDetail], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.video.stitcher.v1.ListVodStitchDetailsRequest]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L418}
-  /// [google.cloud.video.stitcher.v1.VodStitchDetail]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/stitch_details.proto#L30}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.stitcher.v1.ListVodStitchDetailsRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L418}
+  /// [google.cloud.video.stitcher.v1.VodStitchDetail]: @googleapis_reference_link{google/cloud/video/stitcher/v1/stitch_details.proto#L30}
   ///
+  // clang-format on
   StreamRange<google::cloud::video::stitcher::v1::VodStitchDetail>
   ListVodStitchDetails(
       google::cloud::video::stitcher::v1::ListVodStitchDetailsRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Returns the specified stitching information for the specified VOD session.
   ///
-  /// @param name  Required. The name of the stitch detail in the specified VOD
-  /// session, in
+  /// @param name  Required. The name of the stitch detail in the specified VOD session, in
   ///  the form of
   ///  `projects/{project}/locations/{location}/vodSessions/{vod_session_id}/vodStitchDetails/{id}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::video::stitcher::v1::VodStitchDetail,google/cloud/video/stitcher/v1/stitch_details.proto#L30}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.video.stitcher.v1.VodStitchDetail])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.video.stitcher.v1.GetVodStitchDetailRequest]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L445}
-  /// [google.cloud.video.stitcher.v1.VodStitchDetail]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/stitch_details.proto#L30}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.stitcher.v1.GetVodStitchDetailRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L445}
+  /// [google.cloud.video.stitcher.v1.VodStitchDetail]: @googleapis_reference_link{google/cloud/video/stitcher/v1/stitch_details.proto#L30}
   ///
+  // clang-format on
   StatusOr<google::cloud::video::stitcher::v1::VodStitchDetail>
   GetVodStitchDetail(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Returns the specified stitching information for the specified VOD session.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::video::stitcher::v1::GetVodStitchDetailRequest,google/cloud/video/stitcher/v1/video_stitcher_service.proto#L445}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.video.stitcher.v1.GetVodStitchDetailRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::video::stitcher::v1::VodStitchDetail,google/cloud/video/stitcher/v1/stitch_details.proto#L30}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.video.stitcher.v1.VodStitchDetail])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.video.stitcher.v1.GetVodStitchDetailRequest]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L445}
-  /// [google.cloud.video.stitcher.v1.VodStitchDetail]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/stitch_details.proto#L30}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.stitcher.v1.GetVodStitchDetailRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L445}
+  /// [google.cloud.video.stitcher.v1.VodStitchDetail]: @googleapis_reference_link{google/cloud/video/stitcher/v1/stitch_details.proto#L30}
   ///
+  // clang-format on
   StatusOr<google::cloud::video::stitcher::v1::VodStitchDetail>
   GetVodStitchDetail(
       google::cloud::video::stitcher::v1::GetVodStitchDetailRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Return the list of ad tag details for the specified VOD session.
   ///
-  /// @param parent  Required. The VOD session which the ad tag details belong
-  /// to, in the form
-  ///  of
-  ///  `projects/{project}/locations/{location}/vodSessions/{vod_session_id}`.
+  /// @param parent  Required. The VOD session which the ad tag details belong to, in the form
+  ///  of `projects/{project}/locations/{location}/vodSessions/{vod_session_id}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::video::stitcher::v1::VodAdTagDetail,google/cloud/video/stitcher/v1/ad_tag_details.proto#L44}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.video.stitcher.v1.VodAdTagDetail], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.video.stitcher.v1.ListVodAdTagDetailsRequest]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L458}
-  /// [google.cloud.video.stitcher.v1.VodAdTagDetail]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/ad_tag_details.proto#L44}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.stitcher.v1.ListVodAdTagDetailsRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L458}
+  /// [google.cloud.video.stitcher.v1.VodAdTagDetail]: @googleapis_reference_link{google/cloud/video/stitcher/v1/ad_tag_details.proto#L44}
   ///
+  // clang-format on
   StreamRange<google::cloud::video::stitcher::v1::VodAdTagDetail>
   ListVodAdTagDetails(std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Return the list of ad tag details for the specified VOD session.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::video::stitcher::v1::ListVodAdTagDetailsRequest,google/cloud/video/stitcher/v1/video_stitcher_service.proto#L458}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.video.stitcher.v1.ListVodAdTagDetailsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::video::stitcher::v1::VodAdTagDetail,google/cloud/video/stitcher/v1/ad_tag_details.proto#L44}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.video.stitcher.v1.VodAdTagDetail], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.video.stitcher.v1.ListVodAdTagDetailsRequest]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L458}
-  /// [google.cloud.video.stitcher.v1.VodAdTagDetail]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/ad_tag_details.proto#L44}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.stitcher.v1.ListVodAdTagDetailsRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L458}
+  /// [google.cloud.video.stitcher.v1.VodAdTagDetail]: @googleapis_reference_link{google/cloud/video/stitcher/v1/ad_tag_details.proto#L44}
   ///
+  // clang-format on
   StreamRange<google::cloud::video::stitcher::v1::VodAdTagDetail>
   ListVodAdTagDetails(
       google::cloud::video::stitcher::v1::ListVodAdTagDetailsRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Returns the specified ad tag detail for the specified VOD session.
   ///
-  /// @param name  Required. The name of the ad tag detail for the specified VOD
-  /// session, in
+  /// @param name  Required. The name of the ad tag detail for the specified VOD session, in
   ///  the form of
   ///  `projects/{project}/locations/{location}/vodSessions/{vod_session_id}/vodAdTagDetails/{vod_ad_tag_detail}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::video::stitcher::v1::VodAdTagDetail,google/cloud/video/stitcher/v1/ad_tag_details.proto#L44}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.video.stitcher.v1.VodAdTagDetail])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.video.stitcher.v1.GetVodAdTagDetailRequest]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L485}
-  /// [google.cloud.video.stitcher.v1.VodAdTagDetail]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/ad_tag_details.proto#L44}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.stitcher.v1.GetVodAdTagDetailRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L485}
+  /// [google.cloud.video.stitcher.v1.VodAdTagDetail]: @googleapis_reference_link{google/cloud/video/stitcher/v1/ad_tag_details.proto#L44}
   ///
+  // clang-format on
   StatusOr<google::cloud::video::stitcher::v1::VodAdTagDetail>
   GetVodAdTagDetail(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Returns the specified ad tag detail for the specified VOD session.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::video::stitcher::v1::GetVodAdTagDetailRequest,google/cloud/video/stitcher/v1/video_stitcher_service.proto#L485}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.video.stitcher.v1.GetVodAdTagDetailRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::video::stitcher::v1::VodAdTagDetail,google/cloud/video/stitcher/v1/ad_tag_details.proto#L44}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.video.stitcher.v1.VodAdTagDetail])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.video.stitcher.v1.GetVodAdTagDetailRequest]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L485}
-  /// [google.cloud.video.stitcher.v1.VodAdTagDetail]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/ad_tag_details.proto#L44}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.stitcher.v1.GetVodAdTagDetailRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L485}
+  /// [google.cloud.video.stitcher.v1.VodAdTagDetail]: @googleapis_reference_link{google/cloud/video/stitcher/v1/ad_tag_details.proto#L44}
   ///
+  // clang-format on
   StatusOr<google::cloud::video::stitcher::v1::VodAdTagDetail>
   GetVodAdTagDetail(
       google::cloud::video::stitcher::v1::GetVodAdTagDetailRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Return the list of ad tag details for the specified live session.
   ///
@@ -551,37 +872,77 @@ class VideoStitcherServiceClient {
   ///  `projects/{project}/locations/{location}/liveSessions/{live_session}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::video::stitcher::v1::LiveAdTagDetail,google/cloud/video/stitcher/v1/ad_tag_details.proto#L29}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.video.stitcher.v1.LiveAdTagDetail], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.video.stitcher.v1.ListLiveAdTagDetailsRequest]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L498}
-  /// [google.cloud.video.stitcher.v1.LiveAdTagDetail]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/ad_tag_details.proto#L29}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.stitcher.v1.ListLiveAdTagDetailsRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L498}
+  /// [google.cloud.video.stitcher.v1.LiveAdTagDetail]: @googleapis_reference_link{google/cloud/video/stitcher/v1/ad_tag_details.proto#L29}
   ///
+  // clang-format on
   StreamRange<google::cloud::video::stitcher::v1::LiveAdTagDetail>
   ListLiveAdTagDetails(std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Return the list of ad tag details for the specified live session.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::video::stitcher::v1::ListLiveAdTagDetailsRequest,google/cloud/video/stitcher/v1/video_stitcher_service.proto#L498}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.video.stitcher.v1.ListLiveAdTagDetailsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::video::stitcher::v1::LiveAdTagDetail,google/cloud/video/stitcher/v1/ad_tag_details.proto#L29}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.video.stitcher.v1.LiveAdTagDetail], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.video.stitcher.v1.ListLiveAdTagDetailsRequest]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L498}
-  /// [google.cloud.video.stitcher.v1.LiveAdTagDetail]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/ad_tag_details.proto#L29}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.stitcher.v1.ListLiveAdTagDetailsRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L498}
+  /// [google.cloud.video.stitcher.v1.LiveAdTagDetail]: @googleapis_reference_link{google/cloud/video/stitcher/v1/ad_tag_details.proto#L29}
   ///
+  // clang-format on
   StreamRange<google::cloud::video::stitcher::v1::LiveAdTagDetail>
   ListLiveAdTagDetails(
       google::cloud::video::stitcher::v1::ListLiveAdTagDetailsRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Returns the specified ad tag detail for the specified live session.
   ///
@@ -589,43 +950,64 @@ class VideoStitcherServiceClient {
   ///  `projects/{project}/locations/{location}/liveSessions/{live_session}/liveAdTagDetails/{live_ad_tag_detail}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::video::stitcher::v1::LiveAdTagDetail,google/cloud/video/stitcher/v1/ad_tag_details.proto#L29}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.video.stitcher.v1.LiveAdTagDetail])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.video.stitcher.v1.GetLiveAdTagDetailRequest]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L525}
-  /// [google.cloud.video.stitcher.v1.LiveAdTagDetail]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/ad_tag_details.proto#L29}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.stitcher.v1.GetLiveAdTagDetailRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L525}
+  /// [google.cloud.video.stitcher.v1.LiveAdTagDetail]: @googleapis_reference_link{google/cloud/video/stitcher/v1/ad_tag_details.proto#L29}
   ///
+  // clang-format on
   StatusOr<google::cloud::video::stitcher::v1::LiveAdTagDetail>
   GetLiveAdTagDetail(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Returns the specified ad tag detail for the specified live session.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::video::stitcher::v1::GetLiveAdTagDetailRequest,google/cloud/video/stitcher/v1/video_stitcher_service.proto#L525}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.video.stitcher.v1.GetLiveAdTagDetailRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::video::stitcher::v1::LiveAdTagDetail,google/cloud/video/stitcher/v1/ad_tag_details.proto#L29}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.video.stitcher.v1.LiveAdTagDetail])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.video.stitcher.v1.GetLiveAdTagDetailRequest]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L525}
-  /// [google.cloud.video.stitcher.v1.LiveAdTagDetail]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/ad_tag_details.proto#L29}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.stitcher.v1.GetLiveAdTagDetailRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L525}
+  /// [google.cloud.video.stitcher.v1.LiveAdTagDetail]: @googleapis_reference_link{google/cloud/video/stitcher/v1/ad_tag_details.proto#L29}
   ///
+  // clang-format on
   StatusOr<google::cloud::video::stitcher::v1::LiveAdTagDetail>
   GetLiveAdTagDetail(
       google::cloud::video::stitcher::v1::GetLiveAdTagDetailRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a slate.
   ///
-  /// @param parent  Required. The project in which the slate should be created,
-  /// in the form of
+  /// @param parent  Required. The project in which the slate should be created, in the form of
   ///  `projects/{project_number}/locations/{location}`.
   /// @param slate  Required. The slate to create.
   /// @param slate_id  Required. The unique identifier for the slate.
@@ -634,38 +1016,72 @@ class VideoStitcherServiceClient {
   ///  letter, the last a letter or a number, and a 63 character maximum.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::video::stitcher::v1::Slate,google/cloud/video/stitcher/v1/slates.proto#L28}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.video.stitcher.v1.Slate] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.video.stitcher.v1.CreateSlateRequest]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L537}
-  /// [google.cloud.video.stitcher.v1.Slate]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/slates.proto#L28}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.stitcher.v1.CreateSlateRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L537}
+  /// [google.cloud.video.stitcher.v1.Slate]: @googleapis_reference_link{google/cloud/video/stitcher/v1/slates.proto#L28}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::video::stitcher::v1::Slate>> CreateSlate(
       std::string const& parent,
       google::cloud::video::stitcher::v1::Slate const& slate,
       std::string const& slate_id, Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a slate.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::video::stitcher::v1::CreateSlateRequest,google/cloud/video/stitcher/v1/video_stitcher_service.proto#L537}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.video.stitcher.v1.CreateSlateRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::video::stitcher::v1::Slate,google/cloud/video/stitcher/v1/slates.proto#L28}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.video.stitcher.v1.Slate] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.video.stitcher.v1.CreateSlateRequest]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L537}
-  /// [google.cloud.video.stitcher.v1.Slate]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/slates.proto#L28}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.stitcher.v1.CreateSlateRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L537}
+  /// [google.cloud.video.stitcher.v1.Slate]: @googleapis_reference_link{google/cloud/video/stitcher/v1/slates.proto#L28}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::video::stitcher::v1::Slate>> CreateSlate(
       google::cloud::video::stitcher::v1::CreateSlateRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists all slates in the specified project and location.
   ///
@@ -673,113 +1089,207 @@ class VideoStitcherServiceClient {
   ///  `projects/{project_number}/locations/{location}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::video::stitcher::v1::Slate,google/cloud/video/stitcher/v1/slates.proto#L28}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.video.stitcher.v1.Slate], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.video.stitcher.v1.ListSlatesRequest]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L585}
-  /// [google.cloud.video.stitcher.v1.Slate]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/slates.proto#L28}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.stitcher.v1.ListSlatesRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L585}
+  /// [google.cloud.video.stitcher.v1.Slate]: @googleapis_reference_link{google/cloud/video/stitcher/v1/slates.proto#L28}
   ///
+  // clang-format on
   StreamRange<google::cloud::video::stitcher::v1::Slate> ListSlates(
       std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Lists all slates in the specified project and location.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::video::stitcher::v1::ListSlatesRequest,google/cloud/video/stitcher/v1/video_stitcher_service.proto#L585}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.video.stitcher.v1.ListSlatesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::video::stitcher::v1::Slate,google/cloud/video/stitcher/v1/slates.proto#L28}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.video.stitcher.v1.Slate], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.video.stitcher.v1.ListSlatesRequest]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L585}
-  /// [google.cloud.video.stitcher.v1.Slate]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/slates.proto#L28}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.stitcher.v1.ListSlatesRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L585}
+  /// [google.cloud.video.stitcher.v1.Slate]: @googleapis_reference_link{google/cloud/video/stitcher/v1/slates.proto#L28}
   ///
+  // clang-format on
   StreamRange<google::cloud::video::stitcher::v1::Slate> ListSlates(
       google::cloud::video::stitcher::v1::ListSlatesRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Returns the specified slate.
   ///
-  /// @param name  Required. The name of the slate to be retrieved, of the
-  /// slate, in the form
+  /// @param name  Required. The name of the slate to be retrieved, of the slate, in the form
   ///  of `projects/{project_number}/locations/{location}/slates/{id}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::video::stitcher::v1::Slate,google/cloud/video/stitcher/v1/slates.proto#L28}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.video.stitcher.v1.Slate])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.video.stitcher.v1.GetSlateRequest]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L573}
-  /// [google.cloud.video.stitcher.v1.Slate]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/slates.proto#L28}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.stitcher.v1.GetSlateRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L573}
+  /// [google.cloud.video.stitcher.v1.Slate]: @googleapis_reference_link{google/cloud/video/stitcher/v1/slates.proto#L28}
   ///
+  // clang-format on
   StatusOr<google::cloud::video::stitcher::v1::Slate> GetSlate(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Returns the specified slate.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::video::stitcher::v1::GetSlateRequest,google/cloud/video/stitcher/v1/video_stitcher_service.proto#L573}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.video.stitcher.v1.GetSlateRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::video::stitcher::v1::Slate,google/cloud/video/stitcher/v1/slates.proto#L28}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.video.stitcher.v1.Slate])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.video.stitcher.v1.GetSlateRequest]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L573}
-  /// [google.cloud.video.stitcher.v1.Slate]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/slates.proto#L28}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.stitcher.v1.GetSlateRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L573}
+  /// [google.cloud.video.stitcher.v1.Slate]: @googleapis_reference_link{google/cloud/video/stitcher/v1/slates.proto#L28}
   ///
+  // clang-format on
   StatusOr<google::cloud::video::stitcher::v1::Slate> GetSlate(
       google::cloud::video::stitcher::v1::GetSlateRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Updates the specified slate.
   ///
   /// @param slate  Required. The resource with updated fields.
-  /// @param update_mask  Required. The update mask which specifies fields which
-  /// should be updated.
+  /// @param update_mask  Required. The update mask which specifies fields which should be updated.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::video::stitcher::v1::Slate,google/cloud/video/stitcher/v1/slates.proto#L28}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.video.stitcher.v1.Slate] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.video.stitcher.v1.Slate]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/slates.proto#L28}
-  /// [google.cloud.video.stitcher.v1.UpdateSlateRequest]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L622}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.stitcher.v1.Slate]: @googleapis_reference_link{google/cloud/video/stitcher/v1/slates.proto#L28}
+  /// [google.cloud.video.stitcher.v1.UpdateSlateRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L622}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::video::stitcher::v1::Slate>> UpdateSlate(
       google::cloud::video::stitcher::v1::Slate const& slate,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
   ///
   /// Updates the specified slate.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::video::stitcher::v1::UpdateSlateRequest,google/cloud/video/stitcher/v1/video_stitcher_service.proto#L622}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.video.stitcher.v1.UpdateSlateRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::video::stitcher::v1::Slate,google/cloud/video/stitcher/v1/slates.proto#L28}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.video.stitcher.v1.Slate] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.video.stitcher.v1.Slate]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/slates.proto#L28}
-  /// [google.cloud.video.stitcher.v1.UpdateSlateRequest]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L622}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.stitcher.v1.Slate]: @googleapis_reference_link{google/cloud/video/stitcher/v1/slates.proto#L28}
+  /// [google.cloud.video.stitcher.v1.UpdateSlateRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L622}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::video::stitcher::v1::Slate>> UpdateSlate(
       google::cloud::video::stitcher::v1::UpdateSlateRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes the specified slate.
   ///
@@ -787,79 +1297,134 @@ class VideoStitcherServiceClient {
   ///  `projects/{project_number}/locations/{location}/slates/{id}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::video::stitcher::v1::OperationMetadata,google/cloud/video/stitcher/v1/video_stitcher_service.proto#L768}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.video.stitcher.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.video.stitcher.v1.DeleteSlateRequest]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L632}
-  /// [google.cloud.video.stitcher.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L768}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.stitcher.v1.DeleteSlateRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L632}
+  /// [google.cloud.video.stitcher.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L768}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>
   DeleteSlate(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes the specified slate.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::video::stitcher::v1::DeleteSlateRequest,google/cloud/video/stitcher/v1/video_stitcher_service.proto#L632}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.video.stitcher.v1.DeleteSlateRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::video::stitcher::v1::OperationMetadata,google/cloud/video/stitcher/v1/video_stitcher_service.proto#L768}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.video.stitcher.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.video.stitcher.v1.DeleteSlateRequest]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L632}
-  /// [google.cloud.video.stitcher.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L768}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.stitcher.v1.DeleteSlateRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L632}
+  /// [google.cloud.video.stitcher.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L768}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>
   DeleteSlate(
       google::cloud::video::stitcher::v1::DeleteSlateRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a new live session.
   ///
-  /// @param parent  Required. The project and location in which the live
-  /// session should be
+  /// @param parent  Required. The project and location in which the live session should be
   ///  created, in the form of `projects/{project_number}/locations/{location}`.
   /// @param live_session  Required. Parameters for creating a live session.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::video::stitcher::v1::LiveSession,google/cloud/video/stitcher/v1/sessions.proto#L143}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.video.stitcher.v1.LiveSession])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.video.stitcher.v1.CreateLiveSessionRequest]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L644}
-  /// [google.cloud.video.stitcher.v1.LiveSession]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/sessions.proto#L143}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.stitcher.v1.CreateLiveSessionRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L644}
+  /// [google.cloud.video.stitcher.v1.LiveSession]: @googleapis_reference_link{google/cloud/video/stitcher/v1/sessions.proto#L143}
   ///
+  // clang-format on
   StatusOr<google::cloud::video::stitcher::v1::LiveSession> CreateLiveSession(
       std::string const& parent,
       google::cloud::video::stitcher::v1::LiveSession const& live_session,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a new live session.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::video::stitcher::v1::CreateLiveSessionRequest,google/cloud/video/stitcher/v1/video_stitcher_service.proto#L644}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.video.stitcher.v1.CreateLiveSessionRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::video::stitcher::v1::LiveSession,google/cloud/video/stitcher/v1/sessions.proto#L143}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.video.stitcher.v1.LiveSession])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.video.stitcher.v1.CreateLiveSessionRequest]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L644}
-  /// [google.cloud.video.stitcher.v1.LiveSession]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/sessions.proto#L143}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.stitcher.v1.CreateLiveSessionRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L644}
+  /// [google.cloud.video.stitcher.v1.LiveSession]: @googleapis_reference_link{google/cloud/video/stitcher/v1/sessions.proto#L143}
   ///
+  // clang-format on
   StatusOr<google::cloud::video::stitcher::v1::LiveSession> CreateLiveSession(
       google::cloud::video::stitcher::v1::CreateLiveSessionRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Returns the details for the specified live session.
   ///
@@ -867,199 +1432,345 @@ class VideoStitcherServiceClient {
   ///  `projects/{project_number}/locations/{location}/liveSessions/{id}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::video::stitcher::v1::LiveSession,google/cloud/video/stitcher/v1/sessions.proto#L143}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.video.stitcher.v1.LiveSession])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.video.stitcher.v1.GetLiveSessionRequest]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L659}
-  /// [google.cloud.video.stitcher.v1.LiveSession]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/sessions.proto#L143}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.stitcher.v1.GetLiveSessionRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L659}
+  /// [google.cloud.video.stitcher.v1.LiveSession]: @googleapis_reference_link{google/cloud/video/stitcher/v1/sessions.proto#L143}
   ///
+  // clang-format on
   StatusOr<google::cloud::video::stitcher::v1::LiveSession> GetLiveSession(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Returns the details for the specified live session.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::video::stitcher::v1::GetLiveSessionRequest,google/cloud/video/stitcher/v1/video_stitcher_service.proto#L659}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.video.stitcher.v1.GetLiveSessionRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::video::stitcher::v1::LiveSession,google/cloud/video/stitcher/v1/sessions.proto#L143}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.video.stitcher.v1.LiveSession])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.video.stitcher.v1.GetLiveSessionRequest]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L659}
-  /// [google.cloud.video.stitcher.v1.LiveSession]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/sessions.proto#L143}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.stitcher.v1.GetLiveSessionRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L659}
+  /// [google.cloud.video.stitcher.v1.LiveSession]: @googleapis_reference_link{google/cloud/video/stitcher/v1/sessions.proto#L143}
   ///
+  // clang-format on
   StatusOr<google::cloud::video::stitcher::v1::LiveSession> GetLiveSession(
       google::cloud::video::stitcher::v1::GetLiveSessionRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Registers the live config with the provided unique ID in
   /// the specified region.
   ///
-  /// @param parent  Required. The project in which the live config should be
-  /// created, in
+  /// @param parent  Required. The project in which the live config should be created, in
   ///  the form of `projects/{project_number}/locations/{location}`.
   /// @param live_config  Required. The live config resource to create.
-  /// @param live_config_id  Required. The unique identifier ID to use for the
-  /// live config.
+  /// @param live_config_id  Required. The unique identifier ID to use for the live config.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::video::stitcher::v1::LiveConfig,google/cloud/video/stitcher/v1/live_configs.proto#L43}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.video.stitcher.v1.LiveConfig] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.video.stitcher.v1.CreateLiveConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L671}
-  /// [google.cloud.video.stitcher.v1.LiveConfig]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/live_configs.proto#L43}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.stitcher.v1.CreateLiveConfigRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L671}
+  /// [google.cloud.video.stitcher.v1.LiveConfig]: @googleapis_reference_link{google/cloud/video/stitcher/v1/live_configs.proto#L43}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::video::stitcher::v1::LiveConfig>>
   CreateLiveConfig(
       std::string const& parent,
       google::cloud::video::stitcher::v1::LiveConfig const& live_config,
       std::string const& live_config_id, Options opts = {});
 
+  // clang-format off
   ///
   /// Registers the live config with the provided unique ID in
   /// the specified region.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::video::stitcher::v1::CreateLiveConfigRequest,google/cloud/video/stitcher/v1/video_stitcher_service.proto#L671}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.video.stitcher.v1.CreateLiveConfigRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::video::stitcher::v1::LiveConfig,google/cloud/video/stitcher/v1/live_configs.proto#L43}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.video.stitcher.v1.LiveConfig] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.video.stitcher.v1.CreateLiveConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L671}
-  /// [google.cloud.video.stitcher.v1.LiveConfig]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/live_configs.proto#L43}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.stitcher.v1.CreateLiveConfigRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L671}
+  /// [google.cloud.video.stitcher.v1.LiveConfig]: @googleapis_reference_link{google/cloud/video/stitcher/v1/live_configs.proto#L43}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::video::stitcher::v1::LiveConfig>>
   CreateLiveConfig(
       google::cloud::video::stitcher::v1::CreateLiveConfigRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists all live configs managed by the Video Stitcher that
   /// belong to the specified project and region.
   ///
-  /// @param parent  Required. The project that contains the list of live
-  /// configs, in the
+  /// @param parent  Required. The project that contains the list of live configs, in the
   ///  form of `projects/{project_number}/locations/{location}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::video::stitcher::v1::LiveConfig,google/cloud/video/stitcher/v1/live_configs.proto#L43}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.video.stitcher.v1.LiveConfig], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.video.stitcher.v1.ListLiveConfigsRequest]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L704}
-  /// [google.cloud.video.stitcher.v1.LiveConfig]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/live_configs.proto#L43}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.stitcher.v1.ListLiveConfigsRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L704}
+  /// [google.cloud.video.stitcher.v1.LiveConfig]: @googleapis_reference_link{google/cloud/video/stitcher/v1/live_configs.proto#L43}
   ///
+  // clang-format on
   StreamRange<google::cloud::video::stitcher::v1::LiveConfig> ListLiveConfigs(
       std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Lists all live configs managed by the Video Stitcher that
   /// belong to the specified project and region.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::video::stitcher::v1::ListLiveConfigsRequest,google/cloud/video/stitcher/v1/video_stitcher_service.proto#L704}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.video.stitcher.v1.ListLiveConfigsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::video::stitcher::v1::LiveConfig,google/cloud/video/stitcher/v1/live_configs.proto#L43}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.video.stitcher.v1.LiveConfig], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.video.stitcher.v1.ListLiveConfigsRequest]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L704}
-  /// [google.cloud.video.stitcher.v1.LiveConfig]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/live_configs.proto#L43}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.stitcher.v1.ListLiveConfigsRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L704}
+  /// [google.cloud.video.stitcher.v1.LiveConfig]: @googleapis_reference_link{google/cloud/video/stitcher/v1/live_configs.proto#L43}
   ///
+  // clang-format on
   StreamRange<google::cloud::video::stitcher::v1::LiveConfig> ListLiveConfigs(
       google::cloud::video::stitcher::v1::ListLiveConfigsRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Returns the specified live config managed by the Video
   /// Stitcher service.
   ///
-  /// @param name  Required. The name of the live config to be retrieved, in the
-  /// form
+  /// @param name  Required. The name of the live config to be retrieved, in the form
   ///  of
   ///  `projects/{project_number}/locations/{location}/liveConfigs/{id}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::video::stitcher::v1::LiveConfig,google/cloud/video/stitcher/v1/live_configs.proto#L43}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.video.stitcher.v1.LiveConfig])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.video.stitcher.v1.GetLiveConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L743}
-  /// [google.cloud.video.stitcher.v1.LiveConfig]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/live_configs.proto#L43}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.stitcher.v1.GetLiveConfigRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L743}
+  /// [google.cloud.video.stitcher.v1.LiveConfig]: @googleapis_reference_link{google/cloud/video/stitcher/v1/live_configs.proto#L43}
   ///
+  // clang-format on
   StatusOr<google::cloud::video::stitcher::v1::LiveConfig> GetLiveConfig(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Returns the specified live config managed by the Video
   /// Stitcher service.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::video::stitcher::v1::GetLiveConfigRequest,google/cloud/video/stitcher/v1/video_stitcher_service.proto#L743}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.video.stitcher.v1.GetLiveConfigRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::video::stitcher::v1::LiveConfig,google/cloud/video/stitcher/v1/live_configs.proto#L43}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.video.stitcher.v1.LiveConfig])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.video.stitcher.v1.GetLiveConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L743}
-  /// [google.cloud.video.stitcher.v1.LiveConfig]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/live_configs.proto#L43}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.stitcher.v1.GetLiveConfigRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L743}
+  /// [google.cloud.video.stitcher.v1.LiveConfig]: @googleapis_reference_link{google/cloud/video/stitcher/v1/live_configs.proto#L43}
   ///
+  // clang-format on
   StatusOr<google::cloud::video::stitcher::v1::LiveConfig> GetLiveConfig(
       google::cloud::video::stitcher::v1::GetLiveConfigRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes the specified live config.
   ///
-  /// @param name  Required. The name of the live config to be deleted, in the
-  /// form of
+  /// @param name  Required. The name of the live config to be deleted, in the form of
   ///  `projects/{project_number}/locations/{location}/liveConfigs/{id}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::video::stitcher::v1::OperationMetadata,google/cloud/video/stitcher/v1/video_stitcher_service.proto#L768}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.video.stitcher.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.video.stitcher.v1.DeleteLiveConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L756}
-  /// [google.cloud.video.stitcher.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L768}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.stitcher.v1.DeleteLiveConfigRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L756}
+  /// [google.cloud.video.stitcher.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L768}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>
   DeleteLiveConfig(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes the specified live config.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::video::stitcher::v1::DeleteLiveConfigRequest,google/cloud/video/stitcher/v1/video_stitcher_service.proto#L756}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.video.stitcher.v1.DeleteLiveConfigRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::video::stitcher::v1::OperationMetadata,google/cloud/video/stitcher/v1/video_stitcher_service.proto#L768}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.video.stitcher.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.video.stitcher.v1.DeleteLiveConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L756}
-  /// [google.cloud.video.stitcher.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L768}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.stitcher.v1.DeleteLiveConfigRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L756}
+  /// [google.cloud.video.stitcher.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L768}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>
   DeleteLiveConfig(
       google::cloud::video::stitcher::v1::DeleteLiveConfigRequest const&

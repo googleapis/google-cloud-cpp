@@ -1,0 +1,25 @@
+/*!
+@page recaptchaenterprise-override-endpoint How to Override the Default Endpoint
+
+In some cases, you may need to override the default endpoint used by the client
+library. Use the
+[EndpointOption](@ref google::cloud::EndpointOption) when initializing the
+client library to change this default.
+
+<!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `recaptchaenterprise_v1::RecaptchaEnterpriseServiceClient`:
+
+@snippet recaptcha_enterprise_client_samples.cc set-client-endpoint
+
+<!-- inject-endpoint-snippet-end -->
+
+*/
+
+// <!-- inject-endpoint-pages-start -->
+
+/*! @page recaptchaenterprise_v1::RecaptchaEnterpriseServiceClient-endpoint-snippet Override recaptchaenterprise_v1::RecaptchaEnterpriseServiceClient Endpoint Configuration
+
+@snippet google/cloud/recaptchaenterprise/v1/samples/recaptcha_enterprise_client_samples.cc set-client-endpoint
+
+*/
+// <!-- inject-endpoint-pages-end -->

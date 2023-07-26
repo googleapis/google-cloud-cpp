@@ -37,7 +37,7 @@ class FoldersLogging : public FoldersStub {
   ~FoldersLogging() override = default;
   FoldersLogging(std::shared_ptr<FoldersStub> child,
                  TracingOptions tracing_options,
-                 std::set<std::string> components);
+                 std::set<std::string> const& components);
 
   StatusOr<google::cloud::resourcemanager::v3::Folder> GetFolder(
       grpc::ClientContext& context,
@@ -109,7 +109,7 @@ class FoldersLogging : public FoldersStub {
  private:
   std::shared_ptr<FoldersStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // FoldersLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

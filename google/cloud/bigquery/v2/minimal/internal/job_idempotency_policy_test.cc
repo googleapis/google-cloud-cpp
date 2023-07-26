@@ -38,6 +38,43 @@ TEST(JobIdempotencyPolicytTest, ListJobs) {
   EXPECT_EQ(actual->ListJobs(request), expected);
 }
 
+TEST(JobIdempotencyPolicytTest, InsertJob) {
+  auto actual = MakeDefaultBigQueryJobIdempotencyPolicy();
+  auto expected = Idempotency::kNonIdempotent;
+
+  InsertJobRequest request;
+  EXPECT_EQ(actual->InsertJob(request), expected);
+}
+
+TEST(JobIdempotencyPolicytTest, CancelJob) {
+  auto actual = MakeDefaultBigQueryJobIdempotencyPolicy();
+  auto expected = Idempotency::kNonIdempotent;
+
+  CancelJobRequest request;
+  EXPECT_EQ(actual->CancelJob(request), expected);
+}
+
+TEST(JobIdempotencyPolicytTest, QueryNonIdempotent) {
+  auto actual = MakeDefaultBigQueryJobIdempotencyPolicy();
+  auto expected = Idempotency::kNonIdempotent;
+
+  PostQueryRequest request;
+  EXPECT_EQ(actual->Query(request), expected);
+}
+
+TEST(JobIdempotencyPolicytTest, QueryIdempotent) {
+  auto actual = MakeDefaultBigQueryJobIdempotencyPolicy();
+  auto expected = Idempotency::kIdempotent;
+
+  QueryRequest query_request;
+  query_request.set_request_id("123");
+
+  PostQueryRequest request;
+  request.set_query_request(query_request);
+
+  EXPECT_EQ(actual->Query(request), expected);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_v2_minimal_internal
 }  // namespace cloud

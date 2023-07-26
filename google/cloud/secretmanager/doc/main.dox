@@ -23,18 +23,12 @@ which should give you a taste of the Secret Manager API C++ client library API.
 
 <!-- inject-client-list-start -->
 The main class in this library is
-[\c secretmanager_v1::SecretManagerServiceClient](@ref google::cloud::secretmanager_v1::SecretManagerServiceClient).
-All RPCs are exposed as member functions of this class. Other classes provide
-helpers, retry policies, configuration parameters, and infrastructure to mock
-[\c secretmanager_v1::SecretManagerServiceClient](@ref google::cloud::secretmanager_v1::SecretManagerServiceClient) when testing your
+[`secretmanager_v1::SecretManagerServiceClient`](@ref google::cloud::secretmanager_v1::SecretManagerServiceClient). All RPCs are exposed
+as member functions of this class. Other classes provide helpers, configuration
+parameters, and infrastructure to mock
+[`secretmanager_v1::SecretManagerServiceClient`](@ref google::cloud::secretmanager_v1::SecretManagerServiceClient) when testing your
 application.
 <!-- inject-client-list-end -->
-
-## Retry, Backoff, and Idempotency Policies.
-
-The library automatically retries requests that fail with transient errors, and
-uses [exponential backoff] to backoff between retries. Application developers
-can override the default policies.
 
 ## More Information
 
@@ -43,7 +37,8 @@ can override the default policies.
   endpoint.
 - @ref secretmanager-override-authentication - describes how to change the
   authentication credentials used by the library.
-
-[exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff
+- @ref secretmanager-override-retry - describes how to change the default retry
+  policies.
+- @ref secretmanager-env - describes environment variables that can configure the behavior of the library.
 
 */

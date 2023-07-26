@@ -18,6 +18,7 @@
 
 #include "google/cloud/pubsublite/internal/subscriber_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/pubsublite/v1/subscriber.grpc.pb.h>
@@ -29,8 +30,10 @@ namespace pubsublite_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 SubscriberServiceMetadata::SubscriberServiceMetadata(
-    std::shared_ptr<SubscriberServiceStub> child)
+    std::shared_ptr<SubscriberServiceStub> child,
+    std::multimap<std::string, std::string> fixed_metadata)
     : child_(std::move(child)),
+      fixed_metadata_(std::move(fixed_metadata)),
       api_client_header_(
           google::cloud::internal::ApiClientHeader("generator")) {}
 
@@ -51,6 +54,9 @@ void SubscriberServiceMetadata::SetMetadata(grpc::ClientContext& context,
 }
 
 void SubscriberServiceMetadata::SetMetadata(grpc::ClientContext& context) {
+  for (auto const& kv : fixed_metadata_) {
+    context.AddMetadata(kv.first, kv.second);
+  }
   context.AddMetadata("x-goog-api-client", api_client_header_);
   auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {

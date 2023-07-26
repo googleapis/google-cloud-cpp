@@ -138,7 +138,8 @@ Status ConnectionRestGenerator::GenerateCc() {
       {vars("connection_rest_header_path"), vars("options_header_path"),
        vars("connection_impl_rest_header_path"),
        vars("option_defaults_header_path"),
-       vars("stub_factory_rest_header_path"), "google/cloud/common_options.h",
+       vars("stub_factory_rest_header_path"),
+       vars("tracing_connection_header_path"), "google/cloud/common_options.h",
        "google/cloud/credentials.h",
        "google/cloud/internal/rest_background_threads_impl.h"});
   CcSystemIncludes({"memory"});
@@ -171,9 +172,11 @@ std::shared_ptr<$connection_class_name$> Make$connection_class_name$Rest(
   auto background = std::make_unique<
       rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
   auto stub = $product_internal_namespace$::CreateDefault$stub_rest_class_name$(
-    options);
-  return std::make_shared<$product_internal_namespace$::$connection_impl_rest_class_name$>(
-      std::move(background), std::move(stub), std::move(options));
+      options);
+  return $product_internal_namespace$::Make$tracing_connection_class_name$(
+      std::make_shared<
+          $product_internal_namespace$::$connection_impl_rest_class_name$>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 )""");
 

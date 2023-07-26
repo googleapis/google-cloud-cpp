@@ -54,6 +54,11 @@ Idempotency WebRiskServiceConnectionIdempotencyPolicy::CreateSubmission(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency WebRiskServiceConnectionIdempotencyPolicy::SubmitUri(
+    google::cloud::webrisk::v1::SubmitUriRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 std::unique_ptr<WebRiskServiceConnectionIdempotencyPolicy>
 MakeDefaultWebRiskServiceConnectionIdempotencyPolicy() {
   return std::make_unique<WebRiskServiceConnectionIdempotencyPolicy>();

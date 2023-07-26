@@ -76,6 +76,20 @@ std::string RandomSnapshotId(google::cloud::internal::DefaultPRNG& generator);
 
 std::string RandomSchemaId(google::cloud::internal::DefaultPRNG& generator);
 
+std::string ReadFile(std::string const& path);
+
+// Commit a schema with a revision and return the first and last revision ids.
+std::pair<std::string, std::string> CommitSchemaWithRevisionsForTesting(
+    google::cloud::pubsub::SchemaServiceClient& client,
+    std::string const& project_id, std::string const& schema_id,
+    std::string const& schema_file, std::string const& revised_schema_file,
+    std::string const& type);
+
+// Delete all schemas older than 48 hours. Ignore any failures. If multiple
+// tests are cleaning up schemas in parallel, then the delete call might fail.
+void CleanupSchemas(google::cloud::pubsub::SchemaServiceClient& schema_admin,
+                    std::string const& project_id, absl::Time const& time_now);
+
 }  // namespace examples
 }  // namespace pubsub
 }  // namespace cloud

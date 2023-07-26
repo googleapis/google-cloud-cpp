@@ -86,22 +86,35 @@ class ValidationHelperV1Client {
   }
   ///@}
 
+  // clang-format off
   ///
   /// Returns whether the given Attestation for the given image URI
   /// was signed by the given Attestor
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::binaryauthorization::v1::ValidateAttestationOccurrenceRequest,google/cloud/binaryauthorization/v1/service.proto#L271}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.binaryauthorization.v1.ValidateAttestationOccurrenceRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::binaryauthorization::v1::ValidateAttestationOccurrenceResponse,google/cloud/binaryauthorization/v1/service.proto#L294}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.binaryauthorization.v1.ValidateAttestationOccurrenceResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.binaryauthorization.v1.ValidateAttestationOccurrenceRequest]:
-  /// @googleapis_reference_link{google/cloud/binaryauthorization/v1/service.proto#L271}
-  /// [google.cloud.binaryauthorization.v1.ValidateAttestationOccurrenceResponse]:
-  /// @googleapis_reference_link{google/cloud/binaryauthorization/v1/service.proto#L294}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.binaryauthorization.v1.ValidateAttestationOccurrenceRequest]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/service.proto#L271}
+  /// [google.cloud.binaryauthorization.v1.ValidateAttestationOccurrenceResponse]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/service.proto#L294}
   ///
+  // clang-format on
   StatusOr<google::cloud::binaryauthorization::v1::
                ValidateAttestationOccurrenceResponse>
   ValidateAttestationOccurrence(

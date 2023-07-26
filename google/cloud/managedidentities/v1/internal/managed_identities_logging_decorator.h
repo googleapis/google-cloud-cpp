@@ -37,7 +37,7 @@ class ManagedIdentitiesServiceLogging : public ManagedIdentitiesServiceStub {
   ~ManagedIdentitiesServiceLogging() override = default;
   ManagedIdentitiesServiceLogging(
       std::shared_ptr<ManagedIdentitiesServiceStub> child,
-      TracingOptions tracing_options, std::set<std::string> components);
+      TracingOptions tracing_options, std::set<std::string> const& components);
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateMicrosoftAdDomain(
       google::cloud::CompletionQueue& cq,
@@ -110,7 +110,7 @@ class ManagedIdentitiesServiceLogging : public ManagedIdentitiesServiceStub {
  private:
   std::shared_ptr<ManagedIdentitiesServiceStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // ManagedIdentitiesServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

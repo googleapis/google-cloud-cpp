@@ -44,21 +44,8 @@ bool IsBidirStreaming(MethodDescriptor const& method) {
   return method.client_streaming() && method.server_streaming();
 }
 
-bool IsLongrunningOperation(MethodDescriptor const& method) {
-  return method.output_type()->full_name() == "google.longrunning.Operation";
-}
-
 bool IsResponseTypeEmpty(MethodDescriptor const& method) {
   return method.output_type()->full_name() == "google.protobuf.Empty";
-}
-
-bool IsLongrunningMetadataTypeUsedAsResponse(MethodDescriptor const& method) {
-  if (method.output_type()->full_name() == "google.longrunning.Operation") {
-    auto operation_info =
-        method.options().GetExtension(google::longrunning::operation_info);
-    return operation_info.response_type() == "google.protobuf.Empty";
-  }
-  return false;
 }
 
 }  // namespace generator_internal

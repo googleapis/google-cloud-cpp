@@ -45,8 +45,9 @@ Options ServicesDefaultOptions(Options options) {
   }
   if (!options.has<run_v2::ServicesBackoffPolicyOption>()) {
     options.set<run_v2::ServicesBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options.has<run_v2::ServicesPollingPolicyOption>()) {
@@ -54,7 +55,9 @@ Options ServicesDefaultOptions(Options options) {
         GenericPollingPolicy<run_v2::ServicesRetryPolicyOption::Type,
                              run_v2::ServicesBackoffPolicyOption::Type>(
             options.get<run_v2::ServicesRetryPolicyOption>()->clone(),
-            options.get<run_v2::ServicesBackoffPolicyOption>()->clone())
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
             .clone());
   }
   if (!options.has<run_v2::ServicesConnectionIdempotencyPolicyOption>()) {

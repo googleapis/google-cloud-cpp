@@ -40,7 +40,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * While the example showcases types from the BigQuery library, the underlying
  * principles apply for any pair of `*Client` and `*Connection`.
  *
- * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
+ * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
 class MockSqlInstancesServiceConnection
     : public sql_v1::SqlInstancesServiceConnection {
@@ -74,6 +74,11 @@ class MockSqlInstancesServiceConnection
   MOCK_METHOD(
       StatusOr<google::cloud::sql::v1::Operation>, Failover,
       (google::cloud::sql::v1::SqlInstancesFailoverRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::sql::v1::Operation>, Reencrypt,
+      (google::cloud::sql::v1::SqlInstancesReencryptRequest const& request),
       (override));
 
   MOCK_METHOD(StatusOr<google::cloud::sql::v1::DatabaseInstance>, Get,
@@ -172,6 +177,25 @@ class MockSqlInstancesServiceConnection
   MOCK_METHOD(
       StatusOr<google::cloud::sql::v1::Operation>, StartExternalSync,
       (google::cloud::sql::v1::SqlInstancesStartExternalSyncRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::sql::v1::Operation>, PerformDiskShrink,
+      (google::cloud::sql::v1::SqlInstancesPerformDiskShrinkRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::sql::v1::SqlInstancesGetDiskShrinkConfigResponse>,
+      GetDiskShrinkConfig,
+      (google::cloud::sql::v1::SqlInstancesGetDiskShrinkConfigRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::sql::v1::Operation>, ResetReplicaSize,
+      (google::cloud::sql::v1::SqlInstancesResetReplicaSizeRequest const&
            request),
       (override));
 };

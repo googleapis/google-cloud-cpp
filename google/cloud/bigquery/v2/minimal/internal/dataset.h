@@ -67,20 +67,8 @@ struct LinkedDatasetSource {
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(LinkedDatasetSource,
-                                                source_dataset);
-
-struct RoutineReference {
-  std::string project_id;
-  std::string dataset_id;
-  std::string routine_id;
-
-  std::string DebugString(absl::string_view name,
-                          TracingOptions const& options = {},
-                          int indent = 0) const;
-};
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(RoutineReference, dataset_id,
-                                                project_id, routine_id);
+void to_json(nlohmann::json& j, LinkedDatasetSource const& d);
+void from_json(nlohmann::json const& j, LinkedDatasetSource& d);
 
 struct DatasetAccessEntry {
   DatasetReference dataset;
@@ -90,8 +78,8 @@ struct DatasetAccessEntry {
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(DatasetAccessEntry, dataset,
-                                                target_types);
+void to_json(nlohmann::json& j, DatasetAccessEntry const& d);
+void from_json(nlohmann::json const& j, DatasetAccessEntry& d);
 
 struct Access {
   std::string role;
@@ -109,49 +97,8 @@ struct Access {
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(Access, role, user_by_email,
-                                                group_by_email, domain,
-                                                special_group, iam_member, view,
-                                                routine, dataset);
-
-struct HiveMetastoreConnectivity {
-  std::string access_uri_type;
-  std::string access_uri;
-  std::string metadata_connection;
-  std::string storage_connection;
-
-  std::string DebugString(absl::string_view name,
-                          TracingOptions const& options = {},
-                          int indent = 0) const;
-};
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(HiveMetastoreConnectivity,
-                                                access_uri_type, access_uri,
-                                                metadata_connection,
-                                                storage_connection);
-
-struct HiveDatabaseReference {
-  std::string catalog_id;
-  std::string database;
-
-  HiveMetastoreConnectivity metadata_connectivity;
-
-  std::string DebugString(absl::string_view name,
-                          TracingOptions const& options = {},
-                          int indent = 0) const;
-};
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(HiveDatabaseReference,
-                                                catalog_id, database,
-                                                metadata_connectivity);
-
-struct ExternalDatasetReference {
-  HiveDatabaseReference hive_database;
-
-  std::string DebugString(absl::string_view name,
-                          TracingOptions const& options = {},
-                          int indent = 0) const;
-};
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(ExternalDatasetReference,
-                                                hive_database);
+void to_json(nlohmann::json& j, Access const& a);
+void from_json(nlohmann::json const& j, Access& a);
 
 struct GcpTag {
   std::string tag_key;
@@ -161,7 +108,8 @@ struct GcpTag {
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(GcpTag, tag_key, tag_value);
+void to_json(nlohmann::json& j, GcpTag const& t);
+void from_json(nlohmann::json const& j, GcpTag& t);
 
 struct Dataset {
   std::string kind;
@@ -191,7 +139,6 @@ struct Dataset {
 
   DatasetReference dataset_reference;
   LinkedDatasetSource linked_dataset_source;
-  ExternalDatasetReference external_dataset_reference;
   RoundingMode default_rounding_mode;
 
   StorageBillingModel storage_billing_model;
@@ -200,6 +147,8 @@ struct Dataset {
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
+void to_json(nlohmann::json& j, Dataset const& d);
+void from_json(nlohmann::json const& j, Dataset& d);
 
 struct ListFormatDataset {
   std::string kind;
@@ -215,12 +164,8 @@ struct ListFormatDataset {
                           TracingOptions const& options = {},
                           int indent = 0) const;
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(ListFormatDataset, kind, id,
-                                                friendly_name, location, type,
-                                                dataset_reference, labels);
-
-void to_json(nlohmann::json& j, Dataset const& d);
-void from_json(nlohmann::json const& j, Dataset& d);
+void to_json(nlohmann::json& j, ListFormatDataset const& d);
+void from_json(nlohmann::json const& j, ListFormatDataset& d);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_v2_minimal_internal

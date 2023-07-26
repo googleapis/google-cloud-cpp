@@ -59,5 +59,5 @@ int main(int argc, char* argv[]) try {
 - Detailed header comments in our [public `.h`][source-link] files
 
 [cloud-service-docs]: https://cloud.google.com/ids
-[doxygen-link]: https://googleapis.dev/cpp/google-cloud-ids/latest/
+[doxygen-link]: https://cloud.google.com/cpp/docs/reference/ids/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/ids

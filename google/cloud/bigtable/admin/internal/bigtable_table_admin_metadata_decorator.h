@@ -22,6 +22,7 @@
 #include "google/cloud/bigtable/admin/internal/bigtable_table_admin_stub.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
+#include <map>
 #include <memory>
 #include <string>
 
@@ -33,8 +34,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class BigtableTableAdminMetadata : public BigtableTableAdminStub {
  public:
   ~BigtableTableAdminMetadata() override = default;
-  explicit BigtableTableAdminMetadata(
-      std::shared_ptr<BigtableTableAdminStub> child);
+  BigtableTableAdminMetadata(
+      std::shared_ptr<BigtableTableAdminStub> child,
+      std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::bigtable::admin::v2::Table> CreateTable(
       grpc::ClientContext& context,
@@ -144,6 +146,7 @@ class BigtableTableAdminMetadata : public BigtableTableAdminStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<BigtableTableAdminStub> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

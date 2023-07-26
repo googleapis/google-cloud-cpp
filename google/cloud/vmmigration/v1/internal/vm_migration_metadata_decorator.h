@@ -22,6 +22,7 @@
 #include "google/cloud/vmmigration/v1/internal/vm_migration_stub.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
+#include <map>
 #include <memory>
 #include <string>
 
@@ -33,7 +34,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class VmMigrationMetadata : public VmMigrationStub {
  public:
   ~VmMigrationMetadata() override = default;
-  explicit VmMigrationMetadata(std::shared_ptr<VmMigrationStub> child);
+  VmMigrationMetadata(std::shared_ptr<VmMigrationStub> child,
+                      std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::vmmigration::v1::ListSourcesResponse> ListSources(
       grpc::ClientContext& context,
@@ -316,6 +318,7 @@ class VmMigrationMetadata : public VmMigrationStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<VmMigrationStub> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

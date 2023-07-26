@@ -168,8 +168,8 @@ google_cloud_cpp_add_pkgconfig(
     "The Google Cloud Memorystore for Redis API C++ Client Library"
     "Provides C++ APIs to use the Google Cloud Memorystore for Redis API."
     "google_cloud_cpp_grpc_utils"
-    " google_cloud_cpp_common"
-    " google_cloud_cpp_redis_protos")
+    "google_cloud_cpp_common"
+    "google_cloud_cpp_redis_protos")
 
 # Create and install the CMake configuration files.
 include(CMakePackageConfigHelpers)

@@ -21,6 +21,7 @@
 
 #include "google/cloud/iot/v1/internal/device_manager_stub.h"
 #include "google/cloud/version.h"
+#include <map>
 #include <memory>
 #include <string>
 
@@ -32,7 +33,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class DeviceManagerMetadata : public DeviceManagerStub {
  public:
   ~DeviceManagerMetadata() override = default;
-  explicit DeviceManagerMetadata(std::shared_ptr<DeviceManagerStub> child);
+  DeviceManagerMetadata(std::shared_ptr<DeviceManagerStub> child,
+                        std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::iot::v1::DeviceRegistry> CreateDeviceRegistry(
       grpc::ClientContext& context,
@@ -128,6 +130,7 @@ class DeviceManagerMetadata : public DeviceManagerStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<DeviceManagerStub> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

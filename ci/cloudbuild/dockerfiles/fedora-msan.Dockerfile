@@ -19,7 +19,7 @@ ARG ARCH=amd64
 # Install the minimal packages needed to compile libcxx, install Bazel, and
 # then compile our code.
 RUN dnf makecache && \
-    dnf install -y ccache clang clang-tools-extra cmake findutils \
+    dnf install -y clang clang-tools-extra cmake findutils \
         git llvm make ninja-build openssl-devel patch python \
         python3 python3-devel python3-lit python-pip tar unzip which wget xz
 
@@ -68,6 +68,6 @@ RUN /var/tmp/ci/install-cloud-sdk.sh
 ENV CLOUD_SDK_LOCATION=/usr/local/google-cloud-sdk
 ENV PATH=${CLOUD_SDK_LOCATION}/bin:${PATH}
 
-RUN curl -o /usr/bin/bazelisk -sSL "https://github.com/bazelbuild/bazelisk/releases/download/v1.16.0/bazelisk-linux-${ARCH}" && \
+RUN curl -o /usr/bin/bazelisk -sSL "https://github.com/bazelbuild/bazelisk/releases/download/v1.17.0/bazelisk-linux-${ARCH}" && \
     chmod +x /usr/bin/bazelisk && \
     ln -s /usr/bin/bazelisk /usr/bin/bazel

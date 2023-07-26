@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigquery/v2/minimal/internal/dataset.h"
+#include "google/cloud/bigquery/v2/minimal/internal/json_utils.h"
 #include "google/cloud/internal/debug_string.h"
 #include "google/cloud/internal/format_time_point.h"
 
@@ -42,102 +43,57 @@ TargetType TargetType::Views() { return TargetType{"VIEWS"}; }
 TargetType TargetType::Routines() { return TargetType{"ROUTINES"}; }
 
 void to_json(nlohmann::json& j, Dataset const& d) {
-  j = nlohmann::json{
-      {"kind", d.kind},
-      {"etag", d.etag},
-      {"id", d.id},
-      {"self_link", d.self_link},
-      {"friendly_name", d.friendly_name},
-      {"description", d.description},
-      {"type", d.type},
-      {"location", d.location},
-      {"default_collation", d.default_collation},
-      {"published", d.published},
-      {"is_case_insensitive", d.is_case_insensitive},
-      {"default_table_expiration",
-       std::chrono::duration_cast<std::chrono::milliseconds>(
-           d.default_table_expiration)
-           .count()},
-      {"default_partition_expiration",
-       std::chrono::duration_cast<std::chrono::milliseconds>(
-           d.default_partition_expiration)
-           .count()},
-      {"creation_time", std::chrono::duration_cast<std::chrono::milliseconds>(
-                            d.creation_time.time_since_epoch())
-                            .count()},
-      {"last_modified_time",
-       std::chrono::duration_cast<std::chrono::milliseconds>(
-           d.last_modified_time.time_since_epoch())
-           .count()},
-      {"max_time_travel",
-       std::chrono::duration_cast<std::chrono::hours>(d.max_time_travel)
-           .count()},
-      {"labels", d.labels},
-      {"access", d.access},
-      {"tags", d.tags},
-      {"dataset_reference", d.dataset_reference},
+  j = nlohmann::json{{"kind", d.kind},
+                     {"etag", d.etag},
+                     {"id", d.id},
+                     {"selfLink", d.self_link},
+                     {"friendlyName", d.friendly_name},
+                     {"description", d.description},
+                     {"type", d.type},
+                     {"location", d.location},
+                     {"defaultCollation", d.default_collation},
+                     {"published", d.published},
+                     {"isCaseInsensitive", d.is_case_insensitive},
+                     {"labels", d.labels},
+                     {"access", d.access},
+                     {"tags", d.tags},
+                     {"datasetReference", d.dataset_reference},
+                     {"linkedDatasetSource", d.linked_dataset_source},
+                     {"defaultRoundingMode", d.default_rounding_mode},
+                     {"storageBillingModel", d.storage_billing_model}};
 
-      {"linked_dataset_source", d.linked_dataset_source},
-      {"external_dataset_reference", d.external_dataset_reference},
-      {"default_rounding_mode", d.default_rounding_mode},
-      {"storage_billing_model", d.storage_billing_model}};
+  ToJson(d.default_table_expiration, j, "defaultTableExpirationMs");
+  ToJson(d.default_partition_expiration, j, "defaultPartitionExpirationMs");
+  ToJson(d.creation_time, j, "creationTime");
+  ToJson(d.last_modified_time, j, "lastModifiedTime");
+  ToJson(d.max_time_travel, j, "maxTimeTravelHours");
 }
 
 void from_json(nlohmann::json const& j, Dataset& d) {
-  if (j.contains("kind")) j.at("kind").get_to(d.kind);
-  if (j.contains("etag")) j.at("etag").get_to(d.etag);
-  if (j.contains("id")) j.at("id").get_to(d.id);
-  if (j.contains("self_link")) j.at("self_link").get_to(d.self_link);
-  if (j.contains("friendly_name"))
-    j.at("friendly_name").get_to(d.friendly_name);
-  if (j.contains("description")) j.at("description").get_to(d.description);
-  if (j.contains("type")) j.at("type").get_to(d.type);
-  if (j.contains("location")) j.at("location").get_to(d.location);
-  if (j.contains("default_collation"))
-    j.at("default_collation").get_to(d.default_collation);
-  if (j.contains("published")) j.at("published").get_to(d.published);
-  if (j.contains("is_case_insensitive"))
-    j.at("is_case_insensitive").get_to(d.is_case_insensitive);
-  if (j.contains("default_table_expiration")) {
-    std::int64_t millis;
-    j.at("default_table_expiration").get_to(millis);
-    d.default_table_expiration = std::chrono::milliseconds(millis);
-  }
-  if (j.contains("default_partition_expiration")) {
-    std::int64_t millis;
-    j.at("default_partition_expiration").get_to(millis);
-    d.default_partition_expiration = std::chrono::milliseconds(millis);
-  }
-  if (j.contains("creation_time")) {
-    std::int64_t millis;
-    j.at("creation_time").get_to(millis);
-    d.creation_time = std::chrono::time_point<std::chrono::system_clock>(
-        std::chrono::milliseconds(millis));
-  }
-  if (j.contains("last_modified_time")) {
-    std::int64_t millis;
-    j.at("last_modified_time").get_to(millis);
-    d.last_modified_time = std::chrono::time_point<std::chrono::system_clock>(
-        std::chrono::milliseconds(millis));
-  }
-  if (j.contains("max_time_travel")) {
-    std::int64_t hours;
-    j.at("max_time_travel").get_to(hours);
-    d.max_time_travel = std::chrono::hours(hours);
-  }
-  if (j.contains("labels")) j.at("labels").get_to(d.labels);
-  if (j.contains("access")) j.at("access").get_to(d.access);
-  if (j.contains("tags")) j.at("tags").get_to(d.tags);
-  if (j.contains("dataset_reference"))
-    j.at("dataset_reference").get_to(d.dataset_reference);
-  if (j.contains("linked_dataset_source"))
-    j.at("linked_dataset_source").get_to(d.linked_dataset_source);
-  if (j.contains("external_dataset_reference"))
-    j.at("external_dataset_reference").get_to(d.external_dataset_reference);
-  if (j.contains("default_rounding_mode"))
-    j.at("default_rounding_mode").get_to(d.default_rounding_mode);
-  if (j.contains("storage_billing_model"))
-    j.at("storage_billing_model").get_to(d.storage_billing_model);
+  SafeGetTo(d.kind, j, "kind");
+  SafeGetTo(d.etag, j, "etag");
+  SafeGetTo(d.id, j, "id");
+  SafeGetTo(d.self_link, j, "selfLink");
+  SafeGetTo(d.friendly_name, j, "friendlyName");
+  SafeGetTo(d.description, j, "description");
+  SafeGetTo(d.type, j, "type");
+  SafeGetTo(d.location, j, "location");
+  SafeGetTo(d.default_collation, j, "defaultCollation");
+  SafeGetTo(d.published, j, "published");
+  SafeGetTo(d.is_case_insensitive, j, "isCaseInsensitive");
+  SafeGetTo(d.labels, j, "labels");
+  SafeGetTo(d.access, j, "access");
+  SafeGetTo(d.tags, j, "tags");
+  SafeGetTo(d.dataset_reference, j, "datasetReference");
+  SafeGetTo(d.linked_dataset_source, j, "linkedDatasetSource");
+  SafeGetTo(d.default_rounding_mode, j, "defaultRoundingMode");
+  SafeGetTo(d.storage_billing_model, j, "storageBillingModel");
+
+  FromJson(d.default_table_expiration, j, "defaultTableExpirationMs");
+  FromJson(d.default_partition_expiration, j, "defaultPartitionExpirationMs");
+  FromJson(d.creation_time, j, "creationTime");
+  FromJson(d.last_modified_time, j, "lastModifiedTime");
+  FromJson(d.max_time_travel, j, "maxTimeTravelHours");
 }
 
 std::string LinkedDatasetSource::DebugString(absl::string_view name,
@@ -145,16 +101,6 @@ std::string LinkedDatasetSource::DebugString(absl::string_view name,
                                              int indent) const {
   return internal::DebugFormatter(name, options, indent)
       .SubMessage("source_dataset", source_dataset)
-      .Build();
-}
-
-std::string RoutineReference::DebugString(absl::string_view name,
-                                          TracingOptions const& options,
-                                          int indent) const {
-  return internal::DebugFormatter(name, options, indent)
-      .StringField("project_id", project_id)
-      .StringField("dataset_id", dataset_id)
-      .StringField("routine_id", routine_id)
       .Build();
 }
 
@@ -199,34 +145,6 @@ std::string Access::DebugString(absl::string_view name,
       .Build();
 }
 
-std::string HiveMetastoreConnectivity::DebugString(
-    absl::string_view name, TracingOptions const& options, int indent) const {
-  return internal::DebugFormatter(name, options, indent)
-      .StringField("access_uri_type", access_uri_type)
-      .StringField("access_uri", access_uri)
-      .StringField("metadata_connection", metadata_connection)
-      .StringField("storage_connection", storage_connection)
-      .Build();
-}
-
-std::string HiveDatabaseReference::DebugString(absl::string_view name,
-                                               TracingOptions const& options,
-                                               int indent) const {
-  return internal::DebugFormatter(name, options, indent)
-      .StringField("catalog_id", catalog_id)
-      .StringField("database", database)
-      .SubMessage("metadata_connectivity", metadata_connectivity)
-      .Build();
-}
-
-std::string ExternalDatasetReference::DebugString(absl::string_view name,
-                                                  TracingOptions const& options,
-                                                  int indent) const {
-  return internal::DebugFormatter(name, options, indent)
-      .SubMessage("hive_database", hive_database)
-      .Build();
-}
-
 std::string GcpTag::DebugString(absl::string_view name,
                                 TracingOptions const& options,
                                 int indent) const {
@@ -261,7 +179,6 @@ std::string Dataset::DebugString(absl::string_view name,
       .Field("tags", tags)
       .SubMessage("dataset_reference", dataset_reference)
       .SubMessage("linked_dataset_source", linked_dataset_source)
-      .SubMessage("external_dataset_reference", external_dataset_reference)
       .SubMessage("default_rounding_mode", default_rounding_mode)
       .SubMessage("storage_billing_model", storage_billing_model)
       .Build();
@@ -279,6 +196,71 @@ std::string ListFormatDataset::DebugString(absl::string_view name,
       .SubMessage("dataset_reference", dataset_reference)
       .Field("labels", labels)
       .Build();
+}
+
+void to_json(nlohmann::json& j, ListFormatDataset const& d) {
+  j = nlohmann::json{{"kind", d.kind},
+                     {"id", d.id},
+                     {"friendlyName", d.friendly_name},
+                     {"location", d.location},
+                     {"type", d.type},
+                     {"datasetReference", d.dataset_reference},
+                     {"labels", d.labels}};
+}
+void from_json(nlohmann::json const& j, ListFormatDataset& d) {
+  SafeGetTo(d.kind, j, "kind");
+  SafeGetTo(d.id, j, "id");
+  SafeGetTo(d.friendly_name, j, "friendlyName");
+  SafeGetTo(d.location, j, "location");
+  SafeGetTo(d.type, j, "type");
+  SafeGetTo(d.dataset_reference, j, "datasetReference");
+  SafeGetTo(d.labels, j, "labels");
+}
+
+void to_json(nlohmann::json& j, GcpTag const& t) {
+  j = nlohmann::json{{"tagKey", t.tag_key}, {"tagValue", t.tag_value}};
+}
+void from_json(nlohmann::json const& j, GcpTag& t) {
+  SafeGetTo(t.tag_key, j, "tagKey");
+  SafeGetTo(t.tag_value, j, "tagValue");
+}
+
+void to_json(nlohmann::json& j, Access const& a) {
+  j = nlohmann::json{{"role", a.role},
+                     {"userByEmail", a.user_by_email},
+                     {"groupByEmail", a.group_by_email},
+                     {"domain", a.domain},
+                     {"specialGroup", a.special_group},
+                     {"iamMember", a.iam_member},
+                     {"view", a.view},
+                     {"routine", a.routine},
+                     {"dataset", a.dataset}};
+}
+void from_json(nlohmann::json const& j, Access& a) {
+  SafeGetTo(a.role, j, "role");
+  SafeGetTo(a.user_by_email, j, "userByEmail");
+  SafeGetTo(a.group_by_email, j, "groupByEmail");
+  SafeGetTo(a.domain, j, "domain");
+  SafeGetTo(a.special_group, j, "specialGroup");
+  SafeGetTo(a.iam_member, j, "iamMember");
+  SafeGetTo(a.view, j, "view");
+  SafeGetTo(a.routine, j, "routine");
+  SafeGetTo(a.dataset, j, "dataset");
+}
+
+void to_json(nlohmann::json& j, DatasetAccessEntry const& d) {
+  j = nlohmann::json{{"dataset", d.dataset}, {"targetTypes", d.target_types}};
+}
+void from_json(nlohmann::json const& j, DatasetAccessEntry& d) {
+  SafeGetTo(d.dataset, j, "dataset");
+  SafeGetTo(d.target_types, j, "targetTypes");
+}
+
+void to_json(nlohmann::json& j, LinkedDatasetSource const& d) {
+  j = nlohmann::json{{"sourceDataset", d.source_dataset}};
+}
+void from_json(nlohmann::json const& j, LinkedDatasetSource& d) {
+  SafeGetTo(d.source_dataset, j, "sourceDataset");
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -38,6 +38,8 @@ add_library(
     internal/curl_rest_response.h
     internal/curl_wrappers.cc
     internal/curl_wrappers.h
+    internal/curl_writev.cc
+    internal/curl_writev.h
     internal/external_account_source_format.cc
     internal/external_account_source_format.h
     internal/external_account_token_source_aws.cc
@@ -114,6 +116,11 @@ target_link_libraries(
     google_cloud_cpp_rest_internal
     PUBLIC absl::span google-cloud-cpp::common CURL::libcurl
            nlohmann_json::nlohmann_json OpenSSL::SSL OpenSSL::Crypto)
+if (WIN32)
+    # We use `setsockopt()` directly, which requires the ws2_32 (Winsock2 for
+    # Windows32?) library on Windows.
+    target_link_libraries(google_cloud_cpp_rest_internal PUBLIC ws2_32)
+endif ()
 google_cloud_cpp_add_common_options(google_cloud_cpp_rest_internal)
 target_include_directories(
     google_cloud_cpp_rest_internal
@@ -163,7 +170,7 @@ google_cloud_cpp_install_headers(google_cloud_cpp_rest_internal
 google_cloud_cpp_add_pkgconfig(
     rest_internal "REST library for the Google Cloud C++ Client Library"
     "Provides REST Transport for the Google Cloud C++ Client Library."
-    "google_cloud_cpp_common" " libcurl" " openssl")
+    "google_cloud_cpp_common" "libcurl" "openssl")
 
 # Create and install the CMake configuration files.
 include(CMakePackageConfigHelpers)
@@ -221,6 +228,7 @@ if (BUILD_TESTING)
         internal/curl_wrappers_locking_disabled_test.cc
         internal/curl_wrappers_locking_enabled_test.cc
         internal/curl_wrappers_test.cc
+        internal/curl_writev_test.cc
         internal/external_account_source_format_test.cc
         internal/external_account_token_source_aws_test.cc
         internal/external_account_token_source_file_test.cc
@@ -241,7 +249,6 @@ if (BUILD_TESTING)
         internal/oauth2_minimal_iam_credentials_rest_test.cc
         internal/oauth2_refreshing_credentials_wrapper_test.cc
         internal/oauth2_service_account_credentials_test.cc
-        internal/openssl_util_test.cc
         internal/rest_context_test.cc
         internal/rest_opentelemetry_test.cc
         internal/rest_parse_json_error_test.cc

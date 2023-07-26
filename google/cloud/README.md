@@ -13,7 +13,7 @@ Some sub-directories include **internal-only** types and functions. These are
 used in the implementation of the Google Cloud C++ libraries, but are **not**
 intended for general use. They are subject to change and/or removal without
 notice. These include `google/cloud/internal/`, and
-`google-cloud/testing_utils/`.
+`google/cloud/testing_utils/`.
 
 ## Supported Platforms
 
@@ -39,5 +39,5 @@ as well as how to properly format your code.
 
 Apache 2.0; see [`LICENSE`](/LICENSE) for details.
 
-[doxygen-link]: https://googleapis.dev/cpp/google-cloud-common/latest/
+[doxygen-link]: https://cloud.google.com/cpp/docs/reference/common/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud

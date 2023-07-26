@@ -17,6 +17,8 @@
 // source: google/cloud/dialogflow/v2/conversation_dataset.proto
 
 #include "google/cloud/dialogflow_es/conversation_datasets_client.h"
+#include "google/cloud/dialogflow_es/conversation_datasets_connection_idempotency_policy.h"
+#include "google/cloud/dialogflow_es/conversation_datasets_options.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/getenv.h"
@@ -44,6 +46,70 @@ void SetClientEndpoint(std::vector<std::string> const& argv) {
       google::cloud::dialogflow_es::MakeConversationDatasetsConnection(
           options));
   //! [set-client-endpoint]
+}
+
+//! [custom-idempotency-policy]
+class CustomIdempotencyPolicy
+    : public google::cloud::dialogflow_es::
+          ConversationDatasetsConnectionIdempotencyPolicy {
+ public:
+  ~CustomIdempotencyPolicy() override = default;
+  std::unique_ptr<google::cloud::dialogflow_es::
+                      ConversationDatasetsConnectionIdempotencyPolicy>
+  clone() const override {
+    return std::make_unique<CustomIdempotencyPolicy>(*this);
+  }
+  // Override inherited functions to define as needed.
+};
+//! [custom-idempotency-policy]
+
+void SetRetryPolicy(std::vector<std::string> const& argv) {
+  if (!argv.empty()) {
+    throw google::cloud::testing_util::Usage{"set-client-retry-policy"};
+  }
+  //! [set-retry-policy]
+  auto options =
+      google::cloud::Options{}
+          .set<google::cloud::dialogflow_es::
+                   ConversationDatasetsConnectionIdempotencyPolicyOption>(
+              CustomIdempotencyPolicy().clone())
+          .set<google::cloud::dialogflow_es::
+                   ConversationDatasetsRetryPolicyOption>(
+              google::cloud::dialogflow_es::
+                  ConversationDatasetsLimitedErrorCountRetryPolicy(3)
+                      .clone())
+          .set<google::cloud::dialogflow_es::
+                   ConversationDatasetsBackoffPolicyOption>(
+              google::cloud::ExponentialBackoffPolicy(
+                  /*initial_delay=*/std::chrono::milliseconds(200),
+                  /*maximum_delay=*/std::chrono::seconds(45),
+                  /*scaling=*/2.0)
+                  .clone());
+  auto connection =
+      google::cloud::dialogflow_es::MakeConversationDatasetsConnection(options);
+
+  // c1 and c2 share the same retry policies
+  auto c1 =
+      google::cloud::dialogflow_es::ConversationDatasetsClient(connection);
+  auto c2 =
+      google::cloud::dialogflow_es::ConversationDatasetsClient(connection);
+
+  // You can override any of the policies in a new client. This new client
+  // will share the policies from c1 (or c2) *except* from the retry policy.
+  auto c3 = google::cloud::dialogflow_es::ConversationDatasetsClient(
+      connection, google::cloud::Options{}
+                      .set<google::cloud::dialogflow_es::
+                               ConversationDatasetsRetryPolicyOption>(
+                          google::cloud::dialogflow_es::
+                              ConversationDatasetsLimitedTimeRetryPolicy(
+                                  std::chrono::minutes(5))
+                                  .clone()));
+
+  // You can also override the policies in a single call:
+  // c3.SomeRpc(..., google::cloud::Options{}
+  //     .set<google::cloud::dialogflow_es::ConversationDatasetsRetryPolicyOption>(
+  //       google::cloud::dialogflow_es::ConversationDatasetsLimitedErrorCountRetryPolicy(10).clone()));
+  //! [set-retry-policy]
 }
 
 void WithServiceAccount(std::vector<std::string> const& argv) {
@@ -78,6 +144,9 @@ void AutoRun(std::vector<std::string> const& argv) {
   std::cout << "\nRunning SetClientEndpoint() example" << std::endl;
   SetClientEndpoint({});
 
+  std::cout << "\nRunning SetRetryPolicy() example" << std::endl;
+  SetRetryPolicy({});
+
   std::cout << "\nRunning WithServiceAccount() example" << std::endl;
   WithServiceAccount({keyfile});
 }
@@ -87,6 +156,7 @@ void AutoRun(std::vector<std::string> const& argv) {
 int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
   google::cloud::testing_util::Example example({
       {"set-client-endpoint", SetClientEndpoint},
+      {"set-retry-policy", SetRetryPolicy},
       {"with-service-account", WithServiceAccount},
       {"auto", AutoRun},
   });

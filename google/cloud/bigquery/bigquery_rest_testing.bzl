@@ -17,12 +17,23 @@
 """Automatically generated source lists for bigquery_rest_testing - DO NOT EDIT."""
 
 bigquery_rest_testing_hdrs = [
-    "v2/minimal/testing/mock_log_backend.h",
+    "v2/minimal/testing/common_v2_test_utils.h",
+    "v2/minimal/testing/job_query_test_utils.h",
+    "v2/minimal/testing/job_test_utils.h",
+    "v2/minimal/testing/metadata_test_utils.h",
     "v2/minimal/testing/mock_dataset_rest_stub.h",
     "v2/minimal/testing/mock_job_rest_stub.h",
+    "v2/minimal/testing/mock_project_rest_stub.h",
+    "v2/minimal/testing/mock_table_rest_stub.h",
+    "v2/minimal/testing/project_test_utils.h",
     "v2/minimal/testing/table_test_utils.h",
 ]
 
 bigquery_rest_testing_srcs = [
+    "v2/minimal/testing/common_v2_test_utils.cc",
+    "v2/minimal/testing/job_query_test_utils.cc",
+    "v2/minimal/testing/job_test_utils.cc",
+    "v2/minimal/testing/metadata_test_utils.cc",
+    "v2/minimal/testing/project_test_utils.cc",
     "v2/minimal/testing/table_test_utils.cc",
 ]

@@ -19,6 +19,8 @@
 google_cloud_cpp_bigquery_rest_mocks_hdrs = [
     "v2/minimal/mocks/mock_dataset_connection.h",
     "v2/minimal/mocks/mock_job_connection.h",
+    "v2/minimal/mocks/mock_project_connection.h",
+    "v2/minimal/mocks/mock_table_connection.h",
 ]
 
 google_cloud_cpp_bigquery_rest_mocks_srcs = [

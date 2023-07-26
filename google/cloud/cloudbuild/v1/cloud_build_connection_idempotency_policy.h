@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CLOUDBUILD_V1_CLOUD_BUILD_CONNECTION_IDEMPOTENCY_POLICY_H
 
 #include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
 #include "google/cloud/version.h"
 #include <google/devtools/cloudbuild/v1/cloudbuild.grpc.pb.h>
 #include <memory>

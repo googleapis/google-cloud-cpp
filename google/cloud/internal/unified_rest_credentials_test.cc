@@ -152,7 +152,7 @@ ScopedEnvironment SetUpAdcFile(std::string const& filename,
 // an error. There are tests for each class that verify the success case.
 
 TEST(UnifiedRestCredentialsTest, Insecure) {
-  auto credentials = MapCredentials(MakeInsecureCredentials());
+  auto credentials = MapCredentials(*MakeInsecureCredentials());
   auto token = credentials->GetToken(std::chrono::system_clock::now());
   ASSERT_THAT(token, IsOk());
   EXPECT_THAT(token->token, IsEmpty());
@@ -174,8 +174,7 @@ TEST(UnifiedRestCredentialsTest, AdcIsServiceAccount) {
 
   auto const filename = TempKeyFileName();
   auto const env = SetUpAdcFile(filename, contents.dump());
-  auto config =
-      std::make_shared<internal::GoogleDefaultCredentialsConfig>(Options{});
+  auto const config = internal::GoogleDefaultCredentialsConfig(Options{});
   auto credentials = MapCredentials(config, client_factory.AsStdFunction());
   (void)std::remove(filename.c_str());
 
@@ -216,8 +215,7 @@ TEST(UnifiedRestCredentialsTest, AdcIsAuthorizedUser) {
 
   auto const filename = TempKeyFileName();
   auto const env = SetUpAdcFile(filename, contents.dump());
-  auto config =
-      std::make_shared<internal::GoogleDefaultCredentialsConfig>(Options{});
+  auto const config = internal::GoogleDefaultCredentialsConfig(Options{});
   auto credentials = MapCredentials(config, client_factory.AsStdFunction());
   (void)std::remove(filename.c_str());
 
@@ -268,8 +266,7 @@ TEST(UnifiedRestCredentialsTest, AdcIsComputeEngine) {
       .WillOnce(Return(ByMove(std::move(metadata_client))))
       .WillOnce(Return(ByMove(std::move(token_client))));
 
-  auto config =
-      std::make_shared<internal::GoogleDefaultCredentialsConfig>(Options{});
+  auto const config = internal::GoogleDefaultCredentialsConfig(Options{});
   auto credentials = MapCredentials(config, client_factory.AsStdFunction());
 
   auto access_token = credentials->GetToken(now);
@@ -327,7 +324,7 @@ TEST(UnifiedRestCredentialsTest, AdcIsExternalAccount) {
   };
   auto const filename = TempKeyFileName();
   auto const env = SetUpAdcFile(filename, json_external_account.dump());
-  auto config = std::make_shared<internal::GoogleDefaultCredentialsConfig>(
+  auto const config = internal::GoogleDefaultCredentialsConfig(
       Options{}.set<UserProjectOption>("test-user-project"));
   auto credentials = MapCredentials(config, client_factory.AsStdFunction());
   (void)std::remove(filename.c_str());
@@ -342,7 +339,7 @@ TEST(UnifiedRestCredentialsTest, AccessToken) {
   auto const now = std::chrono::system_clock::now();
   auto const expiration = now + std::chrono::seconds(1800);
   auto credentials =
-      MapCredentials(MakeAccessTokenCredentials("token1", expiration));
+      MapCredentials(*MakeAccessTokenCredentials("token1", expiration));
   auto token = credentials->GetToken(now);
   ASSERT_THAT(token, IsOk());
   EXPECT_THAT(token->token, Eq("token1"));
@@ -374,7 +371,7 @@ TEST(UnifiedRestCredentialsTest, ImpersonateServiceAccount) {
   auto const now = std::chrono::system_clock::now();
   auto base = std::make_shared<internal::AccessTokenConfig>(
       "base-access-token", now + std::chrono::seconds(1800), Options{});
-  auto config = std::make_shared<internal::ImpersonateServiceAccountConfig>(
+  auto const config = internal::ImpersonateServiceAccountConfig(
       base, kServiceAccountEmail, Options{});
   auto credentials = MapCredentials(config, client_factory.AsStdFunction());
   auto access_token = credentials->GetToken(now);
@@ -395,8 +392,8 @@ TEST(UnifiedRestCredentialsTest, ServiceAccount) {
   MockClientFactory client_factory;
   EXPECT_CALL(client_factory, Call).Times(0);
 
-  auto config = std::make_shared<internal::ServiceAccountConfig>(
-      contents.dump(), Options{});
+  auto const config =
+      internal::ServiceAccountConfig(contents.dump(), Options{});
   auto credentials = MapCredentials(config, client_factory.AsStdFunction());
   auto access_token = credentials->GetToken(now);
   ASSERT_STATUS_OK(access_token);
@@ -444,8 +441,8 @@ TEST(UnifiedRestCredentialsTest, ExternalAccount) {
       .WillOnce(Return(ByMove(std::move(subject_token_client))))
       .WillOnce(Return(ByMove(std::move(sts_client))));
 
-  auto config = std::make_shared<internal::ExternalAccountConfig>(
-      json_external_account.dump(), Options{});
+  auto const config =
+      internal::ExternalAccountConfig(json_external_account.dump(), Options{});
   auto credentials = MapCredentials(config, client_factory.AsStdFunction());
   auto const now = std::chrono::system_clock::now();
   auto access_token = credentials->GetToken(now);
@@ -459,7 +456,7 @@ TEST(UnifiedRestCredentialsTest, LoadError) {
   auto const filename = TempKeyFileName();
   ScopedEnvironment env("GOOGLE_APPLICATION_CREDENTIALS", filename);
 
-  auto credentials = MapCredentials(MakeGoogleDefaultCredentials());
+  auto credentials = MapCredentials(*MakeGoogleDefaultCredentials());
   EXPECT_THAT(credentials->GetToken(std::chrono::system_clock::now()),
               Not(IsOk()));
 }
@@ -471,7 +468,7 @@ TEST(UnifiedRestCredentialsTest, LoadSuccess) {
 
   ScopedEnvironment env("GOOGLE_APPLICATION_CREDENTIALS", filename);
 
-  auto credentials = MapCredentials(MakeGoogleDefaultCredentials());
+  auto credentials = MapCredentials(*MakeGoogleDefaultCredentials());
   // Calling AuthorizationHeader() makes RPCs which would turn this into an
   // integration test, fortunately there are easier ways to verify the file was
   // loaded correctly:

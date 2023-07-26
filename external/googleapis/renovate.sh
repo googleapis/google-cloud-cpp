@@ -18,10 +18,10 @@ set -euo pipefail
 # Determine the googleapis HEAD commit and the checksum of its tarball.
 REPO="googleapis/googleapis"
 BRANCH="master"
-COMMIT=$(curl -sSL -H "Accept: application/vnd.github.VERSION.sha" \
+COMMIT=$(curl -fsSL -H "Accept: application/vnd.github.VERSION.sha" \
   "https://api.github.com/repos/${REPO}/commits/${BRANCH}")
 DOWNLOAD="$(mktemp)"
-curl -sSL "https://github.com/${REPO}/archive/${COMMIT}.tar.gz" -o "${DOWNLOAD}"
+curl -fsSL "https://github.com/${REPO}/archive/${COMMIT}.tar.gz" -o "${DOWNLOAD}"
 gsutil -q cp "${DOWNLOAD}" "gs://cloud-cpp-community-archive/com_google_googleapis/${COMMIT}.tar.gz"
 SHA256=$(sha256sum "${DOWNLOAD}" | sed "s/ .*//")
 rm -f "${DOWNLOAD}"

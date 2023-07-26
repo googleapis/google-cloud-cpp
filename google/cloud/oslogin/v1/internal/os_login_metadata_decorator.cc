@@ -18,6 +18,7 @@
 
 #include "google/cloud/oslogin/v1/internal/os_login_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/oslogin/v1/oslogin.grpc.pb.h>
@@ -29,8 +30,10 @@ namespace oslogin_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 OsLoginServiceMetadata::OsLoginServiceMetadata(
-    std::shared_ptr<OsLoginServiceStub> child)
+    std::shared_ptr<OsLoginServiceStub> child,
+    std::multimap<std::string, std::string> fixed_metadata)
     : child_(std::move(child)),
+      fixed_metadata_(std::move(fixed_metadata)),
       api_client_header_(
           google::cloud::internal::ApiClientHeader("generator")) {}
 
@@ -38,21 +41,21 @@ StatusOr<google::cloud::oslogin::common::SshPublicKey>
 OsLoginServiceMetadata::CreateSshPublicKey(
     grpc::ClientContext& context,
     google::cloud::oslogin::v1::CreateSshPublicKeyRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->CreateSshPublicKey(context, request);
 }
 
 Status OsLoginServiceMetadata::DeletePosixAccount(
     grpc::ClientContext& context,
     google::cloud::oslogin::v1::DeletePosixAccountRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->DeletePosixAccount(context, request);
 }
 
 Status OsLoginServiceMetadata::DeleteSshPublicKey(
     grpc::ClientContext& context,
     google::cloud::oslogin::v1::DeleteSshPublicKeyRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->DeleteSshPublicKey(context, request);
 }
 
@@ -60,7 +63,7 @@ StatusOr<google::cloud::oslogin::v1::LoginProfile>
 OsLoginServiceMetadata::GetLoginProfile(
     grpc::ClientContext& context,
     google::cloud::oslogin::v1::GetLoginProfileRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetLoginProfile(context, request);
 }
 
@@ -68,7 +71,7 @@ StatusOr<google::cloud::oslogin::common::SshPublicKey>
 OsLoginServiceMetadata::GetSshPublicKey(
     grpc::ClientContext& context,
     google::cloud::oslogin::v1::GetSshPublicKeyRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetSshPublicKey(context, request);
 }
 
@@ -76,7 +79,7 @@ StatusOr<google::cloud::oslogin::v1::ImportSshPublicKeyResponse>
 OsLoginServiceMetadata::ImportSshPublicKey(
     grpc::ClientContext& context,
     google::cloud::oslogin::v1::ImportSshPublicKeyRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ImportSshPublicKey(context, request);
 }
 
@@ -84,7 +87,7 @@ StatusOr<google::cloud::oslogin::common::SshPublicKey>
 OsLoginServiceMetadata::UpdateSshPublicKey(
     grpc::ClientContext& context,
     google::cloud::oslogin::v1::UpdateSshPublicKeyRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->UpdateSshPublicKey(context, request);
 }
 
@@ -95,6 +98,9 @@ void OsLoginServiceMetadata::SetMetadata(grpc::ClientContext& context,
 }
 
 void OsLoginServiceMetadata::SetMetadata(grpc::ClientContext& context) {
+  for (auto const& kv : fixed_metadata_) {
+    context.AddMetadata(kv.first, kv.second);
+  }
   context.AddMetadata("x-goog-api-client", api_client_header_);
   auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {

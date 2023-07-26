@@ -84,6 +84,7 @@ class RevisionsClient {
   }
   ///@}
 
+  // clang-format off
   ///
   /// Gets information about a Revision.
   ///
@@ -92,75 +93,136 @@ class RevisionsClient {
   ///  projects/{project}/locations/{location}/services/{service}/revisions/{revision}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::run::v2::Revision,google/cloud/run/v2/revision.proto#L160}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.run.v2.Revision])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.run.v2.GetRevisionRequest]:
-  /// @googleapis_reference_link{google/cloud/run/v2/revision.proto#L92}
-  /// [google.cloud.run.v2.Revision]:
-  /// @googleapis_reference_link{google/cloud/run/v2/revision.proto#L160}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.run.v2.GetRevisionRequest]: @googleapis_reference_link{google/cloud/run/v2/revision.proto#L92}
+  /// [google.cloud.run.v2.Revision]: @googleapis_reference_link{google/cloud/run/v2/revision.proto#L160}
   ///
+  // clang-format on
   StatusOr<google::cloud::run::v2::Revision> GetRevision(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Gets information about a Revision.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::run::v2::GetRevisionRequest,google/cloud/run/v2/revision.proto#L92}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.run.v2.GetRevisionRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::run::v2::Revision,google/cloud/run/v2/revision.proto#L160}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.run.v2.Revision])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.run.v2.GetRevisionRequest]:
-  /// @googleapis_reference_link{google/cloud/run/v2/revision.proto#L92}
-  /// [google.cloud.run.v2.Revision]:
-  /// @googleapis_reference_link{google/cloud/run/v2/revision.proto#L160}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.run.v2.GetRevisionRequest]: @googleapis_reference_link{google/cloud/run/v2/revision.proto#L92}
+  /// [google.cloud.run.v2.Revision]: @googleapis_reference_link{google/cloud/run/v2/revision.proto#L160}
   ///
+  // clang-format on
   StatusOr<google::cloud::run::v2::Revision> GetRevision(
       google::cloud::run::v2::GetRevisionRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists Revisions from a given Service, or from a given location.
   ///
-  /// @param parent  Required. The Service from which the Revisions should be
-  /// listed.
+  /// @param parent  Required. The Service from which the Revisions should be listed.
   ///  To list all Revisions across Services, use "-" instead of Service name.
   ///  Format:
   ///  projects/{project}/locations/{location}/services/{service}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::run::v2::Revision,google/cloud/run/v2/revision.proto#L160}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.run.v2.Revision], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.run.v2.ListRevisionsRequest]:
-  /// @googleapis_reference_link{google/cloud/run/v2/revision.proto#L103}
-  /// [google.cloud.run.v2.Revision]:
-  /// @googleapis_reference_link{google/cloud/run/v2/revision.proto#L160}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.run.v2.ListRevisionsRequest]: @googleapis_reference_link{google/cloud/run/v2/revision.proto#L103}
+  /// [google.cloud.run.v2.Revision]: @googleapis_reference_link{google/cloud/run/v2/revision.proto#L160}
   ///
+  // clang-format on
   StreamRange<google::cloud::run::v2::Revision> ListRevisions(
       std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Lists Revisions from a given Service, or from a given location.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::run::v2::ListRevisionsRequest,google/cloud/run/v2/revision.proto#L103}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.run.v2.ListRevisionsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::run::v2::Revision,google/cloud/run/v2/revision.proto#L160}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.run.v2.Revision], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.run.v2.ListRevisionsRequest]:
-  /// @googleapis_reference_link{google/cloud/run/v2/revision.proto#L103}
-  /// [google.cloud.run.v2.Revision]:
-  /// @googleapis_reference_link{google/cloud/run/v2/revision.proto#L160}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.run.v2.ListRevisionsRequest]: @googleapis_reference_link{google/cloud/run/v2/revision.proto#L103}
+  /// [google.cloud.run.v2.Revision]: @googleapis_reference_link{google/cloud/run/v2/revision.proto#L160}
   ///
+  // clang-format on
   StreamRange<google::cloud::run::v2::Revision> ListRevisions(
       google::cloud::run::v2::ListRevisionsRequest request, Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes a Revision.
   ///
@@ -169,32 +231,65 @@ class RevisionsClient {
   ///  projects/{project}/locations/{location}/services/{service}/revisions/{revision}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::run::v2::Revision,google/cloud/run/v2/revision.proto#L160}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.run.v2.Revision] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.run.v2.DeleteRevisionRequest]:
-  /// @googleapis_reference_link{google/cloud/run/v2/revision.proto#L139}
-  /// [google.cloud.run.v2.Revision]:
-  /// @googleapis_reference_link{google/cloud/run/v2/revision.proto#L160}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.run.v2.DeleteRevisionRequest]: @googleapis_reference_link{google/cloud/run/v2/revision.proto#L139}
+  /// [google.cloud.run.v2.Revision]: @googleapis_reference_link{google/cloud/run/v2/revision.proto#L160}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::run::v2::Revision>> DeleteRevision(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes a Revision.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::run::v2::DeleteRevisionRequest,google/cloud/run/v2/revision.proto#L139}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.run.v2.DeleteRevisionRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::run::v2::Revision,google/cloud/run/v2/revision.proto#L160}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.run.v2.Revision] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.run.v2.DeleteRevisionRequest]:
-  /// @googleapis_reference_link{google/cloud/run/v2/revision.proto#L139}
-  /// [google.cloud.run.v2.Revision]:
-  /// @googleapis_reference_link{google/cloud/run/v2/revision.proto#L160}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.run.v2.DeleteRevisionRequest]: @googleapis_reference_link{google/cloud/run/v2/revision.proto#L139}
+  /// [google.cloud.run.v2.Revision]: @googleapis_reference_link{google/cloud/run/v2/revision.proto#L160}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::run::v2::Revision>> DeleteRevision(
       google::cloud::run::v2::DeleteRevisionRequest const& request,
       Options opts = {});

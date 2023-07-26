@@ -86,6 +86,7 @@ class MetricsScopesClient {
   }
   ///@}
 
+  // clang-format off
   ///
   /// Returns a specific `Metrics Scope`.
   ///
@@ -94,54 +95,88 @@ class MetricsScopesClient {
   ///  `locations/global/metricsScopes/{SCOPING_PROJECT_ID_OR_NUMBER}`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::monitoring::metricsscope::v1::MetricsScope,google/monitoring/metricsscope/v1/metrics_scope.proto#L35}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.monitoring.metricsscope.v1.MetricsScope])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.monitoring.metricsscope.v1.GetMetricsScopeRequest]:
-  /// @googleapis_reference_link{google/monitoring/metricsscope/v1/metrics_scopes.proto#L90}
-  /// [google.monitoring.metricsscope.v1.MetricsScope]:
-  /// @googleapis_reference_link{google/monitoring/metricsscope/v1/metrics_scope.proto#L35}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.monitoring.metricsscope.v1.GetMetricsScopeRequest]: @googleapis_reference_link{google/monitoring/metricsscope/v1/metrics_scopes.proto#L90}
+  /// [google.monitoring.metricsscope.v1.MetricsScope]: @googleapis_reference_link{google/monitoring/metricsscope/v1/metrics_scope.proto#L35}
   ///
+  // clang-format on
   StatusOr<google::monitoring::metricsscope::v1::MetricsScope> GetMetricsScope(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Returns a specific `Metrics Scope`.
   ///
-  /// @param request
-  /// @googleapis_link{google::monitoring::metricsscope::v1::GetMetricsScopeRequest,google/monitoring/metricsscope/v1/metrics_scopes.proto#L90}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.monitoring.metricsscope.v1.GetMetricsScopeRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::monitoring::metricsscope::v1::MetricsScope,google/monitoring/metricsscope/v1/metrics_scope.proto#L35}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.monitoring.metricsscope.v1.MetricsScope])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.monitoring.metricsscope.v1.GetMetricsScopeRequest]:
-  /// @googleapis_reference_link{google/monitoring/metricsscope/v1/metrics_scopes.proto#L90}
-  /// [google.monitoring.metricsscope.v1.MetricsScope]:
-  /// @googleapis_reference_link{google/monitoring/metricsscope/v1/metrics_scope.proto#L35}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.monitoring.metricsscope.v1.GetMetricsScopeRequest]: @googleapis_reference_link{google/monitoring/metricsscope/v1/metrics_scopes.proto#L90}
+  /// [google.monitoring.metricsscope.v1.MetricsScope]: @googleapis_reference_link{google/monitoring/metricsscope/v1/metrics_scope.proto#L35}
   ///
+  // clang-format on
   StatusOr<google::monitoring::metricsscope::v1::MetricsScope> GetMetricsScope(
       google::monitoring::metricsscope::v1::GetMetricsScopeRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Returns a list of every `Metrics Scope` that a specific `MonitoredProject`
   /// has been added to. The metrics scope representing the specified monitored
   /// project will always be the first entry in the response.
   ///
-  /// @param request
-  /// @googleapis_link{google::monitoring::metricsscope::v1::ListMetricsScopesByMonitoredProjectRequest,google/monitoring/metricsscope/v1/metrics_scopes.proto#L103}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.monitoring.metricsscope.v1.ListMetricsScopesByMonitoredProjectRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::monitoring::metricsscope::v1::ListMetricsScopesByMonitoredProjectResponse,google/monitoring/metricsscope/v1/metrics_scopes.proto#L111}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.monitoring.metricsscope.v1.ListMetricsScopesByMonitoredProjectResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.monitoring.metricsscope.v1.ListMetricsScopesByMonitoredProjectRequest]:
-  /// @googleapis_reference_link{google/monitoring/metricsscope/v1/metrics_scopes.proto#L103}
-  /// [google.monitoring.metricsscope.v1.ListMetricsScopesByMonitoredProjectResponse]:
-  /// @googleapis_reference_link{google/monitoring/metricsscope/v1/metrics_scopes.proto#L111}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.monitoring.metricsscope.v1.ListMetricsScopesByMonitoredProjectRequest]: @googleapis_reference_link{google/monitoring/metricsscope/v1/metrics_scopes.proto#L103}
+  /// [google.monitoring.metricsscope.v1.ListMetricsScopesByMonitoredProjectResponse]: @googleapis_reference_link{google/monitoring/metricsscope/v1/metrics_scopes.proto#L111}
   ///
+  // clang-format on
   StatusOr<google::monitoring::metricsscope::v1::
                ListMetricsScopesByMonitoredProjectResponse>
   ListMetricsScopesByMonitoredProject(
@@ -149,30 +184,43 @@ class MetricsScopesClient {
           ListMetricsScopesByMonitoredProjectRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Adds a `MonitoredProject` with the given project ID
   /// to the specified `Metrics Scope`.
   ///
-  /// @param parent  Required. The resource name of the existing `Metrics Scope`
-  /// that will monitor this
+  /// @param parent  Required. The resource name of the existing `Metrics Scope` that will monitor this
   ///  project.
   ///  Example:
   ///  `locations/global/metricsScopes/{SCOPING_PROJECT_ID_OR_NUMBER}`
-  /// @param monitored_project  Required. The initial `MonitoredProject`
-  /// configuration.
+  /// @param monitored_project  Required. The initial `MonitoredProject` configuration.
   ///  Specify only the `monitored_project.name` field. All other fields are
   ///  ignored. The `monitored_project.name` must be in the format:
   ///  `locations/global/metricsScopes/{SCOPING_PROJECT_ID_OR_NUMBER}/projects/{MONITORED_PROJECT_ID_OR_NUMBER}`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::monitoring::metricsscope::v1::MonitoredProject,google/monitoring/metricsscope/v1/metrics_scope.proto#L62}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.monitoring.metricsscope.v1.MonitoredProject] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.monitoring.metricsscope.v1.CreateMonitoredProjectRequest]:
-  /// @googleapis_reference_link{google/monitoring/metricsscope/v1/metrics_scopes.proto#L118}
-  /// [google.monitoring.metricsscope.v1.MonitoredProject]:
-  /// @googleapis_reference_link{google/monitoring/metricsscope/v1/metrics_scope.proto#L62}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.monitoring.metricsscope.v1.CreateMonitoredProjectRequest]: @googleapis_reference_link{google/monitoring/metricsscope/v1/metrics_scopes.proto#L118}
+  /// [google.monitoring.metricsscope.v1.MonitoredProject]: @googleapis_reference_link{google/monitoring/metricsscope/v1/metrics_scope.proto#L62}
   ///
+  // clang-format on
   future<StatusOr<google::monitoring::metricsscope::v1::MonitoredProject>>
   CreateMonitoredProject(
       std::string const& parent,
@@ -180,65 +228,119 @@ class MetricsScopesClient {
           monitored_project,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Adds a `MonitoredProject` with the given project ID
   /// to the specified `Metrics Scope`.
   ///
-  /// @param request
-  /// @googleapis_link{google::monitoring::metricsscope::v1::CreateMonitoredProjectRequest,google/monitoring/metricsscope/v1/metrics_scopes.proto#L118}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.monitoring.metricsscope.v1.CreateMonitoredProjectRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::monitoring::metricsscope::v1::MonitoredProject,google/monitoring/metricsscope/v1/metrics_scope.proto#L62}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.monitoring.metricsscope.v1.MonitoredProject] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.monitoring.metricsscope.v1.CreateMonitoredProjectRequest]:
-  /// @googleapis_reference_link{google/monitoring/metricsscope/v1/metrics_scopes.proto#L118}
-  /// [google.monitoring.metricsscope.v1.MonitoredProject]:
-  /// @googleapis_reference_link{google/monitoring/metricsscope/v1/metrics_scope.proto#L62}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.monitoring.metricsscope.v1.CreateMonitoredProjectRequest]: @googleapis_reference_link{google/monitoring/metricsscope/v1/metrics_scopes.proto#L118}
+  /// [google.monitoring.metricsscope.v1.MonitoredProject]: @googleapis_reference_link{google/monitoring/metricsscope/v1/metrics_scope.proto#L62}
   ///
+  // clang-format on
   future<StatusOr<google::monitoring::metricsscope::v1::MonitoredProject>>
   CreateMonitoredProject(
       google::monitoring::metricsscope::v1::CreateMonitoredProjectRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes a `MonitoredProject` from the specified `Metrics Scope`.
   ///
   /// @param name  Required. The resource name of the `MonitoredProject`.
   ///  Example:
   ///  `locations/global/metricsScopes/{SCOPING_PROJECT_ID_OR_NUMBER}/projects/{MONITORED_PROJECT_ID_OR_NUMBER}`
+  ///  @n
   ///  Authorization requires the following [Google
-  ///  IAM](https://cloud.google.com/iam) permissions on both the `Metrics
-  ///  Scope` and on the `MonitoredProject`: `monitoring.metricsScopes.link`
+  ///  IAM](https://cloud.google.com/iam) permissions on both the `Metrics Scope`
+  ///  and on the `MonitoredProject`: `monitoring.metricsScopes.link`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::monitoring::metricsscope::v1::OperationMetadata,google/monitoring/metricsscope/v1/metrics_scopes.proto#L156}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.monitoring.metricsscope.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.monitoring.metricsscope.v1.DeleteMonitoredProjectRequest]:
-  /// @googleapis_reference_link{google/monitoring/metricsscope/v1/metrics_scopes.proto#L138}
-  /// [google.monitoring.metricsscope.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/monitoring/metricsscope/v1/metrics_scopes.proto#L156}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.monitoring.metricsscope.v1.DeleteMonitoredProjectRequest]: @googleapis_reference_link{google/monitoring/metricsscope/v1/metrics_scopes.proto#L138}
+  /// [google.monitoring.metricsscope.v1.OperationMetadata]: @googleapis_reference_link{google/monitoring/metricsscope/v1/metrics_scopes.proto#L156}
   ///
+  // clang-format on
   future<StatusOr<google::monitoring::metricsscope::v1::OperationMetadata>>
   DeleteMonitoredProject(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes a `MonitoredProject` from the specified `Metrics Scope`.
   ///
-  /// @param request
-  /// @googleapis_link{google::monitoring::metricsscope::v1::DeleteMonitoredProjectRequest,google/monitoring/metricsscope/v1/metrics_scopes.proto#L138}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.monitoring.metricsscope.v1.DeleteMonitoredProjectRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::monitoring::metricsscope::v1::OperationMetadata,google/monitoring/metricsscope/v1/metrics_scopes.proto#L156}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.monitoring.metricsscope.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.monitoring.metricsscope.v1.DeleteMonitoredProjectRequest]:
-  /// @googleapis_reference_link{google/monitoring/metricsscope/v1/metrics_scopes.proto#L138}
-  /// [google.monitoring.metricsscope.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/monitoring/metricsscope/v1/metrics_scopes.proto#L156}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.monitoring.metricsscope.v1.DeleteMonitoredProjectRequest]: @googleapis_reference_link{google/monitoring/metricsscope/v1/metrics_scopes.proto#L138}
+  /// [google.monitoring.metricsscope.v1.OperationMetadata]: @googleapis_reference_link{google/monitoring/metricsscope/v1/metrics_scopes.proto#L156}
   ///
+  // clang-format on
   future<StatusOr<google::monitoring::metricsscope::v1::OperationMetadata>>
   DeleteMonitoredProject(
       google::monitoring::metricsscope::v1::DeleteMonitoredProjectRequest const&

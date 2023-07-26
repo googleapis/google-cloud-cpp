@@ -22,6 +22,7 @@
 #include "google/cloud/documentai/v1/internal/document_processor_stub.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
+#include <map>
 #include <memory>
 #include <string>
 
@@ -33,8 +34,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class DocumentProcessorServiceMetadata : public DocumentProcessorServiceStub {
  public:
   ~DocumentProcessorServiceMetadata() override = default;
-  explicit DocumentProcessorServiceMetadata(
-      std::shared_ptr<DocumentProcessorServiceStub> child);
+  DocumentProcessorServiceMetadata(
+      std::shared_ptr<DocumentProcessorServiceStub> child,
+      std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::documentai::v1::ProcessResponse> ProcessDocument(
       grpc::ClientContext& context,
@@ -178,6 +180,7 @@ class DocumentProcessorServiceMetadata : public DocumentProcessorServiceStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<DocumentProcessorServiceStub> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

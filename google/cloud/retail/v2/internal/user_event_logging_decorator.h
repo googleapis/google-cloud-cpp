@@ -37,7 +37,7 @@ class UserEventServiceLogging : public UserEventServiceStub {
   ~UserEventServiceLogging() override = default;
   UserEventServiceLogging(std::shared_ptr<UserEventServiceStub> child,
                           TracingOptions tracing_options,
-                          std::set<std::string> components);
+                          std::set<std::string> const& components);
 
   StatusOr<google::cloud::retail::v2::UserEvent> WriteUserEvent(
       grpc::ClientContext& context,
@@ -79,7 +79,7 @@ class UserEventServiceLogging : public UserEventServiceStub {
  private:
   std::shared_ptr<UserEventServiceStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // UserEventServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

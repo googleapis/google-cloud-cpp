@@ -22,6 +22,7 @@
 #include "google/cloud/dataproc/v1/internal/workflow_template_stub.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
+#include <map>
 #include <memory>
 #include <string>
 
@@ -33,8 +34,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class WorkflowTemplateServiceMetadata : public WorkflowTemplateServiceStub {
  public:
   ~WorkflowTemplateServiceMetadata() override = default;
-  explicit WorkflowTemplateServiceMetadata(
-      std::shared_ptr<WorkflowTemplateServiceStub> child);
+  WorkflowTemplateServiceMetadata(
+      std::shared_ptr<WorkflowTemplateServiceStub> child,
+      std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::dataproc::v1::WorkflowTemplate>
   CreateWorkflowTemplate(
@@ -94,6 +96,7 @@ class WorkflowTemplateServiceMetadata : public WorkflowTemplateServiceStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<WorkflowTemplateServiceStub> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

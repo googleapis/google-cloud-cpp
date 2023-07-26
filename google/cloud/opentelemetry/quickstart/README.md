@@ -123,7 +123,7 @@ Linux.
 
 ```Dockerfile
 WORKDIR /var/tmp/build/
-RUN curl -sSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.9.0.tar.gz | \
+RUN curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.9.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_CXX_STANDARD=14 \
@@ -134,7 +134,7 @@ RUN curl -sSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.9.0
         -DWITH_ABSEIL=ON \
         -DBUILD_TESTING=OFF \
         -DOPENTELEMETRY_INSTALL=ON \
-        -H. -Bcmake-out && \
+        -S . -B cmake-out && \
     cmake --build cmake-out --target install && \
     ldconfig && cd /var/tmp && rm -fr build
 ```

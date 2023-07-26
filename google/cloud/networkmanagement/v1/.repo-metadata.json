@@ -1,0 +1,13 @@
+{
+    "api_id": "networkmanagement.googleapis.com",
+    "api_shortname": "networkmanagement",
+    "client_documentation": "https://cloud.google.com/cpp/docs/reference/networkmanagement/latest",
+    "distribution_name": "google-cloud-cpp",
+    "language": "cpp",
+    "library_type": "GAPIC_AUTO",
+    "name_pretty": "Network Management API",
+    "product_documentation": "https://cloud.google.com/network-intelligence-center/docs/connectivity-tests/concepts/overview",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-cpp",
+    "requires_billing": true
+}

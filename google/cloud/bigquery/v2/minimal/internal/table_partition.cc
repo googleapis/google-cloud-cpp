@@ -58,6 +58,18 @@ std::string Clustering::DebugString(absl::string_view name,
       .Build();
 }
 
+void to_json(nlohmann::json& j, TimePartitioning const& t) {
+  j = nlohmann::json{{"type", t.type}, {"field", t.field}};
+
+  ToJson(t.expiration_time, j, "expirationTime");
+}
+void from_json(nlohmann::json const& j, TimePartitioning& t) {
+  if (j.contains("type")) j.at("type").get_to(t.type);
+  if (j.contains("field")) j.at("field").get_to(t.field);
+
+  FromJson(t.expiration_time, j, "expirationTime");
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_v2_minimal_internal
 }  // namespace cloud

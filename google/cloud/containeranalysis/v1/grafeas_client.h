@@ -96,6 +96,7 @@ class GrafeasClient {
   }
   ///@}
 
+  // clang-format off
   ///
   /// Gets the specified occurrence.
   ///
@@ -103,184 +104,311 @@ class GrafeasClient {
   ///  `projects/[PROJECT_ID]/occurrences/[OCCURRENCE_ID]`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{grafeas::v1::Occurrence,grafeas/v1/grafeas.proto#L195}
+  /// @return the result of the RPC. The response message type
+  ///     ([grafeas.v1.Occurrence])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [grafeas.v1.GetOccurrenceRequest]:
-  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L324}
-  /// [grafeas.v1.Occurrence]:
-  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L195}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [grafeas.v1.GetOccurrenceRequest]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L324}
+  /// [grafeas.v1.Occurrence]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L195}
   ///
+  // clang-format on
   StatusOr<grafeas::v1::Occurrence> GetOccurrence(std::string const& name,
                                                   Options opts = {});
 
+  // clang-format off
   ///
   /// Gets the specified occurrence.
   ///
-  /// @param request
-  /// @googleapis_link{grafeas::v1::GetOccurrenceRequest,grafeas/v1/grafeas.proto#L324}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [grafeas.v1.GetOccurrenceRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{grafeas::v1::Occurrence,grafeas/v1/grafeas.proto#L195}
+  /// @return the result of the RPC. The response message type
+  ///     ([grafeas.v1.Occurrence])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [grafeas.v1.GetOccurrenceRequest]:
-  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L324}
-  /// [grafeas.v1.Occurrence]:
-  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L195}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [grafeas.v1.GetOccurrenceRequest]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L324}
+  /// [grafeas.v1.Occurrence]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L195}
   ///
+  // clang-format on
   StatusOr<grafeas::v1::Occurrence> GetOccurrence(
       grafeas::v1::GetOccurrenceRequest const& request, Options opts = {});
 
+  // clang-format off
   ///
   /// Lists occurrences for the specified project.
   ///
-  /// @param parent  The name of the project to list occurrences for in the form
-  /// of
+  /// @param parent  The name of the project to list occurrences for in the form of
   ///  `projects/[PROJECT_ID]`.
   /// @param filter  The filter expression.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{grafeas::v1::Occurrence,grafeas/v1/grafeas.proto#L195}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [grafeas.v1.Occurrence], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [grafeas.v1.ListOccurrencesRequest]:
-  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L334}
-  /// [grafeas.v1.Occurrence]:
-  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L195}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [grafeas.v1.ListOccurrencesRequest]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L334}
+  /// [grafeas.v1.Occurrence]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L195}
   ///
+  // clang-format on
   StreamRange<grafeas::v1::Occurrence> ListOccurrences(
       std::string const& parent, std::string const& filter, Options opts = {});
 
+  // clang-format off
   ///
   /// Lists occurrences for the specified project.
   ///
-  /// @param request
-  /// @googleapis_link{grafeas::v1::ListOccurrencesRequest,grafeas/v1/grafeas.proto#L334}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [grafeas.v1.ListOccurrencesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{grafeas::v1::Occurrence,grafeas/v1/grafeas.proto#L195}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [grafeas.v1.Occurrence], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [grafeas.v1.ListOccurrencesRequest]:
-  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L334}
-  /// [grafeas.v1.Occurrence]:
-  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L195}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [grafeas.v1.ListOccurrencesRequest]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L334}
+  /// [grafeas.v1.Occurrence]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L195}
   ///
+  // clang-format on
   StreamRange<grafeas::v1::Occurrence> ListOccurrences(
       grafeas::v1::ListOccurrencesRequest request, Options opts = {});
 
+  // clang-format off
   ///
-  /// Deletes the specified occurrence. For example, use this method to delete
-  /// an occurrence when the occurrence is no longer applicable for the given
+  /// Deletes the specified occurrence. For example, use this method to delete an
+  /// occurrence when the occurrence is no longer applicable for the given
   /// resource.
   ///
   /// @param name  The name of the occurrence in the form of
   ///  `projects/[PROJECT_ID]/occurrences/[OCCURRENCE_ID]`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
   ///
-  /// [grafeas.v1.DeleteOccurrenceRequest]:
-  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L364}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [grafeas.v1.DeleteOccurrenceRequest]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L364}
   ///
+  // clang-format on
   Status DeleteOccurrence(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
-  /// Deletes the specified occurrence. For example, use this method to delete
-  /// an occurrence when the occurrence is no longer applicable for the given
+  /// Deletes the specified occurrence. For example, use this method to delete an
+  /// occurrence when the occurrence is no longer applicable for the given
   /// resource.
   ///
-  /// @param request
-  /// @googleapis_link{grafeas::v1::DeleteOccurrenceRequest,grafeas/v1/grafeas.proto#L364}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [grafeas.v1.DeleteOccurrenceRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
   ///
-  /// [grafeas.v1.DeleteOccurrenceRequest]:
-  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L364}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [grafeas.v1.DeleteOccurrenceRequest]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L364}
   ///
+  // clang-format on
   Status DeleteOccurrence(grafeas::v1::DeleteOccurrenceRequest const& request,
                           Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a new occurrence.
   ///
-  /// @param parent  The name of the project in the form of
-  /// `projects/[PROJECT_ID]`, under which
+  /// @param parent  The name of the project in the form of `projects/[PROJECT_ID]`, under which
   ///  the occurrence is to be created.
   /// @param occurrence  The occurrence to create.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{grafeas::v1::Occurrence,grafeas/v1/grafeas.proto#L195}
+  /// @return the result of the RPC. The response message type
+  ///     ([grafeas.v1.Occurrence])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [grafeas.v1.CreateOccurrenceRequest]:
-  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L374}
-  /// [grafeas.v1.Occurrence]:
-  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L195}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [grafeas.v1.CreateOccurrenceRequest]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L374}
+  /// [grafeas.v1.Occurrence]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L195}
   ///
+  // clang-format on
   StatusOr<grafeas::v1::Occurrence> CreateOccurrence(
       std::string const& parent, grafeas::v1::Occurrence const& occurrence,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a new occurrence.
   ///
-  /// @param request
-  /// @googleapis_link{grafeas::v1::CreateOccurrenceRequest,grafeas/v1/grafeas.proto#L374}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [grafeas.v1.CreateOccurrenceRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{grafeas::v1::Occurrence,grafeas/v1/grafeas.proto#L195}
+  /// @return the result of the RPC. The response message type
+  ///     ([grafeas.v1.Occurrence])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [grafeas.v1.CreateOccurrenceRequest]:
-  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L374}
-  /// [grafeas.v1.Occurrence]:
-  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L195}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [grafeas.v1.CreateOccurrenceRequest]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L374}
+  /// [grafeas.v1.Occurrence]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L195}
   ///
+  // clang-format on
   StatusOr<grafeas::v1::Occurrence> CreateOccurrence(
       grafeas::v1::CreateOccurrenceRequest const& request, Options opts = {});
 
+  // clang-format off
   ///
   /// Creates new occurrences in batch.
   ///
-  /// @param parent  The name of the project in the form of
-  /// `projects/[PROJECT_ID]`, under which
+  /// @param parent  The name of the project in the form of `projects/[PROJECT_ID]`, under which
   ///  the occurrences are to be created.
   /// @param occurrences  The occurrences to create. Max allowed length is 1000.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{grafeas::v1::BatchCreateOccurrencesResponse,grafeas/v1/grafeas.proto#L544}
+  /// @return the result of the RPC. The response message type
+  ///     ([grafeas.v1.BatchCreateOccurrencesResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [grafeas.v1.BatchCreateOccurrencesRequest]:
-  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L531}
-  /// [grafeas.v1.BatchCreateOccurrencesResponse]:
-  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L544}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [grafeas.v1.BatchCreateOccurrencesRequest]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L531}
+  /// [grafeas.v1.BatchCreateOccurrencesResponse]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L544}
   ///
+  // clang-format on
   StatusOr<grafeas::v1::BatchCreateOccurrencesResponse> BatchCreateOccurrences(
       std::string const& parent,
       std::vector<grafeas::v1::Occurrence> const& occurrences,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates new occurrences in batch.
   ///
-  /// @param request
-  /// @googleapis_link{grafeas::v1::BatchCreateOccurrencesRequest,grafeas/v1/grafeas.proto#L531}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [grafeas.v1.BatchCreateOccurrencesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{grafeas::v1::BatchCreateOccurrencesResponse,grafeas/v1/grafeas.proto#L544}
+  /// @return the result of the RPC. The response message type
+  ///     ([grafeas.v1.BatchCreateOccurrencesResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [grafeas.v1.BatchCreateOccurrencesRequest]:
-  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L531}
-  /// [grafeas.v1.BatchCreateOccurrencesResponse]:
-  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L544}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [grafeas.v1.BatchCreateOccurrencesRequest]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L531}
+  /// [grafeas.v1.BatchCreateOccurrencesResponse]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L544}
   ///
+  // clang-format on
   StatusOr<grafeas::v1::BatchCreateOccurrencesResponse> BatchCreateOccurrences(
       grafeas::v1::BatchCreateOccurrencesRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Updates the specified occurrence.
   ///
@@ -290,36 +418,58 @@ class GrafeasClient {
   /// @param update_mask  The fields to update.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{grafeas::v1::Occurrence,grafeas/v1/grafeas.proto#L195}
+  /// @return the result of the RPC. The response message type
+  ///     ([grafeas.v1.Occurrence])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [grafeas.v1.Occurrence]:
-  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L195}
-  /// [grafeas.v1.UpdateOccurrenceRequest]:
-  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L386}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [grafeas.v1.Occurrence]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L195}
+  /// [grafeas.v1.UpdateOccurrenceRequest]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L386}
   ///
+  // clang-format on
   StatusOr<grafeas::v1::Occurrence> UpdateOccurrence(
       std::string const& name, grafeas::v1::Occurrence const& occurrence,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
   ///
   /// Updates the specified occurrence.
   ///
-  /// @param request
-  /// @googleapis_link{grafeas::v1::UpdateOccurrenceRequest,grafeas/v1/grafeas.proto#L386}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [grafeas.v1.UpdateOccurrenceRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{grafeas::v1::Occurrence,grafeas/v1/grafeas.proto#L195}
+  /// @return the result of the RPC. The response message type
+  ///     ([grafeas.v1.Occurrence])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [grafeas.v1.Occurrence]:
-  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L195}
-  /// [grafeas.v1.UpdateOccurrenceRequest]:
-  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L386}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [grafeas.v1.Occurrence]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L195}
+  /// [grafeas.v1.UpdateOccurrenceRequest]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L386}
   ///
+  // clang-format on
   StatusOr<grafeas::v1::Occurrence> UpdateOccurrence(
       grafeas::v1::UpdateOccurrenceRequest const& request, Options opts = {});
 
+  // clang-format off
   ///
   /// Gets the note attached to the specified occurrence. Consumer projects can
   /// use this method to get a note that belongs to a provider project.
@@ -328,34 +478,58 @@ class GrafeasClient {
   ///  `projects/[PROJECT_ID]/occurrences/[OCCURRENCE_ID]`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{grafeas::v1::Note,grafeas/v1/grafeas.proto#L259}
+  /// @return the result of the RPC. The response message type
+  ///     ([grafeas.v1.Note])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [grafeas.v1.GetOccurrenceNoteRequest]:
-  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L410}
-  /// [grafeas.v1.Note]:
-  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L259}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [grafeas.v1.GetOccurrenceNoteRequest]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L410}
+  /// [grafeas.v1.Note]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L259}
   ///
+  // clang-format on
   StatusOr<grafeas::v1::Note> GetOccurrenceNote(std::string const& name,
                                                 Options opts = {});
 
+  // clang-format off
   ///
   /// Gets the note attached to the specified occurrence. Consumer projects can
   /// use this method to get a note that belongs to a provider project.
   ///
-  /// @param request
-  /// @googleapis_link{grafeas::v1::GetOccurrenceNoteRequest,grafeas/v1/grafeas.proto#L410}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [grafeas.v1.GetOccurrenceNoteRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{grafeas::v1::Note,grafeas/v1/grafeas.proto#L259}
+  /// @return the result of the RPC. The response message type
+  ///     ([grafeas.v1.Note])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [grafeas.v1.GetOccurrenceNoteRequest]:
-  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L410}
-  /// [grafeas.v1.Note]:
-  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L259}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [grafeas.v1.GetOccurrenceNoteRequest]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L410}
+  /// [grafeas.v1.Note]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L259}
   ///
+  // clang-format on
   StatusOr<grafeas::v1::Note> GetOccurrenceNote(
       grafeas::v1::GetOccurrenceNoteRequest const& request, Options opts = {});
 
+  // clang-format off
   ///
   /// Gets the specified note.
   ///
@@ -363,33 +537,57 @@ class GrafeasClient {
   ///  `projects/[PROVIDER_ID]/notes/[NOTE_ID]`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{grafeas::v1::Note,grafeas/v1/grafeas.proto#L259}
+  /// @return the result of the RPC. The response message type
+  ///     ([grafeas.v1.Note])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [grafeas.v1.GetNoteRequest]:
-  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L400}
-  /// [grafeas.v1.Note]:
-  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L259}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [grafeas.v1.GetNoteRequest]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L400}
+  /// [grafeas.v1.Note]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L259}
   ///
+  // clang-format on
   StatusOr<grafeas::v1::Note> GetNote(std::string const& name,
                                       Options opts = {});
 
+  // clang-format off
   ///
   /// Gets the specified note.
   ///
-  /// @param request
-  /// @googleapis_link{grafeas::v1::GetNoteRequest,grafeas/v1/grafeas.proto#L400}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [grafeas.v1.GetNoteRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{grafeas::v1::Note,grafeas/v1/grafeas.proto#L259}
+  /// @return the result of the RPC. The response message type
+  ///     ([grafeas.v1.Note])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [grafeas.v1.GetNoteRequest]:
-  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L400}
-  /// [grafeas.v1.Note]:
-  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L259}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [grafeas.v1.GetNoteRequest]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L400}
+  /// [grafeas.v1.Note]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L259}
   ///
+  // clang-format on
   StatusOr<grafeas::v1::Note> GetNote(
       grafeas::v1::GetNoteRequest const& request, Options opts = {});
 
+  // clang-format off
   ///
   /// Lists notes for the specified project.
   ///
@@ -398,34 +596,76 @@ class GrafeasClient {
   /// @param filter  The filter expression.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{grafeas::v1::Note,grafeas/v1/grafeas.proto#L259}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [grafeas.v1.Note], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [grafeas.v1.ListNotesRequest]:
-  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L420}
-  /// [grafeas.v1.Note]:
-  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L259}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [grafeas.v1.ListNotesRequest]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L420}
+  /// [grafeas.v1.Note]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L259}
   ///
+  // clang-format on
   StreamRange<grafeas::v1::Note> ListNotes(std::string const& parent,
                                            std::string const& filter,
                                            Options opts = {});
 
+  // clang-format off
   ///
   /// Lists notes for the specified project.
   ///
-  /// @param request
-  /// @googleapis_link{grafeas::v1::ListNotesRequest,grafeas/v1/grafeas.proto#L420}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [grafeas.v1.ListNotesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{grafeas::v1::Note,grafeas/v1/grafeas.proto#L259}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [grafeas.v1.Note], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [grafeas.v1.ListNotesRequest]:
-  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L420}
-  /// [grafeas.v1.Note]:
-  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L259}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [grafeas.v1.ListNotesRequest]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L420}
+  /// [grafeas.v1.Note]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L259}
   ///
+  // clang-format on
   StreamRange<grafeas::v1::Note> ListNotes(
       grafeas::v1::ListNotesRequest request, Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes the specified note.
   ///
@@ -433,104 +673,172 @@ class GrafeasClient {
   ///  `projects/[PROVIDER_ID]/notes/[NOTE_ID]`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
   ///
-  /// [grafeas.v1.DeleteNoteRequest]:
-  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L450}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [grafeas.v1.DeleteNoteRequest]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L450}
   ///
+  // clang-format on
   Status DeleteNote(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes the specified note.
   ///
-  /// @param request
-  /// @googleapis_link{grafeas::v1::DeleteNoteRequest,grafeas/v1/grafeas.proto#L450}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [grafeas.v1.DeleteNoteRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
   ///
-  /// [grafeas.v1.DeleteNoteRequest]:
-  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L450}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [grafeas.v1.DeleteNoteRequest]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L450}
   ///
+  // clang-format on
   Status DeleteNote(grafeas::v1::DeleteNoteRequest const& request,
                     Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a new note.
   ///
-  /// @param parent  The name of the project in the form of
-  /// `projects/[PROJECT_ID]`, under which
+  /// @param parent  The name of the project in the form of `projects/[PROJECT_ID]`, under which
   ///  the note is to be created.
   /// @param note_id  The ID to use for this note.
   /// @param note  The note to create.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{grafeas::v1::Note,grafeas/v1/grafeas.proto#L259}
+  /// @return the result of the RPC. The response message type
+  ///     ([grafeas.v1.Note])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [grafeas.v1.CreateNoteRequest]:
-  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L460}
-  /// [grafeas.v1.Note]:
-  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L259}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [grafeas.v1.CreateNoteRequest]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L460}
+  /// [grafeas.v1.Note]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L259}
   ///
+  // clang-format on
   StatusOr<grafeas::v1::Note> CreateNote(std::string const& parent,
                                          std::string const& note_id,
                                          grafeas::v1::Note const& note,
                                          Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a new note.
   ///
-  /// @param request
-  /// @googleapis_link{grafeas::v1::CreateNoteRequest,grafeas/v1/grafeas.proto#L460}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [grafeas.v1.CreateNoteRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{grafeas::v1::Note,grafeas/v1/grafeas.proto#L259}
+  /// @return the result of the RPC. The response message type
+  ///     ([grafeas.v1.Note])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [grafeas.v1.CreateNoteRequest]:
-  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L460}
-  /// [grafeas.v1.Note]:
-  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L259}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [grafeas.v1.CreateNoteRequest]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L460}
+  /// [grafeas.v1.Note]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L259}
   ///
+  // clang-format on
   StatusOr<grafeas::v1::Note> CreateNote(
       grafeas::v1::CreateNoteRequest const& request, Options opts = {});
 
+  // clang-format off
   ///
   /// Creates new notes in batch.
   ///
-  /// @param parent  The name of the project in the form of
-  /// `projects/[PROJECT_ID]`, under which
+  /// @param parent  The name of the project in the form of `projects/[PROJECT_ID]`, under which
   ///  the notes are to be created.
   /// @param notes  The notes to create. Max allowed length is 1000.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{grafeas::v1::BatchCreateNotesResponse,grafeas/v1/grafeas.proto#L525}
+  /// @return the result of the RPC. The response message type
+  ///     ([grafeas.v1.BatchCreateNotesResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [grafeas.v1.BatchCreateNotesRequest]:
-  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L512}
-  /// [grafeas.v1.BatchCreateNotesResponse]:
-  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L525}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [grafeas.v1.BatchCreateNotesRequest]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L512}
+  /// [grafeas.v1.BatchCreateNotesResponse]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L525}
   ///
+  // clang-format on
   StatusOr<grafeas::v1::BatchCreateNotesResponse> BatchCreateNotes(
       std::string const& parent,
       std::map<std::string, grafeas::v1::Note> const& notes, Options opts = {});
 
+  // clang-format off
   ///
   /// Creates new notes in batch.
   ///
-  /// @param request
-  /// @googleapis_link{grafeas::v1::BatchCreateNotesRequest,grafeas/v1/grafeas.proto#L512}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [grafeas.v1.BatchCreateNotesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{grafeas::v1::BatchCreateNotesResponse,grafeas/v1/grafeas.proto#L525}
+  /// @return the result of the RPC. The response message type
+  ///     ([grafeas.v1.BatchCreateNotesResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [grafeas.v1.BatchCreateNotesRequest]:
-  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L512}
-  /// [grafeas.v1.BatchCreateNotesResponse]:
-  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L525}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [grafeas.v1.BatchCreateNotesRequest]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L512}
+  /// [grafeas.v1.BatchCreateNotesResponse]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L525}
   ///
+  // clang-format on
   StatusOr<grafeas::v1::BatchCreateNotesResponse> BatchCreateNotes(
       grafeas::v1::BatchCreateNotesRequest const& request, Options opts = {});
 
+  // clang-format off
   ///
   /// Updates the specified note.
   ///
@@ -540,72 +848,135 @@ class GrafeasClient {
   /// @param update_mask  The fields to update.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{grafeas::v1::Note,grafeas/v1/grafeas.proto#L259}
+  /// @return the result of the RPC. The response message type
+  ///     ([grafeas.v1.Note])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [grafeas.v1.Note]:
-  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L259}
-  /// [grafeas.v1.UpdateNoteRequest]:
-  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L474}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [grafeas.v1.Note]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L259}
+  /// [grafeas.v1.UpdateNoteRequest]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L474}
   ///
+  // clang-format on
   StatusOr<grafeas::v1::Note> UpdateNote(
       std::string const& name, grafeas::v1::Note const& note,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
   ///
   /// Updates the specified note.
   ///
-  /// @param request
-  /// @googleapis_link{grafeas::v1::UpdateNoteRequest,grafeas/v1/grafeas.proto#L474}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [grafeas.v1.UpdateNoteRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{grafeas::v1::Note,grafeas/v1/grafeas.proto#L259}
+  /// @return the result of the RPC. The response message type
+  ///     ([grafeas.v1.Note])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [grafeas.v1.Note]:
-  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L259}
-  /// [grafeas.v1.UpdateNoteRequest]:
-  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L474}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [grafeas.v1.Note]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L259}
+  /// [grafeas.v1.UpdateNoteRequest]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L474}
   ///
+  // clang-format on
   StatusOr<grafeas::v1::Note> UpdateNote(
       grafeas::v1::UpdateNoteRequest const& request, Options opts = {});
 
+  // clang-format off
   ///
-  /// Lists occurrences referencing the specified note. Provider projects can
-  /// use this method to get all occurrences across consumer projects
-  /// referencing the specified note.
+  /// Lists occurrences referencing the specified note. Provider projects can use
+  /// this method to get all occurrences across consumer projects referencing the
+  /// specified note.
   ///
   /// @param name  The name of the note to list occurrences for in the form of
   ///  `projects/[PROVIDER_ID]/notes/[NOTE_ID]`.
   /// @param filter  The filter expression.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{grafeas::v1::Occurrence,grafeas/v1/grafeas.proto#L195}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [grafeas.v1.Occurrence], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [grafeas.v1.ListNoteOccurrencesRequest]:
-  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L488}
-  /// [grafeas.v1.Occurrence]:
-  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L195}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [grafeas.v1.ListNoteOccurrencesRequest]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L488}
+  /// [grafeas.v1.Occurrence]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L195}
   ///
+  // clang-format on
   StreamRange<grafeas::v1::Occurrence> ListNoteOccurrences(
       std::string const& name, std::string const& filter, Options opts = {});
 
+  // clang-format off
   ///
-  /// Lists occurrences referencing the specified note. Provider projects can
-  /// use this method to get all occurrences across consumer projects
-  /// referencing the specified note.
+  /// Lists occurrences referencing the specified note. Provider projects can use
+  /// this method to get all occurrences across consumer projects referencing the
+  /// specified note.
   ///
-  /// @param request
-  /// @googleapis_link{grafeas::v1::ListNoteOccurrencesRequest,grafeas/v1/grafeas.proto#L488}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [grafeas.v1.ListNoteOccurrencesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{grafeas::v1::Occurrence,grafeas/v1/grafeas.proto#L195}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [grafeas.v1.Occurrence], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [grafeas.v1.ListNoteOccurrencesRequest]:
-  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L488}
-  /// [grafeas.v1.Occurrence]:
-  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L195}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [grafeas.v1.ListNoteOccurrencesRequest]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L488}
+  /// [grafeas.v1.Occurrence]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L195}
   ///
+  // clang-format on
   StreamRange<grafeas::v1::Occurrence> ListNoteOccurrences(
       grafeas::v1::ListNoteOccurrencesRequest request, Options opts = {});
 

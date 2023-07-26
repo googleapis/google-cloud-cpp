@@ -21,6 +21,7 @@
 
 #include "google/cloud/orgpolicy/v2/internal/org_policy_stub.h"
 #include "google/cloud/version.h"
+#include <map>
 #include <memory>
 #include <string>
 
@@ -32,7 +33,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class OrgPolicyMetadata : public OrgPolicyStub {
  public:
   ~OrgPolicyMetadata() override = default;
-  explicit OrgPolicyMetadata(std::shared_ptr<OrgPolicyStub> child);
+  OrgPolicyMetadata(std::shared_ptr<OrgPolicyStub> child,
+                    std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::orgpolicy::v2::ListConstraintsResponse>
   ListConstraints(grpc::ClientContext& context,
@@ -73,6 +75,7 @@ class OrgPolicyMetadata : public OrgPolicyStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<OrgPolicyStub> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

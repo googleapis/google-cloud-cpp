@@ -36,7 +36,7 @@ class TextToSpeechLogging : public TextToSpeechStub {
   ~TextToSpeechLogging() override = default;
   TextToSpeechLogging(std::shared_ptr<TextToSpeechStub> child,
                       TracingOptions tracing_options,
-                      std::set<std::string> components);
+                      std::set<std::string> const& components);
 
   StatusOr<google::cloud::texttospeech::v1::ListVoicesResponse> ListVoices(
       grpc::ClientContext& context,
@@ -52,7 +52,7 @@ class TextToSpeechLogging : public TextToSpeechStub {
  private:
   std::shared_ptr<TextToSpeechStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // TextToSpeechLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

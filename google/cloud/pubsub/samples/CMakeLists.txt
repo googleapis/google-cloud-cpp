@@ -74,13 +74,19 @@ export_list_to_bazel("pubsub_client_unit_samples.bzl"
                      "pubsub_client_unit_samples" YEAR "2020")
 
 google_cloud_cpp_proto_library(
-    pubsub_samples_protos samples.proto PROTO_PATH_DIRECTORIES
-    ${CMAKE_CURRENT_SOURCE_DIR} LOCAL_INCLUDE)
+    pubsub_samples_protos "testdata/schema.proto" PROTO_PATH_DIRECTORIES
+    "${CMAKE_CURRENT_SOURCE_DIR}/testdata" LOCAL_INCLUDE)
 
 # Generate a target for each integration test.
 foreach (fname ${pubsub_client_integration_samples})
     google_cloud_cpp_add_executable(target "pubsub" "${fname}")
     add_test(NAME ${target} COMMAND ${target})
+    set_tests_properties(
+        ${target}
+        PROPERTIES
+            ENVIRONMENT
+            GOOGLE_CLOUD_CPP_PUBSUB_TESTDATA=${CMAKE_CURRENT_SOURCE_DIR}/testdata/
+    )
     target_link_libraries(
         ${target} PRIVATE pubsub_samples_protos pubsub_samples_common
                           google_cloud_cpp_testing google-cloud-cpp::pubsub)

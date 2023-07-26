@@ -1,11 +1,15 @@
 name: "External Account Integration"
 
-# Build on pull requests and pushes to `main`. The PR builds will be
-# non-blocking for now, but that is configured elsewhere.
 on:
-  pull_request:
-  push:
-    branches: [ 'main' ]
+  workflow_call:
+    inputs:
+      checkout-ref:
+        required: true
+        description: "The ref we want to compile"
+        type: string
+
+permissions:
+  contents: read
 
 jobs:
   # A minimal build to validate external account (aka Workload/Workforce
@@ -15,67 +19,61 @@ jobs:
   # usable in this case.
   identity-federation-integration-test:
     name: external-account-integration-test
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     # Add "id-token" with the intended permissions.
     permissions:
-      contents: 'read'
-      id-token: 'write'
+      contents: read
+      id-token: write
 
     steps:
-      - name: install ninja
-        run: sudo apt install ninja-build
-      - uses: 'actions/checkout@v3'
-      - name: vcpkg-version
-        id: vcpkg-version
-        run: |
-          echo "version=$(cat ci/etc/vcpkg-version.txt)" >> "${GITHUB_OUTPUT}"
-        shell: bash
-      - name: clone-vcpkg
-        working-directory: "${{runner.temp}}"
-        run: |
-          mkdir -p vcpkg
-          curl -sSL "https://github.com/microsoft/vcpkg/archive/${{ steps.vcpkg-version.outputs.version }}.tar.gz" |
-              tar -C vcpkg --strip-components=1 -zxf -
-          vcpkg/bootstrap-vcpkg.sh -disableMetrics
-      - name: cache-vcpkg
-        id: cache-vcpkg
-        uses: actions/cache@v3
-        with:
-          path: |
-            ~/.cache/vcpkg
-          key: |
-            vcpkg-${{ steps.vcpkg-version.outputs.version }}-${{ hashFiles('vcpkg.json') }}
-          restore-keys: |
-            vcpkg-${{ steps.vcpkg-version.outputs.version }}-
-
-      # Configuring CMake installs the dependencies from the vcpkg cache, or
-      # warms up said cache.
-      - name: configure
-        run: |
-          cmake -G Ninja -S . -B "${{runner.temp}}/build" \
-              -DGOOGLE_CLOUD_CPP_ENABLE=storage,iam \
-              -DCMAKE_TOOLCHAIN_FILE="${{runner.temp}}/vcpkg/scripts/buildsystems/vcpkg.cmake"
-
-      - name: build
-        run: |
-          cmake --build "${{runner.temp}}/build" -j 2 \
-            --target common_internal_external_account_integration_test
-
-      # Configure Workload Identity Federation and generate an access token.
-      - id: 'auth'
-        if: '!github.event.pull_request.head.repo.fork'
-        name: 'Authenticate to GCP'
-        uses: 'google-github-actions/auth@v1'
-        with:
-          create_credentials_file: 'true'
-          workload_identity_provider: 'projects/49427430084/locations/global/workloadIdentityPools/github-wif-pool/providers/github-wif-provider'
-          service_account: 'github-actions@cloud-cpp-identity-federation.iam.gserviceaccount.com'
-      - id: 'test'
-        if: '!github.event.pull_request.head.repo.fork'
-        name: 'Run Integration Test'
-        env:
-          GOOGLE_APPLICATION_CREDENTIALS: "${{ steps.auth.outputs.credentials_file_path }}"
-          GOOGLE_CLOUD_CPP_TEST_WIF_BUCKET: "cloud-cpp-wif-test-bucket"
-          GOOGLE_CLOUD_CPP_EXPERIMENTAL_LOG_CONFIG: "lastN,1024,WARNING"
-        run: |
-          ctest --test-dir "${{runner.temp}}/build" --output-on-failure -R common_internal_external_account_integration_test
+    - uses: actions/checkout@v3
+      with:
+        ref: ${{ inputs.checkout-ref }}
+    - id: auth
+      uses: google-github-actions/auth@v1
+      with:
+        create_credentials_file: true
+        credentials_json: ${{ secrets.BUILD_CACHE_KEY }}
+    - name: Set up Cloud SDK
+      uses: google-github-actions/setup-gcloud@v1
+    - name: vcpkg-version
+      id: vcpkg-version
+      run: |
+        echo "version=$(cat ci/etc/vcpkg-version.txt)" >> "${GITHUB_OUTPUT}"
+      shell: bash
+    - name: install ninja
+      run: sudo apt install ninja-build
+    - name: download-sccache
+      working-directory: "${{runner.temp}}"
+      run: |
+        curl -fsSL https://github.com/mozilla/sccache/releases/download/v0.5.4/sccache-v0.5.4-x86_64-unknown-linux-musl.tar.gz | \
+          tar -zxf - --strip-components=1 && \
+        sudo mv sccache /usr/bin/sccache && \
+        sudo chmod +x /usr/bin/sccache
+    - name: download-vcpkg
+      working-directory: "${{runner.temp}}"
+      run: |
+        mkdir -p vcpkg
+        curl -fsSL "https://github.com/microsoft/vcpkg/archive/${{ steps.vcpkg-version.outputs.version }}.tar.gz" |
+            tar -C vcpkg --strip-components=1 -zxf -
+        vcpkg/bootstrap-vcpkg.sh -disableMetrics
+    # First compile the code using the identity with access to the build cache
+    - run: |
+        env VCPKG_ROOT="${{ runner.temp }}/vcpkg" ci/gha/builds/external-account.sh
+    # Then switch to the BYOID identity and run the integration test
+    - id: byoid-auth
+      if: '!github.event.pull_request.head.repo.fork'
+      name: 'Authenticate to GCP'
+      uses: 'google-github-actions/auth@v1'
+      with:
+        create_credentials_file: true
+        workload_identity_provider: 'projects/49427430084/locations/global/workloadIdentityPools/github-wif-pool/providers/github-wif-provider'
+        service_account: 'github-actions@cloud-cpp-identity-federation.iam.gserviceaccount.com'
+    - run: |
+        ctest --test-dir cmake-out --output-on-failure -R common_internal_external_account_integration_test
+    env:
+      SCCACHE_GCS_BUCKET: cloud-cpp-gha-cache
+      SCCACHE_GCS_KEY_PREFIX: sccache/ubuntu-22.04/${{ github.job }}
+      SCCACHE_GCS_RW_MODE: READ_WRITE
+      SCCACHE_IGNORE_SERVER_IO_ERROR: 1
+      VCPKG_BINARY_SOURCES: x-gcs,gs://cloud-cpp-gha-cache/vcpkg-cache/ubuntu-22.04/${{ github.job }},readwrite

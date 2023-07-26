@@ -21,6 +21,7 @@
 
 #include "google/cloud/advisorynotifications/v1/internal/advisory_notifications_stub.h"
 #include "google/cloud/version.h"
+#include <map>
 #include <memory>
 #include <string>
 
@@ -33,8 +34,9 @@ class AdvisoryNotificationsServiceMetadata
     : public AdvisoryNotificationsServiceStub {
  public:
   ~AdvisoryNotificationsServiceMetadata() override = default;
-  explicit AdvisoryNotificationsServiceMetadata(
-      std::shared_ptr<AdvisoryNotificationsServiceStub> child);
+  AdvisoryNotificationsServiceMetadata(
+      std::shared_ptr<AdvisoryNotificationsServiceStub> child,
+      std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::advisorynotifications::v1::ListNotificationsResponse>
   ListNotifications(
@@ -54,6 +56,7 @@ class AdvisoryNotificationsServiceMetadata
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<AdvisoryNotificationsServiceStub> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

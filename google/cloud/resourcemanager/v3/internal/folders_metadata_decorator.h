@@ -22,6 +22,7 @@
 #include "google/cloud/resourcemanager/v3/internal/folders_stub.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
+#include <map>
 #include <memory>
 #include <string>
 
@@ -33,7 +34,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class FoldersMetadata : public FoldersStub {
  public:
   ~FoldersMetadata() override = default;
-  explicit FoldersMetadata(std::shared_ptr<FoldersStub> child);
+  FoldersMetadata(std::shared_ptr<FoldersStub> child,
+                  std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::resourcemanager::v3::Folder> GetFolder(
       grpc::ClientContext& context,
@@ -108,6 +110,7 @@ class FoldersMetadata : public FoldersStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<FoldersStub> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

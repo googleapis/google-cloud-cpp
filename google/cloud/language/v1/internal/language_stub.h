@@ -59,6 +59,11 @@ class LanguageServiceStub {
       grpc::ClientContext& context,
       google::cloud::language::v1::ClassifyTextRequest const& request) = 0;
 
+  virtual StatusOr<google::cloud::language::v1::ModerateTextResponse>
+  ModerateText(
+      grpc::ClientContext& context,
+      google::cloud::language::v1::ModerateTextRequest const& request) = 0;
+
   virtual StatusOr<google::cloud::language::v1::AnnotateTextResponse>
   AnnotateText(
       grpc::ClientContext& context,
@@ -97,6 +102,10 @@ class DefaultLanguageServiceStub : public LanguageServiceStub {
   StatusOr<google::cloud::language::v1::ClassifyTextResponse> ClassifyText(
       grpc::ClientContext& client_context,
       google::cloud::language::v1::ClassifyTextRequest const& request) override;
+
+  StatusOr<google::cloud::language::v1::ModerateTextResponse> ModerateText(
+      grpc::ClientContext& client_context,
+      google::cloud::language::v1::ModerateTextRequest const& request) override;
 
   StatusOr<google::cloud::language::v1::AnnotateTextResponse> AnnotateText(
       grpc::ClientContext& client_context,

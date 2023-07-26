@@ -18,6 +18,7 @@
 
 #include "google/cloud/translate/v3/internal/translation_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/translate/v3/translation_service.grpc.pb.h>
@@ -29,8 +30,10 @@ namespace translate_v3_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 TranslationServiceMetadata::TranslationServiceMetadata(
-    std::shared_ptr<TranslationServiceStub> child)
+    std::shared_ptr<TranslationServiceStub> child,
+    std::multimap<std::string, std::string> fixed_metadata)
     : child_(std::move(child)),
+      fixed_metadata_(std::move(fixed_metadata)),
       api_client_header_(
           google::cloud::internal::ApiClientHeader("generator")) {}
 
@@ -38,7 +41,7 @@ StatusOr<google::cloud::translation::v3::TranslateTextResponse>
 TranslationServiceMetadata::TranslateText(
     grpc::ClientContext& context,
     google::cloud::translation::v3::TranslateTextRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->TranslateText(context, request);
 }
 
@@ -46,7 +49,7 @@ StatusOr<google::cloud::translation::v3::DetectLanguageResponse>
 TranslationServiceMetadata::DetectLanguage(
     grpc::ClientContext& context,
     google::cloud::translation::v3::DetectLanguageRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->DetectLanguage(context, request);
 }
 
@@ -55,7 +58,7 @@ TranslationServiceMetadata::GetSupportedLanguages(
     grpc::ClientContext& context,
     google::cloud::translation::v3::GetSupportedLanguagesRequest const&
         request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->GetSupportedLanguages(context, request);
 }
 
@@ -63,7 +66,7 @@ StatusOr<google::cloud::translation::v3::TranslateDocumentResponse>
 TranslationServiceMetadata::TranslateDocument(
     grpc::ClientContext& context,
     google::cloud::translation::v3::TranslateDocumentRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->TranslateDocument(context, request);
 }
 
@@ -72,7 +75,7 @@ TranslationServiceMetadata::AsyncBatchTranslateText(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::translation::v3::BatchTranslateTextRequest const& request) {
-  SetMetadata(*context, "parent=" + request.parent());
+  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
   return child_->AsyncBatchTranslateText(cq, std::move(context), request);
 }
 
@@ -82,7 +85,7 @@ TranslationServiceMetadata::AsyncBatchTranslateDocument(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::translation::v3::BatchTranslateDocumentRequest const&
         request) {
-  SetMetadata(*context, "parent=" + request.parent());
+  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
   return child_->AsyncBatchTranslateDocument(cq, std::move(context), request);
 }
 
@@ -91,7 +94,7 @@ TranslationServiceMetadata::AsyncCreateGlossary(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::translation::v3::CreateGlossaryRequest const& request) {
-  SetMetadata(*context, "parent=" + request.parent());
+  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
   return child_->AsyncCreateGlossary(cq, std::move(context), request);
 }
 
@@ -99,7 +102,7 @@ StatusOr<google::cloud::translation::v3::ListGlossariesResponse>
 TranslationServiceMetadata::ListGlossaries(
     grpc::ClientContext& context,
     google::cloud::translation::v3::ListGlossariesRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListGlossaries(context, request);
 }
 
@@ -107,7 +110,7 @@ StatusOr<google::cloud::translation::v3::Glossary>
 TranslationServiceMetadata::GetGlossary(
     grpc::ClientContext& context,
     google::cloud::translation::v3::GetGlossaryRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetGlossary(context, request);
 }
 
@@ -116,7 +119,7 @@ TranslationServiceMetadata::AsyncDeleteGlossary(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::translation::v3::DeleteGlossaryRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncDeleteGlossary(cq, std::move(context), request);
 }
 
@@ -144,6 +147,9 @@ void TranslationServiceMetadata::SetMetadata(
 }
 
 void TranslationServiceMetadata::SetMetadata(grpc::ClientContext& context) {
+  for (auto const& kv : fixed_metadata_) {
+    context.AddMetadata(kv.first, kv.second);
+  }
   context.AddMetadata("x-goog-api-client", api_client_header_);
   auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {

@@ -50,8 +50,9 @@ Options DataTransferServiceDefaultOptions(Options options) {
           bigquery_datatransfer_v1::DataTransferServiceBackoffPolicyOption>()) {
     options
         .set<bigquery_datatransfer_v1::DataTransferServiceBackoffPolicyOption>(
-            ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                     std::chrono::minutes(5), kBackoffScaling)
+            ExponentialBackoffPolicy(
+                std::chrono::seconds(0), std::chrono::seconds(1),
+                std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
                 .clone());
   }
   if (!options

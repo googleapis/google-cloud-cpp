@@ -18,6 +18,7 @@
 
 #include "google/cloud/bigtable/admin/internal/bigtable_table_admin_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/bigtable/admin/v2/bigtable_table_admin.grpc.pb.h>
@@ -29,8 +30,10 @@ namespace bigtable_admin_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 BigtableTableAdminMetadata::BigtableTableAdminMetadata(
-    std::shared_ptr<BigtableTableAdminStub> child)
+    std::shared_ptr<BigtableTableAdminStub> child,
+    std::multimap<std::string, std::string> fixed_metadata)
     : child_(std::move(child)),
+      fixed_metadata_(std::move(fixed_metadata)),
       api_client_header_(
           google::cloud::internal::ApiClientHeader("generator")) {}
 
@@ -38,7 +41,7 @@ StatusOr<google::bigtable::admin::v2::Table>
 BigtableTableAdminMetadata::CreateTable(
     grpc::ClientContext& context,
     google::bigtable::admin::v2::CreateTableRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->CreateTable(context, request);
 }
 
@@ -46,7 +49,7 @@ StatusOr<google::bigtable::admin::v2::ListTablesResponse>
 BigtableTableAdminMetadata::ListTables(
     grpc::ClientContext& context,
     google::bigtable::admin::v2::ListTablesRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListTables(context, request);
 }
 
@@ -54,7 +57,7 @@ StatusOr<google::bigtable::admin::v2::Table>
 BigtableTableAdminMetadata::GetTable(
     grpc::ClientContext& context,
     google::bigtable::admin::v2::GetTableRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetTable(context, request);
 }
 
@@ -63,14 +66,14 @@ BigtableTableAdminMetadata::AsyncUpdateTable(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::bigtable::admin::v2::UpdateTableRequest const& request) {
-  SetMetadata(*context, "table.name=" + request.table().name());
+  SetMetadata(*context, absl::StrCat("table.name=", request.table().name()));
   return child_->AsyncUpdateTable(cq, std::move(context), request);
 }
 
 Status BigtableTableAdminMetadata::DeleteTable(
     grpc::ClientContext& context,
     google::bigtable::admin::v2::DeleteTableRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->DeleteTable(context, request);
 }
 
@@ -79,7 +82,7 @@ BigtableTableAdminMetadata::AsyncUndeleteTable(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::bigtable::admin::v2::UndeleteTableRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncUndeleteTable(cq, std::move(context), request);
 }
 
@@ -87,14 +90,14 @@ StatusOr<google::bigtable::admin::v2::Table>
 BigtableTableAdminMetadata::ModifyColumnFamilies(
     grpc::ClientContext& context,
     google::bigtable::admin::v2::ModifyColumnFamiliesRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->ModifyColumnFamilies(context, request);
 }
 
 Status BigtableTableAdminMetadata::DropRowRange(
     grpc::ClientContext& context,
     google::bigtable::admin::v2::DropRowRangeRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->DropRowRange(context, request);
 }
 
@@ -103,7 +106,7 @@ BigtableTableAdminMetadata::GenerateConsistencyToken(
     grpc::ClientContext& context,
     google::bigtable::admin::v2::GenerateConsistencyTokenRequest const&
         request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GenerateConsistencyToken(context, request);
 }
 
@@ -111,7 +114,7 @@ StatusOr<google::bigtable::admin::v2::CheckConsistencyResponse>
 BigtableTableAdminMetadata::CheckConsistency(
     grpc::ClientContext& context,
     google::bigtable::admin::v2::CheckConsistencyRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->CheckConsistency(context, request);
 }
 
@@ -120,7 +123,7 @@ BigtableTableAdminMetadata::AsyncCreateBackup(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::bigtable::admin::v2::CreateBackupRequest const& request) {
-  SetMetadata(*context, "parent=" + request.parent());
+  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
   return child_->AsyncCreateBackup(cq, std::move(context), request);
 }
 
@@ -128,7 +131,7 @@ StatusOr<google::bigtable::admin::v2::Backup>
 BigtableTableAdminMetadata::GetBackup(
     grpc::ClientContext& context,
     google::bigtable::admin::v2::GetBackupRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetBackup(context, request);
 }
 
@@ -136,14 +139,14 @@ StatusOr<google::bigtable::admin::v2::Backup>
 BigtableTableAdminMetadata::UpdateBackup(
     grpc::ClientContext& context,
     google::bigtable::admin::v2::UpdateBackupRequest const& request) {
-  SetMetadata(context, "backup.name=" + request.backup().name());
+  SetMetadata(context, absl::StrCat("backup.name=", request.backup().name()));
   return child_->UpdateBackup(context, request);
 }
 
 Status BigtableTableAdminMetadata::DeleteBackup(
     grpc::ClientContext& context,
     google::bigtable::admin::v2::DeleteBackupRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->DeleteBackup(context, request);
 }
 
@@ -151,7 +154,7 @@ StatusOr<google::bigtable::admin::v2::ListBackupsResponse>
 BigtableTableAdminMetadata::ListBackups(
     grpc::ClientContext& context,
     google::bigtable::admin::v2::ListBackupsRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListBackups(context, request);
 }
 
@@ -160,21 +163,21 @@ BigtableTableAdminMetadata::AsyncRestoreTable(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::bigtable::admin::v2::RestoreTableRequest const& request) {
-  SetMetadata(*context, "parent=" + request.parent());
+  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
   return child_->AsyncRestoreTable(cq, std::move(context), request);
 }
 
 StatusOr<google::iam::v1::Policy> BigtableTableAdminMetadata::GetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::GetIamPolicyRequest const& request) {
-  SetMetadata(context, "resource=" + request.resource());
+  SetMetadata(context, absl::StrCat("resource=", request.resource()));
   return child_->GetIamPolicy(context, request);
 }
 
 StatusOr<google::iam::v1::Policy> BigtableTableAdminMetadata::SetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::SetIamPolicyRequest const& request) {
-  SetMetadata(context, "resource=" + request.resource());
+  SetMetadata(context, absl::StrCat("resource=", request.resource()));
   return child_->SetIamPolicy(context, request);
 }
 
@@ -182,7 +185,7 @@ StatusOr<google::iam::v1::TestIamPermissionsResponse>
 BigtableTableAdminMetadata::TestIamPermissions(
     grpc::ClientContext& context,
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  SetMetadata(context, "resource=" + request.resource());
+  SetMetadata(context, absl::StrCat("resource=", request.resource()));
   return child_->TestIamPermissions(context, request);
 }
 
@@ -191,7 +194,7 @@ BigtableTableAdminMetadata::AsyncCheckConsistency(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::bigtable::admin::v2::CheckConsistencyRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncCheckConsistency(cq, std::move(context), request);
 }
 
@@ -219,6 +222,9 @@ void BigtableTableAdminMetadata::SetMetadata(
 }
 
 void BigtableTableAdminMetadata::SetMetadata(grpc::ClientContext& context) {
+  for (auto const& kv : fixed_metadata_) {
+    context.AddMetadata(kv.first, kv.second);
+  }
   context.AddMetadata("x-goog-api-client", api_client_header_);
   auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {

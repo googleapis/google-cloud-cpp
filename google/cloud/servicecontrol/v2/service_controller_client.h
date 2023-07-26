@@ -93,15 +93,17 @@ class ServiceControllerClient {
   }
   ///@}
 
+  // clang-format off
   ///
   /// Private Preview. This feature is only available for approved services.
   ///
   /// This method provides admission control for services that are integrated
   /// with [Service
-  /// Infrastructure](https://cloud.google.com/service-infrastructure). It
-  /// checks whether an operation should be allowed based on the service
-  /// configuration and relevant policies. It must be called before the
-  /// operation is executed. For more information, see [Admission
+  /// Infrastructure](https://cloud.google.com/service-infrastructure). It checks
+  /// whether an operation should be allowed based on the service configuration
+  /// and relevant policies. It must be called before the operation is executed.
+  /// For more information, see
+  /// [Admission
   /// Control](https://cloud.google.com/service-infrastructure/docs/admission-control).
   ///
   /// NOTE: The admission control has an expected policy propagation delay of
@@ -116,22 +118,35 @@ class ServiceControllerClient {
   /// [Service Control API Access
   /// Control](https://cloud.google.com/service-infrastructure/docs/service-control/access-control).
   ///
-  /// @param request
-  /// @googleapis_link{google::api::servicecontrol::v2::CheckRequest,google/api/servicecontrol/v2/service_controller.proto#L104}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.api.servicecontrol.v2.CheckRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::api::servicecontrol::v2::CheckResponse,google/api/servicecontrol/v2/service_controller.proto#L157}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.api.servicecontrol.v2.CheckResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.api.servicecontrol.v2.CheckRequest]:
-  /// @googleapis_reference_link{google/api/servicecontrol/v2/service_controller.proto#L104}
-  /// [google.api.servicecontrol.v2.CheckResponse]:
-  /// @googleapis_reference_link{google/api/servicecontrol/v2/service_controller.proto#L157}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.api.servicecontrol.v2.CheckRequest]: @googleapis_reference_link{google/api/servicecontrol/v2/service_controller.proto#L104}
+  /// [google.api.servicecontrol.v2.CheckResponse]: @googleapis_reference_link{google/api/servicecontrol/v2/service_controller.proto#L157}
   ///
+  // clang-format on
   StatusOr<google::api::servicecontrol::v2::CheckResponse> Check(
       google::api::servicecontrol::v2::CheckRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Private Preview. This feature is only available for approved services.
   ///
@@ -152,18 +167,30 @@ class ServiceControllerClient {
   /// [Service Control API Access
   /// Control](https://cloud.google.com/service-infrastructure/docs/service-control/access-control).
   ///
-  /// @param request
-  /// @googleapis_link{google::api::servicecontrol::v2::ReportRequest,google/api/servicecontrol/v2/service_controller.proto#L168}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.api.servicecontrol.v2.ReportRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::api::servicecontrol::v2::ReportResponse,google/api/servicecontrol/v2/service_controller.proto#L190}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.api.servicecontrol.v2.ReportResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.api.servicecontrol.v2.ReportRequest]:
-  /// @googleapis_reference_link{google/api/servicecontrol/v2/service_controller.proto#L168}
-  /// [google.api.servicecontrol.v2.ReportResponse]:
-  /// @googleapis_reference_link{google/api/servicecontrol/v2/service_controller.proto#L190}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.api.servicecontrol.v2.ReportRequest]: @googleapis_reference_link{google/api/servicecontrol/v2/service_controller.proto#L168}
+  /// [google.api.servicecontrol.v2.ReportResponse]: @googleapis_reference_link{google/api/servicecontrol/v2/service_controller.proto#L190}
   ///
+  // clang-format on
   StatusOr<google::api::servicecontrol::v2::ReportResponse> Report(
       google::api::servicecontrol::v2::ReportRequest const& request,
       Options opts = {});

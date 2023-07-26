@@ -16,7 +16,9 @@
 #include "docfx/doxygen2markdown.h"
 #include "docfx/doxygen_errors.h"
 #include "docfx/function_classifiers.h"
+#include "docfx/linked_text_type.h"
 #include "docfx/yaml_emit.h"
+#include <iostream>
 
 namespace docfx {
 namespace {
@@ -46,41 +48,6 @@ void AppendLocation(YAML::Emitter& yaml, YamlContext const& ctx,
        << YAML::Key << "path" << YAML::Value << path       //
        << YAML::EndMap                                     // remote
        << YAML::EndMap;                                    // source
-}
-
-// A `linkedTextType` is defined as below. It is basically a sequence of
-// references (links) mixed with plain text. We ignore the references in the
-// formatting of the syntax content.
-//
-// clang-format off
-//   <xsd:complexType name="linkedTextType" mixed="true">
-//     <xsd:sequence>
-//     <xsd:element name="ref" type="refTextType" minOccurs="0" maxOccurs="unbounded" />
-//     </xsd:sequence>
-//   </xsd:complexType>
-// ... ..
-//   <xsd:complexType name="refTextType">
-//     <xsd:simpleContent>
-//       <xsd:extension base="xsd:string">
-//        <xsd:attribute name="refid" type="xsd:string" />
-//        <xsd:attribute name="kindref" type="DoxRefKind" />
-//        <xsd:attribute name="external" type="xsd:string" use="optional"/>
-//        <xsd:attribute name="tooltip" type="xsd:string" use="optional"/>
-//       </xsd:extension>
-//     </xsd:simpleContent>
-//   </xsd:complexType>
-// clang-format on
-std::string LinkedTextType(pugi::xml_node node) {
-  std::ostringstream os;
-  for (auto const child : node) {
-    auto const name = std::string_view{child.name()};
-    if (name == "ref") {
-      os << child.child_value();
-    } else {
-      os << child.value();
-    }
-  }
-  return std::move(os).str();
 }
 
 std::string HtmlEscape(std::string_view text) {
@@ -163,6 +130,14 @@ bool ParameterItemMatchesName(std::string_view parameter_name,
   return false;
 }
 
+std::string ParameterItemDescription(pugi::xml_node parameteritem) {
+  std::ostringstream os;
+  MarkdownContext mdctx;
+  mdctx.paragraph_start = "";
+  AppendDescriptionType(os, mdctx, parameteritem.child("parameterdescription"));
+  return std::move(os).str();
+}
+
 std::string ParameterDescription(YamlContext const& /*ctx*/,
                                  pugi::xml_node node,
                                  std::string_view parameter_name) {
@@ -172,11 +147,7 @@ std::string ParameterDescription(YamlContext const& /*ctx*/,
   if (!selected) return {};
   for (auto const item : selected.node()) {
     if (!ParameterItemMatchesName(parameter_name, item)) continue;
-    std::ostringstream os;
-    MarkdownContext mdctx;
-    mdctx.paragraph_start = "";
-    AppendDescriptionType(os, mdctx, item.child("parameterdescription"));
-    return std::move(os).str();
+    return ParameterItemDescription(item);
   }
   return {};
 }
@@ -194,11 +165,7 @@ std::string TemplateParameterDescription(YamlContext const& /*ctx*/,
   if (!selected) return {};
   for (auto const item : selected.node()) {
     if (!ParameterItemMatchesName(type, item)) continue;
-    std::ostringstream os;
-    MarkdownContext mdctx;
-    mdctx.paragraph_start = "";
-    AppendDescriptionType(os, mdctx, item.child("parameterdescription"));
-    return std::move(os).str();
+    return ParameterItemDescription(item);
   }
   return {};
 }
@@ -305,10 +272,13 @@ void AppendEnumSyntax(YAML::Emitter& yaml, YamlContext const& ctx,
 
 void AppendTypedefSyntax(YAML::Emitter& yaml, YamlContext const& ctx,
                          pugi::xml_node node) {
+  auto const aliasof =
+      "<code>" + HtmlEscape(LinkedTextType(node.child("type"))) + "</code>";
   yaml << YAML::Key << "syntax" << YAML::Value                     //
        << YAML::BeginMap                                           //
        << YAML::Key << "contents" << YAML::Value << YAML::Literal  //
-       << TypedefSyntaxContent(node);
+       << TypedefSyntaxContent(node)                               //
+       << YAML::Key << "aliasof" << YAML::Value << YAML::Literal << aliasof;
   AppendLocation(yaml, ctx, node, "name");
   yaml << YAML::EndMap;
 }
@@ -340,18 +310,22 @@ void AppendFunctionSyntax(YAML::Emitter& yaml, YamlContext const& ctx,
        << YAML::BeginMap                                           //
        << YAML::Key << "contents" << YAML::Value << YAML::Literal  //
        << FunctionSyntaxContent(node);
-  auto const rettype = HtmlEscape(LinkedTextType(node.child("type")));
+  auto const rettype = LinkedTextType(node.child("type"));
   if (!rettype.empty()) {
-    yaml << YAML::Key << "returns" << YAML::Value   //
-         << YAML::BeginSeq << YAML::BeginMap        //
-         << YAML::Key << "var_type" << YAML::Value  //
-         << YAML::DoubleQuoted << rettype;
+    // The `return` element accepts either a string for `type` or a sequence of
+    // strings. If `type` is a string then it must be UID pointing to another
+    // element in the documentation. That does not work in C++ where many
+    // functions return primitive types and Doxygen does not create links for
+    // the return type. So we create a sequence with a single element.
+    yaml << YAML::Key << "return" << YAML::Value << YAML::BeginMap  //
+         << YAML::Key << "type" << YAML::Value << YAML::BeginSeq    //
+         << YAML::DoubleQuoted << rettype << YAML::EndSeq;
     auto description = ReturnDescription(ctx, node);
     if (!description.empty()) {
       yaml << YAML::Key << "description" << YAML::Value << YAML::Literal
            << description;
     }
-    yaml << YAML::EndMap << YAML::EndSeq;
+    yaml << YAML::EndMap;
   }
   auto params = node.select_nodes("param");
   auto tparams = node.child("templateparamlist").children("param");
@@ -384,6 +358,23 @@ void AppendFunctionSyntax(YAML::Emitter& yaml, YamlContext const& ctx,
              << description;
       }
       yaml << YAML::EndMap;
+    }
+    yaml << YAML::EndSeq;
+  }
+  auto exceptions = node.select_node(".//parameterlist[@kind='exception']");
+  if (!!exceptions && !exceptions.node().children().empty()) {
+    yaml << YAML::Key << "exceptions" << YAML::Value << YAML::BeginSeq;
+    for (auto const item : exceptions.node()) {
+      auto const description = ParameterItemDescription(item);
+      for (auto const name : item.child("parameternamelist")) {
+        auto exception_type = LinkedTextType(name);
+        yaml << YAML::BeginMap                             //
+             << YAML::Key << "var_type" << YAML::Value     //
+             << YAML::DoubleQuoted << exception_type       //
+             << YAML::Key << "description" << YAML::Value  //
+             << YAML::Literal << description               //
+             << YAML::EndMap;
+      }
     }
     yaml << YAML::EndSeq;
   }

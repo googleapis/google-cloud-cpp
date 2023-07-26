@@ -21,6 +21,7 @@
 
 #include "google/cloud/datacatalog/v1/internal/policy_tag_manager_serialization_stub.h"
 #include "google/cloud/version.h"
+#include <map>
 #include <memory>
 #include <string>
 
@@ -33,8 +34,9 @@ class PolicyTagManagerSerializationMetadata
     : public PolicyTagManagerSerializationStub {
  public:
   ~PolicyTagManagerSerializationMetadata() override = default;
-  explicit PolicyTagManagerSerializationMetadata(
-      std::shared_ptr<PolicyTagManagerSerializationStub> child);
+  PolicyTagManagerSerializationMetadata(
+      std::shared_ptr<PolicyTagManagerSerializationStub> child,
+      std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::datacatalog::v1::Taxonomy> ReplaceTaxonomy(
       grpc::ClientContext& context,
@@ -59,6 +61,7 @@ class PolicyTagManagerSerializationMetadata
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<PolicyTagManagerSerializationStub> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

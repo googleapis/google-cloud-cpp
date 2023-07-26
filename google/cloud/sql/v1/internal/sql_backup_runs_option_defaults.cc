@@ -47,8 +47,9 @@ Options SqlBackupRunsServiceDefaultOptions(Options options) {
   }
   if (!options.has<sql_v1::SqlBackupRunsServiceBackoffPolicyOption>()) {
     options.set<sql_v1::SqlBackupRunsServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options.has<

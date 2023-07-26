@@ -36,7 +36,7 @@ void LegacyAsyncRowReader::MakeRequest() {
   if (rows_limit_ != NO_ROWS_LIMIT) {
     request.set_rows_limit(rows_limit_ - rows_count_);
   }
-  parser_ = parser_factory_->Create();
+  parser_ = parser_factory_->Create(false);
 
   auto context = std::make_unique<grpc::ClientContext>();
   rpc_retry_policy_->Setup(*context);

@@ -83,6 +83,7 @@ class GoldenKitchenSinkClient {
   }
   ///@}
 
+  // clang-format off
   ///
   /// Generates an OAuth 2.0 access token for a service account.
   ///
@@ -93,14 +94,26 @@ class GoldenKitchenSinkClient {
   /// @param not_used_anymore  Deprecated field for testing method signatures.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::test::admin::database::v1::GenerateAccessTokenResponse,generator/integration_tests/test.proto#L1009}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.test.admin.database.v1.GenerateAccessTokenResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
   /// [google.test.admin.database.v1.GenerateAccessTokenRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L968}
   /// [google.test.admin.database.v1.GenerateAccessTokenResponse]: @googleapis_reference_link{generator/integration_tests/test.proto#L1009}
   ///
+  // clang-format on
   StatusOr<google::test::admin::database::v1::GenerateAccessTokenResponse>
   GenerateAccessToken(std::string const& name, std::string const& not_used_anymore, Options opts = {});
 
+  // clang-format off
   ///
   /// Generates an OAuth 2.0 access token for a service account.
   ///
@@ -114,6 +127,7 @@ class GoldenKitchenSinkClient {
   ///  chain must be granted the `roles/iam.serviceAccountTokenCreator` role
   ///  on the service account that is specified in the `name` field of the
   ///  request.
+  ///  @n
   ///  The delegates must have the following format:
   ///  `projects/-/serviceAccounts/{ACCOUNT_EMAIL_OR_UNIQUEID}`. The `-` wildcard
   ///  character is required; replacing it with a project ID is invalid.
@@ -128,28 +142,57 @@ class GoldenKitchenSinkClient {
   ///  hour.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::test::admin::database::v1::GenerateAccessTokenResponse,generator/integration_tests/test.proto#L1009}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.test.admin.database.v1.GenerateAccessTokenResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
   /// [google.test.admin.database.v1.GenerateAccessTokenRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L968}
   /// [google.test.admin.database.v1.GenerateAccessTokenResponse]: @googleapis_reference_link{generator/integration_tests/test.proto#L1009}
   ///
+  // clang-format on
   StatusOr<google::test::admin::database::v1::GenerateAccessTokenResponse>
   GenerateAccessToken(std::string const& name, std::vector<std::string> const& delegates, std::vector<std::string> const& scope, google::protobuf::Duration const& lifetime, Options opts = {});
 
+  // clang-format off
   ///
   /// Generates an OAuth 2.0 access token for a service account.
   ///
-  /// @param request @googleapis_link{google::test::admin::database::v1::GenerateAccessTokenRequest,generator/integration_tests/test.proto#L968}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.test.admin.database.v1.GenerateAccessTokenRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::test::admin::database::v1::GenerateAccessTokenResponse,generator/integration_tests/test.proto#L1009}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.test.admin.database.v1.GenerateAccessTokenResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
   /// [google.test.admin.database.v1.GenerateAccessTokenRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L968}
   /// [google.test.admin.database.v1.GenerateAccessTokenResponse]: @googleapis_reference_link{generator/integration_tests/test.proto#L1009}
   ///
+  // clang-format on
   StatusOr<google::test::admin::database::v1::GenerateAccessTokenResponse>
   GenerateAccessToken(google::test::admin::database::v1::GenerateAccessTokenRequest const& request, Options opts = {});
 
+  // clang-format off
   ///
   /// Generates an OpenID Connect ID token for a service account.
   ///
@@ -163,6 +206,7 @@ class GoldenKitchenSinkClient {
   ///  chain must be granted the `roles/iam.serviceAccountTokenCreator` role
   ///  on the service account that is specified in the `name` field of the
   ///  request.
+  ///  @n
   ///  The delegates must have the following format:
   ///  `projects/-/serviceAccounts/{ACCOUNT_EMAIL_OR_UNIQUEID}`. The `-` wildcard
   ///  character is required; replacing it with a project ID is invalid.
@@ -172,28 +216,57 @@ class GoldenKitchenSinkClient {
   ///  token will contain `email` and `email_verified` claims.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::test::admin::database::v1::GenerateIdTokenResponse,generator/integration_tests/test.proto#L1051}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.test.admin.database.v1.GenerateIdTokenResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
   /// [google.test.admin.database.v1.GenerateIdTokenRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L1018}
   /// [google.test.admin.database.v1.GenerateIdTokenResponse]: @googleapis_reference_link{generator/integration_tests/test.proto#L1051}
   ///
+  // clang-format on
   StatusOr<google::test::admin::database::v1::GenerateIdTokenResponse>
   GenerateIdToken(std::string const& name, std::vector<std::string> const& delegates, std::string const& audience, bool include_email, Options opts = {});
 
+  // clang-format off
   ///
   /// Generates an OpenID Connect ID token for a service account.
   ///
-  /// @param request @googleapis_link{google::test::admin::database::v1::GenerateIdTokenRequest,generator/integration_tests/test.proto#L1018}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.test.admin.database.v1.GenerateIdTokenRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::test::admin::database::v1::GenerateIdTokenResponse,generator/integration_tests/test.proto#L1051}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.test.admin.database.v1.GenerateIdTokenResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
   /// [google.test.admin.database.v1.GenerateIdTokenRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L1018}
   /// [google.test.admin.database.v1.GenerateIdTokenResponse]: @googleapis_reference_link{generator/integration_tests/test.proto#L1051}
   ///
+  // clang-format on
   StatusOr<google::test::admin::database::v1::GenerateIdTokenResponse>
   GenerateIdToken(google::test::admin::database::v1::GenerateIdTokenRequest const& request, Options opts = {});
 
+  // clang-format off
   ///
   /// Writes log entries to Logging. This API method is the
   /// only way to send log entries to Logging. This method
@@ -205,13 +278,17 @@ class GoldenKitchenSinkClient {
   ///
   /// @param log_name  Optional. A default log resource name that is assigned to all log entries
   ///  in `entries` that do not specify a value for `log_name`:
+  ///  @n
   ///      "projects/[PROJECT_ID]/logs/[LOG_ID]"
   ///      "organizations/[ORGANIZATION_ID]/logs/[LOG_ID]"
   ///      "billingAccounts/[BILLING_ACCOUNT_ID]/logs/[LOG_ID]"
   ///      "folders/[FOLDER_ID]/logs/[LOG_ID]"
+  ///  @n
   ///  `[LOG_ID]` must be URL-encoded. For example:
+  ///  @n
   ///      "projects/my-project-id/logs/syslog"
   ///      "organizations/1234567890/logs/cloudresourcemanager.googleapis.com%2Factivity"
+  ///  @n
   ///  The permission `logging.logEntries.create` is needed on each project,
   ///  organization, billing account, or folder that is receiving new log
   ///  entries, whether the resource is specified in `logName` or in an
@@ -222,14 +299,26 @@ class GoldenKitchenSinkClient {
   ///  See [LogEntry][google.logging.v2.LogEntry]. Test delimiter$
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::test::admin::database::v1::WriteLogEntriesResponse,generator/integration_tests/test.proto#L1088}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.test.admin.database.v1.WriteLogEntriesResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
   /// [google.test.admin.database.v1.WriteLogEntriesRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L1057}
   /// [google.test.admin.database.v1.WriteLogEntriesResponse]: @googleapis_reference_link{generator/integration_tests/test.proto#L1088}
   ///
+  // clang-format on
   StatusOr<google::test::admin::database::v1::WriteLogEntriesResponse>
   WriteLogEntries(std::string const& log_name, std::map<std::string, std::string> const& labels, Options opts = {});
 
+  // clang-format off
   ///
   /// Writes log entries to Logging. This API method is the
   /// only way to send log entries to Logging. This method
@@ -239,55 +328,117 @@ class GoldenKitchenSinkClient {
   /// different resources (projects, organizations, billing accounts or
   /// folders)
   ///
-  /// @param request @googleapis_link{google::test::admin::database::v1::WriteLogEntriesRequest,generator/integration_tests/test.proto#L1057}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.test.admin.database.v1.WriteLogEntriesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::test::admin::database::v1::WriteLogEntriesResponse,generator/integration_tests/test.proto#L1088}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.test.admin.database.v1.WriteLogEntriesResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
   /// [google.test.admin.database.v1.WriteLogEntriesRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L1057}
   /// [google.test.admin.database.v1.WriteLogEntriesResponse]: @googleapis_reference_link{generator/integration_tests/test.proto#L1088}
   ///
+  // clang-format on
   StatusOr<google::test::admin::database::v1::WriteLogEntriesResponse>
   WriteLogEntries(google::test::admin::database::v1::WriteLogEntriesRequest const& request, Options opts = {});
 
+  // clang-format off
   ///
   /// Lists the logs in projects, organizations, folders, or billing accounts.
   /// Only logs that have entries are listed.
   ///
   /// @param parent  Required. The resource name that owns the logs:
+  ///  @n
   ///      "projects/[PROJECT_ID]"
   ///      "organizations/[ORGANIZATION_ID]"
   ///      "billingAccounts/[BILLING_ACCOUNT_ID]"
   ///      "folders/[FOLDER_ID]"
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return std::string
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains a
+  ///     [`std::string`].
   ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
   /// [google.test.admin.database.v1.ListLogsRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L1091}
   ///
+  // clang-format on
   StreamRange<std::string>
   ListLogs(std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Lists the logs in projects, organizations, folders, or billing accounts.
   /// Only logs that have entries are listed.
   ///
-  /// @param request @googleapis_link{google::test::admin::database::v1::ListLogsRequest,generator/integration_tests/test.proto#L1091}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.test.admin.database.v1.ListLogsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return std::string
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains a
+  ///     [`std::string`].
   ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
   /// [google.test.admin.database.v1.ListLogsRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L1091}
   ///
+  // clang-format on
   StreamRange<std::string>
   ListLogs(google::test::admin::database::v1::ListLogsRequest request, Options opts = {});
 
+  // clang-format off
   ///
   /// Lists every [ServiceAccountKey][google.iam.admin.v1.ServiceAccountKey] for
   /// a service account.
   ///
   /// @param name  Required. The resource name of the service account in the following format:
   ///  `projects/{PROJECT_ID}/serviceAccounts/{ACCOUNT}`.
+  ///  @n
   ///  Using `-` as a wildcard for the `PROJECT_ID`, will infer the project from
   ///  the account. The `ACCOUNT` value can be the `email` address or the
   ///  `unique_id` of the service account.
@@ -296,118 +447,246 @@ class GoldenKitchenSinkClient {
   ///  is provided, all keys are returned.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::test::admin::database::v1::ListServiceAccountKeysResponse,generator/integration_tests/test.proto#L1354}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.test.admin.database.v1.ListServiceAccountKeysResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
   /// [google.test.admin.database.v1.ListServiceAccountKeysRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L1324}
   /// [google.test.admin.database.v1.ListServiceAccountKeysResponse]: @googleapis_reference_link{generator/integration_tests/test.proto#L1354}
   ///
+  // clang-format on
   StatusOr<google::test::admin::database::v1::ListServiceAccountKeysResponse>
   ListServiceAccountKeys(std::string const& name, std::vector<google::test::admin::database::v1::ListServiceAccountKeysRequest::KeyType> const& key_types, Options opts = {});
 
+  // clang-format off
   ///
   /// Lists every [ServiceAccountKey][google.iam.admin.v1.ServiceAccountKey] for
   /// a service account.
   ///
-  /// @param request @googleapis_link{google::test::admin::database::v1::ListServiceAccountKeysRequest,generator/integration_tests/test.proto#L1324}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.test.admin.database.v1.ListServiceAccountKeysRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::test::admin::database::v1::ListServiceAccountKeysResponse,generator/integration_tests/test.proto#L1354}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.test.admin.database.v1.ListServiceAccountKeysResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
   /// [google.test.admin.database.v1.ListServiceAccountKeysRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L1324}
   /// [google.test.admin.database.v1.ListServiceAccountKeysResponse]: @googleapis_reference_link{generator/integration_tests/test.proto#L1354}
   ///
+  // clang-format on
   StatusOr<google::test::admin::database::v1::ListServiceAccountKeysResponse>
   ListServiceAccountKeys(google::test::admin::database::v1::ListServiceAccountKeysRequest const& request, Options opts = {});
 
+  // clang-format off
   ///
   /// Does Nothing.
   ///
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
   ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
   /// [google.protobuf.Empty]: @googleapis_reference_link{google/protobuf/empty.proto#L51}
   ///
+  // clang-format on
   Status
   DoNothing(Options opts = {});
 
+  // clang-format off
   ///
   /// Does Nothing.
   ///
-  /// @param request @googleapis_link{google::protobuf::Empty,google/protobuf/empty.proto#L51}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.protobuf.Empty].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
   ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
   /// [google.protobuf.Empty]: @googleapis_reference_link{google/protobuf/empty.proto#L51}
   ///
+  // clang-format on
   Status
   DoNothing(google::protobuf::Empty const& request, Options opts = {});
 
+  // clang-format off
   ///
   /// A deprecated RPC for which we force API generation.
   ///
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
   ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
   /// [google.test.admin.database.v1.GenerateAccessTokenRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L968}
   ///
+  // clang-format on
   Status
   Deprecated2(Options opts = {});
 
+  // clang-format off
   ///
   /// A deprecated RPC for which we force API generation.
   ///
-  /// @param request @googleapis_link{google::test::admin::database::v1::GenerateAccessTokenRequest,generator/integration_tests/test.proto#L968}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.test.admin.database.v1.GenerateAccessTokenRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
   ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
   /// [google.test.admin.database.v1.GenerateAccessTokenRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L968}
   ///
+  // clang-format on
   Status
   Deprecated2(google::test::admin::database::v1::GenerateAccessTokenRequest const& request, Options opts = {});
 
+  // clang-format off
   ///
   /// Tests the generator for streaming read RPCs (aka server-side streaming)
   ///
   /// @param stream  A placeholder to test method signatures
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::test::admin::database::v1::Response,generator/integration_tests/test.proto#L963}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.test.admin.database.v1.Response])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
   /// [google.test.admin.database.v1.Request]: @googleapis_reference_link{generator/integration_tests/test.proto#L957}
   /// [google.test.admin.database.v1.Response]: @googleapis_reference_link{generator/integration_tests/test.proto#L963}
   ///
+  // clang-format on
   StreamRange<google::test::admin::database::v1::Response>
   StreamingRead(std::string const& stream, Options opts = {});
 
+  // clang-format off
   ///
   /// Tests the generator for streaming read RPCs (aka server-side streaming)
   ///
-  /// @param request @googleapis_link{google::test::admin::database::v1::Request,generator/integration_tests/test.proto#L957}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.test.admin.database.v1.Request].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::test::admin::database::v1::Response,generator/integration_tests/test.proto#L963}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.test.admin.database.v1.Response])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
   /// [google.test.admin.database.v1.Request]: @googleapis_reference_link{generator/integration_tests/test.proto#L957}
   /// [google.test.admin.database.v1.Response]: @googleapis_reference_link{generator/integration_tests/test.proto#L963}
   ///
+  // clang-format on
   StreamRange<google::test::admin::database::v1::Response>
   StreamingRead(google::test::admin::database::v1::Request const& request, Options opts = {});
 
+  // clang-format off
   ///
   /// Tests the generator for streaming read-write RPCs (aka bidir streaming)
   ///
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return A bidirectional streaming interface with request (write) type: @googleapis_link{google::test::admin::database::v1::Request,generator/integration_tests/test.proto#L957} and response (read) type: @googleapis_link{google::test::admin::database::v1::Response,generator/integration_tests/test.proto#L963}
+  /// @return An object representing the bidirectional streaming
+  ///     RPC. Applications can send multiple request messages and receive
+  ///     multiple response messages through this API. Bidirectional streaming
+  ///     RPCs can impose restrictions on the sequence of request and response
+  ///     messages. Please consult the service documentation for details.
+  ///     The request message type ([google.test.admin.database.v1.Request]) and response messages
+  ///     ([google.test.admin.database.v1.Response]) are mapped to C++ classes using the
+  ///     [Protobuf mapping rules].
   ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
   /// [google.test.admin.database.v1.Request]: @googleapis_reference_link{generator/integration_tests/test.proto#L957}
   /// [google.test.admin.database.v1.Response]: @googleapis_reference_link{generator/integration_tests/test.proto#L963}
   ///
+  // clang-format on
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::test::admin::database::v1::Request,
       google::test::admin::database::v1::Response>>
   AsyncStreamingReadWrite(Options opts = {});
 
+  // clang-format off
   ///
   /// An RPC to test that explicit routing headers are supported.
   ///
@@ -426,25 +705,56 @@ class GoldenKitchenSinkClient {
   ///    x-goog-request-params:
   ///    table_location=instances/instance_bar&routing_id=prof_qux
   ///
-  /// @param request @googleapis_link{google::test::admin::database::v1::ExplicitRoutingRequest,generator/integration_tests/test.proto#L1361}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.test.admin.database.v1.ExplicitRoutingRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
   ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
   /// [google.test.admin.database.v1.ExplicitRoutingRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L1361}
   ///
+  // clang-format on
   Status
   ExplicitRouting1(google::test::admin::database::v1::ExplicitRoutingRequest const& request, Options opts = {});
 
+  // clang-format off
   ///
   /// We use this RPC to verify the special case where a routing parameter key
   /// does not require a regex in order to match the correct value.
   ///
-  /// @param request @googleapis_link{google::test::admin::database::v1::ExplicitRoutingRequest,generator/integration_tests/test.proto#L1361}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.test.admin.database.v1.ExplicitRoutingRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
   ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
   /// [google.test.admin.database.v1.ExplicitRoutingRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L1361}
   ///
+  // clang-format on
   Status
   ExplicitRouting2(google::test::admin::database::v1::ExplicitRoutingRequest const& request, Options opts = {});
 

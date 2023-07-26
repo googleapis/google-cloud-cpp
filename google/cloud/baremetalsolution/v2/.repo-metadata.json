@@ -1,0 +1,13 @@
+{
+    "api_id": "baremetalsolution.googleapis.com",
+    "api_shortname": "baremetalsolution",
+    "client_documentation": "https://cloud.google.com/cpp/docs/reference/baremetalsolution/latest",
+    "distribution_name": "google-cloud-cpp",
+    "language": "cpp",
+    "library_type": "GAPIC_AUTO",
+    "name_pretty": "Bare Metal Solution API",
+    "product_documentation": "https://cloud.google.com/bare-metal/docs",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-cpp",
+    "requires_billing": true
+}

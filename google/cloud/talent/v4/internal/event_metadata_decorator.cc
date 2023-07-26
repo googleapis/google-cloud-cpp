@@ -18,6 +18,7 @@
 
 #include "google/cloud/talent/v4/internal/event_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/talent/v4/event_service.grpc.pb.h>
@@ -29,8 +30,10 @@ namespace talent_v4_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 EventServiceMetadata::EventServiceMetadata(
-    std::shared_ptr<EventServiceStub> child)
+    std::shared_ptr<EventServiceStub> child,
+    std::multimap<std::string, std::string> fixed_metadata)
     : child_(std::move(child)),
+      fixed_metadata_(std::move(fixed_metadata)),
       api_client_header_(
           google::cloud::internal::ApiClientHeader("generator")) {}
 
@@ -38,7 +41,7 @@ StatusOr<google::cloud::talent::v4::ClientEvent>
 EventServiceMetadata::CreateClientEvent(
     grpc::ClientContext& context,
     google::cloud::talent::v4::CreateClientEventRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->CreateClientEvent(context, request);
 }
 
@@ -49,6 +52,9 @@ void EventServiceMetadata::SetMetadata(grpc::ClientContext& context,
 }
 
 void EventServiceMetadata::SetMetadata(grpc::ClientContext& context) {
+  for (auto const& kv : fixed_metadata_) {
+    context.AddMetadata(kv.first, kv.second);
+  }
   context.AddMetadata("x-goog-api-client", api_client_header_);
   auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {

@@ -41,9 +41,15 @@ file_status status(std::string const& path) {
 }
 
 #if _WIN32
-using os_stat_type = struct ::_stat;
+using os_stat_type = struct ::_stat64;
+inline int os_stat(std::string const& path, os_stat_type& s) {
+  return ::_stat64(path.c_str(), &s);
+}
 #else
 using os_stat_type = struct stat;
+inline int os_stat(std::string const& path, os_stat_type& s) {
+  return stat(path.c_str(), &s);
+}
 #endif  // _WIN32
 
 perms ExtractPermissions(os_stat_type const& s) {
@@ -105,8 +111,8 @@ file_type ExtractFileType(os_stat_type const& s) {
 file_status status(std::string const& path, std::error_code& ec) noexcept {
   os_stat_type stat{};
   ec.clear();
+  int r = os_stat(path, stat);
 #if _WIN32
-  int r = ::_stat(path.c_str(), &stat);
   if (r == -1) {
     if (errno == ENOENT) {
       return file_status(file_type::not_found);
@@ -118,7 +124,6 @@ file_status status(std::string const& path, std::error_code& ec) noexcept {
     return {};
   }
 #else
-  int r = ::stat(path.c_str(), &stat);
   if (r != 0) {
     if (errno == EACCES) {
       return file_status(file_type::unknown);
@@ -151,8 +156,8 @@ std::uintmax_t file_size(std::string const& path,
                          std::error_code& ec) noexcept {
   os_stat_type stat{};
   ec.clear();
+  int r = os_stat(path, stat);
 #if _WIN32
-  int r = ::_stat(path.c_str(), &stat);
   if (r == -1) {
     ec.assign(errno, std::generic_category());
     return static_cast<std::uintmax_t>(-1);
@@ -161,7 +166,6 @@ std::uintmax_t file_size(std::string const& path,
     return static_cast<std::uintmax_t>(-1);
   }
 #else
-  int r = ::stat(path.c_str(), &stat);
   if (r != 0) {
     ec.assign(errno, std::generic_category());
     return static_cast<std::uintmax_t>(-1);

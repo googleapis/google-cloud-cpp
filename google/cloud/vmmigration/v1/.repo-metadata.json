@@ -1,0 +1,13 @@
+{
+    "api_id": "vmmigration.googleapis.com",
+    "api_shortname": "vmmigration",
+    "client_documentation": "https://cloud.google.com/cpp/docs/reference/vmmigration/latest",
+    "distribution_name": "google-cloud-cpp",
+    "language": "cpp",
+    "library_type": "GAPIC_AUTO",
+    "name_pretty": "VM Migration API",
+    "product_documentation": "https://cloud.google.com/migrate/compute-engine",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-cpp",
+    "requires_billing": true
+}

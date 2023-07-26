@@ -64,6 +64,24 @@ Idempotency EnvironmentsConnectionIdempotencyPolicy::DeleteEnvironment(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency EnvironmentsConnectionIdempotencyPolicy::ExecuteAirflowCommand(
+    google::cloud::orchestration::airflow::service::v1::
+        ExecuteAirflowCommandRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency EnvironmentsConnectionIdempotencyPolicy::StopAirflowCommand(
+    google::cloud::orchestration::airflow::service::v1::
+        StopAirflowCommandRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency EnvironmentsConnectionIdempotencyPolicy::PollAirflowCommand(
+    google::cloud::orchestration::airflow::service::v1::
+        PollAirflowCommandRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency EnvironmentsConnectionIdempotencyPolicy::SaveSnapshot(
     google::cloud::orchestration::airflow::service::v1::
         SaveSnapshotRequest const&) {
@@ -74,6 +92,18 @@ Idempotency EnvironmentsConnectionIdempotencyPolicy::LoadSnapshot(
     google::cloud::orchestration::airflow::service::v1::
         LoadSnapshotRequest const&) {
   return Idempotency::kNonIdempotent;
+}
+
+Idempotency EnvironmentsConnectionIdempotencyPolicy::DatabaseFailover(
+    google::cloud::orchestration::airflow::service::v1::
+        DatabaseFailoverRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency EnvironmentsConnectionIdempotencyPolicy::FetchDatabaseProperties(
+    google::cloud::orchestration::airflow::service::v1::
+        FetchDatabasePropertiesRequest const&) {
+  return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<EnvironmentsConnectionIdempotencyPolicy>

@@ -170,7 +170,7 @@ google_cloud_cpp_install_headers("google_cloud_cpp_notebooks_mocks"
 google_cloud_cpp_add_pkgconfig(
     notebooks "The Notebooks API C++ Client Library"
     "Provides C++ APIs to use the Notebooks API." "google_cloud_cpp_grpc_utils"
-    " google_cloud_cpp_common" " google_cloud_cpp_notebooks_protos")
+    "google_cloud_cpp_common" "google_cloud_cpp_notebooks_protos")
 
 # Create and install the CMake configuration files.
 include(CMakePackageConfigHelpers)

@@ -10,6 +10,14 @@ environment variables are convenient when troubleshooting problems.
 
 <!-- inject-endpoint-env-vars-start -->
 
+- `GOOGLE_CLOUD_CPP_EXECUTIONS_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "run.googleapis.com")
+  used by `MakeExecutionsConnection()`.
+
+- `GOOGLE_CLOUD_CPP_JOBS_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "run.googleapis.com")
+  used by `MakeJobsConnection()`.
+
 - `GOOGLE_CLOUD_CPP_REVISIONS_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "run.googleapis.com")
   used by `MakeRevisionsConnection()`.
@@ -17,6 +25,10 @@ environment variables are convenient when troubleshooting problems.
 - `GOOGLE_CLOUD_CPP_RUN_SERVICES_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "run.googleapis.com")
   used by `MakeServicesConnection()`.
+
+- `GOOGLE_CLOUD_CPP_TASKS_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "run.googleapis.com")
+  used by `MakeTasksConnection()`.
 
 <!-- inject-endpoint-env-vars-end -->
 
@@ -36,7 +48,7 @@ the program's console.
 including whether messages will be output on multiple lines, or whether
 string/bytes fields will be truncated.
 
-@see google::cloud::TracingOptionsOption
+@see google::cloud::GrpcTracingOptionsOption
 
 `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes`: turns on logging in the library, basically
 the library always "logs" but the logging infrastructure has no backend to

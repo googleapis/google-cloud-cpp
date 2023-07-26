@@ -50,8 +50,9 @@ Options BatchControllerDefaultOptions(std::string const& location,
   }
   if (!options.has<dataproc_v1::BatchControllerBackoffPolicyOption>()) {
     options.set<dataproc_v1::BatchControllerBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options.has<dataproc_v1::BatchControllerPollingPolicyOption>()) {
@@ -61,8 +62,9 @@ Options BatchControllerDefaultOptions(std::string const& location,
             dataproc_v1::BatchControllerBackoffPolicyOption::Type>(
             options.get<dataproc_v1::BatchControllerRetryPolicyOption>()
                 ->clone(),
-            options.get<dataproc_v1::BatchControllerBackoffPolicyOption>()
-                ->clone())
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
             .clone());
   }
   if (!options.has<

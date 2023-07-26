@@ -35,7 +35,6 @@
 #include <vector>
 
 namespace {
-using ::google::cloud::storage_experimental::DefaultGrpcClient;
 using ::google::cloud::testing_util::FormatSize;
 using ::google::cloud::testing_util::Timer;
 namespace gcs = ::google::cloud::storage;
@@ -123,8 +122,9 @@ class Iteration {
 gcs::Client MakeClient(AggregateDownloadThroughputOptions const& options) {
   auto opts = options.client_options;
 #if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
+  namespace gcs_ex = ::google::cloud::storage_experimental;
   if (options.api == "GRPC") {
-    return DefaultGrpcClient(
+    return gcs_ex::DefaultGrpcClient(
         std::move(opts).set<gcs_ex::GrpcPluginOption>("media"));
   }
 #endif  // GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC

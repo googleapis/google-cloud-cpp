@@ -18,6 +18,7 @@
 
 #include "google/cloud/appengine/v1/internal/domain_mappings_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/appengine/v1/appengine.grpc.pb.h>
@@ -29,8 +30,10 @@ namespace appengine_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 DomainMappingsMetadata::DomainMappingsMetadata(
-    std::shared_ptr<DomainMappingsStub> child)
+    std::shared_ptr<DomainMappingsStub> child,
+    std::multimap<std::string, std::string> fixed_metadata)
     : child_(std::move(child)),
+      fixed_metadata_(std::move(fixed_metadata)),
       api_client_header_(
           google::cloud::internal::ApiClientHeader("generator")) {}
 
@@ -38,7 +41,7 @@ StatusOr<google::appengine::v1::ListDomainMappingsResponse>
 DomainMappingsMetadata::ListDomainMappings(
     grpc::ClientContext& context,
     google::appengine::v1::ListDomainMappingsRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListDomainMappings(context, request);
 }
 
@@ -46,7 +49,7 @@ StatusOr<google::appengine::v1::DomainMapping>
 DomainMappingsMetadata::GetDomainMapping(
     grpc::ClientContext& context,
     google::appengine::v1::GetDomainMappingRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetDomainMapping(context, request);
 }
 
@@ -55,7 +58,7 @@ DomainMappingsMetadata::AsyncCreateDomainMapping(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::appengine::v1::CreateDomainMappingRequest const& request) {
-  SetMetadata(*context, "parent=" + request.parent());
+  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
   return child_->AsyncCreateDomainMapping(cq, std::move(context), request);
 }
 
@@ -64,7 +67,7 @@ DomainMappingsMetadata::AsyncUpdateDomainMapping(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::appengine::v1::UpdateDomainMappingRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncUpdateDomainMapping(cq, std::move(context), request);
 }
 
@@ -73,7 +76,7 @@ DomainMappingsMetadata::AsyncDeleteDomainMapping(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::appengine::v1::DeleteDomainMappingRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncDeleteDomainMapping(cq, std::move(context), request);
 }
 
@@ -101,6 +104,9 @@ void DomainMappingsMetadata::SetMetadata(grpc::ClientContext& context,
 }
 
 void DomainMappingsMetadata::SetMetadata(grpc::ClientContext& context) {
+  for (auto const& kv : fixed_metadata_) {
+    context.AddMetadata(kv.first, kv.second);
+  }
   context.AddMetadata("x-goog-api-client", api_client_header_);
   auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {

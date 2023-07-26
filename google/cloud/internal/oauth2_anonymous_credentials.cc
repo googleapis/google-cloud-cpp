@@ -19,9 +19,9 @@ namespace cloud {
 namespace oauth2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-StatusOr<internal::AccessToken> AnonymousCredentials::GetToken(
+StatusOr<AccessToken> AnonymousCredentials::GetToken(
     std::chrono::system_clock::time_point tp) {
-  return internal::AccessToken{std::string{}, tp};
+  return AccessToken{std::string{}, tp};
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -18,6 +18,7 @@
 
 #include "google/cloud/run/v2/internal/revisions_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/routing_matcher.h"
@@ -30,8 +31,11 @@ namespace cloud {
 namespace run_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-RevisionsMetadata::RevisionsMetadata(std::shared_ptr<RevisionsStub> child)
+RevisionsMetadata::RevisionsMetadata(
+    std::shared_ptr<RevisionsStub> child,
+    std::multimap<std::string, std::string> fixed_metadata)
     : child_(std::move(child)),
+      fixed_metadata_(std::move(fixed_metadata)),
       api_client_header_(
           google::cloud::internal::ApiClientHeader("generator")) {}
 
@@ -143,6 +147,9 @@ void RevisionsMetadata::SetMetadata(grpc::ClientContext& context,
 }
 
 void RevisionsMetadata::SetMetadata(grpc::ClientContext& context) {
+  for (auto const& kv : fixed_metadata_) {
+    context.AddMetadata(kv.first, kv.second);
+  }
   context.AddMetadata("x-goog-api-client", api_client_header_);
   auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {

@@ -178,6 +178,12 @@ class ClusterManagerAuth : public ClusterManagerStub {
       google::container::v1::ListUsableSubnetworksRequest const& request)
       override;
 
+  StatusOr<google::container::v1::CheckAutopilotCompatibilityResponse>
+  CheckAutopilotCompatibility(
+      grpc::ClientContext& context,
+      google::container::v1::CheckAutopilotCompatibilityRequest const& request)
+      override;
+
  private:
   std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth_;
   std::shared_ptr<ClusterManagerStub> child_;

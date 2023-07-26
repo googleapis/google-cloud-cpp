@@ -44,8 +44,9 @@ Options IDSDefaultOptions(Options options) {
   }
   if (!options.has<ids_v1::IDSBackoffPolicyOption>()) {
     options.set<ids_v1::IDSBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options.has<ids_v1::IDSPollingPolicyOption>()) {
@@ -53,7 +54,9 @@ Options IDSDefaultOptions(Options options) {
         GenericPollingPolicy<ids_v1::IDSRetryPolicyOption::Type,
                              ids_v1::IDSBackoffPolicyOption::Type>(
             options.get<ids_v1::IDSRetryPolicyOption>()->clone(),
-            options.get<ids_v1::IDSBackoffPolicyOption>()->clone())
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
             .clone());
   }
   if (!options.has<ids_v1::IDSConnectionIdempotencyPolicyOption>()) {

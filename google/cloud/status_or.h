@@ -148,15 +148,21 @@ class StatusOr final {
 
   /**
    * Assign a `T` (or anything convertible to `T`) into the `StatusOr`.
+   *
+   * This function does not participate in overload resolution if `U` is equal
+   * to `StatusOr<T>` (or to a cv-ref-qualified `StatusOr<T>`).
+   *
+   * @return a reference to this object.
+   * @tparam U a type convertible to @p T.
    */
-  // Disable this assignment if U==StatusOr<T>. Well, really if U is a
-  // cv-qualified version of StatusOr<T>, so we need to apply std::decay<> to
-  // it first.
-  template <typename U = T>
-  typename std::enable_if<  // NOLINT(misc-unconventional-assign-operator)
-      !std::is_same<StatusOr, typename std::decay<U>::type>::value,
-      StatusOr>::type&
-  operator=(U&& rhs) {
+  template <typename U = T,
+            /// @cond implementation_details
+            typename std::enable_if<
+                !std::is_same<StatusOr, typename std::decay<U>::type>::value,
+                int>::type = 0
+            /// @endcond
+            >
+  StatusOr& operator=(U&& rhs) {
     status_ = Status();
     value_ = std::forward<U>(rhs);
     return *this;
@@ -170,11 +176,21 @@ class StatusOr final {
    *
    * @param rhs the value used to initialize the object.
    *
-   * @throws only if `T`'s move constructor throws.
+   * @throws ... If `T`'s move constructor throws.
    */
   // NOLINTNEXTLINE(google-explicit-constructor)
   StatusOr(T&& rhs) : value_(std::move(rhs)) {}
 
+  /**
+   * Creates a new `StatusOr<T>` holding the value @p rhs.
+   *
+   * @par Post-conditions
+   * `ok() == true` and `value() == rhs`.
+   *
+   * @param rhs the value used to initialize the object.
+   *
+   * @throws ... If `T` copy constructor throws.
+   */
   // NOLINTNEXTLINE(google-explicit-constructor)
   StatusOr(T const& rhs) : value_(rhs) {}
 
@@ -186,13 +202,18 @@ class StatusOr final {
 
   ///@{
   /**
-   * @name Deference operators.
+   * @name Dereference operators.
+   *
+   * @par Pre-conditions
+   * @parblock
+   * `ok() == true`
    *
    * @warning Using these operators when `ok() == false` results in undefined
    *     behavior.
+   * @endparblock
    *
-   * @return All these return a (properly ref and const-qualified) reference to
-   *     the underlying value.
+   * @return A properly ref and const-qualified reference to the underlying
+   *     value.
    */
   T& operator*() & { return *value_; }
 
@@ -207,11 +228,15 @@ class StatusOr final {
   /**
    * @name Member access operators.
    *
+   * @par Pre-conditions
+   * @parblock
+   * `ok() == true`
+   *
    * @warning Using these operators when `ok() == false` results in undefined
    *     behavior.
+   * @endparblock
    *
-   * @return All these return a (properly ref and const-qualified) pointer to
-   *     the underlying value.
+   * @return A properly ref and const-qualified pointer to the underlying value.
    */
   T* operator->() & { return &*value_; }
 
@@ -225,7 +250,7 @@ class StatusOr final {
    * @return All these member functions return a (properly ref and
    *     const-qualified) reference to the underlying value.
    *
-   * @throws `RuntimeStatusError` with the contents of `status()` if the object
+   * @throws RuntimeStatusError with the contents of `status()` if the object
    *   does not contain a value, i.e., if `ok() == false`.
    */
   T& value() & {

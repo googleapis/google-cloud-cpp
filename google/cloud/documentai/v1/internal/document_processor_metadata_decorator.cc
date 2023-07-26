@@ -18,6 +18,7 @@
 
 #include "google/cloud/documentai/v1/internal/document_processor_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/documentai/v1/document_processor_service.grpc.pb.h>
@@ -29,8 +30,10 @@ namespace documentai_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 DocumentProcessorServiceMetadata::DocumentProcessorServiceMetadata(
-    std::shared_ptr<DocumentProcessorServiceStub> child)
+    std::shared_ptr<DocumentProcessorServiceStub> child,
+    std::multimap<std::string, std::string> fixed_metadata)
     : child_(std::move(child)),
+      fixed_metadata_(std::move(fixed_metadata)),
       api_client_header_(
           google::cloud::internal::ApiClientHeader("generator")) {}
 
@@ -38,7 +41,7 @@ StatusOr<google::cloud::documentai::v1::ProcessResponse>
 DocumentProcessorServiceMetadata::ProcessDocument(
     grpc::ClientContext& context,
     google::cloud::documentai::v1::ProcessRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->ProcessDocument(context, request);
 }
 
@@ -47,7 +50,7 @@ DocumentProcessorServiceMetadata::AsyncBatchProcessDocuments(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::documentai::v1::BatchProcessRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncBatchProcessDocuments(cq, std::move(context), request);
 }
 
@@ -55,7 +58,7 @@ StatusOr<google::cloud::documentai::v1::FetchProcessorTypesResponse>
 DocumentProcessorServiceMetadata::FetchProcessorTypes(
     grpc::ClientContext& context,
     google::cloud::documentai::v1::FetchProcessorTypesRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->FetchProcessorTypes(context, request);
 }
 
@@ -63,7 +66,7 @@ StatusOr<google::cloud::documentai::v1::ListProcessorTypesResponse>
 DocumentProcessorServiceMetadata::ListProcessorTypes(
     grpc::ClientContext& context,
     google::cloud::documentai::v1::ListProcessorTypesRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListProcessorTypes(context, request);
 }
 
@@ -71,7 +74,7 @@ StatusOr<google::cloud::documentai::v1::ProcessorType>
 DocumentProcessorServiceMetadata::GetProcessorType(
     grpc::ClientContext& context,
     google::cloud::documentai::v1::GetProcessorTypeRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetProcessorType(context, request);
 }
 
@@ -79,7 +82,7 @@ StatusOr<google::cloud::documentai::v1::ListProcessorsResponse>
 DocumentProcessorServiceMetadata::ListProcessors(
     grpc::ClientContext& context,
     google::cloud::documentai::v1::ListProcessorsRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListProcessors(context, request);
 }
 
@@ -87,7 +90,7 @@ StatusOr<google::cloud::documentai::v1::Processor>
 DocumentProcessorServiceMetadata::GetProcessor(
     grpc::ClientContext& context,
     google::cloud::documentai::v1::GetProcessorRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetProcessor(context, request);
 }
 
@@ -97,7 +100,7 @@ DocumentProcessorServiceMetadata::AsyncTrainProcessorVersion(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::documentai::v1::TrainProcessorVersionRequest const&
         request) {
-  SetMetadata(*context, "parent=" + request.parent());
+  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
   return child_->AsyncTrainProcessorVersion(cq, std::move(context), request);
 }
 
@@ -105,7 +108,7 @@ StatusOr<google::cloud::documentai::v1::ProcessorVersion>
 DocumentProcessorServiceMetadata::GetProcessorVersion(
     grpc::ClientContext& context,
     google::cloud::documentai::v1::GetProcessorVersionRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetProcessorVersion(context, request);
 }
 
@@ -114,7 +117,7 @@ DocumentProcessorServiceMetadata::ListProcessorVersions(
     grpc::ClientContext& context,
     google::cloud::documentai::v1::ListProcessorVersionsRequest const&
         request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListProcessorVersions(context, request);
 }
 
@@ -124,7 +127,7 @@ DocumentProcessorServiceMetadata::AsyncDeleteProcessorVersion(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::documentai::v1::DeleteProcessorVersionRequest const&
         request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncDeleteProcessorVersion(cq, std::move(context), request);
 }
 
@@ -134,7 +137,7 @@ DocumentProcessorServiceMetadata::AsyncDeployProcessorVersion(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::documentai::v1::DeployProcessorVersionRequest const&
         request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncDeployProcessorVersion(cq, std::move(context), request);
 }
 
@@ -144,7 +147,7 @@ DocumentProcessorServiceMetadata::AsyncUndeployProcessorVersion(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::documentai::v1::UndeployProcessorVersionRequest const&
         request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncUndeployProcessorVersion(cq, std::move(context), request);
 }
 
@@ -152,7 +155,7 @@ StatusOr<google::cloud::documentai::v1::Processor>
 DocumentProcessorServiceMetadata::CreateProcessor(
     grpc::ClientContext& context,
     google::cloud::documentai::v1::CreateProcessorRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->CreateProcessor(context, request);
 }
 
@@ -161,7 +164,7 @@ DocumentProcessorServiceMetadata::AsyncDeleteProcessor(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::documentai::v1::DeleteProcessorRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncDeleteProcessor(cq, std::move(context), request);
 }
 
@@ -170,7 +173,7 @@ DocumentProcessorServiceMetadata::AsyncEnableProcessor(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::documentai::v1::EnableProcessorRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncEnableProcessor(cq, std::move(context), request);
 }
 
@@ -179,7 +182,7 @@ DocumentProcessorServiceMetadata::AsyncDisableProcessor(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::documentai::v1::DisableProcessorRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncDisableProcessor(cq, std::move(context), request);
 }
 
@@ -189,7 +192,7 @@ DocumentProcessorServiceMetadata::AsyncSetDefaultProcessorVersion(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::documentai::v1::SetDefaultProcessorVersionRequest const&
         request) {
-  SetMetadata(*context, "processor=" + request.processor());
+  SetMetadata(*context, absl::StrCat("processor=", request.processor()));
   return child_->AsyncSetDefaultProcessorVersion(cq, std::move(context),
                                                  request);
 }
@@ -199,7 +202,8 @@ DocumentProcessorServiceMetadata::AsyncReviewDocument(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::documentai::v1::ReviewDocumentRequest const& request) {
-  SetMetadata(*context, "human_review_config=" + request.human_review_config());
+  SetMetadata(*context, absl::StrCat("human_review_config=",
+                                     request.human_review_config()));
   return child_->AsyncReviewDocument(cq, std::move(context), request);
 }
 
@@ -209,7 +213,8 @@ DocumentProcessorServiceMetadata::AsyncEvaluateProcessorVersion(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::documentai::v1::EvaluateProcessorVersionRequest const&
         request) {
-  SetMetadata(*context, "processor_version=" + request.processor_version());
+  SetMetadata(*context,
+              absl::StrCat("processor_version=", request.processor_version()));
   return child_->AsyncEvaluateProcessorVersion(cq, std::move(context), request);
 }
 
@@ -217,7 +222,7 @@ StatusOr<google::cloud::documentai::v1::Evaluation>
 DocumentProcessorServiceMetadata::GetEvaluation(
     grpc::ClientContext& context,
     google::cloud::documentai::v1::GetEvaluationRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetEvaluation(context, request);
 }
 
@@ -225,7 +230,7 @@ StatusOr<google::cloud::documentai::v1::ListEvaluationsResponse>
 DocumentProcessorServiceMetadata::ListEvaluations(
     grpc::ClientContext& context,
     google::cloud::documentai::v1::ListEvaluationsRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListEvaluations(context, request);
 }
 
@@ -254,6 +259,9 @@ void DocumentProcessorServiceMetadata::SetMetadata(
 
 void DocumentProcessorServiceMetadata::SetMetadata(
     grpc::ClientContext& context) {
+  for (auto const& kv : fixed_metadata_) {
+    context.AddMetadata(kv.first, kv.second);
+  }
   context.AddMetadata("x-goog-api-client", api_client_header_);
   auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {

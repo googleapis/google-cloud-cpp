@@ -18,6 +18,7 @@
 
 #include "google/cloud/dialogflow_es/internal/answer_records_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/dialogflow/v2/answer_record.grpc.pb.h>
@@ -29,8 +30,10 @@ namespace dialogflow_es_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 AnswerRecordsMetadata::AnswerRecordsMetadata(
-    std::shared_ptr<AnswerRecordsStub> child)
+    std::shared_ptr<AnswerRecordsStub> child,
+    std::multimap<std::string, std::string> fixed_metadata)
     : child_(std::move(child)),
+      fixed_metadata_(std::move(fixed_metadata)),
       api_client_header_(
           google::cloud::internal::ApiClientHeader("generator")) {}
 
@@ -38,7 +41,7 @@ StatusOr<google::cloud::dialogflow::v2::ListAnswerRecordsResponse>
 AnswerRecordsMetadata::ListAnswerRecords(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::ListAnswerRecordsRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListAnswerRecords(context, request);
 }
 
@@ -46,7 +49,8 @@ StatusOr<google::cloud::dialogflow::v2::AnswerRecord>
 AnswerRecordsMetadata::UpdateAnswerRecord(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::UpdateAnswerRecordRequest const& request) {
-  SetMetadata(context, "answer_record.name=" + request.answer_record().name());
+  SetMetadata(context, absl::StrCat("answer_record.name=",
+                                    request.answer_record().name()));
   return child_->UpdateAnswerRecord(context, request);
 }
 
@@ -57,6 +61,9 @@ void AnswerRecordsMetadata::SetMetadata(grpc::ClientContext& context,
 }
 
 void AnswerRecordsMetadata::SetMetadata(grpc::ClientContext& context) {
+  for (auto const& kv : fixed_metadata_) {
+    context.AddMetadata(kv.first, kv.second);
+  }
   context.AddMetadata("x-goog-api-client", api_client_header_);
   auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {

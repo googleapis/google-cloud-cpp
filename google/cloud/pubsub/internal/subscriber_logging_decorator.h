@@ -36,7 +36,7 @@ class SubscriberLogging : public SubscriberStub {
   ~SubscriberLogging() override = default;
   SubscriberLogging(std::shared_ptr<SubscriberStub> child,
                     TracingOptions tracing_options,
-                    std::set<std::string> components);
+                    std::set<std::string> const& components);
 
   StatusOr<google::pubsub::v1::Subscription> CreateSubscription(
       grpc::ClientContext& context,
@@ -109,7 +109,7 @@ class SubscriberLogging : public SubscriberStub {
  private:
   std::shared_ptr<SubscriberStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // SubscriberLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -23,6 +23,7 @@ top-level [README](/README.md#building-and-installing).
 ```cc
 #include "google/cloud/storagetransfer/v1/storage_transfer_client.h"
 #include <iostream>
+#include <string>
 
 int main(int argc, char* argv[]) try {
   if (argc != 2) {
@@ -35,7 +36,7 @@ int main(int argc, char* argv[]) try {
       storagetransfer::MakeStorageTransferServiceConnection());
 
   ::google::storagetransfer::v1::ListTransferJobsRequest request;
-  request.set_filter("{\"projectId\": \"" + std::string{argv[1]} + "\"}");
+  request.set_filter(R"""({"projectId": ")""" + std::string{argv[1]} + "\"}");
   for (auto r : client.ListTransferJobs(request)) {
     if (!r) throw std::move(r).status();
     std::cout << r->DebugString() << "\n";
@@ -58,5 +59,5 @@ int main(int argc, char* argv[]) try {
 - Detailed header comments in our [public `.h`][source-link] files
 
 [cloud-service-docs]: https://cloud.google.com/storage-transfer
-[doxygen-link]: https://googleapis.dev/cpp/google-cloud-storagetransfer/latest/
+[doxygen-link]: https://cloud.google.com/cpp/docs/reference/storagetransfer/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/storagetransfer

@@ -18,6 +18,7 @@ set -euo pipefail
 
 source "$(dirname "$0")/../../lib/init.sh"
 source module ci/cloudbuild/builds/lib/cmake.sh
+source module ci/lib/io.sh
 
 export CC=gcc
 export CXX=g++
@@ -30,19 +31,23 @@ readonly ENABLED_FEATURES="__ga_libraries__"
 # uninitialized values with GCC, so we disable that warning with
 # -Wno-maybe-uninitialized. See also:
 # https://github.com/googleapis/google-cloud-cpp/issues/6313
-cmake "${cmake_args[@]}" \
+io::run cmake "${cmake_args[@]}" \
   -DCMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}" \
   -DCMAKE_INSTALL_MESSAGE=NEVER \
   -DBUILD_SHARED_LIBS=ON \
   -DCMAKE_BUILD_TYPE=Debug \
   -DGOOGLE_CLOUD_CPP_ENABLE="${ENABLED_FEATURES}" \
   -DCMAKE_CXX_FLAGS="-Og -Wno-maybe-uninitialized"
-cmake --build cmake-out
-cmake --install cmake-out >/dev/null
+io::run cmake --build cmake-out
+io::run cmake --install cmake-out >/dev/null
 
-mapfile -t ga_list < <(cmake -DCMAKE_MODULE_PATH="${PWD}/cmake" -P cmake/print-ga-libraries.cmake 2>&1)
-# These libraries are not "features", but they are part of the public API
-ga_list+=("common" "grpc_utils")
+if [ "${GOOGLE_CLOUD_CPP_CHECK_API:-}" ]; then
+  IFS=',' read -ra library_list <<<"${GOOGLE_CLOUD_CPP_CHECK_API}"
+else
+  mapfile -t library_list < <(cmake -DCMAKE_MODULE_PATH="${PWD}/cmake" -P cmake/print-ga-libraries.cmake 2>&1)
+  # These libraries are not "features", but they are part of the public API
+  library_list+=("common" "grpc_utils" "oauth2")
+fi
 
 # Uses `abi-dumper` to dump the ABI for the given library, which should
 # be installed at the given @p prefix, and `abi-compliance-checker` to
@@ -59,7 +64,7 @@ function check_abi() {
   local shortlib="${library#google_cloud_cpp_}"
   local public_headers="${prefix}/include/google/cloud/${shortlib}"
   # These two are special
-  if [[ "${shortlib}" == "common" || "${shortlib}" == "grpc_utils" ]]; then
+  if [[ "${shortlib}" == "common" || "${shortlib}" == "grpc_utils" || "${shortlib}" == "oauth2" ]]; then
     public_headers="${prefix}/include/google/cloud"
   fi
 
@@ -130,7 +135,7 @@ function check_abi() {
 }
 export -f check_abi # enables this function to be called from a subshell
 
-mapfile -t libraries < <(printf "google_cloud_cpp_%s\n" "${ga_list[@]}")
+mapfile -t libraries < <(printf "google_cloud_cpp_%s\n" "${library_list[@]}")
 
 # Run the check_abi function for each library in parallel since it is slow.
 echo "${libraries[@]}" | xargs -P "$(nproc)" -n 1 \

@@ -18,7 +18,6 @@
 #include "google/cloud/storage/testing/storage_integration_test.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/getenv.h"
-#include "google/cloud/testing_util/contains_once.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <chrono>
@@ -31,7 +30,6 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::storage::testing::AclEntityNames;
-using ::google::cloud::testing_util::ContainsOnce;
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::Contains;
@@ -103,7 +101,7 @@ TEST_F(BucketIntegrationTest, BasicCRUD) {
       bucket_name, project_id_, BucketMetadata(), Projection::Full());
   ASSERT_STATUS_OK(insert_meta);
   EXPECT_EQ(bucket_name, insert_meta->name());
-  EXPECT_THAT(list_bucket_names(), ContainsOnce(bucket_name));
+  EXPECT_THAT(list_bucket_names(), Contains(bucket_name).Times(1));
 
   StatusOr<BucketMetadata> get_meta =
       client->GetBucketMetadata(bucket_name, Projection::Full());
@@ -381,7 +379,7 @@ TEST_F(BucketIntegrationTest, FullPatch) {
   // acl() - cannot compare for equality because many fields are updated with
   // unknown values (entity_id, etag, etc)
   EXPECT_THAT(AclEntityNames(patched->acl()),
-              ContainsOnce("allAuthenticatedUsers"));
+              Contains("allAuthenticatedUsers").Times(1));
 
   // billing()
   EXPECT_EQ(desired_state.billing_as_optional(),
@@ -393,7 +391,7 @@ TEST_F(BucketIntegrationTest, FullPatch) {
   // default_acl() - cannot compare for equality because many fields are updated
   // with unknown values (entity_id, etag, etc)
   EXPECT_THAT(AclEntityNames(patched->default_acl()),
-              ContainsOnce("allAuthenticatedUsers"));
+              Contains("allAuthenticatedUsers").Times(1));
 
   // encryption() - TODO(#1003) - verify the key was correctly used.
 
@@ -662,7 +660,8 @@ TEST_F(BucketIntegrationTest, AccessControlCRUD) {
   // Search using the entity name returned by the request, because we use
   // 'project-editors-<project_id>' this different than the original entity
   // name, the server "translates" the project id to a project number.
-  EXPECT_THAT(AclEntityNames(*current_acl), ContainsOnce(result->entity()));
+  EXPECT_THAT(AclEntityNames(*current_acl),
+              Contains(result->entity()).Times(1));
 
   StatusOr<BucketAccessControl> get_result =
       client->GetBucketAcl(bucket_name, entity_name);
@@ -734,7 +733,7 @@ TEST_F(BucketIntegrationTest, DefaultObjectAccessControlCRUD) {
   // 'project-editors-<project_id_>' this different than the original entity
   // name, the server "translates" the project id to a project number.
   EXPECT_THAT(AclEntityNames(meta->default_acl()),
-              ContainsOnce(result->entity()));
+              Contains(result->entity()).Times(1));
 
   auto get_result = client->GetDefaultObjectAcl(bucket_name, entity_name);
   ASSERT_STATUS_OK(get_result);
@@ -800,7 +799,7 @@ TEST_F(BucketIntegrationTest, NotificationsCRUD) {
 
   EXPECT_EQ(payload_format::JsonApiV1(), create->payload_format());
   EXPECT_THAT(create->topic(), HasSubstr(topic_name_));
-  EXPECT_THAT(notification_ids(), ContainsOnce(create->id()))
+  EXPECT_THAT(notification_ids(), Contains(create->id()).Times(1))
       << "create=" << *create;
 
   auto get = client->GetNotification(bucket_name, create->id());

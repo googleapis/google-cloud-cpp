@@ -152,6 +152,24 @@ VmwareEngineTracingConnection::ListSubnets(
       google::cloud::vmwareengine::v1::Subnet>(std::move(span), std::move(sr));
 }
 
+StatusOr<google::cloud::vmwareengine::v1::Subnet>
+VmwareEngineTracingConnection::GetSubnet(
+    google::cloud::vmwareengine::v1::GetSubnetRequest const& request) {
+  auto span =
+      internal::MakeSpan("vmwareengine_v1::VmwareEngineConnection::GetSubnet");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetSubnet(request));
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::Subnet>>
+VmwareEngineTracingConnection::UpdateSubnet(
+    google::cloud::vmwareengine::v1::UpdateSubnetRequest const& request) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::UpdateSubnet");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->UpdateSubnet(request));
+}
+
 StreamRange<google::cloud::vmwareengine::v1::NodeType>
 VmwareEngineTracingConnection::ListNodeTypes(
     google::cloud::vmwareengine::v1::ListNodeTypesRequest request) {
@@ -354,6 +372,75 @@ VmwareEngineTracingConnection::ListVmwareEngineNetworks(
   return internal::MakeTracedStreamRange<
       google::cloud::vmwareengine::v1::VmwareEngineNetwork>(std::move(span),
                                                             std::move(sr));
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::PrivateConnection>>
+VmwareEngineTracingConnection::CreatePrivateConnection(
+    google::cloud::vmwareengine::v1::CreatePrivateConnectionRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::CreatePrivateConnection");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreatePrivateConnection(request));
+}
+
+StatusOr<google::cloud::vmwareengine::v1::PrivateConnection>
+VmwareEngineTracingConnection::GetPrivateConnection(
+    google::cloud::vmwareengine::v1::GetPrivateConnectionRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::GetPrivateConnection");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetPrivateConnection(request));
+}
+
+StreamRange<google::cloud::vmwareengine::v1::PrivateConnection>
+VmwareEngineTracingConnection::ListPrivateConnections(
+    google::cloud::vmwareengine::v1::ListPrivateConnectionsRequest request) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::ListPrivateConnections");
+  auto scope = opentelemetry::trace::Scope(span);
+  auto sr = child_->ListPrivateConnections(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::vmwareengine::v1::PrivateConnection>(std::move(span),
+                                                          std::move(sr));
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::PrivateConnection>>
+VmwareEngineTracingConnection::UpdatePrivateConnection(
+    google::cloud::vmwareengine::v1::UpdatePrivateConnectionRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::UpdatePrivateConnection");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UpdatePrivateConnection(request));
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
+VmwareEngineTracingConnection::DeletePrivateConnection(
+    google::cloud::vmwareengine::v1::DeletePrivateConnectionRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::DeletePrivateConnection");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeletePrivateConnection(request));
+}
+
+StreamRange<google::cloud::vmwareengine::v1::PeeringRoute>
+VmwareEngineTracingConnection::ListPrivateConnectionPeeringRoutes(
+    google::cloud::vmwareengine::v1::ListPrivateConnectionPeeringRoutesRequest
+        request) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::"
+      "ListPrivateConnectionPeeringRoutes");
+  auto scope = opentelemetry::trace::Scope(span);
+  auto sr = child_->ListPrivateConnectionPeeringRoutes(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::vmwareengine::v1::PeeringRoute>(std::move(span),
+                                                     std::move(sr));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

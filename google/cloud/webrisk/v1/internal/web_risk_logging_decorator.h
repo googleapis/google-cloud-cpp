@@ -22,6 +22,7 @@
 #include "google/cloud/webrisk/v1/internal/web_risk_stub.h"
 #include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
+#include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 #include <set>
 #include <string>
@@ -36,7 +37,7 @@ class WebRiskServiceLogging : public WebRiskServiceStub {
   ~WebRiskServiceLogging() override = default;
   WebRiskServiceLogging(std::shared_ptr<WebRiskServiceStub> child,
                         TracingOptions tracing_options,
-                        std::set<std::string> components);
+                        std::set<std::string> const& components);
 
   StatusOr<google::cloud::webrisk::v1::ComputeThreatListDiffResponse>
   ComputeThreatListDiff(
@@ -57,10 +58,25 @@ class WebRiskServiceLogging : public WebRiskServiceStub {
       google::cloud::webrisk::v1::CreateSubmissionRequest const& request)
       override;
 
+  future<StatusOr<google::longrunning::Operation>> AsyncSubmitUri(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::webrisk::v1::SubmitUriRequest const& request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::longrunning::GetOperationRequest const& request) override;
+
+  future<Status> AsyncCancelOperation(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::longrunning::CancelOperationRequest const& request) override;
+
  private:
   std::shared_ptr<WebRiskServiceStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // WebRiskServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

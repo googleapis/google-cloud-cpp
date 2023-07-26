@@ -45,8 +45,9 @@ Options SpeechDefaultOptions(Options options) {
   }
   if (!options.has<speech_v1::SpeechBackoffPolicyOption>()) {
     options.set<speech_v1::SpeechBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options.has<speech_v1::SpeechPollingPolicyOption>()) {
@@ -54,7 +55,9 @@ Options SpeechDefaultOptions(Options options) {
         GenericPollingPolicy<speech_v1::SpeechRetryPolicyOption::Type,
                              speech_v1::SpeechBackoffPolicyOption::Type>(
             options.get<speech_v1::SpeechRetryPolicyOption>()->clone(),
-            options.get<speech_v1::SpeechBackoffPolicyOption>()->clone())
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
             .clone());
   }
   if (!options.has<speech_v1::SpeechConnectionIdempotencyPolicyOption>()) {

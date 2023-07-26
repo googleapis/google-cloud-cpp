@@ -1,0 +1,13 @@
+{
+    "api_id": "servicecontrol.googleapis.com",
+    "api_shortname": "servicecontrol",
+    "client_documentation": "https://cloud.google.com/cpp/docs/reference/servicecontrol/latest",
+    "distribution_name": "google-cloud-cpp",
+    "language": "cpp",
+    "library_type": "GAPIC_AUTO",
+    "name_pretty": "Service Control API",
+    "product_documentation": "https://cloud.google.com/service-control",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-cpp",
+    "requires_billing": true
+}

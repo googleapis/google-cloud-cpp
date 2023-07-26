@@ -17,7 +17,7 @@ ARG NCPU=4
 
 # Install the minimal development tools:
 RUN dnf makecache && \
-    dnf install -y ccache cmake curl diffutils findutils gcc-c++ git make \
+    dnf install -y cmake curl diffutils findutils gcc-c++ git make \
         ninja-build patch tar unzip wget which zip
 
 # Fedora 37 includes packages, with recent enough versions, for most of the
@@ -67,7 +67,7 @@ RUN echo 'root:' | chpasswd
 # you may want to use a recent version of the standard `pkg-config` binary. If
 # not, `dnf install pkgconfig` should work.
 WORKDIR /var/tmp/build/pkg-config-cpp
-RUN curl -sSL https://pkgconfig.freedesktop.org/releases/pkg-config-0.29.2.tar.gz | \
+RUN curl -fsSL https://pkgconfig.freedesktop.org/releases/pkg-config-0.29.2.tar.gz | \
     tar -xzf - --strip-components=1 && \
     ./configure --with-internal-glib && \
     make -j ${NCPU:-4} && \
@@ -89,7 +89,7 @@ ENV PKG_CONFIG_PATH=/usr/local/share/pkgconfig:/usr/lib/pkgconfig
 # Note that this is a header-only library, and often installed manually.
 # This leaves your environment without support for CMake pkg-config.
 WORKDIR /var/tmp/build/json
-RUN curl -sSL https://github.com/nlohmann/json/archive/v3.11.2.tar.gz | \
+RUN curl -fsSL https://github.com/nlohmann/json/archive/v3.11.2.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
@@ -105,7 +105,7 @@ RUN curl -sSL https://github.com/nlohmann/json/archive/v3.11.2.tar.gz | \
 # compiled with. And we use the compiler flags from ci/etc/m32-toolchain.cmake
 # to force a 32-bit install.
 WORKDIR /var/tmp/build/opentelemetry
-RUN curl -sSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.9.0.tar.gz | \
+RUN curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.9.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_CXX_STANDARD=17 \
@@ -135,6 +135,12 @@ RUN /var/tmp/ci/install-cloud-sdk.sh
 ENV CLOUD_SDK_LOCATION=/usr/local/google-cloud-sdk
 ENV PATH=${CLOUD_SDK_LOCATION}/bin:${PATH}
 
-# Some of the above libraries may have installed in /usr/local, so make sure
-# those library directories will be found.
+WORKDIR /var/tmp/sccache
+RUN curl -fsSL https://github.com/mozilla/sccache/releases/download/v0.5.4/sccache-v0.5.4-x86_64-unknown-linux-musl.tar.gz | \
+    tar -zxf - --strip-components=1 && \
+    mkdir -p /usr/local/bin && \
+    mv sccache /usr/local/bin/sccache && \
+    chmod +x /usr/local/bin/sccache
+
+# Update the ld.conf cache in case any libraries were installed in /usr/local/lib*
 RUN ldconfig /usr/local/lib*

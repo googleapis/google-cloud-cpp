@@ -18,6 +18,7 @@
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/curl_options.h"
+#include "google/cloud/internal/curl_writev.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/rest_options.h"
 #include "google/cloud/internal/user_agent_prefix.h"
@@ -85,45 +86,43 @@ Status AsStatus(CURLMcode result, char const* where) {
   return internal::UnknownError(std::move(os).str());
 }
 
-// Vector of data chunks to satisfy requests from libcurl.
-class WriteVector {
- public:
-  explicit WriteVector(std::vector<absl::Span<char const>> v)
-      : writev_(std::move(v)) {
-    // Reverse the vector so the first chunk is at the end.
-    std::reverse(writev_.begin(), writev_.end());
-  }
-
-  std::size_t size() const {
-    std::size_t size = 0;
-    for (auto const& s : writev_) {
-      size += s.size();
-    }
-    return size;
-  }
-
-  std::size_t MoveTo(absl::Span<char> dst) {
-    auto const avail = dst.size();
-    while (!writev_.empty()) {
-      auto& src = writev_.back();
-      if (src.size() > dst.size()) {
-        std::copy(src.begin(), src.begin() + dst.size(), dst.begin());
-        src.remove_prefix(dst.size());
-        dst.remove_prefix(dst.size());
-        break;
-      }
-      std::copy(src.begin(), src.end(), dst.begin());
-      dst.remove_prefix(src.size());
-      writev_.pop_back();
-    }
-    return avail - dst.size();
-  }
-
- private:
-  std::vector<absl::Span<char const>> writev_;
-};
-
 }  // namespace
+
+extern "C" {  // libcurl callbacks
+
+// It would be nice to be able to send data from, and receive data into,
+// our own buffers (i.e., without an extra copy). But, there is no such API.
+
+// Receive response data from peer.
+static std::size_t WriteFunction(  // NOLINT(misc-use-anonymous-namespace)
+    char* ptr, size_t size, size_t nmemb, void* userdata) {
+  auto* const request = reinterpret_cast<CurlImpl*>(userdata);
+  return request->WriteCallback(absl::MakeSpan(ptr, size * nmemb));
+}
+
+// Receive a response header from peer.
+static std::size_t HeaderFunction(  // NOLINT(misc-use-anonymous-namespace)
+    char* buffer, std::size_t size, std::size_t nitems, void* userdata) {
+  auto* const request = reinterpret_cast<CurlImpl*>(userdata);
+  return request->HeaderCallback(absl::MakeSpan(buffer, size * nitems));
+}
+
+// Fill buffer to send data to peer (POST/PUT).
+static std::size_t ReadFunction(  // NOLINT(misc-use-anonymous-namespace)
+    char* buffer, std::size_t size, std::size_t nitems, void* userdata) {
+  auto* const writev = reinterpret_cast<WriteVector*>(userdata);
+  return writev->MoveTo(absl::MakeSpan(buffer, size * nitems));
+}
+
+static int SeekFunction(  // NOLINT(misc-use-anonymous-namespace)
+    void* userdata, curl_off_t offset, int origin) {
+  auto* const writev = reinterpret_cast<WriteVector*>(userdata);
+  return writev->Seek(static_cast<std::size_t>(offset), origin)
+             ? CURL_SEEKFUNC_OK
+             : CURL_SEEKFUNC_FAIL;
+}
+
+}  // extern "C"
 
 std::size_t SpillBuffer::CopyFrom(absl::Span<char const> src) {
   // capacity() is CURL_MAX_WRITE_SIZE, the maximum amount of data that
@@ -165,34 +164,6 @@ std::size_t SpillBuffer::MoveTo(absl::Span<char> dst) {
   if (size_ == 0) start_ = 0;  // defrag optimization
   return len;
 }
-
-extern "C" {  // libcurl callbacks
-
-// It would be nice to be able to send data from, and receive data into,
-// our own buffers (i.e., without an extra copy). But, there is no such API.
-
-// Receive response data from peer.
-static std::size_t WriteFunction(char* ptr, size_t size, size_t nmemb,
-                                 void* userdata) {
-  auto* const request = reinterpret_cast<CurlImpl*>(userdata);
-  return request->WriteCallback(absl::MakeSpan(ptr, size * nmemb));
-}
-
-// Receive a response header from peer.
-static std::size_t HeaderFunction(char* buffer, std::size_t size,
-                                  std::size_t nitems, void* userdata) {
-  auto* const request = reinterpret_cast<CurlImpl*>(userdata);
-  return request->HeaderCallback(absl::MakeSpan(buffer, size * nitems));
-}
-
-// Fill buffer to send data to peer (POST/PUT).
-static std::size_t ReadFunction(char* buffer, std::size_t size,
-                                std::size_t nitems, void* userdata) {
-  auto* const writev = reinterpret_cast<WriteVector*>(userdata);
-  return writev->MoveTo(absl::MakeSpan(buffer, size * nitems));
-}
-
-}  // extern "C"
 
 CurlImpl::CurlImpl(CurlHandle handle,
                    std::shared_ptr<CurlHandleFactory> factory,
@@ -386,6 +357,10 @@ Status CurlImpl::MakeRequest(HttpMethod method, RestContext& context,
     if (!status.ok()) return OnTransferError(context, std::move(status));
     status = handle_.SetOption(CURLOPT_READDATA, &writev);
     if (!status.ok()) return OnTransferError(context, std::move(status));
+    status = handle_.SetOption(CURLOPT_SEEKFUNCTION, &SeekFunction);
+    if (!status.ok()) return OnTransferError(context, std::move(status));
+    status = handle_.SetOption(CURLOPT_SEEKDATA, &writev);
+    if (!status.ok()) return OnTransferError(context, std::move(status));
     SetHeader("Expect:");
     return MakeRequestImpl(context);
   }
@@ -396,6 +371,10 @@ Status CurlImpl::MakeRequest(HttpMethod method, RestContext& context,
     status = handle_.SetOption(CURLOPT_READFUNCTION, &ReadFunction);
     if (!status.ok()) return OnTransferError(context, std::move(status));
     status = handle_.SetOption(CURLOPT_READDATA, &writev);
+    if (!status.ok()) return OnTransferError(context, std::move(status));
+    status = handle_.SetOption(CURLOPT_SEEKFUNCTION, &SeekFunction);
+    if (!status.ok()) return OnTransferError(context, std::move(status));
+    status = handle_.SetOption(CURLOPT_SEEKDATA, &writev);
     if (!status.ok()) return OnTransferError(context, std::move(status));
     status = handle_.SetOption(CURLOPT_UPLOAD, 1L);
     if (!status.ok()) return OnTransferError(context, std::move(status));
@@ -705,15 +684,27 @@ Status CurlImpl::PerformWorkUntil(absl::FunctionRef<bool()> predicate) {
 Status CurlImpl::WaitForHandles(int& repeats) {
   int const timeout_ms = 1000;
   int numfds = 0;
+  CURLMcode result;
 #if CURL_AT_LEAST_VERSION(7, 66, 0)
-  CURLMcode result =
-      curl_multi_poll(multi_.get(), nullptr, 0, timeout_ms, &numfds);
+  // Use curl_multi_poll()
+#if CURL_AT_LEAST_VERSION(7, 84, 0)
+  // Work around https://github.com/curl/curl/issues/11135 by retrying
+  // when EINTR fails poll(). We want to retry so that post-poll()
+  // curl_multi bookkeeping code runs.
+  do {
+    errno = 0;
+    result = curl_multi_poll(multi_.get(), nullptr, 0, timeout_ms, &numfds);
+  } while (result == CURLM_UNRECOVERABLE_POLL && errno == EINTR);
+#else
+  // EINTR will be simply ignored by curl_multi_poll().
+  result = curl_multi_poll(multi_.get(), nullptr, 0, timeout_ms, &numfds);
+#endif
   TRACE_STATE() << ", numfds=" << numfds << ", result=" << result
                 << ", repeats=" << repeats;
   if (result != CURLM_OK) return AsStatus(result, __func__);
 #else
-  CURLMcode result =
-      curl_multi_wait(multi_.get(), nullptr, 0, timeout_ms, &numfds);
+  // Use curl_multi_wait()
+  result = curl_multi_wait(multi_.get(), nullptr, 0, timeout_ms, &numfds);
   TRACE_STATE() << ", numfds=" << numfds << ", result=" << result
                 << ", repeats=" << repeats;
   if (result != CURLM_OK) return AsStatus(result, __func__);

@@ -47,8 +47,9 @@ Options HubServiceDefaultOptions(Options options) {
   }
   if (!options.has<networkconnectivity_v1::HubServiceBackoffPolicyOption>()) {
     options.set<networkconnectivity_v1::HubServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options.has<networkconnectivity_v1::HubServicePollingPolicyOption>()) {
@@ -58,9 +59,9 @@ Options HubServiceDefaultOptions(Options options) {
             networkconnectivity_v1::HubServiceBackoffPolicyOption::Type>(
             options.get<networkconnectivity_v1::HubServiceRetryPolicyOption>()
                 ->clone(),
-            options
-                .get<networkconnectivity_v1::HubServiceBackoffPolicyOption>()
-                ->clone())
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
             .clone());
   }
   if (!options.has<networkconnectivity_v1::

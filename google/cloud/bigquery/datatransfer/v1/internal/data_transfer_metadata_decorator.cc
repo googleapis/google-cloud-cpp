@@ -18,6 +18,7 @@
 
 #include "google/cloud/bigquery/datatransfer/v1/internal/data_transfer_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/bigquery/datatransfer/v1/datatransfer.grpc.pb.h>
@@ -29,8 +30,10 @@ namespace bigquery_datatransfer_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 DataTransferServiceMetadata::DataTransferServiceMetadata(
-    std::shared_ptr<DataTransferServiceStub> child)
+    std::shared_ptr<DataTransferServiceStub> child,
+    std::multimap<std::string, std::string> fixed_metadata)
     : child_(std::move(child)),
+      fixed_metadata_(std::move(fixed_metadata)),
       api_client_header_(
           google::cloud::internal::ApiClientHeader("generator")) {}
 
@@ -39,7 +42,7 @@ DataTransferServiceMetadata::GetDataSource(
     grpc::ClientContext& context,
     google::cloud::bigquery::datatransfer::v1::GetDataSourceRequest const&
         request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetDataSource(context, request);
 }
 
@@ -48,7 +51,7 @@ DataTransferServiceMetadata::ListDataSources(
     grpc::ClientContext& context,
     google::cloud::bigquery::datatransfer::v1::ListDataSourcesRequest const&
         request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListDataSources(context, request);
 }
 
@@ -57,7 +60,7 @@ DataTransferServiceMetadata::CreateTransferConfig(
     grpc::ClientContext& context,
     google::cloud::bigquery::datatransfer::v1::
         CreateTransferConfigRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->CreateTransferConfig(context, request);
 }
 
@@ -66,8 +69,8 @@ DataTransferServiceMetadata::UpdateTransferConfig(
     grpc::ClientContext& context,
     google::cloud::bigquery::datatransfer::v1::
         UpdateTransferConfigRequest const& request) {
-  SetMetadata(context,
-              "transfer_config.name=" + request.transfer_config().name());
+  SetMetadata(context, absl::StrCat("transfer_config.name=",
+                                    request.transfer_config().name()));
   return child_->UpdateTransferConfig(context, request);
 }
 
@@ -75,7 +78,7 @@ Status DataTransferServiceMetadata::DeleteTransferConfig(
     grpc::ClientContext& context,
     google::cloud::bigquery::datatransfer::v1::
         DeleteTransferConfigRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->DeleteTransferConfig(context, request);
 }
 
@@ -84,7 +87,7 @@ DataTransferServiceMetadata::GetTransferConfig(
     grpc::ClientContext& context,
     google::cloud::bigquery::datatransfer::v1::GetTransferConfigRequest const&
         request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetTransferConfig(context, request);
 }
 
@@ -93,7 +96,7 @@ DataTransferServiceMetadata::ListTransferConfigs(
     grpc::ClientContext& context,
     google::cloud::bigquery::datatransfer::v1::ListTransferConfigsRequest const&
         request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListTransferConfigs(context, request);
 }
 
@@ -103,7 +106,7 @@ DataTransferServiceMetadata::ScheduleTransferRuns(
     grpc::ClientContext& context,
     google::cloud::bigquery::datatransfer::v1::
         ScheduleTransferRunsRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ScheduleTransferRuns(context, request);
 }
 
@@ -113,7 +116,7 @@ DataTransferServiceMetadata::StartManualTransferRuns(
     grpc::ClientContext& context,
     google::cloud::bigquery::datatransfer::v1::
         StartManualTransferRunsRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->StartManualTransferRuns(context, request);
 }
 
@@ -122,7 +125,7 @@ DataTransferServiceMetadata::GetTransferRun(
     grpc::ClientContext& context,
     google::cloud::bigquery::datatransfer::v1::GetTransferRunRequest const&
         request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetTransferRun(context, request);
 }
 
@@ -130,7 +133,7 @@ Status DataTransferServiceMetadata::DeleteTransferRun(
     grpc::ClientContext& context,
     google::cloud::bigquery::datatransfer::v1::DeleteTransferRunRequest const&
         request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->DeleteTransferRun(context, request);
 }
 
@@ -139,7 +142,7 @@ DataTransferServiceMetadata::ListTransferRuns(
     grpc::ClientContext& context,
     google::cloud::bigquery::datatransfer::v1::ListTransferRunsRequest const&
         request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListTransferRuns(context, request);
 }
 
@@ -148,7 +151,7 @@ DataTransferServiceMetadata::ListTransferLogs(
     grpc::ClientContext& context,
     google::cloud::bigquery::datatransfer::v1::ListTransferLogsRequest const&
         request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListTransferLogs(context, request);
 }
 
@@ -157,7 +160,7 @@ DataTransferServiceMetadata::CheckValidCreds(
     grpc::ClientContext& context,
     google::cloud::bigquery::datatransfer::v1::CheckValidCredsRequest const&
         request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->CheckValidCreds(context, request);
 }
 
@@ -165,7 +168,7 @@ Status DataTransferServiceMetadata::EnrollDataSources(
     grpc::ClientContext& context,
     google::cloud::bigquery::datatransfer::v1::EnrollDataSourcesRequest const&
         request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->EnrollDataSources(context, request);
 }
 
@@ -176,6 +179,9 @@ void DataTransferServiceMetadata::SetMetadata(
 }
 
 void DataTransferServiceMetadata::SetMetadata(grpc::ClientContext& context) {
+  for (auto const& kv : fixed_metadata_) {
+    context.AddMetadata(kv.first, kv.second);
+  }
   context.AddMetadata("x-goog-api-client", api_client_header_);
   auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {

@@ -84,54 +84,77 @@ class SchemaServiceClient {
   }
   ///@}
 
+  // clang-format off
   ///
   /// Creates a schema.
   ///
-  /// @param parent  Required. The name of the project in which to create the
-  /// schema.
+  /// @param parent  Required. The name of the project in which to create the schema.
   ///  Format is `projects/{project-id}`.
   /// @param schema  Required. The schema object to create.
+  ///  @n
   ///  This schema's `name` parameter is ignored. The schema object returned
   ///  by CreateSchema will have a `name` made using the given `parent` and
   ///  `schema_id`.
-  /// @param schema_id  The ID to use for the schema, which will become the
-  /// final component of
+  /// @param schema_id  The ID to use for the schema, which will become the final component of
   ///  the schema's resource name.
-  ///  See https://cloud.google.com/pubsub/docs/admin#resource_names for
-  ///  resource name constraints.
+  ///  @n
+  ///  See https://cloud.google.com/pubsub/docs/admin#resource_names for resource
+  ///  name constraints.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::pubsub::v1::Schema,google/pubsub/v1/schema.proto#L130}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.pubsub.v1.Schema])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.pubsub.v1.CreateSchemaRequest]:
-  /// @googleapis_reference_link{google/pubsub/v1/schema.proto#L185}
-  /// [google.pubsub.v1.Schema]:
-  /// @googleapis_reference_link{google/pubsub/v1/schema.proto#L130}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.pubsub.v1.CreateSchemaRequest]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L185}
+  /// [google.pubsub.v1.Schema]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L130}
   ///
+  // clang-format on
   StatusOr<google::pubsub::v1::Schema> CreateSchema(
       std::string const& parent, google::pubsub::v1::Schema const& schema,
       std::string const& schema_id, Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a schema.
   ///
-  /// @param request
-  /// @googleapis_link{google::pubsub::v1::CreateSchemaRequest,google/pubsub/v1/schema.proto#L185}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.pubsub.v1.CreateSchemaRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::pubsub::v1::Schema,google/pubsub/v1/schema.proto#L130}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.pubsub.v1.Schema])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.pubsub.v1.CreateSchemaRequest]:
-  /// @googleapis_reference_link{google/pubsub/v1/schema.proto#L185}
-  /// [google.pubsub.v1.Schema]:
-  /// @googleapis_reference_link{google/pubsub/v1/schema.proto#L130}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.pubsub.v1.CreateSchemaRequest]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L185}
+  /// [google.pubsub.v1.Schema]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L130}
   ///
+  // clang-format on
   StatusOr<google::pubsub::v1::Schema> CreateSchema(
       google::pubsub::v1::CreateSchemaRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Gets a schema.
   ///
@@ -139,35 +162,57 @@ class SchemaServiceClient {
   ///  Format is `projects/{project}/schemas/{schema}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::pubsub::v1::Schema,google/pubsub/v1/schema.proto#L130}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.pubsub.v1.Schema])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.pubsub.v1.GetSchemaRequest]:
-  /// @googleapis_reference_link{google/pubsub/v1/schema.proto#L211}
-  /// [google.pubsub.v1.Schema]:
-  /// @googleapis_reference_link{google/pubsub/v1/schema.proto#L130}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.pubsub.v1.GetSchemaRequest]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L211}
+  /// [google.pubsub.v1.Schema]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L130}
   ///
+  // clang-format on
   StatusOr<google::pubsub::v1::Schema> GetSchema(std::string const& name,
                                                  Options opts = {});
 
+  // clang-format off
   ///
   /// Gets a schema.
   ///
-  /// @param request
-  /// @googleapis_link{google::pubsub::v1::GetSchemaRequest,google/pubsub/v1/schema.proto#L211}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.pubsub.v1.GetSchemaRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::pubsub::v1::Schema,google/pubsub/v1/schema.proto#L130}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.pubsub.v1.Schema])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.pubsub.v1.GetSchemaRequest]:
-  /// @googleapis_reference_link{google/pubsub/v1/schema.proto#L211}
-  /// [google.pubsub.v1.Schema]:
-  /// @googleapis_reference_link{google/pubsub/v1/schema.proto#L130}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.pubsub.v1.GetSchemaRequest]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L211}
+  /// [google.pubsub.v1.Schema]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L130}
   ///
+  // clang-format on
   StatusOr<google::pubsub::v1::Schema> GetSchema(
       google::pubsub::v1::GetSchemaRequest const& request, Options opts = {});
 
+  // clang-format off
   ///
   /// Lists schemas in a project.
   ///
@@ -175,71 +220,151 @@ class SchemaServiceClient {
   ///  Format is `projects/{project-id}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::pubsub::v1::Schema,google/pubsub/v1/schema.proto#L130}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.pubsub.v1.Schema], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.pubsub.v1.ListSchemasRequest]:
-  /// @googleapis_reference_link{google/pubsub/v1/schema.proto#L225}
-  /// [google.pubsub.v1.Schema]:
-  /// @googleapis_reference_link{google/pubsub/v1/schema.proto#L130}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.pubsub.v1.ListSchemasRequest]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L225}
+  /// [google.pubsub.v1.Schema]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L130}
   ///
+  // clang-format on
   StreamRange<google::pubsub::v1::Schema> ListSchemas(std::string const& parent,
                                                       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists schemas in a project.
   ///
-  /// @param request
-  /// @googleapis_link{google::pubsub::v1::ListSchemasRequest,google/pubsub/v1/schema.proto#L225}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.pubsub.v1.ListSchemasRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::pubsub::v1::Schema,google/pubsub/v1/schema.proto#L130}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.pubsub.v1.Schema], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.pubsub.v1.ListSchemasRequest]:
-  /// @googleapis_reference_link{google/pubsub/v1/schema.proto#L225}
-  /// [google.pubsub.v1.Schema]:
-  /// @googleapis_reference_link{google/pubsub/v1/schema.proto#L130}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.pubsub.v1.ListSchemasRequest]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L225}
+  /// [google.pubsub.v1.Schema]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L130}
   ///
+  // clang-format on
   StreamRange<google::pubsub::v1::Schema> ListSchemas(
       google::pubsub::v1::ListSchemasRequest request, Options opts = {});
 
+  // clang-format off
   ///
   /// Lists all schema revisions for the named schema.
   ///
   /// @param name  Required. The name of the schema to list revisions for.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::pubsub::v1::Schema,google/pubsub/v1/schema.proto#L130}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.pubsub.v1.Schema], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.pubsub.v1.ListSchemaRevisionsRequest]:
-  /// @googleapis_reference_link{google/pubsub/v1/schema.proto#L260}
-  /// [google.pubsub.v1.Schema]:
-  /// @googleapis_reference_link{google/pubsub/v1/schema.proto#L130}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.pubsub.v1.ListSchemaRevisionsRequest]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L260}
+  /// [google.pubsub.v1.Schema]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L130}
   ///
+  // clang-format on
   StreamRange<google::pubsub::v1::Schema> ListSchemaRevisions(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Lists all schema revisions for the named schema.
   ///
-  /// @param request
-  /// @googleapis_link{google::pubsub::v1::ListSchemaRevisionsRequest,google/pubsub/v1/schema.proto#L260}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.pubsub.v1.ListSchemaRevisionsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::pubsub::v1::Schema,google/pubsub/v1/schema.proto#L130}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.pubsub.v1.Schema], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.pubsub.v1.ListSchemaRevisionsRequest]:
-  /// @googleapis_reference_link{google/pubsub/v1/schema.proto#L260}
-  /// [google.pubsub.v1.Schema]:
-  /// @googleapis_reference_link{google/pubsub/v1/schema.proto#L130}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.pubsub.v1.ListSchemaRevisionsRequest]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L260}
+  /// [google.pubsub.v1.Schema]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L130}
   ///
+  // clang-format on
   StreamRange<google::pubsub::v1::Schema> ListSchemaRevisions(
       google::pubsub::v1::ListSchemaRevisionsRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Commits a new schema revision to an existing schema.
   ///
@@ -248,121 +373,187 @@ class SchemaServiceClient {
   /// @param schema  Required. The schema revision to commit.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::pubsub::v1::Schema,google/pubsub/v1/schema.proto#L130}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.pubsub.v1.Schema])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.pubsub.v1.CommitSchemaRequest]:
-  /// @googleapis_reference_link{google/pubsub/v1/schema.proto#L291}
-  /// [google.pubsub.v1.Schema]:
-  /// @googleapis_reference_link{google/pubsub/v1/schema.proto#L130}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.pubsub.v1.CommitSchemaRequest]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L291}
+  /// [google.pubsub.v1.Schema]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L130}
   ///
+  // clang-format on
   StatusOr<google::pubsub::v1::Schema> CommitSchema(
       std::string const& name, google::pubsub::v1::Schema const& schema,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Commits a new schema revision to an existing schema.
   ///
-  /// @param request
-  /// @googleapis_link{google::pubsub::v1::CommitSchemaRequest,google/pubsub/v1/schema.proto#L291}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.pubsub.v1.CommitSchemaRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::pubsub::v1::Schema,google/pubsub/v1/schema.proto#L130}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.pubsub.v1.Schema])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.pubsub.v1.CommitSchemaRequest]:
-  /// @googleapis_reference_link{google/pubsub/v1/schema.proto#L291}
-  /// [google.pubsub.v1.Schema]:
-  /// @googleapis_reference_link{google/pubsub/v1/schema.proto#L130}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.pubsub.v1.CommitSchemaRequest]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L291}
+  /// [google.pubsub.v1.Schema]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L130}
   ///
+  // clang-format on
   StatusOr<google::pubsub::v1::Schema> CommitSchema(
       google::pubsub::v1::CommitSchemaRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a new schema revision that is a copy of the provided revision_id.
   ///
   /// @param name  Required. The schema being rolled back with revision id.
   /// @param revision_id  Required. The revision ID to roll back to.
   ///  It must be a revision of the same schema.
+  ///  @n
   ///    Example: c7cfa2a8
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::pubsub::v1::Schema,google/pubsub/v1/schema.proto#L130}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.pubsub.v1.Schema])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.pubsub.v1.RollbackSchemaRequest]:
-  /// @googleapis_reference_link{google/pubsub/v1/schema.proto#L304}
-  /// [google.pubsub.v1.Schema]:
-  /// @googleapis_reference_link{google/pubsub/v1/schema.proto#L130}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.pubsub.v1.RollbackSchemaRequest]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L304}
+  /// [google.pubsub.v1.Schema]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L130}
   ///
+  // clang-format on
   StatusOr<google::pubsub::v1::Schema> RollbackSchema(
       std::string const& name, std::string const& revision_id,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a new schema revision that is a copy of the provided revision_id.
   ///
-  /// @param request
-  /// @googleapis_link{google::pubsub::v1::RollbackSchemaRequest,google/pubsub/v1/schema.proto#L304}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.pubsub.v1.RollbackSchemaRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::pubsub::v1::Schema,google/pubsub/v1/schema.proto#L130}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.pubsub.v1.Schema])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.pubsub.v1.RollbackSchemaRequest]:
-  /// @googleapis_reference_link{google/pubsub/v1/schema.proto#L304}
-  /// [google.pubsub.v1.Schema]:
-  /// @googleapis_reference_link{google/pubsub/v1/schema.proto#L130}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.pubsub.v1.RollbackSchemaRequest]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L304}
+  /// [google.pubsub.v1.Schema]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L130}
   ///
+  // clang-format on
   StatusOr<google::pubsub::v1::Schema> RollbackSchema(
       google::pubsub::v1::RollbackSchemaRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes a specific schema revision.
   ///
-  /// @param name  Required. The name of the schema revision to be deleted, with
-  /// a revision ID
+  /// @param name  Required. The name of the schema revision to be deleted, with a revision ID
   ///  explicitly included.
+  ///  @n
   ///  Example: `projects/123/schemas/my-schema@c7cfa2a8`
-  /// @param revision_id  Optional. This field is deprecated and should not be
-  /// used for specifying
+  /// @param revision_id  Optional. This field is deprecated and should not be used for specifying
   ///  the revision ID. The revision ID should be specified via the `name`
   ///  parameter.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::pubsub::v1::Schema,google/pubsub/v1/schema.proto#L130}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.pubsub.v1.Schema])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.pubsub.v1.DeleteSchemaRevisionRequest]:
-  /// @googleapis_reference_link{google/pubsub/v1/schema.proto#L319}
-  /// [google.pubsub.v1.Schema]:
-  /// @googleapis_reference_link{google/pubsub/v1/schema.proto#L130}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.pubsub.v1.DeleteSchemaRevisionRequest]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L319}
+  /// [google.pubsub.v1.Schema]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L130}
   ///
+  // clang-format on
   StatusOr<google::pubsub::v1::Schema> DeleteSchemaRevision(
       std::string const& name, std::string const& revision_id,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes a specific schema revision.
   ///
-  /// @param request
-  /// @googleapis_link{google::pubsub::v1::DeleteSchemaRevisionRequest,google/pubsub/v1/schema.proto#L319}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.pubsub.v1.DeleteSchemaRevisionRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::pubsub::v1::Schema,google/pubsub/v1/schema.proto#L130}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.pubsub.v1.Schema])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.pubsub.v1.DeleteSchemaRevisionRequest]:
-  /// @googleapis_reference_link{google/pubsub/v1/schema.proto#L319}
-  /// [google.pubsub.v1.Schema]:
-  /// @googleapis_reference_link{google/pubsub/v1/schema.proto#L130}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.pubsub.v1.DeleteSchemaRevisionRequest]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L319}
+  /// [google.pubsub.v1.Schema]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L130}
   ///
+  // clang-format on
   StatusOr<google::pubsub::v1::Schema> DeleteSchemaRevision(
       google::pubsub::v1::DeleteSchemaRevisionRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes a schema.
   ///
@@ -370,81 +561,138 @@ class SchemaServiceClient {
   ///  Format is `projects/{project}/schemas/{schema}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
   ///
-  /// [google.pubsub.v1.DeleteSchemaRequest]:
-  /// @googleapis_reference_link{google/pubsub/v1/schema.proto#L337}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.pubsub.v1.DeleteSchemaRequest]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L337}
   ///
+  // clang-format on
   Status DeleteSchema(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes a schema.
   ///
-  /// @param request
-  /// @googleapis_link{google::pubsub::v1::DeleteSchemaRequest,google/pubsub/v1/schema.proto#L337}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.pubsub.v1.DeleteSchemaRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
   ///
-  /// [google.pubsub.v1.DeleteSchemaRequest]:
-  /// @googleapis_reference_link{google/pubsub/v1/schema.proto#L337}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.pubsub.v1.DeleteSchemaRequest]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L337}
   ///
+  // clang-format on
   Status DeleteSchema(google::pubsub::v1::DeleteSchemaRequest const& request,
                       Options opts = {});
 
+  // clang-format off
   ///
   /// Validates a schema.
   ///
-  /// @param parent  Required. The name of the project in which to validate
-  /// schemas.
+  /// @param parent  Required. The name of the project in which to validate schemas.
   ///  Format is `projects/{project-id}`.
   /// @param schema  Required. The schema object to validate.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::pubsub::v1::ValidateSchemaResponse,google/pubsub/v1/schema.proto#L363}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.pubsub.v1.ValidateSchemaResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.pubsub.v1.ValidateSchemaRequest]:
-  /// @googleapis_reference_link{google/pubsub/v1/schema.proto#L347}
-  /// [google.pubsub.v1.ValidateSchemaResponse]:
-  /// @googleapis_reference_link{google/pubsub/v1/schema.proto#L363}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.pubsub.v1.ValidateSchemaRequest]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L347}
+  /// [google.pubsub.v1.ValidateSchemaResponse]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L363}
   ///
+  // clang-format on
   StatusOr<google::pubsub::v1::ValidateSchemaResponse> ValidateSchema(
       std::string const& parent, google::pubsub::v1::Schema const& schema,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Validates a schema.
   ///
-  /// @param request
-  /// @googleapis_link{google::pubsub::v1::ValidateSchemaRequest,google/pubsub/v1/schema.proto#L347}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.pubsub.v1.ValidateSchemaRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::pubsub::v1::ValidateSchemaResponse,google/pubsub/v1/schema.proto#L363}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.pubsub.v1.ValidateSchemaResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.pubsub.v1.ValidateSchemaRequest]:
-  /// @googleapis_reference_link{google/pubsub/v1/schema.proto#L347}
-  /// [google.pubsub.v1.ValidateSchemaResponse]:
-  /// @googleapis_reference_link{google/pubsub/v1/schema.proto#L363}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.pubsub.v1.ValidateSchemaRequest]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L347}
+  /// [google.pubsub.v1.ValidateSchemaResponse]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L363}
   ///
+  // clang-format on
   StatusOr<google::pubsub::v1::ValidateSchemaResponse> ValidateSchema(
       google::pubsub::v1::ValidateSchemaRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Validates a message against a schema.
   ///
-  /// @param request
-  /// @googleapis_link{google::pubsub::v1::ValidateMessageRequest,google/pubsub/v1/schema.proto#L366}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.pubsub.v1.ValidateMessageRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::pubsub::v1::ValidateMessageResponse,google/pubsub/v1/schema.proto#L397}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.pubsub.v1.ValidateMessageResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.pubsub.v1.ValidateMessageRequest]:
-  /// @googleapis_reference_link{google/pubsub/v1/schema.proto#L366}
-  /// [google.pubsub.v1.ValidateMessageResponse]:
-  /// @googleapis_reference_link{google/pubsub/v1/schema.proto#L397}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.pubsub.v1.ValidateMessageRequest]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L366}
+  /// [google.pubsub.v1.ValidateMessageResponse]: @googleapis_reference_link{google/pubsub/v1/schema.proto#L397}
   ///
+  // clang-format on
   StatusOr<google::pubsub::v1::ValidateMessageResponse> ValidateMessage(
       google::pubsub::v1::ValidateMessageRequest const& request,
       Options opts = {});

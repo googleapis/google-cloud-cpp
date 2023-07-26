@@ -1,0 +1,134 @@
+name: Windows-Builds
+
+on:
+  workflow_call:
+    inputs:
+      checkout-ref:
+        required: true
+        description: "The ref we want to compile"
+        type: string
+      full-matrix:
+        required: true
+        description: "Build the full matrix"
+        type: boolean
+
+permissions:
+  contents: read
+
+jobs:
+  cmake:
+    name: cmake + ${{ matrix.msvc }} + ${{ matrix.arch }} + ${{ matrix.build_type }} + ${{ matrix.shard }}
+    runs-on:
+      group: cpp-runners
+      labels: ${{ endsWith(matrix.msvc, '-2019') && 'windows-2019' || 'windows-2022' }}
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+    strategy:
+      # Continue other builds even if one fails
+      fail-fast: false
+      matrix:
+        exclude-from-full-trick: [ true ]
+        msvc: [ msvc-2022, msvc-2019 ]
+        build_type: [ Debug, Release ]
+        arch: [ x64, x86 ]
+        shard: [Core, Compute, Other]
+        exclude:
+        # Do not run MSVC 2019 builds with pull requests. Running builds is
+        # expensive, and these rarely catch any problems.
+        - exclude-from-full-trick: ${{ ! inputs.full-matrix }}
+          msvc: msvc-2019
+        # Also skip shards (Compute and Other) that contain only generated code.
+        - exclude-from-full-trick: ${{ ! inputs.full-matrix }}
+          shard: Compute
+        - exclude-from-full-trick: ${{ ! inputs.full-matrix }}
+          shard: Other
+        # Compute is (currently) a single `.lib` file. This file is too large in
+        # Debug mode. MSVC uses COFF:
+        #     https://en.wikipedia.org/wiki/COFF
+        # and COFF offsets are 32-bits. No library or program can exceed this
+        # limit:
+        #     https://learn.microsoft.com/en-us/cpp/error-messages/tool-errors/linker-tools-error-lnk1248
+        - build_type: Debug
+          shard: Compute
+        # No need to duplicate testing with x86 mode and MSVC 2019
+        - arch: x86
+          msvc: msvc-2019
+        # No need to duplicate testing with x86 mode and Debug mode
+        - arch: x86
+          build_type: Debug
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        ref: ${{ inputs.checkout-ref }}
+    - uses: google-github-actions/auth@v1
+      with:
+        create_credentials_file: true
+        credentials_json: ${{ secrets.BUILD_CACHE_KEY }}
+    - uses: actions/setup-python@v4
+      id: py311
+      with:
+        python-version: '3.11'
+    - uses: google-github-actions/setup-gcloud@v1
+    - name: Dynamic Configuration
+      id: dynamic
+      shell: bash
+      run: |
+        echo "vcpkg-version=$(cat ci/etc/vcpkg-version.txt)" >> "${GITHUB_OUTPUT}"
+        core_features=(bigtable pubsub pubsublite spanner storage)
+        if [[ "${{ matrix.shard }}" == "Core" ]]; then
+          features="$(printf ",%s" "${core_features[@]}")"
+          echo "features=${features:1}" >> "${GITHUB_OUTPUT}"
+        elif [[ "${{matrix.shard}}" == "Compute" ]]; then
+          echo "features=compute" >> "${GITHUB_OUTPUT}"
+        else
+          skipped_features=("${core_features[@]}")
+          skipped_features+=(compute)
+          # We use vcpkg in this build, which ships with Protobuf v21.x.
+          # Both `asset` and `channel` require Protobuf >= 23.x to compile on
+          # Windows.
+          skipped_features+=(asset channel)
+          skipped="$(printf ",-%s" "${skipped_features[@]}")"
+          echo "features=__ga_libraries__,__experimental_libraries__,${skipped:2}" >> "${GITHUB_OUTPUT}"
+        fi
+    - name: Download and Install sccache
+      working-directory: "${{runner.temp}}"
+      shell: bash
+      run: |
+        curl -fsSL https://github.com/mozilla/sccache/releases/download/v0.5.4/sccache-v0.5.4-x86_64-pc-windows-msvc.tar.gz | \
+          tar -zxf - --strip-components=1
+        chmod +x sccache.exe
+        mv sccache.exe /c/Users/runneradmin/.cargo/bin
+    - name: Download and Install vcpkg
+      shell: bash
+      run: |
+        cd "${TEMP}"
+        mkdir -p .build/vcpkg
+        curl -fsSL "https://github.com/microsoft/vcpkg/archive/${{ steps.dynamic.outputs.vcpkg-version }}.tar.gz" |
+            tar -C .build/vcpkg --strip-components=1 -zxf -
+        .build/vcpkg/bootstrap-vcpkg.sh -disableMetrics
+    # go/github-actions#gha-bestpractices explains why we use a SHA instead of
+    # a named version for this runner. We could avoid using this runner with the
+    # ideas from:
+    #   https://github.com/microsoft/vswhere/wiki/Find-VC
+    # Note that in other runners the publisher is GitHub. If we trust GitHub
+    # to run the VM, we should trust their runners.
+    - uses: ilammy/msvc-dev-cmd@cec98b9d092141f74527d0afa6feb2af698cfe89 # @v1.21.1
+      with:
+        arch: ${{ matrix.arch }}
+    - name: Build google-cloud-cpp
+      shell: bash
+      run: |
+        export VCPKG_ROOT="${TEMP}/.build/vcpkg"
+        export CLOUDSDK_PYTHON="${{ steps.py311.outputs.python-path }}"
+        # Put the CMake output in a directory with more space and keep it short
+        # to avoid running into the MSVC limits.
+        export CMAKE_OUT='c:\b'
+        ci/gha/builds/windows-cmake.sh ${{ matrix.build_type }} ${{ steps.dynamic.outputs.features }}
+    env:
+      SCCACHE_GCS_BUCKET: cloud-cpp-gha-cache
+      SCCACHE_GCS_KEY_PREFIX: sccache/${{ matrix.msvc }}/${{ matrix.arch}}/${{ matrix.build_type }}
+      SCCACHE_GCS_RW_MODE: READ_WRITE
+      SCCACHE_IGNORE_SERVER_IO_ERROR: 1
+      VCPKG_BINARY_SOURCES: x-gcs,gs://cloud-cpp-gha-cache/vcpkg-cache/${{ matrix.msvc }},readwrite
+      VCPKG_TRIPLET: ${{ matrix.arch }}-windows

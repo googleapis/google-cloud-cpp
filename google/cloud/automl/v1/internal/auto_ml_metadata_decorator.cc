@@ -18,6 +18,7 @@
 
 #include "google/cloud/automl/v1/internal/auto_ml_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/automl/v1/service.grpc.pb.h>
@@ -28,8 +29,11 @@ namespace cloud {
 namespace automl_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-AutoMlMetadata::AutoMlMetadata(std::shared_ptr<AutoMlStub> child)
+AutoMlMetadata::AutoMlMetadata(
+    std::shared_ptr<AutoMlStub> child,
+    std::multimap<std::string, std::string> fixed_metadata)
     : child_(std::move(child)),
+      fixed_metadata_(std::move(fixed_metadata)),
       api_client_header_(
           google::cloud::internal::ApiClientHeader("generator")) {}
 
@@ -38,14 +42,14 @@ AutoMlMetadata::AsyncCreateDataset(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::automl::v1::CreateDatasetRequest const& request) {
-  SetMetadata(*context, "parent=" + request.parent());
+  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
   return child_->AsyncCreateDataset(cq, std::move(context), request);
 }
 
 StatusOr<google::cloud::automl::v1::Dataset> AutoMlMetadata::GetDataset(
     grpc::ClientContext& context,
     google::cloud::automl::v1::GetDatasetRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetDataset(context, request);
 }
 
@@ -53,14 +57,14 @@ StatusOr<google::cloud::automl::v1::ListDatasetsResponse>
 AutoMlMetadata::ListDatasets(
     grpc::ClientContext& context,
     google::cloud::automl::v1::ListDatasetsRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListDatasets(context, request);
 }
 
 StatusOr<google::cloud::automl::v1::Dataset> AutoMlMetadata::UpdateDataset(
     grpc::ClientContext& context,
     google::cloud::automl::v1::UpdateDatasetRequest const& request) {
-  SetMetadata(context, "dataset.name=" + request.dataset().name());
+  SetMetadata(context, absl::StrCat("dataset.name=", request.dataset().name()));
   return child_->UpdateDataset(context, request);
 }
 
@@ -69,7 +73,7 @@ AutoMlMetadata::AsyncDeleteDataset(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::automl::v1::DeleteDatasetRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncDeleteDataset(cq, std::move(context), request);
 }
 
@@ -78,7 +82,7 @@ AutoMlMetadata::AsyncImportData(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::automl::v1::ImportDataRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncImportData(cq, std::move(context), request);
 }
 
@@ -87,7 +91,7 @@ AutoMlMetadata::AsyncExportData(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::automl::v1::ExportDataRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncExportData(cq, std::move(context), request);
 }
 
@@ -95,7 +99,7 @@ StatusOr<google::cloud::automl::v1::AnnotationSpec>
 AutoMlMetadata::GetAnnotationSpec(
     grpc::ClientContext& context,
     google::cloud::automl::v1::GetAnnotationSpecRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetAnnotationSpec(context, request);
 }
 
@@ -104,14 +108,14 @@ AutoMlMetadata::AsyncCreateModel(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::automl::v1::CreateModelRequest const& request) {
-  SetMetadata(*context, "parent=" + request.parent());
+  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
   return child_->AsyncCreateModel(cq, std::move(context), request);
 }
 
 StatusOr<google::cloud::automl::v1::Model> AutoMlMetadata::GetModel(
     grpc::ClientContext& context,
     google::cloud::automl::v1::GetModelRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetModel(context, request);
 }
 
@@ -119,7 +123,7 @@ StatusOr<google::cloud::automl::v1::ListModelsResponse>
 AutoMlMetadata::ListModels(
     grpc::ClientContext& context,
     google::cloud::automl::v1::ListModelsRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListModels(context, request);
 }
 
@@ -128,14 +132,14 @@ AutoMlMetadata::AsyncDeleteModel(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::automl::v1::DeleteModelRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncDeleteModel(cq, std::move(context), request);
 }
 
 StatusOr<google::cloud::automl::v1::Model> AutoMlMetadata::UpdateModel(
     grpc::ClientContext& context,
     google::cloud::automl::v1::UpdateModelRequest const& request) {
-  SetMetadata(context, "model.name=" + request.model().name());
+  SetMetadata(context, absl::StrCat("model.name=", request.model().name()));
   return child_->UpdateModel(context, request);
 }
 
@@ -144,7 +148,7 @@ AutoMlMetadata::AsyncDeployModel(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::automl::v1::DeployModelRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncDeployModel(cq, std::move(context), request);
 }
 
@@ -153,7 +157,7 @@ AutoMlMetadata::AsyncUndeployModel(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::automl::v1::UndeployModelRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncUndeployModel(cq, std::move(context), request);
 }
 
@@ -162,7 +166,7 @@ AutoMlMetadata::AsyncExportModel(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::automl::v1::ExportModelRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncExportModel(cq, std::move(context), request);
 }
 
@@ -170,7 +174,7 @@ StatusOr<google::cloud::automl::v1::ModelEvaluation>
 AutoMlMetadata::GetModelEvaluation(
     grpc::ClientContext& context,
     google::cloud::automl::v1::GetModelEvaluationRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetModelEvaluation(context, request);
 }
 
@@ -178,7 +182,7 @@ StatusOr<google::cloud::automl::v1::ListModelEvaluationsResponse>
 AutoMlMetadata::ListModelEvaluations(
     grpc::ClientContext& context,
     google::cloud::automl::v1::ListModelEvaluationsRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListModelEvaluations(context, request);
 }
 
@@ -206,6 +210,9 @@ void AutoMlMetadata::SetMetadata(grpc::ClientContext& context,
 }
 
 void AutoMlMetadata::SetMetadata(grpc::ClientContext& context) {
+  for (auto const& kv : fixed_metadata_) {
+    context.AddMetadata(kv.first, kv.second);
+  }
   context.AddMetadata("x-goog-api-client", api_client_header_);
   auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {

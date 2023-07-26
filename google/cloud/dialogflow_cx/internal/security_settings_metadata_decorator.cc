@@ -18,6 +18,7 @@
 
 #include "google/cloud/dialogflow_cx/internal/security_settings_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/dialogflow/cx/v3/security_settings.grpc.pb.h>
@@ -29,8 +30,10 @@ namespace dialogflow_cx_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 SecuritySettingsServiceMetadata::SecuritySettingsServiceMetadata(
-    std::shared_ptr<SecuritySettingsServiceStub> child)
+    std::shared_ptr<SecuritySettingsServiceStub> child,
+    std::multimap<std::string, std::string> fixed_metadata)
     : child_(std::move(child)),
+      fixed_metadata_(std::move(fixed_metadata)),
       api_client_header_(
           google::cloud::internal::ApiClientHeader("generator")) {}
 
@@ -39,7 +42,7 @@ SecuritySettingsServiceMetadata::CreateSecuritySettings(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::CreateSecuritySettingsRequest const&
         request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->CreateSecuritySettings(context, request);
 }
 
@@ -48,7 +51,7 @@ SecuritySettingsServiceMetadata::GetSecuritySettings(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::GetSecuritySettingsRequest const&
         request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetSecuritySettings(context, request);
 }
 
@@ -57,8 +60,8 @@ SecuritySettingsServiceMetadata::UpdateSecuritySettings(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::UpdateSecuritySettingsRequest const&
         request) {
-  SetMetadata(context,
-              "security_settings.name=" + request.security_settings().name());
+  SetMetadata(context, absl::StrCat("security_settings.name=",
+                                    request.security_settings().name()));
   return child_->UpdateSecuritySettings(context, request);
 }
 
@@ -67,7 +70,7 @@ SecuritySettingsServiceMetadata::ListSecuritySettings(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::ListSecuritySettingsRequest const&
         request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListSecuritySettings(context, request);
 }
 
@@ -75,7 +78,7 @@ Status SecuritySettingsServiceMetadata::DeleteSecuritySettings(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::DeleteSecuritySettingsRequest const&
         request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->DeleteSecuritySettings(context, request);
 }
 
@@ -87,6 +90,9 @@ void SecuritySettingsServiceMetadata::SetMetadata(
 
 void SecuritySettingsServiceMetadata::SetMetadata(
     grpc::ClientContext& context) {
+  for (auto const& kv : fixed_metadata_) {
+    context.AddMetadata(kv.first, kv.second);
+  }
   context.AddMetadata("x-goog-api-client", api_client_header_);
   auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {

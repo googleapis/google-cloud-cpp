@@ -40,7 +40,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * While the example showcases types from the BigQuery library, the underlying
  * principles apply for any pair of `*Client` and `*Connection`.
  *
- * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
+ * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
 class MockEnvironmentsConnection : public composer_v1::EnvironmentsConnection {
  public:
@@ -84,6 +84,27 @@ class MockEnvironmentsConnection : public composer_v1::EnvironmentsConnection {
                    DeleteEnvironmentRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::orchestration::airflow::service::v1::
+                           ExecuteAirflowCommandResponse>,
+              ExecuteAirflowCommand,
+              (google::cloud::orchestration::airflow::service::v1::
+                   ExecuteAirflowCommandRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::orchestration::airflow::service::v1::
+                           StopAirflowCommandResponse>,
+              StopAirflowCommand,
+              (google::cloud::orchestration::airflow::service::v1::
+                   StopAirflowCommandRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::orchestration::airflow::service::v1::
+                           PollAirflowCommandResponse>,
+              PollAirflowCommand,
+              (google::cloud::orchestration::airflow::service::v1::
+                   PollAirflowCommandRequest const& request),
+              (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::orchestration::airflow::service::
                                   v1::SaveSnapshotResponse>>,
               SaveSnapshot,
@@ -96,6 +117,20 @@ class MockEnvironmentsConnection : public composer_v1::EnvironmentsConnection {
               LoadSnapshot,
               (google::cloud::orchestration::airflow::service::v1::
                    LoadSnapshotRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::orchestration::airflow::service::
+                                  v1::DatabaseFailoverResponse>>,
+              DatabaseFailover,
+              (google::cloud::orchestration::airflow::service::v1::
+                   DatabaseFailoverRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::orchestration::airflow::service::v1::
+                           FetchDatabasePropertiesResponse>,
+              FetchDatabaseProperties,
+              (google::cloud::orchestration::airflow::service::v1::
+                   FetchDatabasePropertiesRequest const& request),
               (override));
 };
 

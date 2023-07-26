@@ -28,19 +28,13 @@ functions of the class. This library groups multiple gRPC services because they
 are part of the same product or are often used together. A typical example may
 be the administrative and data plane operations for a single product.
 
-The library also has other classes that provide helpers, retry policies,
-configuration parameters, and infrastructure to mock the `*Client` classes
-when testing your application.
+The library also has other classes that provide helpers, configuration
+parameters, and infrastructure to mock the `*Client` classes when testing your
+application.
 
 - [\c containeranalysis_v1::ContainerAnalysisClient](@ref google::cloud::containeranalysis_v1::ContainerAnalysisClient)
 - [\c containeranalysis_v1::GrafeasClient](@ref google::cloud::containeranalysis_v1::GrafeasClient)
 <!-- inject-client-list-end -->
-
-## Retry, Backoff, and Idempotency Policies.
-
-The library automatically retries requests that fail with transient errors, and
-uses [exponential backoff] to backoff between retries. Application developers
-can override the default policies.
 
 ## More Information
 
@@ -49,8 +43,10 @@ can override the default policies.
   endpoint.
 - @ref containeranalysis-override-authentication - describes how to change the
   authentication credentials used by the library.
+- @ref containeranalysis-override-retry - describes how to change the default retry
+  policies.
+- @ref containeranalysis-env - describes environment variables that can configure the behavior of the library.
 
 [cloud-service-docs]: https://cloud.google.com/container-analysis
-[exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff
 
 */

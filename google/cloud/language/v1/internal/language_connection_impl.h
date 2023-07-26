@@ -68,6 +68,9 @@ class LanguageServiceConnectionImpl
   StatusOr<google::cloud::language::v1::ClassifyTextResponse> ClassifyText(
       google::cloud::language::v1::ClassifyTextRequest const& request) override;
 
+  StatusOr<google::cloud::language::v1::ModerateTextResponse> ModerateText(
+      google::cloud::language::v1::ModerateTextRequest const& request) override;
+
   StatusOr<google::cloud::language::v1::AnnotateTextResponse> AnnotateText(
       google::cloud::language::v1::AnnotateTextRequest const& request) override;
 

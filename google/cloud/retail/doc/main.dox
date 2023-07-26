@@ -28,23 +28,20 @@ functions of the class. This library groups multiple gRPC services because they
 are part of the same product or are often used together. A typical example may
 be the administrative and data plane operations for a single product.
 
-The library also has other classes that provide helpers, retry policies,
-configuration parameters, and infrastructure to mock the `*Client` classes
-when testing your application.
+The library also has other classes that provide helpers, configuration
+parameters, and infrastructure to mock the `*Client` classes when testing your
+application.
 
 - [\c retail_v2::CatalogServiceClient](@ref google::cloud::retail_v2::CatalogServiceClient)
 - [\c retail_v2::CompletionServiceClient](@ref google::cloud::retail_v2::CompletionServiceClient)
+- [\c retail_v2::ControlServiceClient](@ref google::cloud::retail_v2::ControlServiceClient)
+- [\c retail_v2::ModelServiceClient](@ref google::cloud::retail_v2::ModelServiceClient)
 - [\c retail_v2::PredictionServiceClient](@ref google::cloud::retail_v2::PredictionServiceClient)
 - [\c retail_v2::ProductServiceClient](@ref google::cloud::retail_v2::ProductServiceClient)
 - [\c retail_v2::SearchServiceClient](@ref google::cloud::retail_v2::SearchServiceClient)
+- [\c retail_v2::ServingConfigServiceClient](@ref google::cloud::retail_v2::ServingConfigServiceClient)
 - [\c retail_v2::UserEventServiceClient](@ref google::cloud::retail_v2::UserEventServiceClient)
 <!-- inject-client-list-end -->
-
-## Retry, Backoff, and Idempotency Policies.
-
-The library automatically retries requests that fail with transient errors, and
-uses [exponential backoff] to backoff between retries. Application developers
-can override the default policies.
 
 ## More Information
 
@@ -53,8 +50,10 @@ can override the default policies.
   endpoint.
 - @ref retail-override-authentication - describes how to change the
   authentication credentials used by the library.
+- @ref retail-override-retry - describes how to change the default retry
+  policies.
+- @ref retail-env - describes environment variables that can configure the behavior of the library.
 
 [cloud-service-docs]: https://cloud.google.com/retail/docs
-[exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff
 
 */

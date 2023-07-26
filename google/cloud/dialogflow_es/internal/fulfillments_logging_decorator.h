@@ -36,7 +36,7 @@ class FulfillmentsLogging : public FulfillmentsStub {
   ~FulfillmentsLogging() override = default;
   FulfillmentsLogging(std::shared_ptr<FulfillmentsStub> child,
                       TracingOptions tracing_options,
-                      std::set<std::string> components);
+                      std::set<std::string> const& components);
 
   StatusOr<google::cloud::dialogflow::v2::Fulfillment> GetFulfillment(
       grpc::ClientContext& context,
@@ -51,7 +51,7 @@ class FulfillmentsLogging : public FulfillmentsStub {
  private:
   std::shared_ptr<FulfillmentsStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // FulfillmentsLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

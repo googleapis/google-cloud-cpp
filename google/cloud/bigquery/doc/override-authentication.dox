@@ -14,6 +14,7 @@ The following example shows how to explicitly load a service account key file:
 Follow these links to find examples for other \c *Client classes:
 
 - [\c bigquery_analyticshub_v1::AnalyticsHubServiceClient](@ref bigquery_analyticshub_v1::AnalyticsHubServiceClient-service-account-snippet)
+- [\c bigquery_biglake_v1::MetastoreServiceClient](@ref bigquery_biglake_v1::MetastoreServiceClient-service-account-snippet)
 - [\c bigquery_connection_v1::ConnectionServiceClient](@ref bigquery_connection_v1::ConnectionServiceClient-service-account-snippet)
 - [\c bigquery_datapolicies_v1::DataPolicyServiceClient](@ref bigquery_datapolicies_v1::DataPolicyServiceClient-service-account-snippet)
 - [\c bigquery_datatransfer_v1::DataTransferServiceClient](@ref bigquery_datatransfer_v1::DataTransferServiceClient-service-account-snippet)
@@ -41,6 +42,12 @@ guide for more details.
 /*! @page bigquery_analyticshub_v1::AnalyticsHubServiceClient-service-account-snippet Override bigquery_analyticshub_v1::AnalyticsHubServiceClient Authentication Defaults
 
 @snippet google/cloud/bigquery/analyticshub/v1/samples/analytics_hub_client_samples.cc with-service-account
+
+*/
+
+/*! @page bigquery_biglake_v1::MetastoreServiceClient-service-account-snippet Override bigquery_biglake_v1::MetastoreServiceClient Authentication Defaults
+
+@snippet google/cloud/bigquery/biglake/v1/samples/metastore_client_samples.cc with-service-account
 
 */
 

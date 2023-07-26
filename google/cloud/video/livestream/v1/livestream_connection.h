@@ -23,6 +23,7 @@
 #include "google/cloud/video/livestream/v1/livestream_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
+#include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -37,17 +38,135 @@ namespace cloud {
 namespace video_livestream_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using LivestreamServiceRetryPolicy =
-    ::google::cloud::internal::TraitBasedRetryPolicy<
-        video_livestream_v1_internal::LivestreamServiceRetryTraits>;
+/// The retry policy for `LivestreamServiceConnection`.
+class LivestreamServiceRetryPolicy : public ::google::cloud::RetryPolicy {
+ public:
+  /// Creates a new instance of the policy, reset to the initial state.
+  virtual std::unique_ptr<LivestreamServiceRetryPolicy> clone() const = 0;
+};
 
-using LivestreamServiceLimitedTimeRetryPolicy =
-    ::google::cloud::internal::LimitedTimeRetryPolicy<
-        video_livestream_v1_internal::LivestreamServiceRetryTraits>;
+/**
+ * A retry policy for `LivestreamServiceConnection` based on counting errors.
+ *
+ * This policy stops retrying if:
+ * - An RPC returns a non-transient error.
+ * - More than a prescribed number of transient failures is detected.
+ *
+ * In this class the following status codes are treated as transient errors:
+ * - [`kUnavailable`](@ref google::cloud::StatusCode)
+ */
+class LivestreamServiceLimitedErrorCountRetryPolicy
+    : public LivestreamServiceRetryPolicy {
+ public:
+  /**
+   * Create an instance that tolerates up to @p maximum_failures transient
+   * errors.
+   *
+   * @note Disable the retry loop by providing an instance of this policy with
+   *     @p maximum_failures == 0.
+   */
+  explicit LivestreamServiceLimitedErrorCountRetryPolicy(int maximum_failures)
+      : impl_(maximum_failures) {}
 
-using LivestreamServiceLimitedErrorCountRetryPolicy =
-    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        video_livestream_v1_internal::LivestreamServiceRetryTraits>;
+  LivestreamServiceLimitedErrorCountRetryPolicy(
+      LivestreamServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
+      : LivestreamServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+  LivestreamServiceLimitedErrorCountRetryPolicy(
+      LivestreamServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
+      : LivestreamServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+
+  int maximum_failures() const { return impl_.maximum_failures(); }
+
+  bool OnFailure(Status const& status) override {
+    return impl_.OnFailure(status);
+  }
+  bool IsExhausted() const override { return impl_.IsExhausted(); }
+  bool IsPermanentFailure(Status const& status) const override {
+    return impl_.IsPermanentFailure(status);
+  }
+  std::unique_ptr<LivestreamServiceRetryPolicy> clone() const override {
+    return std::make_unique<LivestreamServiceLimitedErrorCountRetryPolicy>(
+        maximum_failures());
+  }
+
+  // This is provided only for backwards compatibility.
+  using BaseType = LivestreamServiceRetryPolicy;
+
+ private:
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      video_livestream_v1_internal::LivestreamServiceRetryTraits>
+      impl_;
+};
+
+/**
+ * A retry policy for `LivestreamServiceConnection` based on elapsed time.
+ *
+ * This policy stops retrying if:
+ * - An RPC returns a non-transient error.
+ * - The elapsed time in the retry loop exceeds a prescribed duration.
+ *
+ * In this class the following status codes are treated as transient errors:
+ * - [`kUnavailable`](@ref google::cloud::StatusCode)
+ */
+class LivestreamServiceLimitedTimeRetryPolicy
+    : public LivestreamServiceRetryPolicy {
+ public:
+  /**
+   * Constructor given a `std::chrono::duration<>` object.
+   *
+   * @tparam DurationRep a placeholder to match the `Rep` tparam for @p
+   *     duration's type. The semantics of this template parameter are
+   *     documented in `std::chrono::duration<>`. In brief, the underlying
+   *     arithmetic type used to store the number of ticks. For our purposes it
+   *     is simply a formal parameter.
+   * @tparam DurationPeriod a placeholder to match the `Period` tparam for @p
+   *     duration's type. The semantics of this template parameter are
+   *     documented in `std::chrono::duration<>`. In brief, the length of the
+   *     tick in seconds, expressed as a `std::ratio<>`. For our purposes it is
+   *     simply a formal parameter.
+   * @param maximum_duration the maximum time allowed before the policy expires.
+   *     While the application can express this time in any units they desire,
+   *     the class truncates to milliseconds.
+   *
+   * @see https://en.cppreference.com/w/cpp/chrono/duration for more information
+   *     about `std::chrono::duration`.
+   */
+  template <typename DurationRep, typename DurationPeriod>
+  explicit LivestreamServiceLimitedTimeRetryPolicy(
+      std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
+      : impl_(maximum_duration) {}
+
+  LivestreamServiceLimitedTimeRetryPolicy(
+      LivestreamServiceLimitedTimeRetryPolicy&& rhs) noexcept
+      : LivestreamServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  LivestreamServiceLimitedTimeRetryPolicy(
+      LivestreamServiceLimitedTimeRetryPolicy const& rhs) noexcept
+      : LivestreamServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+
+  std::chrono::milliseconds maximum_duration() const {
+    return impl_.maximum_duration();
+  }
+
+  bool OnFailure(Status const& status) override {
+    return impl_.OnFailure(status);
+  }
+  bool IsExhausted() const override { return impl_.IsExhausted(); }
+  bool IsPermanentFailure(Status const& status) const override {
+    return impl_.IsPermanentFailure(status);
+  }
+  std::unique_ptr<LivestreamServiceRetryPolicy> clone() const override {
+    return std::make_unique<LivestreamServiceLimitedTimeRetryPolicy>(
+        maximum_duration());
+  }
+
+  // This is provided only for backwards compatibility.
+  using BaseType = LivestreamServiceRetryPolicy;
+
+ private:
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      video_livestream_v1_internal::LivestreamServiceRetryTraits>
+      impl_;
+};
 
 /**
  * The `LivestreamServiceConnection` object for `LivestreamServiceClient`.
@@ -131,6 +250,28 @@ class LivestreamServiceConnection {
 
   virtual Status DeleteEvent(
       google::cloud::video::livestream::v1::DeleteEventRequest const& request);
+
+  virtual future<StatusOr<google::cloud::video::livestream::v1::Asset>>
+  CreateAsset(
+      google::cloud::video::livestream::v1::CreateAssetRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
+  DeleteAsset(
+      google::cloud::video::livestream::v1::DeleteAssetRequest const& request);
+
+  virtual StatusOr<google::cloud::video::livestream::v1::Asset> GetAsset(
+      google::cloud::video::livestream::v1::GetAssetRequest const& request);
+
+  virtual StreamRange<google::cloud::video::livestream::v1::Asset> ListAssets(
+      google::cloud::video::livestream::v1::ListAssetsRequest request);
+
+  virtual StatusOr<google::cloud::video::livestream::v1::Pool> GetPool(
+      google::cloud::video::livestream::v1::GetPoolRequest const& request);
+
+  virtual future<StatusOr<google::cloud::video::livestream::v1::Pool>>
+  UpdatePool(
+      google::cloud::video::livestream::v1::UpdatePoolRequest const& request);
 };
 
 /**

@@ -1,0 +1,14 @@
+{
+    "api_id": "bigtable.googleapis.com",
+    "api_shortname": "bigtable",
+    "client_documentation": "https://cloud.google.com/cpp/docs/reference/bigtable/latest",
+    "distribution_name": "google-cloud-cpp",
+    "issue_tracker": "https://issuetracker.google.com/savedsearches/559777",
+    "language": "cpp",
+    "library_type": "GAPIC_COMBO",
+    "name_pretty": "Cloud Bigtable API",
+    "product_documentation": "https://cloud.google.com/bigtable/docs",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-cpp",
+    "requires_billing": true
+}

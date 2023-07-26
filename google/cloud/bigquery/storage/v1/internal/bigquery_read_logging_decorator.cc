@@ -30,10 +30,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 BigQueryReadLogging::BigQueryReadLogging(
     std::shared_ptr<BigQueryReadStub> child, TracingOptions tracing_options,
-    std::set<std::string> components)
+    std::set<std::string> const& components)
     : child_(std::move(child)),
       tracing_options_(std::move(tracing_options)),
-      components_(std::move(components)) {}
+      stream_logging_(components.find("rpc-streams") != components.end()) {}
 
 StatusOr<google::cloud::bigquery::storage::v1::ReadSession>
 BigQueryReadLogging::CreateReadSession(
@@ -60,7 +60,7 @@ BigQueryReadLogging::ReadRows(
           -> std::unique_ptr<google::cloud::internal::StreamingReadRpc<
               google::cloud::bigquery::storage::v1::ReadRowsResponse>> {
         auto stream = child_->ReadRows(std::move(context), request);
-        if (components_.count("rpc-streams") > 0) {
+        if (stream_logging_) {
           stream =
               std::make_unique<google::cloud::internal::StreamingReadRpcLogging<
                   google::cloud::bigquery::storage::v1::ReadRowsResponse>>(

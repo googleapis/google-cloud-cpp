@@ -29,10 +29,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ClusterManagerLogging::ClusterManagerLogging(
     std::shared_ptr<ClusterManagerStub> child, TracingOptions tracing_options,
-    std::set<std::string> components)
+    std::set<std::string> const& components)
     : child_(std::move(child)),
       tracing_options_(std::move(tracing_options)),
-      components_(std::move(components)) {}
+      stream_logging_(components.find("rpc-streams") != components.end()) {}
 
 StatusOr<google::container::v1::ListClustersResponse>
 ClusterManagerLogging::ListClusters(
@@ -420,6 +420,19 @@ ClusterManagerLogging::ListUsableSubnetworks(
           grpc::ClientContext& context,
           google::container::v1::ListUsableSubnetworksRequest const& request) {
         return child_->ListUsableSubnetworks(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::container::v1::CheckAutopilotCompatibilityResponse>
+ClusterManagerLogging::CheckAutopilotCompatibility(
+    grpc::ClientContext& context,
+    google::container::v1::CheckAutopilotCompatibilityRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::container::v1::CheckAutopilotCompatibilityRequest const&
+                 request) {
+        return child_->CheckAutopilotCompatibility(context, request);
       },
       context, request, __func__, tracing_options_);
 }

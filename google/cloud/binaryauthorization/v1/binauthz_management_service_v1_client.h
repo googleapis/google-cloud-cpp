@@ -101,342 +101,476 @@ class BinauthzManagementServiceV1Client {
   }
   ///@}
 
+  // clang-format off
   ///
-  /// A [policy][google.cloud.binaryauthorization.v1.Policy] specifies the
-  /// [attestors][google.cloud.binaryauthorization.v1.Attestor] that must attest
-  /// to a container image, before the project is allowed to deploy that image.
-  /// There is at most one policy per project. All image admission requests are
-  /// permitted if a project has no policy.
+  /// A [policy][google.cloud.binaryauthorization.v1.Policy] specifies the [attestors][google.cloud.binaryauthorization.v1.Attestor] that must attest to
+  /// a container image, before the project is allowed to deploy that
+  /// image. There is at most one policy per project. All image admission
+  /// requests are permitted if a project has no policy.
   ///
-  /// Gets the [policy][google.cloud.binaryauthorization.v1.Policy] for this
-  /// project. Returns a default
-  /// [policy][google.cloud.binaryauthorization.v1.Policy] if the project does
-  /// not have one.
+  /// Gets the [policy][google.cloud.binaryauthorization.v1.Policy] for this project. Returns a default
+  /// [policy][google.cloud.binaryauthorization.v1.Policy] if the project does not have one.
   ///
-  /// @param name  Required. The resource name of the
-  /// [policy][google.cloud.binaryauthorization.v1.Policy] to retrieve,
+  /// @param name  Required. The resource name of the [policy][google.cloud.binaryauthorization.v1.Policy] to retrieve,
   ///  in the format `projects/*/policy`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::binaryauthorization::v1::Policy,google/cloud/binaryauthorization/v1/resources.proto#L32}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.binaryauthorization.v1.Policy])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.binaryauthorization.v1.Attestor]:
-  /// @googleapis_reference_link{google/cloud/binaryauthorization/v1/resources.proto#L168}
-  /// [google.cloud.binaryauthorization.v1.GetPolicyRequest]:
-  /// @googleapis_reference_link{google/cloud/binaryauthorization/v1/service.proto#L155}
-  /// [google.cloud.binaryauthorization.v1.Policy]:
-  /// @googleapis_reference_link{google/cloud/binaryauthorization/v1/resources.proto#L32}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.binaryauthorization.v1.Attestor]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/resources.proto#L168}
+  /// [google.cloud.binaryauthorization.v1.GetPolicyRequest]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/service.proto#L155}
+  /// [google.cloud.binaryauthorization.v1.Policy]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/resources.proto#L32}
   ///
+  // clang-format on
   StatusOr<google::cloud::binaryauthorization::v1::Policy> GetPolicy(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
-  /// A [policy][google.cloud.binaryauthorization.v1.Policy] specifies the
-  /// [attestors][google.cloud.binaryauthorization.v1.Attestor] that must attest
-  /// to a container image, before the project is allowed to deploy that image.
-  /// There is at most one policy per project. All image admission requests are
-  /// permitted if a project has no policy.
+  /// A [policy][google.cloud.binaryauthorization.v1.Policy] specifies the [attestors][google.cloud.binaryauthorization.v1.Attestor] that must attest to
+  /// a container image, before the project is allowed to deploy that
+  /// image. There is at most one policy per project. All image admission
+  /// requests are permitted if a project has no policy.
   ///
-  /// Gets the [policy][google.cloud.binaryauthorization.v1.Policy] for this
-  /// project. Returns a default
-  /// [policy][google.cloud.binaryauthorization.v1.Policy] if the project does
-  /// not have one.
+  /// Gets the [policy][google.cloud.binaryauthorization.v1.Policy] for this project. Returns a default
+  /// [policy][google.cloud.binaryauthorization.v1.Policy] if the project does not have one.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::binaryauthorization::v1::GetPolicyRequest,google/cloud/binaryauthorization/v1/service.proto#L155}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.binaryauthorization.v1.GetPolicyRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::binaryauthorization::v1::Policy,google/cloud/binaryauthorization/v1/resources.proto#L32}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.binaryauthorization.v1.Policy])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.binaryauthorization.v1.Attestor]:
-  /// @googleapis_reference_link{google/cloud/binaryauthorization/v1/resources.proto#L168}
-  /// [google.cloud.binaryauthorization.v1.GetPolicyRequest]:
-  /// @googleapis_reference_link{google/cloud/binaryauthorization/v1/service.proto#L155}
-  /// [google.cloud.binaryauthorization.v1.Policy]:
-  /// @googleapis_reference_link{google/cloud/binaryauthorization/v1/resources.proto#L32}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.binaryauthorization.v1.Attestor]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/resources.proto#L168}
+  /// [google.cloud.binaryauthorization.v1.GetPolicyRequest]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/service.proto#L155}
+  /// [google.cloud.binaryauthorization.v1.Policy]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/resources.proto#L32}
   ///
+  // clang-format on
   StatusOr<google::cloud::binaryauthorization::v1::Policy> GetPolicy(
       google::cloud::binaryauthorization::v1::GetPolicyRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
-  /// Creates or updates a project's
-  /// [policy][google.cloud.binaryauthorization.v1.Policy], and returns a copy
-  /// of the new [policy][google.cloud.binaryauthorization.v1.Policy]. A policy
-  /// is always updated as a whole, to avoid race conditions with concurrent
-  /// policy enforcement (or management!) requests. Returns NOT_FOUND if the
-  /// project does not exist, INVALID_ARGUMENT if the request is malformed.
+  /// Creates or updates a project's [policy][google.cloud.binaryauthorization.v1.Policy], and returns a copy of the
+  /// new [policy][google.cloud.binaryauthorization.v1.Policy]. A policy is always updated as a whole, to avoid race
+  /// conditions with concurrent policy enforcement (or management!)
+  /// requests. Returns NOT_FOUND if the project does not exist, INVALID_ARGUMENT
+  /// if the request is malformed.
   ///
-  /// @param policy  Required. A new or updated
-  /// [policy][google.cloud.binaryauthorization.v1.Policy] value. The service
-  /// will
-  ///  overwrite the [policy
-  ///  name][google.cloud.binaryauthorization.v1.Policy.name] field with the
-  ///  resource name in the request URL, in the format `projects/*/policy`.
+  /// @param policy  Required. A new or updated [policy][google.cloud.binaryauthorization.v1.Policy] value. The service will
+  ///  overwrite the [policy name][google.cloud.binaryauthorization.v1.Policy.name] field with the resource name in
+  ///  the request URL, in the format `projects/*/policy`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::binaryauthorization::v1::Policy,google/cloud/binaryauthorization/v1/resources.proto#L32}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.binaryauthorization.v1.Policy])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.binaryauthorization.v1.Policy]:
-  /// @googleapis_reference_link{google/cloud/binaryauthorization/v1/resources.proto#L32}
-  /// [google.cloud.binaryauthorization.v1.UpdatePolicyRequest]:
-  /// @googleapis_reference_link{google/cloud/binaryauthorization/v1/service.proto#L167}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.binaryauthorization.v1.Policy]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/resources.proto#L32}
+  /// [google.cloud.binaryauthorization.v1.UpdatePolicyRequest]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/service.proto#L167}
   ///
+  // clang-format on
   StatusOr<google::cloud::binaryauthorization::v1::Policy> UpdatePolicy(
       google::cloud::binaryauthorization::v1::Policy const& policy,
       Options opts = {});
 
+  // clang-format off
   ///
-  /// Creates or updates a project's
-  /// [policy][google.cloud.binaryauthorization.v1.Policy], and returns a copy
-  /// of the new [policy][google.cloud.binaryauthorization.v1.Policy]. A policy
-  /// is always updated as a whole, to avoid race conditions with concurrent
-  /// policy enforcement (or management!) requests. Returns NOT_FOUND if the
-  /// project does not exist, INVALID_ARGUMENT if the request is malformed.
+  /// Creates or updates a project's [policy][google.cloud.binaryauthorization.v1.Policy], and returns a copy of the
+  /// new [policy][google.cloud.binaryauthorization.v1.Policy]. A policy is always updated as a whole, to avoid race
+  /// conditions with concurrent policy enforcement (or management!)
+  /// requests. Returns NOT_FOUND if the project does not exist, INVALID_ARGUMENT
+  /// if the request is malformed.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::binaryauthorization::v1::UpdatePolicyRequest,google/cloud/binaryauthorization/v1/service.proto#L167}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.binaryauthorization.v1.UpdatePolicyRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::binaryauthorization::v1::Policy,google/cloud/binaryauthorization/v1/resources.proto#L32}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.binaryauthorization.v1.Policy])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.binaryauthorization.v1.Policy]:
-  /// @googleapis_reference_link{google/cloud/binaryauthorization/v1/resources.proto#L32}
-  /// [google.cloud.binaryauthorization.v1.UpdatePolicyRequest]:
-  /// @googleapis_reference_link{google/cloud/binaryauthorization/v1/service.proto#L167}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.binaryauthorization.v1.Policy]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/resources.proto#L32}
+  /// [google.cloud.binaryauthorization.v1.UpdatePolicyRequest]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/service.proto#L167}
   ///
+  // clang-format on
   StatusOr<google::cloud::binaryauthorization::v1::Policy> UpdatePolicy(
       google::cloud::binaryauthorization::v1::UpdatePolicyRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
-  /// Creates an [attestor][google.cloud.binaryauthorization.v1.Attestor], and
-  /// returns a copy of the new
-  /// [attestor][google.cloud.binaryauthorization.v1.Attestor]. Returns
-  /// NOT_FOUND if the project does not exist, INVALID_ARGUMENT if the request
-  /// is malformed, ALREADY_EXISTS if the
+  /// Creates an [attestor][google.cloud.binaryauthorization.v1.Attestor], and returns a copy of the new
+  /// [attestor][google.cloud.binaryauthorization.v1.Attestor]. Returns NOT_FOUND if the project does not exist,
+  /// INVALID_ARGUMENT if the request is malformed, ALREADY_EXISTS if the
   /// [attestor][google.cloud.binaryauthorization.v1.Attestor] already exists.
   ///
-  /// @param parent  Required. The parent of this
-  /// [attestor][google.cloud.binaryauthorization.v1.Attestor].
-  /// @param attestor_id  Required. The
-  /// [attestors][google.cloud.binaryauthorization.v1.Attestor] ID.
-  /// @param attestor  Required. The initial
-  /// [attestor][google.cloud.binaryauthorization.v1.Attestor] value. The
-  /// service will
-  ///  overwrite the [attestor
-  ///  name][google.cloud.binaryauthorization.v1.Attestor.name] field with the
-  ///  resource name, in the format `projects/*/attestors/*`.
+  /// @param parent  Required. The parent of this [attestor][google.cloud.binaryauthorization.v1.Attestor].
+  /// @param attestor_id  Required. The [attestors][google.cloud.binaryauthorization.v1.Attestor] ID.
+  /// @param attestor  Required. The initial [attestor][google.cloud.binaryauthorization.v1.Attestor] value. The service will
+  ///  overwrite the [attestor name][google.cloud.binaryauthorization.v1.Attestor.name] field with the resource name,
+  ///  in the format `projects/*/attestors/*`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::binaryauthorization::v1::Attestor,google/cloud/binaryauthorization/v1/resources.proto#L168}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.binaryauthorization.v1.Attestor])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.binaryauthorization.v1.Attestor]:
-  /// @googleapis_reference_link{google/cloud/binaryauthorization/v1/resources.proto#L168}
-  /// [google.cloud.binaryauthorization.v1.CreateAttestorRequest]:
-  /// @googleapis_reference_link{google/cloud/binaryauthorization/v1/service.proto#L175}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.binaryauthorization.v1.Attestor]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/resources.proto#L168}
+  /// [google.cloud.binaryauthorization.v1.CreateAttestorRequest]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/service.proto#L175}
   ///
+  // clang-format on
   StatusOr<google::cloud::binaryauthorization::v1::Attestor> CreateAttestor(
       std::string const& parent, std::string const& attestor_id,
       google::cloud::binaryauthorization::v1::Attestor const& attestor,
       Options opts = {});
 
+  // clang-format off
   ///
-  /// Creates an [attestor][google.cloud.binaryauthorization.v1.Attestor], and
-  /// returns a copy of the new
-  /// [attestor][google.cloud.binaryauthorization.v1.Attestor]. Returns
-  /// NOT_FOUND if the project does not exist, INVALID_ARGUMENT if the request
-  /// is malformed, ALREADY_EXISTS if the
+  /// Creates an [attestor][google.cloud.binaryauthorization.v1.Attestor], and returns a copy of the new
+  /// [attestor][google.cloud.binaryauthorization.v1.Attestor]. Returns NOT_FOUND if the project does not exist,
+  /// INVALID_ARGUMENT if the request is malformed, ALREADY_EXISTS if the
   /// [attestor][google.cloud.binaryauthorization.v1.Attestor] already exists.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::binaryauthorization::v1::CreateAttestorRequest,google/cloud/binaryauthorization/v1/service.proto#L175}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.binaryauthorization.v1.CreateAttestorRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::binaryauthorization::v1::Attestor,google/cloud/binaryauthorization/v1/resources.proto#L168}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.binaryauthorization.v1.Attestor])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.binaryauthorization.v1.Attestor]:
-  /// @googleapis_reference_link{google/cloud/binaryauthorization/v1/resources.proto#L168}
-  /// [google.cloud.binaryauthorization.v1.CreateAttestorRequest]:
-  /// @googleapis_reference_link{google/cloud/binaryauthorization/v1/service.proto#L175}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.binaryauthorization.v1.Attestor]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/resources.proto#L168}
+  /// [google.cloud.binaryauthorization.v1.CreateAttestorRequest]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/service.proto#L175}
   ///
+  // clang-format on
   StatusOr<google::cloud::binaryauthorization::v1::Attestor> CreateAttestor(
       google::cloud::binaryauthorization::v1::CreateAttestorRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Gets an [attestor][google.cloud.binaryauthorization.v1.Attestor].
-  /// Returns NOT_FOUND if the
-  /// [attestor][google.cloud.binaryauthorization.v1.Attestor] does not exist.
+  /// Returns NOT_FOUND if the [attestor][google.cloud.binaryauthorization.v1.Attestor] does not exist.
   ///
-  /// @param name  Required. The name of the
-  /// [attestor][google.cloud.binaryauthorization.v1.Attestor] to retrieve, in
-  /// the format
+  /// @param name  Required. The name of the [attestor][google.cloud.binaryauthorization.v1.Attestor] to retrieve, in the format
   ///  `projects/*/attestors/*`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::binaryauthorization::v1::Attestor,google/cloud/binaryauthorization/v1/resources.proto#L168}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.binaryauthorization.v1.Attestor])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.binaryauthorization.v1.Attestor]:
-  /// @googleapis_reference_link{google/cloud/binaryauthorization/v1/resources.proto#L168}
-  /// [google.cloud.binaryauthorization.v1.GetAttestorRequest]:
-  /// @googleapis_reference_link{google/cloud/binaryauthorization/v1/service.proto#L194}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.binaryauthorization.v1.Attestor]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/resources.proto#L168}
+  /// [google.cloud.binaryauthorization.v1.GetAttestorRequest]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/service.proto#L194}
   ///
+  // clang-format on
   StatusOr<google::cloud::binaryauthorization::v1::Attestor> GetAttestor(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Gets an [attestor][google.cloud.binaryauthorization.v1.Attestor].
-  /// Returns NOT_FOUND if the
-  /// [attestor][google.cloud.binaryauthorization.v1.Attestor] does not exist.
+  /// Returns NOT_FOUND if the [attestor][google.cloud.binaryauthorization.v1.Attestor] does not exist.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::binaryauthorization::v1::GetAttestorRequest,google/cloud/binaryauthorization/v1/service.proto#L194}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.binaryauthorization.v1.GetAttestorRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::binaryauthorization::v1::Attestor,google/cloud/binaryauthorization/v1/resources.proto#L168}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.binaryauthorization.v1.Attestor])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.binaryauthorization.v1.Attestor]:
-  /// @googleapis_reference_link{google/cloud/binaryauthorization/v1/resources.proto#L168}
-  /// [google.cloud.binaryauthorization.v1.GetAttestorRequest]:
-  /// @googleapis_reference_link{google/cloud/binaryauthorization/v1/service.proto#L194}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.binaryauthorization.v1.Attestor]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/resources.proto#L168}
+  /// [google.cloud.binaryauthorization.v1.GetAttestorRequest]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/service.proto#L194}
   ///
+  // clang-format on
   StatusOr<google::cloud::binaryauthorization::v1::Attestor> GetAttestor(
       google::cloud::binaryauthorization::v1::GetAttestorRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Updates an [attestor][google.cloud.binaryauthorization.v1.Attestor].
-  /// Returns NOT_FOUND if the
-  /// [attestor][google.cloud.binaryauthorization.v1.Attestor] does not exist.
+  /// Returns NOT_FOUND if the [attestor][google.cloud.binaryauthorization.v1.Attestor] does not exist.
   ///
-  /// @param attestor  Required. The updated
-  /// [attestor][google.cloud.binaryauthorization.v1.Attestor] value. The
-  /// service will
-  ///  overwrite the [attestor
-  ///  name][google.cloud.binaryauthorization.v1.Attestor.name] field with the
-  ///  resource name in the request URL, in the format `projects/*/attestors/*`.
+  /// @param attestor  Required. The updated [attestor][google.cloud.binaryauthorization.v1.Attestor] value. The service will
+  ///  overwrite the [attestor name][google.cloud.binaryauthorization.v1.Attestor.name] field with the resource name
+  ///  in the request URL, in the format `projects/*/attestors/*`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::binaryauthorization::v1::Attestor,google/cloud/binaryauthorization/v1/resources.proto#L168}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.binaryauthorization.v1.Attestor])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.binaryauthorization.v1.Attestor]:
-  /// @googleapis_reference_link{google/cloud/binaryauthorization/v1/resources.proto#L168}
-  /// [google.cloud.binaryauthorization.v1.UpdateAttestorRequest]:
-  /// @googleapis_reference_link{google/cloud/binaryauthorization/v1/service.proto#L206}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.binaryauthorization.v1.Attestor]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/resources.proto#L168}
+  /// [google.cloud.binaryauthorization.v1.UpdateAttestorRequest]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/service.proto#L206}
   ///
+  // clang-format on
   StatusOr<google::cloud::binaryauthorization::v1::Attestor> UpdateAttestor(
       google::cloud::binaryauthorization::v1::Attestor const& attestor,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Updates an [attestor][google.cloud.binaryauthorization.v1.Attestor].
-  /// Returns NOT_FOUND if the
-  /// [attestor][google.cloud.binaryauthorization.v1.Attestor] does not exist.
+  /// Returns NOT_FOUND if the [attestor][google.cloud.binaryauthorization.v1.Attestor] does not exist.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::binaryauthorization::v1::UpdateAttestorRequest,google/cloud/binaryauthorization/v1/service.proto#L206}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.binaryauthorization.v1.UpdateAttestorRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::binaryauthorization::v1::Attestor,google/cloud/binaryauthorization/v1/resources.proto#L168}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.binaryauthorization.v1.Attestor])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.binaryauthorization.v1.Attestor]:
-  /// @googleapis_reference_link{google/cloud/binaryauthorization/v1/resources.proto#L168}
-  /// [google.cloud.binaryauthorization.v1.UpdateAttestorRequest]:
-  /// @googleapis_reference_link{google/cloud/binaryauthorization/v1/service.proto#L206}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.binaryauthorization.v1.Attestor]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/resources.proto#L168}
+  /// [google.cloud.binaryauthorization.v1.UpdateAttestorRequest]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/service.proto#L206}
   ///
+  // clang-format on
   StatusOr<google::cloud::binaryauthorization::v1::Attestor> UpdateAttestor(
       google::cloud::binaryauthorization::v1::UpdateAttestorRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists [attestors][google.cloud.binaryauthorization.v1.Attestor].
   /// Returns INVALID_ARGUMENT if the project does not exist.
   ///
-  /// @param parent  Required. The resource name of the project associated with
-  /// the
-  ///  [attestors][google.cloud.binaryauthorization.v1.Attestor], in the format
-  ///  `projects/*`.
+  /// @param parent  Required. The resource name of the project associated with the
+  ///  [attestors][google.cloud.binaryauthorization.v1.Attestor], in the format `projects/*`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::binaryauthorization::v1::Attestor,google/cloud/binaryauthorization/v1/resources.proto#L168}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.binaryauthorization.v1.Attestor], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.binaryauthorization.v1.Attestor]:
-  /// @googleapis_reference_link{google/cloud/binaryauthorization/v1/resources.proto#L168}
-  /// [google.cloud.binaryauthorization.v1.ListAttestorsRequest]:
-  /// @googleapis_reference_link{google/cloud/binaryauthorization/v1/service.proto#L214}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.binaryauthorization.v1.Attestor]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/resources.proto#L168}
+  /// [google.cloud.binaryauthorization.v1.ListAttestorsRequest]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/service.proto#L214}
   ///
+  // clang-format on
   StreamRange<google::cloud::binaryauthorization::v1::Attestor> ListAttestors(
       std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Lists [attestors][google.cloud.binaryauthorization.v1.Attestor].
   /// Returns INVALID_ARGUMENT if the project does not exist.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::binaryauthorization::v1::ListAttestorsRequest,google/cloud/binaryauthorization/v1/service.proto#L214}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.binaryauthorization.v1.ListAttestorsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::binaryauthorization::v1::Attestor,google/cloud/binaryauthorization/v1/resources.proto#L168}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.binaryauthorization.v1.Attestor], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.binaryauthorization.v1.Attestor]:
-  /// @googleapis_reference_link{google/cloud/binaryauthorization/v1/resources.proto#L168}
-  /// [google.cloud.binaryauthorization.v1.ListAttestorsRequest]:
-  /// @googleapis_reference_link{google/cloud/binaryauthorization/v1/service.proto#L214}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.binaryauthorization.v1.Attestor]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/resources.proto#L168}
+  /// [google.cloud.binaryauthorization.v1.ListAttestorsRequest]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/service.proto#L214}
   ///
+  // clang-format on
   StreamRange<google::cloud::binaryauthorization::v1::Attestor> ListAttestors(
       google::cloud::binaryauthorization::v1::ListAttestorsRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
-  /// Deletes an [attestor][google.cloud.binaryauthorization.v1.Attestor].
-  /// Returns NOT_FOUND if the
+  /// Deletes an [attestor][google.cloud.binaryauthorization.v1.Attestor]. Returns NOT_FOUND if the
   /// [attestor][google.cloud.binaryauthorization.v1.Attestor] does not exist.
   ///
-  /// @param name  Required. The name of the
-  /// [attestors][google.cloud.binaryauthorization.v1.Attestor] to delete, in
-  /// the format
+  /// @param name  Required. The name of the [attestors][google.cloud.binaryauthorization.v1.Attestor] to delete, in the format
   ///  `projects/*/attestors/*`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.binaryauthorization.v1.Attestor]:
-  /// @googleapis_reference_link{google/cloud/binaryauthorization/v1/resources.proto#L168}
-  /// [google.cloud.binaryauthorization.v1.DeleteAttestorRequest]:
-  /// @googleapis_reference_link{google/cloud/binaryauthorization/v1/service.proto#L246}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.binaryauthorization.v1.Attestor]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/resources.proto#L168}
+  /// [google.cloud.binaryauthorization.v1.DeleteAttestorRequest]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/service.proto#L246}
   ///
+  // clang-format on
   Status DeleteAttestor(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
-  /// Deletes an [attestor][google.cloud.binaryauthorization.v1.Attestor].
-  /// Returns NOT_FOUND if the
+  /// Deletes an [attestor][google.cloud.binaryauthorization.v1.Attestor]. Returns NOT_FOUND if the
   /// [attestor][google.cloud.binaryauthorization.v1.Attestor] does not exist.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::binaryauthorization::v1::DeleteAttestorRequest,google/cloud/binaryauthorization/v1/service.proto#L246}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.binaryauthorization.v1.DeleteAttestorRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.binaryauthorization.v1.Attestor]:
-  /// @googleapis_reference_link{google/cloud/binaryauthorization/v1/resources.proto#L168}
-  /// [google.cloud.binaryauthorization.v1.DeleteAttestorRequest]:
-  /// @googleapis_reference_link{google/cloud/binaryauthorization/v1/service.proto#L246}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.binaryauthorization.v1.Attestor]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/resources.proto#L168}
+  /// [google.cloud.binaryauthorization.v1.DeleteAttestorRequest]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/service.proto#L246}
   ///
+  // clang-format on
   Status DeleteAttestor(
       google::cloud::binaryauthorization::v1::DeleteAttestorRequest const&
           request,

@@ -53,6 +53,8 @@ using ::testing::SetArgReferee;
 
 class ReadRowsParserMock : public bigtable::internal::ReadRowsParser {
  public:
+  explicit ReadRowsParserMock() : ReadRowsParser(false) {}
+
   MOCK_METHOD(void, HandleChunkHook,
               (ReadRowsResponse_CellChunk chunk, grpc::Status& status));
   void HandleChunk(ReadRowsResponse_CellChunk chunk,
@@ -93,10 +95,10 @@ class ReadRowsParserMockFactory
   void AddParser(ParserPtr parser) { parsers_.emplace_back(std::move(parser)); }
 
   MOCK_METHOD(void, CreateHook, ());
-  ParserPtr Create() override {
+  ParserPtr Create(bool reverse) override {
     CreateHook();
     if (parsers_.empty()) {
-      return std::make_unique<bigtable::internal::ReadRowsParser>();
+      return std::make_unique<bigtable::internal::ReadRowsParser>(reverse);
     }
     ParserPtr parser = std::move(parsers_.front());
     parsers_.pop_front();

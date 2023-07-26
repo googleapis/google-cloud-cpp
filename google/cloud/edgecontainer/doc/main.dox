@@ -24,18 +24,12 @@ which should give you a taste of the Distributed Cloud Edge Container API C++ cl
 
 <!-- inject-client-list-start -->
 The main class in this library is
-[\c edgecontainer_v1::EdgeContainerClient](@ref google::cloud::edgecontainer_v1::EdgeContainerClient).
-All RPCs are exposed as member functions of this class. Other classes provide
-helpers, retry policies, configuration parameters, and infrastructure to mock
-[\c edgecontainer_v1::EdgeContainerClient](@ref google::cloud::edgecontainer_v1::EdgeContainerClient) when testing your
+[`edgecontainer_v1::EdgeContainerClient`](@ref google::cloud::edgecontainer_v1::EdgeContainerClient). All RPCs are exposed
+as member functions of this class. Other classes provide helpers, configuration
+parameters, and infrastructure to mock
+[`edgecontainer_v1::EdgeContainerClient`](@ref google::cloud::edgecontainer_v1::EdgeContainerClient) when testing your
 application.
 <!-- inject-client-list-end -->
-
-## Retry, Backoff, and Idempotency Policies.
-
-The library automatically retries requests that fail with transient errors, and
-uses [exponential backoff] to backoff between retries. Application developers
-can override the default policies.
 
 ## More Information
 
@@ -44,8 +38,10 @@ can override the default policies.
   endpoint.
 - @ref edgecontainer-override-authentication - describes how to change the
   authentication credentials used by the library.
+- @ref edgecontainer-override-retry - describes how to change the default retry
+  policies.
+- @ref edgecontainer-env - describes environment variables that can configure the behavior of the library.
 
 [cloud-service-docs]: https://cloud.google.com/distributed-cloud/edge/latest/docs
-[exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff
 
 */

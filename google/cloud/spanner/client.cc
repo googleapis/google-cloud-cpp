@@ -14,7 +14,7 @@
 
 #include "google/cloud/spanner/client.h"
 #include "google/cloud/spanner/internal/connection_impl.h"
-#include "google/cloud/spanner/internal/spanner_stub.h"
+#include "google/cloud/spanner/internal/spanner_stub_factory.h"
 #include "google/cloud/spanner/internal/status_utils.h"
 #include "google/cloud/spanner/options.h"
 #include "google/cloud/spanner/retry_policy.h"
@@ -301,6 +301,16 @@ StatusOr<CommitResult> Client::Commit(Transaction transaction,
                                       Mutations mutations, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), opts_));
   return conn_->Commit({std::move(transaction), std::move(mutations),
+                        CommitOptions(internal::CurrentOptions())});
+}
+
+StatusOr<CommitResult> Client::CommitAtLeastOnce(
+    Transaction::ReadWriteOptions transaction_options, Mutations mutations,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), opts_));
+  return conn_->Commit({spanner_internal::MakeSingleUseCommitTransaction(
+                            std::move(transaction_options)),
+                        std::move(mutations),
                         CommitOptions(internal::CurrentOptions())});
 }
 

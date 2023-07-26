@@ -49,7 +49,7 @@ StatusOr<ServiceAccountMetadata> ParseMetadataServerResponse(
 ServiceAccountMetadata ParseMetadataServerResponse(std::string const& payload);
 
 /// Parses a refresh response JSON string into an access token.
-StatusOr<internal::AccessToken> ParseComputeEngineRefreshResponse(
+StatusOr<AccessToken> ParseComputeEngineRefreshResponse(
     rest_internal::RestResponse& response,
     std::chrono::system_clock::time_point now);
 
@@ -89,7 +89,7 @@ class ComputeEngineCredentials : public Credentials {
                                     Options options,
                                     HttpClientFactory client_factory);
 
-  StatusOr<internal::AccessToken> GetToken(
+  StatusOr<AccessToken> GetToken(
       std::chrono::system_clock::time_point tp) override;
 
   /**

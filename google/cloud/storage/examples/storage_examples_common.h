@@ -41,6 +41,7 @@ std::string BucketPrefix();
 std::string MakeRandomBucketName(google::cloud::internal::DefaultPRNG& gen);
 std::string MakeRandomObjectName(google::cloud::internal::DefaultPRNG& gen,
                                  std::string const& prefix);
+google::cloud::Options CreateBucketOptions();
 
 using ClientCommand = std::function<void(google::cloud::storage::Client,
                                          std::vector<std::string> const& argv)>;

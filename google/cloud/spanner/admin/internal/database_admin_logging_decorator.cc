@@ -29,10 +29,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 DatabaseAdminLogging::DatabaseAdminLogging(
     std::shared_ptr<DatabaseAdminStub> child, TracingOptions tracing_options,
-    std::set<std::string> components)
+    std::set<std::string> const& components)
     : child_(std::move(child)),
       tracing_options_(std::move(tracing_options)),
-      components_(std::move(components)) {}
+      stream_logging_(components.find("rpc-streams") != components.end()) {}
 
 StatusOr<google::spanner::admin::database::v1::ListDatabasesResponse>
 DatabaseAdminLogging::ListDatabases(
@@ -70,6 +70,22 @@ DatabaseAdminLogging::GetDatabase(
              google::spanner::admin::database::v1::GetDatabaseRequest const&
                  request) { return child_->GetDatabase(context, request); },
       context, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DatabaseAdminLogging::AsyncUpdateDatabase(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::spanner::admin::database::v1::UpdateDatabaseRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::spanner::admin::database::v1::UpdateDatabaseRequest const&
+                 request) {
+        return child_->AsyncUpdateDatabase(cq, std::move(context), request);
+      },
+      cq, std::move(context), request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

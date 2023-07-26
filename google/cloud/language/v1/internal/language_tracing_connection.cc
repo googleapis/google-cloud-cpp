@@ -76,6 +76,15 @@ LanguageServiceTracingConnection::ClassifyText(
   return internal::EndSpan(*span, child_->ClassifyText(request));
 }
 
+StatusOr<google::cloud::language::v1::ModerateTextResponse>
+LanguageServiceTracingConnection::ModerateText(
+    google::cloud::language::v1::ModerateTextRequest const& request) {
+  auto span = internal::MakeSpan(
+      "language_v1::LanguageServiceConnection::ModerateText");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->ModerateText(request));
+}
+
 StatusOr<google::cloud::language::v1::AnnotateTextResponse>
 LanguageServiceTracingConnection::AnnotateText(
     google::cloud::language::v1::AnnotateTextRequest const& request) {

@@ -1,0 +1,14 @@
+{
+    "api_id": "artifactregistry.googleapis.com",
+    "api_shortname": "artifactregistry",
+    "client_documentation": "https://cloud.google.com/cpp/docs/reference/artifactregistry/latest",
+    "distribution_name": "google-cloud-cpp",
+    "issue_tracker": "https://issuetracker.google.com/savedsearches/559742",
+    "language": "cpp",
+    "library_type": "GAPIC_AUTO",
+    "name_pretty": "Artifact Registry API",
+    "product_documentation": "https://cloud.google.com/artifact-registry",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-cpp",
+    "requires_billing": true
+}

@@ -19,7 +19,6 @@
 #include <pugixml.hpp>
 #include <string>
 #include <unordered_map>
-#include <unordered_set>
 
 namespace docfx {
 
@@ -31,12 +30,23 @@ struct YamlContext {
   std::unordered_map<std::string, std::string> mocking_functions;
   // Mocking functions (the `MOCK_METHOD()` elements), indexed by their id.
   std::unordered_map<std::string, std::string> mocking_functions_by_id;
-  // The id of inherited functions mocked via `MOCK_METHOD()`.
-  std::unordered_set<std::string> mocked_ids;
+  // Mocked functions (indexed by their id) pointing to the corresponding
+  // `MOCK_METHOD()`'s id.
+  std::unordered_map<std::string, std::string> mocked_ids;
+  // Fallback brief and detailed description.
+  std::string fallback_description_brief;
+  std::string fallback_description_detailed;
 };
 
 /// Creates a new context to recurse over @p node
 YamlContext NestedYamlContext(YamlContext const& ctx, pugi::xml_node node);
+
+/// Returns true if a <memberdef> element should be skipped from the
+/// children and references lists. We always skip mocked functions.
+bool IsSkippedChild(YamlContext const& ctx, pugi::xml_node node);
+
+/// If @p node is mocked, returns the mocking node. Otherwise return @p node.
+pugi::xml_node MockingNode(YamlContext const& ctx, pugi::xml_node node);
 
 }  // namespace docfx
 

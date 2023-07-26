@@ -46,8 +46,9 @@ Options ImageAnnotatorDefaultOptions(Options options) {
   }
   if (!options.has<vision_v1::ImageAnnotatorBackoffPolicyOption>()) {
     options.set<vision_v1::ImageAnnotatorBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options.has<vision_v1::ImageAnnotatorPollingPolicyOption>()) {
@@ -56,8 +57,9 @@ Options ImageAnnotatorDefaultOptions(Options options) {
             vision_v1::ImageAnnotatorRetryPolicyOption::Type,
             vision_v1::ImageAnnotatorBackoffPolicyOption::Type>(
             options.get<vision_v1::ImageAnnotatorRetryPolicyOption>()->clone(),
-            options.get<vision_v1::ImageAnnotatorBackoffPolicyOption>()
-                ->clone())
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
             .clone());
   }
   if (!options

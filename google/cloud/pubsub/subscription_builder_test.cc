@@ -51,6 +51,16 @@ TEST(SubscriptionBuilder, MakeOidcTokenWithAudience) {
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
+TEST(SubscriptionBuilder, MakeNoWrapper) {
+  auto const actual = PushConfigBuilder::MakeNoWrapper(true);
+  google::pubsub::v1::PushConfig::NoWrapper expected;
+  std::string const text = R"pb(
+    write_metadata: true
+  )pb";
+  ASSERT_TRUE(TextFormat::ParseFromString(text, &expected));
+  EXPECT_THAT(actual, IsProtoEqual(expected));
+}
+
 TEST(SubscriptionBuilder, Empty) {
   auto const actual = PushConfigBuilder().BuildModifyPushConfig(
       Subscription("test-project", "test-subscription"));
@@ -386,6 +396,91 @@ TEST(SubscriptionBuilder, SetAckDeadline) {
       ack_deadline_seconds: 600
     }
     update_mask { paths: "ack_deadline_seconds" })pb";
+  ASSERT_TRUE(TextFormat::ParseFromString(text, &expected));
+  EXPECT_THAT(actual, IsProtoEqual(expected));
+}
+
+TEST(SubscriptionBuilder, CreateWithCloudStorageFull) {
+  auto const actual =
+      SubscriptionBuilder{}
+          .set_cloud_storage_config(
+              CloudStorageConfigBuilder()
+                  .set_bucket("test-bucket")
+                  .set_filename_prefix("test-filename-prefix")
+                  .set_filename_suffix("test-filename-suffix")
+                  .set_avro_config(
+                      CloudStorageConfigBuilder::MakeAvroConfig(true))
+                  .set_max_duration(std::chrono::minutes(1))
+                  .set_max_bytes(2000))
+          .BuildCreateRequest(
+              Topic("test-project", "test-topic"),
+              Subscription("test-project", "test-subscription"));
+  google::pubsub::v1::Subscription expected;
+  std::string const text = R"pb(
+    topic: "projects/test-project/topics/test-topic"
+    name: "projects/test-project/subscriptions/test-subscription"
+    cloud_storage_config {
+      bucket: "test-bucket"
+      filename_prefix: "test-filename-prefix"
+      filename_suffix: "test-filename-suffix"
+      avro_config { write_metadata: true }
+      max_duration { seconds: 60 }
+      max_bytes: 2000
+    })pb";
+  ASSERT_TRUE(TextFormat::ParseFromString(text, &expected));
+  EXPECT_THAT(actual, IsProtoEqual(expected));
+}
+
+TEST(SubscriptionBuilder, UpdateWithCloudStorageFull) {
+  auto const actual =
+      SubscriptionBuilder{}
+          .set_cloud_storage_config(
+              CloudStorageConfigBuilder()
+                  .set_bucket("test-bucket")
+                  .set_filename_prefix("test-filename-prefix")
+                  .set_filename_suffix("test-filename-suffix")
+                  .set_avro_config(
+                      CloudStorageConfigBuilder::MakeAvroConfig(true))
+                  .set_max_duration(std::chrono::minutes(1))
+                  .set_max_bytes(2000))
+          .BuildUpdateRequest(
+              Subscription("test-project", "test-subscription"));
+  google::pubsub::v1::UpdateSubscriptionRequest expected;
+  std::string const text = R"pb(
+    subscription {
+      name: "projects/test-project/subscriptions/test-subscription"
+      cloud_storage_config {
+        bucket: "test-bucket"
+        filename_prefix: "test-filename-prefix"
+        filename_suffix: "test-filename-suffix"
+        avro_config { write_metadata: true }
+        max_duration { seconds: 60 }
+        max_bytes: 2000
+      }
+    }
+    update_mask {
+      paths: "cloud_storage_config.avro_config"
+      paths: "cloud_storage_config.bucket"
+      paths: "cloud_storage_config.filename_prefix"
+      paths: "cloud_storage_config.filename_suffix"
+      paths: "cloud_storage_config.max_bytes"
+      paths: "cloud_storage_config.max_duration"
+    })pb";
+  ASSERT_TRUE(TextFormat::ParseFromString(text, &expected));
+  EXPECT_THAT(actual, IsProtoEqual(expected));
+}
+
+TEST(SubscriptionBuilder, UpdateWithCloudStorageEmpty) {
+  auto const actual = SubscriptionBuilder{}
+                          .set_cloud_storage_config(CloudStorageConfigBuilder())
+                          .BuildUpdateRequest(Subscription(
+                              "test-project", "test-subscription"));
+  google::pubsub::v1::UpdateSubscriptionRequest expected;
+  std::string const text = R"pb(
+    subscription {
+      name: "projects/test-project/subscriptions/test-subscription"
+    }
+    update_mask { paths: "cloud_storage_config" })pb";
   ASSERT_TRUE(TextFormat::ParseFromString(text, &expected));
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }

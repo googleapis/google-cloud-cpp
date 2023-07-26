@@ -17,6 +17,7 @@ Follow these links to find examples for other \c *Client classes:
 - [\c dataproc_v1::BatchControllerClient](@ref dataproc_v1::BatchControllerClient-endpoint-snippet)
 - [\c dataproc_v1::ClusterControllerClient](@ref dataproc_v1::ClusterControllerClient-endpoint-snippet)
 - [\c dataproc_v1::JobControllerClient](@ref dataproc_v1::JobControllerClient-endpoint-snippet)
+- [\c dataproc_v1::NodeGroupControllerClient](@ref dataproc_v1::NodeGroupControllerClient-endpoint-snippet)
 - [\c dataproc_v1::WorkflowTemplateServiceClient](@ref dataproc_v1::WorkflowTemplateServiceClient-endpoint-snippet)
 
 <!-- inject-endpoint-snippet-end -->
@@ -46,6 +47,12 @@ Follow these links to find examples for other \c *Client classes:
 /*! @page dataproc_v1::JobControllerClient-endpoint-snippet Override dataproc_v1::JobControllerClient Endpoint Configuration
 
 @snippet google/cloud/dataproc/v1/samples/job_controller_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page dataproc_v1::NodeGroupControllerClient-endpoint-snippet Override dataproc_v1::NodeGroupControllerClient Endpoint Configuration
+
+@snippet google/cloud/dataproc/v1/samples/node_group_controller_client_samples.cc set-client-endpoint
 
 */
 

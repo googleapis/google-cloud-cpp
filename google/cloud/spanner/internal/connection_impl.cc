@@ -26,7 +26,7 @@
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/retry_loop.h"
-#include "google/cloud/internal/retry_policy.h"
+#include "google/cloud/internal/streaming_read_rpc.h"
 #include "google/cloud/options.h"
 #include <google/protobuf/util/time_util.h>
 #include <grpcpp/grpcpp.h>
@@ -63,7 +63,7 @@ class DefaultPartialResultSetReader : public PartialResultSetReader {
   DefaultPartialResultSetReader(
       std::shared_ptr<grpc::ClientContext> context,
       std::unique_ptr<
-          grpc::ClientReaderInterface<google::spanner::v1::PartialResultSet>>
+          internal::StreamingReadRpc<google::spanner::v1::PartialResultSet>>
           reader)
       : context_(std::move(context)), reader_(std::move(reader)) {}
 
@@ -73,21 +73,29 @@ class DefaultPartialResultSetReader : public PartialResultSetReader {
 
   absl::optional<PartialResultSet> Read(
       absl::optional<std::string> const&) override {
-    google::spanner::v1::PartialResultSet result;
-    bool success = reader_->Read(&result);
-    if (!success) return {};
-    return PartialResultSet{std::move(result), false};
+    struct Visitor {
+      Status& final_status;
+
+      absl::optional<PartialResultSet> operator()(Status s) {
+        final_status = std::move(s);
+        return absl::nullopt;
+      }
+      absl::optional<PartialResultSet> operator()(
+          google::spanner::v1::PartialResultSet result) {
+        return PartialResultSet{std::move(result), false};
+      }
+    };
+    return absl::visit(Visitor{final_status_}, reader_->Read());
   }
 
-  Status Finish() override {
-    return google::cloud::MakeStatusFromRpcError(reader_->Finish());
-  }
+  Status Finish() override { return final_status_; }
 
  private:
   std::shared_ptr<grpc::ClientContext> context_;
   std::unique_ptr<
-      grpc::ClientReaderInterface<google::spanner::v1::PartialResultSet>>
+      internal::StreamingReadRpc<google::spanner::v1::PartialResultSet>>
       reader_;
+  Status final_status_;
 };
 
 google::spanner::v1::TransactionOptions PartitionedDmlTransactionOptions() {
@@ -258,7 +266,7 @@ Status ConnectionImpl::Rollback(RollbackParams params) {
                });
 }
 
-class StatusOnlyResultSetSource : public ResultSourceInterface {
+class StatusOnlyResultSetSource : public spanner::ResultSourceInterface {
  public:
   explicit StatusOnlyResultSetSource(google::cloud::Status status)
       : status_(std::move(status)) {}
@@ -283,11 +291,11 @@ ResultType MakeStatusOnlyResult(Status status) {
       std::make_unique<StatusOnlyResultSetSource>(std::move(status)));
 }
 
-class DmlResultSetSource : public ResultSourceInterface {
+class DmlResultSetSource : public spanner::ResultSourceInterface {
  public:
-  static StatusOr<std::unique_ptr<ResultSourceInterface>> Create(
+  static StatusOr<std::unique_ptr<spanner::ResultSourceInterface>> Create(
       google::spanner::v1::ResultSet result_set) {
-    return std::unique_ptr<ResultSourceInterface>(
+    return std::unique_ptr<spanner::ResultSourceInterface>(
         new DmlResultSetSource(std::move(result_set)));
   }
 
@@ -320,7 +328,7 @@ class StreamingPartitionedDmlResult {
  public:
   StreamingPartitionedDmlResult() = default;
   explicit StreamingPartitionedDmlResult(
-      std::unique_ptr<ResultSourceInterface> source)
+      std::unique_ptr<spanner::ResultSourceInterface> source)
       : source_(std::move(source)) {}
 
   // This class is movable but not copyable.
@@ -345,7 +353,7 @@ class StreamingPartitionedDmlResult {
   }
 
  private:
-  std::unique_ptr<ResultSourceInterface> source_;
+  std::unique_ptr<spanner::ResultSourceInterface> source_;
 };
 
 /**
@@ -452,10 +460,10 @@ spanner::RowStream ConnectionImpl::ReadImpl(
     auto context = std::make_shared<grpc::ClientContext>();
     internal::ConfigureContext(*context, internal::CurrentOptions());
     if (route_to_leader) RouteToLeader(*context);
-    auto grpc_reader = stub->StreamingRead(*context, *request);
+    auto stream = stub->StreamingRead(context, *request);
     std::unique_ptr<PartialResultSetReader> reader =
         std::make_unique<DefaultPartialResultSetReader>(std::move(context),
-                                                        std::move(grpc_reader));
+                                                        std::move(stream));
     if (tracing_enabled) {
       reader = std::make_unique<LoggingResultSetReader>(std::move(reader),
                                                         tracing_options);
@@ -583,7 +591,7 @@ StatusOr<ResultType> ConnectionImpl::ExecuteSqlImpl(
     StatusOr<google::spanner::v1::TransactionSelector>& s,
     TransactionContext const& ctx, SqlParams params,
     google::spanner::v1::ExecuteSqlRequest::QueryMode query_mode,
-    std::function<StatusOr<std::unique_ptr<ResultSourceInterface>>(
+    std::function<StatusOr<std::unique_ptr<spanner::ResultSourceInterface>>(
         google::spanner::v1::ExecuteSqlRequest& request)> const&
         retry_resume_fn) {
   if (!s.ok()) {
@@ -677,17 +685,17 @@ ResultType ConnectionImpl::CommonQueryImpl(
       [stub, retry_policy_prototype, backoff_policy_prototype,
        route_to_leader = ctx.route_to_leader, tracing_enabled,
        tracing_options](google::spanner::v1::ExecuteSqlRequest& request) mutable
-      -> StatusOr<std::unique_ptr<ResultSourceInterface>> {
+      -> StatusOr<std::unique_ptr<spanner::ResultSourceInterface>> {
     auto factory = [stub, request, route_to_leader, tracing_enabled,
                     tracing_options](std::string const& resume_token) mutable {
       if (!resume_token.empty()) request.set_resume_token(resume_token);
       auto context = std::make_shared<grpc::ClientContext>();
       internal::ConfigureContext(*context, internal::CurrentOptions());
       if (route_to_leader) RouteToLeader(*context);
-      auto grpc_reader = stub->ExecuteStreamingSql(*context, request);
+      auto stream = stub->ExecuteStreamingSql(context, request);
       std::unique_ptr<PartialResultSetReader> reader =
-          std::make_unique<DefaultPartialResultSetReader>(
-              std::move(context), std::move(grpc_reader));
+          std::make_unique<DefaultPartialResultSetReader>(std::move(context),
+                                                          std::move(stream));
       if (tracing_enabled) {
         reader = std::make_unique<LoggingResultSetReader>(std::move(reader),
                                                           tracing_options);
@@ -1028,17 +1036,29 @@ StatusOr<spanner::CommitResult> ConnectionImpl::CommitImpl(
   // (for a user-supplied transaction).
   request.mutable_request_options()->set_transaction_tag(ctx.tag);
 
-  if (s->selector_case() != google::spanner::v1::TransactionSelector::kId) {
-    auto begin =
-        BeginTransaction(session, s->has_begin() ? s->begin() : s->single_use(),
-                         std::string(), ctx, __func__);
-    if (!begin.ok()) {
-      s = begin.status();  // invalidate the transaction
-      return begin.status();
+  switch (s->selector_case()) {
+    case google::spanner::v1::TransactionSelector::kSingleUse: {
+      *request.mutable_single_use_transaction() = s->single_use();
+      break;
     }
-    s->set_id(begin->id());
+    case google::spanner::v1::TransactionSelector::kBegin: {
+      auto begin =
+          BeginTransaction(session, s->begin(), std::string(), ctx, __func__);
+      if (!begin.ok()) {
+        s = begin.status();  // invalidate the transaction
+        return begin.status();
+      }
+      s->set_id(begin->id());
+      request.set_transaction_id(s->id());
+      break;
+    }
+    case google::spanner::v1::TransactionSelector::kId: {
+      request.set_transaction_id(s->id());
+      break;
+    }
+    default:
+      return Status(StatusCode::kInternal, "TransactionSelector state error");
   }
-  request.set_transaction_id(s->id());
 
   auto stub = session_pool_->GetStub(*session);
   auto response = RetryLoop(

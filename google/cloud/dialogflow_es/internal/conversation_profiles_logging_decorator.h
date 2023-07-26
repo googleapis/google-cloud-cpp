@@ -37,7 +37,7 @@ class ConversationProfilesLogging : public ConversationProfilesStub {
   ~ConversationProfilesLogging() override = default;
   ConversationProfilesLogging(std::shared_ptr<ConversationProfilesStub> child,
                               TracingOptions tracing_options,
-                              std::set<std::string> components);
+                              std::set<std::string> const& components);
 
   StatusOr<google::cloud::dialogflow::v2::ListConversationProfilesResponse>
   ListConversationProfiles(
@@ -95,7 +95,7 @@ class ConversationProfilesLogging : public ConversationProfilesStub {
  private:
   std::shared_ptr<ConversationProfilesStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // ConversationProfilesLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -22,6 +22,7 @@
 #include "google/cloud/cloudbuild/v2/internal/repository_manager_stub.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
+#include <map>
 #include <memory>
 #include <string>
 
@@ -33,8 +34,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class RepositoryManagerMetadata : public RepositoryManagerStub {
  public:
   ~RepositoryManagerMetadata() override = default;
-  explicit RepositoryManagerMetadata(
-      std::shared_ptr<RepositoryManagerStub> child);
+  RepositoryManagerMetadata(
+      std::shared_ptr<RepositoryManagerStub> child,
+      std::multimap<std::string, std::string> fixed_metadata);
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateConnection(
       google::cloud::CompletionQueue& cq,
@@ -111,6 +113,11 @@ class RepositoryManagerMetadata : public RepositoryManagerStub {
       google::devtools::cloudbuild::v2::FetchLinkableRepositoriesRequest const&
           request) override;
 
+  StatusOr<google::devtools::cloudbuild::v2::FetchGitRefsResponse> FetchGitRefs(
+      grpc::ClientContext& context,
+      google::devtools::cloudbuild::v2::FetchGitRefsRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -127,6 +134,7 @@ class RepositoryManagerMetadata : public RepositoryManagerStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<RepositoryManagerStub> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

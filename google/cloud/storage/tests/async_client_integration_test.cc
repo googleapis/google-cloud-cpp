@@ -19,6 +19,7 @@
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
+#include <numeric>
 
 namespace google {
 namespace cloud {
@@ -36,7 +37,6 @@ class AsyncClientIntegrationTest
     : public google::cloud::storage::testing::StorageIntegrationTest {
  protected:
   void SetUp() override {
-    if (!UsingEmulator()) GTEST_SKIP();
     bucket_name_ =
         GetEnv("GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME").value_or("");
     ASSERT_THAT(bucket_name_, Not(IsEmpty()))
@@ -81,6 +81,46 @@ TEST_F(AsyncClientIntegrationTest, ObjectCRUD) {
 
   auto get = client->GetObjectMetadata(bucket_name(), object_name);
   EXPECT_THAT(get, StatusIs(StatusCode::kNotFound));
+}
+
+TEST_F(AsyncClientIntegrationTest, ComposeObject) {
+  auto client = MakeIntegrationTestClient();
+  ASSERT_STATUS_OK(client);
+
+  auto o1 = MakeRandomObjectName();
+  auto o2 = MakeRandomObjectName();
+  auto destination = MakeRandomObjectName();
+
+  auto insert1 = client->InsertObject(bucket_name(), o1, LoremIpsum(),
+                                      gcs::IfGenerationMatch(0));
+  ASSERT_STATUS_OK(insert1);
+  ScheduleForDelete(*insert1);
+  auto insert2 = client->InsertObject(bucket_name(), o2, LoremIpsum(),
+                                      gcs::IfGenerationMatch(0));
+  ASSERT_STATUS_OK(insert2);
+  ScheduleForDelete(*insert2);
+
+  auto async = MakeAsyncClient();
+  auto pending = async.ComposeObject(
+      bucket_name(),
+      {storage::ComposeSourceObject{insert1->name(), insert1->generation(),
+                                    absl::nullopt},
+       storage::ComposeSourceObject{insert2->name(), insert2->generation(),
+                                    absl::nullopt}},
+      destination);
+  auto const composed = pending.get();
+  EXPECT_STATUS_OK(composed);
+  ScheduleForDelete(*composed);
+
+  auto read =
+      async.ReadObject(bucket_name(), destination, 0, 2 * LoremIpsum().size())
+          .get();
+  ASSERT_STATUS_OK(read.status);
+  auto const full_contents = std::accumulate(
+      read.contents.begin(), read.contents.end(), std::string{});
+  EXPECT_EQ(full_contents, LoremIpsum() + LoremIpsum());
+  ASSERT_TRUE(read.object_metadata.has_value());
+  EXPECT_EQ(*read.object_metadata, *composed);
 }
 
 TEST_F(AsyncClientIntegrationTest, WriteObject) {

@@ -14,6 +14,7 @@
 
 #include "google/cloud/spanner/internal/defaults.h"
 #include "google/cloud/spanner/internal/session_pool.h"
+#include "google/cloud/spanner/internal/spanner_stub_factory.h"
 #include "google/cloud/spanner/options.h"
 #include "google/cloud/spanner/testing/database_integration_test.h"
 #include "google/cloud/testing_util/status_matchers.h"

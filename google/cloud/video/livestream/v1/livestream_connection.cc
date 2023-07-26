@@ -153,6 +153,50 @@ Status LivestreamServiceConnection::DeleteEvent(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+future<StatusOr<google::cloud::video::livestream::v1::Asset>>
+LivestreamServiceConnection::CreateAsset(
+    google::cloud::video::livestream::v1::CreateAssetRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::video::livestream::v1::Asset>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
+LivestreamServiceConnection::DeleteAsset(
+    google::cloud::video::livestream::v1::DeleteAssetRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::cloud::video::livestream::v1::Asset>
+LivestreamServiceConnection::GetAsset(
+    google::cloud::video::livestream::v1::GetAssetRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StreamRange<google::cloud::video::livestream::v1::Asset>
+LivestreamServiceConnection::ListAssets(
+    google::cloud::video::livestream::v1::
+        ListAssetsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::video::livestream::v1::Asset>>();
+}
+
+StatusOr<google::cloud::video::livestream::v1::Pool>
+LivestreamServiceConnection::GetPool(
+    google::cloud::video::livestream::v1::GetPoolRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+future<StatusOr<google::cloud::video::livestream::v1::Pool>>
+LivestreamServiceConnection::UpdatePool(
+    google::cloud::video::livestream::v1::UpdatePoolRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::video::livestream::v1::Pool>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 std::shared_ptr<LivestreamServiceConnection> MakeLivestreamServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,

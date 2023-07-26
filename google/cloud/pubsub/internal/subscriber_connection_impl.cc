@@ -17,8 +17,10 @@
 #include "google/cloud/pubsub/internal/default_pull_ack_handler.h"
 #include "google/cloud/pubsub/internal/subscription_session.h"
 #include "google/cloud/pubsub/options.h"
+#include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/retry_loop.h"
+#include "google/cloud/internal/retry_loop_helpers.h"
 
 namespace google {
 namespace cloud {
@@ -53,31 +55,50 @@ StatusOr<pubsub::PullResponse> SubscriberConnectionImpl::Pull() {
 
   google::pubsub::v1::PullRequest request;
   request.set_subscription(subscription.FullName());
+  // Ask Pub/Sub to return at most 1 message.
   request.set_max_messages(1);
 
-  auto response = google::cloud::internal::RetryLoop(
-      current.get<pubsub::RetryPolicyOption>()->clone(),
-      current.get<pubsub::BackoffPolicyOption>()->clone(),
-      google::cloud::Idempotency::kIdempotent,
-      [stub = stub_](auto& context, auto const& request) {
-        return stub->Pull(context, request);
-      },
-      request, __func__);
-  if (!response) return std::move(response).status();
-  if (response->received_messages_size() != 1) {
-    return internal::InternalError("invalid response, mismatched ID count",
-                                   GCP_ERROR_INFO());
+  auto retry_policy = current.get<pubsub::RetryPolicyOption>()->clone();
+  auto backoff_policy = current.get<pubsub::BackoffPolicyOption>()->clone();
+  google::cloud::Status last_status;
+  while (!retry_policy->IsExhausted()) {
+    grpc::ClientContext context;
+    google::cloud::internal::ConfigureContext(context, current);
+    auto response = stub_->Pull(context, request);
+
+    if (response && !response->received_messages().empty()) {
+      if (response->received_messages_size() > 1) {
+        return internal::InternalError("invalid response, mismatched ID count",
+                                       GCP_ERROR_INFO());
+      }
+
+      auto received_message =
+          std::move(response->mutable_received_messages()->at(0));
+      auto impl = std::make_unique<pubsub_internal::DefaultPullAckHandler>(
+          background_->cq(), stub_, current, std::move(subscription),
+          std::move(*received_message.mutable_ack_id()),
+          received_message.delivery_attempt());
+      auto message = pubsub_internal::FromProto(
+          std::move(*received_message.mutable_message()));
+      return pubsub::PullResponse{pubsub::PullAckHandler(std::move(impl)),
+                                  std::move(message)};
+    }
+    last_status = std::move(response).status();
+    if (!retry_policy->OnFailure(last_status)) {
+      break;
+    }
+    std::this_thread::sleep_for(backoff_policy->OnCompletion());
   }
-  auto received_message =
-      std::move(response->mutable_received_messages()->at(0));
-  auto impl = std::make_unique<pubsub_internal::DefaultPullAckHandler>(
-      background_->cq(), stub_, current, std::move(subscription),
-      std::move(*received_message.mutable_ack_id()),
-      received_message.delivery_attempt());
-  auto message = pubsub_internal::FromProto(
-      std::move(*received_message.mutable_message()));
-  return pubsub::PullResponse{pubsub::PullAckHandler(std::move(impl)),
-                              std::move(message)};
+  if (last_status.ok()) {
+    return google::cloud::internal::UnavailableError("no messages returned",
+                                                     GCP_ERROR_INFO());
+  }
+  if (retry_policy->IsExhausted()) {
+    return google::cloud::internal::RetryLoopError("Retry policy exhausted in",
+                                                   __func__, last_status);
+  }
+  return google::cloud::internal::RetryLoopError("Permanent error in", __func__,
+                                                 last_status);
 }
 
 Options SubscriberConnectionImpl::options() { return opts_; }

@@ -19,6 +19,7 @@
 #include "google/cloud/storage/internal/logging_client.h"
 #include "google/cloud/storage/internal/parameter_pack_validation.h"
 #include "google/cloud/storage/internal/policy_document_request.h"
+#include "google/cloud/storage/internal/request_project_id.h"
 #include "google/cloud/storage/internal/retry_client.h"
 #include "google/cloud/storage/internal/signed_url_requests.h"
 #include "google/cloud/storage/internal/tuple_filter.h"
@@ -305,7 +306,8 @@ class Client {
    * @param project_id the project to query.
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `MaxResults`, `Prefix`,
-   *     `Projection`, and `UserProject`.
+   *     `Projection`, and `UserProject`. `OverrideDefaultProject` is accepted,
+   *     but has no effect.
    *
    * @par Idempotency
    * This is a read-only operation and is always idempotent.
@@ -341,7 +343,7 @@ class Client {
    *
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `MaxResults`, `Prefix`,
-   *     `Projection`, and `UserProject`.
+   *     `Projection`, `UserProject`, and `OverrideDefaultProject`.
    *
    * @par Idempotency
    * This is a read-only operation and is always idempotent.
@@ -351,10 +353,16 @@ class Client {
    */
   template <typename... Options>
   ListBucketsReader ListBuckets(Options&&... options) {
-    google::cloud::internal::OptionsSpan const span(
-        SpanOptions(std::forward<Options>(options)...));
-    auto const& project_id = raw_client_->client_options().project_id();
-    return ListBucketsForProject(project_id, std::forward<Options>(options)...);
+    auto opts = SpanOptions(std::forward<Options>(options)...);
+    auto project_id = storage_internal::RequestProjectId(
+        GCP_ERROR_INFO(), opts, std::forward<Options>(options)...);
+    if (!project_id) {
+      return google::cloud::internal::MakeErrorPaginationRange<
+          ListBucketsReader>(std::move(project_id).status());
+    }
+    google::cloud::internal::OptionsSpan const span(std::move(opts));
+    return ListBucketsForProject(*std::move(project_id),
+                                 std::forward<Options>(options)...);
   }
 
   /**
@@ -367,7 +375,8 @@ class Client {
    *     ignored in favor of @p bucket_name.
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `PredefinedAcl`,
-   *     `PredefinedDefaultObjectAcl`, `Projection`, and `UserProject`.
+   *     `PredefinedDefaultObjectAcl`, `Projection`, `UserProject`,
+   *     and `OverrideDefaultProject`.
    *
    * @par Idempotency
    * This operation is always idempotent. It fails if the bucket already exists.
@@ -388,10 +397,16 @@ class Client {
   StatusOr<BucketMetadata> CreateBucket(std::string bucket_name,
                                         BucketMetadata metadata,
                                         Options&&... options) {
-    auto const& project_id = raw_client_->client_options().project_id();
-    return CreateBucketForProject(std::move(bucket_name), project_id,
-                                  std::move(metadata),
-                                  std::forward<Options>(options)...);
+    auto opts = SpanOptions(std::forward<Options>(options)...);
+    auto project_id = storage_internal::RequestProjectId(
+        GCP_ERROR_INFO(), opts, std::forward<Options>(options)...);
+    if (!project_id) return std::move(project_id).status();
+    google::cloud::internal::OptionsSpan const span(std::move(opts));
+    metadata.set_name(std::move(bucket_name));
+    internal::CreateBucketRequest request(*std::move(project_id),
+                                          std::move(metadata));
+    request.set_multiple_options(std::forward<Options>(options)...);
+    return raw_client_->CreateBucket(request);
   }
 
   /**
@@ -404,6 +419,7 @@ class Client {
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `PredefinedAcl`,
    *     `PredefinedDefaultObjectAcl`, `Projection`, and `UserProject`.
+   *     `OverrideDefaultProject` is accepted, but has no effect.
    *
    * @par Idempotency
    * This operation is always idempotent. It fails if the bucket already exists.
@@ -2472,8 +2488,7 @@ class Client {
    * are no pre-conditions for this operation that can make it idempotent.
    *
    * @par Example
-   * @snippet storage_default_object_acl_samples.cc patch default object acl
-   * no-read
+   * @snippet storage_default_object_acl_samples.cc patch no-read
    *
    * @see
    * https://cloud.google.com/storage/docs/access-control/create-manage-lists#defaultobjects
@@ -2518,6 +2533,7 @@ class Client {
    * @param project_id the project to query.
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `UserProject`.
+   *     `OverrideDefaultProject` is accepted, but has no effect.
    *
    * @par Idempotency
    * This is a read-only operation and is always idempotent.
@@ -2554,7 +2570,8 @@ class Client {
    * function will return the error status.
    *
    * @param options a list of optional query parameters and/or request headers.
-   *     Valid types for this operation include `UserProject`.
+   *     Valid types for this operation include `UserProject`,
+   *     and `OverrideDefaultProject`.
    *
    * @par Idempotency
    * This is a read-only operation and is always idempotent.
@@ -2567,11 +2584,14 @@ class Client {
    */
   template <typename... Options>
   StatusOr<ServiceAccount> GetServiceAccount(Options&&... options) {
-    google::cloud::internal::OptionsSpan const span(
-        SpanOptions(std::forward<Options>(options)...));
-    auto const& project_id = raw_client_->client_options().project_id();
-    return GetServiceAccountForProject(project_id,
-                                       std::forward<Options>(options)...);
+    auto opts = SpanOptions(std::forward<Options>(options)...);
+    auto project_id = storage_internal::RequestProjectId(
+        GCP_ERROR_INFO(), opts, std::forward<Options>(options)...);
+    if (!project_id) return std::move(project_id).status();
+    google::cloud::internal::OptionsSpan const span(std::move(opts));
+    internal::GetProjectServiceAccountRequest request(*std::move(project_id));
+    request.set_multiple_options(std::forward<Options>(options)...);
+    return raw_client_->GetServiceAccount(request);
   }
 
   /**
@@ -2605,16 +2625,21 @@ class Client {
    */
   template <typename... Options>
   ListHmacKeysReader ListHmacKeys(Options&&... options) {
-    google::cloud::internal::OptionsSpan const span(
-        SpanOptions(std::forward<Options>(options)...));
-    auto const& project_id = raw_client_->client_options().project_id();
-    internal::ListHmacKeysRequest request(project_id);
+    auto opts = SpanOptions(std::forward<Options>(options)...);
+    auto project_id = storage_internal::RequestProjectId(
+        GCP_ERROR_INFO(), opts, std::forward<Options>(options)...);
+    if (!project_id) {
+      return google::cloud::internal::MakeErrorPaginationRange<
+          ListHmacKeysReader>(std::move(project_id).status());
+    }
+    google::cloud::internal::OptionsSpan const span(std::move(opts));
+
+    internal::ListHmacKeysRequest request(*std::move(project_id));
     request.set_multiple_options(std::forward<Options>(options)...);
-    auto& client = raw_client_;
     return google::cloud::internal::MakePaginationRange<ListHmacKeysReader>(
         request,
-        [client](internal::ListHmacKeysRequest const& r) {
-          return client->ListHmacKeys(r);
+        [stub = raw_client_](internal::ListHmacKeysRequest const& r) {
+          return stub->ListHmacKeys(r);
         },
         [](internal::ListHmacKeysResponse r) { return std::move(r.items); });
   }
@@ -2652,16 +2677,17 @@ class Client {
   template <typename... Options>
   StatusOr<std::pair<HmacKeyMetadata, std::string>> CreateHmacKey(
       std::string service_account, Options&&... options) {
-    google::cloud::internal::OptionsSpan const span(
-        SpanOptions(std::forward<Options>(options)...));
-    auto const& project_id = raw_client_->client_options().project_id();
-    internal::CreateHmacKeyRequest request(project_id,
+    auto opts = SpanOptions(std::forward<Options>(options)...);
+    auto project_id = storage_internal::RequestProjectId(
+        GCP_ERROR_INFO(), opts, std::forward<Options>(options)...);
+    if (!project_id) return std::move(project_id).status();
+    google::cloud::internal::OptionsSpan const span(std::move(opts));
+
+    internal::CreateHmacKeyRequest request(*std::move(project_id),
                                            std::move(service_account));
     request.set_multiple_options(std::forward<Options>(options)...);
     auto result = raw_client_->CreateHmacKey(request);
-    if (!result) {
-      return result.status();
-    }
+    if (!result) return std::move(result).status();
     return std::make_pair(std::move(result->metadata),
                           std::move(result->secret));
   }
@@ -2693,10 +2719,14 @@ class Client {
    */
   template <typename... Options>
   Status DeleteHmacKey(std::string access_id, Options&&... options) {
-    google::cloud::internal::OptionsSpan const span(
-        SpanOptions(std::forward<Options>(options)...));
-    auto const& project_id = raw_client_->client_options().project_id();
-    internal::DeleteHmacKeyRequest request(project_id, std::move(access_id));
+    auto opts = SpanOptions(std::forward<Options>(options)...);
+    auto project_id = storage_internal::RequestProjectId(
+        GCP_ERROR_INFO(), opts, std::forward<Options>(options)...);
+    if (!project_id) return std::move(project_id).status();
+    google::cloud::internal::OptionsSpan const span(std::move(opts));
+
+    internal::DeleteHmacKeyRequest request(*std::move(project_id),
+                                           std::move(access_id));
     request.set_multiple_options(std::forward<Options>(options)...);
     return raw_client_->DeleteHmacKey(request).status();
   }
@@ -2728,10 +2758,14 @@ class Client {
   template <typename... Options>
   StatusOr<HmacKeyMetadata> GetHmacKey(std::string access_id,
                                        Options&&... options) {
-    google::cloud::internal::OptionsSpan const span(
-        SpanOptions(std::forward<Options>(options)...));
-    auto const& project_id = raw_client_->client_options().project_id();
-    internal::GetHmacKeyRequest request(project_id, std::move(access_id));
+    auto opts = SpanOptions(std::forward<Options>(options)...);
+    auto project_id = storage_internal::RequestProjectId(
+        GCP_ERROR_INFO(), opts, std::forward<Options>(options)...);
+    if (!project_id) return std::move(project_id).status();
+    google::cloud::internal::OptionsSpan const span(std::move(opts));
+
+    internal::GetHmacKeyRequest request(*std::move(project_id),
+                                        std::move(access_id));
     request.set_multiple_options(std::forward<Options>(options)...);
     return raw_client_->GetHmacKey(request);
   }
@@ -2768,11 +2802,14 @@ class Client {
   StatusOr<HmacKeyMetadata> UpdateHmacKey(std::string access_id,
                                           HmacKeyMetadata resource,
                                           Options&&... options) {
-    google::cloud::internal::OptionsSpan const span(
-        SpanOptions(std::forward<Options>(options)...));
-    auto const& project_id = raw_client_->client_options().project_id();
-    internal::UpdateHmacKeyRequest request(project_id, std::move(access_id),
-                                           std::move(resource));
+    auto opts = SpanOptions(std::forward<Options>(options)...);
+    auto project_id = storage_internal::RequestProjectId(
+        GCP_ERROR_INFO(), opts, std::forward<Options>(options)...);
+    if (!project_id) return std::move(project_id).status();
+    google::cloud::internal::OptionsSpan const span(std::move(opts));
+
+    internal::UpdateHmacKeyRequest request(
+        *std::move(project_id), std::move(access_id), std::move(resource));
     request.set_multiple_options(std::forward<Options>(options)...);
     return raw_client_->UpdateHmacKey(request);
   }
@@ -3358,7 +3395,7 @@ class Client {
     return UploadFileResumable(file_name, std::move(request));
   }
 
-  bool UseSimpleUpload(std::string const& file_name, std::size_t& size) const;
+  static bool UseSimpleUpload(std::string const& file_name, std::size_t& size);
 
   StatusOr<ObjectMetadata> UploadFileSimple(
       std::string const& file_name, std::size_t file_size,

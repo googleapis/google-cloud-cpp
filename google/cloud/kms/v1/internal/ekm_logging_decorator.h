@@ -36,7 +36,7 @@ class EkmServiceLogging : public EkmServiceStub {
   ~EkmServiceLogging() override = default;
   EkmServiceLogging(std::shared_ptr<EkmServiceStub> child,
                     TracingOptions tracing_options,
-                    std::set<std::string> components);
+                    std::set<std::string> const& components);
 
   StatusOr<google::cloud::kms::v1::ListEkmConnectionsResponse>
   ListEkmConnections(grpc::ClientContext& context,
@@ -65,10 +65,15 @@ class EkmServiceLogging : public EkmServiceStub {
       grpc::ClientContext& context,
       google::cloud::kms::v1::UpdateEkmConfigRequest const& request) override;
 
+  StatusOr<google::cloud::kms::v1::VerifyConnectivityResponse>
+  VerifyConnectivity(grpc::ClientContext& context,
+                     google::cloud::kms::v1::VerifyConnectivityRequest const&
+                         request) override;
+
  private:
   std::shared_ptr<EkmServiceStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // EkmServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

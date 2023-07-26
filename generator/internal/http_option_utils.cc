@@ -15,6 +15,7 @@
 #include "generator/internal/http_option_utils.h"
 #include "generator/internal/printer.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
+#include "google/cloud/internal/algorithm.h"
 #include "google/cloud/log.h"
 #include "absl/strings/str_format.h"
 #include "absl/strings/str_split.h"
@@ -70,14 +71,13 @@ void SetHttpDerivedMethodVars(
     // The emitted code needs to access the value via `request.parent()' and
     // 'request.instance().name()`, respectively.
     void operator()(HttpExtensionInfo const& info) {
-      method_vars["method_request_url_path"] = info.url_path;
-      method_vars["method_request_url_substitution"] = info.url_substitution;
-      std::string param = info.request_field_name;
-      // method_request_param_key and method_request_param_value are only used
-      // for gRPC transport.
-      method_vars["method_request_param_key"] = param;
-      method_vars["method_request_param_value"] =
-          FormatFieldAccessorCall(method, param) + "()";
+      method_vars["method_request_params"] = absl::StrJoin(
+          info.field_substitutions, ", \"&\",",
+          [&](std::string* out, std::pair<std::string, std::string> const& p) {
+            out->append(
+                absl::StrFormat("\"%s=\", request.%s()", p.first,
+                                FormatFieldAccessorCall(method, p.first)));
+          });
       method_vars["method_request_body"] = info.body;
       method_vars["method_http_verb"] = info.http_verb;
       // method_rest_path is only used for REST transport.
@@ -96,7 +96,7 @@ void SetHttpDerivedMethodVars(
     //   get: "/v1/foo/bar"
     void operator()(HttpSimpleInfo const& info) {
       method_vars["method_http_verb"] = info.http_verb;
-      method_vars["method_request_param_value"] = method.full_name();
+      method_vars["method_request_params"] = method.full_name();
       method_vars["method_rest_path"] = absl::StrCat("\"", info.url_path, "\"");
     }
 
@@ -131,7 +131,7 @@ void SetHttpGetQueryParameters(
         : method(method), method_vars(method_vars) {}
     void FormatQueryParameterCode(
         std::string const& http_verb,
-        absl::optional<std::string> const& param_field_name) {
+        std::vector<std::string> const& param_field_names) {
       if (http_verb == "Get") {
         std::vector<std::pair<std::string, protobuf::FieldDescriptor::CppType>>
             remaining_request_fields;
@@ -141,7 +141,7 @@ void SetHttpGetQueryParameters(
           // Only attempt to make non-repeated, simple fields query parameters.
           if (!field->is_repeated() &&
               field->cpp_type() != protobuf::FieldDescriptor::CPPTYPE_MESSAGE) {
-            if (!param_field_name || field->name() != *param_field_name) {
+            if (!internal::Contains(param_field_names, field->name())) {
               remaining_request_fields.emplace_back(field->name(),
                                                     field->cpp_type());
             }
@@ -151,6 +151,12 @@ void SetHttpGetQueryParameters(
           if (i.second == protobuf::FieldDescriptor::CPPTYPE_STRING) {
             out->append(absl::StrFormat("std::make_pair(\"%s\", request.%s())",
                                         i.first, i.first));
+            return;
+          }
+          if (i.second == protobuf::FieldDescriptor::CPPTYPE_BOOL) {
+            out->append(absl::StrFormat(
+                R"""(std::make_pair("%s", request.%s() ? "1" : "0"))""",
+                i.first, i.first));
             return;
           }
           out->append(absl::StrFormat(
@@ -168,16 +174,24 @@ void SetHttpGetQueryParameters(
       }
     }
 
-    // This visitor handles the case where the url field contains a token
-    // surrounded by curly braces:
-    //   patch: "/v1/{parent=projects/*/instances/*}/databases\"
-    // In this case 'parent' is expected to be found as a field in the protobuf
-    // request message and is already included in the url. No need to duplicate
-    // it as a query parameter.
+    // This visitor handles the case where the url field contains a token,
+    // or tokens, surrounded by curly braces:
+    //   patch: "/v1/{parent=projects/*/instances/*}/databases"
+    //   patch: "/v1/projects/{project}/instances/{instance}/databases"
+    // In the first case 'parent' is expected to be found as a field in the
+    // protobuf request message and is already included in the url. In the
+    // second case, both 'project' and 'instance' are expected as fields in
+    // the request and are already present in the url. No need to duplicate
+    // these fields as query parameters.
     void operator()(HttpExtensionInfo const& info) {
-      FormatQueryParameterCode(
-          info.http_verb,
-          FormatFieldAccessorCall(method, info.request_field_name));
+      FormatQueryParameterCode(info.http_verb, [&] {
+        std::vector<std::string> param_field_names;
+        param_field_names.reserve(info.field_substitutions.size());
+        for (auto const& p : info.field_substitutions) {
+          param_field_names.push_back(FormatFieldAccessorCall(method, p.first));
+        }
+        return param_field_names;
+      }());
     }
 
     // This visitor handles the case where no request field is specified in the
@@ -238,21 +252,37 @@ ParseHttpExtension(google::protobuf::MethodDescriptor const& method) {
                      << ": google::api::HttpRule not handled";
   }
 
-  static std::regex const kUrlPatternRegex(R"((.*)\{(.*)=(.*)\}(.*))");
-  std::smatch match;
-  if (!std::regex_match(url_pattern, match, kUrlPatternRegex)) {
+  static std::regex const kImplicitNamedFieldUrlPatternRegex(
+      R"((.*)\{(.*)\}(.*))");
+  std::smatch implicit_match;
+
+  // The implicit named field regex matches both the implicit and explicit
+  // syntax. So we can use the implicit match to determine if either are
+  // present.
+  if (!std::regex_match(url_pattern, implicit_match,
+                        kImplicitNamedFieldUrlPatternRegex)) {
     return HttpSimpleInfo{info.http_verb, url_pattern, http_rule.body()};
   }
-  info.url_path = match[0];
-  info.request_field_name = match[2];
-  info.url_substitution = match[3];
-  info.body = http_rule.body();
-  info.path_prefix = match[1];
-  info.path_suffix = match[4];
+
+  static std::regex const kExplicitNamedFieldUrlPatternRegex(
+      R"((.*)\{(.*)=(.*)\}(.*))");
+  std::smatch explicit_match;
+
+  if (std::regex_match(url_pattern, explicit_match,
+                       kExplicitNamedFieldUrlPatternRegex)) {
+    info.url_path = explicit_match[0];
+    info.body = http_rule.body();
+    info.path_suffix = explicit_match[4];
+  } else {
+    info.url_path = implicit_match[0];
+    info.body = http_rule.body();
+    info.path_suffix = implicit_match[3];
+  }
 
   std::size_t current = 0;
-  for (auto open = url_pattern.find('{'); open != std::string::npos;
-       open = url_pattern.find('{', current)) {
+  auto open = url_pattern.find('{');
+  info.path_prefix = url_pattern.substr(current, open - current);
+  for (; open != std::string::npos; open = url_pattern.find('{', current)) {
     info.rest_path.emplace_back(
         [piece = url_pattern.substr(current, open - current)](
             google::protobuf::MethodDescriptor const&) {
@@ -262,6 +292,11 @@ ParseHttpExtension(google::protobuf::MethodDescriptor const& method) {
     auto close = url_pattern.find('}', current);
     std::pair<std::string, std::string> param = absl::StrSplit(
         url_pattern.substr(current, close - current), absl::ByChar('='));
+    if (!param.first.empty() && param.second.empty()) {
+      info.field_substitutions.emplace_back(param.first, param.first);
+    } else if (!param.first.empty() && !param.second.empty()) {
+      info.field_substitutions.emplace_back(param.first, param.second);
+    }
     info.rest_path.emplace_back(
         [piece =
              param.first](google::protobuf::MethodDescriptor const& method) {
@@ -286,6 +321,46 @@ bool HasHttpAnnotation(MethodDescriptor const& method) {
   auto result = ParseHttpExtension(method);
   return absl::holds_alternative<HttpExtensionInfo>(result) ||
          absl::holds_alternative<HttpSimpleInfo>(result);
+}
+
+std::string FormatRequestResource(
+    google::protobuf::Descriptor const& request,
+    absl::variant<absl::monostate, HttpSimpleInfo, HttpExtensionInfo> const&
+        parsed_http_info) {
+  struct HttpInfoVisitor {
+    std::string operator()(HttpExtensionInfo const& info) { return info.body; }
+    std::string operator()(HttpSimpleInfo const& info) { return info.body; }
+    std::string operator()(absl::monostate) { return ""; }
+  };
+
+  std::string body_field_name =
+      absl::visit(HttpInfoVisitor{}, parsed_http_info);
+  if (body_field_name.empty()) return "request";
+
+  std::string field_name;
+  for (int i = 0; i != request.field_count(); ++i) {
+    auto const* field = request.field(i);
+    if (field->name() == body_field_name) {
+      field_name = FieldName(field);
+    }
+  }
+
+  // TODO(#12204): The resulting field_name from this check may never differ
+  // from the value in info.body due to how we generate the discovery protos.
+  // In fact, we may be able to stop emitting the __json_request_body annotation
+  // and remove this check.
+  if (field_name.empty()) {
+    for (int i = 0; i != request.field_count(); ++i) {
+      auto const* field = request.field(i);
+      if (field->has_json_name() &&
+          field->json_name() == "__json_request_body") {
+        field_name = FieldName(field);
+      }
+    }
+  }
+
+  if (field_name.empty()) return "request";
+  return absl::StrCat("request.", field_name, "()");
 }
 
 }  // namespace generator_internal

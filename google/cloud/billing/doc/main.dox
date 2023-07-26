@@ -27,20 +27,14 @@ functions of the class. This library groups multiple gRPC services because they
 are part of the same product or are often used together. A typical example may
 be the administrative and data plane operations for a single product.
 
-The library also has other classes that provide helpers, retry policies,
-configuration parameters, and infrastructure to mock the `*Client` classes
-when testing your application.
+The library also has other classes that provide helpers, configuration
+parameters, and infrastructure to mock the `*Client` classes when testing your
+application.
 
 - [\c billing_budgets_v1::BudgetServiceClient](@ref google::cloud::billing_budgets_v1::BudgetServiceClient)
 - [\c billing_v1::CloudBillingClient](@ref google::cloud::billing_v1::CloudBillingClient)
 - [\c billing_v1::CloudCatalogClient](@ref google::cloud::billing_v1::CloudCatalogClient)
 <!-- inject-client-list-end -->
-
-## Retry, Backoff, and Idempotency Policies.
-
-The library automatically retries requests that fail with transient errors, and
-uses [exponential backoff] to backoff between retries. Application developers
-can override the default policies.
 
 ## More Information
 
@@ -49,7 +43,8 @@ can override the default policies.
   endpoint.
 - @ref billing-override-authentication - describes how to change the
   authentication credentials used by the library.
-
-[exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff
+- @ref billing-override-retry - describes how to change the default retry
+  policies.
+- @ref billing-env - describes environment variables that can configure the behavior of the library.
 
 */

@@ -88,86 +88,130 @@ class ParticipantsClient {
   }
   ///@}
 
+  // clang-format off
   ///
   /// Creates a new participant in a conversation.
   ///
-  /// @param parent  Required. Resource identifier of the conversation adding
-  /// the participant.
+  /// @param parent  Required. Resource identifier of the conversation adding the participant.
   ///  Format: `projects/<Project ID>/locations/<Location
   ///  ID>/conversations/<Conversation ID>`.
   /// @param participant  Required. The participant to create.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::Participant,google/cloud/dialogflow/v2/participant.proto#L178}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.dialogflow.v2.Participant])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.dialogflow.v2.CreateParticipantRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L319}
-  /// [google.cloud.dialogflow.v2.Participant]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L178}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dialogflow.v2.CreateParticipantRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L319}
+  /// [google.cloud.dialogflow.v2.Participant]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L178}
   ///
+  // clang-format on
   StatusOr<google::cloud::dialogflow::v2::Participant> CreateParticipant(
       std::string const& parent,
       google::cloud::dialogflow::v2::Participant const& participant,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a new participant in a conversation.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::v2::CreateParticipantRequest,google/cloud/dialogflow/v2/participant.proto#L319}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dialogflow.v2.CreateParticipantRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::Participant,google/cloud/dialogflow/v2/participant.proto#L178}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.dialogflow.v2.Participant])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.dialogflow.v2.CreateParticipantRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L319}
-  /// [google.cloud.dialogflow.v2.Participant]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L178}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dialogflow.v2.CreateParticipantRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L319}
+  /// [google.cloud.dialogflow.v2.Participant]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L178}
   ///
+  // clang-format on
   StatusOr<google::cloud::dialogflow::v2::Participant> CreateParticipant(
       google::cloud::dialogflow::v2::CreateParticipantRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Retrieves a conversation participant.
   ///
   /// @param name  Required. The name of the participant. Format:
-  ///  `projects/<Project ID>/locations/<Location
-  ///  ID>/conversations/<Conversation ID>/participants/<Participant ID>`.
+  ///  `projects/<Project ID>/locations/<Location ID>/conversations/<Conversation
+  ///  ID>/participants/<Participant ID>`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::Participant,google/cloud/dialogflow/v2/participant.proto#L178}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.dialogflow.v2.Participant])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.dialogflow.v2.GetParticipantRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L336}
-  /// [google.cloud.dialogflow.v2.Participant]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L178}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dialogflow.v2.GetParticipantRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L336}
+  /// [google.cloud.dialogflow.v2.Participant]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L178}
   ///
+  // clang-format on
   StatusOr<google::cloud::dialogflow::v2::Participant> GetParticipant(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Retrieves a conversation participant.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::v2::GetParticipantRequest,google/cloud/dialogflow/v2/participant.proto#L336}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dialogflow.v2.GetParticipantRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::Participant,google/cloud/dialogflow/v2/participant.proto#L178}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.dialogflow.v2.Participant])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.dialogflow.v2.GetParticipantRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L336}
-  /// [google.cloud.dialogflow.v2.Participant]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L178}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dialogflow.v2.GetParticipantRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L336}
+  /// [google.cloud.dialogflow.v2.Participant]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L178}
   ///
+  // clang-format on
   StatusOr<google::cloud::dialogflow::v2::Participant> GetParticipant(
       google::cloud::dialogflow::v2::GetParticipantRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Returns the list of all participants in the specified conversation.
   ///
@@ -176,36 +220,76 @@ class ParticipantsClient {
   ///  ID>/conversations/<Conversation ID>`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::Participant,google/cloud/dialogflow/v2/participant.proto#L178}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.dialogflow.v2.Participant], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dialogflow.v2.ListParticipantsRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L350}
-  /// [google.cloud.dialogflow.v2.Participant]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L178}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dialogflow.v2.ListParticipantsRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L350}
+  /// [google.cloud.dialogflow.v2.Participant]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L178}
   ///
+  // clang-format on
   StreamRange<google::cloud::dialogflow::v2::Participant> ListParticipants(
       std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Returns the list of all participants in the specified conversation.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::v2::ListParticipantsRequest,google/cloud/dialogflow/v2/participant.proto#L350}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dialogflow.v2.ListParticipantsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::Participant,google/cloud/dialogflow/v2/participant.proto#L178}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.dialogflow.v2.Participant], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dialogflow.v2.ListParticipantsRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L350}
-  /// [google.cloud.dialogflow.v2.Participant]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L178}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dialogflow.v2.ListParticipantsRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L350}
+  /// [google.cloud.dialogflow.v2.Participant]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L178}
   ///
+  // clang-format on
   StreamRange<google::cloud::dialogflow::v2::Participant> ListParticipants(
       google::cloud::dialogflow::v2::ListParticipantsRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Updates the specified participant.
   ///
@@ -213,37 +297,59 @@ class ParticipantsClient {
   /// @param update_mask  Required. The mask to specify which fields to update.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::Participant,google/cloud/dialogflow/v2/participant.proto#L178}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.dialogflow.v2.Participant])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.dialogflow.v2.Participant]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L178}
-  /// [google.cloud.dialogflow.v2.UpdateParticipantRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L383}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dialogflow.v2.Participant]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L178}
+  /// [google.cloud.dialogflow.v2.UpdateParticipantRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L383}
   ///
+  // clang-format on
   StatusOr<google::cloud::dialogflow::v2::Participant> UpdateParticipant(
       google::cloud::dialogflow::v2::Participant const& participant,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
   ///
   /// Updates the specified participant.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::v2::UpdateParticipantRequest,google/cloud/dialogflow/v2/participant.proto#L383}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dialogflow.v2.UpdateParticipantRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::Participant,google/cloud/dialogflow/v2/participant.proto#L178}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.dialogflow.v2.Participant])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.dialogflow.v2.Participant]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L178}
-  /// [google.cloud.dialogflow.v2.UpdateParticipantRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L383}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dialogflow.v2.Participant]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L178}
+  /// [google.cloud.dialogflow.v2.UpdateParticipantRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L383}
   ///
+  // clang-format on
   StatusOr<google::cloud::dialogflow::v2::Participant> UpdateParticipant(
       google::cloud::dialogflow::v2::UpdateParticipantRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Adds a text (chat, for example), or audio (phone recording, for example)
   /// message from a participant into the conversation.
@@ -252,26 +358,34 @@ class ParticipantsClient {
   /// sent to virtual agents. See [Versions and
   /// environments](https://cloud.google.com/dialogflow/es/docs/agents-versions).
   ///
-  /// @param participant  Required. The name of the participant this text comes
-  /// from.
+  /// @param participant  Required. The name of the participant this text comes from.
   ///  Format: `projects/<Project ID>/locations/<Location
   ///  ID>/conversations/<Conversation ID>/participants/<Participant ID>`.
   /// @param text_input  The natural language text to be processed.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::AnalyzeContentResponse,google/cloud/dialogflow/v2/participant.proto#L449}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.dialogflow.v2.AnalyzeContentResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.dialogflow.v2.AnalyzeContentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L394}
-  /// [google.cloud.dialogflow.v2.AnalyzeContentResponse]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L449}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dialogflow.v2.AnalyzeContentRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L394}
+  /// [google.cloud.dialogflow.v2.AnalyzeContentResponse]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L449}
   ///
+  // clang-format on
   StatusOr<google::cloud::dialogflow::v2::AnalyzeContentResponse>
   AnalyzeContent(std::string const& participant,
                  google::cloud::dialogflow::v2::TextInput const& text_input,
                  Options opts = {});
 
+  // clang-format off
   ///
   /// Adds a text (chat, for example), or audio (phone recording, for example)
   /// message from a participant into the conversation.
@@ -280,26 +394,34 @@ class ParticipantsClient {
   /// sent to virtual agents. See [Versions and
   /// environments](https://cloud.google.com/dialogflow/es/docs/agents-versions).
   ///
-  /// @param participant  Required. The name of the participant this text comes
-  /// from.
+  /// @param participant  Required. The name of the participant this text comes from.
   ///  Format: `projects/<Project ID>/locations/<Location
   ///  ID>/conversations/<Conversation ID>/participants/<Participant ID>`.
   /// @param event_input  An input event to send to Dialogflow.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::AnalyzeContentResponse,google/cloud/dialogflow/v2/participant.proto#L449}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.dialogflow.v2.AnalyzeContentResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.dialogflow.v2.AnalyzeContentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L394}
-  /// [google.cloud.dialogflow.v2.AnalyzeContentResponse]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L449}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dialogflow.v2.AnalyzeContentRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L394}
+  /// [google.cloud.dialogflow.v2.AnalyzeContentResponse]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L449}
   ///
+  // clang-format on
   StatusOr<google::cloud::dialogflow::v2::AnalyzeContentResponse>
   AnalyzeContent(std::string const& participant,
                  google::cloud::dialogflow::v2::EventInput const& event_input,
                  Options opts = {});
 
+  // clang-format off
   ///
   /// Adds a text (chat, for example), or audio (phone recording, for example)
   /// message from a participant into the conversation.
@@ -308,23 +430,36 @@ class ParticipantsClient {
   /// sent to virtual agents. See [Versions and
   /// environments](https://cloud.google.com/dialogflow/es/docs/agents-versions).
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::v2::AnalyzeContentRequest,google/cloud/dialogflow/v2/participant.proto#L394}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dialogflow.v2.AnalyzeContentRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::AnalyzeContentResponse,google/cloud/dialogflow/v2/participant.proto#L449}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.dialogflow.v2.AnalyzeContentResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.dialogflow.v2.AnalyzeContentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L394}
-  /// [google.cloud.dialogflow.v2.AnalyzeContentResponse]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L449}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dialogflow.v2.AnalyzeContentRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L394}
+  /// [google.cloud.dialogflow.v2.AnalyzeContentResponse]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L449}
   ///
+  // clang-format on
   StatusOr<google::cloud::dialogflow::v2::AnalyzeContentResponse>
   AnalyzeContent(
       google::cloud::dialogflow::v2::AnalyzeContentRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Adds a text (chat, for example), or audio (phone recording, for example)
   /// message from a participant into the conversation.
@@ -335,8 +470,8 @@ class ParticipantsClient {
   /// returned in order. The first one or more messages contain the
   /// `recognition_result` field. Each result represents a more complete
   /// transcript of what the user said. The next message contains the
-  /// `reply_text` field and potentially the `reply_audio` field. The message
-  /// can also contain the `automated_agent_reply` field.
+  /// `reply_text` field and potentially the `reply_audio` field. The message can
+  /// also contain the `automated_agent_reply` field.
   ///
   /// Note: Always use agent versions for production traffic
   /// sent to virtual agents. See [Versions and
@@ -344,142 +479,215 @@ class ParticipantsClient {
   ///
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return A bidirectional streaming interface with request (write) type:
-  /// @googleapis_link{google::cloud::dialogflow::v2::StreamingAnalyzeContentRequest,google/cloud/dialogflow/v2/participant.proto#L544}
-  /// and response (read) type:
-  /// @googleapis_link{google::cloud::dialogflow::v2::StreamingAnalyzeContentResponse,google/cloud/dialogflow/v2/participant.proto#L634}
+  /// @return An object representing the bidirectional streaming
+  ///     RPC. Applications can send multiple request messages and receive
+  ///     multiple response messages through this API. Bidirectional streaming
+  ///     RPCs can impose restrictions on the sequence of request and response
+  ///     messages. Please consult the service documentation for details.
+  ///     The request message type ([google.cloud.dialogflow.v2.StreamingAnalyzeContentRequest]) and response messages
+  ///     ([google.cloud.dialogflow.v2.StreamingAnalyzeContentResponse]) are mapped to C++ classes using the
+  ///     [Protobuf mapping rules].
   ///
-  /// [google.cloud.dialogflow.v2.StreamingAnalyzeContentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L544}
-  /// [google.cloud.dialogflow.v2.StreamingAnalyzeContentResponse]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L634}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dialogflow.v2.StreamingAnalyzeContentRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L544}
+  /// [google.cloud.dialogflow.v2.StreamingAnalyzeContentResponse]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L638}
   ///
+  // clang-format on
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::dialogflow::v2::StreamingAnalyzeContentRequest,
       google::cloud::dialogflow::v2::StreamingAnalyzeContentResponse>>
   AsyncStreamingAnalyzeContent(Options opts = {});
 
+  // clang-format off
   ///
   /// Gets suggested articles for a participant based on specific historical
   /// messages.
   ///
-  /// @param parent  Required. The name of the participant to fetch suggestion
-  /// for.
+  /// @param parent  Required. The name of the participant to fetch suggestion for.
   ///  Format: `projects/<Project ID>/locations/<Location
   ///  ID>/conversations/<Conversation ID>/participants/<Participant ID>`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::SuggestArticlesResponse,google/cloud/dialogflow/v2/participant.proto#L719}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.dialogflow.v2.SuggestArticlesResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.dialogflow.v2.SuggestArticlesRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L684}
-  /// [google.cloud.dialogflow.v2.SuggestArticlesResponse]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L719}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dialogflow.v2.SuggestArticlesRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L692}
+  /// [google.cloud.dialogflow.v2.SuggestArticlesResponse]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L727}
   ///
+  // clang-format on
   StatusOr<google::cloud::dialogflow::v2::SuggestArticlesResponse>
   SuggestArticles(std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Gets suggested articles for a participant based on specific historical
   /// messages.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::v2::SuggestArticlesRequest,google/cloud/dialogflow/v2/participant.proto#L684}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dialogflow.v2.SuggestArticlesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::SuggestArticlesResponse,google/cloud/dialogflow/v2/participant.proto#L719}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.dialogflow.v2.SuggestArticlesResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.dialogflow.v2.SuggestArticlesRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L684}
-  /// [google.cloud.dialogflow.v2.SuggestArticlesResponse]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L719}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dialogflow.v2.SuggestArticlesRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L692}
+  /// [google.cloud.dialogflow.v2.SuggestArticlesResponse]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L727}
   ///
+  // clang-format on
   StatusOr<google::cloud::dialogflow::v2::SuggestArticlesResponse>
   SuggestArticles(
       google::cloud::dialogflow::v2::SuggestArticlesRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Gets suggested faq answers for a participant based on specific historical
   /// messages.
   ///
-  /// @param parent  Required. The name of the participant to fetch suggestion
-  /// for.
+  /// @param parent  Required. The name of the participant to fetch suggestion for.
   ///  Format: `projects/<Project ID>/locations/<Location
   ///  ID>/conversations/<Conversation ID>/participants/<Participant ID>`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::SuggestFaqAnswersResponse,google/cloud/dialogflow/v2/participant.proto#L775}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.dialogflow.v2.SuggestFaqAnswersResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.dialogflow.v2.SuggestFaqAnswersRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L741}
-  /// [google.cloud.dialogflow.v2.SuggestFaqAnswersResponse]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L775}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dialogflow.v2.SuggestFaqAnswersRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L749}
+  /// [google.cloud.dialogflow.v2.SuggestFaqAnswersResponse]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L783}
   ///
+  // clang-format on
   StatusOr<google::cloud::dialogflow::v2::SuggestFaqAnswersResponse>
   SuggestFaqAnswers(std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Gets suggested faq answers for a participant based on specific historical
   /// messages.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::v2::SuggestFaqAnswersRequest,google/cloud/dialogflow/v2/participant.proto#L741}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dialogflow.v2.SuggestFaqAnswersRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::SuggestFaqAnswersResponse,google/cloud/dialogflow/v2/participant.proto#L775}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.dialogflow.v2.SuggestFaqAnswersResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.dialogflow.v2.SuggestFaqAnswersRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L741}
-  /// [google.cloud.dialogflow.v2.SuggestFaqAnswersResponse]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L775}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dialogflow.v2.SuggestFaqAnswersRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L749}
+  /// [google.cloud.dialogflow.v2.SuggestFaqAnswersResponse]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L783}
   ///
+  // clang-format on
   StatusOr<google::cloud::dialogflow::v2::SuggestFaqAnswersResponse>
   SuggestFaqAnswers(
       google::cloud::dialogflow::v2::SuggestFaqAnswersRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Gets smart replies for a participant based on specific historical
   /// messages.
   ///
-  /// @param parent  Required. The name of the participant to fetch suggestion
-  /// for.
+  /// @param parent  Required. The name of the participant to fetch suggestion for.
   ///  Format: `projects/<Project ID>/locations/<Location
   ///  ID>/conversations/<Conversation ID>/participants/<Participant ID>`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::SuggestSmartRepliesResponse,google/cloud/dialogflow/v2/participant.proto#L830}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.dialogflow.v2.SuggestSmartRepliesResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.dialogflow.v2.SuggestSmartRepliesRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L797}
-  /// [google.cloud.dialogflow.v2.SuggestSmartRepliesResponse]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L830}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dialogflow.v2.SuggestSmartRepliesRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L805}
+  /// [google.cloud.dialogflow.v2.SuggestSmartRepliesResponse]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L838}
   ///
+  // clang-format on
   StatusOr<google::cloud::dialogflow::v2::SuggestSmartRepliesResponse>
   SuggestSmartReplies(std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Gets smart replies for a participant based on specific historical
   /// messages.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::v2::SuggestSmartRepliesRequest,google/cloud/dialogflow/v2/participant.proto#L797}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dialogflow.v2.SuggestSmartRepliesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::SuggestSmartRepliesResponse,google/cloud/dialogflow/v2/participant.proto#L830}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.dialogflow.v2.SuggestSmartRepliesResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.dialogflow.v2.SuggestSmartRepliesRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L797}
-  /// [google.cloud.dialogflow.v2.SuggestSmartRepliesResponse]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L830}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dialogflow.v2.SuggestSmartRepliesRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L805}
+  /// [google.cloud.dialogflow.v2.SuggestSmartRepliesResponse]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L838}
   ///
+  // clang-format on
   StatusOr<google::cloud::dialogflow::v2::SuggestSmartRepliesResponse>
   SuggestSmartReplies(
       google::cloud::dialogflow::v2::SuggestSmartRepliesRequest const& request,

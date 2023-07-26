@@ -18,6 +18,7 @@
 
 #include "google/cloud/servicecontrol/v1/internal/quota_controller_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/api/servicecontrol/v1/quota_controller.grpc.pb.h>
@@ -29,8 +30,10 @@ namespace servicecontrol_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 QuotaControllerMetadata::QuotaControllerMetadata(
-    std::shared_ptr<QuotaControllerStub> child)
+    std::shared_ptr<QuotaControllerStub> child,
+    std::multimap<std::string, std::string> fixed_metadata)
     : child_(std::move(child)),
+      fixed_metadata_(std::move(fixed_metadata)),
       api_client_header_(
           google::cloud::internal::ApiClientHeader("generator")) {}
 
@@ -38,7 +41,7 @@ StatusOr<google::api::servicecontrol::v1::AllocateQuotaResponse>
 QuotaControllerMetadata::AllocateQuota(
     grpc::ClientContext& context,
     google::api::servicecontrol::v1::AllocateQuotaRequest const& request) {
-  SetMetadata(context);
+  SetMetadata(context, absl::StrCat("service_name=", request.service_name()));
   return child_->AllocateQuota(context, request);
 }
 
@@ -49,6 +52,9 @@ void QuotaControllerMetadata::SetMetadata(grpc::ClientContext& context,
 }
 
 void QuotaControllerMetadata::SetMetadata(grpc::ClientContext& context) {
+  for (auto const& kv : fixed_metadata_) {
+    context.AddMetadata(kv.first, kv.second);
+  }
   context.AddMetadata("x-goog-api-client", api_client_header_);
   auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {

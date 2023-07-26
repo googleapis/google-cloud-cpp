@@ -90,6 +90,14 @@ class VmwareEngineTracingConnection
   StreamRange<google::cloud::vmwareengine::v1::Subnet> ListSubnets(
       google::cloud::vmwareengine::v1::ListSubnetsRequest request) override;
 
+  StatusOr<google::cloud::vmwareengine::v1::Subnet> GetSubnet(
+      google::cloud::vmwareengine::v1::GetSubnetRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::vmwareengine::v1::Subnet>> UpdateSubnet(
+      google::cloud::vmwareengine::v1::UpdateSubnetRequest const& request)
+      override;
+
   StreamRange<google::cloud::vmwareengine::v1::NodeType> ListNodeTypes(
       google::cloud::vmwareengine::v1::ListNodeTypesRequest request) override;
 
@@ -178,6 +186,36 @@ class VmwareEngineTracingConnection
   ListVmwareEngineNetworks(
       google::cloud::vmwareengine::v1::ListVmwareEngineNetworksRequest request)
       override;
+
+  future<StatusOr<google::cloud::vmwareengine::v1::PrivateConnection>>
+  CreatePrivateConnection(
+      google::cloud::vmwareengine::v1::CreatePrivateConnectionRequest const&
+          request) override;
+
+  StatusOr<google::cloud::vmwareengine::v1::PrivateConnection>
+  GetPrivateConnection(
+      google::cloud::vmwareengine::v1::GetPrivateConnectionRequest const&
+          request) override;
+
+  StreamRange<google::cloud::vmwareengine::v1::PrivateConnection>
+  ListPrivateConnections(
+      google::cloud::vmwareengine::v1::ListPrivateConnectionsRequest request)
+      override;
+
+  future<StatusOr<google::cloud::vmwareengine::v1::PrivateConnection>>
+  UpdatePrivateConnection(
+      google::cloud::vmwareengine::v1::UpdatePrivateConnectionRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
+  DeletePrivateConnection(
+      google::cloud::vmwareengine::v1::DeletePrivateConnectionRequest const&
+          request) override;
+
+  StreamRange<google::cloud::vmwareengine::v1::PeeringRoute>
+  ListPrivateConnectionPeeringRoutes(
+      google::cloud::vmwareengine::v1::ListPrivateConnectionPeeringRoutesRequest
+          request) override;
 
  private:
   std::shared_ptr<vmwareengine_v1::VmwareEngineConnection> child_;

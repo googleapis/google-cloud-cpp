@@ -40,7 +40,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * While the example showcases types from the BigQuery library, the underlying
  * principles apply for any pair of `*Client` and `*Connection`.
  *
- * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
+ * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
 class MockLivestreamServiceConnection
     : public video_livestream_v1::LivestreamServiceConnection {
@@ -137,6 +137,38 @@ class MockLivestreamServiceConnection
   MOCK_METHOD(
       Status, DeleteEvent,
       (google::cloud::video::livestream::v1::DeleteEventRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::video::livestream::v1::Asset>>,
+      CreateAsset,
+      (google::cloud::video::livestream::v1::CreateAssetRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>,
+      DeleteAsset,
+      (google::cloud::video::livestream::v1::DeleteAssetRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::video::livestream::v1::Asset>, GetAsset,
+      (google::cloud::video::livestream::v1::GetAssetRequest const& request),
+      (override));
+
+  MOCK_METHOD(StreamRange<google::cloud::video::livestream::v1::Asset>,
+              ListAssets,
+              (google::cloud::video::livestream::v1::ListAssetsRequest request),
+              (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::video::livestream::v1::Pool>, GetPool,
+      (google::cloud::video::livestream::v1::GetPoolRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::video::livestream::v1::Pool>>, UpdatePool,
+      (google::cloud::video::livestream::v1::UpdatePoolRequest const& request),
       (override));
 };
 

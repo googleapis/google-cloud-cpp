@@ -47,8 +47,9 @@ Options ServiceManagerDefaultOptions(Options options) {
   }
   if (!options.has<servicemanagement_v1::ServiceManagerBackoffPolicyOption>()) {
     options.set<servicemanagement_v1::ServiceManagerBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options.has<servicemanagement_v1::ServiceManagerPollingPolicyOption>()) {
@@ -59,9 +60,9 @@ Options ServiceManagerDefaultOptions(Options options) {
             options
                 .get<servicemanagement_v1::ServiceManagerRetryPolicyOption>()
                 ->clone(),
-            options
-                .get<servicemanagement_v1::ServiceManagerBackoffPolicyOption>()
-                ->clone())
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
             .clone());
   }
   if (!options.has<servicemanagement_v1::

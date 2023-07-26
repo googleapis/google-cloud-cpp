@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_GENERIC_REQUEST_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_GENERIC_REQUEST_H
 
+#include "google/cloud/storage/override_default_project.h"
 #include "google/cloud/storage/user_ip_option.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/storage/well_known_headers.h"
@@ -115,6 +116,45 @@ class GenericRequestBase<Derived, Option> {
 };
 
 /**
+ * Specialize for `OverrideDefaultProject` as a no-op class.
+ *
+ * Historically some `*Request` types had a `OverrideDefaultProject` option
+ * which would override the `project_id_` field. The field was initialized
+ * from the `storage::Client` defaults. With the introduction of per-call
+ * `google::cloud::Options` there were too many ways to initialize these
+ * values. We decided to initialize the `project_id_` field once, using a
+ * common function to merge the `Options...` parameters, the per-call
+ * `google::cloud::Options` and the client default `google::cloud::Options`.
+ */
+template <typename Derived>
+class GenericRequestBase<Derived, OverrideDefaultProject> {
+ public:
+  Derived& set_option(OverrideDefaultProject const&) {
+    return *static_cast<Derived*>(this);
+  }
+
+  template <typename Callable>
+  void ForEachOption(Callable&& /*c*/) const {}
+
+  template <typename HttpRequest>
+  void AddOptionsToHttpRequest(HttpRequest& /*request*/) const {}
+
+  void DumpOptions(std::ostream& /*os*/, char const* /*sep*/) const {}
+
+  template <typename /* O */>
+  bool HasOption() const {
+    return false;
+  }
+
+  template <typename O,
+            typename std::enable_if<
+                std::is_same<O, OverrideDefaultProject>::value, int>::type = 0>
+  OverrideDefaultProject GetOption() const {
+    return OverrideDefaultProject{};
+  }
+};
+
+/**
  * Refactors common functions that manipulate list of parameters in a request.
  *
  * This class is used in the implementation of `RequestParameters` see below for
@@ -173,6 +213,63 @@ class GenericRequestBase : public GenericRequestBase<Derived, Options...> {
 
  private:
   Option option_;
+};
+
+/**
+ * Specialize for `OverrideDefaultProject` as a no-op class.
+ *
+ * Historically some `*Request` types had a `OverrideDefaultProject` option
+ * which would override the `project_id_` field. The field was initialized
+ * from the `storage::Client` defaults. With the introduction of per-call
+ * `google::cloud::Options` there were too many ways to initialize these
+ * values. We decided to initialize the `project_id_` field once, using a
+ * common function to merge the `Options...` parameters, the per-call
+ * `google::cloud::Options` and the client default `google::cloud::Options`.
+ */
+template <typename Derived, typename... Options>
+class GenericRequestBase<Derived, OverrideDefaultProject, Options...>
+    : public GenericRequestBase<Derived, Options...> {
+ public:
+  using GenericRequestBase<Derived, Options...>::set_option;
+
+  Derived& set_option(OverrideDefaultProject const&) {
+    return *static_cast<Derived*>(this);
+  }
+
+  template <typename Callable>
+  void ForEachOption(Callable&& c) const {
+    GenericRequestBase<Derived, Options...>::ForEachOption(c);
+  }
+
+  template <typename HttpRequest>
+  void AddOptionsToHttpRequest(HttpRequest& request) const {
+    AddOptionsToBuilder<HttpRequest> add{request};
+    ForEachOption(add);
+  }
+
+  void DumpOptions(std::ostream& os, char const* sep) const {
+    GenericRequestBase<Derived, Options...>::DumpOptions(os, sep);
+  }
+
+  template <typename O>
+  bool HasOption() const {
+    if (std::is_same<O, OverrideDefaultProject>::value) return false;
+    return GenericRequestBase<Derived, Options...>::template HasOption<O>();
+  }
+
+  template <typename O,
+            typename std::enable_if<
+                std::is_same<O, OverrideDefaultProject>::value, int>::type = 0>
+  OverrideDefaultProject GetOption() const {
+    return OverrideDefaultProject{};
+  }
+
+  template <typename O,
+            typename std::enable_if<
+                !std::is_same<O, OverrideDefaultProject>::value, int>::type = 0>
+  O GetOption() const {
+    return GenericRequestBase<Derived, Options...>::template GetOption<O>();
+  }
 };
 
 /**

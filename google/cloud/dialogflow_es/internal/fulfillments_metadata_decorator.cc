@@ -18,6 +18,7 @@
 
 #include "google/cloud/dialogflow_es/internal/fulfillments_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/dialogflow/v2/fulfillment.grpc.pb.h>
@@ -29,8 +30,10 @@ namespace dialogflow_es_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 FulfillmentsMetadata::FulfillmentsMetadata(
-    std::shared_ptr<FulfillmentsStub> child)
+    std::shared_ptr<FulfillmentsStub> child,
+    std::multimap<std::string, std::string> fixed_metadata)
     : child_(std::move(child)),
+      fixed_metadata_(std::move(fixed_metadata)),
       api_client_header_(
           google::cloud::internal::ApiClientHeader("generator")) {}
 
@@ -38,7 +41,7 @@ StatusOr<google::cloud::dialogflow::v2::Fulfillment>
 FulfillmentsMetadata::GetFulfillment(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::GetFulfillmentRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetFulfillment(context, request);
 }
 
@@ -46,7 +49,8 @@ StatusOr<google::cloud::dialogflow::v2::Fulfillment>
 FulfillmentsMetadata::UpdateFulfillment(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::UpdateFulfillmentRequest const& request) {
-  SetMetadata(context, "fulfillment.name=" + request.fulfillment().name());
+  SetMetadata(context,
+              absl::StrCat("fulfillment.name=", request.fulfillment().name()));
   return child_->UpdateFulfillment(context, request);
 }
 
@@ -57,6 +61,9 @@ void FulfillmentsMetadata::SetMetadata(grpc::ClientContext& context,
 }
 
 void FulfillmentsMetadata::SetMetadata(grpc::ClientContext& context) {
+  for (auto const& kv : fixed_metadata_) {
+    context.AddMetadata(kv.first, kv.second);
+  }
   context.AddMetadata("x-goog-api-client", api_client_header_);
   auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {

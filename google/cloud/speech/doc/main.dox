@@ -26,19 +26,14 @@ functions of the class. This library groups multiple gRPC services because they
 are part of the same product or are often used together. A typical example may
 be the administrative and data plane operations for a single product.
 
-The library also has other classes that provide helpers, retry policies,
-configuration parameters, and infrastructure to mock the `*Client` classes
-when testing your application.
+The library also has other classes that provide helpers, configuration
+parameters, and infrastructure to mock the `*Client` classes when testing your
+application.
 
+- [\c speech_v1::AdaptationClient](@ref google::cloud::speech_v1::AdaptationClient)
 - [\c speech_v1::SpeechClient](@ref google::cloud::speech_v1::SpeechClient)
 - [\c speech_v2::SpeechClient](@ref google::cloud::speech_v2::SpeechClient)
 <!-- inject-client-list-end -->
-
-## Retry, Backoff, and Idempotency Policies.
-
-The library automatically retries requests that fail with transient errors, and
-uses [exponential backoff] to backoff between retries. Application developers
-can override the default policies.
 
 ## More Information
 
@@ -47,8 +42,10 @@ can override the default policies.
   endpoint.
 - @ref speech-override-authentication - describes how to change the
   authentication credentials used by the library.
+- @ref speech-override-retry - describes how to change the default retry
+  policies.
+- @ref speech-env - describes environment variables that can configure the behavior of the library.
 
 [cloud-service-docs]: https://cloud.google.com/speech
-[exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff
 
 */

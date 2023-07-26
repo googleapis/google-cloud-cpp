@@ -18,6 +18,7 @@
 
 #include "google/cloud/composer/v1/internal/image_versions_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/orchestration/airflow/service/v1/image_versions.grpc.pb.h>
@@ -29,8 +30,10 @@ namespace composer_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ImageVersionsMetadata::ImageVersionsMetadata(
-    std::shared_ptr<ImageVersionsStub> child)
+    std::shared_ptr<ImageVersionsStub> child,
+    std::multimap<std::string, std::string> fixed_metadata)
     : child_(std::move(child)),
+      fixed_metadata_(std::move(fixed_metadata)),
       api_client_header_(
           google::cloud::internal::ApiClientHeader("generator")) {}
 
@@ -40,7 +43,7 @@ ImageVersionsMetadata::ListImageVersions(
     grpc::ClientContext& context,
     google::cloud::orchestration::airflow::service::v1::
         ListImageVersionsRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListImageVersions(context, request);
 }
 
@@ -51,6 +54,9 @@ void ImageVersionsMetadata::SetMetadata(grpc::ClientContext& context,
 }
 
 void ImageVersionsMetadata::SetMetadata(grpc::ClientContext& context) {
+  for (auto const& kv : fixed_metadata_) {
+    context.AddMetadata(kv.first, kv.second);
+  }
   context.AddMetadata("x-goog-api-client", api_client_header_);
   auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {

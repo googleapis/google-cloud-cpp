@@ -18,6 +18,7 @@ licenses(["notice"])  # Apache 2.0
 
 service_dirs = [
     "",
+    "biglake/v1/",
     "analyticshub/v1/",
     "connection/v1/",
     "datapolicies/v1/",
@@ -53,6 +54,7 @@ cc_library(
         "//:common",
         "//:grpc_utils",
         "@com_google_googleapis//google/cloud/bigquery/analyticshub/v1:analyticshub_cc_grpc",
+        "@com_google_googleapis//google/cloud/bigquery/biglake/v1:biglake_cc_grpc",
         "@com_google_googleapis//google/cloud/bigquery/connection/v1:connection_cc_grpc",
         "@com_google_googleapis//google/cloud/bigquery/datapolicies/v1:datapolicies_cc_grpc",
         "@com_google_googleapis//google/cloud/bigquery/datatransfer/v1:datatransfer_cc_grpc",
@@ -107,7 +109,6 @@ cc_library(
     visibility = ["//:__pkg__"],
     deps = [
         "//:common",
-        "//:grpc_utils",
         "//google/cloud:google_cloud_cpp_rest_internal",
     ],
 )

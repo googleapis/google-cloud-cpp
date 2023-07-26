@@ -21,6 +21,7 @@
 
 #include "google/cloud/containeranalysis/v1/internal/container_analysis_stub.h"
 #include "google/cloud/version.h"
+#include <map>
 #include <memory>
 #include <string>
 
@@ -32,8 +33,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class ContainerAnalysisMetadata : public ContainerAnalysisStub {
  public:
   ~ContainerAnalysisMetadata() override = default;
-  explicit ContainerAnalysisMetadata(
-      std::shared_ptr<ContainerAnalysisStub> child);
+  ContainerAnalysisMetadata(
+      std::shared_ptr<ContainerAnalysisStub> child,
+      std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
       grpc::ClientContext& context,
@@ -60,6 +62,7 @@ class ContainerAnalysisMetadata : public ContainerAnalysisStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<ContainerAnalysisStub> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

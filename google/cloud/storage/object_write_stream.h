@@ -203,8 +203,8 @@ class ObjectWriteStream : public std::basic_ostream<char> {
    * parameter, applications cannot assume that all fields in the metadata are
    * filled on success.
    *
-   * @throws If the application has enabled the exception mask this function may
-   *     throw `std::ios_base::failure`.
+   * @throws std::ios_base::failure if the application has enabled the
+   *     exception mask.
    */
   void Close();
 

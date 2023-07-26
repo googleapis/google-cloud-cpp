@@ -87,5 +87,5 @@ int main(int argc, char* argv[]) try {
 - Detailed header comments in our [public `.h`][source-link] files
 
 [cloud-bigquery-docs]: https://cloud.google.com/bigquery/docs/
-[doxygen-link]: https://googleapis.dev/cpp/google-cloud-bigquery/latest/
+[doxygen-link]: https://cloud.google.com/cpp/docs/reference/bigquery/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/bigquery

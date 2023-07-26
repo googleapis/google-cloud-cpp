@@ -18,6 +18,7 @@
 
 #include "google/cloud/filestore/v1/internal/cloud_filestore_manager_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/filestore/v1/cloud_filestore_service.grpc.pb.h>
@@ -29,8 +30,10 @@ namespace filestore_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 CloudFilestoreManagerMetadata::CloudFilestoreManagerMetadata(
-    std::shared_ptr<CloudFilestoreManagerStub> child)
+    std::shared_ptr<CloudFilestoreManagerStub> child,
+    std::multimap<std::string, std::string> fixed_metadata)
     : child_(std::move(child)),
+      fixed_metadata_(std::move(fixed_metadata)),
       api_client_header_(
           google::cloud::internal::ApiClientHeader("generator")) {}
 
@@ -38,7 +41,7 @@ StatusOr<google::cloud::filestore::v1::ListInstancesResponse>
 CloudFilestoreManagerMetadata::ListInstances(
     grpc::ClientContext& context,
     google::cloud::filestore::v1::ListInstancesRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListInstances(context, request);
 }
 
@@ -46,7 +49,7 @@ StatusOr<google::cloud::filestore::v1::Instance>
 CloudFilestoreManagerMetadata::GetInstance(
     grpc::ClientContext& context,
     google::cloud::filestore::v1::GetInstanceRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetInstance(context, request);
 }
 
@@ -55,7 +58,7 @@ CloudFilestoreManagerMetadata::AsyncCreateInstance(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::filestore::v1::CreateInstanceRequest const& request) {
-  SetMetadata(*context, "parent=" + request.parent());
+  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
   return child_->AsyncCreateInstance(cq, std::move(context), request);
 }
 
@@ -64,7 +67,8 @@ CloudFilestoreManagerMetadata::AsyncUpdateInstance(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::filestore::v1::UpdateInstanceRequest const& request) {
-  SetMetadata(*context, "instance.name=" + request.instance().name());
+  SetMetadata(*context,
+              absl::StrCat("instance.name=", request.instance().name()));
   return child_->AsyncUpdateInstance(cq, std::move(context), request);
 }
 
@@ -73,7 +77,7 @@ CloudFilestoreManagerMetadata::AsyncRestoreInstance(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::filestore::v1::RestoreInstanceRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncRestoreInstance(cq, std::move(context), request);
 }
 
@@ -82,7 +86,7 @@ CloudFilestoreManagerMetadata::AsyncDeleteInstance(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::filestore::v1::DeleteInstanceRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncDeleteInstance(cq, std::move(context), request);
 }
 
@@ -90,7 +94,7 @@ StatusOr<google::cloud::filestore::v1::ListSnapshotsResponse>
 CloudFilestoreManagerMetadata::ListSnapshots(
     grpc::ClientContext& context,
     google::cloud::filestore::v1::ListSnapshotsRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListSnapshots(context, request);
 }
 
@@ -98,7 +102,7 @@ StatusOr<google::cloud::filestore::v1::Snapshot>
 CloudFilestoreManagerMetadata::GetSnapshot(
     grpc::ClientContext& context,
     google::cloud::filestore::v1::GetSnapshotRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetSnapshot(context, request);
 }
 
@@ -107,7 +111,7 @@ CloudFilestoreManagerMetadata::AsyncCreateSnapshot(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::filestore::v1::CreateSnapshotRequest const& request) {
-  SetMetadata(*context, "parent=" + request.parent());
+  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
   return child_->AsyncCreateSnapshot(cq, std::move(context), request);
 }
 
@@ -116,7 +120,7 @@ CloudFilestoreManagerMetadata::AsyncDeleteSnapshot(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::filestore::v1::DeleteSnapshotRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncDeleteSnapshot(cq, std::move(context), request);
 }
 
@@ -125,7 +129,8 @@ CloudFilestoreManagerMetadata::AsyncUpdateSnapshot(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::filestore::v1::UpdateSnapshotRequest const& request) {
-  SetMetadata(*context, "snapshot.name=" + request.snapshot().name());
+  SetMetadata(*context,
+              absl::StrCat("snapshot.name=", request.snapshot().name()));
   return child_->AsyncUpdateSnapshot(cq, std::move(context), request);
 }
 
@@ -133,7 +138,7 @@ StatusOr<google::cloud::filestore::v1::ListBackupsResponse>
 CloudFilestoreManagerMetadata::ListBackups(
     grpc::ClientContext& context,
     google::cloud::filestore::v1::ListBackupsRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListBackups(context, request);
 }
 
@@ -141,7 +146,7 @@ StatusOr<google::cloud::filestore::v1::Backup>
 CloudFilestoreManagerMetadata::GetBackup(
     grpc::ClientContext& context,
     google::cloud::filestore::v1::GetBackupRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetBackup(context, request);
 }
 
@@ -150,7 +155,7 @@ CloudFilestoreManagerMetadata::AsyncCreateBackup(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::filestore::v1::CreateBackupRequest const& request) {
-  SetMetadata(*context, "parent=" + request.parent());
+  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
   return child_->AsyncCreateBackup(cq, std::move(context), request);
 }
 
@@ -159,7 +164,7 @@ CloudFilestoreManagerMetadata::AsyncDeleteBackup(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::filestore::v1::DeleteBackupRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncDeleteBackup(cq, std::move(context), request);
 }
 
@@ -168,7 +173,7 @@ CloudFilestoreManagerMetadata::AsyncUpdateBackup(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::filestore::v1::UpdateBackupRequest const& request) {
-  SetMetadata(*context, "backup.name=" + request.backup().name());
+  SetMetadata(*context, absl::StrCat("backup.name=", request.backup().name()));
   return child_->AsyncUpdateBackup(cq, std::move(context), request);
 }
 
@@ -196,6 +201,9 @@ void CloudFilestoreManagerMetadata::SetMetadata(
 }
 
 void CloudFilestoreManagerMetadata::SetMetadata(grpc::ClientContext& context) {
+  for (auto const& kv : fixed_metadata_) {
+    context.AddMetadata(kv.first, kv.second);
+  }
   context.AddMetadata("x-goog-api-client", api_client_header_);
   auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {

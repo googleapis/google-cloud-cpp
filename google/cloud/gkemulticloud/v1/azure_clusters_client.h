@@ -87,6 +87,7 @@ class AzureClustersClient {
   }
   ///@}
 
+  // clang-format off
   ///
   /// Creates a new [AzureClient][google.cloud.gkemulticloud.v1.AzureClient]
   /// resource on a given Google Cloud project and region.
@@ -102,39 +103,54 @@ class AzureClustersClient {
   /// @param parent  Required. The parent location where this
   ///  [AzureClient][google.cloud.gkemulticloud.v1.AzureClient] resource will be
   ///  created.
-  ///  Location names are formatted as
-  ///  `projects/<project-id>/locations/<region>`. See [Resource
-  ///  Names](https://cloud.google.com/apis/design/resource_names) for more
-  ///  details on Google Cloud resource names.
+  ///  @n
+  ///  Location names are formatted as `projects/<project-id>/locations/<region>`.
+  ///  @n
+  ///  See [Resource Names](https://cloud.google.com/apis/design/resource_names)
+  ///  for more details on Google Cloud resource names.
   /// @param azure_client  Required. The specification of the
   ///  [AzureClient][google.cloud.gkemulticloud.v1.AzureClient] to create.
-  /// @param azure_client_id  Required. A client provided ID the resource. Must
-  /// be unique within the
+  /// @param azure_client_id  Required. A client provided ID the resource. Must be unique within the
   ///  parent resource.
+  ///  @n
   ///  The provided ID will be part of the
   ///  [AzureClient][google.cloud.gkemulticloud.v1.AzureClient] resource name
   ///  formatted as
   ///  `projects/<project-id>/locations/<region>/azureClients/<client-id>`.
-  ///  Valid characters are `/[a-z][0-9]-/`. Cannot be longer than 63
-  ///  characters.
+  ///  @n
+  ///  Valid characters are `/[a-z][0-9]-/`. Cannot be longer than 63 characters.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::AzureClient,google/cloud/gkemulticloud/v1/azure_resources.proto#L396}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.gkemulticloud.v1.AzureClient] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.gkemulticloud.v1.AzureClient]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L396}
-  /// [google.cloud.gkemulticloud.v1.CreateAzureClientRequest]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L622}
-  /// [google.longrunning.Operation]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.gkemulticloud.v1.AzureClient]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L396}
+  /// [google.cloud.gkemulticloud.v1.CreateAzureClientRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L622}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::gkemulticloud::v1::AzureClient>>
   CreateAzureClient(
       std::string const& parent,
       google::cloud::gkemulticloud::v1::AzureClient const& azure_client,
       std::string const& azure_client_id, Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a new [AzureClient][google.cloud.gkemulticloud.v1.AzureClient]
   /// resource on a given Google Cloud project and region.
@@ -147,25 +163,43 @@ class AzureClustersClient {
   /// [Operation][google.longrunning.Operation] resource that can be
   /// described to track the status of the operation.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::CreateAzureClientRequest,google/cloud/gkemulticloud/v1/azure_service.proto#L622}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.gkemulticloud.v1.CreateAzureClientRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::AzureClient,google/cloud/gkemulticloud/v1/azure_resources.proto#L396}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.gkemulticloud.v1.AzureClient] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.gkemulticloud.v1.AzureClient]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L396}
-  /// [google.cloud.gkemulticloud.v1.CreateAzureClientRequest]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L622}
-  /// [google.longrunning.Operation]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.gkemulticloud.v1.AzureClient]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L396}
+  /// [google.cloud.gkemulticloud.v1.CreateAzureClientRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L622}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::gkemulticloud::v1::AzureClient>>
   CreateAzureClient(
       google::cloud::gkemulticloud::v1::CreateAzureClientRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Describes a specific
   /// [AzureClient][google.cloud.gkemulticloud.v1.AzureClient] resource.
@@ -173,90 +207,155 @@ class AzureClustersClient {
   /// @param name  Required. The name of the
   ///  [AzureClient][google.cloud.gkemulticloud.v1.AzureClient] resource to
   ///  describe.
+  ///  @n
   ///  [AzureClient][google.cloud.gkemulticloud.v1.AzureClient] names are
   ///  formatted as
   ///  `projects/<project-id>/locations/<region>/azureClients/<client-id>`.
+  ///  @n
   ///  See [Resource Names](https://cloud.google.com/apis/design/resource_names)
   ///  for more details on Google Cloud resource names.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::AzureClient,google/cloud/gkemulticloud/v1/azure_resources.proto#L396}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.gkemulticloud.v1.AzureClient])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.gkemulticloud.v1.AzureClient]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L396}
-  /// [google.cloud.gkemulticloud.v1.GetAzureClientRequest]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L658}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.gkemulticloud.v1.AzureClient]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L396}
+  /// [google.cloud.gkemulticloud.v1.GetAzureClientRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L658}
   ///
+  // clang-format on
   StatusOr<google::cloud::gkemulticloud::v1::AzureClient> GetAzureClient(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Describes a specific
   /// [AzureClient][google.cloud.gkemulticloud.v1.AzureClient] resource.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::GetAzureClientRequest,google/cloud/gkemulticloud/v1/azure_service.proto#L658}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.gkemulticloud.v1.GetAzureClientRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::AzureClient,google/cloud/gkemulticloud/v1/azure_resources.proto#L396}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.gkemulticloud.v1.AzureClient])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.gkemulticloud.v1.AzureClient]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L396}
-  /// [google.cloud.gkemulticloud.v1.GetAzureClientRequest]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L658}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.gkemulticloud.v1.AzureClient]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L396}
+  /// [google.cloud.gkemulticloud.v1.GetAzureClientRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L658}
   ///
+  // clang-format on
   StatusOr<google::cloud::gkemulticloud::v1::AzureClient> GetAzureClient(
       google::cloud::gkemulticloud::v1::GetAzureClientRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists all [AzureClient][google.cloud.gkemulticloud.v1.AzureClient]
   /// resources on a given Google Cloud project and region.
   ///
   /// @param parent  Required. The parent location which owns this collection of
   ///  [AzureClient][google.cloud.gkemulticloud.v1.AzureClient] resources.
-  ///  Location names are formatted as
-  ///  `projects/<project-id>/locations/<region>`. See [Resource
-  ///  Names](https://cloud.google.com/apis/design/resource_names) for more
-  ///  details on Google Cloud Platform resource names.
+  ///  @n
+  ///  Location names are formatted as `projects/<project-id>/locations/<region>`.
+  ///  @n
+  ///  See [Resource Names](https://cloud.google.com/apis/design/resource_names)
+  ///  for more details on Google Cloud Platform resource names.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::AzureClient,google/cloud/gkemulticloud/v1/azure_resources.proto#L396}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.gkemulticloud.v1.AzureClient], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.gkemulticloud.v1.AzureClient]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L396}
-  /// [google.cloud.gkemulticloud.v1.ListAzureClientsRequest]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L678}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.gkemulticloud.v1.AzureClient]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L396}
+  /// [google.cloud.gkemulticloud.v1.ListAzureClientsRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L678}
   ///
+  // clang-format on
   StreamRange<google::cloud::gkemulticloud::v1::AzureClient> ListAzureClients(
       std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Lists all [AzureClient][google.cloud.gkemulticloud.v1.AzureClient]
   /// resources on a given Google Cloud project and region.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::ListAzureClientsRequest,google/cloud/gkemulticloud/v1/azure_service.proto#L678}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.gkemulticloud.v1.ListAzureClientsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::AzureClient,google/cloud/gkemulticloud/v1/azure_resources.proto#L396}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.gkemulticloud.v1.AzureClient], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.gkemulticloud.v1.AzureClient]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L396}
-  /// [google.cloud.gkemulticloud.v1.ListAzureClientsRequest]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L678}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.gkemulticloud.v1.AzureClient]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L396}
+  /// [google.cloud.gkemulticloud.v1.ListAzureClientsRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L678}
   ///
+  // clang-format on
   StreamRange<google::cloud::gkemulticloud::v1::AzureClient> ListAzureClients(
       google::cloud::gkemulticloud::v1::ListAzureClientsRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
-  /// Deletes a specific
-  /// [AzureClient][google.cloud.gkemulticloud.v1.AzureClient] resource.
+  /// Deletes a specific [AzureClient][google.cloud.gkemulticloud.v1.AzureClient]
+  /// resource.
   ///
   /// If the client is used by one or more clusters, deletion will
   /// fail and a `FAILED_PRECONDITION` error will be returned.
@@ -267,31 +366,46 @@ class AzureClustersClient {
   ///
   /// @param name  Required. The resource name the
   ///  [AzureClient][google.cloud.gkemulticloud.v1.AzureClient] to delete.
+  ///  @n
   ///  [AzureClient][google.cloud.gkemulticloud.v1.AzureClient] names are
   ///  formatted as
   ///  `projects/<project-id>/locations/<region>/azureClients/<client-id>`.
+  ///  @n
   ///  See [Resource Names](https://cloud.google.com/apis/design/resource_names)
   ///  for more details on Google Cloud resource names.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::OperationMetadata,google/cloud/gkemulticloud/v1/common_resources.proto#L50}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.gkemulticloud.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.gkemulticloud.v1.AzureClient]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L396}
-  /// [google.cloud.gkemulticloud.v1.DeleteAzureClientRequest]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L720}
-  /// [google.cloud.gkemulticloud.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/common_resources.proto#L50}
-  /// [google.longrunning.Operation]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.gkemulticloud.v1.AzureClient]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L396}
+  /// [google.cloud.gkemulticloud.v1.DeleteAzureClientRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L720}
+  /// [google.cloud.gkemulticloud.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/common_resources.proto#L50}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
   DeleteAzureClient(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
-  /// Deletes a specific
-  /// [AzureClient][google.cloud.gkemulticloud.v1.AzureClient] resource.
+  /// Deletes a specific [AzureClient][google.cloud.gkemulticloud.v1.AzureClient]
+  /// resource.
   ///
   /// If the client is used by one or more clusters, deletion will
   /// fail and a `FAILED_PRECONDITION` error will be returned.
@@ -300,27 +414,44 @@ class AzureClustersClient {
   /// [Operation][google.longrunning.Operation] resource that can be
   /// described to track the status of the operation.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::DeleteAzureClientRequest,google/cloud/gkemulticloud/v1/azure_service.proto#L720}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.gkemulticloud.v1.DeleteAzureClientRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::OperationMetadata,google/cloud/gkemulticloud/v1/common_resources.proto#L50}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.gkemulticloud.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.gkemulticloud.v1.AzureClient]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L396}
-  /// [google.cloud.gkemulticloud.v1.DeleteAzureClientRequest]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L720}
-  /// [google.cloud.gkemulticloud.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/common_resources.proto#L50}
-  /// [google.longrunning.Operation]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.gkemulticloud.v1.AzureClient]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L396}
+  /// [google.cloud.gkemulticloud.v1.DeleteAzureClientRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L720}
+  /// [google.cloud.gkemulticloud.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/common_resources.proto#L50}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
   DeleteAzureClient(
       google::cloud::gkemulticloud::v1::DeleteAzureClientRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a new [AzureCluster][google.cloud.gkemulticloud.v1.AzureCluster]
   /// resource on a given Google Cloud Platform project and region.
@@ -330,40 +461,56 @@ class AzureClustersClient {
   /// described to track the status of the operation.
   ///
   /// @param parent  Required. The parent location where this
-  ///  [AzureCluster][google.cloud.gkemulticloud.v1.AzureCluster] resource will
-  ///  be created. Location names are formatted as
-  ///  `projects/<project-id>/locations/<region>`. See [Resource
-  ///  Names](https://cloud.google.com/apis/design/resource_names) for more
-  ///  details on Google Cloud resource names.
+  ///  [AzureCluster][google.cloud.gkemulticloud.v1.AzureCluster] resource will be
+  ///  created.
+  ///  @n
+  ///  Location names are formatted as `projects/<project-id>/locations/<region>`.
+  ///  @n
+  ///  See [Resource Names](https://cloud.google.com/apis/design/resource_names)
+  ///  for more details on Google Cloud resource names.
   /// @param azure_cluster  Required. The specification of the
   ///  [AzureCluster][google.cloud.gkemulticloud.v1.AzureCluster] to create.
-  /// @param azure_cluster_id  Required. A client provided ID the resource. Must
-  /// be unique within the
+  /// @param azure_cluster_id  Required. A client provided ID the resource. Must be unique within the
   ///  parent resource.
+  ///  @n
   ///  The provided ID will be part of the
   ///  [AzureCluster][google.cloud.gkemulticloud.v1.AzureCluster] resource name
   ///  formatted as
   ///  `projects/<project-id>/locations/<region>/azureClusters/<cluster-id>`.
-  ///  Valid characters are `/[a-z][0-9]-/`. Cannot be longer than 63
-  ///  characters.
+  ///  @n
+  ///  Valid characters are `/[a-z][0-9]-/`. Cannot be longer than 63 characters.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::AzureCluster,google/cloud/gkemulticloud/v1/azure_resources.proto#L33}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.gkemulticloud.v1.AzureCluster] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.gkemulticloud.v1.AzureCluster]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L33}
-  /// [google.cloud.gkemulticloud.v1.CreateAzureClusterRequest]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L275}
-  /// [google.longrunning.Operation]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.gkemulticloud.v1.AzureCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L33}
+  /// [google.cloud.gkemulticloud.v1.CreateAzureClusterRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L275}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::gkemulticloud::v1::AzureCluster>>
   CreateAzureCluster(
       std::string const& parent,
       google::cloud::gkemulticloud::v1::AzureCluster const& azure_cluster,
       std::string const& azure_cluster_id, Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a new [AzureCluster][google.cloud.gkemulticloud.v1.AzureCluster]
   /// resource on a given Google Cloud Platform project and region.
@@ -372,37 +519,53 @@ class AzureClustersClient {
   /// [Operation][google.longrunning.Operation] resource that can be
   /// described to track the status of the operation.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::CreateAzureClusterRequest,google/cloud/gkemulticloud/v1/azure_service.proto#L275}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.gkemulticloud.v1.CreateAzureClusterRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::AzureCluster,google/cloud/gkemulticloud/v1/azure_resources.proto#L33}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.gkemulticloud.v1.AzureCluster] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.gkemulticloud.v1.AzureCluster]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L33}
-  /// [google.cloud.gkemulticloud.v1.CreateAzureClusterRequest]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L275}
-  /// [google.longrunning.Operation]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.gkemulticloud.v1.AzureCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L33}
+  /// [google.cloud.gkemulticloud.v1.CreateAzureClusterRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L275}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::gkemulticloud::v1::AzureCluster>>
   CreateAzureCluster(
       google::cloud::gkemulticloud::v1::CreateAzureClusterRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Updates an [AzureCluster][google.cloud.gkemulticloud.v1.AzureCluster].
   ///
-  /// @param azure_cluster  Required. The
-  /// [AzureCluster][google.cloud.gkemulticloud.v1.AzureCluster]
+  /// @param azure_cluster  Required. The [AzureCluster][google.cloud.gkemulticloud.v1.AzureCluster]
   ///  resource to update.
-  /// @param update_mask  Required. Mask of fields to update. At least one path
-  /// must be supplied in
-  ///  this field. The elements of the repeated paths field can only include
-  ///  these fields from
-  ///  [AzureCluster][google.cloud.gkemulticloud.v1.AzureCluster]:
+  /// @param update_mask  Required. Mask of fields to update. At least one path must be supplied in
+  ///  this field. The elements of the repeated paths field can only include these
+  ///  fields from [AzureCluster][google.cloud.gkemulticloud.v1.AzureCluster]:
+  ///  @n
   ///   *   `description`.
   ///   *   `azureClient`.
   ///   *   `control_plane.version`.
@@ -421,40 +584,74 @@ class AzureClustersClient {
   ///   *   `monitoring_config.managed_prometheus_config.enabled`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::AzureCluster,google/cloud/gkemulticloud/v1/azure_resources.proto#L33}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.gkemulticloud.v1.AzureCluster] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.gkemulticloud.v1.AzureCluster]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L33}
-  /// [google.cloud.gkemulticloud.v1.UpdateAzureClusterRequest]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L311}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.gkemulticloud.v1.AzureCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L33}
+  /// [google.cloud.gkemulticloud.v1.UpdateAzureClusterRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L311}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::gkemulticloud::v1::AzureCluster>>
   UpdateAzureCluster(
       google::cloud::gkemulticloud::v1::AzureCluster const& azure_cluster,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
   ///
   /// Updates an [AzureCluster][google.cloud.gkemulticloud.v1.AzureCluster].
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::UpdateAzureClusterRequest,google/cloud/gkemulticloud/v1/azure_service.proto#L311}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.gkemulticloud.v1.UpdateAzureClusterRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::AzureCluster,google/cloud/gkemulticloud/v1/azure_resources.proto#L33}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.gkemulticloud.v1.AzureCluster] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.gkemulticloud.v1.AzureCluster]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L33}
-  /// [google.cloud.gkemulticloud.v1.UpdateAzureClusterRequest]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L311}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.gkemulticloud.v1.AzureCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L33}
+  /// [google.cloud.gkemulticloud.v1.UpdateAzureClusterRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L311}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::gkemulticloud::v1::AzureCluster>>
   UpdateAzureCluster(
       google::cloud::gkemulticloud::v1::UpdateAzureClusterRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Describes a specific
   /// [AzureCluster][google.cloud.gkemulticloud.v1.AzureCluster] resource.
@@ -462,86 +659,151 @@ class AzureClustersClient {
   /// @param name  Required. The name of the
   ///  [AzureCluster][google.cloud.gkemulticloud.v1.AzureCluster] resource to
   ///  describe.
+  ///  @n
   ///  `AzureCluster` names are formatted as
   ///  `projects/<project-id>/locations/<region>/azureClusters/<cluster-id>`.
+  ///  @n
   ///  See [Resource Names](https://cloud.google.com/apis/design/resource_names)
   ///  for more details on Google Cloud Platform resource names.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::AzureCluster,google/cloud/gkemulticloud/v1/azure_resources.proto#L33}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.gkemulticloud.v1.AzureCluster])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.gkemulticloud.v1.AzureCluster]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L33}
-  /// [google.cloud.gkemulticloud.v1.GetAzureClusterRequest]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L344}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.gkemulticloud.v1.AzureCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L33}
+  /// [google.cloud.gkemulticloud.v1.GetAzureClusterRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L344}
   ///
+  // clang-format on
   StatusOr<google::cloud::gkemulticloud::v1::AzureCluster> GetAzureCluster(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Describes a specific
   /// [AzureCluster][google.cloud.gkemulticloud.v1.AzureCluster] resource.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::GetAzureClusterRequest,google/cloud/gkemulticloud/v1/azure_service.proto#L344}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.gkemulticloud.v1.GetAzureClusterRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::AzureCluster,google/cloud/gkemulticloud/v1/azure_resources.proto#L33}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.gkemulticloud.v1.AzureCluster])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.gkemulticloud.v1.AzureCluster]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L33}
-  /// [google.cloud.gkemulticloud.v1.GetAzureClusterRequest]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L344}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.gkemulticloud.v1.AzureCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L33}
+  /// [google.cloud.gkemulticloud.v1.GetAzureClusterRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L344}
   ///
+  // clang-format on
   StatusOr<google::cloud::gkemulticloud::v1::AzureCluster> GetAzureCluster(
       google::cloud::gkemulticloud::v1::GetAzureClusterRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists all [AzureCluster][google.cloud.gkemulticloud.v1.AzureCluster]
   /// resources on a given Google Cloud project and region.
   ///
   /// @param parent  Required. The parent location which owns this collection of
   ///  [AzureCluster][google.cloud.gkemulticloud.v1.AzureCluster] resources.
-  ///  Location names are formatted as
-  ///  `projects/<project-id>/locations/<region>`. See [Resource
-  ///  Names](https://cloud.google.com/apis/design/resource_names) for more
-  ///  details on Google Cloud Platform resource names.
+  ///  @n
+  ///  Location names are formatted as `projects/<project-id>/locations/<region>`.
+  ///  @n
+  ///  See [Resource Names](https://cloud.google.com/apis/design/resource_names)
+  ///  for more details on Google Cloud Platform resource names.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::AzureCluster,google/cloud/gkemulticloud/v1/azure_resources.proto#L33}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.gkemulticloud.v1.AzureCluster], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.gkemulticloud.v1.AzureCluster]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L33}
-  /// [google.cloud.gkemulticloud.v1.ListAzureClustersRequest]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L363}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.gkemulticloud.v1.AzureCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L33}
+  /// [google.cloud.gkemulticloud.v1.ListAzureClustersRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L363}
   ///
+  // clang-format on
   StreamRange<google::cloud::gkemulticloud::v1::AzureCluster> ListAzureClusters(
       std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Lists all [AzureCluster][google.cloud.gkemulticloud.v1.AzureCluster]
   /// resources on a given Google Cloud project and region.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::ListAzureClustersRequest,google/cloud/gkemulticloud/v1/azure_service.proto#L363}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.gkemulticloud.v1.ListAzureClustersRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::AzureCluster,google/cloud/gkemulticloud/v1/azure_resources.proto#L33}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.gkemulticloud.v1.AzureCluster], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.gkemulticloud.v1.AzureCluster]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L33}
-  /// [google.cloud.gkemulticloud.v1.ListAzureClustersRequest]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L363}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.gkemulticloud.v1.AzureCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L33}
+  /// [google.cloud.gkemulticloud.v1.ListAzureClustersRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L363}
   ///
+  // clang-format on
   StreamRange<google::cloud::gkemulticloud::v1::AzureCluster> ListAzureClusters(
       google::cloud::gkemulticloud::v1::ListAzureClustersRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes a specific
   /// [AzureCluster][google.cloud.gkemulticloud.v1.AzureCluster] resource.
@@ -555,29 +817,43 @@ class AzureClustersClient {
   ///
   /// @param name  Required. The resource name the
   ///  [AzureCluster][google.cloud.gkemulticloud.v1.AzureCluster] to delete.
+  ///  @n
   ///  `AzureCluster` names are formatted as
   ///  `projects/<project-id>/locations/<region>/azureClusters/<cluster-id>`.
+  ///  @n
   ///  See [Resource Names](https://cloud.google.com/apis/design/resource_names)
   ///  for more details on Google Cloud Platform resource names.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::OperationMetadata,google/cloud/gkemulticloud/v1/common_resources.proto#L50}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.gkemulticloud.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.gkemulticloud.v1.AzureCluster]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L33}
-  /// [google.cloud.gkemulticloud.v1.AzureNodePool]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L474}
-  /// [google.cloud.gkemulticloud.v1.DeleteAzureClusterRequest]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L405}
-  /// [google.cloud.gkemulticloud.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/common_resources.proto#L50}
-  /// [google.longrunning.Operation]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.gkemulticloud.v1.AzureCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L33}
+  /// [google.cloud.gkemulticloud.v1.AzureNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L474}
+  /// [google.cloud.gkemulticloud.v1.DeleteAzureClusterRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L405}
+  /// [google.cloud.gkemulticloud.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/common_resources.proto#L50}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
   DeleteAzureCluster(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes a specific
   /// [AzureCluster][google.cloud.gkemulticloud.v1.AzureCluster] resource.
@@ -589,143 +865,199 @@ class AzureClustersClient {
   /// [Operation][google.longrunning.Operation] resource that can be
   /// described to track the status of the operation.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::DeleteAzureClusterRequest,google/cloud/gkemulticloud/v1/azure_service.proto#L405}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.gkemulticloud.v1.DeleteAzureClusterRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::OperationMetadata,google/cloud/gkemulticloud/v1/common_resources.proto#L50}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.gkemulticloud.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.gkemulticloud.v1.AzureCluster]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L33}
-  /// [google.cloud.gkemulticloud.v1.AzureNodePool]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L474}
-  /// [google.cloud.gkemulticloud.v1.DeleteAzureClusterRequest]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L405}
-  /// [google.cloud.gkemulticloud.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/common_resources.proto#L50}
-  /// [google.longrunning.Operation]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.gkemulticloud.v1.AzureCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L33}
+  /// [google.cloud.gkemulticloud.v1.AzureNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L474}
+  /// [google.cloud.gkemulticloud.v1.DeleteAzureClusterRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L405}
+  /// [google.cloud.gkemulticloud.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/common_resources.proto#L50}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
   DeleteAzureCluster(
       google::cloud::gkemulticloud::v1::DeleteAzureClusterRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Generates a short-lived access token to authenticate to a given
   /// [AzureCluster][google.cloud.gkemulticloud.v1.AzureCluster] resource.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::GenerateAzureAccessTokenRequest,google/cloud/gkemulticloud/v1/azure_service.proto#L750}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.gkemulticloud.v1.GenerateAzureAccessTokenRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::GenerateAzureAccessTokenResponse,google/cloud/gkemulticloud/v1/azure_service.proto#L769}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.gkemulticloud.v1.GenerateAzureAccessTokenResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.gkemulticloud.v1.AzureCluster]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L33}
-  /// [google.cloud.gkemulticloud.v1.GenerateAzureAccessTokenRequest]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L750}
-  /// [google.cloud.gkemulticloud.v1.GenerateAzureAccessTokenResponse]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L769}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.gkemulticloud.v1.AzureCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L33}
+  /// [google.cloud.gkemulticloud.v1.GenerateAzureAccessTokenRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L750}
+  /// [google.cloud.gkemulticloud.v1.GenerateAzureAccessTokenResponse]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L769}
   ///
+  // clang-format on
   StatusOr<google::cloud::gkemulticloud::v1::GenerateAzureAccessTokenResponse>
   GenerateAzureAccessToken(
       google::cloud::gkemulticloud::v1::GenerateAzureAccessTokenRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
-  /// Creates a new
-  /// [AzureNodePool][google.cloud.gkemulticloud.v1.AzureNodePool], attached to
-  /// a given [AzureCluster][google.cloud.gkemulticloud.v1.AzureCluster].
+  /// Creates a new [AzureNodePool][google.cloud.gkemulticloud.v1.AzureNodePool],
+  /// attached to a given
+  /// [AzureCluster][google.cloud.gkemulticloud.v1.AzureCluster].
   ///
   /// If successful, the response contains a newly created
   /// [Operation][google.longrunning.Operation] resource that can be
   /// described to track the status of the operation.
   ///
-  /// @param parent  Required. The
-  /// [AzureCluster][google.cloud.gkemulticloud.v1.AzureCluster]
+  /// @param parent  Required. The [AzureCluster][google.cloud.gkemulticloud.v1.AzureCluster]
   ///  resource where this node pool will be created.
-  ///  Location names are formatted as
-  ///  `projects/<project-id>/locations/<region>`. See [Resource
-  ///  Names](https://cloud.google.com/apis/design/resource_names) for more
-  ///  details on Google Cloud resource names.
+  ///  @n
+  ///  Location names are formatted as `projects/<project-id>/locations/<region>`.
+  ///  @n
+  ///  See [Resource Names](https://cloud.google.com/apis/design/resource_names)
+  ///  for more details on Google Cloud resource names.
   /// @param azure_node_pool  Required. The specification of the
   ///  [AzureNodePool][google.cloud.gkemulticloud.v1.AzureNodePool] to create.
-  /// @param azure_node_pool_id  Required. A client provided ID the resource.
-  /// Must be unique within the
+  /// @param azure_node_pool_id  Required. A client provided ID the resource. Must be unique within the
   ///  parent resource.
+  ///  @n
   ///  The provided ID will be part of the
-  ///  [AzureNodePool][google.cloud.gkemulticloud.v1.AzureNodePool] resource
-  ///  name formatted as
+  ///  [AzureNodePool][google.cloud.gkemulticloud.v1.AzureNodePool] resource name
+  ///  formatted as
   ///  `projects/<project-id>/locations/<region>/azureClusters/<cluster-id>/azureNodePools/<node-pool-id>`.
-  ///  Valid characters are `/[a-z][0-9]-/`. Cannot be longer than 63
-  ///  characters.
+  ///  @n
+  ///  Valid characters are `/[a-z][0-9]-/`. Cannot be longer than 63 characters.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::AzureNodePool,google/cloud/gkemulticloud/v1/azure_resources.proto#L474}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.gkemulticloud.v1.AzureNodePool] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.gkemulticloud.v1.AzureCluster]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L33}
-  /// [google.cloud.gkemulticloud.v1.AzureNodePool]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L474}
-  /// [google.cloud.gkemulticloud.v1.CreateAzureNodePoolRequest]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L443}
-  /// [google.longrunning.Operation]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.gkemulticloud.v1.AzureCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L33}
+  /// [google.cloud.gkemulticloud.v1.AzureNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L474}
+  /// [google.cloud.gkemulticloud.v1.CreateAzureNodePoolRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L443}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::gkemulticloud::v1::AzureNodePool>>
   CreateAzureNodePool(
       std::string const& parent,
       google::cloud::gkemulticloud::v1::AzureNodePool const& azure_node_pool,
       std::string const& azure_node_pool_id, Options opts = {});
 
+  // clang-format off
   ///
-  /// Creates a new
-  /// [AzureNodePool][google.cloud.gkemulticloud.v1.AzureNodePool], attached to
-  /// a given [AzureCluster][google.cloud.gkemulticloud.v1.AzureCluster].
+  /// Creates a new [AzureNodePool][google.cloud.gkemulticloud.v1.AzureNodePool],
+  /// attached to a given
+  /// [AzureCluster][google.cloud.gkemulticloud.v1.AzureCluster].
   ///
   /// If successful, the response contains a newly created
   /// [Operation][google.longrunning.Operation] resource that can be
   /// described to track the status of the operation.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::CreateAzureNodePoolRequest,google/cloud/gkemulticloud/v1/azure_service.proto#L443}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.gkemulticloud.v1.CreateAzureNodePoolRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::AzureNodePool,google/cloud/gkemulticloud/v1/azure_resources.proto#L474}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.gkemulticloud.v1.AzureNodePool] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.gkemulticloud.v1.AzureCluster]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L33}
-  /// [google.cloud.gkemulticloud.v1.AzureNodePool]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L474}
-  /// [google.cloud.gkemulticloud.v1.CreateAzureNodePoolRequest]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L443}
-  /// [google.longrunning.Operation]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.gkemulticloud.v1.AzureCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L33}
+  /// [google.cloud.gkemulticloud.v1.AzureNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L474}
+  /// [google.cloud.gkemulticloud.v1.CreateAzureNodePoolRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L443}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::gkemulticloud::v1::AzureNodePool>>
   CreateAzureNodePool(
       google::cloud::gkemulticloud::v1::CreateAzureNodePoolRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Updates an [AzureNodePool][google.cloud.gkemulticloud.v1.AzureNodePool].
   ///
-  /// @param azure_node_pool  Required. The
-  /// [AzureNodePool][google.cloud.gkemulticloud.v1.AzureNodePool]
+  /// @param azure_node_pool  Required. The [AzureNodePool][google.cloud.gkemulticloud.v1.AzureNodePool]
   ///  resource to update.
-  /// @param update_mask  Required. Mask of fields to update. At least one path
-  /// must be supplied in
-  ///  this field. The elements of the repeated paths field can only include
-  ///  these fields from
-  ///  [AzureNodePool][google.cloud.gkemulticloud.v1.AzureNodePool]:
+  /// @param update_mask  Required. Mask of fields to update. At least one path must be supplied in
+  ///  this field. The elements of the repeated paths field can only include these
+  ///  fields from [AzureNodePool][google.cloud.gkemulticloud.v1.AzureNodePool]:
+  ///  @n
   ///   *.  `annotations`.
   ///   *   `version`.
   ///   *   `autoscaling.min_node_count`.
@@ -733,40 +1065,74 @@ class AzureClustersClient {
   ///   *   `config.ssh_config.authorized_key`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::AzureNodePool,google/cloud/gkemulticloud/v1/azure_resources.proto#L474}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.gkemulticloud.v1.AzureNodePool] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.gkemulticloud.v1.AzureNodePool]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L474}
-  /// [google.cloud.gkemulticloud.v1.UpdateAzureNodePoolRequest]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L479}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.gkemulticloud.v1.AzureNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L474}
+  /// [google.cloud.gkemulticloud.v1.UpdateAzureNodePoolRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L479}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::gkemulticloud::v1::AzureNodePool>>
   UpdateAzureNodePool(
       google::cloud::gkemulticloud::v1::AzureNodePool const& azure_node_pool,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
   ///
   /// Updates an [AzureNodePool][google.cloud.gkemulticloud.v1.AzureNodePool].
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::UpdateAzureNodePoolRequest,google/cloud/gkemulticloud/v1/azure_service.proto#L479}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.gkemulticloud.v1.UpdateAzureNodePoolRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::AzureNodePool,google/cloud/gkemulticloud/v1/azure_resources.proto#L474}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.gkemulticloud.v1.AzureNodePool] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.gkemulticloud.v1.AzureNodePool]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L474}
-  /// [google.cloud.gkemulticloud.v1.UpdateAzureNodePoolRequest]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L479}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.gkemulticloud.v1.AzureNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L474}
+  /// [google.cloud.gkemulticloud.v1.UpdateAzureNodePoolRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L479}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::gkemulticloud::v1::AzureNodePool>>
   UpdateAzureNodePool(
       google::cloud::gkemulticloud::v1::UpdateAzureNodePoolRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Describes a specific
   /// [AzureNodePool][google.cloud.gkemulticloud.v1.AzureNodePool] resource.
@@ -774,94 +1140,157 @@ class AzureClustersClient {
   /// @param name  Required. The name of the
   ///  [AzureNodePool][google.cloud.gkemulticloud.v1.AzureNodePool] resource to
   ///  describe.
+  ///  @n
   ///  `AzureNodePool` names are formatted as
   ///  `projects/<project-id>/locations/<region>/azureClusters/<cluster-id>/azureNodePools/<node-pool-id>`.
+  ///  @n
   ///  See [Resource Names](https://cloud.google.com/apis/design/resource_names)
   ///  for more details on Google Cloud resource names.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::AzureNodePool,google/cloud/gkemulticloud/v1/azure_resources.proto#L474}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.gkemulticloud.v1.AzureNodePool])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.gkemulticloud.v1.AzureNodePool]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L474}
-  /// [google.cloud.gkemulticloud.v1.GetAzureNodePoolRequest]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L501}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.gkemulticloud.v1.AzureNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L474}
+  /// [google.cloud.gkemulticloud.v1.GetAzureNodePoolRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L501}
   ///
+  // clang-format on
   StatusOr<google::cloud::gkemulticloud::v1::AzureNodePool> GetAzureNodePool(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Describes a specific
   /// [AzureNodePool][google.cloud.gkemulticloud.v1.AzureNodePool] resource.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::GetAzureNodePoolRequest,google/cloud/gkemulticloud/v1/azure_service.proto#L501}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.gkemulticloud.v1.GetAzureNodePoolRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::AzureNodePool,google/cloud/gkemulticloud/v1/azure_resources.proto#L474}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.gkemulticloud.v1.AzureNodePool])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.gkemulticloud.v1.AzureNodePool]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L474}
-  /// [google.cloud.gkemulticloud.v1.GetAzureNodePoolRequest]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L501}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.gkemulticloud.v1.AzureNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L474}
+  /// [google.cloud.gkemulticloud.v1.GetAzureNodePoolRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L501}
   ///
+  // clang-format on
   StatusOr<google::cloud::gkemulticloud::v1::AzureNodePool> GetAzureNodePool(
       google::cloud::gkemulticloud::v1::GetAzureNodePoolRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists all [AzureNodePool][google.cloud.gkemulticloud.v1.AzureNodePool]
   /// resources on a given
   /// [AzureCluster][google.cloud.gkemulticloud.v1.AzureCluster].
   ///
-  /// @param parent  Required. The parent `AzureCluster` which owns this
-  /// collection of
+  /// @param parent  Required. The parent `AzureCluster` which owns this collection of
   ///  [AzureNodePool][google.cloud.gkemulticloud.v1.AzureNodePool] resources.
+  ///  @n
   ///  `AzureCluster` names are formatted as
   ///  `projects/<project-id>/locations/<region>/azureClusters/<cluster-id>`.
+  ///  @n
   ///  See [Resource Names](https://cloud.google.com/apis/design/resource_names)
   ///  for more details on Google Cloud resource names.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::AzureNodePool,google/cloud/gkemulticloud/v1/azure_resources.proto#L474}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.gkemulticloud.v1.AzureNodePool], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.gkemulticloud.v1.AzureCluster]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L33}
-  /// [google.cloud.gkemulticloud.v1.AzureNodePool]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L474}
-  /// [google.cloud.gkemulticloud.v1.ListAzureNodePoolsRequest]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L520}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.gkemulticloud.v1.AzureCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L33}
+  /// [google.cloud.gkemulticloud.v1.AzureNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L474}
+  /// [google.cloud.gkemulticloud.v1.ListAzureNodePoolsRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L520}
   ///
+  // clang-format on
   StreamRange<google::cloud::gkemulticloud::v1::AzureNodePool>
   ListAzureNodePools(std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Lists all [AzureNodePool][google.cloud.gkemulticloud.v1.AzureNodePool]
   /// resources on a given
   /// [AzureCluster][google.cloud.gkemulticloud.v1.AzureCluster].
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::ListAzureNodePoolsRequest,google/cloud/gkemulticloud/v1/azure_service.proto#L520}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.gkemulticloud.v1.ListAzureNodePoolsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::AzureNodePool,google/cloud/gkemulticloud/v1/azure_resources.proto#L474}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.gkemulticloud.v1.AzureNodePool], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.gkemulticloud.v1.AzureCluster]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L33}
-  /// [google.cloud.gkemulticloud.v1.AzureNodePool]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L474}
-  /// [google.cloud.gkemulticloud.v1.ListAzureNodePoolsRequest]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L520}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.gkemulticloud.v1.AzureCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L33}
+  /// [google.cloud.gkemulticloud.v1.AzureNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L474}
+  /// [google.cloud.gkemulticloud.v1.ListAzureNodePoolsRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L520}
   ///
+  // clang-format on
   StreamRange<google::cloud::gkemulticloud::v1::AzureNodePool>
   ListAzureNodePools(
       google::cloud::gkemulticloud::v1::ListAzureNodePoolsRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes a specific
   /// [AzureNodePool][google.cloud.gkemulticloud.v1.AzureNodePool] resource.
@@ -872,27 +1301,42 @@ class AzureClustersClient {
   ///
   /// @param name  Required. The resource name the
   ///  [AzureNodePool][google.cloud.gkemulticloud.v1.AzureNodePool] to delete.
+  ///  @n
   ///  `AzureNodePool` names are formatted as
   ///  `projects/<project-id>/locations/<region>/azureClusters/<cluster-id>/azureNodePools/<node-pool-id>`.
+  ///  @n
   ///  See [Resource Names](https://cloud.google.com/apis/design/resource_names)
   ///  for more details on Google Cloud resource names.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::OperationMetadata,google/cloud/gkemulticloud/v1/common_resources.proto#L50}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.gkemulticloud.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.gkemulticloud.v1.AzureNodePool]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L474}
-  /// [google.cloud.gkemulticloud.v1.DeleteAzureNodePoolRequest]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L563}
-  /// [google.cloud.gkemulticloud.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/common_resources.proto#L50}
-  /// [google.longrunning.Operation]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.gkemulticloud.v1.AzureNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L474}
+  /// [google.cloud.gkemulticloud.v1.DeleteAzureNodePoolRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L563}
+  /// [google.cloud.gkemulticloud.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/common_resources.proto#L50}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
   DeleteAzureNodePool(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes a specific
   /// [AzureNodePool][google.cloud.gkemulticloud.v1.AzureNodePool] resource.
@@ -901,28 +1345,45 @@ class AzureClustersClient {
   /// [Operation][google.longrunning.Operation] resource that can be
   /// described to track the status of the operation.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::DeleteAzureNodePoolRequest,google/cloud/gkemulticloud/v1/azure_service.proto#L563}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.gkemulticloud.v1.DeleteAzureNodePoolRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::OperationMetadata,google/cloud/gkemulticloud/v1/common_resources.proto#L50}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.gkemulticloud.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.gkemulticloud.v1.AzureNodePool]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L474}
-  /// [google.cloud.gkemulticloud.v1.DeleteAzureNodePoolRequest]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L563}
-  /// [google.cloud.gkemulticloud.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/common_resources.proto#L50}
-  /// [google.longrunning.Operation]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.gkemulticloud.v1.AzureNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L474}
+  /// [google.cloud.gkemulticloud.v1.DeleteAzureNodePoolRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L563}
+  /// [google.cloud.gkemulticloud.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/common_resources.proto#L50}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
   DeleteAzureNodePool(
       google::cloud::gkemulticloud::v1::DeleteAzureNodePoolRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Returns information, such as supported Azure regions and Kubernetes
   /// versions, on a given Google Cloud location.
@@ -930,39 +1391,62 @@ class AzureClustersClient {
   /// @param name  Required. The name of the
   ///  [AzureServerConfig][google.cloud.gkemulticloud.v1.AzureServerConfig]
   ///  resource to describe.
+  ///  @n
   ///  `AzureServerConfig` names are formatted as
   ///  `projects/<project-id>/locations/<region>/azureServerConfig`.
+  ///  @n
   ///  See [Resource Names](https://cloud.google.com/apis/design/resource_names)
   ///  for more details on Google Cloud resource names.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::AzureServerConfig,google/cloud/gkemulticloud/v1/azure_resources.proto#L649}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.gkemulticloud.v1.AzureServerConfig])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.gkemulticloud.v1.AzureServerConfig]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L649}
-  /// [google.cloud.gkemulticloud.v1.GetAzureServerConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L603}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.gkemulticloud.v1.AzureServerConfig]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L649}
+  /// [google.cloud.gkemulticloud.v1.GetAzureServerConfigRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L603}
   ///
+  // clang-format on
   StatusOr<google::cloud::gkemulticloud::v1::AzureServerConfig>
   GetAzureServerConfig(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Returns information, such as supported Azure regions and Kubernetes
   /// versions, on a given Google Cloud location.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::GetAzureServerConfigRequest,google/cloud/gkemulticloud/v1/azure_service.proto#L603}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.gkemulticloud.v1.GetAzureServerConfigRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::AzureServerConfig,google/cloud/gkemulticloud/v1/azure_resources.proto#L649}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.gkemulticloud.v1.AzureServerConfig])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.gkemulticloud.v1.AzureServerConfig]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L649}
-  /// [google.cloud.gkemulticloud.v1.GetAzureServerConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L603}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.gkemulticloud.v1.AzureServerConfig]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L649}
+  /// [google.cloud.gkemulticloud.v1.GetAzureServerConfigRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L603}
   ///
+  // clang-format on
   StatusOr<google::cloud::gkemulticloud::v1::AzureServerConfig>
   GetAzureServerConfig(
       google::cloud::gkemulticloud::v1::GetAzureServerConfigRequest const&

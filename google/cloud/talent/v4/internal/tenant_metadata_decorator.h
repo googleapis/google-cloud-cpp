@@ -21,6 +21,7 @@
 
 #include "google/cloud/talent/v4/internal/tenant_stub.h"
 #include "google/cloud/version.h"
+#include <map>
 #include <memory>
 #include <string>
 
@@ -32,7 +33,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class TenantServiceMetadata : public TenantServiceStub {
  public:
   ~TenantServiceMetadata() override = default;
-  explicit TenantServiceMetadata(std::shared_ptr<TenantServiceStub> child);
+  TenantServiceMetadata(std::shared_ptr<TenantServiceStub> child,
+                        std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::talent::v4::Tenant> CreateTenant(
       grpc::ClientContext& context,
@@ -60,6 +62,7 @@ class TenantServiceMetadata : public TenantServiceStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<TenantServiceStub> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

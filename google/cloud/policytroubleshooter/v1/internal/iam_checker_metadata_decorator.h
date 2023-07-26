@@ -21,6 +21,7 @@
 
 #include "google/cloud/policytroubleshooter/v1/internal/iam_checker_stub.h"
 #include "google/cloud/version.h"
+#include <map>
 #include <memory>
 #include <string>
 
@@ -32,7 +33,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class IamCheckerMetadata : public IamCheckerStub {
  public:
   ~IamCheckerMetadata() override = default;
-  explicit IamCheckerMetadata(std::shared_ptr<IamCheckerStub> child);
+  IamCheckerMetadata(std::shared_ptr<IamCheckerStub> child,
+                     std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<
       google::cloud::policytroubleshooter::v1::TroubleshootIamPolicyResponse>
@@ -47,6 +49,7 @@ class IamCheckerMetadata : public IamCheckerStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<IamCheckerStub> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

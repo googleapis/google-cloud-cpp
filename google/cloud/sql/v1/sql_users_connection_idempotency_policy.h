@@ -20,9 +20,8 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_SQL_USERS_CONNECTION_IDEMPOTENCY_POLICY_H
 
 #include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
 #include "google/cloud/version.h"
-#include <google/cloud/sql/v1/cloud_sql_users.grpc.pb.h>
+#include <google/cloud/sql/v1/cloud_sql_users.pb.h>
 #include <memory>
 
 namespace google {
@@ -40,6 +39,9 @@ class SqlUsersServiceConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency Delete(
       google::cloud::sql::v1::SqlUsersDeleteRequest const& request);
+
+  virtual google::cloud::Idempotency Get(
+      google::cloud::sql::v1::SqlUsersGetRequest const& request);
 
   virtual google::cloud::Idempotency Insert(
       google::cloud::sql::v1::SqlUsersInsertRequest const& request);

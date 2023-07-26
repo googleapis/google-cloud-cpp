@@ -1,0 +1,14 @@
+{
+    "api_id": "storagetransfer.googleapis.com",
+    "api_shortname": "storagetransfer",
+    "client_documentation": "https://cloud.google.com/cpp/docs/reference/storagetransfer/latest",
+    "distribution_name": "google-cloud-cpp",
+    "issue_tracker": "https://issuetracker.google.com/issues?q=status:open%20componentid:187195",
+    "language": "cpp",
+    "library_type": "GAPIC_AUTO",
+    "name_pretty": "Storage Transfer API",
+    "product_documentation": "https://cloud.google.com/storage-transfer",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-cpp",
+    "requires_billing": true
+}

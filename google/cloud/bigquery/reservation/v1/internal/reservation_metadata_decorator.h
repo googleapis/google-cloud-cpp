@@ -21,6 +21,7 @@
 
 #include "google/cloud/bigquery/reservation/v1/internal/reservation_stub.h"
 #include "google/cloud/version.h"
+#include <map>
 #include <memory>
 #include <string>
 
@@ -32,8 +33,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class ReservationServiceMetadata : public ReservationServiceStub {
  public:
   ~ReservationServiceMetadata() override = default;
-  explicit ReservationServiceMetadata(
-      std::shared_ptr<ReservationServiceStub> child);
+  ReservationServiceMetadata(
+      std::shared_ptr<ReservationServiceStub> child,
+      std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::bigquery::reservation::v1::Reservation>
   CreateReservation(
@@ -164,6 +166,7 @@ class ReservationServiceMetadata : public ReservationServiceStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<ReservationServiceStub> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

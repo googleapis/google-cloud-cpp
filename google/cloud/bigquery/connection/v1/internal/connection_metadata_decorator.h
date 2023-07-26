@@ -21,6 +21,7 @@
 
 #include "google/cloud/bigquery/connection/v1/internal/connection_stub.h"
 #include "google/cloud/version.h"
+#include <map>
 #include <memory>
 #include <string>
 
@@ -32,8 +33,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class ConnectionServiceMetadata : public ConnectionServiceStub {
  public:
   ~ConnectionServiceMetadata() override = default;
-  explicit ConnectionServiceMetadata(
-      std::shared_ptr<ConnectionServiceStub> child);
+  ConnectionServiceMetadata(
+      std::shared_ptr<ConnectionServiceStub> child,
+      std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::bigquery::connection::v1::Connection>
   CreateConnection(
@@ -81,6 +83,7 @@ class ConnectionServiceMetadata : public ConnectionServiceStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<ConnectionServiceStub> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

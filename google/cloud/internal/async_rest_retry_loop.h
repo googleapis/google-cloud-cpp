@@ -24,7 +24,7 @@
 #include "google/cloud/internal/invoke_result.h"
 #include "google/cloud/internal/rest_context.h"
 #include "google/cloud/internal/retry_loop_helpers.h"
-#include "google/cloud/internal/retry_policy.h"
+#include "google/cloud/retry_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include "absl/meta/type_traits.h"

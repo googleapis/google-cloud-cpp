@@ -18,6 +18,7 @@
 
 #include "google/cloud/binaryauthorization/v1/internal/validation_helper_v1_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/binaryauthorization/v1/service.grpc.pb.h>
@@ -29,8 +30,10 @@ namespace binaryauthorization_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ValidationHelperV1Metadata::ValidationHelperV1Metadata(
-    std::shared_ptr<ValidationHelperV1Stub> child)
+    std::shared_ptr<ValidationHelperV1Stub> child,
+    std::multimap<std::string, std::string> fixed_metadata)
     : child_(std::move(child)),
+      fixed_metadata_(std::move(fixed_metadata)),
       api_client_header_(
           google::cloud::internal::ApiClientHeader("generator")) {}
 
@@ -40,7 +43,7 @@ ValidationHelperV1Metadata::ValidateAttestationOccurrence(
     grpc::ClientContext& context,
     google::cloud::binaryauthorization::v1::
         ValidateAttestationOccurrenceRequest const& request) {
-  SetMetadata(context, "attestor=" + request.attestor());
+  SetMetadata(context, absl::StrCat("attestor=", request.attestor()));
   return child_->ValidateAttestationOccurrence(context, request);
 }
 
@@ -51,6 +54,9 @@ void ValidationHelperV1Metadata::SetMetadata(
 }
 
 void ValidationHelperV1Metadata::SetMetadata(grpc::ClientContext& context) {
+  for (auto const& kv : fixed_metadata_) {
+    context.AddMetadata(kv.first, kv.second);
+  }
   context.AddMetadata("x-goog-api-client", api_client_header_);
   auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {

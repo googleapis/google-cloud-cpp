@@ -35,9 +35,9 @@ cc_proto_library(
 )
 
 VARIATIONS = {
-    "default": {},
+    "default": {"GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG": "none"},
     "grpc-media": {"GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG": "media"},
-    "grpc-metadata": {"GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG": "metadata"},
+    "grpc-metadata": {"GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG": ""},
     "legacy-http": {"GOOGLE_CLOUD_CPP_STORAGE_USE_LEGACY_HTTP": "yes"},
 }
 

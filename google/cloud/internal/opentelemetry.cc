@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/internal/opentelemetry.h"
-#include "google/cloud/internal/opentelemetry_options.h"
+#include "google/cloud/opentelemetry_options.h"
 #include "google/cloud/options.h"
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include <opentelemetry/context/propagation/global_propagator.h>
@@ -79,7 +79,7 @@ Status EndSpan(opentelemetry::trace::Span& span, Status const& status) {
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 bool TracingEnabled(Options const& options) {
-  return options.get<OpenTelemetryTracingOption>();
+  return options.get<experimental::OpenTelemetryTracingOption>();
 }
 #else
 bool TracingEnabled(Options const&) { return false; }

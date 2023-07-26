@@ -18,6 +18,7 @@
 
 #include "google/cloud/pubsublite/internal/admin_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/pubsublite/v1/admin.grpc.pb.h>
@@ -29,8 +30,10 @@ namespace pubsublite_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 AdminServiceMetadata::AdminServiceMetadata(
-    std::shared_ptr<AdminServiceStub> child)
+    std::shared_ptr<AdminServiceStub> child,
+    std::multimap<std::string, std::string> fixed_metadata)
     : child_(std::move(child)),
+      fixed_metadata_(std::move(fixed_metadata)),
       api_client_header_(
           google::cloud::internal::ApiClientHeader("generator")) {}
 
@@ -38,14 +41,14 @@ StatusOr<google::cloud::pubsublite::v1::Topic>
 AdminServiceMetadata::CreateTopic(
     grpc::ClientContext& context,
     google::cloud::pubsublite::v1::CreateTopicRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->CreateTopic(context, request);
 }
 
 StatusOr<google::cloud::pubsublite::v1::Topic> AdminServiceMetadata::GetTopic(
     grpc::ClientContext& context,
     google::cloud::pubsublite::v1::GetTopicRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetTopic(context, request);
 }
 
@@ -53,7 +56,7 @@ StatusOr<google::cloud::pubsublite::v1::TopicPartitions>
 AdminServiceMetadata::GetTopicPartitions(
     grpc::ClientContext& context,
     google::cloud::pubsublite::v1::GetTopicPartitionsRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetTopicPartitions(context, request);
 }
 
@@ -61,7 +64,7 @@ StatusOr<google::cloud::pubsublite::v1::ListTopicsResponse>
 AdminServiceMetadata::ListTopics(
     grpc::ClientContext& context,
     google::cloud::pubsublite::v1::ListTopicsRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListTopics(context, request);
 }
 
@@ -69,14 +72,14 @@ StatusOr<google::cloud::pubsublite::v1::Topic>
 AdminServiceMetadata::UpdateTopic(
     grpc::ClientContext& context,
     google::cloud::pubsublite::v1::UpdateTopicRequest const& request) {
-  SetMetadata(context, "topic.name=" + request.topic().name());
+  SetMetadata(context, absl::StrCat("topic.name=", request.topic().name()));
   return child_->UpdateTopic(context, request);
 }
 
 Status AdminServiceMetadata::DeleteTopic(
     grpc::ClientContext& context,
     google::cloud::pubsublite::v1::DeleteTopicRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->DeleteTopic(context, request);
 }
 
@@ -85,7 +88,7 @@ AdminServiceMetadata::ListTopicSubscriptions(
     grpc::ClientContext& context,
     google::cloud::pubsublite::v1::ListTopicSubscriptionsRequest const&
         request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->ListTopicSubscriptions(context, request);
 }
 
@@ -93,7 +96,7 @@ StatusOr<google::cloud::pubsublite::v1::Subscription>
 AdminServiceMetadata::CreateSubscription(
     grpc::ClientContext& context,
     google::cloud::pubsublite::v1::CreateSubscriptionRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->CreateSubscription(context, request);
 }
 
@@ -101,7 +104,7 @@ StatusOr<google::cloud::pubsublite::v1::Subscription>
 AdminServiceMetadata::GetSubscription(
     grpc::ClientContext& context,
     google::cloud::pubsublite::v1::GetSubscriptionRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetSubscription(context, request);
 }
 
@@ -109,7 +112,7 @@ StatusOr<google::cloud::pubsublite::v1::ListSubscriptionsResponse>
 AdminServiceMetadata::ListSubscriptions(
     grpc::ClientContext& context,
     google::cloud::pubsublite::v1::ListSubscriptionsRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListSubscriptions(context, request);
 }
 
@@ -117,14 +120,15 @@ StatusOr<google::cloud::pubsublite::v1::Subscription>
 AdminServiceMetadata::UpdateSubscription(
     grpc::ClientContext& context,
     google::cloud::pubsublite::v1::UpdateSubscriptionRequest const& request) {
-  SetMetadata(context, "subscription.name=" + request.subscription().name());
+  SetMetadata(context, absl::StrCat("subscription.name=",
+                                    request.subscription().name()));
   return child_->UpdateSubscription(context, request);
 }
 
 Status AdminServiceMetadata::DeleteSubscription(
     grpc::ClientContext& context,
     google::cloud::pubsublite::v1::DeleteSubscriptionRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->DeleteSubscription(context, request);
 }
 
@@ -133,7 +137,7 @@ AdminServiceMetadata::AsyncSeekSubscription(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::pubsublite::v1::SeekSubscriptionRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncSeekSubscription(cq, std::move(context), request);
 }
 
@@ -141,7 +145,7 @@ StatusOr<google::cloud::pubsublite::v1::Reservation>
 AdminServiceMetadata::CreateReservation(
     grpc::ClientContext& context,
     google::cloud::pubsublite::v1::CreateReservationRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->CreateReservation(context, request);
 }
 
@@ -149,7 +153,7 @@ StatusOr<google::cloud::pubsublite::v1::Reservation>
 AdminServiceMetadata::GetReservation(
     grpc::ClientContext& context,
     google::cloud::pubsublite::v1::GetReservationRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetReservation(context, request);
 }
 
@@ -157,7 +161,7 @@ StatusOr<google::cloud::pubsublite::v1::ListReservationsResponse>
 AdminServiceMetadata::ListReservations(
     grpc::ClientContext& context,
     google::cloud::pubsublite::v1::ListReservationsRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListReservations(context, request);
 }
 
@@ -165,14 +169,15 @@ StatusOr<google::cloud::pubsublite::v1::Reservation>
 AdminServiceMetadata::UpdateReservation(
     grpc::ClientContext& context,
     google::cloud::pubsublite::v1::UpdateReservationRequest const& request) {
-  SetMetadata(context, "reservation.name=" + request.reservation().name());
+  SetMetadata(context,
+              absl::StrCat("reservation.name=", request.reservation().name()));
   return child_->UpdateReservation(context, request);
 }
 
 Status AdminServiceMetadata::DeleteReservation(
     grpc::ClientContext& context,
     google::cloud::pubsublite::v1::DeleteReservationRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->DeleteReservation(context, request);
 }
 
@@ -181,7 +186,7 @@ AdminServiceMetadata::ListReservationTopics(
     grpc::ClientContext& context,
     google::cloud::pubsublite::v1::ListReservationTopicsRequest const&
         request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->ListReservationTopics(context, request);
 }
 
@@ -190,7 +195,7 @@ AdminServiceMetadata::AsyncGetTopicPartitions(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::pubsublite::v1::GetTopicPartitionsRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncGetTopicPartitions(cq, std::move(context), request);
 }
 
@@ -218,6 +223,9 @@ void AdminServiceMetadata::SetMetadata(grpc::ClientContext& context,
 }
 
 void AdminServiceMetadata::SetMetadata(grpc::ClientContext& context) {
+  for (auto const& kv : fixed_metadata_) {
+    context.AddMetadata(kv.first, kv.second);
+  }
   context.AddMetadata("x-goog-api-client", api_client_header_);
   auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {

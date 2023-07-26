@@ -41,7 +41,7 @@ class MinimalIamCredentialsRest {
  public:
   virtual ~MinimalIamCredentialsRest() = default;
 
-  virtual StatusOr<google::cloud::internal::AccessToken> GenerateAccessToken(
+  virtual StatusOr<google::cloud::AccessToken> GenerateAccessToken(
       GenerateAccessTokenRequest const& request) = 0;
 };
 

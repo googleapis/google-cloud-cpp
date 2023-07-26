@@ -1,6 +1,6 @@
 /*!
 
-@page migrating-from-dataclient Migrating from `DataClient` to `DataConnection`
+@page migrating-from-dataclient Migrating from DataClient to DataConnection
 
 In this document we describe how to migrate existing code that uses `DataClient`
 to use `DataConnection`.

@@ -1,0 +1,13 @@
+{
+    "api_id": "datalineage.googleapis.com",
+    "api_shortname": "datalineage",
+    "client_documentation": "https://cloud.google.com/cpp/docs/reference/datacatalog/latest",
+    "distribution_name": "google-cloud-cpp",
+    "language": "cpp",
+    "library_type": "GAPIC_AUTO",
+    "name_pretty": "Data Lineage API",
+    "product_documentation": "https://cloud.google.com/data-catalog/docs/concepts/about-data-lineage",
+    "release_level": "preview",
+    "repo": "googleapis/google-cloud-cpp",
+    "requires_billing": true
+}

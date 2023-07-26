@@ -1537,6 +1537,35 @@ void ListDatabaseOperationsCommand(std::vector<std::string> argv) {
   ListDatabaseOperations(std::move(client), argv[0], argv[1]);
 }
 
+//! [update-database] [START spanner_update_database]
+void UpdateDatabase(google::cloud::spanner_admin::DatabaseAdminClient client,
+                    std::string const& project_id,
+                    std::string const& instance_id,
+                    std::string const& database_id, bool drop_protection) {
+  google::cloud::spanner::Database db(project_id, instance_id, database_id);
+  google::spanner::admin::database::v1::Database database;
+  database.set_name(db.FullName());
+  database.set_enable_drop_protection(drop_protection);
+  google::protobuf::FieldMask update_mask;
+  update_mask.add_paths("enable_drop_protection");
+  auto updated = client.UpdateDatabase(database, update_mask).get();
+  if (!updated) throw std::move(updated).status();
+  std::cout << "Database " << updated->name() << " successfully updated.\n";
+}
+//! [update-database] [END spanner_update_database]
+
+void UpdateDatabaseCommand(std::vector<std::string> argv) {
+  if (argv.size() != 4) {
+    throw std::runtime_error(
+        "update-database <project-id> <instance-id> <database-id>"
+        " <drop-protection>");
+  }
+  google::cloud::spanner_admin::DatabaseAdminClient client(
+      google::cloud::spanner_admin::MakeDatabaseAdminConnection());
+  bool drop_protection = (argv[3][0] == 'T');
+  UpdateDatabase(std::move(client), argv[0], argv[1], argv[2], drop_protection);
+}
+
 //! [drop-database] [START spanner_drop_database]
 void DropDatabase(google::cloud::spanner_admin::DatabaseAdminClient client,
                   std::string const& project_id, std::string const& instance_id,
@@ -1722,6 +1751,33 @@ void UpdateData(google::cloud::spanner::Client client) {
   std::cout << "Update was successful [spanner_update_data]\n";
 }
 //! [END spanner_update_data]
+
+void DeleteDataAtLeastOnce(google::cloud::spanner::Client client) {
+  //! [commit-at-least-once]
+  namespace spanner = ::google::cloud::spanner;
+
+  // Delete the album with key (2,2) without automatic re-run (e.g., if the
+  // transaction was aborted) or replay protection, but using a single RPC.
+  auto commit_result = client.CommitAtLeastOnce(
+      spanner::Transaction::ReadWriteOptions(),
+      spanner::Mutations{
+          spanner::DeleteMutationBuilder(
+              "Albums", spanner::KeySet().AddKey(spanner::MakeKey(2, 2)))
+              .Build()});
+
+  if (commit_result) {
+    std::cout << "Delete was successful\n";
+  } else if (commit_result.status().code() ==
+             google::cloud::StatusCode::kNotFound) {
+    std::cout << "Delete was successful but seemingly replayed\n";
+  } else if (commit_result.status().code() ==
+             google::cloud::StatusCode::kAborted) {
+    std::cout << "Delete was aborted\n";
+  } else {
+    throw std::move(commit_result).status();
+  }
+  //! [commit-at-least-once]
+}
 
 //! [START spanner_delete_data]
 void DeleteData(google::cloud::spanner::Client client) {
@@ -3389,6 +3445,90 @@ void DeleteUsingDmlReturning(google::cloud::spanner::Client client) {
 }
 // [END spanner_delete_dml_returning]
 
+// [START spanner_create_table_with_foreign_key_delete_cascade]
+void CreateTableWithForeignKeyDeleteCascade(
+    google::cloud::spanner_admin::DatabaseAdminClient client,
+    std::string const& project_id, std::string const& instance_id,
+    std::string const& database_id) {
+  google::cloud::spanner::Database database(project_id, instance_id,
+                                            database_id);
+  std::vector<std::string> statements;
+  statements.emplace_back(R"""(
+      CREATE TABLE Customers (
+          CustomerId   INT64 NOT NULL,
+          CustomerName STRING(62) NOT NULL
+      ) PRIMARY KEY (CustomerId))""");
+  statements.emplace_back(R"""(
+      CREATE TABLE ShoppingCarts (
+          CartId       INT64 NOT NULL,
+          CustomerId   INT64 NOT NULL,
+          CustomerName STRING(62) NOT NULL,
+          CONSTRAINT FKShoppingCartsCustomerId
+              FOREIGN KEY (CustomerId)
+              REFERENCES Customers (CustomerId)
+              ON DELETE CASCADE
+      ) PRIMARY KEY (CartId))""");
+  auto metadata =
+      client.UpdateDatabaseDdl(database.FullName(), std::move(statements))
+          .get();
+  google::cloud::spanner_testing::LogUpdateDatabaseDdl(  //! TODO(#4758)
+      client, database, metadata.status());              //! TODO(#4758)
+  if (!metadata) throw std::move(metadata).status();
+  std::cout << "Created Customers and ShoppingCarts tables"
+            << " with FKShoppingCartsCustomerId foreign key constraint"
+            << " on " << database.FullName() << "\n";
+}
+// [END spanner_create_table_with_foreign_key_delete_cascade]
+
+// [START spanner_alter_table_with_foreign_key_delete_cascade]
+void AlterTableWithForeignKeyDeleteCascade(
+    google::cloud::spanner_admin::DatabaseAdminClient client,
+    std::string const& project_id, std::string const& instance_id,
+    std::string const& database_id) {
+  google::cloud::spanner::Database database(project_id, instance_id,
+                                            database_id);
+  std::vector<std::string> statements;
+  statements.emplace_back(R"""(
+      ALTER TABLE ShoppingCarts
+      ADD CONSTRAINT FKShoppingCartsCustomerName
+          FOREIGN KEY (CustomerName)
+          REFERENCES Customers(CustomerName)
+          ON DELETE CASCADE)""");
+  auto metadata =
+      client.UpdateDatabaseDdl(database.FullName(), std::move(statements))
+          .get();
+  google::cloud::spanner_testing::LogUpdateDatabaseDdl(  //! TODO(#4758)
+      client, database, metadata.status());              //! TODO(#4758)
+  if (!metadata) throw std::move(metadata).status();
+  std::cout << "Altered ShoppingCarts table"
+            << " with FKShoppingCartsCustomerName foreign key constraint"
+            << " on " << database.FullName() << "\n";
+}
+// [END spanner_alter_table_with_foreign_key_delete_cascade]
+
+// [START spanner_drop_foreign_key_constraint_delete_cascade]
+void DropForeignKeyConstraintDeleteCascade(
+    google::cloud::spanner_admin::DatabaseAdminClient client,
+    std::string const& project_id, std::string const& instance_id,
+    std::string const& database_id) {
+  google::cloud::spanner::Database database(project_id, instance_id,
+                                            database_id);
+  std::vector<std::string> statements;
+  statements.emplace_back(R"""(
+      ALTER TABLE ShoppingCarts
+      DROP CONSTRAINT FKShoppingCartsCustomerName)""");
+  auto metadata =
+      client.UpdateDatabaseDdl(database.FullName(), std::move(statements))
+          .get();
+  google::cloud::spanner_testing::LogUpdateDatabaseDdl(  //! TODO(#4758)
+      client, database, metadata.status());              //! TODO(#4758)
+  if (!metadata) throw std::move(metadata).status();
+  std::cout << "Altered ShoppingCarts table"
+            << " to drop FKShoppingCartsCustomerName foreign key constraint"
+            << " on " << database.FullName() << "\n";
+}
+// [END spanner_drop_foreign_key_constraint_delete_cascade]
+
 void ExampleStatusOr(google::cloud::spanner::Client client) {
   //! [example-status-or]
   namespace spanner = ::google::cloud::spanner;
@@ -3424,8 +3564,9 @@ void CustomRetryPolicy(std::vector<std::string> argv) {
     throw std::runtime_error(
         "custom-retry-policy <project-id> <instance-id> <database-id>");
   }
-  //! [custom-retry-policy]
+  //! [custom-retry-policy] [START spanner_set_custom_timeout_and_retry]
   namespace spanner = ::google::cloud::spanner;
+  using ::google::cloud::StatusOr;
   [](std::string const& project_id, std::string const& instance_id,
      std::string const& database_id) {
     // Use a truncated exponential backoff with jitter to wait between
@@ -3437,22 +3578,30 @@ void CustomRetryPolicy(std::vector<std::string> argv) {
         google::cloud::Options{}
             .set<spanner::SpannerRetryPolicyOption>(
                 std::make_shared<spanner::LimitedTimeRetryPolicy>(
-                    /*maximum_duration=*/std::chrono::minutes(25)))
+                    /*maximum_duration=*/std::chrono::seconds(60)))
             .set<spanner::SpannerBackoffPolicyOption>(
                 std::make_shared<spanner::ExponentialBackoffPolicy>(
-                    /*initial_delay=*/std::chrono::seconds(2),
-                    /*maximum_delay=*/std::chrono::minutes(10),
+                    /*initial_delay=*/std::chrono::milliseconds(500),
+                    /*maximum_delay=*/std::chrono::seconds(64),
                     /*scaling=*/1.5))));
 
-    auto rows =
-        client.ExecuteQuery(spanner::SqlStatement("SELECT 'Hello World'"));
-
-    for (auto& row : spanner::StreamOf<std::tuple<std::string>>(rows)) {
-      if (!row) throw std::move(row).status();
-      std::cout << std::get<0>(*row) << "\n";
-    }
+    std::int64_t rows_inserted;
+    auto commit_result = client.Commit(
+        [&client, &rows_inserted](
+            spanner::Transaction txn) -> StatusOr<spanner::Mutations> {
+          auto insert = client.ExecuteDml(
+              std::move(txn),
+              spanner::SqlStatement(
+                  "INSERT INTO Singers (SingerId, FirstName, LastName)"
+                  "  VALUES (20, 'George', 'Washington')"));
+          if (!insert) return std::move(insert).status();
+          rows_inserted = insert->RowsModified();
+          return spanner::Mutations{};
+        });
+    if (!commit_result) throw std::move(commit_result).status();
+    std::cout << "Rows inserted: " << rows_inserted;
   }
-  //! [custom-retry-policy]
+  //! [custom-retry-policy] [END spanner_set_custom_timeout_and_retry]
   (argv[0], argv[1], argv[2]);
 }
 
@@ -3908,6 +4057,7 @@ int RunOneCommand(std::vector<std::string> argv) {
       {"list-backups", ListBackupsCommand},
       {"list-backup-operations", ListBackupOperationsCommand},
       {"list-database-operations", ListDatabaseOperationsCommand},
+      {"update-database", UpdateDatabaseCommand},
       make_database_command_entry("drop-database", DropDatabase),
       make_database_command_entry("database-get-iam-policy",
                                   DatabaseGetIamPolicy),
@@ -3917,6 +4067,7 @@ int RunOneCommand(std::vector<std::string> argv) {
       {"create-client-with-query-options", CreateClientWithQueryOptionsCommand},
       make_command_entry("insert-data", InsertData),
       make_command_entry("update-data", UpdateData),
+      make_command_entry("delete-data-at-least-once", DeleteDataAtLeastOnce),
       make_command_entry("delete-data", DeleteData),
       make_command_entry("insert-datatypes-data", InsertDatatypesData),
       make_command_entry("query-with-array-parameter", QueryWithArrayParameter),
@@ -4673,6 +4824,9 @@ void RunAll(bool emulator) {
   SampleBanner("spanner_dml_standard_delete");
   DmlStandardDelete(client);
 
+  SampleBanner("delete-data-at-least-once");
+  DeleteDataAtLeastOnce(client);
+
   SampleBanner("spanner_delete_data");
   DeleteData(client);
 
@@ -4725,8 +4879,29 @@ void RunAll(bool emulator) {
     QueryInformationSchemaDatabaseOptions(client);
   }
 
+  if (!emulator) {
+    SampleBanner("spanner_create_table_with_foreign_key_delete_cascade");
+    CreateTableWithForeignKeyDeleteCascade(database_admin_client, project_id,
+                                           instance_id, database_id);
+
+    SampleBanner("spanner_alter_table_with_foreign_key_delete_cascade");
+    AlterTableWithForeignKeyDeleteCascade(database_admin_client, project_id,
+                                          instance_id, database_id);
+
+    SampleBanner("spanner_drop_foreign_key_constraint_delete_cascade");
+    DropForeignKeyConstraintDeleteCascade(database_admin_client, project_id,
+                                          instance_id, database_id);
+  }
+
   SampleBanner("spanner_drop_database");
   DeleteAll(client);
+
+  if (!emulator) {
+    SampleBanner("spanner_update_database");
+    UpdateDatabase(database_admin_client, project_id, instance_id, database_id,
+                   /*drop_protection=*/false);
+  }
+
   DropDatabase(database_admin_client, project_id, instance_id, database_id);
 
   if (!emulator) {  // default_leader

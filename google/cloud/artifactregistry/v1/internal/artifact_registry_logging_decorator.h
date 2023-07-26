@@ -37,7 +37,7 @@ class ArtifactRegistryLogging : public ArtifactRegistryStub {
   ~ArtifactRegistryLogging() override = default;
   ArtifactRegistryLogging(std::shared_ptr<ArtifactRegistryStub> child,
                           TracingOptions tracing_options,
-                          std::set<std::string> components);
+                          std::set<std::string> const& components);
 
   StatusOr<google::devtools::artifactregistry::v1::ListDockerImagesResponse>
   ListDockerImages(
@@ -242,7 +242,7 @@ class ArtifactRegistryLogging : public ArtifactRegistryStub {
  private:
   std::shared_ptr<ArtifactRegistryStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // ArtifactRegistryLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

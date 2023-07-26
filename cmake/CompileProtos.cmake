@@ -98,14 +98,17 @@ function (google_cloud_cpp_generate_proto SRCS)
         set(pb_h "${CMAKE_CURRENT_BINARY_DIR}/${D}/${file_stem}.pb.h")
         list(APPEND ${SRCS} "${pb_cc}" "${pb_h}")
 
+        if (NOT Protobuf_PROTOC_EXECUTABLE)
+            set(Protobuf_PROTOC_EXECUTABLE $<TARGET_FILE:protobuf::protoc>)
+        endif ()
         if (${_opt_LOCAL_INCLUDE})
             add_custom_command(
                 OUTPUT "${pb_cc}" "${pb_h}"
                 COMMAND
-                    $<TARGET_FILE:protobuf::protoc> ARGS --cpp_out
+                    ${Protobuf_PROTOC_EXECUTABLE} ARGS --cpp_out
                     "${CMAKE_CURRENT_BINARY_DIR}/${D}" ${protobuf_include_path}
                     "${file_name}"
-                DEPENDS "${file_path}" protobuf::protoc
+                DEPENDS "${file_path}"
                 WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/${D}"
                 COMMENT "Running C++ protocol buffer compiler on ${file_path}"
                 VERBATIM)
@@ -113,10 +116,10 @@ function (google_cloud_cpp_generate_proto SRCS)
             add_custom_command(
                 OUTPUT "${pb_cc}" "${pb_h}"
                 COMMAND
-                    $<TARGET_FILE:protobuf::protoc> ARGS --cpp_out
+                    ${Protobuf_PROTOC_EXECUTABLE} ARGS --cpp_out
                     "${CMAKE_CURRENT_BINARY_DIR}" ${protobuf_include_path}
                     "${file_path}"
-                DEPENDS "${file_path}" protobuf::protoc
+                DEPENDS "${file_path}"
                 COMMENT "Running C++ protocol buffer compiler on ${file_path}"
                 VERBATIM)
         endif ()
@@ -197,15 +200,18 @@ function (google_cloud_cpp_generate_grpcpp SRCS)
             "${CMAKE_CURRENT_BINARY_DIR}/${D}/${file_stem}.grpc.pb.cc")
         set(grpc_pb_h "${CMAKE_CURRENT_BINARY_DIR}/${D}/${file_stem}.grpc.pb.h")
         list(APPEND ${SRCS} "${grpc_pb_cc}" "${grpc_pb_h}")
+        if (NOT Protobuf_PROTOC_EXECUTABLE)
+            set(Protobuf_PROTOC_EXECUTABLE $<TARGET_FILE:protobuf::protoc>)
+        endif ()
         add_custom_command(
             OUTPUT "${grpc_pb_cc}" "${grpc_pb_h}"
             COMMAND
-                $<TARGET_FILE:protobuf::protoc> ARGS
-                --plugin=protoc-gen-grpc=$<TARGET_FILE:gRPC::grpc_cpp_plugin>
+                ${Protobuf_PROTOC_EXECUTABLE} ARGS
+                --plugin=protoc-gen-grpc=${GOOGLE_CLOUD_CPP_GRPC_PLUGIN_EXECUTABLE}
                 "--grpc_out=${CMAKE_CURRENT_BINARY_DIR}"
                 "--cpp_out=${CMAKE_CURRENT_BINARY_DIR}" ${protobuf_include_path}
                 "${file_path}"
-            DEPENDS "${file_path}" protobuf::protoc gRPC::grpc_cpp_plugin
+            DEPENDS "${file_path}"
             COMMENT "Running gRPC C++ protocol buffer compiler on ${file_path}"
             VERBATIM)
     endforeach ()
@@ -289,13 +295,16 @@ function (google_cloud_cpp_load_protodeps var file)
         "google-cloud-cpp::cloud_oslogin_common_common_protos"
         "google-cloud-cpp::cloud_recommender_v1_recommender_protos"
         "google-cloud-cpp::identity_accesscontextmanager_type_type_protos")
-    # Replace "google-cloud-cpp::$1" with "google-cloud-cpp:$2" in deps.
+    # Replace "google-cloud-cpp::$1" with "google-cloud-cpp:$2" in deps. The
+    # most common reason to need one of these is a dependency between the protos
+    # in one library vs. the protos in a second library. The AIPs frown upon
+    # such dependencies, but they do happen.
     set(target_substitutions
         "grafeas_v1_grafeas_protos\;grafeas_protos"
         "identity_accesscontextmanager_v1_accesscontextmanager_protos\;accesscontextmanager_protos"
         "cloud_osconfig_v1_osconfig_protos\;osconfig_protos"
         "devtools_source_v1_source_protos\;devtools_source_v1_source_context_protos"
-    )
+        "cloud_documentai_v1_documentai_protos\;documentai_protos")
 
     foreach (line IN LISTS contents)
         if ("${line}" STREQUAL "")
@@ -459,13 +468,13 @@ macro (external_googleapis_install_pc_common target)
     list(
         APPEND
         _target_pc_requires
-        " grpc++"
-        " grpc"
-        " openssl"
-        " protobuf"
-        " zlib"
-        " libcares")
-    string(CONCAT GOOGLE_CLOUD_CPP_PC_REQUIRES ${_target_pc_requires})
+        "grpc++"
+        "grpc"
+        "openssl"
+        "protobuf"
+        "zlib"
+        "libcares")
+    string(JOIN " " GOOGLE_CLOUD_CPP_PC_REQUIRES ${_target_pc_requires})
     get_target_property(_target_type ${target} TYPE)
     if ("${_target_type}" STREQUAL "INTERFACE_LIBRARY")
         set(GOOGLE_CLOUD_CPP_PC_LIBS "")

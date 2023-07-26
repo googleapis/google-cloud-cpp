@@ -40,6 +40,143 @@ service {
   retryable_status_codes: ["kUnavailable"]
 }
 
+# AI Platform
+service {
+  service_proto_path: "google/cloud/aiplatform/v1/featurestore_service.proto"
+  product_path: "google/cloud/aiplatform/v1"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+  endpoint_location_style: LOCATION_DEPENDENT
+}
+
+service {
+  service_proto_path: "google/cloud/aiplatform/v1/match_service.proto"
+  product_path: "google/cloud/aiplatform/v1"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+  endpoint_location_style: LOCATION_DEPENDENT
+}
+
+service {
+  service_proto_path: "google/cloud/aiplatform/v1/pipeline_service.proto"
+  product_path: "google/cloud/aiplatform/v1"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+  endpoint_location_style: LOCATION_DEPENDENT
+}
+
+service {
+  service_proto_path: "google/cloud/aiplatform/v1/featurestore_online_service.proto"
+  product_path: "google/cloud/aiplatform/v1"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+  endpoint_location_style: LOCATION_DEPENDENT
+}
+
+service {
+  service_proto_path: "google/cloud/aiplatform/v1/metadata_service.proto"
+  product_path: "google/cloud/aiplatform/v1"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+  endpoint_location_style: LOCATION_DEPENDENT
+}
+
+service {
+  service_proto_path: "google/cloud/aiplatform/v1/index_endpoint_service.proto"
+  product_path: "google/cloud/aiplatform/v1"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+  endpoint_location_style: LOCATION_DEPENDENT
+}
+
+service {
+  service_proto_path: "google/cloud/aiplatform/v1/model_service.proto"
+  product_path: "google/cloud/aiplatform/v1"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+  endpoint_location_style: LOCATION_DEPENDENT
+}
+
+service {
+  service_proto_path: "google/cloud/aiplatform/v1/vizier_service.proto"
+  product_path: "google/cloud/aiplatform/v1"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+  endpoint_location_style: LOCATION_DEPENDENT
+}
+
+service {
+  service_proto_path: "google/cloud/aiplatform/v1/dataset_service.proto"
+  product_path: "google/cloud/aiplatform/v1"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+  endpoint_location_style: LOCATION_DEPENDENT
+}
+
+service {
+  service_proto_path: "google/cloud/aiplatform/v1/index_service.proto"
+  product_path: "google/cloud/aiplatform/v1"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+  endpoint_location_style: LOCATION_DEPENDENT
+}
+
+service {
+  service_proto_path: "google/cloud/aiplatform/v1/tensorboard_service.proto"
+  product_path: "google/cloud/aiplatform/v1"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+  endpoint_location_style: LOCATION_DEPENDENT
+}
+
+service {
+  service_proto_path: "google/cloud/aiplatform/v1/prediction_service.proto"
+  product_path: "google/cloud/aiplatform/v1"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+  endpoint_location_style: LOCATION_DEPENDENT
+}
+
+service {
+  service_proto_path: "google/cloud/aiplatform/v1/model_garden_service.proto"
+  product_path: "google/cloud/aiplatform/v1"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+  endpoint_location_style: LOCATION_DEPENDENT
+}
+
+service {
+  service_proto_path: "google/cloud/aiplatform/v1/specialist_pool_service.proto"
+  product_path: "google/cloud/aiplatform/v1"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+  endpoint_location_style: LOCATION_DEPENDENT
+}
+
+service {
+  service_proto_path: "google/cloud/aiplatform/v1/migration_service.proto"
+  product_path: "google/cloud/aiplatform/v1"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+  endpoint_location_style: LOCATION_DEPENDENT
+}
+
+service {
+  service_proto_path: "google/cloud/aiplatform/v1/endpoint_service.proto"
+  product_path: "google/cloud/aiplatform/v1"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+  endpoint_location_style: LOCATION_DEPENDENT
+}
+
+service {
+  service_proto_path: "google/cloud/aiplatform/v1/job_service.proto"
+  product_path: "google/cloud/aiplatform/v1"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+  endpoint_location_style: LOCATION_DEPENDENT
+}
+
 # Alloy DB
 service {
   service_proto_path: "google/cloud/alloydb/v1/service.proto"
@@ -201,6 +338,13 @@ service {
 }
 
 service {
+  service_proto_path: "google/cloud/bigquery/biglake/v1/metastore.proto"
+  product_path: "google/cloud/bigquery/biglake/v1"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
   service_proto_path: "google/cloud/bigquery/connection/v1/connection.proto"
   product_path: "google/cloud/bigquery/connection/v1"
   forwarding_product_path: "google/cloud/bigquery"
@@ -283,6 +427,7 @@ service {
     "ReadRows",
     "SampleRowKeys"
   ]
+  omit_repo_metadata: true
 }
 
 service {
@@ -292,6 +437,7 @@ service {
   emulator_endpoint_env_var: "BIGTABLE_INSTANCE_ADMIN_EMULATOR_HOST"
   retryable_status_codes: ["kUnavailable", "kAborted"]
   omitted_rpcs: ["DeleteAppProfile(std::string const&)"]
+  omit_repo_metadata: true
 }
 
 service {
@@ -311,6 +457,7 @@ service {
   idempotency_overrides: [
     {rpc_name: "BigtableTableAdmin.CheckConsistency", idempotency: IDEMPOTENT}
   ]
+  omit_repo_metadata: true
 }
 
 # Billing
@@ -380,8 +527,6 @@ service {
   product_path: "google/cloud/cloudbuild/v2"
   initial_copyright_year: "2023"
   retryable_status_codes: ["kUnavailable"]
-  # TODO(#11077): Remove experimental when service goes GA.
-  experimental: true
 }
 
 # Cloud Channel
@@ -394,20 +539,11 @@ service {
   retryable_status_codes: ["kUnavailable"]
 }
 
-# Cloud Debugger
 service {
-  service_proto_path: "google/devtools/clouddebugger/v2/controller.proto"
-  product_path: "google/cloud/debugger/v2"
-  forwarding_product_path: "google/cloud/debugger"
-  initial_copyright_year: "2022"
-  retryable_status_codes: ["kUnavailable"]
-}
-
-service {
-  service_proto_path: "google/devtools/clouddebugger/v2/debugger.proto"
-  product_path: "google/cloud/debugger/v2"
-  forwarding_product_path: "google/cloud/debugger"
-  initial_copyright_year: "2022"
+  service_proto_path: "google/cloud/channel/v1/reports_service.proto"
+  additional_proto_files: ["google/cloud/channel/v1/operations.proto"]
+  product_path: "google/cloud/channel/v1"
+  initial_copyright_year: "2023"
   retryable_status_codes: ["kUnavailable"]
 }
 
@@ -427,6 +563,922 @@ service {
   forwarding_product_path: "google/cloud/composer"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
+}
+
+# Compute
+discovery_products {
+  discovery_document_url: "file:///workspace/generator/discovery/compute_public_google_rest_v1.json"
+  operation_services: ["GlobalOperations", "GlobalOrganizationOperations", "RegionOperations", "ZoneOperations"]
+
+  rest_services {
+    service_proto_path: "google/cloud/compute/accelerator_types/v1/accelerator_types.proto"
+    product_path: "google/cloud/compute/accelerator_types/v1"
+    initial_copyright_year: "2023"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    experimental: true
+    generate_grpc_transport: false
+  }
+
+  rest_services {
+    service_proto_path: "google/cloud/compute/addresses/v1/addresses.proto"
+    product_path: "google/cloud/compute/addresses/v1"
+    initial_copyright_year: "2023"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    experimental: true
+    generate_grpc_transport: false
+  }
+
+  rest_services {
+    service_proto_path: "google/cloud/compute/autoscalers/v1/autoscalers.proto"
+    product_path: "google/cloud/compute/autoscalers/v1"
+    initial_copyright_year: "2023"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    experimental: true
+    generate_grpc_transport: false
+  }
+
+  rest_services {
+    service_proto_path: "google/cloud/compute/backend_buckets/v1/backend_buckets.proto"
+    product_path: "google/cloud/compute/backend_buckets/v1"
+    initial_copyright_year: "2023"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    experimental: true
+    generate_grpc_transport: false
+  }
+
+  rest_services {
+    service_proto_path: "google/cloud/compute/backend_services/v1/backend_services.proto"
+    product_path: "google/cloud/compute/backend_services/v1"
+    initial_copyright_year: "2023"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    experimental: true
+    generate_grpc_transport: false
+  }
+
+  rest_services {
+    service_proto_path: "google/cloud/compute/disk_types/v1/disk_types.proto"
+    product_path: "google/cloud/compute/disk_types/v1"
+    initial_copyright_year: "2023"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    experimental: true
+    generate_grpc_transport: false
+  }
+
+  rest_services {
+    service_proto_path: "google/cloud/compute/disks/v1/disks.proto"
+    product_path: "google/cloud/compute/disks/v1"
+    initial_copyright_year: "2023"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    experimental: true
+    generate_grpc_transport: false
+  }
+
+  rest_services {
+    service_proto_path: "google/cloud/compute/external_vpn_gateways/v1/external_vpn_gateways.proto"
+    product_path: "google/cloud/compute/external_vpn_gateways/v1"
+    initial_copyright_year: "2023"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    experimental: true
+    generate_grpc_transport: false
+  }
+
+  rest_services {
+    service_proto_path: "google/cloud/compute/firewall_policies/v1/firewall_policies.proto"
+    product_path: "google/cloud/compute/firewall_policies/v1"
+    initial_copyright_year: "2023"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    experimental: true
+    generate_grpc_transport: false
+  }
+
+  rest_services {
+    service_proto_path: "google/cloud/compute/firewalls/v1/firewalls.proto"
+    product_path: "google/cloud/compute/firewalls/v1"
+    initial_copyright_year: "2023"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    experimental: true
+    generate_grpc_transport: false
+  }
+
+  rest_services {
+    service_proto_path: "google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto"
+    product_path: "google/cloud/compute/forwarding_rules/v1"
+    initial_copyright_year: "2023"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    experimental: true
+    generate_grpc_transport: false
+  }
+
+  rest_services {
+    service_proto_path: "google/cloud/compute/global_addresses/v1/global_addresses.proto"
+    product_path: "google/cloud/compute/global_addresses/v1"
+    initial_copyright_year: "2023"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    experimental: true
+    generate_grpc_transport: false
+  }
+
+  rest_services {
+    service_proto_path: "google/cloud/compute/global_forwarding_rules/v1/global_forwarding_rules.proto"
+    product_path: "google/cloud/compute/global_forwarding_rules/v1"
+    initial_copyright_year: "2023"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    experimental: true
+    generate_grpc_transport: false
+  }
+
+  rest_services {
+    service_proto_path: "google/cloud/compute/global_network_endpoint_groups/v1/global_network_endpoint_groups.proto"
+    product_path: "google/cloud/compute/global_network_endpoint_groups/v1"
+    initial_copyright_year: "2023"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    experimental: true
+    generate_grpc_transport: false
+  }
+
+  rest_services {
+    service_proto_path: "google/cloud/compute/global_operations/v1/global_operations.proto"
+    product_path: "google/cloud/compute/global_operations/v1"
+    initial_copyright_year: "2023"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    experimental: true
+    generate_grpc_transport: false
+  }
+
+  rest_services {
+    service_proto_path: "google/cloud/compute/global_organization_operations/v1/global_organization_operations.proto"
+    product_path: "google/cloud/compute/global_organization_operations/v1"
+    initial_copyright_year: "2023"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    experimental: true
+    generate_grpc_transport: false
+  }
+
+  rest_services {
+    service_proto_path: "google/cloud/compute/global_public_delegated_prefixes/v1/global_public_delegated_prefixes.proto"
+    product_path: "google/cloud/compute/global_public_delegated_prefixes/v1"
+    initial_copyright_year: "2023"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    experimental: true
+    generate_grpc_transport: false
+  }
+
+  rest_services {
+    service_proto_path: "google/cloud/compute/health_checks/v1/health_checks.proto"
+    product_path: "google/cloud/compute/health_checks/v1"
+    initial_copyright_year: "2023"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    experimental: true
+    generate_grpc_transport: false
+  }
+
+  rest_services {
+    service_proto_path: "google/cloud/compute/http_health_checks/v1/http_health_checks.proto"
+    product_path: "google/cloud/compute/http_health_checks/v1"
+    initial_copyright_year: "2023"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    experimental: true
+    generate_grpc_transport: false
+  }
+
+  rest_services {
+    service_proto_path: "google/cloud/compute/https_health_checks/v1/https_health_checks.proto"
+    product_path: "google/cloud/compute/https_health_checks/v1"
+    initial_copyright_year: "2023"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    experimental: true
+    generate_grpc_transport: false
+  }
+
+  rest_services {
+    service_proto_path: "google/cloud/compute/image_family_views/v1/image_family_views.proto"
+    product_path: "google/cloud/compute/image_family_views/v1"
+    initial_copyright_year: "2023"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    experimental: true
+    generate_grpc_transport: false
+  }
+
+  rest_services {
+    service_proto_path: "google/cloud/compute/images/v1/images.proto"
+    product_path: "google/cloud/compute/images/v1"
+    initial_copyright_year: "2023"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    experimental: true
+    generate_grpc_transport: false
+  }
+
+  rest_services {
+    service_proto_path: "google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto"
+    product_path: "google/cloud/compute/instance_group_managers/v1"
+    initial_copyright_year: "2023"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    experimental: true
+    generate_grpc_transport: false
+  }
+
+  rest_services {
+    service_proto_path: "google/cloud/compute/instance_groups/v1/instance_groups.proto"
+    product_path: "google/cloud/compute/instance_groups/v1"
+    initial_copyright_year: "2023"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    experimental: true
+    generate_grpc_transport: false
+  }
+
+  rest_services {
+    service_proto_path: "google/cloud/compute/instance_templates/v1/instance_templates.proto"
+    product_path: "google/cloud/compute/instance_templates/v1"
+    initial_copyright_year: "2023"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    experimental: true
+    generate_grpc_transport: false
+  }
+
+  rest_services {
+    service_proto_path: "google/cloud/compute/instances/v1/instances.proto"
+    product_path: "google/cloud/compute/instances/v1"
+    initial_copyright_year: "2023"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    experimental: true
+    generate_grpc_transport: false
+  }
+
+  rest_services {
+    service_proto_path: "google/cloud/compute/interconnect_attachments/v1/interconnect_attachments.proto"
+    product_path: "google/cloud/compute/interconnect_attachments/v1"
+    initial_copyright_year: "2023"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    experimental: true
+    generate_grpc_transport: false
+  }
+
+  rest_services {
+    service_proto_path: "google/cloud/compute/interconnect_locations/v1/interconnect_locations.proto"
+    product_path: "google/cloud/compute/interconnect_locations/v1"
+    initial_copyright_year: "2023"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    experimental: true
+    generate_grpc_transport: false
+  }
+
+  rest_services {
+    service_proto_path: "google/cloud/compute/interconnects/v1/interconnects.proto"
+    product_path: "google/cloud/compute/interconnects/v1"
+    initial_copyright_year: "2023"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    experimental: true
+    generate_grpc_transport: false
+  }
+
+  rest_services {
+    service_proto_path: "google/cloud/compute/license_codes/v1/license_codes.proto"
+    product_path: "google/cloud/compute/license_codes/v1"
+    initial_copyright_year: "2023"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    experimental: true
+    generate_grpc_transport: false
+  }
+
+  rest_services {
+    service_proto_path: "google/cloud/compute/licenses/v1/licenses.proto"
+    product_path: "google/cloud/compute/licenses/v1"
+    initial_copyright_year: "2023"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    experimental: true
+    generate_grpc_transport: false
+  }
+
+  rest_services {
+    service_proto_path: "google/cloud/compute/machine_images/v1/machine_images.proto"
+    product_path: "google/cloud/compute/machine_images/v1"
+    initial_copyright_year: "2023"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    experimental: true
+    generate_grpc_transport: false
+  }
+
+  rest_services {
+    service_proto_path: "google/cloud/compute/machine_types/v1/machine_types.proto"
+    product_path: "google/cloud/compute/machine_types/v1"
+    initial_copyright_year: "2023"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    experimental: true
+    generate_grpc_transport: false
+  }
+
+  rest_services {
+    service_proto_path: "google/cloud/compute/network_attachments/v1/network_attachments.proto"
+    product_path: "google/cloud/compute/network_attachments/v1"
+    initial_copyright_year: "2023"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    experimental: true
+    generate_grpc_transport: false
+  }
+
+  rest_services {
+    service_proto_path: "google/cloud/compute/network_edge_security_services/v1/network_edge_security_services.proto"
+    product_path: "google/cloud/compute/network_edge_security_services/v1"
+    initial_copyright_year: "2023"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    experimental: true
+    generate_grpc_transport: false
+  }
+
+  rest_services {
+    service_proto_path: "google/cloud/compute/network_endpoint_groups/v1/network_endpoint_groups.proto"
+    product_path: "google/cloud/compute/network_endpoint_groups/v1"
+    initial_copyright_year: "2023"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    experimental: true
+    generate_grpc_transport: false
+  }
+
+  rest_services {
+    service_proto_path: "google/cloud/compute/network_firewall_policies/v1/network_firewall_policies.proto"
+    product_path: "google/cloud/compute/network_firewall_policies/v1"
+    initial_copyright_year: "2023"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    experimental: true
+    generate_grpc_transport: false
+  }
+
+  rest_services {
+    service_proto_path: "google/cloud/compute/networks/v1/networks.proto"
+    product_path: "google/cloud/compute/networks/v1"
+    initial_copyright_year: "2023"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    experimental: true
+    generate_grpc_transport: false
+  }
+
+  rest_services {
+    service_proto_path: "google/cloud/compute/node_groups/v1/node_groups.proto"
+    product_path: "google/cloud/compute/node_groups/v1"
+    initial_copyright_year: "2023"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    experimental: true
+    generate_grpc_transport: false
+  }
+
+  rest_services {
+    service_proto_path: "google/cloud/compute/node_templates/v1/node_templates.proto"
+    product_path: "google/cloud/compute/node_templates/v1"
+    initial_copyright_year: "2023"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    experimental: true
+    generate_grpc_transport: false
+  }
+
+  rest_services {
+    service_proto_path: "google/cloud/compute/node_types/v1/node_types.proto"
+    product_path: "google/cloud/compute/node_types/v1"
+    initial_copyright_year: "2023"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    experimental: true
+    generate_grpc_transport: false
+  }
+
+  rest_services {
+    service_proto_path: "google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto"
+    product_path: "google/cloud/compute/packet_mirrorings/v1"
+    initial_copyright_year: "2023"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    experimental: true
+    generate_grpc_transport: false
+  }
+
+  rest_services {
+    service_proto_path: "google/cloud/compute/projects/v1/projects.proto"
+    product_path: "google/cloud/compute/projects/v1"
+    initial_copyright_year: "2023"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    experimental: true
+    generate_grpc_transport: false
+  }
+
+  rest_services {
+    service_proto_path: "google/cloud/compute/public_advertised_prefixes/v1/public_advertised_prefixes.proto"
+    product_path: "google/cloud/compute/public_advertised_prefixes/v1"
+    initial_copyright_year: "2023"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    experimental: true
+    generate_grpc_transport: false
+  }
+
+  rest_services {
+    service_proto_path: "google/cloud/compute/public_delegated_prefixes/v1/public_delegated_prefixes.proto"
+    product_path: "google/cloud/compute/public_delegated_prefixes/v1"
+    initial_copyright_year: "2023"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    experimental: true
+    generate_grpc_transport: false
+  }
+
+  rest_services {
+    service_proto_path: "google/cloud/compute/region_autoscalers/v1/region_autoscalers.proto"
+    product_path: "google/cloud/compute/region_autoscalers/v1"
+    initial_copyright_year: "2023"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    experimental: true
+    generate_grpc_transport: false
+  }
+
+  rest_services {
+    service_proto_path: "google/cloud/compute/region_backend_services/v1/region_backend_services.proto"
+    product_path: "google/cloud/compute/region_backend_services/v1"
+    initial_copyright_year: "2023"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    experimental: true
+    generate_grpc_transport: false
+  }
+
+  rest_services {
+    service_proto_path: "google/cloud/compute/region_commitments/v1/region_commitments.proto"
+    product_path: "google/cloud/compute/region_commitments/v1"
+    initial_copyright_year: "2023"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    experimental: true
+    generate_grpc_transport: false
+  }
+
+  rest_services {
+    service_proto_path: "google/cloud/compute/region_disk_types/v1/region_disk_types.proto"
+    product_path: "google/cloud/compute/region_disk_types/v1"
+    initial_copyright_year: "2023"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    experimental: true
+    generate_grpc_transport: false
+  }
+
+  rest_services {
+    service_proto_path: "google/cloud/compute/region_disks/v1/region_disks.proto"
+    product_path: "google/cloud/compute/region_disks/v1"
+    initial_copyright_year: "2023"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    experimental: true
+    generate_grpc_transport: false
+  }
+
+  rest_services {
+    service_proto_path: "google/cloud/compute/region_health_check_services/v1/region_health_check_services.proto"
+    product_path: "google/cloud/compute/region_health_check_services/v1"
+    initial_copyright_year: "2023"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    experimental: true
+    generate_grpc_transport: false
+  }
+
+  rest_services {
+    service_proto_path: "google/cloud/compute/region_health_checks/v1/region_health_checks.proto"
+    product_path: "google/cloud/compute/region_health_checks/v1"
+    initial_copyright_year: "2023"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    experimental: true
+    generate_grpc_transport: false
+  }
+
+  rest_services {
+    service_proto_path: "google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto"
+    product_path: "google/cloud/compute/region_instance_group_managers/v1"
+    initial_copyright_year: "2023"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    experimental: true
+    generate_grpc_transport: false
+  }
+
+  rest_services {
+    service_proto_path: "google/cloud/compute/region_instance_groups/v1/region_instance_groups.proto"
+    product_path: "google/cloud/compute/region_instance_groups/v1"
+    initial_copyright_year: "2023"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    experimental: true
+    generate_grpc_transport: false
+  }
+
+  rest_services {
+    service_proto_path: "google/cloud/compute/region_instance_templates/v1/region_instance_templates.proto"
+    product_path: "google/cloud/compute/region_instance_templates/v1"
+    initial_copyright_year: "2023"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    experimental: true
+    generate_grpc_transport: false
+  }
+
+  rest_services {
+    service_proto_path: "google/cloud/compute/region_instances/v1/region_instances.proto"
+    product_path: "google/cloud/compute/region_instances/v1"
+    initial_copyright_year: "2023"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    experimental: true
+    generate_grpc_transport: false
+  }
+
+  rest_services {
+    service_proto_path: "google/cloud/compute/region_network_endpoint_groups/v1/region_network_endpoint_groups.proto"
+    product_path: "google/cloud/compute/region_network_endpoint_groups/v1"
+    initial_copyright_year: "2023"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    experimental: true
+    generate_grpc_transport: false
+  }
+
+  rest_services {
+    service_proto_path: "google/cloud/compute/region_network_firewall_policies/v1/region_network_firewall_policies.proto"
+    product_path: "google/cloud/compute/region_network_firewall_policies/v1"
+    initial_copyright_year: "2023"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    experimental: true
+    generate_grpc_transport: false
+  }
+
+  rest_services {
+    service_proto_path: "google/cloud/compute/region_notification_endpoints/v1/region_notification_endpoints.proto"
+    product_path: "google/cloud/compute/region_notification_endpoints/v1"
+    initial_copyright_year: "2023"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    experimental: true
+    generate_grpc_transport: false
+  }
+
+  rest_services {
+    service_proto_path: "google/cloud/compute/region_operations/v1/region_operations.proto"
+    product_path: "google/cloud/compute/region_operations/v1"
+    initial_copyright_year: "2023"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    experimental: true
+    generate_grpc_transport: false
+  }
+
+  rest_services {
+    service_proto_path: "google/cloud/compute/region_security_policies/v1/region_security_policies.proto"
+    product_path: "google/cloud/compute/region_security_policies/v1"
+    initial_copyright_year: "2023"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    experimental: true
+    generate_grpc_transport: false
+  }
+
+  rest_services {
+    service_proto_path: "google/cloud/compute/region_ssl_certificates/v1/region_ssl_certificates.proto"
+    product_path: "google/cloud/compute/region_ssl_certificates/v1"
+    initial_copyright_year: "2023"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    experimental: true
+    generate_grpc_transport: false
+  }
+
+  rest_services {
+    service_proto_path: "google/cloud/compute/region_ssl_policies/v1/region_ssl_policies.proto"
+    product_path: "google/cloud/compute/region_ssl_policies/v1"
+    initial_copyright_year: "2023"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    experimental: true
+    generate_grpc_transport: false
+  }
+
+  rest_services {
+    service_proto_path: "google/cloud/compute/region_target_http_proxies/v1/region_target_http_proxies.proto"
+    product_path: "google/cloud/compute/region_target_http_proxies/v1"
+    initial_copyright_year: "2023"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    experimental: true
+    generate_grpc_transport: false
+  }
+
+  rest_services {
+    service_proto_path: "google/cloud/compute/region_target_https_proxies/v1/region_target_https_proxies.proto"
+    product_path: "google/cloud/compute/region_target_https_proxies/v1"
+    initial_copyright_year: "2023"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    experimental: true
+    generate_grpc_transport: false
+  }
+
+  rest_services {
+    service_proto_path: "google/cloud/compute/region_target_tcp_proxies/v1/region_target_tcp_proxies.proto"
+    product_path: "google/cloud/compute/region_target_tcp_proxies/v1"
+    initial_copyright_year: "2023"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    experimental: true
+    generate_grpc_transport: false
+  }
+
+  rest_services {
+    service_proto_path: "google/cloud/compute/region_url_maps/v1/region_url_maps.proto"
+    product_path: "google/cloud/compute/region_url_maps/v1"
+    initial_copyright_year: "2023"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    experimental: true
+    generate_grpc_transport: false
+  }
+
+  rest_services {
+    service_proto_path: "google/cloud/compute/regions/v1/regions.proto"
+    product_path: "google/cloud/compute/regions/v1"
+    initial_copyright_year: "2023"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    experimental: true
+    generate_grpc_transport: false
+  }
+
+  rest_services {
+    service_proto_path: "google/cloud/compute/reservations/v1/reservations.proto"
+    product_path: "google/cloud/compute/reservations/v1"
+    initial_copyright_year: "2023"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    experimental: true
+    generate_grpc_transport: false
+  }
+
+  rest_services {
+    service_proto_path: "google/cloud/compute/resource_policies/v1/resource_policies.proto"
+    product_path: "google/cloud/compute/resource_policies/v1"
+    initial_copyright_year: "2023"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    experimental: true
+    generate_grpc_transport: false
+  }
+
+  rest_services {
+    service_proto_path: "google/cloud/compute/routers/v1/routers.proto"
+    product_path: "google/cloud/compute/routers/v1"
+    initial_copyright_year: "2023"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    experimental: true
+    generate_grpc_transport: false
+  }
+
+  rest_services {
+    service_proto_path: "google/cloud/compute/routes/v1/routes.proto"
+    product_path: "google/cloud/compute/routes/v1"
+    initial_copyright_year: "2023"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    experimental: true
+    generate_grpc_transport: false
+  }
+
+  rest_services {
+    service_proto_path: "google/cloud/compute/security_policies/v1/security_policies.proto"
+    product_path: "google/cloud/compute/security_policies/v1"
+    initial_copyright_year: "2023"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    experimental: true
+    generate_grpc_transport: false
+  }
+
+  rest_services {
+    service_proto_path: "google/cloud/compute/service_attachments/v1/service_attachments.proto"
+    product_path: "google/cloud/compute/service_attachments/v1"
+    initial_copyright_year: "2023"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    experimental: true
+    generate_grpc_transport: false
+  }
+
+  rest_services {
+    service_proto_path: "google/cloud/compute/snapshots/v1/snapshots.proto"
+    product_path: "google/cloud/compute/snapshots/v1"
+    initial_copyright_year: "2023"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    experimental: true
+    generate_grpc_transport: false
+  }
+
+  rest_services {
+    service_proto_path: "google/cloud/compute/ssl_certificates/v1/ssl_certificates.proto"
+    product_path: "google/cloud/compute/ssl_certificates/v1"
+    initial_copyright_year: "2023"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    experimental: true
+    generate_grpc_transport: false
+  }
+
+  rest_services {
+    service_proto_path: "google/cloud/compute/ssl_policies/v1/ssl_policies.proto"
+    product_path: "google/cloud/compute/ssl_policies/v1"
+    initial_copyright_year: "2023"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    experimental: true
+    generate_grpc_transport: false
+  }
+
+  rest_services {
+    service_proto_path: "google/cloud/compute/subnetworks/v1/subnetworks.proto"
+    product_path: "google/cloud/compute/subnetworks/v1"
+    initial_copyright_year: "2023"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    experimental: true
+    generate_grpc_transport: false
+  }
+
+  rest_services {
+    service_proto_path: "google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto"
+    product_path: "google/cloud/compute/target_grpc_proxies/v1"
+    initial_copyright_year: "2023"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    experimental: true
+    generate_grpc_transport: false
+  }
+
+  rest_services {
+    service_proto_path: "google/cloud/compute/target_http_proxies/v1/target_http_proxies.proto"
+    product_path: "google/cloud/compute/target_http_proxies/v1"
+    initial_copyright_year: "2023"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    experimental: true
+    generate_grpc_transport: false
+  }
+
+  rest_services {
+    service_proto_path: "google/cloud/compute/target_https_proxies/v1/target_https_proxies.proto"
+    product_path: "google/cloud/compute/target_https_proxies/v1"
+    initial_copyright_year: "2023"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    experimental: true
+    generate_grpc_transport: false
+  }
+
+  rest_services {
+    service_proto_path: "google/cloud/compute/target_instances/v1/target_instances.proto"
+    product_path: "google/cloud/compute/target_instances/v1"
+    initial_copyright_year: "2023"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    experimental: true
+    generate_grpc_transport: false
+  }
+
+  rest_services {
+    service_proto_path: "google/cloud/compute/target_pools/v1/target_pools.proto"
+    product_path: "google/cloud/compute/target_pools/v1"
+    initial_copyright_year: "2023"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    experimental: true
+    generate_grpc_transport: false
+  }
+
+  rest_services {
+    service_proto_path: "google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto"
+    product_path: "google/cloud/compute/target_ssl_proxies/v1"
+    initial_copyright_year: "2023"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    experimental: true
+    generate_grpc_transport: false
+  }
+
+  rest_services {
+    service_proto_path: "google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto"
+    product_path: "google/cloud/compute/target_tcp_proxies/v1"
+    initial_copyright_year: "2023"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    experimental: true
+    generate_grpc_transport: false
+  }
+
+  rest_services {
+    service_proto_path: "google/cloud/compute/target_vpn_gateways/v1/target_vpn_gateways.proto"
+    product_path: "google/cloud/compute/target_vpn_gateways/v1"
+    initial_copyright_year: "2023"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    experimental: true
+    generate_grpc_transport: false
+  }
+
+  rest_services {
+    service_proto_path: "google/cloud/compute/url_maps/v1/url_maps.proto"
+    product_path: "google/cloud/compute/url_maps/v1"
+    initial_copyright_year: "2023"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    experimental: true
+    generate_grpc_transport: false
+  }
+
+  rest_services {
+    service_proto_path: "google/cloud/compute/vpn_gateways/v1/vpn_gateways.proto"
+    product_path: "google/cloud/compute/vpn_gateways/v1"
+    initial_copyright_year: "2023"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    experimental: true
+    generate_grpc_transport: false
+  }
+
+  rest_services {
+    service_proto_path: "google/cloud/compute/vpn_tunnels/v1/vpn_tunnels.proto"
+    product_path: "google/cloud/compute/vpn_tunnels/v1"
+    initial_copyright_year: "2023"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    experimental: true
+    generate_grpc_transport: false
+  }
+
+  rest_services {
+    service_proto_path: "google/cloud/compute/zone_operations/v1/zone_operations.proto"
+    product_path: "google/cloud/compute/zone_operations/v1"
+    initial_copyright_year: "2023"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    experimental: true
+    generate_grpc_transport: false
+  }
+
+  rest_services {
+    service_proto_path: "google/cloud/compute/zones/v1/zones.proto"
+    product_path: "google/cloud/compute/zones/v1"
+    initial_copyright_year: "2023"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    experimental: true
+    generate_grpc_transport: false
+  }
 }
 
 # Confidential Computing
@@ -500,6 +1552,42 @@ service {
   retryable_status_codes: ["kUnavailable"]
 }
 
+# Content Warehouse
+service {
+  service_proto_path: "google/cloud/contentwarehouse/v1/document_link_service.proto"
+  product_path: "google/cloud/contentwarehouse/v1"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/contentwarehouse/v1/document_schema_service.proto"
+  product_path: "google/cloud/contentwarehouse/v1"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/contentwarehouse/v1/document_service.proto"
+  product_path: "google/cloud/contentwarehouse/v1"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/contentwarehouse/v1/ruleset_service.proto"
+  product_path: "google/cloud/contentwarehouse/v1"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/contentwarehouse/v1/synonymset_service.proto"
+  product_path: "google/cloud/contentwarehouse/v1"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # Data Catalog
 service {
   service_proto_path: "google/cloud/datacatalog/v1/datacatalog.proto"
@@ -540,6 +1628,14 @@ service {
   product_path: "google/cloud/datamigration/v1"
   forwarding_product_path: "google/cloud/datamigration"
   initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+# Data Fusion
+service {
+  service_proto_path: "google/cloud/datafusion/v1/datafusion.proto"
+  product_path: "google/cloud/datafusion/v1"
+  initial_copyright_year: "2023"
   retryable_status_codes: ["kUnavailable"]
 }
 
@@ -605,6 +1701,14 @@ service {
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
   endpoint_location_style: LOCATION_DEPENDENT_COMPAT
+}
+
+service {
+  service_proto_path: "google/cloud/dataproc/v1/node_groups.proto"
+  product_path: "google/cloud/dataproc/v1"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+  endpoint_location_style: LOCATION_DEPENDENT
 }
 
 service {
@@ -930,12 +2034,28 @@ service {
   endpoint_location_style: LOCATION_DEPENDENT_COMPAT
 }
 
+# Cloud Domains
+service {
+  service_proto_path: "google/cloud/domains/v1/domains.proto"
+  product_path: "google/cloud/domains/v1"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # Edge Container
 service {
   service_proto_path: "google/cloud/edgecontainer/v1/service.proto"
   product_path: "google/cloud/edgecontainer/v1"
   forwarding_product_path: "google/cloud/edgecontainer"
   initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+# Essential Contacts
+service {
+  service_proto_path: "google/cloud/essentialcontacts/v1/service.proto"
+  product_path: "google/cloud/essentialcontacts/v1"
+  initial_copyright_year: "2023"
   retryable_status_codes: ["kUnavailable"]
 }
 
@@ -975,36 +2095,18 @@ service {
   retryable_status_codes: ["kUnavailable"]
 }
 
-# Game Services
 service {
-  service_proto_path: "google/cloud/gaming/v1/game_server_clusters_service.proto"
-  product_path: "google/cloud/gameservices/v1"
-  forwarding_product_path: "google/cloud/gameservices"
-  initial_copyright_year: "2022"
+  service_proto_path: "google/cloud/functions/v2/functions.proto"
+  product_path: "google/cloud/functions/v2"
+  initial_copyright_year: "2023"
   retryable_status_codes: ["kUnavailable"]
 }
 
+# GKE Backup
 service {
-  service_proto_path: "google/cloud/gaming/v1/game_server_configs_service.proto"
-  product_path: "google/cloud/gameservices/v1"
-  forwarding_product_path: "google/cloud/gameservices"
-  initial_copyright_year: "2022"
-  retryable_status_codes: ["kUnavailable"]
-}
-
-service {
-  service_proto_path: "google/cloud/gaming/v1/game_server_deployments_service.proto"
-  product_path: "google/cloud/gameservices/v1"
-  forwarding_product_path: "google/cloud/gameservices"
-  initial_copyright_year: "2022"
-  retryable_status_codes: ["kUnavailable"]
-}
-
-service {
-  service_proto_path: "google/cloud/gaming/v1/realms_service.proto"
-  product_path: "google/cloud/gameservices/v1"
-  forwarding_product_path: "google/cloud/gameservices"
-  initial_copyright_year: "2022"
+  service_proto_path: "google/cloud/gkebackup/v1/gkebackup.proto"
+  product_path: "google/cloud/gkebackup/v1"
+  initial_copyright_year: "2023"
   retryable_status_codes: ["kUnavailable"]
 }
 
@@ -1180,6 +2282,20 @@ service {
   retryable_status_codes: ["kInternal", "kUnavailable"]
 }
 
+service {
+  service_proto_path: "google/logging/v2/logging_config.proto"
+  product_path: "google/cloud/logging/v2"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/logging/v2/logging_metrics.proto"
+  product_path: "google/cloud/logging/v2"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # Managed Microsoft Active Directory (Managed Microsoft AD or Managed Identities)
 service {
   service_proto_path: "google/cloud/managedidentities/v1/managed_identities_service.proto"
@@ -1195,6 +2311,29 @@ service {
   product_path: "google/cloud/memcache/v1"
   forwarding_product_path: "google/cloud/memcache"
   initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+# Dataproc Metastore
+service {
+  service_proto_path: "google/cloud/metastore/v1/metastore.proto"
+  product_path: "google/cloud/metastore/v1"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/metastore/v1/metastore_federation.proto"
+  product_path: "google/cloud/metastore/v1"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+# Migration Center
+service {
+  service_proto_path: "google/cloud/migrationcenter/v1/migrationcenter.proto"
+  product_path: "google/cloud/migrationcenter/v1"
+  initial_copyright_year: "2023"
   retryable_status_codes: ["kUnavailable"]
 }
 
@@ -1249,6 +2388,13 @@ service {
 }
 
 service {
+  service_proto_path: "google/monitoring/v3/snooze_service.proto"
+  product_path: "google/cloud/monitoring/v3"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
   service_proto_path: "google/monitoring/v3/uptime_service.proto"
   product_path: "google/cloud/monitoring/v3"
   forwarding_product_path: "google/cloud/monitoring"
@@ -1291,6 +2437,23 @@ service {
   retryable_status_codes: ["kUnavailable"]
 }
 
+# Network Security
+service {
+  service_proto_path: "google/cloud/networksecurity/v1/network_security.proto"
+  additional_proto_files: ["google/cloud/networksecurity/v1/common.proto"]
+  product_path: "google/cloud/networksecurity/v1"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+# Network Services (aka Traffic Director)
+service {
+  service_proto_path: "google/cloud/networkservices/v1/network_services.proto"
+  product_path: "google/cloud/networkservices/v1"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # Notebooks
 service {
   service_proto_path: "google/cloud/notebooks/v1/managed_service.proto"
@@ -1325,6 +2488,13 @@ service {
   product_path: "google/cloud/osconfig/v1"
   forwarding_product_path: "google/cloud/osconfig"
   initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/osconfig/v1/osconfig_zonal_service.proto"
+  product_path: "google/cloud/osconfig/v1"
+  initial_copyright_year: "2023"
   retryable_status_codes: ["kUnavailable"]
 }
 
@@ -1375,6 +2545,7 @@ service {
     "ModifyAckDeadline",
     "Publish"
   ]
+  omit_repo_metadata: true
 }
 
 service {
@@ -1395,6 +2566,7 @@ service {
   initial_copyright_year: "2021"
   gen_async_rpcs: ["GetTopicPartitions"]
   retryable_status_codes: ["kInternal", "kUnavailable"]
+  omit_repo_metadata: true
 }
 
 service {
@@ -1403,6 +2575,7 @@ service {
   initial_copyright_year: "2022"
   omit_client: true
   omit_connection: true
+  omit_repo_metadata: true
 }
 
 service {
@@ -1411,6 +2584,7 @@ service {
   initial_copyright_year: "2022"
   omit_client: true
   omit_connection: true
+  omit_repo_metadata: true
 }
 
 service {
@@ -1419,6 +2593,7 @@ service {
   initial_copyright_year: "2022"
   omit_client: true
   omit_connection: true
+  omit_repo_metadata: true
 }
 
 service {
@@ -1426,6 +2601,23 @@ service {
   product_path: "google/cloud/pubsublite"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kInternal", "kUnavailable"]
+  omit_repo_metadata: true
+}
+
+# Rapid Migration Assessment
+service {
+  service_proto_path: "google/cloud/rapidmigrationassessment/v1/rapidmigrationassessment.proto"
+  product_path: "google/cloud/rapidmigrationassessment/v1"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+# reCAPTCHA Enterprise
+service {
+  service_proto_path: "google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto"
+  product_path: "google/cloud/recaptchaenterprise/v1"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
 }
 
 # Recommender
@@ -1471,6 +2663,34 @@ service {
   retryable_status_codes: ["kUnavailable"]
 }
 
+service {
+  service_proto_path: "google/cloud/resourcemanager/v3/tag_bindings.proto"
+  product_path: "google/cloud/resourcemanager/v3"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/resourcemanager/v3/tag_holds.proto"
+  product_path: "google/cloud/resourcemanager/v3"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/resourcemanager/v3/tag_keys.proto"
+  product_path: "google/cloud/resourcemanager/v3"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/resourcemanager/v3/tag_values.proto"
+  product_path: "google/cloud/resourcemanager/v3"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # Resource Settings
 service {
   service_proto_path: "google/cloud/resourcesettings/v1/resource_settings.proto"
@@ -1494,6 +2714,20 @@ service {
   product_path: "google/cloud/retail/v2"
   forwarding_product_path: "google/cloud/retail"
   initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/retail/v2/control_service.proto"
+  product_path: "google/cloud/retail/v2"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/retail/v2/model_service.proto"
+  product_path: "google/cloud/retail/v2"
+  initial_copyright_year: "2023"
   retryable_status_codes: ["kUnavailable"]
 }
 
@@ -1523,6 +2757,13 @@ service {
 }
 
 service {
+  service_proto_path: "google/cloud/retail/v2/serving_config_service.proto"
+  product_path: "google/cloud/retail/v2"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
   service_proto_path: "google/cloud/retail/v2/user_event_service.proto"
   product_path: "google/cloud/retail/v2"
   forwarding_product_path: "google/cloud/retail"
@@ -1531,6 +2772,20 @@ service {
 }
 
 # Cloud Run
+service {
+  service_proto_path: "google/cloud/run/v2/execution.proto"
+  product_path: "google/cloud/run/v2"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/run/v2/job.proto"
+  product_path: "google/cloud/run/v2"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 service {
   service_proto_path: "google/cloud/run/v2/revision.proto"
   product_path: "google/cloud/run/v2"
@@ -1545,6 +2800,13 @@ service {
   forwarding_product_path: "google/cloud/run"
   initial_copyright_year: "2022"
   service_endpoint_env_var: "GOOGLE_CLOUD_CPP_RUN_SERVICES_ENDPOINT"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/run/v2/task.proto"
+  product_path: "google/cloud/run/v2"
+  initial_copyright_year: "2023"
   retryable_status_codes: ["kUnavailable"]
 }
 
@@ -1572,6 +2834,7 @@ service {
   product_path: "google/cloud/securitycenter/v1"
   forwarding_product_path: "google/cloud/securitycenter"
   initial_copyright_year: "2022"
+  emitted_rpcs: ["GroupAssets", "ListAssets", "RunAssetDiscovery"]
   retryable_status_codes: ["kUnavailable"]
 }
 
@@ -1648,6 +2911,26 @@ service {
 
 # Spanner
 service {
+  service_proto_path: "google/spanner/v1/spanner.proto"
+  product_path: "google/cloud/spanner"
+  initial_copyright_year: "2023"
+  omit_client: true
+  omit_connection: true
+  omit_stub_factory: true
+  omitted_rpcs: [
+    "GetSession",
+    "ListSessions",
+    "Read"
+  ]
+  gen_async_rpcs: [
+    "BatchCreateSessions",
+    "DeleteSession",
+    "ExecuteSql"
+  ]
+  omit_repo_metadata: true
+}
+
+service {
   service_proto_path: "google/spanner/admin/database/v1/spanner_database_admin.proto"
   product_path: "google/cloud/spanner/admin"
   initial_copyright_year: "2021"
@@ -1656,6 +2939,7 @@ service {
   backwards_compatibility_namespace_alias: true
   retryable_status_codes: ["kUnavailable"]
   generate_rest_transport: true
+  omit_repo_metadata: true
 }
 
 service {
@@ -1667,6 +2951,7 @@ service {
   backwards_compatibility_namespace_alias: true
   retryable_status_codes: ["kUnavailable"]
   generate_rest_transport: true
+  omit_repo_metadata: true
 }
 
 # Speech
@@ -1679,12 +2964,17 @@ service {
 }
 
 service {
+  service_proto_path: "google/cloud/speech/v1/cloud_speech_adaptation.proto"
+  product_path: "google/cloud/speech/v1"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
   service_proto_path: "google/cloud/speech/v2/cloud_speech.proto"
   product_path: "google/cloud/speech/v2"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
-  # TODO(#10264): Remove experimental when service goes GA.
-  experimental: true
 }
 
 # Sql
@@ -1786,19 +3076,44 @@ service {
   omit_client: true
   omit_connection: true
   omit_stub_factory: true
+  generate_round_robin_decorator: true
   gen_async_rpcs: [
+    "ComposeObject",
     "DeleteObject",
     "ReadObject",
     "StartResumableWrite",
     "QueryWriteStatus",
     "WriteObject"
   ]
+  omit_repo_metadata: true
 }
 
 # Storage Insights
 service {
   service_proto_path: "google/cloud/storageinsights/v1/storageinsights.proto"
   product_path: "google/cloud/storageinsights/v1"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+# Support
+service {
+  service_proto_path: "google/cloud/support/v2/attachment_service.proto"
+  product_path: "google/cloud/support/v2"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/support/v2/case_service.proto"
+  product_path: "google/cloud/support/v2"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/support/v2/comment_service.proto"
+  product_path: "google/cloud/support/v2"
   initial_copyright_year: "2023"
   retryable_status_codes: ["kUnavailable"]
 }
@@ -1868,6 +3183,14 @@ service {
   product_path: "google/cloud/texttospeech/v1"
   forwarding_product_path: "google/cloud/texttospeech"
   initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+# Timeseries Insights
+service {
+  service_proto_path: "google/cloud/timeseriesinsights/v1/timeseries_insights.proto"
+  product_path: "google/cloud/timeseriesinsights/v1"
+  initial_copyright_year: "2023"
   retryable_status_codes: ["kUnavailable"]
 }
 

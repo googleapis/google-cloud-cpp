@@ -133,7 +133,7 @@ void PatchDefaultObjectAcl(google::cloud::storage::Client client,
 
 void PatchDefaultObjectAclNoRead(google::cloud::storage::Client client,
                                  std::vector<std::string> const& argv) {
-  //! [patch default object acl no-read]
+  //! [patch no-read]
   namespace gcs = ::google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name,
@@ -148,7 +148,7 @@ void PatchDefaultObjectAclNoRead(google::cloud::storage::Client client,
               << " in bucket " << patched_acl->bucket() << " is now "
               << *patched_acl << "\n";
   }
-  //! [patch default object acl no-read]
+  //! [patch no-read]
   (std::move(client), argv.at(0), argv.at(1), argv.at(2));
 }
 
@@ -191,7 +191,8 @@ void RunAll(std::vector<std::string> const& argv) {
   std::cout << "\nCreating bucket to run the example (" << bucket_name << ")"
             << std::endl;
   (void)client
-      .CreateBucketForProject(bucket_name, project_id, gcs::BucketMetadata{})
+      .CreateBucketForProject(bucket_name, project_id, gcs::BucketMetadata{},
+                              examples::CreateBucketOptions())
       .value();
   // In GCS a single project cannot create or delete buckets more often than
   // once every two seconds. We will pause until that time before deleting the

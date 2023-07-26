@@ -35,7 +35,7 @@ namespace documentai_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ///
-/// Service to call Cloud DocumentAI to process documents according to the
+/// Service to call Document AI to process documents according to the
 /// processor's definition. Processors are built using state-of-the-art Google
 /// AI such as natural language, computer vision, and translation to extract
 /// structured information from unstructured or semi-structured documents.
@@ -93,6 +93,7 @@ class DocumentProcessorServiceClient {
   }
   ///@}
 
+  // clang-format off
   ///
   /// Processes a single document.
   ///
@@ -100,44 +101,66 @@ class DocumentProcessorServiceClient {
   ///  [Processor][google.cloud.documentai.v1.Processor] or
   ///  [ProcessorVersion][google.cloud.documentai.v1.ProcessorVersion]
   ///  to use for processing. If a
-  ///  [Processor][google.cloud.documentai.v1.Processor] is specified, the
-  ///  server will use its [default
+  ///  [Processor][google.cloud.documentai.v1.Processor] is specified, the server
+  ///  will use its [default
   ///  version][google.cloud.documentai.v1.Processor.default_processor_version].
   ///  Format: `projects/{project}/locations/{location}/processors/{processor}`,
   ///  or
   ///  `projects/{project}/locations/{location}/processors/{processor}/processorVersions/{processorVersion}`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::documentai::v1::ProcessResponse,google/cloud/documentai/v1/document_processor_service.proto#L400}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.documentai.v1.ProcessResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.documentai.v1.ProcessRequest]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L328}
-  /// [google.cloud.documentai.v1.ProcessResponse]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L400}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.documentai.v1.ProcessRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L339}
+  /// [google.cloud.documentai.v1.ProcessResponse]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L423}
   ///
+  // clang-format on
   StatusOr<google::cloud::documentai::v1::ProcessResponse> ProcessDocument(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Processes a single document.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::documentai::v1::ProcessRequest,google/cloud/documentai/v1/document_processor_service.proto#L328}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.documentai.v1.ProcessRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::documentai::v1::ProcessResponse,google/cloud/documentai/v1/document_processor_service.proto#L400}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.documentai.v1.ProcessResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.documentai.v1.ProcessRequest]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L328}
-  /// [google.cloud.documentai.v1.ProcessResponse]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L400}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.documentai.v1.ProcessRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L339}
+  /// [google.cloud.documentai.v1.ProcessResponse]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L423}
   ///
+  // clang-format on
   StatusOr<google::cloud::documentai::v1::ProcessResponse> ProcessDocument(
       google::cloud::documentai::v1::ProcessRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// LRO endpoint to batch process many documents. The output is written
   /// to Cloud Storage as JSON in the [Document] format.
@@ -150,352 +173,629 @@ class DocumentProcessorServiceClient {
   ///  `projects/{project}/locations/{location}/processors/{processor}/processorVersions/{processorVersion}`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::documentai::v1::BatchProcessResponse,google/cloud/documentai/v1/document_processor_service.proto#L434}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.documentai.v1.BatchProcessResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.documentai.v1.BatchProcessRequest]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L410}
-  /// [google.cloud.documentai.v1.BatchProcessResponse]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L434}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.documentai.v1.BatchProcessRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L434}
+  /// [google.cloud.documentai.v1.BatchProcessResponse]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L466}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::documentai::v1::BatchProcessResponse>>
   BatchProcessDocuments(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// LRO endpoint to batch process many documents. The output is written
   /// to Cloud Storage as JSON in the [Document] format.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::documentai::v1::BatchProcessRequest,google/cloud/documentai/v1/document_processor_service.proto#L410}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.documentai.v1.BatchProcessRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::documentai::v1::BatchProcessResponse,google/cloud/documentai/v1/document_processor_service.proto#L434}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.documentai.v1.BatchProcessResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.documentai.v1.BatchProcessRequest]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L410}
-  /// [google.cloud.documentai.v1.BatchProcessResponse]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L434}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.documentai.v1.BatchProcessRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L434}
+  /// [google.cloud.documentai.v1.BatchProcessResponse]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L466}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::documentai::v1::BatchProcessResponse>>
   BatchProcessDocuments(
       google::cloud::documentai::v1::BatchProcessRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
-  /// Fetches processor types. Note that we do not use ListProcessorTypes here
-  /// because it is not paginated.
+  /// Fetches processor types. Note that we don't use
+  /// [ListProcessorTypes][google.cloud.documentai.v1.DocumentProcessorService.ListProcessorTypes]
+  /// here, because it isn't paginated.
   ///
-  /// @param parent  Required. The project of processor type to list.
-  ///  The available processor types may depend on the allow-listing on
-  ///  projects. Format: `projects/{project}/locations/{location}`
+  /// @param parent  Required. The location of processor types to list.
+  ///  Format: `projects/{project}/locations/{location}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::documentai::v1::FetchProcessorTypesResponse,google/cloud/documentai/v1/document_processor_service.proto#L512}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.documentai.v1.FetchProcessorTypesResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.documentai.v1.FetchProcessorTypesRequest]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L499}
-  /// [google.cloud.documentai.v1.FetchProcessorTypesResponse]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L512}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.documentai.v1.DocumentProcessorService.ListProcessorTypes]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L105}
+  /// [google.cloud.documentai.v1.FetchProcessorTypesRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L535}
+  /// [google.cloud.documentai.v1.FetchProcessorTypesResponse]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L549}
   ///
+  // clang-format on
   StatusOr<google::cloud::documentai::v1::FetchProcessorTypesResponse>
   FetchProcessorTypes(std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
-  /// Fetches processor types. Note that we do not use ListProcessorTypes here
-  /// because it is not paginated.
+  /// Fetches processor types. Note that we don't use
+  /// [ListProcessorTypes][google.cloud.documentai.v1.DocumentProcessorService.ListProcessorTypes]
+  /// here, because it isn't paginated.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::documentai::v1::FetchProcessorTypesRequest,google/cloud/documentai/v1/document_processor_service.proto#L499}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.documentai.v1.FetchProcessorTypesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::documentai::v1::FetchProcessorTypesResponse,google/cloud/documentai/v1/document_processor_service.proto#L512}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.documentai.v1.FetchProcessorTypesResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.documentai.v1.FetchProcessorTypesRequest]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L499}
-  /// [google.cloud.documentai.v1.FetchProcessorTypesResponse]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L512}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.documentai.v1.DocumentProcessorService.ListProcessorTypes]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L105}
+  /// [google.cloud.documentai.v1.FetchProcessorTypesRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L535}
+  /// [google.cloud.documentai.v1.FetchProcessorTypesResponse]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L549}
   ///
+  // clang-format on
   StatusOr<google::cloud::documentai::v1::FetchProcessorTypesResponse>
   FetchProcessorTypes(
       google::cloud::documentai::v1::FetchProcessorTypesRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists the processor types that exist.
   ///
-  /// @param parent  Required. The location of processor type to list.
-  ///  The available processor types may depend on the allow-listing on
-  ///  projects. Format: `projects/{project}/locations/{location}`
+  /// @param parent  Required. The location of processor types to list.
+  ///  Format: `projects/{project}/locations/{location}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::documentai::v1::ProcessorType,google/cloud/documentai/v1/processor_type.proto#L32}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.documentai.v1.ProcessorType], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.documentai.v1.ListProcessorTypesRequest]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L518}
-  /// [google.cloud.documentai.v1.ProcessorType]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/processor_type.proto#L32}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.documentai.v1.ListProcessorTypesRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L558}
+  /// [google.cloud.documentai.v1.ProcessorType]: @googleapis_reference_link{google/cloud/documentai/v1/processor_type.proto#L32}
   ///
+  // clang-format on
   StreamRange<google::cloud::documentai::v1::ProcessorType> ListProcessorTypes(
       std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Lists the processor types that exist.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::documentai::v1::ListProcessorTypesRequest,google/cloud/documentai/v1/document_processor_service.proto#L518}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.documentai.v1.ListProcessorTypesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::documentai::v1::ProcessorType,google/cloud/documentai/v1/processor_type.proto#L32}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.documentai.v1.ProcessorType], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.documentai.v1.ListProcessorTypesRequest]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L518}
-  /// [google.cloud.documentai.v1.ProcessorType]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/processor_type.proto#L32}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.documentai.v1.ListProcessorTypesRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L558}
+  /// [google.cloud.documentai.v1.ProcessorType]: @googleapis_reference_link{google/cloud/documentai/v1/processor_type.proto#L32}
   ///
+  // clang-format on
   StreamRange<google::cloud::documentai::v1::ProcessorType> ListProcessorTypes(
       google::cloud::documentai::v1::ListProcessorTypesRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Gets a processor type detail.
   ///
   /// @param name  Required. The processor type resource name.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::documentai::v1::ProcessorType,google/cloud/documentai/v1/processor_type.proto#L32}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.documentai.v1.ProcessorType])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.documentai.v1.GetProcessorTypeRequest]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L578}
-  /// [google.cloud.documentai.v1.ProcessorType]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/processor_type.proto#L32}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.documentai.v1.GetProcessorTypeRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L623}
+  /// [google.cloud.documentai.v1.ProcessorType]: @googleapis_reference_link{google/cloud/documentai/v1/processor_type.proto#L32}
   ///
+  // clang-format on
   StatusOr<google::cloud::documentai::v1::ProcessorType> GetProcessorType(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Gets a processor type detail.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::documentai::v1::GetProcessorTypeRequest,google/cloud/documentai/v1/document_processor_service.proto#L578}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.documentai.v1.GetProcessorTypeRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::documentai::v1::ProcessorType,google/cloud/documentai/v1/processor_type.proto#L32}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.documentai.v1.ProcessorType])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.documentai.v1.GetProcessorTypeRequest]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L578}
-  /// [google.cloud.documentai.v1.ProcessorType]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/processor_type.proto#L32}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.documentai.v1.GetProcessorTypeRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L623}
+  /// [google.cloud.documentai.v1.ProcessorType]: @googleapis_reference_link{google/cloud/documentai/v1/processor_type.proto#L32}
   ///
+  // clang-format on
   StatusOr<google::cloud::documentai::v1::ProcessorType> GetProcessorType(
       google::cloud::documentai::v1::GetProcessorTypeRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists all processors which belong to this project.
   ///
-  /// @param parent  Required. The parent (project and location) which owns this
-  /// collection of
+  /// @param parent  Required. The parent (project and location) which owns this collection of
   ///  Processors. Format: `projects/{project}/locations/{location}`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::documentai::v1::Processor,google/cloud/documentai/v1/processor.proto#L118}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.documentai.v1.Processor], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.documentai.v1.ListProcessorsRequest]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L548}
-  /// [google.cloud.documentai.v1.Processor]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/processor.proto#L118}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.documentai.v1.ListProcessorsRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L589}
+  /// [google.cloud.documentai.v1.Processor]: @googleapis_reference_link{google/cloud/documentai/v1/processor.proto#L120}
   ///
+  // clang-format on
   StreamRange<google::cloud::documentai::v1::Processor> ListProcessors(
       std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Lists all processors which belong to this project.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::documentai::v1::ListProcessorsRequest,google/cloud/documentai/v1/document_processor_service.proto#L548}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.documentai.v1.ListProcessorsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::documentai::v1::Processor,google/cloud/documentai/v1/processor.proto#L118}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.documentai.v1.Processor], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.documentai.v1.ListProcessorsRequest]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L548}
-  /// [google.cloud.documentai.v1.Processor]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/processor.proto#L118}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.documentai.v1.ListProcessorsRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L589}
+  /// [google.cloud.documentai.v1.Processor]: @googleapis_reference_link{google/cloud/documentai/v1/processor.proto#L120}
   ///
+  // clang-format on
   StreamRange<google::cloud::documentai::v1::Processor> ListProcessors(
       google::cloud::documentai::v1::ListProcessorsRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Gets a processor detail.
   ///
   /// @param name  Required. The processor resource name.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::documentai::v1::Processor,google/cloud/documentai/v1/processor.proto#L118}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.documentai.v1.Processor])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.documentai.v1.GetProcessorRequest]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L589}
-  /// [google.cloud.documentai.v1.Processor]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/processor.proto#L118}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.documentai.v1.GetProcessorRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L636}
+  /// [google.cloud.documentai.v1.Processor]: @googleapis_reference_link{google/cloud/documentai/v1/processor.proto#L120}
   ///
+  // clang-format on
   StatusOr<google::cloud::documentai::v1::Processor> GetProcessor(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Gets a processor detail.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::documentai::v1::GetProcessorRequest,google/cloud/documentai/v1/document_processor_service.proto#L589}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.documentai.v1.GetProcessorRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::documentai::v1::Processor,google/cloud/documentai/v1/processor.proto#L118}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.documentai.v1.Processor])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.documentai.v1.GetProcessorRequest]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L589}
-  /// [google.cloud.documentai.v1.Processor]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/processor.proto#L118}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.documentai.v1.GetProcessorRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L636}
+  /// [google.cloud.documentai.v1.Processor]: @googleapis_reference_link{google/cloud/documentai/v1/processor.proto#L120}
   ///
+  // clang-format on
   StatusOr<google::cloud::documentai::v1::Processor> GetProcessor(
       google::cloud::documentai::v1::GetProcessorRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Trains a new processor version.
   /// Operation metadata is returned as
-  /// cloud_documentai_core.TrainProcessorVersionMetadata.
+  /// [TrainProcessorVersionMetadata][google.cloud.documentai.v1.TrainProcessorVersionMetadata].
   ///
-  /// @param parent  Required. The parent (project, location and processor) to
-  /// create the new
+  /// @param parent  Required. The parent (project, location and processor) to create the new
   ///  version for. Format:
   ///  `projects/{project}/locations/{location}/processors/{processor}`.
   /// @param processor_version  Required. The processor version to be created.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::documentai::v1::TrainProcessorVersionResponse,google/cloud/documentai/v1/document_processor_service.proto#L849}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.documentai.v1.TrainProcessorVersionResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.documentai.v1.TrainProcessorVersionRequest]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L812}
-  /// [google.cloud.documentai.v1.TrainProcessorVersionResponse]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L849}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.documentai.v1.TrainProcessorVersionMetadata]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L971}
+  /// [google.cloud.documentai.v1.TrainProcessorVersionRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L903}
+  /// [google.cloud.documentai.v1.TrainProcessorVersionResponse]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L965}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::documentai::v1::TrainProcessorVersionResponse>>
   TrainProcessorVersion(
       std::string const& parent,
       google::cloud::documentai::v1::ProcessorVersion const& processor_version,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Trains a new processor version.
   /// Operation metadata is returned as
-  /// cloud_documentai_core.TrainProcessorVersionMetadata.
+  /// [TrainProcessorVersionMetadata][google.cloud.documentai.v1.TrainProcessorVersionMetadata].
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::documentai::v1::TrainProcessorVersionRequest,google/cloud/documentai/v1/document_processor_service.proto#L812}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.documentai.v1.TrainProcessorVersionRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::documentai::v1::TrainProcessorVersionResponse,google/cloud/documentai/v1/document_processor_service.proto#L849}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.documentai.v1.TrainProcessorVersionResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.documentai.v1.TrainProcessorVersionRequest]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L812}
-  /// [google.cloud.documentai.v1.TrainProcessorVersionResponse]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L849}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.documentai.v1.TrainProcessorVersionMetadata]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L971}
+  /// [google.cloud.documentai.v1.TrainProcessorVersionRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L903}
+  /// [google.cloud.documentai.v1.TrainProcessorVersionResponse]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L965}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::documentai::v1::TrainProcessorVersionResponse>>
   TrainProcessorVersion(
       google::cloud::documentai::v1::TrainProcessorVersionRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Gets a processor version detail.
   ///
   /// @param name  Required. The processor resource name.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::documentai::v1::ProcessorVersion,google/cloud/documentai/v1/processor.proto#L38}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.documentai.v1.ProcessorVersion])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.documentai.v1.GetProcessorVersionRequest]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L600}
-  /// [google.cloud.documentai.v1.ProcessorVersion]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/processor.proto#L38}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.documentai.v1.GetProcessorVersionRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L649}
+  /// [google.cloud.documentai.v1.ProcessorVersion]: @googleapis_reference_link{google/cloud/documentai/v1/processor.proto#L37}
   ///
+  // clang-format on
   StatusOr<google::cloud::documentai::v1::ProcessorVersion> GetProcessorVersion(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Gets a processor version detail.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::documentai::v1::GetProcessorVersionRequest,google/cloud/documentai/v1/document_processor_service.proto#L600}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.documentai.v1.GetProcessorVersionRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::documentai::v1::ProcessorVersion,google/cloud/documentai/v1/processor.proto#L38}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.documentai.v1.ProcessorVersion])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.documentai.v1.GetProcessorVersionRequest]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L600}
-  /// [google.cloud.documentai.v1.ProcessorVersion]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/processor.proto#L38}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.documentai.v1.GetProcessorVersionRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L649}
+  /// [google.cloud.documentai.v1.ProcessorVersion]: @googleapis_reference_link{google/cloud/documentai/v1/processor.proto#L37}
   ///
+  // clang-format on
   StatusOr<google::cloud::documentai::v1::ProcessorVersion> GetProcessorVersion(
       google::cloud::documentai::v1::GetProcessorVersionRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists all versions of a processor.
   ///
-  /// @param parent  Required. The parent (project, location and processor) to
-  /// list all
+  /// @param parent  Required. The parent (project, location and processor) to list all
   ///  versions. Format:
   ///  `projects/{project}/locations/{location}/processors/{processor}`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::documentai::v1::ProcessorVersion,google/cloud/documentai/v1/processor.proto#L38}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.documentai.v1.ProcessorVersion], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.documentai.v1.ListProcessorVersionsRequest]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L611}
-  /// [google.cloud.documentai.v1.ProcessorVersion]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/processor.proto#L38}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.documentai.v1.ListProcessorVersionsRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L660}
+  /// [google.cloud.documentai.v1.ProcessorVersion]: @googleapis_reference_link{google/cloud/documentai/v1/processor.proto#L37}
   ///
+  // clang-format on
   StreamRange<google::cloud::documentai::v1::ProcessorVersion>
   ListProcessorVersions(std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Lists all versions of a processor.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::documentai::v1::ListProcessorVersionsRequest,google/cloud/documentai/v1/document_processor_service.proto#L611}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.documentai.v1.ListProcessorVersionsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::documentai::v1::ProcessorVersion,google/cloud/documentai/v1/processor.proto#L38}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.documentai.v1.ProcessorVersion], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.documentai.v1.ListProcessorVersionsRequest]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L611}
-  /// [google.cloud.documentai.v1.ProcessorVersion]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/processor.proto#L38}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.documentai.v1.ListProcessorVersionsRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L660}
+  /// [google.cloud.documentai.v1.ProcessorVersion]: @googleapis_reference_link{google/cloud/documentai/v1/processor.proto#L37}
   ///
+  // clang-format on
   StreamRange<google::cloud::documentai::v1::ProcessorVersion>
   ListProcessorVersions(
       google::cloud::documentai::v1::ListProcessorVersionsRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes the processor version, all artifacts under the processor version
   /// will be deleted.
@@ -503,34 +803,67 @@ class DocumentProcessorServiceClient {
   /// @param name  Required. The processor version resource name to be deleted.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::documentai::v1::DeleteProcessorVersionMetadata,google/cloud/documentai/v1/document_processor_service.proto#L653}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.documentai.v1.DeleteProcessorVersionMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.documentai.v1.DeleteProcessorVersionMetadata]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L653}
-  /// [google.cloud.documentai.v1.DeleteProcessorVersionRequest]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L642}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.documentai.v1.DeleteProcessorVersionMetadata]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L708}
+  /// [google.cloud.documentai.v1.DeleteProcessorVersionRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L695}
   ///
+  // clang-format on
   future<
       StatusOr<google::cloud::documentai::v1::DeleteProcessorVersionMetadata>>
   DeleteProcessorVersion(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes the processor version, all artifacts under the processor version
   /// will be deleted.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::documentai::v1::DeleteProcessorVersionRequest,google/cloud/documentai/v1/document_processor_service.proto#L642}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.documentai.v1.DeleteProcessorVersionRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::documentai::v1::DeleteProcessorVersionMetadata,google/cloud/documentai/v1/document_processor_service.proto#L653}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.documentai.v1.DeleteProcessorVersionMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.documentai.v1.DeleteProcessorVersionMetadata]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L653}
-  /// [google.cloud.documentai.v1.DeleteProcessorVersionRequest]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L642}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.documentai.v1.DeleteProcessorVersionMetadata]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L708}
+  /// [google.cloud.documentai.v1.DeleteProcessorVersionRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L695}
   ///
+  // clang-format on
   future<
       StatusOr<google::cloud::documentai::v1::DeleteProcessorVersionMetadata>>
   DeleteProcessorVersion(
@@ -538,39 +871,73 @@ class DocumentProcessorServiceClient {
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Deploys the processor version.
   ///
   /// @param name  Required. The processor version resource name to be deployed.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::documentai::v1::DeployProcessorVersionResponse,google/cloud/documentai/v1/document_processor_service.proto#L670}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.documentai.v1.DeployProcessorVersionResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.documentai.v1.DeployProcessorVersionRequest]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L659}
-  /// [google.cloud.documentai.v1.DeployProcessorVersionResponse]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L670}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.documentai.v1.DeployProcessorVersionRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L716}
+  /// [google.cloud.documentai.v1.DeployProcessorVersionResponse]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L729}
   ///
+  // clang-format on
   future<
       StatusOr<google::cloud::documentai::v1::DeployProcessorVersionResponse>>
   DeployProcessorVersion(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Deploys the processor version.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::documentai::v1::DeployProcessorVersionRequest,google/cloud/documentai/v1/document_processor_service.proto#L659}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.documentai.v1.DeployProcessorVersionRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::documentai::v1::DeployProcessorVersionResponse,google/cloud/documentai/v1/document_processor_service.proto#L670}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.documentai.v1.DeployProcessorVersionResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.documentai.v1.DeployProcessorVersionRequest]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L659}
-  /// [google.cloud.documentai.v1.DeployProcessorVersionResponse]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L670}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.documentai.v1.DeployProcessorVersionRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L716}
+  /// [google.cloud.documentai.v1.DeployProcessorVersionResponse]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L729}
   ///
+  // clang-format on
   future<
       StatusOr<google::cloud::documentai::v1::DeployProcessorVersionResponse>>
   DeployProcessorVersion(
@@ -578,40 +945,73 @@ class DocumentProcessorServiceClient {
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Undeploys the processor version.
   ///
-  /// @param name  Required. The processor version resource name to be
-  /// undeployed.
+  /// @param name  Required. The processor version resource name to be undeployed.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::documentai::v1::UndeployProcessorVersionResponse,google/cloud/documentai/v1/document_processor_service.proto#L690}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.documentai.v1.UndeployProcessorVersionResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.documentai.v1.UndeployProcessorVersionRequest]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L679}
-  /// [google.cloud.documentai.v1.UndeployProcessorVersionResponse]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L690}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.documentai.v1.UndeployProcessorVersionRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L742}
+  /// [google.cloud.documentai.v1.UndeployProcessorVersionResponse]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L755}
   ///
+  // clang-format on
   future<
       StatusOr<google::cloud::documentai::v1::UndeployProcessorVersionResponse>>
   UndeployProcessorVersion(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Undeploys the processor version.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::documentai::v1::UndeployProcessorVersionRequest,google/cloud/documentai/v1/document_processor_service.proto#L679}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.documentai.v1.UndeployProcessorVersionRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::documentai::v1::UndeployProcessorVersionResponse,google/cloud/documentai/v1/document_processor_service.proto#L690}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.documentai.v1.UndeployProcessorVersionResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.documentai.v1.UndeployProcessorVersionRequest]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L679}
-  /// [google.cloud.documentai.v1.UndeployProcessorVersionResponse]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L690}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.documentai.v1.UndeployProcessorVersionRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L742}
+  /// [google.cloud.documentai.v1.UndeployProcessorVersionResponse]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L755}
   ///
+  // clang-format on
   future<
       StatusOr<google::cloud::documentai::v1::UndeployProcessorVersionResponse>>
   UndeployProcessorVersion(
@@ -619,52 +1019,79 @@ class DocumentProcessorServiceClient {
           request,
       Options opts = {});
 
+  // clang-format off
   ///
-  /// Creates a processor from the type processor that the user chose.
-  /// The processor will be at "ENABLED" state by default after its creation.
+  /// Creates a processor from the
+  /// [ProcessorType][google.cloud.documentai.v1.ProcessorType] provided. The
+  /// processor will be at `ENABLED` state by default after its creation.
   ///
-  /// @param parent  Required. The parent (project and location) under which to
-  /// create the
+  /// @param parent  Required. The parent (project and location) under which to create the
   ///  processor. Format: `projects/{project}/locations/{location}`
   /// @param processor  Required. The processor to be created, requires
-  /// [processor_type] and
-  ///  [display_name] to be set. Also, the processor is under CMEK if CMEK
-  ///  fields are set.
+  ///  [Processor.type][google.cloud.documentai.v1.Processor.type] and
+  ///  [Processor.display_name]][] to be set. Also, the
+  ///  [Processor.kms_key_name][google.cloud.documentai.v1.Processor.kms_key_name]
+  ///  field must be set if the processor is under CMEK.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::documentai::v1::Processor,google/cloud/documentai/v1/processor.proto#L118}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.documentai.v1.Processor])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.documentai.v1.CreateProcessorRequest]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L702}
-  /// [google.cloud.documentai.v1.Processor]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/processor.proto#L118}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.documentai.v1.CreateProcessorRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L770}
+  /// [google.cloud.documentai.v1.Processor]: @googleapis_reference_link{google/cloud/documentai/v1/processor.proto#L120}
+  /// [google.cloud.documentai.v1.ProcessorType]: @googleapis_reference_link{google/cloud/documentai/v1/processor_type.proto#L32}
   ///
+  // clang-format on
   StatusOr<google::cloud::documentai::v1::Processor> CreateProcessor(
       std::string const& parent,
       google::cloud::documentai::v1::Processor const& processor,
       Options opts = {});
 
+  // clang-format off
   ///
-  /// Creates a processor from the type processor that the user chose.
-  /// The processor will be at "ENABLED" state by default after its creation.
+  /// Creates a processor from the
+  /// [ProcessorType][google.cloud.documentai.v1.ProcessorType] provided. The
+  /// processor will be at `ENABLED` state by default after its creation.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::documentai::v1::CreateProcessorRequest,google/cloud/documentai/v1/document_processor_service.proto#L702}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.documentai.v1.CreateProcessorRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::documentai::v1::Processor,google/cloud/documentai/v1/processor.proto#L118}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.documentai.v1.Processor])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.documentai.v1.CreateProcessorRequest]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L702}
-  /// [google.cloud.documentai.v1.Processor]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/processor.proto#L118}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.documentai.v1.CreateProcessorRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L770}
+  /// [google.cloud.documentai.v1.Processor]: @googleapis_reference_link{google/cloud/documentai/v1/processor.proto#L120}
+  /// [google.cloud.documentai.v1.ProcessorType]: @googleapis_reference_link{google/cloud/documentai/v1/processor_type.proto#L32}
   ///
+  // clang-format on
   StatusOr<google::cloud::documentai::v1::Processor> CreateProcessor(
       google::cloud::documentai::v1::CreateProcessorRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes the processor, unloads all deployed model artifacts if it was
   /// enabled and then deletes all artifacts associated with this processor.
@@ -672,78 +1099,150 @@ class DocumentProcessorServiceClient {
   /// @param name  Required. The processor resource name to be deleted.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::documentai::v1::DeleteProcessorMetadata,google/cloud/documentai/v1/document_processor_service.proto#L730}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.documentai.v1.DeleteProcessorMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.documentai.v1.DeleteProcessorMetadata]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L730}
-  /// [google.cloud.documentai.v1.DeleteProcessorRequest]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L719}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.documentai.v1.DeleteProcessorMetadata]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L804}
+  /// [google.cloud.documentai.v1.DeleteProcessorRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L791}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::documentai::v1::DeleteProcessorMetadata>>
   DeleteProcessor(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes the processor, unloads all deployed model artifacts if it was
   /// enabled and then deletes all artifacts associated with this processor.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::documentai::v1::DeleteProcessorRequest,google/cloud/documentai/v1/document_processor_service.proto#L719}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.documentai.v1.DeleteProcessorRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::documentai::v1::DeleteProcessorMetadata,google/cloud/documentai/v1/document_processor_service.proto#L730}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.documentai.v1.DeleteProcessorMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.documentai.v1.DeleteProcessorMetadata]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L730}
-  /// [google.cloud.documentai.v1.DeleteProcessorRequest]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L719}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.documentai.v1.DeleteProcessorMetadata]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L804}
+  /// [google.cloud.documentai.v1.DeleteProcessorRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L791}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::documentai::v1::DeleteProcessorMetadata>>
   DeleteProcessor(
       google::cloud::documentai::v1::DeleteProcessorRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Enables a processor
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::documentai::v1::EnableProcessorRequest,google/cloud/documentai/v1/document_processor_service.proto#L736}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.documentai.v1.EnableProcessorRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::documentai::v1::EnableProcessorResponse,google/cloud/documentai/v1/document_processor_service.proto#L748}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.documentai.v1.EnableProcessorResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.documentai.v1.EnableProcessorRequest]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L736}
-  /// [google.cloud.documentai.v1.EnableProcessorResponse]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L748}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.documentai.v1.EnableProcessorRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L812}
+  /// [google.cloud.documentai.v1.EnableProcessorResponse]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L825}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::documentai::v1::EnableProcessorResponse>>
   EnableProcessor(
       google::cloud::documentai::v1::EnableProcessorRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Disables a processor
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::documentai::v1::DisableProcessorRequest,google/cloud/documentai/v1/document_processor_service.proto#L757}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.documentai.v1.DisableProcessorRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::documentai::v1::DisableProcessorResponse,google/cloud/documentai/v1/document_processor_service.proto#L769}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.documentai.v1.DisableProcessorResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.documentai.v1.DisableProcessorRequest]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L757}
-  /// [google.cloud.documentai.v1.DisableProcessorResponse]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L769}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.documentai.v1.DisableProcessorRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L838}
+  /// [google.cloud.documentai.v1.DisableProcessorResponse]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L851}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::documentai::v1::DisableProcessorResponse>>
   DisableProcessor(
       google::cloud::documentai::v1::DisableProcessorRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Set the default (active) version of a
   /// [Processor][google.cloud.documentai.v1.Processor] that will be used in
@@ -751,24 +1250,39 @@ class DocumentProcessorServiceClient {
   /// and
   /// [BatchProcessDocuments][google.cloud.documentai.v1.DocumentProcessorService.BatchProcessDocuments].
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::documentai::v1::SetDefaultProcessorVersionRequest,google/cloud/documentai/v1/document_processor_service.proto#L778}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.documentai.v1.SetDefaultProcessorVersionRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::documentai::v1::SetDefaultProcessorVersionResponse,google/cloud/documentai/v1/document_processor_service.proto#L802}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.documentai.v1.SetDefaultProcessorVersionResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.documentai.v1.DocumentProcessorService.BatchProcessDocuments]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L76}
-  /// [google.cloud.documentai.v1.DocumentProcessorService.ProcessDocument]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L62}
-  /// [google.cloud.documentai.v1.Processor]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/processor.proto#L118}
-  /// [google.cloud.documentai.v1.SetDefaultProcessorVersionRequest]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L778}
-  /// [google.cloud.documentai.v1.SetDefaultProcessorVersionResponse]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L802}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.documentai.v1.DocumentProcessorService.BatchProcessDocuments]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L76}
+  /// [google.cloud.documentai.v1.DocumentProcessorService.ProcessDocument]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L62}
+  /// [google.cloud.documentai.v1.Processor]: @googleapis_reference_link{google/cloud/documentai/v1/processor.proto#L120}
+  /// [google.cloud.documentai.v1.SetDefaultProcessorVersionRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L864}
+  /// [google.cloud.documentai.v1.SetDefaultProcessorVersionResponse]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L890}
   ///
+  // clang-format on
   future<StatusOr<
       google::cloud::documentai::v1::SetDefaultProcessorVersionResponse>>
   SetDefaultProcessorVersion(
@@ -776,47 +1290,82 @@ class DocumentProcessorServiceClient {
           request,
       Options opts = {});
 
+  // clang-format off
   ///
-  /// Send a document for Human Review. The input document should be processed
-  /// by the specified processor.
+  /// Send a document for Human Review. The input document should be processed by
+  /// the specified processor.
   ///
   /// @param human_review_config  Required. The resource name of the
-  /// HumanReviewConfig that the document will
-  ///  be reviewed with.
+  ///  [HumanReviewConfig][google.cloud.documentai.v1.HumanReviewConfig] that the
+  ///  document will be reviewed with.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::documentai::v1::ReviewDocumentResponse,google/cloud/documentai/v1/document_processor_service.proto#L924}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.documentai.v1.ReviewDocumentResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.documentai.v1.ReviewDocumentRequest]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L887}
-  /// [google.cloud.documentai.v1.ReviewDocumentResponse]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L924}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.documentai.v1.ReviewDocumentRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L1005}
+  /// [google.cloud.documentai.v1.ReviewDocumentResponse]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L1045}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::documentai::v1::ReviewDocumentResponse>>
   ReviewDocument(std::string const& human_review_config, Options opts = {});
 
+  // clang-format off
   ///
-  /// Send a document for Human Review. The input document should be processed
-  /// by the specified processor.
+  /// Send a document for Human Review. The input document should be processed by
+  /// the specified processor.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::documentai::v1::ReviewDocumentRequest,google/cloud/documentai/v1/document_processor_service.proto#L887}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.documentai.v1.ReviewDocumentRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::documentai::v1::ReviewDocumentResponse,google/cloud/documentai/v1/document_processor_service.proto#L924}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.documentai.v1.ReviewDocumentResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.documentai.v1.ReviewDocumentRequest]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L887}
-  /// [google.cloud.documentai.v1.ReviewDocumentResponse]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L924}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.documentai.v1.ReviewDocumentRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L1005}
+  /// [google.cloud.documentai.v1.ReviewDocumentResponse]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L1045}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::documentai::v1::ReviewDocumentResponse>>
   ReviewDocument(
       google::cloud::documentai::v1::ReviewDocumentRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Evaluates a ProcessorVersion against annotated documents, producing an
   /// Evaluation.
@@ -827,35 +1376,68 @@ class DocumentProcessorServiceClient {
   ///  `projects/{project}/locations/{location}/processors/{processor}/processorVersions/{processorVersion}`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::documentai::v1::EvaluateProcessorVersionResponse,google/cloud/documentai/v1/document_processor_service.proto#L983}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.documentai.v1.EvaluateProcessorVersionResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.documentai.v1.EvaluateProcessorVersionRequest]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L958}
-  /// [google.cloud.documentai.v1.EvaluateProcessorVersionResponse]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L983}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.documentai.v1.EvaluateProcessorVersionRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L1083}
+  /// [google.cloud.documentai.v1.EvaluateProcessorVersionResponse]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L1112}
   ///
+  // clang-format on
   future<
       StatusOr<google::cloud::documentai::v1::EvaluateProcessorVersionResponse>>
   EvaluateProcessorVersion(std::string const& processor_version,
                            Options opts = {});
 
+  // clang-format off
   ///
   /// Evaluates a ProcessorVersion against annotated documents, producing an
   /// Evaluation.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::documentai::v1::EvaluateProcessorVersionRequest,google/cloud/documentai/v1/document_processor_service.proto#L958}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.documentai.v1.EvaluateProcessorVersionRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::documentai::v1::EvaluateProcessorVersionResponse,google/cloud/documentai/v1/document_processor_service.proto#L983}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.documentai.v1.EvaluateProcessorVersionResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.documentai.v1.EvaluateProcessorVersionRequest]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L958}
-  /// [google.cloud.documentai.v1.EvaluateProcessorVersionResponse]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L983}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.documentai.v1.EvaluateProcessorVersionRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L1083}
+  /// [google.cloud.documentai.v1.EvaluateProcessorVersionResponse]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L1112}
   ///
+  // clang-format on
   future<
       StatusOr<google::cloud::documentai::v1::EvaluateProcessorVersionResponse>>
   EvaluateProcessorVersion(
@@ -863,6 +1445,7 @@ class DocumentProcessorServiceClient {
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Retrieves a specific evaluation.
   ///
@@ -871,36 +1454,58 @@ class DocumentProcessorServiceClient {
   ///  `projects/{project}/locations/{location}/processors/{processor}/processorVersions/{processorVersion}/evaluations/{evaluation}`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::documentai::v1::Evaluation,google/cloud/documentai/v1/evaluation.proto#L48}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.documentai.v1.Evaluation])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.documentai.v1.Evaluation]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/evaluation.proto#L48}
-  /// [google.cloud.documentai.v1.GetEvaluationRequest]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L989}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.documentai.v1.Evaluation]: @googleapis_reference_link{google/cloud/documentai/v1/evaluation.proto#L48}
+  /// [google.cloud.documentai.v1.GetEvaluationRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L1118}
   ///
+  // clang-format on
   StatusOr<google::cloud::documentai::v1::Evaluation> GetEvaluation(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Retrieves a specific evaluation.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::documentai::v1::GetEvaluationRequest,google/cloud/documentai/v1/document_processor_service.proto#L989}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.documentai.v1.GetEvaluationRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::documentai::v1::Evaluation,google/cloud/documentai/v1/evaluation.proto#L48}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.documentai.v1.Evaluation])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.documentai.v1.Evaluation]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/evaluation.proto#L48}
-  /// [google.cloud.documentai.v1.GetEvaluationRequest]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L989}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.documentai.v1.Evaluation]: @googleapis_reference_link{google/cloud/documentai/v1/evaluation.proto#L48}
+  /// [google.cloud.documentai.v1.GetEvaluationRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L1118}
   ///
+  // clang-format on
   StatusOr<google::cloud::documentai::v1::Evaluation> GetEvaluation(
       google::cloud::documentai::v1::GetEvaluationRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Retrieves a set of evaluations for a given processor version.
   ///
@@ -910,32 +1515,71 @@ class DocumentProcessorServiceClient {
   ///  `projects/{project}/locations/{location}/processors/{processor}/processorVersions/{processorVersion}`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::documentai::v1::Evaluation,google/cloud/documentai/v1/evaluation.proto#L48}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.documentai.v1.Evaluation], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.documentai.v1.Evaluation]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/evaluation.proto#L48}
-  /// [google.cloud.documentai.v1.ListEvaluationsRequest]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L1002}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.documentai.v1.Evaluation]: @googleapis_reference_link{google/cloud/documentai/v1/evaluation.proto#L48}
+  /// [google.cloud.documentai.v1.ListEvaluationsRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L1132}
   ///
+  // clang-format on
   StreamRange<google::cloud::documentai::v1::Evaluation> ListEvaluations(
       std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Retrieves a set of evaluations for a given processor version.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::documentai::v1::ListEvaluationsRequest,google/cloud/documentai/v1/document_processor_service.proto#L1002}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.documentai.v1.ListEvaluationsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::documentai::v1::Evaluation,google/cloud/documentai/v1/evaluation.proto#L48}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.documentai.v1.Evaluation], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.documentai.v1.Evaluation]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/evaluation.proto#L48}
-  /// [google.cloud.documentai.v1.ListEvaluationsRequest]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L1002}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.documentai.v1.Evaluation]: @googleapis_reference_link{google/cloud/documentai/v1/evaluation.proto#L48}
+  /// [google.cloud.documentai.v1.ListEvaluationsRequest]: @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L1132}
   ///
+  // clang-format on
   StreamRange<google::cloud::documentai::v1::Evaluation> ListEvaluations(
       google::cloud::documentai::v1::ListEvaluationsRequest request,
       Options opts = {});

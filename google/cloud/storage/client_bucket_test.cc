@@ -20,8 +20,10 @@
 #include "google/cloud/storage/testing/client_unit_test.h"
 #include "google/cloud/storage/testing/mock_client.h"
 #include "google/cloud/storage/testing/retry_tests.h"
+#include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
+#include <algorithm>
 
 namespace google {
 namespace cloud {
@@ -31,12 +33,13 @@ namespace {
 
 using ::google::cloud::internal::CurrentOptions;
 using ::google::cloud::storage::testing::canonical_errors::TransientError;
+using ::google::cloud::testing_util::ScopedEnvironment;
+using ::google::cloud::testing_util::StatusIs;
 using ::testing::ElementsAre;
 using ::testing::ElementsAreArray;
 using ::testing::HasSubstr;
 using ::testing::Property;
 using ::testing::Return;
-using ::testing::ReturnRef;
 
 auto match_binding = [](NativeIamBinding const& b) {
   return AllOf(
@@ -44,6 +47,13 @@ auto match_binding = [](NativeIamBinding const& b) {
       Property(&NativeIamBinding::members, ElementsAreArray(b.members())),
       Property(&NativeIamBinding::has_condition, b.has_condition()));
 };
+
+Status PermanentError() {
+  // We need an error code different from `kInvalidArgument` as this is used
+  // by `storage_internal::RequestProjectId()`. Some of the tests could be
+  // testing the wrong thing if we used the same value.
+  return Status(StatusCode::kPermissionDenied, "uh-oh");
+}
 
 /**
  * Test the functions in Storage::Client related to 'Buckets: *'.
@@ -53,6 +63,121 @@ auto match_binding = [](NativeIamBinding const& b) {
  * https://cloud.google.com/storage/docs/json_api/v1/buckets
  */
 class BucketTest : public ::google::cloud::storage::testing::ClientUnitTest {};
+
+TEST_F(BucketTest, ListBucketsNoProject) {
+  auto env = ScopedEnvironment("GOOGLE_CLOUD_PROJECT", absl::nullopt);
+  auto mock = std::make_shared<testing::MockClient>();
+  EXPECT_CALL(*mock, options())
+      .WillRepeatedly(
+          Return(storage::internal::DefaultOptionsWithCredentials(Options{})));
+  EXPECT_CALL(*mock, ListBuckets).Times(0);
+  auto client =
+      google::cloud::storage::testing::UndecoratedClientFromMock(mock);
+  auto actual = client.ListBuckets(Options{});
+  std::vector<StatusOr<BucketMetadata>> list{actual.begin(), actual.end()};
+  EXPECT_THAT(list, ElementsAre(StatusIs(StatusCode::kInvalidArgument)));
+}
+
+TEST_F(BucketTest, ListBucketsProjectFromConnectionOptions) {
+  auto env = ScopedEnvironment("GOOGLE_CLOUD_PROJECT", absl::nullopt);
+  auto mock = std::make_shared<testing::MockClient>();
+  auto expected_request = []() {
+    return Property(&internal::ListBucketsRequest::project_id,
+                    "client-project-id");
+  };
+  EXPECT_CALL(*mock, options())
+      .WillRepeatedly(Return(storage::internal::DefaultOptionsWithCredentials(
+          Options{}.set<ProjectIdOption>("client-project-id"))));
+  EXPECT_CALL(*mock, ListBuckets(expected_request()))
+      .WillOnce(Return(PermanentError()));
+  auto client =
+      google::cloud::storage::testing::UndecoratedClientFromMock(mock);
+  auto actual = client.ListBuckets(Options{});
+  std::vector<StatusOr<BucketMetadata>> list{actual.begin(), actual.end()};
+  EXPECT_THAT(list, ElementsAre(PermanentError()));
+}
+
+TEST_F(BucketTest, ListBucketsProjectFromEnv) {
+  auto env = ScopedEnvironment("GOOGLE_CLOUD_PROJECT", "env-project-id");
+  auto mock = std::make_shared<testing::MockClient>();
+  auto expected_request = []() {
+    return Property(&internal::ListBucketsRequest::project_id,
+                    "env-project-id");
+  };
+  EXPECT_CALL(*mock, options())
+      .WillRepeatedly(Return(storage::internal::DefaultOptionsWithCredentials(
+          Options{}.set<ProjectIdOption>("client-project-id"))));
+  EXPECT_CALL(*mock, ListBuckets(expected_request()))
+      .WillOnce(Return(PermanentError()));
+  auto client =
+      google::cloud::storage::testing::UndecoratedClientFromMock(mock);
+  auto actual = client.ListBuckets(Options{});
+  std::vector<StatusOr<BucketMetadata>> list{actual.begin(), actual.end()};
+  EXPECT_THAT(list, ElementsAre(PermanentError()));
+}
+
+TEST_F(BucketTest, ListBucketsProjectFromCallOptions) {
+  auto env = ScopedEnvironment("GOOGLE_CLOUD_PROJECT", "env-project-id");
+  auto mock = std::make_shared<testing::MockClient>();
+  auto expected_request = []() {
+    return Property(&internal::ListBucketsRequest::project_id,
+                    "call-project-id");
+  };
+  EXPECT_CALL(*mock, options())
+      .WillRepeatedly(Return(storage::internal::DefaultOptionsWithCredentials(
+          Options{}.set<ProjectIdOption>("client-project-id"))));
+  EXPECT_CALL(*mock, ListBuckets(expected_request()))
+      .WillOnce(Return(PermanentError()));
+  auto client =
+      google::cloud::storage::testing::UndecoratedClientFromMock(mock);
+  auto actual =
+      client.ListBuckets(Options{}.set<ProjectIdOption>("call-project-id"));
+  std::vector<StatusOr<BucketMetadata>> list{actual.begin(), actual.end()};
+  EXPECT_THAT(list, ElementsAre(PermanentError()));
+}
+
+TEST_F(BucketTest, ListBucketsProjectFromOverride) {
+  auto env = ScopedEnvironment("GOOGLE_CLOUD_PROJECT", "env-project-id");
+  auto mock = std::make_shared<testing::MockClient>();
+  auto expected_request = []() {
+    return Property(&internal::ListBucketsRequest::project_id,
+                    "override-project-id");
+  };
+  EXPECT_CALL(*mock, options())
+      .WillRepeatedly(Return(storage::internal::DefaultOptionsWithCredentials(
+          Options{}.set<ProjectIdOption>("client-project-id"))));
+  EXPECT_CALL(*mock, ListBuckets(expected_request()))
+      .WillOnce(Return(PermanentError()));
+  auto client =
+      google::cloud::storage::testing::UndecoratedClientFromMock(mock);
+  auto actual =
+      client.ListBuckets(OverrideDefaultProject("override-project-id"),
+                         Options{}.set<ProjectIdOption>("call-project-id"));
+  std::vector<StatusOr<BucketMetadata>> list{actual.begin(), actual.end()};
+  EXPECT_THAT(list, ElementsAre(PermanentError()));
+}
+
+TEST_F(BucketTest, ListBucketsForProject) {
+  auto env = ScopedEnvironment("GOOGLE_CLOUD_PROJECT", "env-project-id");
+  auto mock = std::make_shared<testing::MockClient>();
+  auto expected_request = []() {
+    return Property(&internal::ListBucketsRequest::project_id,
+                    "explicit-argument-project-id");
+  };
+  EXPECT_CALL(*mock, options())
+      .WillRepeatedly(Return(storage::internal::DefaultOptionsWithCredentials(
+          Options{}.set<ProjectIdOption>("client-project-id"))));
+  EXPECT_CALL(*mock, ListBuckets(expected_request()))
+      .WillOnce(Return(PermanentError()));
+  auto client =
+      google::cloud::storage::testing::UndecoratedClientFromMock(mock);
+  auto actual = client.ListBucketsForProject(
+      "explicit-argument-project-id",
+      OverrideDefaultProject("override-project-id"),
+      Options{}.set<ProjectIdOption>("call-project-id"));
+  std::vector<StatusOr<BucketMetadata>> list{actual.begin(), actual.end()};
+  EXPECT_THAT(list, ElementsAre(PermanentError()));
+}
 
 TEST_F(BucketTest, CreateBucket) {
   std::string text = R"""({
@@ -70,10 +195,7 @@ TEST_F(BucketTest, CreateBucket) {
 })""";
   auto expected = internal::BucketMetadataParser::FromString(text).value();
 
-  ClientOptions mock_options(oauth2::CreateAnonymousCredentials());
-  mock_options.set_project_id("test-project-name");
-
-  EXPECT_CALL(*mock_, client_options()).WillRepeatedly(ReturnRef(mock_options));
+  EXPECT_CALL(*mock_, client_options()).Times(0);
   EXPECT_CALL(*mock_, CreateBucket)
       .WillOnce(Return(StatusOr<BucketMetadata>(TransientError())))
       .WillOnce([&expected](internal::CreateBucketRequest const& r) {
@@ -85,13 +207,129 @@ TEST_F(BucketTest, CreateBucket) {
         EXPECT_EQ("test-project-name", r.project_id());
         return make_status_or(expected);
       });
-  auto client = ClientForMock();
+  auto client = testing::ClientFromMock(mock_);
   auto actual = client.CreateBucket(
       "test-bucket-name",
       BucketMetadata().set_location("US").set_storage_class("STANDARD"),
-      Options{}.set<UserProjectOption>("u-p-test"));
+      Options{}
+          .set<UserProjectOption>("u-p-test")
+          .set<ProjectIdOption>("test-project-name"));
   ASSERT_STATUS_OK(actual);
   EXPECT_EQ(expected, *actual);
+}
+
+TEST_F(BucketTest, CreateBucketNoProject) {
+  auto env = ScopedEnvironment("GOOGLE_CLOUD_PROJECT", absl::nullopt);
+  auto mock = std::make_shared<testing::MockClient>();
+  EXPECT_CALL(*mock, options())
+      .WillRepeatedly(
+          Return(storage::internal::DefaultOptionsWithCredentials(Options{})));
+  EXPECT_CALL(*mock, CreateBucket).Times(0);
+  auto client =
+      google::cloud::storage::testing::UndecoratedClientFromMock(mock);
+  auto actual =
+      client.CreateBucket("test-bucket-name", BucketMetadata(), Options{});
+  ASSERT_THAT(actual, StatusIs(StatusCode::kInvalidArgument));
+}
+
+TEST_F(BucketTest, CreateBucketProjectFromConnectionOptions) {
+  auto env = ScopedEnvironment("GOOGLE_CLOUD_PROJECT", absl::nullopt);
+  auto mock = std::make_shared<testing::MockClient>();
+  auto expected_request = []() {
+    return Property(&internal::CreateBucketRequest::project_id,
+                    "client-project-id");
+  };
+  EXPECT_CALL(*mock, options())
+      .WillRepeatedly(Return(storage::internal::DefaultOptionsWithCredentials(
+          Options{}.set<ProjectIdOption>("client-project-id"))));
+  EXPECT_CALL(*mock, CreateBucket(expected_request()))
+      .WillOnce(Return(BucketMetadata()));
+  auto client =
+      google::cloud::storage::testing::UndecoratedClientFromMock(mock);
+  auto actual =
+      client.CreateBucket("test-bucket-name", BucketMetadata(), Options{});
+  ASSERT_STATUS_OK(actual);
+}
+
+TEST_F(BucketTest, CreateBucketProjectFromEnv) {
+  auto env = ScopedEnvironment("GOOGLE_CLOUD_PROJECT", "env-project-id");
+  auto mock = std::make_shared<testing::MockClient>();
+  auto expected_request = []() {
+    return Property(&internal::CreateBucketRequest::project_id,
+                    "env-project-id");
+  };
+  EXPECT_CALL(*mock, options())
+      .WillRepeatedly(Return(storage::internal::DefaultOptionsWithCredentials(
+          Options{}.set<ProjectIdOption>("client-project-id"))));
+  EXPECT_CALL(*mock, CreateBucket(expected_request()))
+      .WillOnce(Return(BucketMetadata()));
+  auto client =
+      google::cloud::storage::testing::UndecoratedClientFromMock(mock);
+  auto actual =
+      client.CreateBucket("test-bucket-name", BucketMetadata(), Options{});
+  ASSERT_STATUS_OK(actual);
+}
+
+TEST_F(BucketTest, CreateBucketProjectFromCallOptions) {
+  auto env = ScopedEnvironment("GOOGLE_CLOUD_PROJECT", "env-project-id");
+  auto mock = std::make_shared<testing::MockClient>();
+  auto expected_request = []() {
+    return Property(&internal::CreateBucketRequest::project_id,
+                    "call-project-id");
+  };
+  EXPECT_CALL(*mock, options())
+      .WillRepeatedly(Return(storage::internal::DefaultOptionsWithCredentials(
+          Options{}.set<ProjectIdOption>("client-project-id"))));
+  EXPECT_CALL(*mock, CreateBucket(expected_request()))
+      .WillOnce(Return(BucketMetadata()));
+  auto client =
+      google::cloud::storage::testing::UndecoratedClientFromMock(mock);
+  auto actual =
+      client.CreateBucket("test-bucket-name", BucketMetadata(),
+                          Options{}.set<ProjectIdOption>("call-project-id"));
+  ASSERT_STATUS_OK(actual);
+}
+
+TEST_F(BucketTest, CreateBucketProjectFromOverride) {
+  auto env = ScopedEnvironment("GOOGLE_CLOUD_PROJECT", "env-project-id");
+  auto mock = std::make_shared<testing::MockClient>();
+  auto expected_request = []() {
+    return Property(&internal::CreateBucketRequest::project_id,
+                    "override-project-id");
+  };
+  EXPECT_CALL(*mock, options())
+      .WillRepeatedly(Return(storage::internal::DefaultOptionsWithCredentials(
+          Options{}.set<ProjectIdOption>("client-project-id"))));
+  EXPECT_CALL(*mock, CreateBucket(expected_request()))
+      .WillOnce(Return(BucketMetadata()));
+  auto client =
+      google::cloud::storage::testing::UndecoratedClientFromMock(mock);
+  auto actual =
+      client.CreateBucket("test-bucket-name", BucketMetadata(),
+                          OverrideDefaultProject("override-project-id"),
+                          Options{}.set<ProjectIdOption>("call-project-id"));
+  ASSERT_STATUS_OK(actual);
+}
+
+TEST_F(BucketTest, CreateBucketForProject) {
+  auto env = ScopedEnvironment("GOOGLE_CLOUD_PROJECT", "env-project-id");
+  auto mock = std::make_shared<testing::MockClient>();
+  auto expected_request = []() {
+    return Property(&internal::CreateBucketRequest::project_id,
+                    "explicit-argument-project-id");
+  };
+  EXPECT_CALL(*mock, options())
+      .WillRepeatedly(Return(storage::internal::DefaultOptionsWithCredentials(
+          Options{}.set<ProjectIdOption>("client-project-id"))));
+  EXPECT_CALL(*mock, CreateBucket(expected_request()))
+      .WillOnce(Return(BucketMetadata()));
+  auto client =
+      google::cloud::storage::testing::UndecoratedClientFromMock(mock);
+  auto actual = client.CreateBucketForProject(
+      "test-bucket-name", "explicit-argument-project-id", BucketMetadata(),
+      OverrideDefaultProject("override-project-id"),
+      Options{}.set<ProjectIdOption>("call-project-id"));
+  ASSERT_STATUS_OK(actual);
 }
 
 TEST_F(BucketTest, CreateBucketTooManyFailures) {

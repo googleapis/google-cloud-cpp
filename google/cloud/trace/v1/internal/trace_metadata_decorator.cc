@@ -18,6 +18,7 @@
 
 #include "google/cloud/trace/v1/internal/trace_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/devtools/cloudtrace/v1/trace.grpc.pb.h>
@@ -29,8 +30,10 @@ namespace trace_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 TraceServiceMetadata::TraceServiceMetadata(
-    std::shared_ptr<TraceServiceStub> child)
+    std::shared_ptr<TraceServiceStub> child,
+    std::multimap<std::string, std::string> fixed_metadata)
     : child_(std::move(child)),
+      fixed_metadata_(std::move(fixed_metadata)),
       api_client_header_(
           google::cloud::internal::ApiClientHeader("generator")) {}
 
@@ -38,7 +41,7 @@ StatusOr<google::devtools::cloudtrace::v1::ListTracesResponse>
 TraceServiceMetadata::ListTraces(
     grpc::ClientContext& context,
     google::devtools::cloudtrace::v1::ListTracesRequest const& request) {
-  SetMetadata(context);
+  SetMetadata(context, absl::StrCat("project_id=", request.project_id()));
   return child_->ListTraces(context, request);
 }
 
@@ -46,14 +49,15 @@ StatusOr<google::devtools::cloudtrace::v1::Trace>
 TraceServiceMetadata::GetTrace(
     grpc::ClientContext& context,
     google::devtools::cloudtrace::v1::GetTraceRequest const& request) {
-  SetMetadata(context);
+  SetMetadata(context, absl::StrCat("project_id=", request.project_id(), "&",
+                                    "trace_id=", request.trace_id()));
   return child_->GetTrace(context, request);
 }
 
 Status TraceServiceMetadata::PatchTraces(
     grpc::ClientContext& context,
     google::devtools::cloudtrace::v1::PatchTracesRequest const& request) {
-  SetMetadata(context);
+  SetMetadata(context, absl::StrCat("project_id=", request.project_id()));
   return child_->PatchTraces(context, request);
 }
 
@@ -64,6 +68,9 @@ void TraceServiceMetadata::SetMetadata(grpc::ClientContext& context,
 }
 
 void TraceServiceMetadata::SetMetadata(grpc::ClientContext& context) {
+  for (auto const& kv : fixed_metadata_) {
+    context.AddMetadata(kv.first, kv.second);
+  }
   context.AddMetadata("x-goog-api-client", api_client_header_);
   auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {

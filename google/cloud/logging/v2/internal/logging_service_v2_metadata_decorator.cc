@@ -18,6 +18,7 @@
 
 #include "google/cloud/logging/v2/internal/logging_service_v2_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/logging/v2/logging.grpc.pb.h>
@@ -29,15 +30,17 @@ namespace logging_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 LoggingServiceV2Metadata::LoggingServiceV2Metadata(
-    std::shared_ptr<LoggingServiceV2Stub> child)
+    std::shared_ptr<LoggingServiceV2Stub> child,
+    std::multimap<std::string, std::string> fixed_metadata)
     : child_(std::move(child)),
+      fixed_metadata_(std::move(fixed_metadata)),
       api_client_header_(
           google::cloud::internal::ApiClientHeader("generator")) {}
 
 Status LoggingServiceV2Metadata::DeleteLog(
     grpc::ClientContext& context,
     google::logging::v2::DeleteLogRequest const& request) {
-  SetMetadata(context, "log_name=" + request.log_name());
+  SetMetadata(context, absl::StrCat("log_name=", request.log_name()));
   return child_->DeleteLog(context, request);
 }
 
@@ -70,7 +73,7 @@ StatusOr<google::logging::v2::ListLogsResponse>
 LoggingServiceV2Metadata::ListLogs(
     grpc::ClientContext& context,
     google::logging::v2::ListLogsRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListLogs(context, request);
 }
 
@@ -100,6 +103,9 @@ void LoggingServiceV2Metadata::SetMetadata(grpc::ClientContext& context,
 }
 
 void LoggingServiceV2Metadata::SetMetadata(grpc::ClientContext& context) {
+  for (auto const& kv : fixed_metadata_) {
+    context.AddMetadata(kv.first, kv.second);
+  }
   context.AddMetadata("x-goog-api-client", api_client_header_);
   auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {

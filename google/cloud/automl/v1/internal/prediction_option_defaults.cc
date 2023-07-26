@@ -47,8 +47,9 @@ Options PredictionServiceDefaultOptions(Options options) {
   }
   if (!options.has<automl_v1::PredictionServiceBackoffPolicyOption>()) {
     options.set<automl_v1::PredictionServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options.has<automl_v1::PredictionServicePollingPolicyOption>()) {
@@ -58,8 +59,9 @@ Options PredictionServiceDefaultOptions(Options options) {
             automl_v1::PredictionServiceBackoffPolicyOption::Type>(
             options.get<automl_v1::PredictionServiceRetryPolicyOption>()
                 ->clone(),
-            options.get<automl_v1::PredictionServiceBackoffPolicyOption>()
-                ->clone())
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
             .clone());
   }
   if (!options.has<

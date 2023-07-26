@@ -36,7 +36,7 @@ class IamCheckerLogging : public IamCheckerStub {
   ~IamCheckerLogging() override = default;
   IamCheckerLogging(std::shared_ptr<IamCheckerStub> child,
                     TracingOptions tracing_options,
-                    std::set<std::string> components);
+                    std::set<std::string> const& components);
 
   StatusOr<
       google::cloud::policytroubleshooter::v1::TroubleshootIamPolicyResponse>
@@ -48,7 +48,7 @@ class IamCheckerLogging : public IamCheckerStub {
  private:
   std::shared_ptr<IamCheckerStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // IamCheckerLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -54,7 +54,8 @@ std::shared_ptr<CertificateManagerStub> CreateDefaultCertificateManagerStub(
     stub = std::make_shared<CertificateManagerAuth>(std::move(auth),
                                                     std::move(stub));
   }
-  stub = std::make_shared<CertificateManagerMetadata>(std::move(stub));
+  stub = std::make_shared<CertificateManagerMetadata>(
+      std::move(stub), std::multimap<std::string, std::string>{});
   if (internal::Contains(options.get<TracingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<CertificateManagerLogging>(

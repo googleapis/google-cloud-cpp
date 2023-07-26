@@ -14,7 +14,6 @@
 
 #include "generator/integration_tests/golden/v1/internal/golden_kitchen_sink_stub_factory.h"
 #include "google/cloud/common_options.h"
-#include "google/cloud/internal/opentelemetry_options.h"
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"

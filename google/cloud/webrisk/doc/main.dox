@@ -22,18 +22,12 @@ which should give you a taste of the Web Risk API C++ client library API.
 
 <!-- inject-client-list-start -->
 The main class in this library is
-[\c webrisk_v1::WebRiskServiceClient](@ref google::cloud::webrisk_v1::WebRiskServiceClient).
-All RPCs are exposed as member functions of this class. Other classes provide
-helpers, retry policies, configuration parameters, and infrastructure to mock
-[\c webrisk_v1::WebRiskServiceClient](@ref google::cloud::webrisk_v1::WebRiskServiceClient) when testing your
+[`webrisk_v1::WebRiskServiceClient`](@ref google::cloud::webrisk_v1::WebRiskServiceClient). All RPCs are exposed
+as member functions of this class. Other classes provide helpers, configuration
+parameters, and infrastructure to mock
+[`webrisk_v1::WebRiskServiceClient`](@ref google::cloud::webrisk_v1::WebRiskServiceClient) when testing your
 application.
 <!-- inject-client-list-end -->
-
-## Retry, Backoff, and Idempotency Policies.
-
-The library automatically retries requests that fail with transient errors, and
-uses [exponential backoff] to backoff between retries. Application developers
-can override the default policies.
 
 ## More Information
 
@@ -42,7 +36,8 @@ can override the default policies.
   endpoint.
 - @ref webrisk-override-authentication - describes how to change the
   authentication credentials used by the library.
-
-[exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff
+- @ref webrisk-override-retry - describes how to change the default retry
+  policies.
+- @ref webrisk-env - describes environment variables that can configure the behavior of the library.
 
 */

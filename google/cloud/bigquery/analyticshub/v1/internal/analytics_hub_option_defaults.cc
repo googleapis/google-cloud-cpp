@@ -50,8 +50,9 @@ Options AnalyticsHubServiceDefaultOptions(Options options) {
           bigquery_analyticshub_v1::AnalyticsHubServiceBackoffPolicyOption>()) {
     options
         .set<bigquery_analyticshub_v1::AnalyticsHubServiceBackoffPolicyOption>(
-            ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                     std::chrono::minutes(5), kBackoffScaling)
+            ExponentialBackoffPolicy(
+                std::chrono::seconds(0), std::chrono::seconds(1),
+                std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
                 .clone());
   }
   if (!options

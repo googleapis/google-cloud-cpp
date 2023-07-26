@@ -18,6 +18,7 @@
 
 #include "google/cloud/language/v1/internal/language_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/language/v1/language_service.grpc.pb.h>
@@ -29,8 +30,10 @@ namespace language_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 LanguageServiceMetadata::LanguageServiceMetadata(
-    std::shared_ptr<LanguageServiceStub> child)
+    std::shared_ptr<LanguageServiceStub> child,
+    std::multimap<std::string, std::string> fixed_metadata)
     : child_(std::move(child)),
+      fixed_metadata_(std::move(fixed_metadata)),
       api_client_header_(
           google::cloud::internal::ApiClientHeader("generator")) {}
 
@@ -74,6 +77,14 @@ LanguageServiceMetadata::ClassifyText(
   return child_->ClassifyText(context, request);
 }
 
+StatusOr<google::cloud::language::v1::ModerateTextResponse>
+LanguageServiceMetadata::ModerateText(
+    grpc::ClientContext& context,
+    google::cloud::language::v1::ModerateTextRequest const& request) {
+  SetMetadata(context);
+  return child_->ModerateText(context, request);
+}
+
 StatusOr<google::cloud::language::v1::AnnotateTextResponse>
 LanguageServiceMetadata::AnnotateText(
     grpc::ClientContext& context,
@@ -89,6 +100,9 @@ void LanguageServiceMetadata::SetMetadata(grpc::ClientContext& context,
 }
 
 void LanguageServiceMetadata::SetMetadata(grpc::ClientContext& context) {
+  for (auto const& kv : fixed_metadata_) {
+    context.AddMetadata(kv.first, kv.second);
+  }
   context.AddMetadata("x-goog-api-client", api_client_header_);
   auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {

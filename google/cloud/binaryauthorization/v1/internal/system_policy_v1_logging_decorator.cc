@@ -29,10 +29,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 SystemPolicyV1Logging::SystemPolicyV1Logging(
     std::shared_ptr<SystemPolicyV1Stub> child, TracingOptions tracing_options,
-    std::set<std::string> components)
+    std::set<std::string> const& components)
     : child_(std::move(child)),
       tracing_options_(std::move(tracing_options)),
-      components_(std::move(components)) {}
+      stream_logging_(components.find("rpc-streams") != components.end()) {}
 
 StatusOr<google::cloud::binaryauthorization::v1::Policy>
 SystemPolicyV1Logging::GetSystemPolicy(

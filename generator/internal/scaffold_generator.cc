@@ -21,8 +21,10 @@
 #include <google/protobuf/io/printer.h>
 #include <google/protobuf/io/zero_copy_stream_impl.h>
 #include <nlohmann/json.hpp>
+#include <yaml-cpp/yaml.h>
 #include <fstream>
 #include <iterator>
+#include <regex>
 #ifdef _WIN32
 #include <direct.h>
 #else
@@ -93,10 +95,7 @@ std::string SiteRoot(
   return LibraryName(service.product_path());
 }
 
-std::map<std::string, std::string> ScaffoldVars(
-    std::string const& googleapis_path,
-    google::cloud::cpp::generator::ServiceConfiguration const& service,
-    bool experimental) {
+nlohmann::json LoadApiIndex(std::string const& googleapis_path) {
   auto const api_index_path = googleapis_path + "/" + kApiIndexFilename;
   auto status = google::cloud::internal::status(api_index_path);
   if (!exists(status)) {
@@ -108,21 +107,31 @@ std::map<std::string, std::string> ScaffoldVars(
   if (index.is_null()) {
     GCP_LOG(WARNING) << "Cannot parse API index file (" << api_index_path
                      << ")";
-    return {};
+    return nlohmann::json{{"apis", std::vector<nlohmann::json>{}}};
   }
   if (!index.contains("apis")) {
     GCP_LOG(WARNING) << "Missing `apis` field in API index file ("
                      << api_index_path << ")";
-    return {};
+    return nlohmann::json{{"apis", std::vector<nlohmann::json>{}}};
   }
+  return index;
+}
+
+std::map<std::string, std::string> ScaffoldVars(
+    std::string const& googleapis_path, nlohmann::json const& index,
+    google::cloud::cpp::generator::ServiceConfiguration const& service,
+    bool experimental) {
   std::map<std::string, std::string> vars;
   for (auto const& api : index["apis"]) {
     if (!api.contains("directory")) continue;
     auto const directory = api["directory"].get<std::string>() + "/";
     if (!absl::StartsWith(service.service_proto_path(), directory)) continue;
+    vars.emplace("id", api.value("id", ""));
     vars.emplace("title", api.value("title", ""));
     vars.emplace("description", api.value("description", ""));
     vars.emplace("directory", api.value("directory", ""));
+    vars.emplace("nameInServiceConfig", api.value("nameInServiceConfig", ""));
+    vars.emplace("configFile", api.value("configFile", ""));
   }
   auto const library = LibraryName(service.product_path());
   vars["copyright_year"] = service.initial_copyright_year();
@@ -138,6 +147,63 @@ std::map<std::string, std::string> ScaffoldVars(
                      "to change without notice.\n\nPlease,"
                    : "While this library is **GA**, please";
 
+  // Try to load the service config YAML file. On failure just return the
+  // existing vars.
+  auto const config_file = vars.find("configFile");
+  auto const directory = vars.find("directory");
+  if (config_file == vars.end() || directory == vars.end()) {
+    GCP_LOG(WARNING) << "Missing directory and/or YAML config file name for: "
+                     << service.service_proto_path();
+    return vars;
+  }
+
+  auto const path =
+      googleapis_path + "/" + directory->second + "/" + config_file->second;
+  auto status = google::cloud::internal::status(path);
+  if (!exists(status)) {
+    GCP_LOG(WARNING) << "Cannot find YAML service config file (" << path
+                     << ") for: " << service.service_proto_path();
+    return vars;
+  }
+  auto config = YAML::LoadFile(path);
+  if (config.Type() != YAML::NodeType::Map) {
+    GCP_LOG(WARNING) << "Error loading YAML config file (" << path
+                     << ") for: " << service.service_proto_path()
+                     << "  error=" << config.Type();
+    return vars;
+  }
+  auto publishing = config["publishing"];
+  // This error is too common at the moment. Most libraries lack a
+  // 'publishing' section.
+  if (publishing.Type() != YAML::NodeType::Map) return vars;
+
+  for (std::string const name : {
+           "api_short_name",
+           "documentation_uri",
+           "new_issue_uri",
+       }) {
+    auto node = publishing[name];
+    if (node.Type() != YAML::NodeType::Scalar) continue;
+    auto value = node.as<std::string>();
+    if (value.empty()) continue;
+    vars[name] = std::move(value);
+  }
+  // The YAML configuration includes a link to create new issues. If possible,
+  // convert that to a link to list issues, which is what we want to generate.
+  auto l = vars.find("new_issue_uri");
+  if (l != vars.end()) {
+    auto issue_tracker = l->second;
+    auto const re = std::regex(
+        R"re((https://issuetracker.google.com/issues).*[^a-z]component=([0-9]*).*)re");
+    std::smatch match;
+    if (std::regex_match(issue_tracker, match, re)) {
+      issue_tracker =
+          absl::StrCat(match[1].str(), "?q=componentid:", match[2].str(), "%20",
+                       "status=open");
+    }
+    vars["issue_tracker"] = issue_tracker;
+  }
+
   return vars;
 }
 
@@ -149,11 +215,77 @@ void MakeDirectory(std::string const& path) {
 #endif  // _WIN32
 }
 
-void GenerateScaffold(
-    std::string const& googleapis_path,
-    std::string const& scaffold_templates_path, std::string const& output_path,
+void GenerateMetadata(
+    std::map<std::string, std::string> const& vars,
+    std::string const& output_path,
     google::cloud::cpp::generator::ServiceConfiguration const& service,
-    bool experimental) {
+    bool allow_placeholders) {
+  auto const destination = [&]() {
+    MakeDirectory(output_path);
+    auto d = output_path + "/" + LibraryPath(service.product_path());
+    MakeDirectory(d);
+    auto l = vars.find("service_subdirectory");
+    if (l == vars.end()) return d;
+    if (l->second.empty()) return d;
+    d += l->second;
+    MakeDirectory(d);
+    return d;
+  }();
+
+  nlohmann::json metadata{
+      {"language", "cpp"},
+      {"repo", "googleapis/google-cloud-cpp"},
+      {"release_level", service.experimental() ? "preview" : "stable"},
+      // In other languages this is the name of the package. In C++ there are
+      // many package managers, and this seems to be the most common name.
+      {"distribution_name", "google-cloud-cpp"},
+      // This seems to be largely unused, but better to put a value.
+      {"requires_billing", true},
+      // Assume the library is automatically generated. For hand-crafted
+      // libraries we will set `omit_repo_metadata: true` in
+      // generator_config.textproto.
+      {"library_type", "GAPIC_AUTO"},
+  };
+  auto library = vars.find("library");
+  if (library == vars.end()) {
+    GCP_LOG(WARNING) << "Cannot find field `library` in configuration vars for:"
+                     << service.service_proto_path();
+    return;
+  }
+  metadata["client_documentation"] =
+      "https://cloud.google.com/cpp/docs/reference/" + library->second +
+      "/latest";
+
+  struct MapVars {
+    std::string metadata_name;
+    std::string var_name;
+  } map_vars[] = {
+      {"name_pretty", "title"},
+      {"api_id", "nameInServiceConfig"},
+      {"api_shortname", "api_short_name"},
+      {"product_documentation", "documentation_uri"},
+      {"issue_tracker", "issue_tracker"},
+  };
+  for (auto const& kv : map_vars) {
+    auto const l = vars.find(kv.var_name);
+    if (l == vars.end()) {
+      // At the moment, too many proto directories lack a `publishing` section
+      // in their YAML file.
+      if (!allow_placeholders) return;
+      metadata[kv.metadata_name] = "EDIT HERE: missing data";
+      continue;
+    }
+    metadata[kv.metadata_name] = l->second;
+  }
+
+  std::ofstream(destination + ".repo-metadata.json")
+      << metadata.dump(4) << "\n";
+}
+
+void GenerateScaffold(
+    std::map<std::string, std::string> const& vars,
+    std::string const& scaffold_templates_path, std::string const& output_path,
+    google::cloud::cpp::generator::ServiceConfiguration const& service) {
   using Generator = std::function<void(
       std::ostream&, std::map<std::string, std::string> const&)>;
   struct Destination {
@@ -168,6 +300,7 @@ void GenerateScaffold(
       {"doc/environment-variables.dox", GenerateDoxygenEnvironmentPage},
       {"doc/override-authentication.dox", GenerateOverrideAuthenticationPage},
       {"doc/override-endpoint.dox", GenerateOverrideEndpointPage},
+      {"doc/override-retry-policies.dox", GenerateOverrideRetryPoliciesPage},
       {"doc/options.dox", GenerateDoxygenOptionsPage},
       {"quickstart/README.md", GenerateQuickstartReadme},
       {"quickstart/quickstart.cc", GenerateQuickstartSkeleton},
@@ -177,7 +310,6 @@ void GenerateScaffold(
       {"quickstart/.bazelrc", GenerateQuickstartBazelrc},
   };
 
-  auto const vars = ScaffoldVars(googleapis_path, service, experimental);
   MakeDirectory(output_path + "/");
   auto const destination =
       output_path + "/" + LibraryPath(service.product_path());
@@ -253,7 +385,7 @@ this library.
 * Detailed header comments in our [public `.h`][source-link] files
 
 [cloud-service-docs]: https://cloud.google.com/$site_root$
-[doxygen-link]: https://googleapis.dev/cpp/google-cloud-$library$/latest/
+[doxygen-link]: https://cloud.google.com/cpp/docs/reference/$library$/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/$library$
 )""";
   google::protobuf::io::OstreamOutputStream output(&os);
@@ -510,8 +642,8 @@ google_cloud_cpp_add_pkgconfig(
     "The $title$ C++ Client Library"
     "Provides C++ APIs to use the $title$."
     "google_cloud_cpp_grpc_utils"
-    " google_cloud_cpp_common"
-    " google_cloud_cpp_$library$_protos")
+    "google_cloud_cpp_common"
+    "google_cloud_cpp_$library$_protos")
 
 # Create and install the CMake configuration files.
 include(CMakePackageConfigHelpers)
@@ -569,12 +701,6 @@ which should give you a taste of the $title$ C++ client library API.
 <!-- inject-client-list-start -->
 <!-- inject-client-list-end -->
 
-## Retry, Backoff, and Idempotency Policies.
-
-The library automatically retries requests that fail with transient errors, and
-uses [exponential backoff] to backoff between retries. Application developers
-can override the default policies.
-
 ## More Information
 
 - @ref common-error-handling - describes how the library reports errors.
@@ -582,9 +708,12 @@ can override the default policies.
   endpoint.
 - @ref $library$-override-authentication - describes how to change the
   authentication credentials used by the library.
+- @ref $library$-override-retry - describes how to change the default retry
+  policies.
+- @ref $library$-env - describes environment variables that can configure the
+  behavior of the library.
 
 [cloud-service-docs]: https://cloud.google.com/$site_root$
-[exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff
 
 */
 )""";
@@ -624,7 +753,7 @@ the program's console.
 including whether messages will be output on multiple lines, or whether
 string/bytes fields will be truncated.
 
-@see google::cloud::TracingOptionsOption
+@see google::cloud::GrpcTracingOptionsOption
 
 `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes`: turns on logging in the library, basically
 the library always "logs" but the logging infrastructure has no backend to
@@ -699,6 +828,97 @@ client library to change this default.
 
 // <!-- inject-endpoint-pages-start -->
 // <!-- inject-endpoint-pages-end -->
+)""";
+  google::protobuf::io::OstreamOutputStream output(&os);
+  google::protobuf::io::Printer printer(&output, '$');
+  printer.Print(variables, kText);
+}
+
+void GenerateOverrideRetryPoliciesPage(
+    std::ostream& os, std::map<std::string, std::string> const& variables) {
+  auto constexpr kText = R"""(/*!
+@page $library$-override-retry Override Retry, Backoff, and Idempotency Policies
+
+When it is safe to do so, the library automatically retries requests that fail
+due to a transient error. The library then uses [exponential backoff] to backoff
+before trying again. Which operations are considered safe to retry, which
+errors are treated as transient failures, the details of the exponential backoff
+algorithm, and for how long the library retries are all configurable via
+policies.
+
+This document provides examples showing how to override the default policies.
+
+The policies can be set when the `*Connection` object is created. The library
+provides default policies for any policy that is not set. The application can
+also override some (or all) policies when the `*Client` object is created. This
+can be useful if multiple `*Client` objects share the same `*Connection` object,
+but you want different retry behavior in some of the clients. Finally, the
+application can override some retry policies when calling a specific member
+function.
+
+The library uses three different options to control the retry loop. The options
+have per-client names.
+
+@section $library$-override-retry-retry-policy Configuring the transient errors and retry duration
+
+The `*RetryPolicyOption` controls:
+
+- Which errors are to be treated as transient errors.
+- How long the library will keep retrying transient errors.
+
+You can provide your own class for this option. The library also provides two
+built-in policies:
+
+- `*LimitedErrorCountRetryPolicy`: stops retrying after a specified number
+  of transient errors.
+- `*LimitedTimeRetryPolicy`: stops retrying after a specified time.
+
+Note that a library may have more than one version of these classes. Their name
+match the `*Client` and `*Connection` object they are intended to be used
+with. Some `*Client` objects treat different error codes as transient errors.
+In most cases, only [kUnavailable](@ref google::cloud::StatusCode) is treated
+as a transient error.
+
+@section $library$-override-retry-backoff-policy Controlling the backoff algorithm
+
+The `*BackoffPolicyOption` controls how long the client library will wait
+before retrying a request that failed with a transient error. You can provide
+your own class for this option.
+
+The only built-in backoff policy is
+[`ExponentialBackoffPolicy`](@ref google::cloud::ExponentialBackoffPolicy).
+This class implements a truncated exponential backoff algorithm, with jitter.
+In summary, it doubles the current backoff time after each failure. The actual
+backoff time for an RPC is chosen at random, but never exceeds the current
+backoff. The current backoff is doubled after each failure, but never exceeds
+(or is "truncated") if it reaches a prescribed maximum.
+
+@section $library$-override-retry-idempotency-policy Controlling which operations are retryable
+
+The `*IdempotencyPolicyOption` controls which requests are retryable, as some
+requests are never safe to retry.
+
+Only one built-in idempotency policy is provided by the library. The name
+matches the name of the client it is intended for. For example, `FooBarClient`
+will use `FooBarIdempotencyPolicy`. This policy is very conservative.
+
+@section $library$-override-retry-example Example
+
+<!-- inject-retry-snippet-start -->
+<!-- inject-retry-snippet-end -->
+
+@section $library$-override-retry-more-information More Information
+
+@see google::cloud::Options
+@see google::cloud::BackoffPolicy
+@see google::cloud::ExponentialBackoffPolicy
+
+[exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff
+
+*/
+
+// <!-- inject-retry-pages-start -->
+// <!-- inject-retry-pages-end -->
 )""";
   google::protobuf::io::OstreamOutputStream output(&os);
   google::protobuf::io::Printer printer(&output, '$');
@@ -833,7 +1053,7 @@ https://cloud.google.com/docs/authentication/production
 
    ```bash
    cd $$HOME/google-cloud-cpp/google/cloud/$library$/quickstart
-   cmake -H. -B.build -DCMAKE_TOOLCHAIN_FILE=$$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake
+   cmake -S . -B .build -DCMAKE_TOOLCHAIN_FILE=$$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake
    cmake --build .build
    ```
 

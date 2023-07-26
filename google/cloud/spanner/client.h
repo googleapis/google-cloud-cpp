@@ -184,7 +184,7 @@ class Client {
    * @copydoc Read
    *
    * @param transaction_options Execute this read in a single-use transaction
-   * with these options.
+   *     with these options.
    */
   RowStream Read(Transaction::SingleUseOptions transaction_options,
                  std::string table, KeySet keys,
@@ -593,8 +593,8 @@ class Client {
    *
    * @param transaction The transaction to commit.
    * @param mutations The mutations to be executed when this transaction
-   *     commits. All mutations are applied atomically, in the order they appear
-   *     in this list.
+   *     commits. All mutations are applied atomically, in the order they
+   *     appear in this list.
    * @param opts (optional) The options to use for this call.
    *
    * @return A `StatusOr` containing the result of the commit or error status
@@ -602,6 +602,37 @@ class Client {
    */
   StatusOr<CommitResult> Commit(Transaction transaction, Mutations mutations,
                                 Options opts = {});
+
+  /**
+   * Commits a write transaction with at-least-once semantics.
+   *
+   * Apply the given mutations atomically, using a single RPC, and therefore
+   * without replay protection.  That is, it is possible that the mutations
+   * will be applied more than once. If the mutations are not idempotent, this
+   * may lead to a failure (for example, an insert may fail with "already
+   * exists" even though the row did not exist before the call was made).
+   * Accordingly, this call may only be appropriate for idempotent, latency-
+   * sensitive and/or high-throughput blind writing.
+   *
+   * @note Prefer the `Commit` overloads if you want exactly-once semantics
+   *     or want to reapply mutations after a `kAborted` error.
+   *
+   * @par Example
+   * @snippet samples.cc commit-at-least-once
+   *
+   * @param transaction_options Execute the commit in a temporary transaction
+   *     with these options.
+   * @param mutations The mutations to be executed when this transaction
+   *     commits. All mutations are applied atomically, in the order they
+   *     appear in this list.
+   * @param opts (optional) The options to use for this call.
+   *
+   * @return A `StatusOr` containing the result of the commit or error status
+   *     on failure.
+   */
+  StatusOr<CommitResult> CommitAtLeastOnce(
+      Transaction::ReadWriteOptions transaction_options, Mutations mutations,
+      Options opts = {});
 
   /**
    * Rolls back a read-write transaction, releasing any locks it holds.

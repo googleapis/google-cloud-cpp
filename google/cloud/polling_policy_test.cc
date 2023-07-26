@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/polling_policy.h"
+#include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/testing_util/check_predicate_becomes_false.h"
 #include <gtest/gtest.h>
 #include <chrono>
@@ -47,11 +48,11 @@ auto const kLimitedTimeTolerance = ms(20);
  * @test Verify that a polling policy configured to run for 50ms works
  * correctly.
  */
-void CheckLimitedTime(PollingPolicy& tested) {
+void CheckLimitedTime(PollingPolicy& tested, char const* where) {
   google::cloud::testing_util::CheckPredicateBecomesFalse(
       [&tested] { return tested.OnFailure(TransientError()); },
       std::chrono::system_clock::now() + kLimitedTimeTestPeriod,
-      kLimitedTimeTolerance);
+      kLimitedTimeTolerance, where);
 }
 
 /// @test A simple test for the GenericPollingPolicy.
@@ -61,7 +62,7 @@ TEST(GenericPollingPolicy, Simple) {
   GenericPollingPolicy<LimitedTimeRetryPolicyForTest,
                        internal::ExponentialBackoffPolicy>
       tested(retry, backoff);
-  CheckLimitedTime(tested);
+  CheckLimitedTime(tested, __func__);
   auto delay = tested.WaitPeriod();
   EXPECT_LE(ms(10), delay);
   EXPECT_GE(ms(20), delay);
@@ -74,7 +75,7 @@ TEST(GenericPollingPolicy, SimpleWithPointers) {
   GenericPollingPolicy<std::shared_ptr<RetryPolicyForTest>,
                        std::shared_ptr<internal::BackoffPolicy>>
       tested(retry.clone(), backoff.clone());
-  CheckLimitedTime(tested);
+  CheckLimitedTime(tested, __func__);
   auto delay = tested.WaitPeriod();
   EXPECT_LE(ms(10), delay);
   EXPECT_GE(ms(20), delay);

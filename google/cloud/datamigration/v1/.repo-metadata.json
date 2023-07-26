@@ -1,0 +1,14 @@
+{
+    "api_id": "datamigration.googleapis.com",
+    "api_shortname": "datamigration",
+    "client_documentation": "https://cloud.google.com/cpp/docs/reference/datamigration/latest",
+    "distribution_name": "google-cloud-cpp",
+    "issue_tracker": "https://issuetracker.google.com/savedsearches/6119985",
+    "language": "cpp",
+    "library_type": "GAPIC_AUTO",
+    "name_pretty": "Database Migration API",
+    "product_documentation": "https://cloud.google.com/database-migration",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-cpp",
+    "requires_billing": true
+}

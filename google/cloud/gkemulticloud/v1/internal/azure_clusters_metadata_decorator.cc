@@ -18,6 +18,7 @@
 
 #include "google/cloud/gkemulticloud/v1/internal/azure_clusters_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/gkemulticloud/v1/azure_service.grpc.pb.h>
@@ -29,8 +30,10 @@ namespace gkemulticloud_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 AzureClustersMetadata::AzureClustersMetadata(
-    std::shared_ptr<AzureClustersStub> child)
+    std::shared_ptr<AzureClustersStub> child,
+    std::multimap<std::string, std::string> fixed_metadata)
     : child_(std::move(child)),
+      fixed_metadata_(std::move(fixed_metadata)),
       api_client_header_(
           google::cloud::internal::ApiClientHeader("generator")) {}
 
@@ -39,7 +42,7 @@ AzureClustersMetadata::AsyncCreateAzureClient(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gkemulticloud::v1::CreateAzureClientRequest const& request) {
-  SetMetadata(*context, "parent=" + request.parent());
+  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
   return child_->AsyncCreateAzureClient(cq, std::move(context), request);
 }
 
@@ -47,7 +50,7 @@ StatusOr<google::cloud::gkemulticloud::v1::AzureClient>
 AzureClustersMetadata::GetAzureClient(
     grpc::ClientContext& context,
     google::cloud::gkemulticloud::v1::GetAzureClientRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetAzureClient(context, request);
 }
 
@@ -55,7 +58,7 @@ StatusOr<google::cloud::gkemulticloud::v1::ListAzureClientsResponse>
 AzureClustersMetadata::ListAzureClients(
     grpc::ClientContext& context,
     google::cloud::gkemulticloud::v1::ListAzureClientsRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListAzureClients(context, request);
 }
 
@@ -64,7 +67,7 @@ AzureClustersMetadata::AsyncDeleteAzureClient(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gkemulticloud::v1::DeleteAzureClientRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncDeleteAzureClient(cq, std::move(context), request);
 }
 
@@ -74,7 +77,7 @@ AzureClustersMetadata::AsyncCreateAzureCluster(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gkemulticloud::v1::CreateAzureClusterRequest const&
         request) {
-  SetMetadata(*context, "parent=" + request.parent());
+  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
   return child_->AsyncCreateAzureCluster(cq, std::move(context), request);
 }
 
@@ -84,7 +87,8 @@ AzureClustersMetadata::AsyncUpdateAzureCluster(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gkemulticloud::v1::UpdateAzureClusterRequest const&
         request) {
-  SetMetadata(*context, "azure_cluster.name=" + request.azure_cluster().name());
+  SetMetadata(*context, absl::StrCat("azure_cluster.name=",
+                                     request.azure_cluster().name()));
   return child_->AsyncUpdateAzureCluster(cq, std::move(context), request);
 }
 
@@ -92,7 +96,7 @@ StatusOr<google::cloud::gkemulticloud::v1::AzureCluster>
 AzureClustersMetadata::GetAzureCluster(
     grpc::ClientContext& context,
     google::cloud::gkemulticloud::v1::GetAzureClusterRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetAzureCluster(context, request);
 }
 
@@ -100,7 +104,7 @@ StatusOr<google::cloud::gkemulticloud::v1::ListAzureClustersResponse>
 AzureClustersMetadata::ListAzureClusters(
     grpc::ClientContext& context,
     google::cloud::gkemulticloud::v1::ListAzureClustersRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListAzureClusters(context, request);
 }
 
@@ -110,7 +114,7 @@ AzureClustersMetadata::AsyncDeleteAzureCluster(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gkemulticloud::v1::DeleteAzureClusterRequest const&
         request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncDeleteAzureCluster(cq, std::move(context), request);
 }
 
@@ -119,7 +123,7 @@ AzureClustersMetadata::GenerateAzureAccessToken(
     grpc::ClientContext& context,
     google::cloud::gkemulticloud::v1::GenerateAzureAccessTokenRequest const&
         request) {
-  SetMetadata(context, "azure_cluster=" + request.azure_cluster());
+  SetMetadata(context, absl::StrCat("azure_cluster=", request.azure_cluster()));
   return child_->GenerateAzureAccessToken(context, request);
 }
 
@@ -129,7 +133,7 @@ AzureClustersMetadata::AsyncCreateAzureNodePool(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gkemulticloud::v1::CreateAzureNodePoolRequest const&
         request) {
-  SetMetadata(*context, "parent=" + request.parent());
+  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
   return child_->AsyncCreateAzureNodePool(cq, std::move(context), request);
 }
 
@@ -139,8 +143,8 @@ AzureClustersMetadata::AsyncUpdateAzureNodePool(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gkemulticloud::v1::UpdateAzureNodePoolRequest const&
         request) {
-  SetMetadata(*context,
-              "azure_node_pool.name=" + request.azure_node_pool().name());
+  SetMetadata(*context, absl::StrCat("azure_node_pool.name=",
+                                     request.azure_node_pool().name()));
   return child_->AsyncUpdateAzureNodePool(cq, std::move(context), request);
 }
 
@@ -148,7 +152,7 @@ StatusOr<google::cloud::gkemulticloud::v1::AzureNodePool>
 AzureClustersMetadata::GetAzureNodePool(
     grpc::ClientContext& context,
     google::cloud::gkemulticloud::v1::GetAzureNodePoolRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetAzureNodePool(context, request);
 }
 
@@ -157,7 +161,7 @@ AzureClustersMetadata::ListAzureNodePools(
     grpc::ClientContext& context,
     google::cloud::gkemulticloud::v1::ListAzureNodePoolsRequest const&
         request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListAzureNodePools(context, request);
 }
 
@@ -167,7 +171,7 @@ AzureClustersMetadata::AsyncDeleteAzureNodePool(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gkemulticloud::v1::DeleteAzureNodePoolRequest const&
         request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncDeleteAzureNodePool(cq, std::move(context), request);
 }
 
@@ -176,7 +180,7 @@ AzureClustersMetadata::GetAzureServerConfig(
     grpc::ClientContext& context,
     google::cloud::gkemulticloud::v1::GetAzureServerConfigRequest const&
         request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetAzureServerConfig(context, request);
 }
 
@@ -204,6 +208,9 @@ void AzureClustersMetadata::SetMetadata(grpc::ClientContext& context,
 }
 
 void AzureClustersMetadata::SetMetadata(grpc::ClientContext& context) {
+  for (auto const& kv : fixed_metadata_) {
+    context.AddMetadata(kv.first, kv.second);
+  }
   context.AddMetadata("x-goog-api-client", api_client_header_);
   auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {

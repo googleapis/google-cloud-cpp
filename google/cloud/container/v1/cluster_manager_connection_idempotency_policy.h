@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTAINER_V1_CLUSTER_MANAGER_CONNECTION_IDEMPOTENCY_POLICY_H
 
 #include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
 #include "google/cloud/version.h"
 #include <google/container/v1/cluster_service.grpc.pb.h>
 #include <memory>
@@ -136,6 +135,9 @@ class ClusterManagerConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency ListUsableSubnetworks(
       google::container::v1::ListUsableSubnetworksRequest request);
+
+  virtual google::cloud::Idempotency CheckAutopilotCompatibility(
+      google::container::v1::CheckAutopilotCompatibilityRequest const& request);
 };
 
 std::unique_ptr<ClusterManagerConnectionIdempotencyPolicy>

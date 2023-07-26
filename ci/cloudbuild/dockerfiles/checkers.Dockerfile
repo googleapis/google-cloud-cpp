@@ -35,7 +35,7 @@ RUN dnf makecache && \
         python-pip \
         ShellCheck
 
-RUN cargo install typos-cli --version 1.3.9 --root /usr/local
+RUN cargo install typos-cli --version 1.16.1 --root /usr/local
 
 RUN curl -L -o /usr/bin/buildifier https://github.com/bazelbuild/buildtools/releases/download/5.0.1/buildifier-linux-${ARCH} && \
     chmod 755 /usr/bin/buildifier
@@ -50,6 +50,6 @@ RUN pip3 install mdformat-gfm==0.3.5 \
                  mdformat-frontmatter==0.4.1 \
                  mdformat-footnote==0.1.1
 
-RUN curl -o /usr/bin/bazelisk -sSL "https://github.com/bazelbuild/bazelisk/releases/download/v1.16.0/bazelisk-linux-${ARCH}" && \
+RUN curl -o /usr/bin/bazelisk -sSL "https://github.com/bazelbuild/bazelisk/releases/download/v1.17.0/bazelisk-linux-${ARCH}" && \
     chmod +x /usr/bin/bazelisk && \
     ln -s /usr/bin/bazelisk /usr/bin/bazel

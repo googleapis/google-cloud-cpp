@@ -1,0 +1,3 @@
+enabled: true
+triggerWithoutPullRequest: true
+lang: c++

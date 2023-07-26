@@ -108,6 +108,7 @@ class ProductSearchClient {
   }
   ///@}
 
+  // clang-format off
   ///
   /// Creates and returns a new ProductSet resource.
   ///
@@ -116,30 +117,38 @@ class ProductSearchClient {
   /// * Returns INVALID_ARGUMENT if display_name is missing, or is longer than
   ///   4096 characters.
   ///
-  /// @param parent  Required. The project in which the ProductSet should be
-  /// created.
+  /// @param parent  Required. The project in which the ProductSet should be created.
+  ///  @n
   ///  Format is `projects/PROJECT_ID/locations/LOC_ID`.
   /// @param product_set  Required. The ProductSet to create.
-  /// @param product_set_id  A user-supplied resource id for this ProductSet. If
-  /// set, the server will
+  /// @param product_set_id  A user-supplied resource id for this ProductSet. If set, the server will
   ///  attempt to use this value as the resource id. If it is already in use, an
-  ///  error is returned with code ALREADY_EXISTS. Must be at most 128
-  ///  characters long. It cannot contain the character `/`.
+  ///  error is returned with code ALREADY_EXISTS. Must be at most 128 characters
+  ///  long. It cannot contain the character `/`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::vision::v1::ProductSet,google/cloud/vision/v1/product_search_service.proto#L423}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.vision.v1.ProductSet])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.vision.v1.CreateProductSetRequest]:
-  /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L584}
-  /// [google.cloud.vision.v1.ProductSet]:
-  /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L423}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vision.v1.CreateProductSetRequest]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L584}
+  /// [google.cloud.vision.v1.ProductSet]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L423}
   ///
+  // clang-format on
   StatusOr<google::cloud::vision::v1::ProductSet> CreateProductSet(
       std::string const& parent,
       google::cloud::vision::v1::ProductSet const& product_set,
       std::string const& product_set_id, Options opts = {});
 
+  // clang-format off
   ///
   /// Creates and returns a new ProductSet resource.
   ///
@@ -148,22 +157,35 @@ class ProductSearchClient {
   /// * Returns INVALID_ARGUMENT if display_name is missing, or is longer than
   ///   4096 characters.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::vision::v1::CreateProductSetRequest,google/cloud/vision/v1/product_search_service.proto#L584}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.vision.v1.CreateProductSetRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::vision::v1::ProductSet,google/cloud/vision/v1/product_search_service.proto#L423}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.vision.v1.ProductSet])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.vision.v1.CreateProductSetRequest]:
-  /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L584}
-  /// [google.cloud.vision.v1.ProductSet]:
-  /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L423}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vision.v1.CreateProductSetRequest]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L584}
+  /// [google.cloud.vision.v1.ProductSet]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L423}
   ///
+  // clang-format on
   StatusOr<google::cloud::vision::v1::ProductSet> CreateProductSet(
       google::cloud::vision::v1::CreateProductSetRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists ProductSets in an unspecified order.
   ///
@@ -172,22 +194,40 @@ class ProductSearchClient {
   /// * Returns INVALID_ARGUMENT if page_size is greater than 100, or less
   ///   than 1.
   ///
-  /// @param parent  Required. The project from which ProductSets should be
-  /// listed.
+  /// @param parent  Required. The project from which ProductSets should be listed.
+  ///  @n
   ///  Format is `projects/PROJECT_ID/locations/LOC_ID`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::vision::v1::ProductSet,google/cloud/vision/v1/product_search_service.proto#L423}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.vision.v1.ProductSet], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.vision.v1.ListProductSetsRequest]:
-  /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L606}
-  /// [google.cloud.vision.v1.ProductSet]:
-  /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L423}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vision.v1.ListProductSetsRequest]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L606}
+  /// [google.cloud.vision.v1.ProductSet]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L423}
   ///
+  // clang-format on
   StreamRange<google::cloud::vision::v1::ProductSet> ListProductSets(
       std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Lists ProductSets in an unspecified order.
   ///
@@ -196,22 +236,44 @@ class ProductSearchClient {
   /// * Returns INVALID_ARGUMENT if page_size is greater than 100, or less
   ///   than 1.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::vision::v1::ListProductSetsRequest,google/cloud/vision/v1/product_search_service.proto#L606}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.vision.v1.ListProductSetsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::vision::v1::ProductSet,google/cloud/vision/v1/product_search_service.proto#L423}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.vision.v1.ProductSet], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.vision.v1.ListProductSetsRequest]:
-  /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L606}
-  /// [google.cloud.vision.v1.ProductSet]:
-  /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L423}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vision.v1.ListProductSetsRequest]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L606}
+  /// [google.cloud.vision.v1.ProductSet]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L423}
   ///
+  // clang-format on
   StreamRange<google::cloud::vision::v1::ProductSet> ListProductSets(
       google::cloud::vision::v1::ListProductSetsRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Gets information associated with a ProductSet.
   ///
@@ -220,21 +282,31 @@ class ProductSearchClient {
   /// * Returns NOT_FOUND if the ProductSet does not exist.
   ///
   /// @param name  Required. Resource name of the ProductSet to get.
+  ///  @n
   ///  Format is:
   ///  `projects/PROJECT_ID/locations/LOC_ID/productSets/PRODUCT_SET_ID`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::vision::v1::ProductSet,google/cloud/vision/v1/product_search_service.proto#L423}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.vision.v1.ProductSet])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.vision.v1.GetProductSetRequest]:
-  /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L635}
-  /// [google.cloud.vision.v1.ProductSet]:
-  /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L423}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vision.v1.GetProductSetRequest]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L635}
+  /// [google.cloud.vision.v1.ProductSet]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L423}
   ///
+  // clang-format on
   StatusOr<google::cloud::vision::v1::ProductSet> GetProductSet(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Gets information associated with a ProductSet.
   ///
@@ -242,22 +314,35 @@ class ProductSearchClient {
   ///
   /// * Returns NOT_FOUND if the ProductSet does not exist.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::vision::v1::GetProductSetRequest,google/cloud/vision/v1/product_search_service.proto#L635}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.vision.v1.GetProductSetRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::vision::v1::ProductSet,google/cloud/vision/v1/product_search_service.proto#L423}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.vision.v1.ProductSet])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.vision.v1.GetProductSetRequest]:
-  /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L635}
-  /// [google.cloud.vision.v1.ProductSet]:
-  /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L423}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vision.v1.GetProductSetRequest]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L635}
+  /// [google.cloud.vision.v1.ProductSet]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L423}
   ///
+  // clang-format on
   StatusOr<google::cloud::vision::v1::ProductSet> GetProductSet(
       google::cloud::vision::v1::GetProductSetRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Makes changes to a ProductSet resource.
   /// Only display_name can be updated currently.
@@ -268,27 +353,34 @@ class ProductSearchClient {
   /// * Returns INVALID_ARGUMENT if display_name is present in update_mask but
   ///   missing from the request or longer than 4096 characters.
   ///
-  /// @param product_set  Required. The ProductSet resource which replaces the
-  /// one on the server.
-  /// @param update_mask  The [FieldMask][google.protobuf.FieldMask] that
-  /// specifies which fields to
+  /// @param product_set  Required. The ProductSet resource which replaces the one on the server.
+  /// @param update_mask  The [FieldMask][google.protobuf.FieldMask] that specifies which fields to
   ///  update.
   ///  If update_mask isn't specified, all mutable fields are to be updated.
   ///  Valid mask path is `display_name`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::vision::v1::ProductSet,google/cloud/vision/v1/product_search_service.proto#L423}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.vision.v1.ProductSet])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.vision.v1.ProductSet]:
-  /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L423}
-  /// [google.cloud.vision.v1.UpdateProductSetRequest]:
-  /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L649}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vision.v1.ProductSet]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L423}
+  /// [google.cloud.vision.v1.UpdateProductSetRequest]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L649}
   ///
+  // clang-format on
   StatusOr<google::cloud::vision::v1::ProductSet> UpdateProductSet(
       google::cloud::vision::v1::ProductSet const& product_set,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
   ///
   /// Makes changes to a ProductSet resource.
   /// Only display_name can be updated currently.
@@ -299,22 +391,35 @@ class ProductSearchClient {
   /// * Returns INVALID_ARGUMENT if display_name is present in update_mask but
   ///   missing from the request or longer than 4096 characters.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::vision::v1::UpdateProductSetRequest,google/cloud/vision/v1/product_search_service.proto#L649}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.vision.v1.UpdateProductSetRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::vision::v1::ProductSet,google/cloud/vision/v1/product_search_service.proto#L423}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.vision.v1.ProductSet])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.vision.v1.ProductSet]:
-  /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L423}
-  /// [google.cloud.vision.v1.UpdateProductSetRequest]:
-  /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L649}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vision.v1.ProductSet]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L423}
+  /// [google.cloud.vision.v1.UpdateProductSetRequest]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L649}
   ///
+  // clang-format on
   StatusOr<google::cloud::vision::v1::ProductSet> UpdateProductSet(
       google::cloud::vision::v1::UpdateProductSetRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Permanently deletes a ProductSet. Products and ReferenceImages in the
   /// ProductSet are not deleted.
@@ -322,34 +427,59 @@ class ProductSearchClient {
   /// The actual image files are not deleted from Google Cloud Storage.
   ///
   /// @param name  Required. Resource name of the ProductSet to delete.
+  ///  @n
   ///  Format is:
   ///  `projects/PROJECT_ID/locations/LOC_ID/productSets/PRODUCT_SET_ID`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.vision.v1.DeleteProductSetRequest]:
-  /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L661}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vision.v1.DeleteProductSetRequest]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L661}
   ///
+  // clang-format on
   Status DeleteProductSet(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Permanently deletes a ProductSet. Products and ReferenceImages in the
   /// ProductSet are not deleted.
   ///
   /// The actual image files are not deleted from Google Cloud Storage.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::vision::v1::DeleteProductSetRequest,google/cloud/vision/v1/product_search_service.proto#L661}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.vision.v1.DeleteProductSetRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.vision.v1.DeleteProductSetRequest]:
-  /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L661}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vision.v1.DeleteProductSetRequest]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L661}
   ///
+  // clang-format on
   Status DeleteProductSet(
       google::cloud::vision::v1::DeleteProductSetRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates and returns a new product resource.
   ///
@@ -360,31 +490,39 @@ class ProductSearchClient {
   /// * Returns INVALID_ARGUMENT if description is longer than 4096 characters.
   /// * Returns INVALID_ARGUMENT if product_category is missing or invalid.
   ///
-  /// @param parent  Required. The project in which the Product should be
-  /// created.
+  /// @param parent  Required. The project in which the Product should be created.
+  ///  @n
   ///  Format is
   ///  `projects/PROJECT_ID/locations/LOC_ID`.
   /// @param product  Required. The product to create.
-  /// @param product_id  A user-supplied resource id for this Product. If set,
-  /// the server will
+  /// @param product_id  A user-supplied resource id for this Product. If set, the server will
   ///  attempt to use this value as the resource id. If it is already in use, an
-  ///  error is returned with code ALREADY_EXISTS. Must be at most 128
-  ///  characters long. It cannot contain the character `/`.
+  ///  error is returned with code ALREADY_EXISTS. Must be at most 128 characters
+  ///  long. It cannot contain the character `/`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::vision::v1::Product,google/cloud/vision/v1/product_search_service.proto#L365}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.vision.v1.Product])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.vision.v1.CreateProductRequest]:
-  /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L489}
-  /// [google.cloud.vision.v1.Product]:
-  /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L365}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vision.v1.CreateProductRequest]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L489}
+  /// [google.cloud.vision.v1.Product]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L365}
   ///
+  // clang-format on
   StatusOr<google::cloud::vision::v1::Product> CreateProduct(
       std::string const& parent,
       google::cloud::vision::v1::Product const& product,
       std::string const& product_id, Options opts = {});
 
+  // clang-format off
   ///
   /// Creates and returns a new product resource.
   ///
@@ -395,71 +533,122 @@ class ProductSearchClient {
   /// * Returns INVALID_ARGUMENT if description is longer than 4096 characters.
   /// * Returns INVALID_ARGUMENT if product_category is missing or invalid.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::vision::v1::CreateProductRequest,google/cloud/vision/v1/product_search_service.proto#L489}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.vision.v1.CreateProductRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::vision::v1::Product,google/cloud/vision/v1/product_search_service.proto#L365}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.vision.v1.Product])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.vision.v1.CreateProductRequest]:
-  /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L489}
-  /// [google.cloud.vision.v1.Product]:
-  /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L365}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vision.v1.CreateProductRequest]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L489}
+  /// [google.cloud.vision.v1.Product]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L365}
   ///
+  // clang-format on
   StatusOr<google::cloud::vision::v1::Product> CreateProduct(
       google::cloud::vision::v1::CreateProductRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists products in an unspecified order.
   ///
   /// Possible errors:
   ///
-  /// * Returns INVALID_ARGUMENT if page_size is greater than 100 or less
-  /// than 1.
+  /// * Returns INVALID_ARGUMENT if page_size is greater than 100 or less than 1.
   ///
-  /// @param parent  Required. The project OR ProductSet from which Products
-  /// should be listed.
+  /// @param parent  Required. The project OR ProductSet from which Products should be listed.
+  ///  @n
   ///  Format:
   ///  `projects/PROJECT_ID/locations/LOC_ID`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::vision::v1::Product,google/cloud/vision/v1/product_search_service.proto#L365}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.vision.v1.Product], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.vision.v1.ListProductsRequest]:
-  /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L512}
-  /// [google.cloud.vision.v1.Product]:
-  /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L365}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vision.v1.ListProductsRequest]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L512}
+  /// [google.cloud.vision.v1.Product]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L365}
   ///
+  // clang-format on
   StreamRange<google::cloud::vision::v1::Product> ListProducts(
       std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Lists products in an unspecified order.
   ///
   /// Possible errors:
   ///
-  /// * Returns INVALID_ARGUMENT if page_size is greater than 100 or less
-  /// than 1.
+  /// * Returns INVALID_ARGUMENT if page_size is greater than 100 or less than 1.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::vision::v1::ListProductsRequest,google/cloud/vision/v1/product_search_service.proto#L512}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.vision.v1.ListProductsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::vision::v1::Product,google/cloud/vision/v1/product_search_service.proto#L365}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.vision.v1.Product], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.vision.v1.ListProductsRequest]:
-  /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L512}
-  /// [google.cloud.vision.v1.Product]:
-  /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L365}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vision.v1.ListProductsRequest]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L512}
+  /// [google.cloud.vision.v1.Product]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L365}
   ///
+  // clang-format on
   StreamRange<google::cloud::vision::v1::Product> ListProducts(
       google::cloud::vision::v1::ListProductsRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Gets information associated with a Product.
   ///
@@ -468,21 +657,31 @@ class ProductSearchClient {
   /// * Returns NOT_FOUND if the Product does not exist.
   ///
   /// @param name  Required. Resource name of the Product to get.
+  ///  @n
   ///  Format is:
   ///  `projects/PROJECT_ID/locations/LOC_ID/products/PRODUCT_ID`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::vision::v1::Product,google/cloud/vision/v1/product_search_service.proto#L365}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.vision.v1.Product])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.vision.v1.GetProductRequest]:
-  /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L542}
-  /// [google.cloud.vision.v1.Product]:
-  /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L365}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vision.v1.GetProductRequest]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L542}
+  /// [google.cloud.vision.v1.Product]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L365}
   ///
+  // clang-format on
   StatusOr<google::cloud::vision::v1::Product> GetProduct(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Gets information associated with a Product.
   ///
@@ -490,22 +689,35 @@ class ProductSearchClient {
   ///
   /// * Returns NOT_FOUND if the Product does not exist.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::vision::v1::GetProductRequest,google/cloud/vision/v1/product_search_service.proto#L542}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.vision.v1.GetProductRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::vision::v1::Product,google/cloud/vision/v1/product_search_service.proto#L365}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.vision.v1.Product])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.vision.v1.GetProductRequest]:
-  /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L542}
-  /// [google.cloud.vision.v1.Product]:
-  /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L365}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vision.v1.GetProductRequest]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L542}
+  /// [google.cloud.vision.v1.Product]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L365}
   ///
+  // clang-format on
   StatusOr<google::cloud::vision::v1::Product> GetProduct(
       google::cloud::vision::v1::GetProductRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Makes changes to a Product resource.
   /// Only the `display_name`, `description`, and `labels` fields can be updated
@@ -517,36 +729,42 @@ class ProductSearchClient {
   /// Possible errors:
   ///
   /// * Returns NOT_FOUND if the Product does not exist.
-  /// * Returns INVALID_ARGUMENT if display_name is present in update_mask but
-  /// is
+  /// * Returns INVALID_ARGUMENT if display_name is present in update_mask but is
   ///   missing from the request or longer than 4096 characters.
   /// * Returns INVALID_ARGUMENT if description is present in update_mask but is
   ///   longer than 4096 characters.
   /// * Returns INVALID_ARGUMENT if product_category is present in update_mask.
   ///
-  /// @param product  Required. The Product resource which replaces the one on
-  /// the server.
+  /// @param product  Required. The Product resource which replaces the one on the server.
   ///  product.name is immutable.
-  /// @param update_mask  The [FieldMask][google.protobuf.FieldMask] that
-  /// specifies which fields
+  /// @param update_mask  The [FieldMask][google.protobuf.FieldMask] that specifies which fields
   ///  to update.
   ///  If update_mask isn't specified, all mutable fields are to be updated.
   ///  Valid mask paths include `product_labels`, `display_name`, and
   ///  `description`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::vision::v1::Product,google/cloud/vision/v1/product_search_service.proto#L365}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.vision.v1.Product])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.vision.v1.Product]:
-  /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L365}
-  /// [google.cloud.vision.v1.UpdateProductRequest]:
-  /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L556}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vision.v1.Product]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L365}
+  /// [google.cloud.vision.v1.UpdateProductRequest]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L556}
   ///
+  // clang-format on
   StatusOr<google::cloud::vision::v1::Product> UpdateProduct(
       google::cloud::vision::v1::Product const& product,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
   ///
   /// Makes changes to a Product resource.
   /// Only the `display_name`, `description`, and `labels` fields can be updated
@@ -558,29 +776,41 @@ class ProductSearchClient {
   /// Possible errors:
   ///
   /// * Returns NOT_FOUND if the Product does not exist.
-  /// * Returns INVALID_ARGUMENT if display_name is present in update_mask but
-  /// is
+  /// * Returns INVALID_ARGUMENT if display_name is present in update_mask but is
   ///   missing from the request or longer than 4096 characters.
   /// * Returns INVALID_ARGUMENT if description is present in update_mask but is
   ///   longer than 4096 characters.
   /// * Returns INVALID_ARGUMENT if product_category is present in update_mask.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::vision::v1::UpdateProductRequest,google/cloud/vision/v1/product_search_service.proto#L556}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.vision.v1.UpdateProductRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::vision::v1::Product,google/cloud/vision/v1/product_search_service.proto#L365}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.vision.v1.Product])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.vision.v1.Product]:
-  /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L365}
-  /// [google.cloud.vision.v1.UpdateProductRequest]:
-  /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L556}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vision.v1.Product]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L365}
+  /// [google.cloud.vision.v1.UpdateProductRequest]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L556}
   ///
+  // clang-format on
   StatusOr<google::cloud::vision::v1::Product> UpdateProduct(
       google::cloud::vision::v1::UpdateProductRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Permanently deletes a product and its reference images.
   ///
@@ -589,16 +819,27 @@ class ProductSearchClient {
   /// until all related caches are refreshed.
   ///
   /// @param name  Required. Resource name of product to delete.
+  ///  @n
   ///  Format is:
   ///  `projects/PROJECT_ID/locations/LOC_ID/products/PRODUCT_ID`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.vision.v1.DeleteProductRequest]:
-  /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L570}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vision.v1.DeleteProductRequest]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L570}
   ///
+  // clang-format on
   Status DeleteProduct(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Permanently deletes a product and its reference images.
   ///
@@ -606,29 +847,43 @@ class ProductSearchClient {
   /// search queries against ProductSets containing the product may still work
   /// until all related caches are refreshed.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::vision::v1::DeleteProductRequest,google/cloud/vision/v1/product_search_service.proto#L570}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.vision.v1.DeleteProductRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.vision.v1.DeleteProductRequest]:
-  /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L570}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vision.v1.DeleteProductRequest]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L570}
   ///
+  // clang-format on
   Status DeleteProduct(
       google::cloud::vision::v1::DeleteProductRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates and returns a new ReferenceImage resource.
   ///
-  /// The `bounding_poly` field is optional. If `bounding_poly` is not
-  /// specified, the system will try to detect regions of interest in the image
-  /// that are compatible with the product_category on the parent product. If it
-  /// is specified, detection is ALWAYS skipped. The system converts polygons
-  /// into non-rotated rectangles.
+  /// The `bounding_poly` field is optional. If `bounding_poly` is not specified,
+  /// the system will try to detect regions of interest in the image that are
+  /// compatible with the product_category on the parent product. If it is
+  /// specified, detection is ALWAYS skipped. The system converts polygons into
+  /// non-rotated rectangles.
   ///
-  /// Note that the pipeline will resize the image if the image resolution is
-  /// too large to process (above 50MP).
+  /// Note that the pipeline will resize the image if the image resolution is too
+  /// large to process (above 50MP).
   ///
   /// Possible errors:
   ///
@@ -637,46 +892,53 @@ class ProductSearchClient {
   /// * Returns INVALID_ARGUMENT if the product does not exist.
   /// * Returns INVALID_ARGUMENT if bounding_poly is not provided, and nothing
   ///   compatible with the parent product's product_category is detected.
-  /// * Returns INVALID_ARGUMENT if bounding_poly contains more than 10
-  /// polygons.
+  /// * Returns INVALID_ARGUMENT if bounding_poly contains more than 10 polygons.
   ///
-  /// @param parent  Required. Resource name of the product in which to create
-  /// the reference image.
+  /// @param parent  Required. Resource name of the product in which to create the reference image.
+  ///  @n
   ///  Format is
   ///  `projects/PROJECT_ID/locations/LOC_ID/products/PRODUCT_ID`.
   /// @param reference_image  Required. The reference image to create.
   ///  If an image ID is specified, it is ignored.
-  /// @param reference_image_id  A user-supplied resource id for the
-  /// ReferenceImage to be added. If set,
+  /// @param reference_image_id  A user-supplied resource id for the ReferenceImage to be added. If set,
   ///  the server will attempt to use this value as the resource id. If it is
   ///  already in use, an error is returned with code ALREADY_EXISTS. Must be at
   ///  most 128 characters long. It cannot contain the character `/`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::vision::v1::ReferenceImage,google/cloud/vision/v1/product_search_service.proto#L458}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.vision.v1.ReferenceImage])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.vision.v1.CreateReferenceImageRequest]:
-  /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L675}
-  /// [google.cloud.vision.v1.ReferenceImage]:
-  /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L458}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vision.v1.CreateReferenceImageRequest]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L675}
+  /// [google.cloud.vision.v1.ReferenceImage]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L458}
   ///
+  // clang-format on
   StatusOr<google::cloud::vision::v1::ReferenceImage> CreateReferenceImage(
       std::string const& parent,
       google::cloud::vision::v1::ReferenceImage const& reference_image,
       std::string const& reference_image_id, Options opts = {});
 
+  // clang-format off
   ///
   /// Creates and returns a new ReferenceImage resource.
   ///
-  /// The `bounding_poly` field is optional. If `bounding_poly` is not
-  /// specified, the system will try to detect regions of interest in the image
-  /// that are compatible with the product_category on the parent product. If it
-  /// is specified, detection is ALWAYS skipped. The system converts polygons
-  /// into non-rotated rectangles.
+  /// The `bounding_poly` field is optional. If `bounding_poly` is not specified,
+  /// the system will try to detect regions of interest in the image that are
+  /// compatible with the product_category on the parent product. If it is
+  /// specified, detection is ALWAYS skipped. The system converts polygons into
+  /// non-rotated rectangles.
   ///
-  /// Note that the pipeline will resize the image if the image resolution is
-  /// too large to process (above 50MP).
+  /// Note that the pipeline will resize the image if the image resolution is too
+  /// large to process (above 50MP).
   ///
   /// Possible errors:
   ///
@@ -685,25 +947,37 @@ class ProductSearchClient {
   /// * Returns INVALID_ARGUMENT if the product does not exist.
   /// * Returns INVALID_ARGUMENT if bounding_poly is not provided, and nothing
   ///   compatible with the parent product's product_category is detected.
-  /// * Returns INVALID_ARGUMENT if bounding_poly contains more than 10
-  /// polygons.
+  /// * Returns INVALID_ARGUMENT if bounding_poly contains more than 10 polygons.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::vision::v1::CreateReferenceImageRequest,google/cloud/vision/v1/product_search_service.proto#L675}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.vision.v1.CreateReferenceImageRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::vision::v1::ReferenceImage,google/cloud/vision/v1/product_search_service.proto#L458}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.vision.v1.ReferenceImage])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.vision.v1.CreateReferenceImageRequest]:
-  /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L675}
-  /// [google.cloud.vision.v1.ReferenceImage]:
-  /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L458}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vision.v1.CreateReferenceImageRequest]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L675}
+  /// [google.cloud.vision.v1.ReferenceImage]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L458}
   ///
+  // clang-format on
   StatusOr<google::cloud::vision::v1::ReferenceImage> CreateReferenceImage(
       google::cloud::vision::v1::CreateReferenceImageRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Permanently deletes a reference image.
   ///
@@ -714,16 +988,27 @@ class ProductSearchClient {
   /// The actual image files are not deleted from Google Cloud Storage.
   ///
   /// @param name  Required. The resource name of the reference image to delete.
+  ///  @n
   ///  Format is:
   ///  `projects/PROJECT_ID/locations/LOC_ID/products/PRODUCT_ID/referenceImages/IMAGE_ID`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.vision.v1.DeleteReferenceImageRequest]:
-  /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L748}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vision.v1.DeleteReferenceImageRequest]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L748}
   ///
+  // clang-format on
   Status DeleteReferenceImage(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Permanently deletes a reference image.
   ///
@@ -733,18 +1018,32 @@ class ProductSearchClient {
   ///
   /// The actual image files are not deleted from Google Cloud Storage.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::vision::v1::DeleteReferenceImageRequest,google/cloud/vision/v1/product_search_service.proto#L748}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.vision.v1.DeleteReferenceImageRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.vision.v1.DeleteReferenceImageRequest]:
-  /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L748}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vision.v1.DeleteReferenceImageRequest]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L748}
   ///
+  // clang-format on
   Status DeleteReferenceImage(
       google::cloud::vision::v1::DeleteReferenceImageRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists reference images.
   ///
@@ -754,23 +1053,41 @@ class ProductSearchClient {
   /// * Returns INVALID_ARGUMENT if the page_size is greater than 100, or less
   ///   than 1.
   ///
-  /// @param parent  Required. Resource name of the product containing the
-  /// reference images.
+  /// @param parent  Required. Resource name of the product containing the reference images.
+  ///  @n
   ///  Format is
   ///  `projects/PROJECT_ID/locations/LOC_ID/products/PRODUCT_ID`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::vision::v1::ReferenceImage,google/cloud/vision/v1/product_search_service.proto#L458}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.vision.v1.ReferenceImage], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.vision.v1.ListReferenceImagesRequest]:
-  /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L699}
-  /// [google.cloud.vision.v1.ReferenceImage]:
-  /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L458}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vision.v1.ListReferenceImagesRequest]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L699}
+  /// [google.cloud.vision.v1.ReferenceImage]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L458}
   ///
+  // clang-format on
   StreamRange<google::cloud::vision::v1::ReferenceImage> ListReferenceImages(
       std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Lists reference images.
   ///
@@ -780,22 +1097,44 @@ class ProductSearchClient {
   /// * Returns INVALID_ARGUMENT if the page_size is greater than 100, or less
   ///   than 1.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::vision::v1::ListReferenceImagesRequest,google/cloud/vision/v1/product_search_service.proto#L699}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.vision.v1.ListReferenceImagesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::vision::v1::ReferenceImage,google/cloud/vision/v1/product_search_service.proto#L458}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.vision.v1.ReferenceImage], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.vision.v1.ListReferenceImagesRequest]:
-  /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L699}
-  /// [google.cloud.vision.v1.ReferenceImage]:
-  /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L458}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vision.v1.ListReferenceImagesRequest]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L699}
+  /// [google.cloud.vision.v1.ReferenceImage]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L458}
   ///
+  // clang-format on
   StreamRange<google::cloud::vision::v1::ReferenceImage> ListReferenceImages(
       google::cloud::vision::v1::ListReferenceImagesRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Gets information associated with a ReferenceImage.
   ///
@@ -804,21 +1143,31 @@ class ProductSearchClient {
   /// * Returns NOT_FOUND if the specified image does not exist.
   ///
   /// @param name  Required. The resource name of the ReferenceImage to get.
+  ///  @n
   ///  Format is:
   ///  `projects/PROJECT_ID/locations/LOC_ID/products/PRODUCT_ID/referenceImages/IMAGE_ID`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::vision::v1::ReferenceImage,google/cloud/vision/v1/product_search_service.proto#L458}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.vision.v1.ReferenceImage])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.vision.v1.GetReferenceImageRequest]:
-  /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L734}
-  /// [google.cloud.vision.v1.ReferenceImage]:
-  /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L458}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vision.v1.GetReferenceImageRequest]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L734}
+  /// [google.cloud.vision.v1.ReferenceImage]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L458}
   ///
+  // clang-format on
   StatusOr<google::cloud::vision::v1::ReferenceImage> GetReferenceImage(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Gets information associated with a ReferenceImage.
   ///
@@ -826,22 +1175,35 @@ class ProductSearchClient {
   ///
   /// * Returns NOT_FOUND if the specified image does not exist.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::vision::v1::GetReferenceImageRequest,google/cloud/vision/v1/product_search_service.proto#L734}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.vision.v1.GetReferenceImageRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::vision::v1::ReferenceImage,google/cloud/vision/v1/product_search_service.proto#L458}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.vision.v1.ReferenceImage])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.vision.v1.GetReferenceImageRequest]:
-  /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L734}
-  /// [google.cloud.vision.v1.ReferenceImage]:
-  /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L458}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vision.v1.GetReferenceImageRequest]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L734}
+  /// [google.cloud.vision.v1.ReferenceImage]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L458}
   ///
+  // clang-format on
   StatusOr<google::cloud::vision::v1::ReferenceImage> GetReferenceImage(
       google::cloud::vision::v1::GetReferenceImageRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Adds a Product to the specified ProductSet. If the Product is already
   /// present, no change is made.
@@ -853,21 +1215,32 @@ class ProductSearchClient {
   /// * Returns NOT_FOUND if the Product or the ProductSet doesn't exist.
   ///
   /// @param name  Required. The resource name for the ProductSet to modify.
+  ///  @n
   ///  Format is:
   ///  `projects/PROJECT_ID/locations/LOC_ID/productSets/PRODUCT_SET_ID`
-  /// @param product  Required. The resource name for the Product to be added to
-  /// this ProductSet.
+  /// @param product  Required. The resource name for the Product to be added to this ProductSet.
+  ///  @n
   ///  Format is:
   ///  `projects/PROJECT_ID/locations/LOC_ID/products/PRODUCT_ID`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.vision.v1.AddProductToProductSetRequest]:
-  /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L762}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vision.v1.AddProductToProductSetRequest]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L762}
   ///
+  // clang-format on
   Status AddProductToProductSet(std::string const& name,
                                 std::string const& product, Options opts = {});
 
+  // clang-format off
   ///
   /// Adds a Product to the specified ProductSet. If the Product is already
   /// present, no change is made.
@@ -878,54 +1251,93 @@ class ProductSearchClient {
   ///
   /// * Returns NOT_FOUND if the Product or the ProductSet doesn't exist.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::vision::v1::AddProductToProductSetRequest,google/cloud/vision/v1/product_search_service.proto#L762}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.vision.v1.AddProductToProductSetRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.vision.v1.AddProductToProductSetRequest]:
-  /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L762}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vision.v1.AddProductToProductSetRequest]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L762}
   ///
+  // clang-format on
   Status AddProductToProductSet(
       google::cloud::vision::v1::AddProductToProductSetRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Removes a Product from the specified ProductSet.
   ///
   /// @param name  Required. The resource name for the ProductSet to modify.
+  ///  @n
   ///  Format is:
   ///  `projects/PROJECT_ID/locations/LOC_ID/productSets/PRODUCT_SET_ID`
-  /// @param product  Required. The resource name for the Product to be removed
-  /// from this ProductSet.
+  /// @param product  Required. The resource name for the Product to be removed from this ProductSet.
+  ///  @n
   ///  Format is:
   ///  `projects/PROJECT_ID/locations/LOC_ID/products/PRODUCT_ID`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.vision.v1.RemoveProductFromProductSetRequest]:
-  /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L787}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vision.v1.RemoveProductFromProductSetRequest]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L787}
   ///
+  // clang-format on
   Status RemoveProductFromProductSet(std::string const& name,
                                      std::string const& product,
                                      Options opts = {});
 
+  // clang-format off
   ///
   /// Removes a Product from the specified ProductSet.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::vision::v1::RemoveProductFromProductSetRequest,google/cloud/vision/v1/product_search_service.proto#L787}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.vision.v1.RemoveProductFromProductSetRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.vision.v1.RemoveProductFromProductSetRequest]:
-  /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L787}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vision.v1.RemoveProductFromProductSetRequest]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L787}
   ///
+  // clang-format on
   Status RemoveProductFromProductSet(
       google::cloud::vision::v1::RemoveProductFromProductSetRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists the Products in a ProductSet, in an unspecified order. If the
   /// ProductSet does not exist, the products field of the response will be
@@ -933,26 +1345,43 @@ class ProductSearchClient {
   ///
   /// Possible errors:
   ///
-  /// * Returns INVALID_ARGUMENT if page_size is greater than 100 or less
-  /// than 1.
+  /// * Returns INVALID_ARGUMENT if page_size is greater than 100 or less than 1.
   ///
-  /// @param name  Required. The ProductSet resource for which to retrieve
-  /// Products.
+  /// @param name  Required. The ProductSet resource for which to retrieve Products.
+  ///  @n
   ///  Format is:
   ///  `projects/PROJECT_ID/locations/LOC_ID/productSets/PRODUCT_SET_ID`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::vision::v1::Product,google/cloud/vision/v1/product_search_service.proto#L365}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.vision.v1.Product], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.vision.v1.ListProductsInProductSetRequest]:
-  /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L812}
-  /// [google.cloud.vision.v1.Product]:
-  /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L365}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vision.v1.ListProductsInProductSetRequest]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L812}
+  /// [google.cloud.vision.v1.Product]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L365}
   ///
+  // clang-format on
   StreamRange<google::cloud::vision::v1::Product> ListProductsInProductSet(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Lists the Products in a ProductSet, in an unspecified order. If the
   /// ProductSet does not exist, the products field of the response will be
@@ -960,31 +1389,52 @@ class ProductSearchClient {
   ///
   /// Possible errors:
   ///
-  /// * Returns INVALID_ARGUMENT if page_size is greater than 100 or less
-  /// than 1.
+  /// * Returns INVALID_ARGUMENT if page_size is greater than 100 or less than 1.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::vision::v1::ListProductsInProductSetRequest,google/cloud/vision/v1/product_search_service.proto#L812}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.vision.v1.ListProductsInProductSetRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::vision::v1::Product,google/cloud/vision/v1/product_search_service.proto#L365}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.vision.v1.Product], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.vision.v1.ListProductsInProductSetRequest]:
-  /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L812}
-  /// [google.cloud.vision.v1.Product]:
-  /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L365}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vision.v1.ListProductsInProductSetRequest]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L812}
+  /// [google.cloud.vision.v1.Product]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L365}
   ///
+  // clang-format on
   StreamRange<google::cloud::vision::v1::Product> ListProductsInProductSet(
       google::cloud::vision::v1::ListProductsInProductSetRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Asynchronous API that imports a list of reference images to specified
   /// product sets based on a list of image information.
   ///
-  /// The [google.longrunning.Operation][google.longrunning.Operation] API can
-  /// be used to keep track of the progress and results of the request.
+  /// The [google.longrunning.Operation][google.longrunning.Operation] API can be used to keep track of the
+  /// progress and results of the request.
   /// `Operation.metadata` contains `BatchOperationMetadata`. (progress)
   /// `Operation.response` contains `ImportProductSetsResponse`. (results)
   ///
@@ -992,24 +1442,36 @@ class ProductSearchClient {
   /// For the format of the csv file please see
   /// [ImportProductSetsGcsSource.csv_file_uri][google.cloud.vision.v1.ImportProductSetsGcsSource.csv_file_uri].
   ///
-  /// @param parent  Required. The project in which the ProductSets should be
-  /// imported.
+  /// @param parent  Required. The project in which the ProductSets should be imported.
+  ///  @n
   ///  Format is `projects/PROJECT_ID/locations/LOC_ID`.
   /// @param input_config  Required. The input content for the list of requests.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::vision::v1::ImportProductSetsResponse,google/cloud/vision/v1/product_search_service.proto#L939}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.vision.v1.ImportProductSetsResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.vision.v1.ImportProductSetsGcsSource.csv_file_uri]:
-  /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L905}
-  /// [google.cloud.vision.v1.ImportProductSetsRequest]:
-  /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L919}
-  /// [google.cloud.vision.v1.ImportProductSetsResponse]:
-  /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L939}
-  /// [google.longrunning.Operation]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vision.v1.ImportProductSetsGcsSource.csv_file_uri]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L905}
+  /// [google.cloud.vision.v1.ImportProductSetsRequest]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L919}
+  /// [google.cloud.vision.v1.ImportProductSetsResponse]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L939}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::vision::v1::ImportProductSetsResponse>>
   ImportProductSets(
       std::string const& parent,
@@ -1017,12 +1479,13 @@ class ProductSearchClient {
           input_config,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Asynchronous API that imports a list of reference images to specified
   /// product sets based on a list of image information.
   ///
-  /// The [google.longrunning.Operation][google.longrunning.Operation] API can
-  /// be used to keep track of the progress and results of the request.
+  /// The [google.longrunning.Operation][google.longrunning.Operation] API can be used to keep track of the
+  /// progress and results of the request.
   /// `Operation.metadata` contains `BatchOperationMetadata`. (progress)
   /// `Operation.response` contains `ImportProductSetsResponse`. (results)
   ///
@@ -1030,27 +1493,44 @@ class ProductSearchClient {
   /// For the format of the csv file please see
   /// [ImportProductSetsGcsSource.csv_file_uri][google.cloud.vision.v1.ImportProductSetsGcsSource.csv_file_uri].
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::vision::v1::ImportProductSetsRequest,google/cloud/vision/v1/product_search_service.proto#L919}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.vision.v1.ImportProductSetsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::vision::v1::ImportProductSetsResponse,google/cloud/vision/v1/product_search_service.proto#L939}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.vision.v1.ImportProductSetsResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.vision.v1.ImportProductSetsGcsSource.csv_file_uri]:
-  /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L905}
-  /// [google.cloud.vision.v1.ImportProductSetsRequest]:
-  /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L919}
-  /// [google.cloud.vision.v1.ImportProductSetsResponse]:
-  /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L939}
-  /// [google.longrunning.Operation]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vision.v1.ImportProductSetsGcsSource.csv_file_uri]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L905}
+  /// [google.cloud.vision.v1.ImportProductSetsRequest]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L919}
+  /// [google.cloud.vision.v1.ImportProductSetsResponse]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L939}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::vision::v1::ImportProductSetsResponse>>
   ImportProductSets(
       google::cloud::vision::v1::ImportProductSetsRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Asynchronous API to delete all Products in a ProductSet or all Products
   /// that are in no ProductSet.
@@ -1065,36 +1545,50 @@ class ProductSearchClient {
   ///
   /// It's not possible to undo the PurgeProducts operation. Therefore, it is
   /// recommended to keep the csv files used in ImportProductSets (if that was
-  /// how you originally built the Product Set) before starting PurgeProducts,
-  /// in case you need to re-import the data after deletion.
+  /// how you originally built the Product Set) before starting PurgeProducts, in
+  /// case you need to re-import the data after deletion.
   ///
   /// If the plan is to purge all of the Products from a ProductSet and then
   /// re-use the empty ProductSet to re-import new Products into the empty
   /// ProductSet, you must wait until the PurgeProducts operation has finished
   /// for that ProductSet.
   ///
-  /// The [google.longrunning.Operation][google.longrunning.Operation] API can
-  /// be used to keep track of the progress and results of the request.
+  /// The [google.longrunning.Operation][google.longrunning.Operation] API can be used to keep track of the
+  /// progress and results of the request.
   /// `Operation.metadata` contains `BatchOperationMetadata`. (progress)
   ///
-  /// @param parent  Required. The project and location in which the Products
-  /// should be deleted.
+  /// @param parent  Required. The project and location in which the Products should be deleted.
+  ///  @n
   ///  Format is `projects/PROJECT_ID/locations/LOC_ID`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::vision::v1::BatchOperationMetadata,google/cloud/vision/v1/product_search_service.proto#L956}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.vision.v1.BatchOperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.vision.v1.BatchOperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L956}
-  /// [google.cloud.vision.v1.PurgeProductsRequest]:
-  /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L998}
-  /// [google.longrunning.Operation]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vision.v1.BatchOperationMetadata]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L956}
+  /// [google.cloud.vision.v1.PurgeProductsRequest]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L998}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::vision::v1::BatchOperationMetadata>>
   PurgeProducts(std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Asynchronous API to delete all Products in a ProductSet or all Products
   /// that are in no ProductSet.
@@ -1109,32 +1603,49 @@ class ProductSearchClient {
   ///
   /// It's not possible to undo the PurgeProducts operation. Therefore, it is
   /// recommended to keep the csv files used in ImportProductSets (if that was
-  /// how you originally built the Product Set) before starting PurgeProducts,
-  /// in case you need to re-import the data after deletion.
+  /// how you originally built the Product Set) before starting PurgeProducts, in
+  /// case you need to re-import the data after deletion.
   ///
   /// If the plan is to purge all of the Products from a ProductSet and then
   /// re-use the empty ProductSet to re-import new Products into the empty
   /// ProductSet, you must wait until the PurgeProducts operation has finished
   /// for that ProductSet.
   ///
-  /// The [google.longrunning.Operation][google.longrunning.Operation] API can
-  /// be used to keep track of the progress and results of the request.
+  /// The [google.longrunning.Operation][google.longrunning.Operation] API can be used to keep track of the
+  /// progress and results of the request.
   /// `Operation.metadata` contains `BatchOperationMetadata`. (progress)
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::vision::v1::PurgeProductsRequest,google/cloud/vision/v1/product_search_service.proto#L998}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.vision.v1.PurgeProductsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::vision::v1::BatchOperationMetadata,google/cloud/vision/v1/product_search_service.proto#L956}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.vision.v1.BatchOperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.vision.v1.BatchOperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L956}
-  /// [google.cloud.vision.v1.PurgeProductsRequest]:
-  /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L998}
-  /// [google.longrunning.Operation]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vision.v1.BatchOperationMetadata]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L956}
+  /// [google.cloud.vision.v1.PurgeProductsRequest]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L998}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::vision::v1::BatchOperationMetadata>>
   PurgeProducts(google::cloud::vision::v1::PurgeProductsRequest const& request,
                 Options opts = {});

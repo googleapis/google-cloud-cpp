@@ -1,0 +1,14 @@
+{
+    "api_id": "cloudscheduler.googleapis.com",
+    "api_shortname": "cloudscheduler",
+    "client_documentation": "https://cloud.google.com/cpp/docs/reference/scheduler/latest",
+    "distribution_name": "google-cloud-cpp",
+    "issue_tracker": "https://issuetracker.google.com/savedsearches/5411429",
+    "language": "cpp",
+    "library_type": "GAPIC_AUTO",
+    "name_pretty": "Cloud Scheduler API",
+    "product_documentation": "https://cloud.google.com/scheduler",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-cpp",
+    "requires_billing": true
+}

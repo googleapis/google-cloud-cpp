@@ -36,7 +36,7 @@ class GrafeasLogging : public GrafeasStub {
   ~GrafeasLogging() override = default;
   GrafeasLogging(std::shared_ptr<GrafeasStub> child,
                  TracingOptions tracing_options,
-                 std::set<std::string> components);
+                 std::set<std::string> const& components);
 
   StatusOr<grafeas::v1::Occurrence> GetOccurrence(
       grpc::ClientContext& context,
@@ -96,7 +96,7 @@ class GrafeasLogging : public GrafeasStub {
  private:
   std::shared_ptr<GrafeasStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // GrafeasLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -23,6 +23,7 @@
 #include "google/cloud/internal/curl_options.h"
 #include "google/cloud/internal/curl_rest_response.h"
 #include "google/cloud/internal/oauth2_google_credentials.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/internal/tracing_rest_client.h"
 #include "google/cloud/internal/unified_rest_credentials.h"
 #include "absl/strings/match.h"
@@ -74,6 +75,16 @@ std::string FormatHostHeaderValue(absl::string_view hostname) {
   return std::string(hostname.substr(0, hostname.find('/')));
 }
 
+std::unique_ptr<RestClient> MakeRestClient(
+    std::string endpoint_address, std::shared_ptr<CurlHandleFactory> factory,
+    Options options) {
+  bool tracing_enabled = internal::TracingEnabled(options);
+  std::unique_ptr<RestClient> client = std::make_unique<CurlRestClient>(
+      std::move(endpoint_address), std::move(factory), std::move(options));
+  if (tracing_enabled) client = MakeTracingRestClient(std::move(client));
+  return client;
+}
+
 }  // namespace
 
 std::string CurlRestClient::HostHeader(Options const& options,
@@ -103,7 +114,7 @@ CurlRestClient::CurlRestClient(std::string endpoint_address,
                                 google::cloud::internal::ApiClientHeader()),
       options_(std::move(options)) {
   if (options_.has<UnifiedCredentialsOption>()) {
-    credentials_ = MapCredentials(options_.get<UnifiedCredentialsOption>());
+    credentials_ = MapCredentials(*options_.get<UnifiedCredentialsOption>());
   }
 }
 
@@ -223,8 +234,8 @@ StatusOr<std::unique_ptr<RestResponse>> CurlRestClient::Put(
 std::unique_ptr<RestClient> MakeDefaultRestClient(std::string endpoint_address,
                                                   Options options) {
   auto factory = GetDefaultCurlHandleFactory(options);
-  return MakeTracingRestClient(std::make_unique<CurlRestClient>(
-      std::move(endpoint_address), std::move(factory), std::move(options)));
+  return MakeRestClient(std::move(endpoint_address), std::move(factory),
+                        std::move(options));
 }
 
 std::unique_ptr<RestClient> MakePooledRestClient(std::string endpoint_address,
@@ -233,15 +244,11 @@ std::unique_ptr<RestClient> MakePooledRestClient(std::string endpoint_address,
   if (options.has<ConnectionPoolSizeOption>()) {
     pool_size = options.get<ConnectionPoolSizeOption>();
   }
-  if (pool_size > 0) {
-    auto pool = std::make_shared<PooledCurlHandleFactory>(pool_size, options);
-    return MakeTracingRestClient(std::make_unique<CurlRestClient>(
-        std::move(endpoint_address), std::move(pool), std::move(options)));
-  }
-
-  auto pool = std::make_shared<DefaultCurlHandleFactory>(options);
-  return MakeTracingRestClient(std::make_unique<CurlRestClient>(
-      std::move(endpoint_address), std::move(pool), std::move(options)));
+  auto pool = pool_size > 0 ? std::make_shared<PooledCurlHandleFactory>(
+                                  pool_size, options)
+                            : GetDefaultCurlHandleFactory(options);
+  return MakeRestClient(std::move(endpoint_address), std::move(pool),
+                        std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

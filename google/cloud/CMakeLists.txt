@@ -14,6 +14,10 @@
 # limitations under the License.
 # ~~~
 
+if (GOOGLE_CLOUD_CPP_USE_INSTALLED_COMMON)
+    return()
+endif ()
+
 set(DOXYGEN_PROJECT_NAME "Google Cloud C++ Client")
 set(DOXYGEN_PROJECT_BRIEF "C++ Client Library for Google Cloud Platform")
 set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION}")
@@ -57,6 +61,7 @@ endif ()
 
 if (GOOGLE_CLOUD_CPP_ENABLE_REST)
     include("${CMAKE_CURRENT_SOURCE_DIR}/google_cloud_cpp_rest_internal.cmake")
+    add_subdirectory(oauth2)
 endif ()
 
 if (GOOGLE_CLOUD_CPP_ENABLE_REST AND GOOGLE_CLOUD_CPP_ENABLE_GRPC)

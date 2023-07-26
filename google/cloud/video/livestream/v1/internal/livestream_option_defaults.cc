@@ -48,8 +48,9 @@ Options LivestreamServiceDefaultOptions(Options options) {
   if (!options
            .has<video_livestream_v1::LivestreamServiceBackoffPolicyOption>()) {
     options.set<video_livestream_v1::LivestreamServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options
@@ -61,10 +62,9 @@ Options LivestreamServiceDefaultOptions(Options options) {
             options
                 .get<video_livestream_v1::LivestreamServiceRetryPolicyOption>()
                 ->clone(),
-            options
-                .get<
-                    video_livestream_v1::LivestreamServiceBackoffPolicyOption>()
-                ->clone())
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
             .clone());
   }
   if (!options.has<video_livestream_v1::

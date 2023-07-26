@@ -71,30 +71,39 @@ if [ -z "${GENERATE_GOLDEN_ONLY}" ]; then
   io::log_h2 "Formatting generated code"
   git ls-files -z -- '*.h' '*.cc' '*.proto' |
     xargs -P "$(nproc)" -n 1 -0 clang-format -i
+  git ls-files -z -- '*.h' '*.cc' '*.proto' |
+    xargs -r -P "$(nproc)" -n 50 -0 sed -i 's/[[:blank:]]\+$//'
 else
   io::log_red "Only formatting generated golden code."
-  git ls-files -z -- 'generator/integration_tests/golden/internal/*.h' \
-    'generator/integration_tests/golden/v1/*.h' \
-    'generator/integration_tests/golden/v1/internal/*.cc' \
-    'generator/integration_tests/golden/v1/*.cc' \
+  git ls-files -z -- 'generator/integration_tests/golden/**/*.h' \
+    'generator/integration_tests/golden/v1/**/*.cc' \
     'generator/integration_tests/*.proto' |
     xargs -P "$(nproc)" -n 1 -0 clang-format -i
+  git ls-files -z -- 'generator/integration_tests/golden/**/*.h' \
+    'generator/integration_tests/golden/v1/**/*.cc' \
+    'generator/integration_tests/*.proto' |
+    xargs -r -P "$(nproc)" -n 50 -0 sed -i 's/[[:blank:]]\+$//'
 fi
 
-if [ -z "${GENERATE_GOLDEN_ONLY}" ]; then
+if [[ "${TRIGGER_TYPE:-}" != "manual" ]]; then
   io::log_h2 "Updating protobuf lists/deps"
   external/googleapis/update_libraries.sh
 else
-  io::log_red "Skipping update of protobuf lists/deps."
+  io::log_yellow "Skipping update of protobuf lists/deps."
 fi
 
-# This build should fail if any generated files differ from what was checked
-# in. We only look in the google/ directory so that the build doesn't fail if
-# it's run while editing files in generator/...
+# This build should fail if any generated files differ from what was checked in.
 io::log_h2 "Highlight generated code differences"
-git diff --exit-code generator/integration_tests/golden/ google/ ci/
+# We use `--compact-summary` because in almost all cases the delta is at
+# least hundreds of lines long, and often it is thousands of lines long. The
+# summary is all we need in the script.  The developer can do specific diffs
+# if needed.
+#
+# We only compare a subset of the directories because we expect changes in
+# generator/... (but not in generator/integration_tests/golden) while making
+# generator changes.
+git diff --exit-code --compact-summary generator/integration_tests/golden/ google/ ci/
 
-io::log_h2 "Highlight new files"
 if [[ -n "$(git status --porcelain)" ]]; then
   io::log_red "New unmanaged files created by generator"
   git status

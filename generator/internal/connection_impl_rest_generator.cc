@@ -15,6 +15,7 @@
 #include "generator/internal/connection_impl_rest_generator.h"
 #include "generator/internal/codegen_utils.h"
 #include "generator/internal/http_option_utils.h"
+#include "generator/internal/longrunning.h"
 #include "generator/internal/pagination.h"
 #include "generator/internal/predicate_utils.h"
 #include "generator/internal/printer.h"
@@ -282,6 +283,62 @@ $connection_impl_rest_class_name$::$method_name$($request_type$ request) {
 )""";
   }
 
+  auto lro_template_types = [&] {
+    if (IsGRPCLongrunningOperation(method)) {
+      return R"""($longrunning_deduced_response_type$)""";
+    }
+    return R"""(
+    $longrunning_deduced_response_type$,
+    $longrunning_response_type$,
+    $longrunning_get_operation_request_type$,
+    $longrunning_cancel_operation_request_type$)""";
+  };
+
+  auto extractor = [&] {
+    if (IsGRPCLongrunningOperation(method)) {
+      // One of the variations is how to extract the value from the operation
+      // result. Some operations use the metadata, some the data. We need to
+      // provide the right function to
+      // internal::AsyncRestLongRunningOperation.
+      if (IsLongrunningMetadataTypeUsedAsResponse(method)) {
+        return R"""(
+    &google::cloud::internal::ExtractLongRunningResultMetadata<$longrunning_deduced_response_type$>,)""";
+      }
+      return R"""(
+    &google::cloud::internal::ExtractLongRunningResultResponse<$longrunning_deduced_response_type$>,)""";
+    }
+    // TODO(#11639): improve error handling by interrogating error details in
+    // the Operation type (if available).
+    return R"""(
+    [](StatusOr<$longrunning_deduced_response_type$> op, std::string const&) {
+        return op;
+    },)""";
+  };
+
+  auto is_operation_done = [&] {
+    if (IsGRPCLongrunningOperation(method)) return "";
+    return R"""(,
+    []($longrunning_deduced_response_type$ const& op) {
+        return op.status() == "DONE";
+    },)""";
+  };
+
+  auto get_request_set_operation = [&] {
+    if (IsGRPCLongrunningOperation(method)) return "";
+    return R"""(
+    [request](std::string const& op, $longrunning_get_operation_request_type$& r) {
+        $longrunning_set_operation_fields$
+    },)""";
+  };
+
+  auto cancel_request_set_operation = [&] {
+    if (IsGRPCLongrunningOperation(method)) return "";
+    return R"""(
+    [request](std::string const& op, $longrunning_cancel_operation_request_type$& r) {
+        $longrunning_set_operation_fields$
+    })""";
+  };
+
   if (IsLongrunningOperation(method)) {
     return absl::StrCat(
         // The return type may be a simple `Status` or the
@@ -298,7 +355,8 @@ future<StatusOr<$longrunning_deduced_response_type$>>)""",
         R"""(
 $connection_impl_rest_class_name$::$method_name$($request_type$ const& request) {
   auto& stub = stub_;
-  return rest_internal::AsyncRestLongRunningOperation<$longrunning_deduced_response_type$>(
+  return rest_internal::AsyncRestLongRunningOperation<)""",
+        lro_template_types(), R"""(>(
     background_->cq(), request,
     [stub](CompletionQueue& cq,
           std::unique_ptr<rest_internal::RestContext> context,
@@ -307,28 +365,21 @@ $connection_impl_rest_class_name$::$method_name$($request_type$ const& request) 
     },
     [stub](CompletionQueue& cq,
           std::unique_ptr<rest_internal::RestContext> context,
-          google::longrunning::GetOperationRequest const& request) {
+          $longrunning_get_operation_request_type$ const& request) {
      return stub->AsyncGetOperation(cq, std::move(context), request);
     },
     [stub](CompletionQueue& cq,
           std::unique_ptr<rest_internal::RestContext> context,
-          google::longrunning::CancelOperationRequest const& request) {
+          $longrunning_cancel_operation_request_type$ const& request) {
      return stub->AsyncCancelOperation(cq, std::move(context), request);
     },)""",
-        // One of the variations is how to extract the value from the operation
-        // result, some operations use the metadata, some the data. We need to
-        // provide the right function to
-        // internal::AsyncRestLongRunningOperation.
-        IsLongrunningMetadataTypeUsedAsResponse(method) ?
-                                                        R"""(
-    &google::cloud::internal::ExtractLongRunningResultMetadata<$longrunning_deduced_response_type$>,)"""
-                                                        :
-                                                        R"""(
-    &google::cloud::internal::ExtractLongRunningResultResponse<$longrunning_deduced_response_type$>,)""",
+        extractor(),
         R"""(
     retry_policy(), backoff_policy(),
     idempotency_policy()->$method_name$(request),
-    polling_policy(), __func__))""",
+    polling_policy(), __func__)""",
+        is_operation_done(), get_request_set_operation(),
+        cancel_request_set_operation(), R"""())""",
         // Finally, the internal::AsyncRestLongRunningOperation helper may
         // return `future<StatusOr<google::protobuf::Empty>>`, in this case we
         // add a bit of code to drop the `protobuf::Empty`:

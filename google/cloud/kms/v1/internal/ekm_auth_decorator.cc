@@ -82,6 +82,15 @@ StatusOr<google::cloud::kms::v1::EkmConfig> EkmServiceAuth::UpdateEkmConfig(
   return child_->UpdateEkmConfig(context, request);
 }
 
+StatusOr<google::cloud::kms::v1::VerifyConnectivityResponse>
+EkmServiceAuth::VerifyConnectivity(
+    grpc::ClientContext& context,
+    google::cloud::kms::v1::VerifyConnectivityRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->VerifyConnectivity(context, request);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace kms_v1_internal
 }  // namespace cloud

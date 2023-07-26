@@ -19,7 +19,6 @@
 
 #include "google/cloud/bigquery/v2/minimal/internal/job_request.h"
 #include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -37,6 +36,12 @@ class BigQueryJobIdempotencyPolicy {
   virtual google::cloud::Idempotency GetJob(GetJobRequest const& request);
 
   virtual google::cloud::Idempotency ListJobs(ListJobsRequest const& request);
+
+  virtual google::cloud::Idempotency InsertJob(InsertJobRequest const& request);
+
+  virtual google::cloud::Idempotency CancelJob(CancelJobRequest const& request);
+
+  virtual google::cloud::Idempotency Query(PostQueryRequest const& request);
 };
 
 std::unique_ptr<BigQueryJobIdempotencyPolicy>

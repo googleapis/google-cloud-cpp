@@ -21,6 +21,7 @@
 
 #include "google/cloud/dialogflow_es/internal/environments_stub.h"
 #include "google/cloud/version.h"
+#include <map>
 #include <memory>
 #include <string>
 
@@ -32,7 +33,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class EnvironmentsMetadata : public EnvironmentsStub {
  public:
   ~EnvironmentsMetadata() override = default;
-  explicit EnvironmentsMetadata(std::shared_ptr<EnvironmentsStub> child);
+  EnvironmentsMetadata(std::shared_ptr<EnvironmentsStub> child,
+                       std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::dialogflow::v2::ListEnvironmentsResponse>
   ListEnvironments(grpc::ClientContext& context,
@@ -71,6 +73,7 @@ class EnvironmentsMetadata : public EnvironmentsStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<EnvironmentsStub> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

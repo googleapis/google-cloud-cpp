@@ -54,6 +54,15 @@ mapfile -t actual_dirs < <(env -C "${INSTALL_PREFIX}" find -type d)
 # We maintain those here as a hard-coded list.
 mapfile -t expected_dirs < <(cat ci/etc/expected_install_directories)
 expected_dirs+=(
+  # no RPC services in several subdirectories of google/cloud/aiplatform
+  ./include/google/cloud/aiplatform/logging
+  ./include/google/cloud/aiplatform/v1/schema
+  ./include/google/cloud/aiplatform/v1/schema/predict
+  ./include/google/cloud/aiplatform/v1/schema/predict/instance
+  ./include/google/cloud/aiplatform/v1/schema/predict/params
+  ./include/google/cloud/aiplatform/v1/schema/predict/prediction
+  ./include/google/cloud/aiplatform/v1/schema/trainingjob
+  ./include/google/cloud/aiplatform/v1/schema/trainingjob/definition
   # no RPC services in google/cloud/appengine/legacy
   ./include/google/appengine/legacy
   # no RPC services in google/cloud/appengine/logging
@@ -75,10 +84,19 @@ expected_dirs+=(
   ./include/google/cloud/clouddms/logging/v1
   # no RPC services in google/cloud/common
   ./include/google/cloud/common
+  # no RPC services in google/cloud/compute common proto dirs
+  ./include/google/cloud/compute/v1
+  ./include/google/cloud/compute/v1/internal
+  ./include/google/cloud/gkebackup/logging
+  ./include/google/cloud/gkebackup/logging/v1
   ./include/google/cloud/gkehub/v1/configmanagement
   ./include/google/cloud/gkehub/v1/multiclusteringress
   ./include/google/cloud/grpc_utils
   ./include/google/cloud/internal
+  # no RPC services in google/cloud/metastore/logging
+  ./include/google/cloud/metastore/logging
+  ./include/google/cloud/metastore/logging/v1
+  # mocks and opentelemetry/* are hand-crafted directories
   ./include/google/cloud/mocks
   ./include/google/cloud/opentelemetry
   ./include/google/cloud/opentelemetry/internal
@@ -94,7 +112,6 @@ expected_dirs+=(
   # no gRPC services in google/cloud/secretmanager/logging
   ./include/google/cloud/secretmanager/logging
   ./include/google/cloud/secretmanager/logging/v1
-  ./include/google/cloud/spanner/internal
   ./include/google/cloud/spanner/mocks
   ./include/google/cloud/storage/oauth2
   ./include/google/cloud/storage/testing
@@ -111,7 +128,6 @@ expected_dirs+=(
   ./include/google/longrunning
   ./include/google/rpc
   ./include/google/rpc/context
-  ./include/google/spanner/v1
   ./include/google/type
   ./include/grafeas
   ./include/grafeas/v1
@@ -121,6 +137,7 @@ expected_dirs+=(
   ./lib64/cmake/google_cloud_cpp_grafeas
   ./lib64/cmake/google_cloud_cpp_grpc_utils
   ./lib64/cmake/google_cloud_cpp_mocks
+  ./lib64/cmake/google_cloud_cpp_oauth2
   ./lib64/cmake/google_cloud_cpp_opentelemetry
   ./lib64/cmake/google_cloud_cpp_pubsub_mocks
   ./lib64/cmake/google_cloud_cpp_rest_internal

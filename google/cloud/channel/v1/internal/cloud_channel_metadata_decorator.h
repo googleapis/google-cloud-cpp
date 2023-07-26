@@ -22,6 +22,7 @@
 #include "google/cloud/channel/v1/internal/cloud_channel_stub.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
+#include <map>
 #include <memory>
 #include <string>
 
@@ -33,8 +34,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class CloudChannelServiceMetadata : public CloudChannelServiceStub {
  public:
   ~CloudChannelServiceMetadata() override = default;
-  explicit CloudChannelServiceMetadata(
-      std::shared_ptr<CloudChannelServiceStub> child);
+  CloudChannelServiceMetadata(
+      std::shared_ptr<CloudChannelServiceStub> child,
+      std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::channel::v1::ListCustomersResponse> ListCustomers(
       grpc::ClientContext& context,
@@ -240,6 +242,16 @@ class CloudChannelServiceMetadata : public CloudChannelServiceStub {
       google::cloud::channel::v1::
           DeleteChannelPartnerRepricingConfigRequest const& request) override;
 
+  StatusOr<google::cloud::channel::v1::ListSkuGroupsResponse> ListSkuGroups(
+      grpc::ClientContext& context,
+      google::cloud::channel::v1::ListSkuGroupsRequest const& request) override;
+
+  StatusOr<google::cloud::channel::v1::ListSkuGroupBillableSkusResponse>
+  ListSkuGroupBillableSkus(
+      grpc::ClientContext& context,
+      google::cloud::channel::v1::ListSkuGroupBillableSkusRequest const&
+          request) override;
+
   StatusOr<google::cloud::channel::v1::Offer> LookupOffer(
       grpc::ClientContext& context,
       google::cloud::channel::v1::LookupOfferRequest const& request) override;
@@ -307,6 +319,7 @@ class CloudChannelServiceMetadata : public CloudChannelServiceStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<CloudChannelServiceStub> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

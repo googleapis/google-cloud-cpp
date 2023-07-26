@@ -55,8 +55,16 @@ class AlloyDBAdminTracingConnection
   future<StatusOr<google::cloud::alloydb::v1::OperationMetadata>> DeleteCluster(
       google::cloud::alloydb::v1::DeleteClusterRequest const& request) override;
 
+  future<StatusOr<google::cloud::alloydb::v1::Cluster>> PromoteCluster(
+      google::cloud::alloydb::v1::PromoteClusterRequest const& request)
+      override;
+
   future<StatusOr<google::cloud::alloydb::v1::Cluster>> RestoreCluster(
       google::cloud::alloydb::v1::RestoreClusterRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::alloydb::v1::Cluster>> CreateSecondaryCluster(
+      google::cloud::alloydb::v1::CreateSecondaryClusterRequest const& request)
       override;
 
   StreamRange<google::cloud::alloydb::v1::Instance> ListInstances(
@@ -67,6 +75,11 @@ class AlloyDBAdminTracingConnection
 
   future<StatusOr<google::cloud::alloydb::v1::Instance>> CreateInstance(
       google::cloud::alloydb::v1::CreateInstanceRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::alloydb::v1::Instance>>
+  CreateSecondaryInstance(
+      google::cloud::alloydb::v1::CreateSecondaryInstanceRequest const& request)
       override;
 
   future<StatusOr<google::cloud::alloydb::v1::BatchCreateInstancesResponse>>
@@ -85,6 +98,9 @@ class AlloyDBAdminTracingConnection
   future<StatusOr<google::cloud::alloydb::v1::Instance>> FailoverInstance(
       google::cloud::alloydb::v1::FailoverInstanceRequest const& request)
       override;
+
+  future<StatusOr<google::cloud::alloydb::v1::Instance>> InjectFault(
+      google::cloud::alloydb::v1::InjectFaultRequest const& request) override;
 
   future<StatusOr<google::cloud::alloydb::v1::Instance>> RestartInstance(
       google::cloud::alloydb::v1::RestartInstanceRequest const& request)
@@ -109,6 +125,21 @@ class AlloyDBAdminTracingConnection
   ListSupportedDatabaseFlags(
       google::cloud::alloydb::v1::ListSupportedDatabaseFlagsRequest request)
       override;
+
+  StreamRange<google::cloud::alloydb::v1::User> ListUsers(
+      google::cloud::alloydb::v1::ListUsersRequest request) override;
+
+  StatusOr<google::cloud::alloydb::v1::User> GetUser(
+      google::cloud::alloydb::v1::GetUserRequest const& request) override;
+
+  StatusOr<google::cloud::alloydb::v1::User> CreateUser(
+      google::cloud::alloydb::v1::CreateUserRequest const& request) override;
+
+  StatusOr<google::cloud::alloydb::v1::User> UpdateUser(
+      google::cloud::alloydb::v1::UpdateUserRequest const& request) override;
+
+  Status DeleteUser(
+      google::cloud::alloydb::v1::DeleteUserRequest const& request) override;
 
  private:
   std::shared_ptr<alloydb_v1::AlloyDBAdminConnection> child_;

@@ -1,0 +1,13 @@
+@com_google_googleapis//google/cloud/gkebackup/logging/v1:logged_backup.proto
+@com_google_googleapis//google/cloud/gkebackup/logging/v1:logged_backup_plan.proto
+@com_google_googleapis//google/cloud/gkebackup/logging/v1:logged_common.proto
+@com_google_googleapis//google/cloud/gkebackup/logging/v1:logged_restore.proto
+@com_google_googleapis//google/cloud/gkebackup/logging/v1:logged_restore_plan.proto
+@com_google_googleapis//google/cloud/gkebackup/logging/v1:logging.proto
+@com_google_googleapis//google/cloud/gkebackup/v1:backup.proto
+@com_google_googleapis//google/cloud/gkebackup/v1:backup_plan.proto
+@com_google_googleapis//google/cloud/gkebackup/v1:common.proto
+@com_google_googleapis//google/cloud/gkebackup/v1:gkebackup.proto
+@com_google_googleapis//google/cloud/gkebackup/v1:restore.proto
+@com_google_googleapis//google/cloud/gkebackup/v1:restore_plan.proto
+@com_google_googleapis//google/cloud/gkebackup/v1:volume.proto

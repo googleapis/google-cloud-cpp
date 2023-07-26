@@ -21,6 +21,7 @@
 
 #include "google/cloud/storage/internal/storage_stub.h"
 #include "google/cloud/version.h"
+#include <map>
 #include <memory>
 #include <string>
 
@@ -32,7 +33,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class StorageMetadata : public StorageStub {
  public:
   ~StorageMetadata() override = default;
-  explicit StorageMetadata(std::shared_ptr<StorageStub> child);
+  StorageMetadata(std::shared_ptr<StorageStub> child,
+                  std::multimap<std::string, std::string> fixed_metadata);
 
   Status DeleteBucket(
       grpc::ClientContext& context,
@@ -164,6 +166,11 @@ class StorageMetadata : public StorageStub {
       grpc::ClientContext& context,
       google::storage::v2::UpdateHmacKeyRequest const& request) override;
 
+  future<StatusOr<google::storage::v2::Object>> AsyncComposeObject(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::storage::v2::ComposeObjectRequest const& request) override;
+
   future<Status> AsyncDeleteObject(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -200,6 +207,7 @@ class StorageMetadata : public StorageStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<StorageStub> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

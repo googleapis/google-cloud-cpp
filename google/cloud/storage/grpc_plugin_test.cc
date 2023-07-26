@@ -76,18 +76,18 @@ TEST(GrpcPluginTest, EnvironmentOverrides) {
   ASSERT_THAT(grpc, IsNull());
 }
 
-TEST(GrpcPluginTest, UnsetConfigCreatesCurl) {
+TEST(GrpcPluginTest, UnsetConfigCreatesMetadata) {
   // Explicitly disable logging, which may be enabled by our CI builds.
   auto logging =
       ScopedEnvironment("CLOUD_STORAGE_ENABLE_TRACING", absl::nullopt);
   auto config =
       ScopedEnvironment("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG", absl::nullopt);
-  auto client = DefaultGrpcClient(Options{});
+  auto client = DefaultGrpcClient(TestOptions());
   auto const* const retry =
       dynamic_cast<RetryClient*>(ClientImplDetails::GetRawClient(client).get());
   ASSERT_THAT(retry, NotNull());
-  auto const* const rest = dynamic_cast<RestClient*>(retry->client().get());
-  ASSERT_THAT(rest, NotNull());
+  auto const* const grpc = dynamic_cast<GrpcClient*>(retry->client().get());
+  ASSERT_THAT(grpc, NotNull());
 }
 
 TEST(GrpcPluginTest, NoneConfigCreatesCurl) {

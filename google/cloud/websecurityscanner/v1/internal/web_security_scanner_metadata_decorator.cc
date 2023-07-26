@@ -18,6 +18,7 @@
 
 #include "google/cloud/websecurityscanner/v1/internal/web_security_scanner_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/websecurityscanner/v1/web_security_scanner.grpc.pb.h>
@@ -29,8 +30,10 @@ namespace websecurityscanner_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 WebSecurityScannerMetadata::WebSecurityScannerMetadata(
-    std::shared_ptr<WebSecurityScannerStub> child)
+    std::shared_ptr<WebSecurityScannerStub> child,
+    std::multimap<std::string, std::string> fixed_metadata)
     : child_(std::move(child)),
+      fixed_metadata_(std::move(fixed_metadata)),
       api_client_header_(
           google::cloud::internal::ApiClientHeader("generator")) {}
 
@@ -39,7 +42,7 @@ WebSecurityScannerMetadata::CreateScanConfig(
     grpc::ClientContext& context,
     google::cloud::websecurityscanner::v1::CreateScanConfigRequest const&
         request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->CreateScanConfig(context, request);
 }
 
@@ -47,7 +50,7 @@ Status WebSecurityScannerMetadata::DeleteScanConfig(
     grpc::ClientContext& context,
     google::cloud::websecurityscanner::v1::DeleteScanConfigRequest const&
         request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->DeleteScanConfig(context, request);
 }
 
@@ -56,7 +59,7 @@ WebSecurityScannerMetadata::GetScanConfig(
     grpc::ClientContext& context,
     google::cloud::websecurityscanner::v1::GetScanConfigRequest const&
         request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetScanConfig(context, request);
 }
 
@@ -65,7 +68,7 @@ WebSecurityScannerMetadata::ListScanConfigs(
     grpc::ClientContext& context,
     google::cloud::websecurityscanner::v1::ListScanConfigsRequest const&
         request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListScanConfigs(context, request);
 }
 
@@ -74,7 +77,8 @@ WebSecurityScannerMetadata::UpdateScanConfig(
     grpc::ClientContext& context,
     google::cloud::websecurityscanner::v1::UpdateScanConfigRequest const&
         request) {
-  SetMetadata(context, "scan_config.name=" + request.scan_config().name());
+  SetMetadata(context,
+              absl::StrCat("scan_config.name=", request.scan_config().name()));
   return child_->UpdateScanConfig(context, request);
 }
 
@@ -82,7 +86,7 @@ StatusOr<google::cloud::websecurityscanner::v1::ScanRun>
 WebSecurityScannerMetadata::StartScanRun(
     grpc::ClientContext& context,
     google::cloud::websecurityscanner::v1::StartScanRunRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->StartScanRun(context, request);
 }
 
@@ -90,7 +94,7 @@ StatusOr<google::cloud::websecurityscanner::v1::ScanRun>
 WebSecurityScannerMetadata::GetScanRun(
     grpc::ClientContext& context,
     google::cloud::websecurityscanner::v1::GetScanRunRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetScanRun(context, request);
 }
 
@@ -98,7 +102,7 @@ StatusOr<google::cloud::websecurityscanner::v1::ListScanRunsResponse>
 WebSecurityScannerMetadata::ListScanRuns(
     grpc::ClientContext& context,
     google::cloud::websecurityscanner::v1::ListScanRunsRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListScanRuns(context, request);
 }
 
@@ -106,7 +110,7 @@ StatusOr<google::cloud::websecurityscanner::v1::ScanRun>
 WebSecurityScannerMetadata::StopScanRun(
     grpc::ClientContext& context,
     google::cloud::websecurityscanner::v1::StopScanRunRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->StopScanRun(context, request);
 }
 
@@ -115,7 +119,7 @@ WebSecurityScannerMetadata::ListCrawledUrls(
     grpc::ClientContext& context,
     google::cloud::websecurityscanner::v1::ListCrawledUrlsRequest const&
         request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListCrawledUrls(context, request);
 }
 
@@ -123,7 +127,7 @@ StatusOr<google::cloud::websecurityscanner::v1::Finding>
 WebSecurityScannerMetadata::GetFinding(
     grpc::ClientContext& context,
     google::cloud::websecurityscanner::v1::GetFindingRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetFinding(context, request);
 }
 
@@ -131,7 +135,7 @@ StatusOr<google::cloud::websecurityscanner::v1::ListFindingsResponse>
 WebSecurityScannerMetadata::ListFindings(
     grpc::ClientContext& context,
     google::cloud::websecurityscanner::v1::ListFindingsRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListFindings(context, request);
 }
 
@@ -140,7 +144,7 @@ WebSecurityScannerMetadata::ListFindingTypeStats(
     grpc::ClientContext& context,
     google::cloud::websecurityscanner::v1::ListFindingTypeStatsRequest const&
         request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListFindingTypeStats(context, request);
 }
 
@@ -151,6 +155,9 @@ void WebSecurityScannerMetadata::SetMetadata(
 }
 
 void WebSecurityScannerMetadata::SetMetadata(grpc::ClientContext& context) {
+  for (auto const& kv : fixed_metadata_) {
+    context.AddMetadata(kv.first, kv.second);
+  }
   context.AddMetadata("x-goog-api-client", api_client_header_);
   auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {

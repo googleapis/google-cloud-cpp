@@ -22,6 +22,7 @@
 #include "google/cloud/edgecontainer/v1/internal/edge_container_stub.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
+#include <map>
 #include <memory>
 #include <string>
 
@@ -33,7 +34,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class EdgeContainerMetadata : public EdgeContainerStub {
  public:
   ~EdgeContainerMetadata() override = default;
-  explicit EdgeContainerMetadata(std::shared_ptr<EdgeContainerStub> child);
+  EdgeContainerMetadata(std::shared_ptr<EdgeContainerStub> child,
+                        std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::edgecontainer::v1::ListClustersResponse> ListClusters(
       grpc::ClientContext& context,
@@ -146,6 +148,7 @@ class EdgeContainerMetadata : public EdgeContainerStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<EdgeContainerStub> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

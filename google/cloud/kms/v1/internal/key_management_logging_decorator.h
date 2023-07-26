@@ -36,7 +36,7 @@ class KeyManagementServiceLogging : public KeyManagementServiceStub {
   ~KeyManagementServiceLogging() override = default;
   KeyManagementServiceLogging(std::shared_ptr<KeyManagementServiceStub> child,
                               TracingOptions tracing_options,
-                              std::set<std::string> components);
+                              std::set<std::string> const& components);
 
   StatusOr<google::cloud::kms::v1::ListKeyRingsResponse> ListKeyRings(
       grpc::ClientContext& context,
@@ -131,6 +131,14 @@ class KeyManagementServiceLogging : public KeyManagementServiceStub {
       grpc::ClientContext& context,
       google::cloud::kms::v1::DecryptRequest const& request) override;
 
+  StatusOr<google::cloud::kms::v1::RawEncryptResponse> RawEncrypt(
+      grpc::ClientContext& context,
+      google::cloud::kms::v1::RawEncryptRequest const& request) override;
+
+  StatusOr<google::cloud::kms::v1::RawDecryptResponse> RawDecrypt(
+      grpc::ClientContext& context,
+      google::cloud::kms::v1::RawDecryptRequest const& request) override;
+
   StatusOr<google::cloud::kms::v1::AsymmetricSignResponse> AsymmetricSign(
       grpc::ClientContext& context,
       google::cloud::kms::v1::AsymmetricSignRequest const& request) override;
@@ -155,7 +163,7 @@ class KeyManagementServiceLogging : public KeyManagementServiceStub {
  private:
   std::shared_ptr<KeyManagementServiceStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // KeyManagementServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

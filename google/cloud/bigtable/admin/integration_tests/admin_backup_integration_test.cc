@@ -20,7 +20,6 @@
 #include "google/cloud/internal/random.h"
 #include "google/cloud/internal/time_utils.h"
 #include "google/cloud/testing_util/chrono_literals.h"
-#include "google/cloud/testing_util/contains_once.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <google/protobuf/util/time_util.h>
@@ -35,7 +34,6 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::internal::ToProtoTimestamp;
-using ::google::cloud::testing_util::ContainsOnce;
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::testing::Contains;
 using ::testing::Not;
@@ -99,7 +97,11 @@ TEST_F(AdminBackupIntegrationTest, CreateListGetUpdateRestoreDeleteBackup) {
   auto const backup_name = cluster_name + "/backups/" + backup_id;
 
   // Create backup
-  auto expire_time = std::chrono::system_clock::now() + std::chrono::hours(12);
+  // The proto documentation says backup expiration times are in "microseconds
+  // granularity":
+  //   https://cloud.google.com/bigtable/docs/reference/admin/rpc/google.bigtable.admin.v2#google.bigtable.admin.v2.Backup
+  auto expire_time = std::chrono::time_point_cast<std::chrono::microseconds>(
+      std::chrono::system_clock::now() + std::chrono::hours(12));
 
   btadmin::Backup b;
   b.set_source_table(table_name);
@@ -151,7 +153,7 @@ TEST_F(AdminBackupIntegrationTest, CreateListGetUpdateRestoreDeleteBackup) {
   // Verify the restore
   tables = ListTables();
   ASSERT_STATUS_OK(tables);
-  EXPECT_THAT(*tables, ContainsOnce(table_name));
+  EXPECT_THAT(*tables, Contains(table_name).Times(1));
 
   // Delete backup
   EXPECT_STATUS_OK(client_.DeleteBackup(backup_name));

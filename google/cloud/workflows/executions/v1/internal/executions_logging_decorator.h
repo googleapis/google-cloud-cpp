@@ -36,7 +36,7 @@ class ExecutionsLogging : public ExecutionsStub {
   ~ExecutionsLogging() override = default;
   ExecutionsLogging(std::shared_ptr<ExecutionsStub> child,
                     TracingOptions tracing_options,
-                    std::set<std::string> components);
+                    std::set<std::string> const& components);
 
   StatusOr<google::cloud::workflows::executions::v1::ListExecutionsResponse>
   ListExecutions(
@@ -62,7 +62,7 @@ class ExecutionsLogging : public ExecutionsStub {
  private:
   std::shared_ptr<ExecutionsStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // ExecutionsLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

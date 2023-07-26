@@ -113,6 +113,13 @@ WebRiskServiceClient::CreateSubmission(
   return connection_->CreateSubmission(request);
 }
 
+future<StatusOr<google::cloud::webrisk::v1::Submission>>
+WebRiskServiceClient::SubmitUri(
+    google::cloud::webrisk::v1::SubmitUriRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->SubmitUri(request);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace webrisk_v1
 }  // namespace cloud

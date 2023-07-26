@@ -36,7 +36,7 @@ class SchemaServiceLogging : public SchemaServiceStub {
   ~SchemaServiceLogging() override = default;
   SchemaServiceLogging(std::shared_ptr<SchemaServiceStub> child,
                        TracingOptions tracing_options,
-                       std::set<std::string> components);
+                       std::set<std::string> const& components);
 
   StatusOr<google::pubsub::v1::Schema> CreateSchema(
       grpc::ClientContext& context,
@@ -81,7 +81,7 @@ class SchemaServiceLogging : public SchemaServiceStub {
  private:
   std::shared_ptr<SchemaServiceStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // SchemaServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

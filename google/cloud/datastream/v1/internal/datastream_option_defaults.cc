@@ -46,8 +46,9 @@ Options DatastreamDefaultOptions(Options options) {
   }
   if (!options.has<datastream_v1::DatastreamBackoffPolicyOption>()) {
     options.set<datastream_v1::DatastreamBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options.has<datastream_v1::DatastreamPollingPolicyOption>()) {
@@ -56,8 +57,9 @@ Options DatastreamDefaultOptions(Options options) {
             datastream_v1::DatastreamRetryPolicyOption::Type,
             datastream_v1::DatastreamBackoffPolicyOption::Type>(
             options.get<datastream_v1::DatastreamRetryPolicyOption>()->clone(),
-            options.get<datastream_v1::DatastreamBackoffPolicyOption>()
-                ->clone())
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
             .clone());
   }
   if (!options

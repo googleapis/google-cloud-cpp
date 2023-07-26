@@ -21,6 +21,7 @@
 
 #include "google/cloud/binaryauthorization/v1/internal/binauthz_management_service_v1_stub.h"
 #include "google/cloud/version.h"
+#include <map>
 #include <memory>
 #include <string>
 
@@ -33,8 +34,9 @@ class BinauthzManagementServiceV1Metadata
     : public BinauthzManagementServiceV1Stub {
  public:
   ~BinauthzManagementServiceV1Metadata() override = default;
-  explicit BinauthzManagementServiceV1Metadata(
-      std::shared_ptr<BinauthzManagementServiceV1Stub> child);
+  BinauthzManagementServiceV1Metadata(
+      std::shared_ptr<BinauthzManagementServiceV1Stub> child,
+      std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::binaryauthorization::v1::Policy> GetPolicy(
       grpc::ClientContext& context,
@@ -78,6 +80,7 @@ class BinauthzManagementServiceV1Metadata
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<BinauthzManagementServiceV1Stub> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

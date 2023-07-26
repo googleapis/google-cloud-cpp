@@ -20,14 +20,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
 std::unique_ptr<BackoffPolicy> ExponentialBackoffPolicy::clone() const {
-  return std::make_unique<ExponentialBackoffPolicy>(initial_delay_,
-                                                    maximum_delay_, scaling_);
+  return std::make_unique<ExponentialBackoffPolicy>(
+      minimum_delay_, initial_delay_upper_bound_, maximum_delay_,
+      scaling_lower_bound_, scaling_upper_bound_);
 }
 
 std::chrono::milliseconds ExponentialBackoffPolicy::OnCompletion() {
-  using std::chrono::duration_cast;
-  using std::chrono::microseconds;
-  using std::chrono::milliseconds;
   // We do not want to copy the seed in `clone()` because then all operations
   // will have the same sequence of backoffs. Nor do we want to use a shared
   // PRNG because that would require locking and some more complicated lifecycle
@@ -41,17 +39,23 @@ std::chrono::milliseconds ExponentialBackoffPolicy::OnCompletion() {
   if (!generator_) {
     generator_ = google::cloud::internal::MakeDefaultPRNG();
   }
-  std::uniform_int_distribution<microseconds::rep> rng_distribution(
-      current_delay_range_.count() / 2, current_delay_range_.count());
+
+  if (current_delay_start_ >= (maximum_delay_ / scaling_upper_bound_)) {
+    current_delay_start_ =
+        (std::max)(minimum_delay_, maximum_delay_ / scaling_upper_bound_);
+  }
+  current_delay_end_ = (std::min)(current_delay_end_, maximum_delay_);
+
+  std::uniform_real_distribution<DoubleMicroseconds::rep> rng_distribution(
+      current_delay_start_.count(), current_delay_end_.count());
   // Randomized sleep period because it is possible that after some time all
   // client have same sleep period if we use only exponential backoff policy.
-  auto delay = microseconds(rng_distribution(*generator_));
-  current_delay_range_ = microseconds(static_cast<microseconds::rep>(
-      static_cast<double>(current_delay_range_.count()) * scaling_));
-  if (current_delay_range_ >= maximum_delay_) {
-    current_delay_range_ = maximum_delay_;
-  }
-  return duration_cast<milliseconds>(delay);
+  auto delay = DoubleMicroseconds(rng_distribution(*generator_));
+
+  current_delay_start_ *= scaling_lower_bound_;
+  current_delay_end_ *= scaling_upper_bound_;
+
+  return std::chrono::duration_cast<std::chrono::milliseconds>(delay);
 }
 
 }  // namespace internal

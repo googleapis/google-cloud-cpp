@@ -22,6 +22,7 @@
 #include "google/cloud/certificatemanager/v1/internal/certificate_manager_stub.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
+#include <map>
 #include <memory>
 #include <string>
 
@@ -33,8 +34,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class CertificateManagerMetadata : public CertificateManagerStub {
  public:
   ~CertificateManagerMetadata() override = default;
-  explicit CertificateManagerMetadata(
-      std::shared_ptr<CertificateManagerStub> child);
+  CertificateManagerMetadata(
+      std::shared_ptr<CertificateManagerStub> child,
+      std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::certificatemanager::v1::ListCertificatesResponse>
   ListCertificates(
@@ -202,6 +204,7 @@ class CertificateManagerMetadata : public CertificateManagerStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<CertificateManagerStub> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

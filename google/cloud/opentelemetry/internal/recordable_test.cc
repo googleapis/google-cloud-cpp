@@ -16,8 +16,10 @@
 #include "google/cloud/internal/time_utils.h"
 #include "google/cloud/version.h"
 #include "absl/time/clock.h"
-#include <google/rpc/code.pb.h>
 #include <gmock/gmock.h>
+#include <grpcpp/grpcpp.h>
+#include <opentelemetry/sdk/resource/resource.h>
+#include <opentelemetry/sdk/resource/semantic_conventions.h>
 
 namespace google {
 namespace cloud {
@@ -25,12 +27,14 @@ namespace otel_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+namespace sc = opentelemetry::sdk::resource::SemanticConventions;
 namespace v2 = ::google::devtools::cloudtrace::v2;
 using ::testing::_;
 using ::testing::AllOf;
 using ::testing::ElementsAre;
 using ::testing::Eq;
 using ::testing::IsEmpty;
+using ::testing::IsSupersetOf;
 using ::testing::Matcher;
 using ::testing::Pair;
 using ::testing::ResultOf;
@@ -63,10 +67,20 @@ class KVIterable : public opentelemetry::common::KeyValueIterable {
   std::size_t* iteration_count_;
 };
 
+// We use static storage, so make sure that if this method is called multiple
+// times for a given T, it is called with the same t1.
 template <typename T>
-opentelemetry::nostd::span<T> MakeCompositeAttribute() {
-  T v[]{T{}, T{}};
-  return opentelemetry::nostd::span<T>(v);
+opentelemetry::nostd::span<T> MakeCompositeAttribute(T t1) {
+  static auto* const kData = new T{t1};
+  return opentelemetry::nostd::span<T>(kData, 1);
+}
+
+// We use static storage, so make sure that if this method is called multiple
+// times for a given T, it is called with the same t1 and t2.
+template <typename T>
+opentelemetry::nostd::span<T const> MakeCompositeAttribute(T t1, T t2) {
+  static auto const* const kData = new T[2]{t1, t2};
+  return {kData, 2};
 }
 
 Matcher<v2::AttributeValue const&> AttributeValue(bool value) {
@@ -285,23 +299,91 @@ TEST(AddAttribute, ConvertsDoubleAttributeToString) {
               Attributes(ElementsAre(Pair("key", AttributeValue("4.2")))));
 }
 
-TEST(AddAttribute, DropsCompositeAttributes) {
+TEST(AddAttribute, HandlesCompositeBoolAttribute) {
+  v2::Span::Attributes attributes;
+  AddAttribute(attributes, "key", MakeCompositeAttribute<bool>(true, false),
+               /*limit=*/32);
+  EXPECT_THAT(
+      attributes,
+      Attributes(ElementsAre(Pair("key", AttributeValue("[true, false]")))));
+}
+
+TEST(AddAttribute, HandlesCompositeIntAttributes) {
   std::vector<opentelemetry::common::AttributeValue> values = {
-      MakeCompositeAttribute<bool>(),
-      MakeCompositeAttribute<std::int32_t>(),
-      MakeCompositeAttribute<std::int64_t>(),
-      MakeCompositeAttribute<std::uint32_t>(),
-      MakeCompositeAttribute<double>(),
-      MakeCompositeAttribute<opentelemetry::nostd::string_view>(),
-      MakeCompositeAttribute<std::uint64_t>(),
-      MakeCompositeAttribute<std::uint8_t>()};
+      MakeCompositeAttribute<std::int32_t>(42, 84),
+      MakeCompositeAttribute<std::int64_t>(42, 84),
+      MakeCompositeAttribute<std::uint32_t>(42, 84),
+      MakeCompositeAttribute<std::uint64_t>(42, 84),
+      MakeCompositeAttribute<std::uint8_t>(42, 84),
+  };
 
   for (auto const& value : values) {
     v2::Span::Attributes attributes;
     AddAttribute(attributes, "key", value, /*limit=*/32);
-    EXPECT_THAT(attributes,
-                Attributes(IsEmpty(), /*dropped_attributes_count=*/1));
+    EXPECT_THAT(
+        attributes,
+        Attributes(ElementsAre(Pair("key", AttributeValue("[42, 84]")))));
   }
+}
+
+TEST(AddAttribute, HandlesCompositeDoubleAttributes) {
+  v2::Span::Attributes attributes;
+  AddAttribute(attributes, "key", MakeCompositeAttribute<double>(4.2, 8.4),
+               /*limit=*/32);
+  EXPECT_THAT(
+      attributes,
+      Attributes(ElementsAre(Pair("key", AttributeValue("[4.2, 8.4]")))));
+}
+
+TEST(AddAttribute, HandlesCompositeStringAttributes) {
+  v2::Span::Attributes attributes;
+  AddAttribute(
+      attributes, "key",
+      MakeCompositeAttribute<opentelemetry::nostd::string_view>("s1", "s2"),
+      /*limit=*/32);
+  EXPECT_THAT(attributes, Attributes(ElementsAre(Pair(
+                              "key", AttributeValue(R"""(["s1", "s2"])""")))));
+}
+
+TEST(Recordable, SetResourceCopiesResourceAttributes) {
+  auto resource = opentelemetry::sdk::resource::Resource::Create({
+      {"bool", true},
+      {"int32", std::int32_t{5}},
+      {"uint32", std::uint32_t{5}},
+      {"int64", std::int64_t{5}},
+      {"uint64", std::uint64_t{5}},
+      {"double", 5.0},
+      {"string", "5"},
+      {"vector<bool>", MakeCompositeAttribute<bool>(true)},
+      {"vector<int32>", MakeCompositeAttribute<std::int32_t>(5)},
+      {"vector<int64>", MakeCompositeAttribute<std::int64_t>(5)},
+      {"vector<uint32>", MakeCompositeAttribute<std::uint32_t>(5)},
+      {"vector<double>", MakeCompositeAttribute<double>(5.0)},
+      {"vector<string>",
+       MakeCompositeAttribute<opentelemetry::nostd::string_view>("5")},
+      {"vector<uint64>", MakeCompositeAttribute<std::uint64_t>(5)},
+      {"vector<uint8>", MakeCompositeAttribute<std::uint8_t>(5)},
+  });
+
+  auto rec = Recordable(Project(kProjectId));
+  rec.SetResource(resource);
+  auto proto = std::move(rec).as_proto();
+  EXPECT_THAT(
+      proto.attributes(),
+      Attributes(IsSupersetOf(
+          {Pair("bool", AttributeValue(true)), Pair("int32", AttributeValue(5)),
+           Pair("uint32", AttributeValue(5)), Pair("int64", AttributeValue(5)),
+           Pair("uint64", AttributeValue(5)),
+           Pair("double", AttributeValue("5")),
+           Pair("string", AttributeValue("5")),
+           Pair("vector<bool>", AttributeValue("[true]")),
+           Pair("vector<int32>", AttributeValue("[5]")),
+           Pair("vector<int64>", AttributeValue("[5]")),
+           Pair("vector<uint32>", AttributeValue("[5]")),
+           Pair("vector<double>", AttributeValue("[5]")),
+           Pair("vector<string>", AttributeValue(R"""(["5"])""")),
+           Pair("vector<uint64>", AttributeValue("[5]")),
+           Pair("vector<uint8>", AttributeValue("[5]"))})));
 }
 
 TEST(AddAttribute, MapsKeysForCloudTrace) {
@@ -450,17 +532,17 @@ TEST(Recordable, SetStatus) {
   struct TestCase {
     opentelemetry::trace::StatusCode code;
     opentelemetry::nostd::string_view desc;
-    google::rpc::Code expected_code;
+    grpc::StatusCode expected_code;
     std::string expected_message;
   };
 
   for (auto const& test :
        std::vector<TestCase>{{opentelemetry::trace::StatusCode::kUnset, "",
-                              google::rpc::Code::OK, ""},
+                              grpc::StatusCode ::OK, ""},
                              {opentelemetry::trace::StatusCode::kOk, "ignored",
-                              google::rpc::Code::OK, ""},
+                              grpc::StatusCode::OK, ""},
                              {opentelemetry::trace::StatusCode::kError, "fail",
-                              google::rpc::Code::UNKNOWN, "fail"}}) {
+                              grpc::StatusCode::UNKNOWN, "fail"}}) {
     auto rec = Recordable(Project(kProjectId));
     rec.SetStatus(test.code, test.desc);
     auto proto = std::move(rec).as_proto();
@@ -553,6 +635,26 @@ TEST(Recordable, SetAttributeRespectsLimit) {
   auto proto = std::move(rec).as_proto();
   EXPECT_THAT(proto.attributes(), Attributes(SizeIs(kSpanAttributeLimit),
                                              /*dropped_attributes_count=*/1));
+}
+
+TEST(Recordable, SetResourceMapsMonitoredResources) {
+  auto resource = opentelemetry::sdk::resource::Resource::Create({
+      {sc::kCloudProvider, "gcp"},
+      {sc::kCloudPlatform, "gcp_compute_engine"},
+      {sc::kHostId, "1020304050607080900"},
+      {sc::kCloudAvailabilityZone, "us-central1-a"},
+  });
+
+  auto rec = Recordable(Project(kProjectId));
+  rec.SetResource(resource);
+  auto proto = std::move(rec).as_proto();
+  EXPECT_THAT(
+      proto.attributes(),
+      Attributes(IsSupersetOf({
+          Pair("g.co/r/gce_instance/zone", AttributeValue("us-central1-a")),
+          Pair("g.co/r/gce_instance/instance_id",
+               AttributeValue("1020304050607080900")),
+      })));
 }
 
 TEST(Recordable, SetStartTime) {

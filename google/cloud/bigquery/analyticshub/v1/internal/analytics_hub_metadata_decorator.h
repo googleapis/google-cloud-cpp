@@ -21,6 +21,7 @@
 
 #include "google/cloud/bigquery/analyticshub/v1/internal/analytics_hub_stub.h"
 #include "google/cloud/version.h"
+#include <map>
 #include <memory>
 #include <string>
 
@@ -32,8 +33,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class AnalyticsHubServiceMetadata : public AnalyticsHubServiceStub {
  public:
   ~AnalyticsHubServiceMetadata() override = default;
-  explicit AnalyticsHubServiceMetadata(
-      std::shared_ptr<AnalyticsHubServiceStub> child);
+  AnalyticsHubServiceMetadata(
+      std::shared_ptr<AnalyticsHubServiceStub> child,
+      std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::bigquery::analyticshub::v1::ListDataExchangesResponse>
   ListDataExchanges(
@@ -118,6 +120,7 @@ class AnalyticsHubServiceMetadata : public AnalyticsHubServiceStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<AnalyticsHubServiceStub> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

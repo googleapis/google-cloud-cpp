@@ -46,8 +46,9 @@ Options EnvironmentsDefaultOptions(Options options) {
   }
   if (!options.has<composer_v1::EnvironmentsBackoffPolicyOption>()) {
     options.set<composer_v1::EnvironmentsBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options.has<composer_v1::EnvironmentsPollingPolicyOption>()) {
@@ -56,8 +57,9 @@ Options EnvironmentsDefaultOptions(Options options) {
             composer_v1::EnvironmentsRetryPolicyOption::Type,
             composer_v1::EnvironmentsBackoffPolicyOption::Type>(
             options.get<composer_v1::EnvironmentsRetryPolicyOption>()->clone(),
-            options.get<composer_v1::EnvironmentsBackoffPolicyOption>()
-                ->clone())
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
             .clone());
   }
   if (!options

@@ -5,5 +5,6 @@
 @com_google_googleapis//google/api:httpbody_proto
 @com_google_googleapis//google/api:launch_stage_proto
 @com_google_googleapis//google/api:resource_proto
+@com_google_googleapis//google/api:routing_proto
 @com_google_googleapis//google/longrunning:operations_proto
 @com_google_googleapis//google/rpc:status_proto

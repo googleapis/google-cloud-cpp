@@ -1,6 +1,6 @@
-# HOWTO: using the Stackdriver Trace API C++ client in your project
+# HOWTO: using the Cloud Trace API C++ client in your project
 
-This directory contains small examples showing how to use the Stackdriver Trace API C++
+This directory contains small examples showing how to use the Cloud Trace API C++
 client library in your own project. These instructions assume that you have
 some experience as a C++ developer and that you have a working C++ toolchain
 (compiler, linker, etc.) installed on your platform.
@@ -29,7 +29,7 @@ steps in detail.
 
 ## Configuring authentication for the C++ Client Library
 
-Like most Google Cloud Platform (GCP) services, Stackdriver Trace API requires that
+Like most Google Cloud Platform (GCP) services, Cloud Trace API requires that
 your application authenticates with the service before accessing any data. If
 you are not familiar with GCP authentication please take this opportunity to
 review the [Authentication Overview][authentication-quickstart]. This library
@@ -103,7 +103,7 @@ https://cloud.google.com/docs/authentication/production
 
    ```bash
    cd $HOME/google-cloud-cpp/google/cloud/trace/quickstart
-   cmake -H. -B.build -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake
+   cmake -S . -B .build -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake
    cmake --build .build
    ```
 

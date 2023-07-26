@@ -23,8 +23,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 namespace {
 
-class StatusOnlyResultSetSource
-    : public spanner_internal::ResultSourceInterface {
+class StatusOnlyResultSetSource : public ResultSourceInterface {
  public:
   explicit StatusOnlyResultSetSource(Status status)
       : status_(std::move(status)) {}

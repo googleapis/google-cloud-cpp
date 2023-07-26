@@ -18,6 +18,7 @@
 
 #include "google/cloud/orgpolicy/v2/internal/org_policy_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/orgpolicy/v2/orgpolicy.grpc.pb.h>
@@ -28,8 +29,11 @@ namespace cloud {
 namespace orgpolicy_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-OrgPolicyMetadata::OrgPolicyMetadata(std::shared_ptr<OrgPolicyStub> child)
+OrgPolicyMetadata::OrgPolicyMetadata(
+    std::shared_ptr<OrgPolicyStub> child,
+    std::multimap<std::string, std::string> fixed_metadata)
     : child_(std::move(child)),
+      fixed_metadata_(std::move(fixed_metadata)),
       api_client_header_(
           google::cloud::internal::ApiClientHeader("generator")) {}
 
@@ -37,7 +41,7 @@ StatusOr<google::cloud::orgpolicy::v2::ListConstraintsResponse>
 OrgPolicyMetadata::ListConstraints(
     grpc::ClientContext& context,
     google::cloud::orgpolicy::v2::ListConstraintsRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListConstraints(context, request);
 }
 
@@ -45,14 +49,14 @@ StatusOr<google::cloud::orgpolicy::v2::ListPoliciesResponse>
 OrgPolicyMetadata::ListPolicies(
     grpc::ClientContext& context,
     google::cloud::orgpolicy::v2::ListPoliciesRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListPolicies(context, request);
 }
 
 StatusOr<google::cloud::orgpolicy::v2::Policy> OrgPolicyMetadata::GetPolicy(
     grpc::ClientContext& context,
     google::cloud::orgpolicy::v2::GetPolicyRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetPolicy(context, request);
 }
 
@@ -60,28 +64,28 @@ StatusOr<google::cloud::orgpolicy::v2::Policy>
 OrgPolicyMetadata::GetEffectivePolicy(
     grpc::ClientContext& context,
     google::cloud::orgpolicy::v2::GetEffectivePolicyRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetEffectivePolicy(context, request);
 }
 
 StatusOr<google::cloud::orgpolicy::v2::Policy> OrgPolicyMetadata::CreatePolicy(
     grpc::ClientContext& context,
     google::cloud::orgpolicy::v2::CreatePolicyRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->CreatePolicy(context, request);
 }
 
 StatusOr<google::cloud::orgpolicy::v2::Policy> OrgPolicyMetadata::UpdatePolicy(
     grpc::ClientContext& context,
     google::cloud::orgpolicy::v2::UpdatePolicyRequest const& request) {
-  SetMetadata(context, "policy.name=" + request.policy().name());
+  SetMetadata(context, absl::StrCat("policy.name=", request.policy().name()));
   return child_->UpdatePolicy(context, request);
 }
 
 Status OrgPolicyMetadata::DeletePolicy(
     grpc::ClientContext& context,
     google::cloud::orgpolicy::v2::DeletePolicyRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->DeletePolicy(context, request);
 }
 
@@ -92,6 +96,9 @@ void OrgPolicyMetadata::SetMetadata(grpc::ClientContext& context,
 }
 
 void OrgPolicyMetadata::SetMetadata(grpc::ClientContext& context) {
+  for (auto const& kv : fixed_metadata_) {
+    context.AddMetadata(kv.first, kv.second);
+  }
   context.AddMetadata("x-goog-api-client", api_client_header_);
   auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {

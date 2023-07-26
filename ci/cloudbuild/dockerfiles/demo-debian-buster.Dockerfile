@@ -22,7 +22,7 @@ ARG NCPU=4
 # ```bash
 RUN apt-get update && \
     apt-get --no-install-recommends install -y apt-transport-https apt-utils \
-        automake build-essential ca-certificates ccache cmake curl git \
+        automake build-essential ca-certificates cmake curl git \
         gcc g++ libc-ares-dev libc-ares2 libcurl4-openssl-dev \
         libssl-dev m4 make ninja-build pkg-config tar wget zlib1g-dev
 # ```
@@ -43,7 +43,7 @@ RUN apt-get update && \
 
 # ```bash
 WORKDIR /var/tmp/build/abseil-cpp
-RUN curl -sSL https://github.com/abseil/abseil-cpp/archive/20230125.3.tar.gz | \
+RUN curl -fsSL https://github.com/abseil/abseil-cpp/archive/20230125.3.tar.gz | \
     tar -xzf - --strip-components=1 && \
     sed -i 's/^#define ABSL_OPTION_USE_\(.*\) 2/#define ABSL_OPTION_USE_\1 0/' "absl/base/options.h" && \
     cmake \
@@ -63,7 +63,7 @@ RUN curl -sSL https://github.com/abseil/abseil-cpp/archive/20230125.3.tar.gz | \
 
 # ```bash
 WORKDIR /var/tmp/build/crc32c
-RUN curl -sSL https://github.com/google/crc32c/archive/1.1.2.tar.gz | \
+RUN curl -fsSL https://github.com/google/crc32c/archive/1.1.2.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -86,7 +86,7 @@ RUN curl -sSL https://github.com/google/crc32c/archive/1.1.2.tar.gz | \
 
 # ```bash
 WORKDIR /var/tmp/build/json
-RUN curl -sSL https://github.com/nlohmann/json/archive/v3.11.2.tar.gz | \
+RUN curl -fsSL https://github.com/nlohmann/json/archive/v3.11.2.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
@@ -107,7 +107,7 @@ RUN curl -sSL https://github.com/nlohmann/json/archive/v3.11.2.tar.gz | \
 
 # ```bash
 WORKDIR /var/tmp/build/protobuf
-RUN curl -sSL https://github.com/protocolbuffers/protobuf/archive/v21.12.tar.gz | \
+RUN curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v23.4.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -127,12 +127,12 @@ RUN curl -sSL https://github.com/protocolbuffers/protobuf/archive/v21.12.tar.gz 
 
 # ```bash
 WORKDIR /var/tmp/build/re2
-RUN curl -sSL https://github.com/google/re2/archive/2023-03-01.tar.gz | \
+RUN curl -fsSL https://github.com/google/re2/archive/2023-07-01.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=ON \
         -DRE2_BUILD_TESTING=OFF \
-        -H. -Bcmake-out && \
+        -S . -B cmake-out && \
     cmake --build cmake-out -- -j ${NCPU:-4} && \
     cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
     ldconfig
@@ -144,7 +144,7 @@ RUN curl -sSL https://github.com/google/re2/archive/2023-03-01.tar.gz | \
 
 # ```bash
 WORKDIR /var/tmp/build/grpc
-RUN curl -sSL https://github.com/grpc/grpc/archive/v1.54.0.tar.gz | \
+RUN curl -fsSL https://github.com/grpc/grpc/archive/v1.56.2.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -164,6 +164,12 @@ RUN curl -sSL https://github.com/grpc/grpc/archive/v1.54.0.tar.gz | \
 
 ## [DONE packaging.md]
 
-# Some of the above libraries may have installed in /usr/local, so make sure
-# those library directories will be found.
+WORKDIR /var/tmp/sccache
+RUN curl -fsSL https://github.com/mozilla/sccache/releases/download/v0.5.4/sccache-v0.5.4-x86_64-unknown-linux-musl.tar.gz | \
+    tar -zxf - --strip-components=1 && \
+    mkdir -p /usr/local/bin && \
+    mv sccache /usr/local/bin/sccache && \
+    chmod +x /usr/local/bin/sccache
+
+# Update the ld.conf cache in case any libraries were installed in /usr/local/lib*
 RUN ldconfig /usr/local/lib*

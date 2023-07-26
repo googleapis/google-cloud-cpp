@@ -37,7 +37,7 @@ class FleetRoutingLogging : public FleetRoutingStub {
   ~FleetRoutingLogging() override = default;
   FleetRoutingLogging(std::shared_ptr<FleetRoutingStub> child,
                       TracingOptions tracing_options,
-                      std::set<std::string> components);
+                      std::set<std::string> const& components);
 
   StatusOr<google::cloud::optimization::v1::OptimizeToursResponse>
   OptimizeTours(grpc::ClientContext& context,
@@ -63,7 +63,7 @@ class FleetRoutingLogging : public FleetRoutingStub {
  private:
   std::shared_ptr<FleetRoutingStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // FleetRoutingLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

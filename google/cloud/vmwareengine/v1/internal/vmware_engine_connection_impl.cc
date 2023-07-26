@@ -372,6 +372,48 @@ VmwareEngineConnectionImpl::ListSubnets(
       });
 }
 
+StatusOr<google::cloud::vmwareengine::v1::Subnet>
+VmwareEngineConnectionImpl::GetSubnet(
+    google::cloud::vmwareengine::v1::GetSubnetRequest const& request) {
+  return google::cloud::internal::RetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->GetSubnet(request),
+      [this](grpc::ClientContext& context,
+             google::cloud::vmwareengine::v1::GetSubnetRequest const& request) {
+        return stub_->GetSubnet(context, request);
+      },
+      request, __func__);
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::Subnet>>
+VmwareEngineConnectionImpl::UpdateSubnet(
+    google::cloud::vmwareengine::v1::UpdateSubnetRequest const& request) {
+  auto& stub = stub_;
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::vmwareengine::v1::Subnet>(
+      background_->cq(), request,
+      [stub](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::vmwareengine::v1::UpdateSubnetRequest const& request) {
+        return stub->AsyncUpdateSubnet(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::vmwareengine::v1::Subnet>,
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->UpdateSubnet(request), polling_policy(), __func__);
+}
+
 StreamRange<google::cloud::vmwareengine::v1::NodeType>
 VmwareEngineConnectionImpl::ListNodeTypes(
     google::cloud::vmwareengine::v1::ListNodeTypesRequest request) {
@@ -875,6 +917,192 @@ VmwareEngineConnectionImpl::ListVmwareEngineNetworks(
         std::vector<google::cloud::vmwareengine::v1::VmwareEngineNetwork>
             result(r.vmware_engine_networks().size());
         auto& messages = *r.mutable_vmware_engine_networks();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::PrivateConnection>>
+VmwareEngineConnectionImpl::CreatePrivateConnection(
+    google::cloud::vmwareengine::v1::CreatePrivateConnectionRequest const&
+        request) {
+  auto& stub = stub_;
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::vmwareengine::v1::PrivateConnection>(
+      background_->cq(), request,
+      [stub](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::vmwareengine::v1::CreatePrivateConnectionRequest const&
+              request) {
+        return stub->AsyncCreatePrivateConnection(cq, std::move(context),
+                                                  request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::vmwareengine::v1::PrivateConnection>,
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->CreatePrivateConnection(request), polling_policy(),
+      __func__);
+}
+
+StatusOr<google::cloud::vmwareengine::v1::PrivateConnection>
+VmwareEngineConnectionImpl::GetPrivateConnection(
+    google::cloud::vmwareengine::v1::GetPrivateConnectionRequest const&
+        request) {
+  return google::cloud::internal::RetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->GetPrivateConnection(request),
+      [this](grpc::ClientContext& context,
+             google::cloud::vmwareengine::v1::GetPrivateConnectionRequest const&
+                 request) {
+        return stub_->GetPrivateConnection(context, request);
+      },
+      request, __func__);
+}
+
+StreamRange<google::cloud::vmwareengine::v1::PrivateConnection>
+VmwareEngineConnectionImpl::ListPrivateConnections(
+    google::cloud::vmwareengine::v1::ListPrivateConnectionsRequest request) {
+  request.clear_page_token();
+  auto& stub = stub_;
+  auto retry = std::shared_ptr<vmwareengine_v1::VmwareEngineRetryPolicy const>(
+      retry_policy());
+  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+  auto idempotency = idempotency_policy()->ListPrivateConnections(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::vmwareengine::v1::PrivateConnection>>(
+      std::move(request),
+      [stub, retry, backoff, idempotency, function_name](
+          google::cloud::vmwareengine::v1::ListPrivateConnectionsRequest const&
+              r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](grpc::ClientContext& context,
+                   google::cloud::vmwareengine::v1::
+                       ListPrivateConnectionsRequest const& request) {
+              return stub->ListPrivateConnections(context, request);
+            },
+            r, function_name);
+      },
+      [](google::cloud::vmwareengine::v1::ListPrivateConnectionsResponse r) {
+        std::vector<google::cloud::vmwareengine::v1::PrivateConnection> result(
+            r.private_connections().size());
+        auto& messages = *r.mutable_private_connections();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::PrivateConnection>>
+VmwareEngineConnectionImpl::UpdatePrivateConnection(
+    google::cloud::vmwareengine::v1::UpdatePrivateConnectionRequest const&
+        request) {
+  auto& stub = stub_;
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::vmwareengine::v1::PrivateConnection>(
+      background_->cq(), request,
+      [stub](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::vmwareengine::v1::UpdatePrivateConnectionRequest const&
+              request) {
+        return stub->AsyncUpdatePrivateConnection(cq, std::move(context),
+                                                  request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::vmwareengine::v1::PrivateConnection>,
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->UpdatePrivateConnection(request), polling_policy(),
+      __func__);
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
+VmwareEngineConnectionImpl::DeletePrivateConnection(
+    google::cloud::vmwareengine::v1::DeletePrivateConnectionRequest const&
+        request) {
+  auto& stub = stub_;
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::vmwareengine::v1::OperationMetadata>(
+      background_->cq(), request,
+      [stub](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::vmwareengine::v1::DeletePrivateConnectionRequest const&
+              request) {
+        return stub->AsyncDeletePrivateConnection(cq, std::move(context),
+                                                  request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::vmwareengine::v1::OperationMetadata>,
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->DeletePrivateConnection(request), polling_policy(),
+      __func__);
+}
+
+StreamRange<google::cloud::vmwareengine::v1::PeeringRoute>
+VmwareEngineConnectionImpl::ListPrivateConnectionPeeringRoutes(
+    google::cloud::vmwareengine::v1::ListPrivateConnectionPeeringRoutesRequest
+        request) {
+  request.clear_page_token();
+  auto& stub = stub_;
+  auto retry = std::shared_ptr<vmwareengine_v1::VmwareEngineRetryPolicy const>(
+      retry_policy());
+  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+  auto idempotency =
+      idempotency_policy()->ListPrivateConnectionPeeringRoutes(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::vmwareengine::v1::PeeringRoute>>(
+      std::move(request),
+      [stub, retry, backoff, idempotency,
+       function_name](google::cloud::vmwareengine::v1::
+                          ListPrivateConnectionPeeringRoutesRequest const& r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](
+                grpc::ClientContext& context,
+                google::cloud::vmwareengine::v1::
+                    ListPrivateConnectionPeeringRoutesRequest const& request) {
+              return stub->ListPrivateConnectionPeeringRoutes(context, request);
+            },
+            r, function_name);
+      },
+      [](google::cloud::vmwareengine::v1::
+             ListPrivateConnectionPeeringRoutesResponse r) {
+        std::vector<google::cloud::vmwareengine::v1::PeeringRoute> result(
+            r.peering_routes().size());
+        auto& messages = *r.mutable_peering_routes();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
       });

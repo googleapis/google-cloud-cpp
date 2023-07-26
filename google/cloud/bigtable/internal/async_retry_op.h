@@ -20,7 +20,7 @@
 #include "google/cloud/bigtable/rpc_backoff_policy.h"
 #include "google/cloud/bigtable/rpc_retry_policy.h"
 #include "google/cloud/bigtable/version.h"
-#include "google/cloud/internal/retry_policy.h"
+#include "google/cloud/idempotency.h"
 #include "google/cloud/internal/throw_delegate.h"
 
 namespace google {

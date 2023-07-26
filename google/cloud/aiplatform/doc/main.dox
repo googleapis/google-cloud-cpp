@@ -1,0 +1,68 @@
+/*!
+
+@mainpage Vertex AI API C++ Client Library
+
+An idiomatic C++ client library for the [Vertex AI API][cloud-service-docs], a
+service to train high-quality custom machine learning models with minimal
+machine learning expertise and effort.
+
+While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
+[Semantic Versioning](https://semver.org/).
+
+@tableofcontents{HTML:2}
+
+## Quickstart
+
+The following shows the code that you'll run in the
+`google/cloud/aiplatform/quickstart/` directory,
+which should give you a taste of the Vertex AI API C++ client library API.
+
+@snippet quickstart.cc all
+
+## Main classes
+
+<!-- inject-client-list-start -->
+This library offers multiple `*Client` classes, which are listed below. Each
+one of these classes exposes all the RPCs for a gRPC `service` as member
+functions of the class. This library groups multiple gRPC services because they
+are part of the same product or are often used together. A typical example may
+be the administrative and data plane operations for a single product.
+
+The library also has other classes that provide helpers, configuration
+parameters, and infrastructure to mock the `*Client` classes when testing your
+application.
+
+- [\c aiplatform_v1::DatasetServiceClient](@ref google::cloud::aiplatform_v1::DatasetServiceClient)
+- [\c aiplatform_v1::EndpointServiceClient](@ref google::cloud::aiplatform_v1::EndpointServiceClient)
+- [\c aiplatform_v1::FeaturestoreServiceClient](@ref google::cloud::aiplatform_v1::FeaturestoreServiceClient)
+- [\c aiplatform_v1::FeaturestoreOnlineServingServiceClient](@ref google::cloud::aiplatform_v1::FeaturestoreOnlineServingServiceClient)
+- [\c aiplatform_v1::IndexServiceClient](@ref google::cloud::aiplatform_v1::IndexServiceClient)
+- [\c aiplatform_v1::IndexEndpointServiceClient](@ref google::cloud::aiplatform_v1::IndexEndpointServiceClient)
+- [\c aiplatform_v1::JobServiceClient](@ref google::cloud::aiplatform_v1::JobServiceClient)
+- [\c aiplatform_v1::MatchServiceClient](@ref google::cloud::aiplatform_v1::MatchServiceClient)
+- [\c aiplatform_v1::MetadataServiceClient](@ref google::cloud::aiplatform_v1::MetadataServiceClient)
+- [\c aiplatform_v1::MigrationServiceClient](@ref google::cloud::aiplatform_v1::MigrationServiceClient)
+- [\c aiplatform_v1::ModelServiceClient](@ref google::cloud::aiplatform_v1::ModelServiceClient)
+- [\c aiplatform_v1::ModelGardenServiceClient](@ref google::cloud::aiplatform_v1::ModelGardenServiceClient)
+- [\c aiplatform_v1::PipelineServiceClient](@ref google::cloud::aiplatform_v1::PipelineServiceClient)
+- [\c aiplatform_v1::PredictionServiceClient](@ref google::cloud::aiplatform_v1::PredictionServiceClient)
+- [\c aiplatform_v1::SpecialistPoolServiceClient](@ref google::cloud::aiplatform_v1::SpecialistPoolServiceClient)
+- [\c aiplatform_v1::TensorboardServiceClient](@ref google::cloud::aiplatform_v1::TensorboardServiceClient)
+- [\c aiplatform_v1::VizierServiceClient](@ref google::cloud::aiplatform_v1::VizierServiceClient)
+<!-- inject-client-list-end -->
+
+## More Information
+
+- @ref common-error-handling - describes how the library reports errors.
+- @ref aiplatform-override-endpoint - describes how to override the default
+  endpoint.
+- @ref aiplatform-override-authentication - describes how to change the
+  authentication credentials used by the library.
+- @ref aiplatform-override-retry - describes how to change the default retry
+  policies.
+- @ref aiplatform-env - describes environment variables that can configure the
+  behavior of the library.
+
+[cloud-service-docs]: https://cloud.google.com/vertex-ai
+
+*/

@@ -13,42 +13,16 @@
 // limitations under the License.
 
 #include "generator/internal/descriptor_utils.h"
-#include "generator/internal/auth_decorator_generator.h"
-#include "generator/internal/client_generator.h"
+#include "generator/generator_config.pb.h"
 #include "generator/internal/codegen_utils.h"
-#include "generator/internal/connection_generator.h"
-#include "generator/internal/connection_impl_generator.h"
-#include "generator/internal/connection_impl_rest_generator.h"
-#include "generator/internal/connection_rest_generator.h"
 #include "generator/internal/format_class_comments.h"
 #include "generator/internal/format_method_comments.h"
-#include "generator/internal/forwarding_client_generator.h"
-#include "generator/internal/forwarding_connection_generator.h"
-#include "generator/internal/forwarding_idempotency_policy_generator.h"
-#include "generator/internal/forwarding_mock_connection_generator.h"
-#include "generator/internal/forwarding_options_generator.h"
 #include "generator/internal/http_option_utils.h"
-#include "generator/internal/idempotency_policy_generator.h"
-#include "generator/internal/logging_decorator_generator.h"
-#include "generator/internal/logging_decorator_rest_generator.h"
-#include "generator/internal/metadata_decorator_generator.h"
-#include "generator/internal/metadata_decorator_rest_generator.h"
-#include "generator/internal/mock_connection_generator.h"
-#include "generator/internal/option_defaults_generator.h"
-#include "generator/internal/options_generator.h"
+#include "generator/internal/longrunning.h"
 #include "generator/internal/pagination.h"
-#include "generator/internal/predicate_utils.h"
 #include "generator/internal/resolve_method_return.h"
-#include "generator/internal/retry_traits_generator.h"
-#include "generator/internal/round_robin_decorator_generator.h"
-#include "generator/internal/sample_generator.h"
+#include "generator/internal/routing.h"
 #include "generator/internal/scaffold_generator.h"
-#include "generator/internal/stub_factory_generator.h"
-#include "generator/internal/stub_factory_rest_generator.h"
-#include "generator/internal/stub_generator.h"
-#include "generator/internal/stub_rest_generator.h"
-#include "generator/internal/tracing_connection_generator.h"
-#include "generator/internal/tracing_stub_generator.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/absl_str_replace_quiet.h"
@@ -99,73 +73,6 @@ std::string CppTypeToString(FieldDescriptor const* field) {
                  << " not handled";
   /*NOTREACHED*/
   return field->cpp_type_name();
-}
-
-absl::variant<std::string, google::protobuf::Descriptor const*>
-FullyQualifyMessageType(google::protobuf::MethodDescriptor const& method,
-                        std::string message_type) {
-  google::protobuf::Descriptor const* output_type =
-      method.file()->pool()->FindMessageTypeByName(message_type);
-  if (output_type != nullptr) {
-    return output_type;
-  }
-  output_type = method.file()->pool()->FindMessageTypeByName(
-      absl::StrCat(method.file()->package(), ".", message_type));
-  if (output_type != nullptr) {
-    return output_type;
-  }
-  return message_type;
-}
-
-absl::variant<std::string, google::protobuf::Descriptor const*>
-DeduceLongrunningOperationResponseType(
-    google::protobuf::MethodDescriptor const& method,
-    google::longrunning::OperationInfo const& operation_info) {
-  std::string deduced_response_type =
-      operation_info.response_type() == "google.protobuf.Empty"
-          ? operation_info.metadata_type()
-          : operation_info.response_type();
-  return FullyQualifyMessageType(method, deduced_response_type);
-}
-
-struct FullyQualifiedMessageTypeVisitor {
-  std::string operator()(std::string const& s) const { return s; }
-  std::string operator()(google::protobuf::Descriptor const* d) const {
-    return d->full_name();
-  }
-};
-
-struct FormatDoxygenLinkVisitor {
-  explicit FormatDoxygenLinkVisitor() = default;
-  std::string operator()(std::string const& s) const {
-    return ProtoNameToCppName(s);
-  }
-  std::string operator()(google::protobuf::Descriptor const* d) const {
-    return FormatDoxygenLink(*d);
-  }
-};
-
-void SetLongrunningOperationMethodVars(
-    google::protobuf::MethodDescriptor const& method,
-    VarsDictionary& method_vars) {
-  if (method.output_type()->full_name() == "google.longrunning.Operation") {
-    auto operation_info =
-        method.options().GetExtension(google::longrunning::operation_info);
-    method_vars["longrunning_metadata_type"] = ProtoNameToCppName(absl::visit(
-        FullyQualifiedMessageTypeVisitor(),
-        FullyQualifyMessageType(method, operation_info.metadata_type())));
-    method_vars["longrunning_response_type"] = ProtoNameToCppName(absl::visit(
-        FullyQualifiedMessageTypeVisitor(),
-        FullyQualifyMessageType(method, operation_info.response_type())));
-    auto deduced_response_type =
-        DeduceLongrunningOperationResponseType(method, operation_info);
-    method_vars["longrunning_deduced_response_message_type"] =
-        absl::visit(FullyQualifiedMessageTypeVisitor(), deduced_response_type);
-    method_vars["longrunning_deduced_response_type"] = ProtoNameToCppName(
-        method_vars["longrunning_deduced_response_message_type"]);
-    method_vars["method_longrunning_deduced_return_doxygen_link"] =
-        absl::visit(FormatDoxygenLinkVisitor{}, deduced_response_type);
-  }
 }
 
 void SetMethodSignatureMethodVars(
@@ -444,6 +351,38 @@ auto constexpr kDialogflowESSessionEntityTypeDisplayNameCpp = R"""(
  projects/<Project ID>/agent/environments/<Environment ID>/users/<User ID>/sessions/<Session ID>/entityTypes/<Entity Type Display Name>
  @endcode)""";
 
+auto constexpr kLoggingConfigClientProto1 =
+    R"""( The resource name of the link:
+
+   "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/links/[LINK_ID]"
+   "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/links/[LINK_ID]"
+   "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/links/[LINK_ID]"
+   "folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/links/[LINK_ID])""";
+
+auto constexpr kLoggingConfigClientCpp1 =
+    R"""( The resource name of the link:
+
+   "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/links/[LINK_ID]"
+   "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/links/[LINK_ID]"
+   "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/links/[LINK_ID]"
+   "folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/links/[LINK_ID]")""";
+
+auto constexpr kLoggingConfigClientProto2 =
+    R"""( The parent resource whose links are to be listed:
+
+   "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/links/"
+   "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/"
+   "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/"
+   "folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/)""";
+
+auto constexpr kLoggingConfigClientCpp2 =
+    R"""( The parent resource whose links are to be listed:
+
+   "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+   "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+   "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+   "folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]")""";
+
 ParameterCommentSubstitution substitutions[] = {
     // From dialogflow/cx/v3.
     {kDialogflowCXEnvironmentIdProto1, kDialogflowCXEnvironmentIdCpp1},
@@ -459,14 +398,14 @@ ParameterCommentSubstitution substitutions[] = {
     {kDialogflowESSessionEntityTypeDisplayNameProto,
      kDialogflowESSessionEntityTypeDisplayNameCpp},
 
+    // From logging/v2.
+    {kLoggingConfigClientProto1, kLoggingConfigClientCpp1},
+    {kLoggingConfigClientProto2, kLoggingConfigClientCpp2},
+
     // From artifactregistry/v1, where a missing closing quote confuses
     // the Doxygen parser.
     {R"""("projects/p1/locations/us-central1/repositories/repo1)""",
      R"""("projects/p1/locations/us-central1/repositories/repo1")"""},
-
-    // Doxygen cannot process this tag in dataproc/v1.
-    {"<tbody>", "<!--<tbody>-->"},
-    {"</tbody>", "<!--</tbody>-->"},
 
     // Unescaped elements in spanner/admin/instance/v1.
     {" <parent>/instanceConfigs/us-east1,",
@@ -476,12 +415,6 @@ ParameterCommentSubstitution substitutions[] = {
     // Extra quotes in asset/v1.
     {R"""( "folders/12345")", or a )""", R"""( "folders/12345"), or a )"""},
 
-    // This triggers a bug (I think it is a bug) in Doxygen:
-    //    https://github.com/doxygen/doxygen/issues/8788
-    // From resourcemanager/v3.
-    {R"""(`displayName=\\"Test String\\"`)""",
-     R"""(`displayName="Test String"`))"""},
-
     // Doxygen gets confused by single quotes in code spans:
     //    https://www.doxygen.nl/manual/markdown.html#mddox_code_spans
     // The workaround is to double quote these:
@@ -489,33 +422,97 @@ ParameterCommentSubstitution substitutions[] = {
     {R"""(`{cluster} = '-'`)""", R"""(``{cluster} = '-'``)"""},
     {R"""(`projects/<Project ID or '-'>`)""",
      R"""(``projects/<Project ID or '-'>``)"""},
+
+    // Further trim some initial paragraphs for long descriptions.
+    {R"""( The included patch
+ environment would specify the scikit-learn version as follows:)""",
+     ""},
+    {R"""( The elements of the repeated paths field can only include these
+ fields from [AwsCluster][google.cloud.gkemulticloud.v1.AwsCluster]:)""",
+     ""},
+    {R"""( The elements of the repeated paths field can only include these
+ fields from [AwsNodePool][google.cloud.gkemulticloud.v1.AwsNodePool]:)""",
+     ""},
+    {R"""( For more information, see the
+ [LogEntry][google.logging.v2.LogEntry] type.)""",
+     ""},
+    {R"""(and the `PATCH` request body would specify the new value, as follows:)""",
+     R"""(and the `PATCH` request body would specify the new value.)"""},
+    {"fields. Some eligible fields are:", "fields."},
+    {" The allowable fields to\n update are:", ""},
+
+    // These appear in google/api/servicemanagement/v1/servicemanager.proto
+    // Doxygen gets confused by single quotes in code spans:
+    //    https://www.doxygen.nl/manual/markdown.html#mddox_code_spans
+    // The workaround is to double quote these:
+    {"`filter='status=SUCCESS'`", "``filter='status=SUCCESS'``"},
+    {"`filter='strategy=TrafficPercentStrategy'`",
+     "``filter='strategy=TrafficPercentStrategy'``"},
+
+    // Some comments include multiple newlines in a row. We need to preserve
+    // these because they are paragraph separators. When used in `@param`
+    // commands we need to represent them as `@n` or they do would terminate the
+    // `@param` comment. No comments use more than three newlines in a row at
+    // the moment.
+    {"\n\n\n", "\n @n\n"},
+    {"\n\n", "\n @n\n"},
+
+    // Finally, the next line after a newline needs to start as a comment.
+    {"\n", "\n  /// "},
 };
+
+// Very long parameters need different formatting.
+auto constexpr kShortParamFormat = "  /// @param %s %s\n";
+auto constexpr kLongParamFormat = R"""(  /// @param %s %s
+  ///  @n
+  ///  For more information, see [%s][%s].
+)""";
+
+std::string FormattedCommentsForParameter(
+    google::protobuf::MethodDescriptor const& method,
+    std::string const& parameter) {
+  google::protobuf::Descriptor const* input_type = method.input_type();
+  google::protobuf::FieldDescriptor const* parameter_descriptor =
+      input_type->FindFieldByName(parameter);
+  google::protobuf::SourceLocation loc;
+  parameter_descriptor->GetSourceLocation(&loc);
+  auto comment = EscapePrinterDelimiter(ChompByValue(loc.leading_comments));
+  // This is an arbitrary threshold. The intent is to simplify the generator
+  // code for corner cases. In the few cases where the documentation of a field
+  // is extremely detailed it manages to confuse Doxygen. We could try to
+  // reformat the comments until Doxygen works. Considering that there are very
+  // few of these cases, and that the long descriptions are confusing when
+  // reading a single function documentation, we just link the full method
+  // documentation and skip the details.
+  auto constexpr kTooManyLines = 20;
+  if (std::count(comment.begin(), comment.end(), '\n') > kTooManyLines) {
+    std::vector<absl::string_view> paragraphs = absl::StrSplit(comment, "\n\n");
+    auto brief = std::string{paragraphs.front()};
+    for (auto& sub : substitutions) {
+      sub.uses += absl::StrReplaceAll({{sub.before, sub.after}}, &brief);
+    }
+    return absl::StrFormat(kLongParamFormat, FieldName(parameter_descriptor),
+                           brief, method.input_type()->name(),
+                           method.input_type()->full_name());
+  }
+
+  for (auto& sub : substitutions) {
+    sub.uses += absl::StrReplaceAll({{sub.before, sub.after}}, &comment);
+  }
+  return absl::StrFormat(kShortParamFormat, FieldName(parameter_descriptor),
+                         std::move(comment));
+}
 
 std::string FormatApiMethodSignatureParameters(
     google::protobuf::MethodDescriptor const& method,
     std::string const& signature) {
   std::string parameter_comments;
-  google::protobuf::Descriptor const* input_type = method.input_type();
   std::vector<std::string> parameters =
       absl::StrSplit(signature, ',', absl::SkipEmpty());
   for (auto& parameter : parameters) {
     absl::StripAsciiWhitespace(&parameter);
-    google::protobuf::FieldDescriptor const* parameter_descriptor =
-        input_type->FindFieldByName(parameter);
-    google::protobuf::SourceLocation loc;
-    parameter_descriptor->GetSourceLocation(&loc);
-    auto comment = EscapePrinterDelimiter(ChompByValue(loc.leading_comments));
-    for (auto& sub : substitutions) {
-      sub.uses += absl::StrReplaceAll({{sub.before, sub.after}}, &comment);
-    }
-    absl::StrReplaceAll(
-        {
-            {"\n\n", "\n  /// "},
-            {"\n", "\n  /// "},
-        },
-        &comment);
-    absl::StrAppendFormat(&parameter_comments, "  /// @param %s %s\n",
-                          FieldName(parameter_descriptor), std::move(comment));
+    absl::StrAppend(&parameter_comments,
+                    FormattedCommentsForParameter(method, parameter));
   }
   return parameter_comments;
 }
@@ -544,6 +541,37 @@ void SetRetryStatusCodeExpression(VarsDictionary& vars) {
   vars["retry_status_code_expression"] = retry_status_code_expression;
 }
 
+std::string TransientErrorsComment(VarsDictionary const& vars) {
+  auto loc = vars.find("retryable_status_codes");
+  if (loc == vars.end()) return {};
+  std::set<std::string> codes = absl::StrSplit(loc->second, ',');
+
+  loc = vars.find("service_name");
+  auto const service_name = loc == vars.end() ? std::string{} : loc->second;
+
+  std::string comment = R"""(
+ * In this class the following status codes are treated as transient errors:)""";
+
+  auto format = [](absl::string_view code) {
+    auto constexpr kCodeFormat = R"""(
+ * - [`%s`](@ref google::cloud::StatusCode))""";
+    return absl::StrFormat(kCodeFormat, code);
+  };
+  for (auto const& code : codes) {
+    std::pair<std::string, std::string> service_code =
+        absl::StrSplit(code, '.');
+    if (service_code.second.empty()) {
+      comment += format(service_code.first);
+      continue;
+    }
+    if (service_code.first == service_name) {
+      comment += format(service_code.second);
+      continue;
+    }
+  }
+  return comment;
+}
+
 std::string FormatAdditionalPbHeaderPaths(VarsDictionary& vars) {
   std::vector<std::string> additional_pb_header_paths;
   auto iter = vars.find("additional_proto_files");
@@ -561,6 +589,7 @@ std::string FormatAdditionalPbHeaderPaths(VarsDictionary& vars) {
 
 }  // namespace
 
+// TODO(#11545): relocate this function to a separate TU.
 std::string FormatDoxygenLink(
     google::protobuf::Descriptor const& message_type) {
   google::protobuf::SourceLocation loc;
@@ -569,58 +598,6 @@ std::string FormatDoxygenLink(
   return absl::StrCat(
       "@googleapis_link{", ProtoNameToCppName(message_type.full_name()), ",",
       output_type_proto_file_name, "#L", loc.start_line + 1, "}");
-}
-
-ExplicitRoutingInfo ParseExplicitRoutingHeader(
-    google::protobuf::MethodDescriptor const& method) {
-  ExplicitRoutingInfo info;
-  if (!method.options().HasExtension(google::api::routing)) return info;
-  google::api::RoutingRule rule =
-      method.options().GetExtension(google::api::routing);
-
-  auto const& rps = rule.routing_parameters();
-  // We use reverse iterators so that "last wins" becomes "first wins".
-  for (auto it = rps.rbegin(); it != rps.rend(); ++it) {
-    std::vector<std::string> chunks;
-    auto const* input_type = method.input_type();
-    for (auto const& sv : absl::StrSplit(it->field(), '.')) {
-      auto const chunk = std::string(sv);
-      auto const* chunk_descriptor = input_type->FindFieldByName(chunk);
-      chunks.push_back(FieldName(chunk_descriptor));
-      input_type = chunk_descriptor->message_type();
-    }
-    auto field_name = absl::StrJoin(chunks, "().");
-    auto const& path_template = it->path_template();
-    // When a path_template is not supplied, we use the field name as the
-    // routing parameter key. The pattern matches the whole value of the field.
-    if (path_template.empty()) {
-      info[it->field()].push_back({std::move(field_name), "(.*)"});
-      continue;
-    }
-    // When a path_template is supplied, we convert the pattern from the proto
-    // into a std::regex. We extract the routing parameter key and set up a
-    // single capture group. For example:
-    //
-    // Input :
-    //   - path_template = "projects/*/{foo=instances/*}:**"
-    // Output:
-    //   - param         = "foo"
-    //   - pattern       = "projects/[^/]+/(instances/[^:]+):.*"
-    static std::regex const kPatternRegex(R"((.*)\{(.*)=(.*)\}(.*))");
-    std::smatch match;
-    if (!std::regex_match(path_template, match, kPatternRegex)) {
-      GCP_LOG(FATAL) << __FILE__ << ":" << __LINE__ << ": "
-                     << "RoutingParameters path template is malformed: "
-                     << path_template;
-    }
-    auto pattern =
-        absl::StrCat(match[1].str(), "(", match[3].str(), ")", match[4].str());
-    pattern = absl::StrReplaceAll(
-        pattern,
-        {{"**", ".*"}, {"*):", "[^:]+):"}, {"*:", "[^:]+:"}, {"*", "[^/]+"}});
-    info[match[2].str()].push_back({std::move(field_name), std::move(pattern)});
-  }
-  return info;
 }
 
 std::string FormatMethodCommentsMethodSignature(
@@ -633,10 +610,16 @@ std::string FormatMethodCommentsMethodSignature(
 
 std::string FormatMethodCommentsProtobufRequest(
     google::protobuf::MethodDescriptor const& method) {
-  google::protobuf::Descriptor const* input_type = method.input_type();
-  auto parameter_comment = absl::StrFormat("  /// @param %s %s\n", "request",
-                                           FormatDoxygenLink(*input_type));
-  return FormatMethodComments(method, std::move(parameter_comment));
+  auto constexpr kRequestParam =
+      R"""(  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [%s].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+)""";
+  return FormatMethodComments(
+      method, absl::StrFormat(kRequestParam, method.input_type()->full_name()));
 }
 
 bool CheckParameterCommentSubstitutions() {
@@ -866,6 +849,8 @@ VarsDictionary CreateServiceVars(
       absl::StrCat(vars["product_path"], "internal/",
                    ServiceNameToFilePath(descriptor.name()), "_tracing_stub.h");
   SetRetryStatusCodeExpression(vars);
+  vars["transient_errors_comment"] = TransientErrorsComment(vars);
+  SetLongrunningOperationServiceVars(descriptor, vars);
   return vars;
 }
 
@@ -930,127 +915,13 @@ std::map<std::string, VarsDictionary> CreateMethodVars(
     SetMethodSignatureMethodVars(service, method, emitted_rpcs, omitted_rpcs,
                                  method_vars);
     auto parsed_http_info = ParseHttpExtension(method);
+    method_vars["request_resource"] =
+        FormatRequestResource(*method.input_type(), parsed_http_info);
     SetHttpDerivedMethodVars(parsed_http_info, method, method_vars);
     SetHttpGetQueryParameters(parsed_http_info, method, method_vars);
     service_methods_vars[method.full_name()] = method_vars;
   }
   return service_methods_vars;
-}
-
-std::vector<std::unique_ptr<GeneratorInterface>> MakeGenerators(
-    google::protobuf::ServiceDescriptor const* service,
-    google::protobuf::compiler::GeneratorContext* context,
-    std::vector<std::pair<std::string, std::string>> const& vars) {
-  std::vector<std::unique_ptr<GeneratorInterface>> code_generators;
-  VarsDictionary service_vars = CreateServiceVars(*service, vars);
-  auto method_vars = CreateMethodVars(*service, service_vars);
-  bool const generate_grpc_transport = [&] {
-    auto iter = service_vars.find("generate_grpc_transport");
-    if (iter == service_vars.end()) return true;
-    return iter->second == "true";
-  }();
-
-  auto const omit_client = service_vars.find("omit_client");
-  if (omit_client == service_vars.end() || omit_client->second != "true") {
-    code_generators.push_back(std::make_unique<ClientGenerator>(
-        service, service_vars, method_vars, context));
-    code_generators.push_back(std::make_unique<SampleGenerator>(
-        service, service_vars, method_vars, context));
-  }
-  auto const omit_connection = service_vars.find("omit_connection");
-  if (omit_connection == service_vars.end() ||
-      omit_connection->second != "true") {
-    if (generate_grpc_transport) {
-      code_generators.push_back(std::make_unique<ConnectionImplGenerator>(
-          service, service_vars, method_vars, context));
-    }
-    code_generators.push_back(std::make_unique<ConnectionGenerator>(
-        service, service_vars, method_vars, context));
-    code_generators.push_back(std::make_unique<IdempotencyPolicyGenerator>(
-        service, service_vars, method_vars, context));
-    code_generators.push_back(std::make_unique<MockConnectionGenerator>(
-        service, service_vars, method_vars, context));
-    code_generators.push_back(std::make_unique<OptionDefaultsGenerator>(
-        service, service_vars, method_vars, context));
-    code_generators.push_back(std::make_unique<OptionsGenerator>(
-        service, service_vars, method_vars, context));
-    if (service_vars.find("retry_status_code_expression") !=
-        service_vars.end()) {
-      code_generators.push_back(std::make_unique<RetryTraitsGenerator>(
-          service, service_vars, method_vars, context));
-    }
-    code_generators.push_back(std::make_unique<TracingConnectionGenerator>(
-        service, service_vars, method_vars, context));
-  }
-  auto const omit_stub_factory = service_vars.find("omit_stub_factory");
-  if (omit_stub_factory == service_vars.end() ||
-      omit_stub_factory->second != "true") {
-    if (generate_grpc_transport) {
-      code_generators.push_back(std::make_unique<StubFactoryGenerator>(
-          service, service_vars, method_vars, context));
-    }
-  }
-  auto const forwarding_headers = service_vars.find("forwarding_product_path");
-  if (forwarding_headers != service_vars.end() &&
-      !forwarding_headers->second.empty()) {
-    code_generators.push_back(std::make_unique<ForwardingClientGenerator>(
-        service, service_vars, method_vars, context));
-    code_generators.push_back(std::make_unique<ForwardingConnectionGenerator>(
-        service, service_vars, method_vars, context));
-    code_generators.push_back(
-        std::make_unique<ForwardingIdempotencyPolicyGenerator>(
-            service, service_vars, method_vars, context));
-    code_generators.push_back(
-        std::make_unique<ForwardingMockConnectionGenerator>(
-            service, service_vars, method_vars, context));
-    code_generators.push_back(std::make_unique<ForwardingOptionsGenerator>(
-        service, service_vars, method_vars, context));
-  }
-
-  if (generate_grpc_transport) {
-    code_generators.push_back(std::make_unique<AuthDecoratorGenerator>(
-        service, service_vars, method_vars, context));
-    code_generators.push_back(std::make_unique<LoggingDecoratorGenerator>(
-        service, service_vars, method_vars, context));
-    code_generators.push_back(std::make_unique<MetadataDecoratorGenerator>(
-        service, service_vars, method_vars, context));
-    code_generators.push_back(std::make_unique<StubGenerator>(
-        service, service_vars, method_vars, context));
-    code_generators.push_back(std::make_unique<TracingStubGenerator>(
-        service, service_vars, method_vars, context));
-  }
-
-  auto const generate_round_robin_generator =
-      service_vars.find("generate_round_robin_decorator");
-  if (generate_round_robin_generator != service_vars.end() &&
-      generate_round_robin_generator->second == "true") {
-    code_generators.push_back(std::make_unique<RoundRobinDecoratorGenerator>(
-        service, service_vars, method_vars, context));
-  }
-
-  auto const generate_rest_transport =
-      service_vars.find("generate_rest_transport");
-  if (generate_rest_transport != service_vars.end() &&
-      generate_rest_transport->second == "true") {
-    // All REST interfaces postdate the change to the format of our inline
-    // namespace name, so we never need to add a backwards-compatibility alias.
-    auto rest_service_vars = service_vars;
-    rest_service_vars.erase("backwards_compatibility_namespace_alias");
-    code_generators.push_back(std::make_unique<ConnectionRestGenerator>(
-        service, rest_service_vars, method_vars, context));
-    code_generators.push_back(std::make_unique<ConnectionImplRestGenerator>(
-        service, rest_service_vars, method_vars, context));
-    code_generators.push_back(std::make_unique<LoggingDecoratorRestGenerator>(
-        service, rest_service_vars, method_vars, context));
-    code_generators.push_back(std::make_unique<MetadataDecoratorRestGenerator>(
-        service, rest_service_vars, method_vars, context));
-    code_generators.push_back(std::make_unique<StubFactoryRestGenerator>(
-        service, rest_service_vars, method_vars, context));
-    code_generators.push_back(std::make_unique<StubRestGenerator>(
-        service, rest_service_vars, method_vars, context));
-  }
-
-  return code_generators;
 }
 
 Status PrintMethod(google::protobuf::MethodDescriptor const& method,

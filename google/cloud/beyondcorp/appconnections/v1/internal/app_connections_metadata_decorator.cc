@@ -19,6 +19,7 @@
 
 #include "google/cloud/beyondcorp/appconnections/v1/internal/app_connections_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/beyondcorp/appconnections/v1/app_connections_service.grpc.pb.h>
@@ -30,8 +31,10 @@ namespace beyondcorp_appconnections_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 AppConnectionsServiceMetadata::AppConnectionsServiceMetadata(
-    std::shared_ptr<AppConnectionsServiceStub> child)
+    std::shared_ptr<AppConnectionsServiceStub> child,
+    std::multimap<std::string, std::string> fixed_metadata)
     : child_(std::move(child)),
+      fixed_metadata_(std::move(fixed_metadata)),
       api_client_header_(
           google::cloud::internal::ApiClientHeader("generator")) {}
 
@@ -41,7 +44,7 @@ AppConnectionsServiceMetadata::ListAppConnections(
     grpc::ClientContext& context,
     google::cloud::beyondcorp::appconnections::v1::
         ListAppConnectionsRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListAppConnections(context, request);
 }
 
@@ -50,7 +53,7 @@ AppConnectionsServiceMetadata::GetAppConnection(
     grpc::ClientContext& context,
     google::cloud::beyondcorp::appconnections::v1::
         GetAppConnectionRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetAppConnection(context, request);
 }
 
@@ -60,7 +63,7 @@ AppConnectionsServiceMetadata::AsyncCreateAppConnection(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::beyondcorp::appconnections::v1::
         CreateAppConnectionRequest const& request) {
-  SetMetadata(*context, "parent=" + request.parent());
+  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
   return child_->AsyncCreateAppConnection(cq, std::move(context), request);
 }
 
@@ -70,8 +73,8 @@ AppConnectionsServiceMetadata::AsyncUpdateAppConnection(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::beyondcorp::appconnections::v1::
         UpdateAppConnectionRequest const& request) {
-  SetMetadata(*context,
-              "app_connection.name=" + request.app_connection().name());
+  SetMetadata(*context, absl::StrCat("app_connection.name=",
+                                     request.app_connection().name()));
   return child_->AsyncUpdateAppConnection(cq, std::move(context), request);
 }
 
@@ -81,7 +84,7 @@ AppConnectionsServiceMetadata::AsyncDeleteAppConnection(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::beyondcorp::appconnections::v1::
         DeleteAppConnectionRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncDeleteAppConnection(cq, std::move(context), request);
 }
 
@@ -91,7 +94,7 @@ AppConnectionsServiceMetadata::ResolveAppConnections(
     grpc::ClientContext& context,
     google::cloud::beyondcorp::appconnections::v1::
         ResolveAppConnectionsRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ResolveAppConnections(context, request);
 }
 
@@ -119,6 +122,9 @@ void AppConnectionsServiceMetadata::SetMetadata(
 }
 
 void AppConnectionsServiceMetadata::SetMetadata(grpc::ClientContext& context) {
+  for (auto const& kv : fixed_metadata_) {
+    context.AddMetadata(kv.first, kv.second);
+  }
   context.AddMetadata("x-goog-api-client", api_client_header_);
   auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {

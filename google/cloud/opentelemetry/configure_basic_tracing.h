@@ -116,16 +116,7 @@ class BasicTracingConfiguration {
  * you can use an environment variable (or any other configuration source)
  * to initialize its value.
  *
- * @code
- *   auto const rate = [](char const* v) -> double {
- *     if (v == nullptr) return 0.01; // By default use 1% sampling.
- *     return std::stoi(v) / 100.0;
- *   }(std::getenv("MY_CONFIG_VARIABLE"))
- *   auto tracing = google::cloud::opentelemetry::ConfigureBasicTracing(
- *       google::cloud::Project(tracing_project),
- *       google::cloud::Options{}
- *           .set<google::cloud::opentelemetry::BasicTracingRateOption>(rate));
- * @endcode
+ * @snippet samples.cc otel-basic-tracing-rate
  * @endparblock
  *
  * @param project the project to send the traces to.

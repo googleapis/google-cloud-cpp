@@ -45,7 +45,8 @@ DefaultSqlDatabasesServiceRestStub::Delete(
     google::cloud::sql::v1::SqlDatabasesDeleteRequest const& request) {
   return rest_internal::Delete<google::cloud::sql::v1::Operation>(
       *service_, rest_context, request,
-      "/v1/projects/{project}/instances/{instance}/databases/{database}");
+      absl::StrCat("/v1/projects/", request.project(), "/instances/",
+                   request.instance(), "/databases/", request.database(), ""));
 }
 
 StatusOr<google::cloud::sql::v1::Database>
@@ -54,10 +55,9 @@ DefaultSqlDatabasesServiceRestStub::Get(
     google::cloud::sql::v1::SqlDatabasesGetRequest const& request) {
   return rest_internal::Get<google::cloud::sql::v1::Database>(
       *service_, rest_context, request,
-      "/v1/projects/{project}/instances/{instance}/databases/{database}",
-      {std::make_pair("database", request.database()),
-       std::make_pair("instance", request.instance()),
-       std::make_pair("project", request.project())});
+      absl::StrCat("/v1/projects/", request.project(), "/instances/",
+                   request.instance(), "/databases/", request.database(), ""),
+      {});
 }
 
 StatusOr<google::cloud::sql::v1::Operation>
@@ -65,8 +65,9 @@ DefaultSqlDatabasesServiceRestStub::Insert(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::sql::v1::SqlDatabasesInsertRequest const& request) {
   return rest_internal::Post<google::cloud::sql::v1::Operation>(
-      *service_, rest_context, request,
-      "/v1/projects/{project}/instances/{instance}/databases");
+      *service_, rest_context, request.body(),
+      absl::StrCat("/v1/projects/", request.project(), "/instances/",
+                   request.instance(), "/databases"));
 }
 
 StatusOr<google::cloud::sql::v1::DatabasesListResponse>
@@ -75,9 +76,9 @@ DefaultSqlDatabasesServiceRestStub::List(
     google::cloud::sql::v1::SqlDatabasesListRequest const& request) {
   return rest_internal::Get<google::cloud::sql::v1::DatabasesListResponse>(
       *service_, rest_context, request,
-      "/v1/projects/{project}/instances/{instance}/databases",
-      {std::make_pair("instance", request.instance()),
-       std::make_pair("project", request.project())});
+      absl::StrCat("/v1/projects/", request.project(), "/instances/",
+                   request.instance(), "/databases"),
+      {});
 }
 
 StatusOr<google::cloud::sql::v1::Operation>
@@ -85,8 +86,9 @@ DefaultSqlDatabasesServiceRestStub::Patch(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::sql::v1::SqlDatabasesUpdateRequest const& request) {
   return rest_internal::Patch<google::cloud::sql::v1::Operation>(
-      *service_, rest_context, request,
-      "/v1/projects/{project}/instances/{instance}/databases/{database}");
+      *service_, rest_context, request.body(),
+      absl::StrCat("/v1/projects/", request.project(), "/instances/",
+                   request.instance(), "/databases/", request.database(), ""));
 }
 
 StatusOr<google::cloud::sql::v1::Operation>
@@ -94,8 +96,9 @@ DefaultSqlDatabasesServiceRestStub::Update(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::sql::v1::SqlDatabasesUpdateRequest const& request) {
   return rest_internal::Put<google::cloud::sql::v1::Operation>(
-      *service_, rest_context, request,
-      "/v1/projects/{project}/instances/{instance}/databases/{database}");
+      *service_, rest_context, request.body(),
+      absl::StrCat("/v1/projects/", request.project(), "/instances/",
+                   request.instance(), "/databases/", request.database(), ""));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

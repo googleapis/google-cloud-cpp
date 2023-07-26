@@ -1,0 +1,14 @@
+{
+    "api_id": "contactcenterinsights.googleapis.com",
+    "api_shortname": "contactcenterinsights",
+    "client_documentation": "https://cloud.google.com/cpp/docs/reference/contactcenterinsights/latest",
+    "distribution_name": "google-cloud-cpp",
+    "issue_tracker": "https://issuetracker.google.com/savedsearches/6143399",
+    "language": "cpp",
+    "library_type": "GAPIC_AUTO",
+    "name_pretty": "Contact Center AI Insights API",
+    "product_documentation": "https://cloud.google.com/contact-center/insights/docs",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-cpp",
+    "requires_billing": true
+}

@@ -92,6 +92,7 @@ class PolicyTagManagerSerializationClient {
   }
   ///@}
 
+  // clang-format off
   ///
   /// Replaces (updates) a taxonomy and all its policy tags.
   ///
@@ -107,22 +108,35 @@ class PolicyTagManagerSerializationClient {
   ///   new.
   /// - Updates policy tags with valid resources names accordingly.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::datacatalog::v1::ReplaceTaxonomyRequest,google/cloud/datacatalog/v1/policytagmanagerserialization.proto#L135}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.datacatalog.v1.ReplaceTaxonomyRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::datacatalog::v1::Taxonomy,google/cloud/datacatalog/v1/policytagmanager.proto#L211}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.datacatalog.v1.Taxonomy])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.datacatalog.v1.ReplaceTaxonomyRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanagerserialization.proto#L135}
-  /// [google.cloud.datacatalog.v1.Taxonomy]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L211}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.datacatalog.v1.ReplaceTaxonomyRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanagerserialization.proto#L135}
+  /// [google.cloud.datacatalog.v1.Taxonomy]: @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L211}
   ///
+  // clang-format on
   StatusOr<google::cloud::datacatalog::v1::Taxonomy> ReplaceTaxonomy(
       google::cloud::datacatalog::v1::ReplaceTaxonomyRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates new taxonomies (including their policy tags) in a given project
   /// by importing from inlined or cross-regional sources.
@@ -130,26 +144,39 @@ class PolicyTagManagerSerializationClient {
   /// For a cross-regional source, new taxonomies are created by copying
   /// from a source in another region.
   ///
-  /// For an inlined source, taxonomies and policy tags are created in bulk
-  /// using nested protocol buffer structures.
+  /// For an inlined source, taxonomies and policy tags are created in bulk using
+  /// nested protocol buffer structures.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::datacatalog::v1::ImportTaxonomiesRequest,google/cloud/datacatalog/v1/policytagmanagerserialization.proto#L151}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.datacatalog.v1.ImportTaxonomiesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::datacatalog::v1::ImportTaxonomiesResponse,google/cloud/datacatalog/v1/policytagmanagerserialization.proto#L192}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.datacatalog.v1.ImportTaxonomiesResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.datacatalog.v1.ImportTaxonomiesRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanagerserialization.proto#L151}
-  /// [google.cloud.datacatalog.v1.ImportTaxonomiesResponse]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanagerserialization.proto#L192}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.datacatalog.v1.ImportTaxonomiesRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanagerserialization.proto#L151}
+  /// [google.cloud.datacatalog.v1.ImportTaxonomiesResponse]: @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanagerserialization.proto#L192}
   ///
+  // clang-format on
   StatusOr<google::cloud::datacatalog::v1::ImportTaxonomiesResponse>
   ImportTaxonomies(
       google::cloud::datacatalog::v1::ImportTaxonomiesRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Exports taxonomies in the requested type and returns them,
   /// including their policy tags. The requested taxonomies must belong to the
@@ -158,18 +185,30 @@ class PolicyTagManagerSerializationClient {
   /// This method generates `SerializedTaxonomy` protocol buffers with nested
   /// policy tags that can be used as input for `ImportTaxonomies` calls.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::datacatalog::v1::ExportTaxonomiesRequest,google/cloud/datacatalog/v1/policytagmanagerserialization.proto#L199}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.datacatalog.v1.ExportTaxonomiesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::datacatalog::v1::ExportTaxonomiesResponse,google/cloud/datacatalog/v1/policytagmanagerserialization.proto#L227}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.datacatalog.v1.ExportTaxonomiesResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.datacatalog.v1.ExportTaxonomiesRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanagerserialization.proto#L199}
-  /// [google.cloud.datacatalog.v1.ExportTaxonomiesResponse]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanagerserialization.proto#L227}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.datacatalog.v1.ExportTaxonomiesRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanagerserialization.proto#L199}
+  /// [google.cloud.datacatalog.v1.ExportTaxonomiesResponse]: @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanagerserialization.proto#L227}
   ///
+  // clang-format on
   StatusOr<google::cloud::datacatalog::v1::ExportTaxonomiesResponse>
   ExportTaxonomies(
       google::cloud::datacatalog::v1::ExportTaxonomiesRequest const& request,

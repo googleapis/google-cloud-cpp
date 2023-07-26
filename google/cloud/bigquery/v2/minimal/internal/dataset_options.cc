@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigquery/v2/minimal/internal/dataset_options.h"
+#include "google/cloud/bigquery/v2/minimal/internal/common_options.h"
 #include "google/cloud/bigquery/v2/minimal/internal/dataset_retry_policy.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include <memory>
@@ -22,18 +23,6 @@ namespace google {
 namespace cloud {
 namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-namespace {
-auto constexpr kBackoffScaling = 2.0;
-std::size_t constexpr kConnectionPoolSize = 4;
-std::size_t constexpr kConnectionPoolSizeMax = 64;
-
-std::size_t DefaultConnectionPoolSize() {
-  int cpu_count = std::thread::hardware_concurrency();
-  if (cpu_count == 0) return kConnectionPoolSize;
-  return (std::min)(kConnectionPoolSizeMax, cpu_count * kConnectionPoolSize);
-}
-}  // namespace
 
 Options DatasetDefaultOptions(Options options) {
   options = google::cloud::internal::PopulateCommonOptions(

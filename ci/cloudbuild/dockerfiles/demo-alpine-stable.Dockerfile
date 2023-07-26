@@ -21,7 +21,7 @@ ARG NCPU=4
 
 # ```bash
 RUN apk update && \
-    apk add bash ca-certificates ccache cmake curl git \
+    apk add bash ca-certificates cmake curl git \
         gcc g++ make tar unzip zip zlib-dev
 # ```
 
@@ -34,7 +34,7 @@ RUN apk update && \
 
 # ```bash
 WORKDIR /var/tmp/build/pkg-config-cpp
-RUN curl -sSL https://pkgconfig.freedesktop.org/releases/pkg-config-0.29.2.tar.gz | \
+RUN curl -fsSL https://pkgconfig.freedesktop.org/releases/pkg-config-0.29.2.tar.gz | \
     tar -xzf - --strip-components=1 && \
     ./configure --with-internal-glib && \
     make -j ${NCPU:-4} && \
@@ -61,7 +61,7 @@ RUN apk update && \
 
 # ```bash
 WORKDIR /var/tmp/build/crc32c
-RUN curl -sSL https://github.com/google/crc32c/archive/1.1.2.tar.gz | \
+RUN curl -fsSL https://github.com/google/crc32c/archive/1.1.2.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -75,3 +75,10 @@ RUN curl -sSL https://github.com/google/crc32c/archive/1.1.2.tar.gz | \
 # ```
 
 ## [DONE packaging.md]
+
+WORKDIR /var/tmp/sccache
+RUN curl -fsSL https://github.com/mozilla/sccache/releases/download/v0.5.4/sccache-v0.5.4-x86_64-unknown-linux-musl.tar.gz | \
+    tar -zxf - --strip-components=1 && \
+    mkdir -p /usr/local/bin && \
+    mv sccache /usr/local/bin/sccache && \
+    chmod +x /usr/local/bin/sccache

@@ -27,7 +27,6 @@ namespace testing {
 namespace {
 
 using ::testing::Return;
-using ::testing::ReturnRef;
 using ::testing::StartsWith;
 
 ObjectMetadata CreateObject(std::string const& name, int generation) {
@@ -72,7 +71,7 @@ TEST(CleanupStaleBucketsTest, RemoveBucketContents) {
   EXPECT_CALL(*mock, GetBucketMetadata)
       .WillOnce(
           Return(make_status_or(BucketMetadata{}.set_name("fake-bucket"))));
-  auto client = internal::ClientImplDetails::CreateWithoutDecorations(mock);
+  auto client = UndecoratedClientFromMock(mock);
   auto const actual = RemoveBucketAndContents(client, "fake-bucket");
   EXPECT_STATUS_OK(actual);
 }
@@ -89,10 +88,6 @@ TEST(CleanupStaleBucketsTest, RemoveStaleBuckets) {
         EXPECT_TRUE(r.HasOption<Versions>());
         return internal::ListObjectsResponse{};
       });
-  auto const options =
-      ClientOptions{oauth2::CreateAnonymousCredentials()}.set_project_id(
-          "fake-project");
-  EXPECT_CALL(*mock, client_options).WillRepeatedly(ReturnRef(options));
 
   auto const now =
       google::cloud::internal::ParseRfc3339("2020-09-23T12:34:56Z").value();
@@ -100,6 +95,8 @@ TEST(CleanupStaleBucketsTest, RemoveStaleBuckets) {
   auto const affected_tp = create_time_limit - std::chrono::hours(1);
   auto const unaffected_tp = create_time_limit + std::chrono::hours(1);
 
+  EXPECT_CALL(*mock, options)
+      .WillRepeatedly(Return(Options{}.set<ProjectIdOption>("fake-project")));
   EXPECT_CALL(*mock, ListBuckets)
       .WillOnce([&](internal::ListBucketsRequest const& r) {
         EXPECT_EQ("fake-project", r.project_id());
@@ -114,7 +111,7 @@ TEST(CleanupStaleBucketsTest, RemoveStaleBuckets) {
         return response;
       });
 
-  auto client = internal::ClientImplDetails::CreateWithoutDecorations(mock);
+  auto client = UndecoratedClientFromMock(mock);
   auto const actual = RemoveStaleBuckets(client, "matching", create_time_limit);
   EXPECT_STATUS_OK(actual);
 }

@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CLOUDBUILD_V2_REPOSITORY_MANAGER_CONNECTION_IDEMPOTENCY_POLICY_H
 
 #include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
 #include "google/cloud/version.h"
 #include <google/devtools/cloudbuild/v2/repositories.grpc.pb.h>
 #include <memory>
@@ -79,6 +78,9 @@ class RepositoryManagerConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency FetchLinkableRepositories(
       google::devtools::cloudbuild::v2::FetchLinkableRepositoriesRequest
           request);
+
+  virtual google::cloud::Idempotency FetchGitRefs(
+      google::devtools::cloudbuild::v2::FetchGitRefsRequest const& request);
 };
 
 std::unique_ptr<RepositoryManagerConnectionIdempotencyPolicy>

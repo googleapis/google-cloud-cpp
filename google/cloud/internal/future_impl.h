@@ -372,7 +372,7 @@ class future_shared_state final : public future_shared_state_base {
    * stores the value and the state becomes satisfied.
    *
    * @param value the value to store in the shared state.
-   * @throws `std::future_error` if the shared state was already satisfied. The
+   * @throws std::future_error if the shared state was already satisfied. The
    *     error code is `std::future_errc::promise_already_satisfied`.
    */
   void set_value(T value) {

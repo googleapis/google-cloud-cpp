@@ -87,75 +87,115 @@ class SecurityCenterClient {
   }
   ///@}
 
+  // clang-format off
   ///
   /// Kicks off an LRO to bulk mute findings for a parent based on a filter. The
   /// parent can be either an organization, folder or project. The findings
   /// matched by the filter will be muted after the LRO is done.
   ///
-  /// @param parent  Required. The parent, at which bulk action needs to be
-  /// applied. Its format
+  /// @param parent  Required. The parent, at which bulk action needs to be applied. Its format
   ///  is "organizations/[organization_id]", "folders/[folder_id]",
   ///  "projects/[project_id]".
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::securitycenter::v1::BulkMuteFindingsResponse,google/cloud/securitycenter/v1/securitycenter_service.proto#L768}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.securitycenter.v1.BulkMuteFindingsResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.securitycenter.v1.BulkMuteFindingsRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L731}
-  /// [google.cloud.securitycenter.v1.BulkMuteFindingsResponse]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L768}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securitycenter.v1.BulkMuteFindingsRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L734}
+  /// [google.cloud.securitycenter.v1.BulkMuteFindingsResponse]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L771}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::securitycenter::v1::BulkMuteFindingsResponse>>
   BulkMuteFindings(std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Kicks off an LRO to bulk mute findings for a parent based on a filter. The
   /// parent can be either an organization, folder or project. The findings
   /// matched by the filter will be muted after the LRO is done.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::securitycenter::v1::BulkMuteFindingsRequest,google/cloud/securitycenter/v1/securitycenter_service.proto#L731}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.securitycenter.v1.BulkMuteFindingsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::securitycenter::v1::BulkMuteFindingsResponse,google/cloud/securitycenter/v1/securitycenter_service.proto#L768}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.securitycenter.v1.BulkMuteFindingsResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.securitycenter.v1.BulkMuteFindingsRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L731}
-  /// [google.cloud.securitycenter.v1.BulkMuteFindingsResponse]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L768}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securitycenter.v1.BulkMuteFindingsRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L734}
+  /// [google.cloud.securitycenter.v1.BulkMuteFindingsResponse]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L771}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::securitycenter::v1::BulkMuteFindingsResponse>>
   BulkMuteFindings(
       google::cloud::securitycenter::v1::BulkMuteFindingsRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a resident SecurityHealthAnalyticsCustomModule at the scope of the
   /// given CRM parent, and also creates inherited
   /// SecurityHealthAnalyticsCustomModules for all CRM descendants of the given
   /// parent. These modules are enabled by default.
   ///
-  /// @param parent  Required. Resource name of the new custom module's parent.
-  /// Its format is
+  /// @param parent  Required. Resource name of the new custom module's parent. Its format is
   ///  "organizations/{organization}/securityHealthAnalyticsSettings",
   ///  "folders/{folder}/securityHealthAnalyticsSettings", or
   ///  "projects/{project}/securityHealthAnalyticsSettings"
-  /// @param security_health_analytics_custom_module  Required.
-  /// SecurityHealthAnalytics custom module to create. The provided
+  /// @param security_health_analytics_custom_module  Required. SecurityHealthAnalytics custom module to create. The provided
   ///  name is ignored and reset with provided parent information and
   ///  server-generated ID.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule,google/cloud/securitycenter/v1/security_health_analytics_custom_module.proto#L43}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.securitycenter.v1.SecurityHealthAnalyticsCustomModule])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.securitycenter.v1.CreateSecurityHealthAnalyticsCustomModuleRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L839}
-  /// [google.cloud.securitycenter.v1.SecurityHealthAnalyticsCustomModule]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/security_health_analytics_custom_module.proto#L43}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securitycenter.v1.CreateSecurityHealthAnalyticsCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L842}
+  /// [google.cloud.securitycenter.v1.SecurityHealthAnalyticsCustomModule]: @googleapis_reference_link{google/cloud/securitycenter/v1/security_health_analytics_custom_module.proto#L43}
   ///
+  // clang-format on
   StatusOr<
       google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule>
   CreateSecurityHealthAnalyticsCustomModule(
@@ -165,24 +205,37 @@ class SecurityCenterClient {
               security_health_analytics_custom_module,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a resident SecurityHealthAnalyticsCustomModule at the scope of the
   /// given CRM parent, and also creates inherited
   /// SecurityHealthAnalyticsCustomModules for all CRM descendants of the given
   /// parent. These modules are enabled by default.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::securitycenter::v1::CreateSecurityHealthAnalyticsCustomModuleRequest,google/cloud/securitycenter/v1/securitycenter_service.proto#L839}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.securitycenter.v1.CreateSecurityHealthAnalyticsCustomModuleRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule,google/cloud/securitycenter/v1/security_health_analytics_custom_module.proto#L43}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.securitycenter.v1.SecurityHealthAnalyticsCustomModule])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.securitycenter.v1.CreateSecurityHealthAnalyticsCustomModuleRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L839}
-  /// [google.cloud.securitycenter.v1.SecurityHealthAnalyticsCustomModule]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/security_health_analytics_custom_module.proto#L43}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securitycenter.v1.CreateSecurityHealthAnalyticsCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L842}
+  /// [google.cloud.securitycenter.v1.SecurityHealthAnalyticsCustomModule]: @googleapis_reference_link{google/cloud/securitycenter/v1/security_health_analytics_custom_module.proto#L43}
   ///
+  // clang-format on
   StatusOr<
       google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule>
   CreateSecurityHealthAnalyticsCustomModule(
@@ -190,193 +243,267 @@ class SecurityCenterClient {
           CreateSecurityHealthAnalyticsCustomModuleRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a source.
   ///
-  /// @param parent  Required. Resource name of the new source's parent. Its
-  /// format should be
+  /// @param parent  Required. Resource name of the new source's parent. Its format should be
   ///  "organizations/[organization_id]".
-  /// @param source  Required. The Source being created, only the display_name
-  /// and description
+  /// @param source  Required. The Source being created, only the display_name and description
   ///  will be used. All other fields will be ignored.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::securitycenter::v1::Source,google/cloud/securitycenter/v1/source.proto#L32}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.securitycenter.v1.Source])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.securitycenter.v1.CreateSourceRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L859}
-  /// [google.cloud.securitycenter.v1.Source]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/source.proto#L32}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securitycenter.v1.CreateSourceRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L862}
+  /// [google.cloud.securitycenter.v1.Source]: @googleapis_reference_link{google/cloud/securitycenter/v1/source.proto#L32}
   ///
+  // clang-format on
   StatusOr<google::cloud::securitycenter::v1::Source> CreateSource(
       std::string const& parent,
       google::cloud::securitycenter::v1::Source const& source,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a source.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::securitycenter::v1::CreateSourceRequest,google/cloud/securitycenter/v1/securitycenter_service.proto#L859}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.securitycenter.v1.CreateSourceRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::securitycenter::v1::Source,google/cloud/securitycenter/v1/source.proto#L32}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.securitycenter.v1.Source])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.securitycenter.v1.CreateSourceRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L859}
-  /// [google.cloud.securitycenter.v1.Source]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/source.proto#L32}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securitycenter.v1.CreateSourceRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L862}
+  /// [google.cloud.securitycenter.v1.Source]: @googleapis_reference_link{google/cloud/securitycenter/v1/source.proto#L32}
   ///
+  // clang-format on
   StatusOr<google::cloud::securitycenter::v1::Source> CreateSource(
       google::cloud::securitycenter::v1::CreateSourceRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
-  /// Creates a finding. The corresponding source must exist for finding
-  /// creation to succeed.
+  /// Creates a finding. The corresponding source must exist for finding creation
+  /// to succeed.
   ///
-  /// @param parent  Required. Resource name of the new finding's parent. Its
-  /// format should be
+  /// @param parent  Required. Resource name of the new finding's parent. Its format should be
   ///  "organizations/[organization_id]/sources/[source_id]".
-  /// @param finding_id  Required. Unique identifier provided by the client
-  /// within the parent scope.
+  /// @param finding_id  Required. Unique identifier provided by the client within the parent scope.
   ///  It must be alphanumeric and less than or equal to 32 characters and
   ///  greater than 0 characters in length.
-  /// @param finding  Required. The Finding being created. The name and
-  /// security_marks will be
+  /// @param finding  Required. The Finding being created. The name and security_marks will be
   ///  ignored as they are both output only fields on this resource.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::securitycenter::v1::Finding,google/cloud/securitycenter/v1/finding.proto#L57}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.securitycenter.v1.Finding])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.securitycenter.v1.CreateFindingRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L771}
-  /// [google.cloud.securitycenter.v1.Finding]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/finding.proto#L57}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securitycenter.v1.CreateFindingRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L774}
+  /// [google.cloud.securitycenter.v1.Finding]: @googleapis_reference_link{google/cloud/securitycenter/v1/finding.proto#L57}
   ///
+  // clang-format on
   StatusOr<google::cloud::securitycenter::v1::Finding> CreateFinding(
       std::string const& parent, std::string const& finding_id,
       google::cloud::securitycenter::v1::Finding const& finding,
       Options opts = {});
 
+  // clang-format off
   ///
-  /// Creates a finding. The corresponding source must exist for finding
-  /// creation to succeed.
+  /// Creates a finding. The corresponding source must exist for finding creation
+  /// to succeed.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::securitycenter::v1::CreateFindingRequest,google/cloud/securitycenter/v1/securitycenter_service.proto#L771}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.securitycenter.v1.CreateFindingRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::securitycenter::v1::Finding,google/cloud/securitycenter/v1/finding.proto#L57}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.securitycenter.v1.Finding])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.securitycenter.v1.CreateFindingRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L771}
-  /// [google.cloud.securitycenter.v1.Finding]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/finding.proto#L57}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securitycenter.v1.CreateFindingRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L774}
+  /// [google.cloud.securitycenter.v1.Finding]: @googleapis_reference_link{google/cloud/securitycenter/v1/finding.proto#L57}
   ///
+  // clang-format on
   StatusOr<google::cloud::securitycenter::v1::Finding> CreateFinding(
       google::cloud::securitycenter::v1::CreateFindingRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a mute config.
   ///
-  /// @param parent  Required. Resource name of the new mute configs's parent.
-  /// Its format is
+  /// @param parent  Required. Resource name of the new mute configs's parent. Its format is
   ///  "organizations/[organization_id]", "folders/[folder_id]", or
   ///  "projects/[project_id]".
   /// @param mute_config  Required. The mute config being created.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::securitycenter::v1::MuteConfig,google/cloud/securitycenter/v1/mute_config.proto#L33}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.securitycenter.v1.MuteConfig])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.securitycenter.v1.CreateMuteConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L792}
-  /// [google.cloud.securitycenter.v1.MuteConfig]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/mute_config.proto#L33}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securitycenter.v1.CreateMuteConfigRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L795}
+  /// [google.cloud.securitycenter.v1.MuteConfig]: @googleapis_reference_link{google/cloud/securitycenter/v1/mute_config.proto#L33}
   ///
+  // clang-format on
   StatusOr<google::cloud::securitycenter::v1::MuteConfig> CreateMuteConfig(
       std::string const& parent,
       google::cloud::securitycenter::v1::MuteConfig const& mute_config,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a mute config.
   ///
-  /// @param parent  Required. Resource name of the new mute configs's parent.
-  /// Its format is
+  /// @param parent  Required. Resource name of the new mute configs's parent. Its format is
   ///  "organizations/[organization_id]", "folders/[folder_id]", or
   ///  "projects/[project_id]".
   /// @param mute_config  Required. The mute config being created.
-  /// @param mute_config_id  Required. Unique identifier provided by the client
-  /// within the parent scope.
-  ///  It must consist of lower case letters, numbers, and hyphen, with the
-  ///  first character a letter, the last a letter or a number, and a 63
-  ///  character maximum.
+  /// @param mute_config_id  Required. Unique identifier provided by the client within the parent scope.
+  ///  It must consist of only lowercase letters, numbers, and hyphens, must start
+  ///  with a letter, must end with either a letter or a number, and must be 63
+  ///  characters or less.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::securitycenter::v1::MuteConfig,google/cloud/securitycenter/v1/mute_config.proto#L33}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.securitycenter.v1.MuteConfig])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.securitycenter.v1.CreateMuteConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L792}
-  /// [google.cloud.securitycenter.v1.MuteConfig]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/mute_config.proto#L33}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securitycenter.v1.CreateMuteConfigRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L795}
+  /// [google.cloud.securitycenter.v1.MuteConfig]: @googleapis_reference_link{google/cloud/securitycenter/v1/mute_config.proto#L33}
   ///
+  // clang-format on
   StatusOr<google::cloud::securitycenter::v1::MuteConfig> CreateMuteConfig(
       std::string const& parent,
       google::cloud::securitycenter::v1::MuteConfig const& mute_config,
       std::string const& mute_config_id, Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a mute config.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::securitycenter::v1::CreateMuteConfigRequest,google/cloud/securitycenter/v1/securitycenter_service.proto#L792}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.securitycenter.v1.CreateMuteConfigRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::securitycenter::v1::MuteConfig,google/cloud/securitycenter/v1/mute_config.proto#L33}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.securitycenter.v1.MuteConfig])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.securitycenter.v1.CreateMuteConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L792}
-  /// [google.cloud.securitycenter.v1.MuteConfig]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/mute_config.proto#L33}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securitycenter.v1.CreateMuteConfigRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L795}
+  /// [google.cloud.securitycenter.v1.MuteConfig]: @googleapis_reference_link{google/cloud/securitycenter/v1/mute_config.proto#L33}
   ///
+  // clang-format on
   StatusOr<google::cloud::securitycenter::v1::MuteConfig> CreateMuteConfig(
       google::cloud::securitycenter::v1::CreateMuteConfigRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a notification config.
   ///
-  /// @param parent  Required. Resource name of the new notification config's
-  /// parent. Its format
+  /// @param parent  Required. Resource name of the new notification config's parent. Its format
   ///  is "organizations/[organization_id]", "folders/[folder_id]", or
   ///  "projects/[project_id]".
   /// @param config_id  Required.
   ///  Unique identifier provided by the client within the parent scope.
   ///  It must be between 1 and 128 characters and contain alphanumeric
   ///  characters, underscores, or hyphens only.
-  /// @param notification_config  Required. The notification config being
-  /// created. The name and the service
+  /// @param notification_config  Required. The notification config being created. The name and the service
   ///  account will be ignored as they are both output only fields on this
   ///  resource.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::securitycenter::v1::NotificationConfig,google/cloud/securitycenter/v1/notification_config.proto#L38}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.securitycenter.v1.NotificationConfig])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.securitycenter.v1.CreateNotificationConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L814}
-  /// [google.cloud.securitycenter.v1.NotificationConfig]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/notification_config.proto#L38}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securitycenter.v1.CreateNotificationConfigRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L817}
+  /// [google.cloud.securitycenter.v1.NotificationConfig]: @googleapis_reference_link{google/cloud/securitycenter/v1/notification_config.proto#L38}
   ///
+  // clang-format on
   StatusOr<google::cloud::securitycenter::v1::NotificationConfig>
   CreateNotificationConfig(
       std::string const& parent, std::string const& config_id,
@@ -384,27 +511,34 @@ class SecurityCenterClient {
           notification_config,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a notification config.
   ///
-  /// @param parent  Required. Resource name of the new notification config's
-  /// parent. Its format
+  /// @param parent  Required. Resource name of the new notification config's parent. Its format
   ///  is "organizations/[organization_id]", "folders/[folder_id]", or
   ///  "projects/[project_id]".
-  /// @param notification_config  Required. The notification config being
-  /// created. The name and the service
+  /// @param notification_config  Required. The notification config being created. The name and the service
   ///  account will be ignored as they are both output only fields on this
   ///  resource.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::securitycenter::v1::NotificationConfig,google/cloud/securitycenter/v1/notification_config.proto#L38}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.securitycenter.v1.NotificationConfig])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.securitycenter.v1.CreateNotificationConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L814}
-  /// [google.cloud.securitycenter.v1.NotificationConfig]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/notification_config.proto#L38}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securitycenter.v1.CreateNotificationConfigRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L817}
+  /// [google.cloud.securitycenter.v1.NotificationConfig]: @googleapis_reference_link{google/cloud/securitycenter/v1/notification_config.proto#L38}
   ///
+  // clang-format on
   StatusOr<google::cloud::securitycenter::v1::NotificationConfig>
   CreateNotificationConfig(
       std::string const& parent,
@@ -412,27 +546,41 @@ class SecurityCenterClient {
           notification_config,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a notification config.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::securitycenter::v1::CreateNotificationConfigRequest,google/cloud/securitycenter/v1/securitycenter_service.proto#L814}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.securitycenter.v1.CreateNotificationConfigRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::securitycenter::v1::NotificationConfig,google/cloud/securitycenter/v1/notification_config.proto#L38}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.securitycenter.v1.NotificationConfig])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.securitycenter.v1.CreateNotificationConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L814}
-  /// [google.cloud.securitycenter.v1.NotificationConfig]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/notification_config.proto#L38}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securitycenter.v1.CreateNotificationConfigRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L817}
+  /// [google.cloud.securitycenter.v1.NotificationConfig]: @googleapis_reference_link{google/cloud/securitycenter/v1/notification_config.proto#L38}
   ///
+  // clang-format on
   StatusOr<google::cloud::securitycenter::v1::NotificationConfig>
   CreateNotificationConfig(
       google::cloud::securitycenter::v1::CreateNotificationConfigRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes an existing mute config.
   ///
@@ -442,59 +590,106 @@ class SecurityCenterClient {
   ///  projects/{project}/muteConfigs/{config_id}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.securitycenter.v1.DeleteMuteConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L875}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securitycenter.v1.DeleteMuteConfigRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L878}
   ///
+  // clang-format on
   Status DeleteMuteConfig(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes an existing mute config.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::securitycenter::v1::DeleteMuteConfigRequest,google/cloud/securitycenter/v1/securitycenter_service.proto#L875}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.securitycenter.v1.DeleteMuteConfigRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.securitycenter.v1.DeleteMuteConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L875}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securitycenter.v1.DeleteMuteConfigRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L878}
   ///
+  // clang-format on
   Status DeleteMuteConfig(
       google::cloud::securitycenter::v1::DeleteMuteConfigRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes a notification config.
   ///
-  /// @param name  Required. Name of the notification config to delete. Its
-  /// format is
+  /// @param name  Required. Name of the notification config to delete. Its format is
   ///  "organizations/[organization_id]/notificationConfigs/[config_id]",
   ///  "folders/[folder_id]/notificationConfigs/[config_id]",
   ///  or "projects/[project_id]/notificationConfigs/[config_id]".
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.securitycenter.v1.DeleteNotificationConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L889}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securitycenter.v1.DeleteNotificationConfigRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L892}
   ///
+  // clang-format on
   Status DeleteNotificationConfig(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes a notification config.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::securitycenter::v1::DeleteNotificationConfigRequest,google/cloud/securitycenter/v1/securitycenter_service.proto#L889}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.securitycenter.v1.DeleteNotificationConfigRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.securitycenter.v1.DeleteNotificationConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L889}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securitycenter.v1.DeleteNotificationConfigRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L892}
   ///
+  // clang-format on
   Status DeleteNotificationConfig(
       google::cloud::securitycenter::v1::DeleteNotificationConfigRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes the specified SecurityHealthAnalyticsCustomModule and all of its
   /// descendants in the CRM hierarchy. This method is only supported for
@@ -507,109 +702,175 @@ class SecurityCenterClient {
   ///  "projects/{project}/securityHealthAnalyticsSettings/customModules/{customModule}"
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.securitycenter.v1.DeleteSecurityHealthAnalyticsCustomModuleRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L903}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securitycenter.v1.DeleteSecurityHealthAnalyticsCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L906}
   ///
+  // clang-format on
   Status DeleteSecurityHealthAnalyticsCustomModule(std::string const& name,
                                                    Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes the specified SecurityHealthAnalyticsCustomModule and all of its
   /// descendants in the CRM hierarchy. This method is only supported for
   /// resident custom modules.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::securitycenter::v1::DeleteSecurityHealthAnalyticsCustomModuleRequest,google/cloud/securitycenter/v1/securitycenter_service.proto#L903}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.securitycenter.v1.DeleteSecurityHealthAnalyticsCustomModuleRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.securitycenter.v1.DeleteSecurityHealthAnalyticsCustomModuleRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L903}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securitycenter.v1.DeleteSecurityHealthAnalyticsCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L906}
   ///
+  // clang-format on
   Status DeleteSecurityHealthAnalyticsCustomModule(
       google::cloud::securitycenter::v1::
           DeleteSecurityHealthAnalyticsCustomModuleRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Gets a BigQuery export.
   ///
-  /// @param name  Required. Name of the BigQuery export to retrieve. Its format
-  /// is
+  /// @param name  Required. Name of the BigQuery export to retrieve. Its format is
   ///  organizations/{organization}/bigQueryExports/{export_id},
   ///  folders/{folder}/bigQueryExports/{export_id}, or
   ///  projects/{project}/bigQueryExports/{export_id}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::securitycenter::v1::BigQueryExport,google/cloud/securitycenter/v1/bigquery_export.proto#L32}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.securitycenter.v1.BigQueryExport])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.securitycenter.v1.BigQueryExport]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/bigquery_export.proto#L32}
-  /// [google.cloud.securitycenter.v1.GetBigQueryExportRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L918}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securitycenter.v1.BigQueryExport]: @googleapis_reference_link{google/cloud/securitycenter/v1/bigquery_export.proto#L32}
+  /// [google.cloud.securitycenter.v1.GetBigQueryExportRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L921}
   ///
+  // clang-format on
   StatusOr<google::cloud::securitycenter::v1::BigQueryExport> GetBigQueryExport(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Gets a BigQuery export.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::securitycenter::v1::GetBigQueryExportRequest,google/cloud/securitycenter/v1/securitycenter_service.proto#L918}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.securitycenter.v1.GetBigQueryExportRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::securitycenter::v1::BigQueryExport,google/cloud/securitycenter/v1/bigquery_export.proto#L32}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.securitycenter.v1.BigQueryExport])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.securitycenter.v1.BigQueryExport]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/bigquery_export.proto#L32}
-  /// [google.cloud.securitycenter.v1.GetBigQueryExportRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L918}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securitycenter.v1.BigQueryExport]: @googleapis_reference_link{google/cloud/securitycenter/v1/bigquery_export.proto#L32}
+  /// [google.cloud.securitycenter.v1.GetBigQueryExportRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L921}
   ///
+  // clang-format on
   StatusOr<google::cloud::securitycenter::v1::BigQueryExport> GetBigQueryExport(
       google::cloud::securitycenter::v1::GetBigQueryExportRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Gets the access control policy on the specified Source.
   ///
-  /// @param resource  REQUIRED: The resource for which the policy is being
-  /// requested.
+  /// @param resource  REQUIRED: The resource for which the policy is being requested.
   ///  See the operation documentation for the appropriate value for this field.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L98}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.iam.v1.Policy])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.iam.v1.GetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L123}
-  /// [google.iam.v1.Policy]:
-  /// @googleapis_reference_link{google/iam/v1/policy.proto#L98}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.iam.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L123}
+  /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L98}
   ///
+  // clang-format on
   StatusOr<google::iam::v1::Policy> GetIamPolicy(std::string const& resource,
                                                  Options opts = {});
 
+  // clang-format off
   ///
   /// Gets the access control policy on the specified Source.
   ///
-  /// @param request
-  /// @googleapis_link{google::iam::v1::GetIamPolicyRequest,google/iam/v1/iam_policy.proto#L123}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.iam.v1.GetIamPolicyRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L98}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.iam.v1.Policy])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.iam.v1.GetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L123}
-  /// [google.iam.v1.Policy]:
-  /// @googleapis_reference_link{google/iam/v1/policy.proto#L98}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.iam.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L123}
+  /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L98}
   ///
+  // clang-format on
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
       google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
 
+  // clang-format off
   ///
   /// Gets a mute config.
   ///
@@ -619,157 +880,241 @@ class SecurityCenterClient {
   ///  projects/{project}/muteConfigs/{config_id}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::securitycenter::v1::MuteConfig,google/cloud/securitycenter/v1/mute_config.proto#L33}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.securitycenter.v1.MuteConfig])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.securitycenter.v1.GetMuteConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L932}
-  /// [google.cloud.securitycenter.v1.MuteConfig]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/mute_config.proto#L33}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securitycenter.v1.GetMuteConfigRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L935}
+  /// [google.cloud.securitycenter.v1.MuteConfig]: @googleapis_reference_link{google/cloud/securitycenter/v1/mute_config.proto#L33}
   ///
+  // clang-format on
   StatusOr<google::cloud::securitycenter::v1::MuteConfig> GetMuteConfig(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Gets a mute config.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::securitycenter::v1::GetMuteConfigRequest,google/cloud/securitycenter/v1/securitycenter_service.proto#L932}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.securitycenter.v1.GetMuteConfigRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::securitycenter::v1::MuteConfig,google/cloud/securitycenter/v1/mute_config.proto#L33}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.securitycenter.v1.MuteConfig])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.securitycenter.v1.GetMuteConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L932}
-  /// [google.cloud.securitycenter.v1.MuteConfig]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/mute_config.proto#L33}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securitycenter.v1.GetMuteConfigRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L935}
+  /// [google.cloud.securitycenter.v1.MuteConfig]: @googleapis_reference_link{google/cloud/securitycenter/v1/mute_config.proto#L33}
   ///
+  // clang-format on
   StatusOr<google::cloud::securitycenter::v1::MuteConfig> GetMuteConfig(
       google::cloud::securitycenter::v1::GetMuteConfigRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Gets a notification config.
   ///
-  /// @param name  Required. Name of the notification config to get. Its format
-  /// is
+  /// @param name  Required. Name of the notification config to get. Its format is
   ///  "organizations/[organization_id]/notificationConfigs/[config_id]",
   ///  "folders/[folder_id]/notificationConfigs/[config_id]",
   ///  or "projects/[project_id]/notificationConfigs/[config_id]".
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::securitycenter::v1::NotificationConfig,google/cloud/securitycenter/v1/notification_config.proto#L38}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.securitycenter.v1.NotificationConfig])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.securitycenter.v1.GetNotificationConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L946}
-  /// [google.cloud.securitycenter.v1.NotificationConfig]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/notification_config.proto#L38}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securitycenter.v1.GetNotificationConfigRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L949}
+  /// [google.cloud.securitycenter.v1.NotificationConfig]: @googleapis_reference_link{google/cloud/securitycenter/v1/notification_config.proto#L38}
   ///
+  // clang-format on
   StatusOr<google::cloud::securitycenter::v1::NotificationConfig>
   GetNotificationConfig(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Gets a notification config.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::securitycenter::v1::GetNotificationConfigRequest,google/cloud/securitycenter/v1/securitycenter_service.proto#L946}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.securitycenter.v1.GetNotificationConfigRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::securitycenter::v1::NotificationConfig,google/cloud/securitycenter/v1/notification_config.proto#L38}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.securitycenter.v1.NotificationConfig])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.securitycenter.v1.GetNotificationConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L946}
-  /// [google.cloud.securitycenter.v1.NotificationConfig]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/notification_config.proto#L38}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securitycenter.v1.GetNotificationConfigRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L949}
+  /// [google.cloud.securitycenter.v1.NotificationConfig]: @googleapis_reference_link{google/cloud/securitycenter/v1/notification_config.proto#L38}
   ///
+  // clang-format on
   StatusOr<google::cloud::securitycenter::v1::NotificationConfig>
   GetNotificationConfig(
       google::cloud::securitycenter::v1::GetNotificationConfigRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Gets the settings for an organization.
   ///
-  /// @param name  Required. Name of the organization to get organization
-  /// settings for. Its
+  /// @param name  Required. Name of the organization to get organization settings for. Its
   ///  format is "organizations/[organization_id]/organizationSettings".
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::securitycenter::v1::OrganizationSettings,google/cloud/securitycenter/v1/organization_settings.proto#L30}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.securitycenter.v1.OrganizationSettings])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.securitycenter.v1.GetOrganizationSettingsRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L960}
-  /// [google.cloud.securitycenter.v1.OrganizationSettings]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/organization_settings.proto#L30}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securitycenter.v1.GetOrganizationSettingsRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L963}
+  /// [google.cloud.securitycenter.v1.OrganizationSettings]: @googleapis_reference_link{google/cloud/securitycenter/v1/organization_settings.proto#L30}
   ///
+  // clang-format on
   StatusOr<google::cloud::securitycenter::v1::OrganizationSettings>
   GetOrganizationSettings(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Gets the settings for an organization.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::securitycenter::v1::GetOrganizationSettingsRequest,google/cloud/securitycenter/v1/securitycenter_service.proto#L960}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.securitycenter.v1.GetOrganizationSettingsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::securitycenter::v1::OrganizationSettings,google/cloud/securitycenter/v1/organization_settings.proto#L30}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.securitycenter.v1.OrganizationSettings])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.securitycenter.v1.GetOrganizationSettingsRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L960}
-  /// [google.cloud.securitycenter.v1.OrganizationSettings]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/organization_settings.proto#L30}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securitycenter.v1.GetOrganizationSettingsRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L963}
+  /// [google.cloud.securitycenter.v1.OrganizationSettings]: @googleapis_reference_link{google/cloud/securitycenter/v1/organization_settings.proto#L30}
   ///
+  // clang-format on
   StatusOr<google::cloud::securitycenter::v1::OrganizationSettings>
   GetOrganizationSettings(
       google::cloud::securitycenter::v1::GetOrganizationSettingsRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Retrieves an EffectiveSecurityHealthAnalyticsCustomModule.
   ///
-  /// @param name  Required. Name of the effective custom module to get. Its
-  /// format is
+  /// @param name  Required. Name of the effective custom module to get. Its format is
   ///  "organizations/{organization}/securityHealthAnalyticsSettings/effectiveCustomModules/{customModule}",
   ///  "folders/{folder}/securityHealthAnalyticsSettings/effectiveCustomModules/{customModule}",
   ///  or
   ///  "projects/{project}/securityHealthAnalyticsSettings/effectiveCustomModules/{customModule}"
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::securitycenter::v1::EffectiveSecurityHealthAnalyticsCustomModule,google/cloud/securitycenter/v1/effective_security_health_analytics_custom_module.proto#L40}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.securitycenter.v1.EffectiveSecurityHealthAnalyticsCustomModule])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.securitycenter.v1.EffectiveSecurityHealthAnalyticsCustomModule]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/effective_security_health_analytics_custom_module.proto#L40}
-  /// [google.cloud.securitycenter.v1.GetEffectiveSecurityHealthAnalyticsCustomModuleRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L973}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securitycenter.v1.EffectiveSecurityHealthAnalyticsCustomModule]: @googleapis_reference_link{google/cloud/securitycenter/v1/effective_security_health_analytics_custom_module.proto#L40}
+  /// [google.cloud.securitycenter.v1.GetEffectiveSecurityHealthAnalyticsCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L976}
   ///
+  // clang-format on
   StatusOr<google::cloud::securitycenter::v1::
                EffectiveSecurityHealthAnalyticsCustomModule>
   GetEffectiveSecurityHealthAnalyticsCustomModule(std::string const& name,
                                                   Options opts = {});
 
+  // clang-format off
   ///
   /// Retrieves an EffectiveSecurityHealthAnalyticsCustomModule.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::securitycenter::v1::GetEffectiveSecurityHealthAnalyticsCustomModuleRequest,google/cloud/securitycenter/v1/securitycenter_service.proto#L973}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.securitycenter.v1.GetEffectiveSecurityHealthAnalyticsCustomModuleRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::securitycenter::v1::EffectiveSecurityHealthAnalyticsCustomModule,google/cloud/securitycenter/v1/effective_security_health_analytics_custom_module.proto#L40}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.securitycenter.v1.EffectiveSecurityHealthAnalyticsCustomModule])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.securitycenter.v1.EffectiveSecurityHealthAnalyticsCustomModule]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/effective_security_health_analytics_custom_module.proto#L40}
-  /// [google.cloud.securitycenter.v1.GetEffectiveSecurityHealthAnalyticsCustomModuleRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L973}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securitycenter.v1.EffectiveSecurityHealthAnalyticsCustomModule]: @googleapis_reference_link{google/cloud/securitycenter/v1/effective_security_health_analytics_custom_module.proto#L40}
+  /// [google.cloud.securitycenter.v1.GetEffectiveSecurityHealthAnalyticsCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L976}
   ///
+  // clang-format on
   StatusOr<google::cloud::securitycenter::v1::
                EffectiveSecurityHealthAnalyticsCustomModule>
   GetEffectiveSecurityHealthAnalyticsCustomModule(
@@ -777,6 +1122,7 @@ class SecurityCenterClient {
           GetEffectiveSecurityHealthAnalyticsCustomModuleRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Retrieves a SecurityHealthAnalyticsCustomModule.
   ///
@@ -787,34 +1133,55 @@ class SecurityCenterClient {
   ///  "projects/{project}/securityHealthAnalyticsSettings/customModules/{customModule}"
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule,google/cloud/securitycenter/v1/security_health_analytics_custom_module.proto#L43}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.securitycenter.v1.SecurityHealthAnalyticsCustomModule])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.securitycenter.v1.GetSecurityHealthAnalyticsCustomModuleRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L988}
-  /// [google.cloud.securitycenter.v1.SecurityHealthAnalyticsCustomModule]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/security_health_analytics_custom_module.proto#L43}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securitycenter.v1.GetSecurityHealthAnalyticsCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L991}
+  /// [google.cloud.securitycenter.v1.SecurityHealthAnalyticsCustomModule]: @googleapis_reference_link{google/cloud/securitycenter/v1/security_health_analytics_custom_module.proto#L43}
   ///
+  // clang-format on
   StatusOr<
       google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule>
   GetSecurityHealthAnalyticsCustomModule(std::string const& name,
                                          Options opts = {});
 
+  // clang-format off
   ///
   /// Retrieves a SecurityHealthAnalyticsCustomModule.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::securitycenter::v1::GetSecurityHealthAnalyticsCustomModuleRequest,google/cloud/securitycenter/v1/securitycenter_service.proto#L988}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.securitycenter.v1.GetSecurityHealthAnalyticsCustomModuleRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule,google/cloud/securitycenter/v1/security_health_analytics_custom_module.proto#L43}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.securitycenter.v1.SecurityHealthAnalyticsCustomModule])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.securitycenter.v1.GetSecurityHealthAnalyticsCustomModuleRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L988}
-  /// [google.cloud.securitycenter.v1.SecurityHealthAnalyticsCustomModule]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/security_health_analytics_custom_module.proto#L43}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securitycenter.v1.GetSecurityHealthAnalyticsCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L991}
+  /// [google.cloud.securitycenter.v1.SecurityHealthAnalyticsCustomModule]: @googleapis_reference_link{google/cloud/securitycenter/v1/security_health_analytics_custom_module.proto#L43}
   ///
+  // clang-format on
   StatusOr<
       google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule>
   GetSecurityHealthAnalyticsCustomModule(
@@ -822,6 +1189,7 @@ class SecurityCenterClient {
           GetSecurityHealthAnalyticsCustomModuleRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Gets a source.
   ///
@@ -829,56 +1197,100 @@ class SecurityCenterClient {
   ///  "organizations/[organization_id]/source/[source_id]".
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::securitycenter::v1::Source,google/cloud/securitycenter/v1/source.proto#L32}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.securitycenter.v1.Source])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.securitycenter.v1.GetSourceRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1003}
-  /// [google.cloud.securitycenter.v1.Source]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/source.proto#L32}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securitycenter.v1.GetSourceRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1006}
+  /// [google.cloud.securitycenter.v1.Source]: @googleapis_reference_link{google/cloud/securitycenter/v1/source.proto#L32}
   ///
+  // clang-format on
   StatusOr<google::cloud::securitycenter::v1::Source> GetSource(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Gets a source.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::securitycenter::v1::GetSourceRequest,google/cloud/securitycenter/v1/securitycenter_service.proto#L1003}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.securitycenter.v1.GetSourceRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::securitycenter::v1::Source,google/cloud/securitycenter/v1/source.proto#L32}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.securitycenter.v1.Source])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.securitycenter.v1.GetSourceRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1003}
-  /// [google.cloud.securitycenter.v1.Source]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/source.proto#L32}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securitycenter.v1.GetSourceRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1006}
+  /// [google.cloud.securitycenter.v1.Source]: @googleapis_reference_link{google/cloud/securitycenter/v1/source.proto#L32}
   ///
+  // clang-format on
   StatusOr<google::cloud::securitycenter::v1::Source> GetSource(
       google::cloud::securitycenter::v1::GetSourceRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Filters an organization's assets and  groups them by their specified
   /// properties.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::securitycenter::v1::GroupAssetsRequest,google/cloud/securitycenter/v1/securitycenter_service.proto#L1015}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.securitycenter.v1.GroupAssetsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::securitycenter::v1::GroupResult,google/cloud/securitycenter/v1/securitycenter_service.proto#L1336}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.securitycenter.v1.GroupResult], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.securitycenter.v1.GroupAssetsRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1015}
-  /// [google.cloud.securitycenter.v1.GroupResult]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1336}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securitycenter.v1.GroupAssetsRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1018}
+  /// [google.cloud.securitycenter.v1.GroupResult]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1339}
   ///
+  // clang-format on
   StreamRange<google::cloud::securitycenter::v1::GroupResult> GroupAssets(
       google::cloud::securitycenter::v1::GroupAssetsRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Filters an organization or source's findings and  groups them by their
   /// specified properties.
@@ -895,32 +1307,53 @@ class SecurityCenterClient {
   ///  provide a source_id of `-`. For example:
   ///  organizations/{organization_id}/sources/-, folders/{folder_id}/sources/-,
   ///  or projects/{project_id}/sources/-
-  /// @param group_by  Required. Expression that defines what assets fields to
-  /// use for grouping
+  /// @param group_by  Required. Expression that defines what assets fields to use for grouping
   ///  (including `state_change`). The string value should follow SQL syntax:
   ///  comma separated list of fields. For example: "parent,resource_name".
+  ///  @n
   ///  The following fields are supported:
+  ///  @n
   ///  * resource_name
   ///  * category
   ///  * state
   ///  * parent
   ///  * severity
+  ///  @n
   ///  The following fields are supported when compare_duration is set:
+  ///  @n
   ///  * state_change
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::securitycenter::v1::GroupResult,google/cloud/securitycenter/v1/securitycenter_service.proto#L1336}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.securitycenter.v1.GroupResult], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.securitycenter.v1.GroupFindingsRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1174}
-  /// [google.cloud.securitycenter.v1.GroupResult]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1336}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securitycenter.v1.GroupFindingsRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1177}
+  /// [google.cloud.securitycenter.v1.GroupResult]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1339}
   ///
+  // clang-format on
   StreamRange<google::cloud::securitycenter::v1::GroupResult> GroupFindings(
       std::string const& parent, std::string const& group_by,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Filters an organization or source's findings and  groups them by their
   /// specified properties.
@@ -930,82 +1363,164 @@ class SecurityCenterClient {
   /// /v1/folders/{folder_id}/sources/-/findings,
   /// /v1/projects/{project_id}/sources/-/findings
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::securitycenter::v1::GroupFindingsRequest,google/cloud/securitycenter/v1/securitycenter_service.proto#L1174}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.securitycenter.v1.GroupFindingsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::securitycenter::v1::GroupResult,google/cloud/securitycenter/v1/securitycenter_service.proto#L1336}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.securitycenter.v1.GroupResult], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.securitycenter.v1.GroupFindingsRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1174}
-  /// [google.cloud.securitycenter.v1.GroupResult]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1336}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securitycenter.v1.GroupFindingsRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1177}
+  /// [google.cloud.securitycenter.v1.GroupResult]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1339}
   ///
+  // clang-format on
   StreamRange<google::cloud::securitycenter::v1::GroupResult> GroupFindings(
       google::cloud::securitycenter::v1::GroupFindingsRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists an organization's assets.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::securitycenter::v1::ListAssetsRequest,google/cloud/securitycenter/v1/securitycenter_service.proto#L1546}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.securitycenter.v1.ListAssetsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::securitycenter::v1::ListAssetsResponse::ListAssetsResult,google/cloud/securitycenter/v1/securitycenter_service.proto#L1696}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.securitycenter.v1.ListAssetsResponse.ListAssetsResult], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.securitycenter.v1.ListAssetsRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1546}
-  /// [google.cloud.securitycenter.v1.ListAssetsResponse.ListAssetsResult]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1696}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securitycenter.v1.ListAssetsRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1549}
+  /// [google.cloud.securitycenter.v1.ListAssetsResponse.ListAssetsResult]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1699}
   ///
+  // clang-format on
   StreamRange<
       google::cloud::securitycenter::v1::ListAssetsResponse::ListAssetsResult>
   ListAssets(google::cloud::securitycenter::v1::ListAssetsRequest request,
              Options opts = {});
 
+  // clang-format off
   ///
   /// Returns a list of all resident SecurityHealthAnalyticsCustomModules under
   /// the given CRM parent and all of the parent’s CRM descendants.
   ///
-  /// @param parent  Required. Name of parent to list descendant custom modules.
-  /// Its format is
+  /// @param parent  Required. Name of parent to list descendant custom modules. Its format is
   ///  "organizations/{organization}/securityHealthAnalyticsSettings",
   ///  "folders/{folder}/securityHealthAnalyticsSettings", or
   ///  "projects/{project}/securityHealthAnalyticsSettings"
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule,google/cloud/securitycenter/v1/security_health_analytics_custom_module.proto#L43}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.securitycenter.v1.SecurityHealthAnalyticsCustomModule], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.securitycenter.v1.ListDescendantSecurityHealthAnalyticsCustomModulesRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1346}
-  /// [google.cloud.securitycenter.v1.SecurityHealthAnalyticsCustomModule]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/security_health_analytics_custom_module.proto#L43}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securitycenter.v1.ListDescendantSecurityHealthAnalyticsCustomModulesRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1349}
+  /// [google.cloud.securitycenter.v1.SecurityHealthAnalyticsCustomModule]: @googleapis_reference_link{google/cloud/securitycenter/v1/security_health_analytics_custom_module.proto#L43}
   ///
+  // clang-format on
   StreamRange<
       google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule>
   ListDescendantSecurityHealthAnalyticsCustomModules(std::string const& parent,
                                                      Options opts = {});
 
+  // clang-format off
   ///
   /// Returns a list of all resident SecurityHealthAnalyticsCustomModules under
   /// the given CRM parent and all of the parent’s CRM descendants.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::securitycenter::v1::ListDescendantSecurityHealthAnalyticsCustomModulesRequest,google/cloud/securitycenter/v1/securitycenter_service.proto#L1346}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.securitycenter.v1.ListDescendantSecurityHealthAnalyticsCustomModulesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule,google/cloud/securitycenter/v1/security_health_analytics_custom_module.proto#L43}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.securitycenter.v1.SecurityHealthAnalyticsCustomModule], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.securitycenter.v1.ListDescendantSecurityHealthAnalyticsCustomModulesRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1346}
-  /// [google.cloud.securitycenter.v1.SecurityHealthAnalyticsCustomModule]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/security_health_analytics_custom_module.proto#L43}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securitycenter.v1.ListDescendantSecurityHealthAnalyticsCustomModulesRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1349}
+  /// [google.cloud.securitycenter.v1.SecurityHealthAnalyticsCustomModule]: @googleapis_reference_link{google/cloud/securitycenter/v1/security_health_analytics_custom_module.proto#L43}
   ///
+  // clang-format on
   StreamRange<
       google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule>
   ListDescendantSecurityHealthAnalyticsCustomModules(
@@ -1013,150 +1528,289 @@ class SecurityCenterClient {
           ListDescendantSecurityHealthAnalyticsCustomModulesRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists an organization or source's findings.
   ///
   /// To list across all sources provide a `-` as the source id.
   /// Example: /v1/organizations/{organization_id}/sources/-/findings
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::securitycenter::v1::ListFindingsRequest,google/cloud/securitycenter/v1/securitycenter_service.proto#L1739}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.securitycenter.v1.ListFindingsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::securitycenter::v1::ListFindingsResponse::ListFindingsResult,google/cloud/securitycenter/v1/securitycenter_service.proto#L1892}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.securitycenter.v1.ListFindingsResponse.ListFindingsResult], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.securitycenter.v1.ListFindingsRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1739}
-  /// [google.cloud.securitycenter.v1.ListFindingsResponse.ListFindingsResult]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1892}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securitycenter.v1.ListFindingsRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1742}
+  /// [google.cloud.securitycenter.v1.ListFindingsResponse.ListFindingsResult]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1895}
   ///
+  // clang-format on
   StreamRange<google::cloud::securitycenter::v1::ListFindingsResponse::
                   ListFindingsResult>
   ListFindings(google::cloud::securitycenter::v1::ListFindingsRequest request,
                Options opts = {});
 
+  // clang-format off
   ///
   /// Lists mute configs.
   ///
-  /// @param parent  Required. The parent, which owns the collection of mute
-  /// configs. Its format
+  /// @param parent  Required. The parent, which owns the collection of mute configs. Its format
   ///  is "organizations/[organization_id]", "folders/[folder_id]",
   ///  "projects/[project_id]".
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::securitycenter::v1::MuteConfig,google/cloud/securitycenter/v1/mute_config.proto#L33}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.securitycenter.v1.MuteConfig], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.securitycenter.v1.ListMuteConfigsRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1380}
-  /// [google.cloud.securitycenter.v1.MuteConfig]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/mute_config.proto#L33}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securitycenter.v1.ListMuteConfigsRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1383}
+  /// [google.cloud.securitycenter.v1.MuteConfig]: @googleapis_reference_link{google/cloud/securitycenter/v1/mute_config.proto#L33}
   ///
+  // clang-format on
   StreamRange<google::cloud::securitycenter::v1::MuteConfig> ListMuteConfigs(
       std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Lists mute configs.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::securitycenter::v1::ListMuteConfigsRequest,google/cloud/securitycenter/v1/securitycenter_service.proto#L1380}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.securitycenter.v1.ListMuteConfigsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::securitycenter::v1::MuteConfig,google/cloud/securitycenter/v1/mute_config.proto#L33}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.securitycenter.v1.MuteConfig], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.securitycenter.v1.ListMuteConfigsRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1380}
-  /// [google.cloud.securitycenter.v1.MuteConfig]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/mute_config.proto#L33}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securitycenter.v1.ListMuteConfigsRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1383}
+  /// [google.cloud.securitycenter.v1.MuteConfig]: @googleapis_reference_link{google/cloud/securitycenter/v1/mute_config.proto#L33}
   ///
+  // clang-format on
   StreamRange<google::cloud::securitycenter::v1::MuteConfig> ListMuteConfigs(
       google::cloud::securitycenter::v1::ListMuteConfigsRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists notification configs.
   ///
-  /// @param parent  Required. The name of the parent in which to list the
-  /// notification
+  /// @param parent  Required. The name of the parent in which to list the notification
   ///  configurations. Its format is "organizations/[organization_id]",
   ///  "folders/[folder_id]", or "projects/[project_id]".
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::securitycenter::v1::NotificationConfig,google/cloud/securitycenter/v1/notification_config.proto#L38}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.securitycenter.v1.NotificationConfig], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.securitycenter.v1.ListNotificationConfigsRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1416}
-  /// [google.cloud.securitycenter.v1.NotificationConfig]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/notification_config.proto#L38}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securitycenter.v1.ListNotificationConfigsRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1419}
+  /// [google.cloud.securitycenter.v1.NotificationConfig]: @googleapis_reference_link{google/cloud/securitycenter/v1/notification_config.proto#L38}
   ///
+  // clang-format on
   StreamRange<google::cloud::securitycenter::v1::NotificationConfig>
   ListNotificationConfigs(std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Lists notification configs.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::securitycenter::v1::ListNotificationConfigsRequest,google/cloud/securitycenter/v1/securitycenter_service.proto#L1416}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.securitycenter.v1.ListNotificationConfigsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::securitycenter::v1::NotificationConfig,google/cloud/securitycenter/v1/notification_config.proto#L38}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.securitycenter.v1.NotificationConfig], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.securitycenter.v1.ListNotificationConfigsRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1416}
-  /// [google.cloud.securitycenter.v1.NotificationConfig]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/notification_config.proto#L38}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securitycenter.v1.ListNotificationConfigsRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1419}
+  /// [google.cloud.securitycenter.v1.NotificationConfig]: @googleapis_reference_link{google/cloud/securitycenter/v1/notification_config.proto#L38}
   ///
+  // clang-format on
   StreamRange<google::cloud::securitycenter::v1::NotificationConfig>
   ListNotificationConfigs(
       google::cloud::securitycenter::v1::ListNotificationConfigsRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
-  /// Returns a list of all EffectiveSecurityHealthAnalyticsCustomModules for
-  /// the given parent. This includes resident modules defined at the scope of
-  /// the parent, and inherited modules, inherited from CRM ancestors.
+  /// Returns a list of all EffectiveSecurityHealthAnalyticsCustomModules for the
+  /// given parent. This includes resident modules defined at the scope of the
+  /// parent, and inherited modules, inherited from CRM ancestors.
   ///
-  /// @param parent  Required. Name of parent to list effective custom modules.
-  /// Its format is
+  /// @param parent  Required. Name of parent to list effective custom modules. Its format is
   ///  "organizations/{organization}/securityHealthAnalyticsSettings",
   ///  "folders/{folder}/securityHealthAnalyticsSettings", or
   ///  "projects/{project}/securityHealthAnalyticsSettings"
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::securitycenter::v1::EffectiveSecurityHealthAnalyticsCustomModule,google/cloud/securitycenter/v1/effective_security_health_analytics_custom_module.proto#L40}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.securitycenter.v1.EffectiveSecurityHealthAnalyticsCustomModule], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.securitycenter.v1.EffectiveSecurityHealthAnalyticsCustomModule]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/effective_security_health_analytics_custom_module.proto#L40}
-  /// [google.cloud.securitycenter.v1.ListEffectiveSecurityHealthAnalyticsCustomModulesRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1449}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securitycenter.v1.EffectiveSecurityHealthAnalyticsCustomModule]: @googleapis_reference_link{google/cloud/securitycenter/v1/effective_security_health_analytics_custom_module.proto#L40}
+  /// [google.cloud.securitycenter.v1.ListEffectiveSecurityHealthAnalyticsCustomModulesRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1452}
   ///
+  // clang-format on
   StreamRange<google::cloud::securitycenter::v1::
                   EffectiveSecurityHealthAnalyticsCustomModule>
   ListEffectiveSecurityHealthAnalyticsCustomModules(std::string const& parent,
                                                     Options opts = {});
 
+  // clang-format off
   ///
-  /// Returns a list of all EffectiveSecurityHealthAnalyticsCustomModules for
-  /// the given parent. This includes resident modules defined at the scope of
-  /// the parent, and inherited modules, inherited from CRM ancestors.
+  /// Returns a list of all EffectiveSecurityHealthAnalyticsCustomModules for the
+  /// given parent. This includes resident modules defined at the scope of the
+  /// parent, and inherited modules, inherited from CRM ancestors.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::securitycenter::v1::ListEffectiveSecurityHealthAnalyticsCustomModulesRequest,google/cloud/securitycenter/v1/securitycenter_service.proto#L1449}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.securitycenter.v1.ListEffectiveSecurityHealthAnalyticsCustomModulesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::securitycenter::v1::EffectiveSecurityHealthAnalyticsCustomModule,google/cloud/securitycenter/v1/effective_security_health_analytics_custom_module.proto#L40}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.securitycenter.v1.EffectiveSecurityHealthAnalyticsCustomModule], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.securitycenter.v1.EffectiveSecurityHealthAnalyticsCustomModule]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/effective_security_health_analytics_custom_module.proto#L40}
-  /// [google.cloud.securitycenter.v1.ListEffectiveSecurityHealthAnalyticsCustomModulesRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1449}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securitycenter.v1.EffectiveSecurityHealthAnalyticsCustomModule]: @googleapis_reference_link{google/cloud/securitycenter/v1/effective_security_health_analytics_custom_module.proto#L40}
+  /// [google.cloud.securitycenter.v1.ListEffectiveSecurityHealthAnalyticsCustomModulesRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1452}
   ///
+  // clang-format on
   StreamRange<google::cloud::securitycenter::v1::
                   EffectiveSecurityHealthAnalyticsCustomModule>
   ListEffectiveSecurityHealthAnalyticsCustomModules(
@@ -1164,48 +1818,87 @@ class SecurityCenterClient {
           ListEffectiveSecurityHealthAnalyticsCustomModulesRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Returns a list of all SecurityHealthAnalyticsCustomModules for the given
   /// parent. This includes resident modules defined at the scope of the parent,
   /// and inherited modules, inherited from CRM ancestors.
   ///
-  /// @param parent  Required. Name of parent to list custom modules. Its format
-  /// is
+  /// @param parent  Required. Name of parent to list custom modules. Its format is
   ///  "organizations/{organization}/securityHealthAnalyticsSettings",
   ///  "folders/{folder}/securityHealthAnalyticsSettings", or
   ///  "projects/{project}/securityHealthAnalyticsSettings"
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule,google/cloud/securitycenter/v1/security_health_analytics_custom_module.proto#L43}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.securitycenter.v1.SecurityHealthAnalyticsCustomModule], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.securitycenter.v1.ListSecurityHealthAnalyticsCustomModulesRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1482}
-  /// [google.cloud.securitycenter.v1.SecurityHealthAnalyticsCustomModule]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/security_health_analytics_custom_module.proto#L43}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securitycenter.v1.ListSecurityHealthAnalyticsCustomModulesRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1485}
+  /// [google.cloud.securitycenter.v1.SecurityHealthAnalyticsCustomModule]: @googleapis_reference_link{google/cloud/securitycenter/v1/security_health_analytics_custom_module.proto#L43}
   ///
+  // clang-format on
   StreamRange<
       google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule>
   ListSecurityHealthAnalyticsCustomModules(std::string const& parent,
                                            Options opts = {});
 
+  // clang-format off
   ///
   /// Returns a list of all SecurityHealthAnalyticsCustomModules for the given
   /// parent. This includes resident modules defined at the scope of the parent,
   /// and inherited modules, inherited from CRM ancestors.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::securitycenter::v1::ListSecurityHealthAnalyticsCustomModulesRequest,google/cloud/securitycenter/v1/securitycenter_service.proto#L1482}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.securitycenter.v1.ListSecurityHealthAnalyticsCustomModulesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule,google/cloud/securitycenter/v1/security_health_analytics_custom_module.proto#L43}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.securitycenter.v1.SecurityHealthAnalyticsCustomModule], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.securitycenter.v1.ListSecurityHealthAnalyticsCustomModulesRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1482}
-  /// [google.cloud.securitycenter.v1.SecurityHealthAnalyticsCustomModule]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/security_health_analytics_custom_module.proto#L43}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securitycenter.v1.ListSecurityHealthAnalyticsCustomModulesRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1485}
+  /// [google.cloud.securitycenter.v1.SecurityHealthAnalyticsCustomModule]: @googleapis_reference_link{google/cloud/securitycenter/v1/security_health_analytics_custom_module.proto#L43}
   ///
+  // clang-format on
   StreamRange<
       google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule>
   ListSecurityHealthAnalyticsCustomModules(
@@ -1213,45 +1906,85 @@ class SecurityCenterClient {
           ListSecurityHealthAnalyticsCustomModulesRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists all sources belonging to an organization.
   ///
-  /// @param parent  Required. Resource name of the parent of sources to list.
-  /// Its format should
+  /// @param parent  Required. Resource name of the parent of sources to list. Its format should
   ///  be "organizations/[organization_id]", "folders/[folder_id]", or
   ///  "projects/[project_id]".
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::securitycenter::v1::Source,google/cloud/securitycenter/v1/source.proto#L32}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.securitycenter.v1.Source], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.securitycenter.v1.ListSourcesRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1514}
-  /// [google.cloud.securitycenter.v1.Source]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/source.proto#L32}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securitycenter.v1.ListSourcesRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1517}
+  /// [google.cloud.securitycenter.v1.Source]: @googleapis_reference_link{google/cloud/securitycenter/v1/source.proto#L32}
   ///
+  // clang-format on
   StreamRange<google::cloud::securitycenter::v1::Source> ListSources(
       std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Lists all sources belonging to an organization.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::securitycenter::v1::ListSourcesRequest,google/cloud/securitycenter/v1/securitycenter_service.proto#L1514}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.securitycenter.v1.ListSourcesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::securitycenter::v1::Source,google/cloud/securitycenter/v1/source.proto#L32}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.securitycenter.v1.Source], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.securitycenter.v1.ListSourcesRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1514}
-  /// [google.cloud.securitycenter.v1.Source]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/source.proto#L32}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securitycenter.v1.ListSourcesRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1517}
+  /// [google.cloud.securitycenter.v1.Source]: @googleapis_reference_link{google/cloud/securitycenter/v1/source.proto#L32}
   ///
+  // clang-format on
   StreamRange<google::cloud::securitycenter::v1::Source> ListSources(
       google::cloud::securitycenter::v1::ListSourcesRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Runs asset discovery. The discovery is tracked with a long-running
   /// operation.
@@ -1260,22 +1993,36 @@ class SecurityCenterClient {
   /// it is called too frequently the caller will receive a TOO_MANY_REQUESTS
   /// error.
   ///
-  /// @param parent  Required. Name of the organization to run asset discovery
-  /// for. Its format
+  /// @param parent  Required. Name of the organization to run asset discovery for. Its format
   ///  is "organizations/[organization_id]".
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::securitycenter::v1::RunAssetDiscoveryResponse,google/cloud/securitycenter/v1/run_asset_discovery_response.proto#L29}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.securitycenter.v1.RunAssetDiscoveryResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.securitycenter.v1.RunAssetDiscoveryRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2019}
-  /// [google.cloud.securitycenter.v1.RunAssetDiscoveryResponse]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/run_asset_discovery_response.proto#L29}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securitycenter.v1.RunAssetDiscoveryRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2022}
+  /// [google.cloud.securitycenter.v1.RunAssetDiscoveryResponse]: @googleapis_reference_link{google/cloud/securitycenter/v1/run_asset_discovery_response.proto#L29}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::securitycenter::v1::RunAssetDiscoveryResponse>>
   RunAssetDiscovery(std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Runs asset discovery. The discovery is tracked with a long-running
   /// operation.
@@ -1284,24 +2031,43 @@ class SecurityCenterClient {
   /// it is called too frequently the caller will receive a TOO_MANY_REQUESTS
   /// error.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::securitycenter::v1::RunAssetDiscoveryRequest,google/cloud/securitycenter/v1/securitycenter_service.proto#L2019}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.securitycenter.v1.RunAssetDiscoveryRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::securitycenter::v1::RunAssetDiscoveryResponse,google/cloud/securitycenter/v1/run_asset_discovery_response.proto#L29}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.securitycenter.v1.RunAssetDiscoveryResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.securitycenter.v1.RunAssetDiscoveryRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2019}
-  /// [google.cloud.securitycenter.v1.RunAssetDiscoveryResponse]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/run_asset_discovery_response.proto#L29}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securitycenter.v1.RunAssetDiscoveryRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2022}
+  /// [google.cloud.securitycenter.v1.RunAssetDiscoveryResponse]: @googleapis_reference_link{google/cloud/securitycenter/v1/run_asset_discovery_response.proto#L29}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::securitycenter::v1::RunAssetDiscoveryResponse>>
   RunAssetDiscovery(
       google::cloud::securitycenter::v1::RunAssetDiscoveryRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Updates the state of a finding.
   ///
@@ -1312,42 +2078,63 @@ class SecurityCenterClient {
   ///  "folders/{folder_id}/sources/{source_id}/findings/{finding_id}",
   ///  "projects/{project_id}/sources/{source_id}/findings/{finding_id}".
   /// @param state  Required. The desired State of the finding.
-  /// @param start_time  Required. The time at which the updated state takes
-  /// effect.
+  /// @param start_time  Required. The time at which the updated state takes effect.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::securitycenter::v1::Finding,google/cloud/securitycenter/v1/finding.proto#L57}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.securitycenter.v1.Finding])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.securitycenter.v1.Finding]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/finding.proto#L57}
-  /// [google.cloud.securitycenter.v1.SetFindingStateRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1977}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securitycenter.v1.Finding]: @googleapis_reference_link{google/cloud/securitycenter/v1/finding.proto#L57}
+  /// [google.cloud.securitycenter.v1.SetFindingStateRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1980}
   ///
+  // clang-format on
   StatusOr<google::cloud::securitycenter::v1::Finding> SetFindingState(
       std::string const& name,
       google::cloud::securitycenter::v1::Finding::State state,
       google::protobuf::Timestamp const& start_time, Options opts = {});
 
+  // clang-format off
   ///
   /// Updates the state of a finding.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::securitycenter::v1::SetFindingStateRequest,google/cloud/securitycenter/v1/securitycenter_service.proto#L1977}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.securitycenter.v1.SetFindingStateRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::securitycenter::v1::Finding,google/cloud/securitycenter/v1/finding.proto#L57}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.securitycenter.v1.Finding])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.securitycenter.v1.Finding]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/finding.proto#L57}
-  /// [google.cloud.securitycenter.v1.SetFindingStateRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1977}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securitycenter.v1.Finding]: @googleapis_reference_link{google/cloud/securitycenter/v1/finding.proto#L57}
+  /// [google.cloud.securitycenter.v1.SetFindingStateRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1980}
   ///
+  // clang-format on
   StatusOr<google::cloud::securitycenter::v1::Finding> SetFindingState(
       google::cloud::securitycenter::v1::SetFindingStateRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Updates the mute state of a finding.
   ///
@@ -1360,58 +2147,86 @@ class SecurityCenterClient {
   /// @param mute  Required. The desired state of the Mute.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::securitycenter::v1::Finding,google/cloud/securitycenter/v1/finding.proto#L57}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.securitycenter.v1.Finding])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.securitycenter.v1.Finding]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/finding.proto#L57}
-  /// [google.cloud.securitycenter.v1.SetMuteRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2000}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securitycenter.v1.Finding]: @googleapis_reference_link{google/cloud/securitycenter/v1/finding.proto#L57}
+  /// [google.cloud.securitycenter.v1.SetMuteRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2003}
   ///
+  // clang-format on
   StatusOr<google::cloud::securitycenter::v1::Finding> SetMute(
       std::string const& name,
       google::cloud::securitycenter::v1::Finding::Mute mute, Options opts = {});
 
+  // clang-format off
   ///
   /// Updates the mute state of a finding.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::securitycenter::v1::SetMuteRequest,google/cloud/securitycenter/v1/securitycenter_service.proto#L2000}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.securitycenter.v1.SetMuteRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::securitycenter::v1::Finding,google/cloud/securitycenter/v1/finding.proto#L57}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.securitycenter.v1.Finding])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.securitycenter.v1.Finding]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/finding.proto#L57}
-  /// [google.cloud.securitycenter.v1.SetMuteRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2000}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securitycenter.v1.Finding]: @googleapis_reference_link{google/cloud/securitycenter/v1/finding.proto#L57}
+  /// [google.cloud.securitycenter.v1.SetMuteRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2003}
   ///
+  // clang-format on
   StatusOr<google::cloud::securitycenter::v1::Finding> SetMute(
       google::cloud::securitycenter::v1::SetMuteRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Sets the access control policy on the specified Source.
   ///
-  /// @param resource  REQUIRED: The resource for which the policy is being
-  /// specified.
+  /// @param resource  REQUIRED: The resource for which the policy is being specified.
   ///  See the operation documentation for the appropriate value for this field.
-  /// @param policy  REQUIRED: The complete policy to be applied to the
-  /// `resource`. The size of
+  /// @param policy  REQUIRED: The complete policy to be applied to the `resource`. The size of
   ///  the policy is limited to a few 10s of KB. An empty policy is a
   ///  valid policy but certain Cloud Platform services (such as Projects)
   ///  might reject them.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L98}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.iam.v1.Policy])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.iam.v1.Policy]:
-  /// @googleapis_reference_link{google/iam/v1/policy.proto#L98}
-  /// [google.iam.v1.SetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L98}
+  /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
   ///
+  // clang-format on
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
       std::string const& resource, google::iam::v1::Policy const& policy,
       Options opts = {});
@@ -1440,155 +2255,233 @@ class SecurityCenterClient {
                                                  IamUpdater const& updater,
                                                  Options opts = {});
 
+  // clang-format off
   ///
   /// Sets the access control policy on the specified Source.
   ///
-  /// @param request
-  /// @googleapis_link{google::iam::v1::SetIamPolicyRequest,google/iam/v1/iam_policy.proto#L101}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.iam.v1.SetIamPolicyRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L98}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.iam.v1.Policy])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.iam.v1.Policy]:
-  /// @googleapis_reference_link{google/iam/v1/policy.proto#L98}
-  /// [google.iam.v1.SetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L98}
+  /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
   ///
+  // clang-format on
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
       google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
 
+  // clang-format off
   ///
   /// Returns the permissions that a caller has on the specified source.
   ///
-  /// @param resource  REQUIRED: The resource for which the policy detail is
-  /// being requested.
+  /// @param resource  REQUIRED: The resource for which the policy detail is being requested.
   ///  See the operation documentation for the appropriate value for this field.
-  /// @param permissions  The set of permissions to check for the `resource`.
-  /// Permissions with
+  /// @param permissions  The set of permissions to check for the `resource`. Permissions with
   ///  wildcards (such as '*' or 'storage.*') are not allowed. For more
   ///  information see
   ///  [IAM Overview](https://cloud.google.com/iam/docs/overview#permissions).
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::iam::v1::TestIamPermissionsResponse,google/iam/v1/iam_policy.proto#L151}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.iam.v1.TestIamPermissionsResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.iam.v1.TestIamPermissionsRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L136}
-  /// [google.iam.v1.TestIamPermissionsResponse]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L151}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.iam.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L136}
+  /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L151}
   ///
+  // clang-format on
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
       std::string const& resource, std::vector<std::string> const& permissions,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Returns the permissions that a caller has on the specified source.
   ///
-  /// @param request
-  /// @googleapis_link{google::iam::v1::TestIamPermissionsRequest,google/iam/v1/iam_policy.proto#L136}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.iam.v1.TestIamPermissionsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::iam::v1::TestIamPermissionsResponse,google/iam/v1/iam_policy.proto#L151}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.iam.v1.TestIamPermissionsResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.iam.v1.TestIamPermissionsRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L136}
-  /// [google.iam.v1.TestIamPermissionsResponse]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L151}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.iam.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L136}
+  /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L151}
   ///
+  // clang-format on
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
       google::iam::v1::TestIamPermissionsRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Updates external system. This is for a given finding.
   ///
   /// @param external_system  Required. The external system resource to update.
-  /// @param update_mask  The FieldMask to use when updating the external system
-  /// resource.
+  /// @param update_mask  The FieldMask to use when updating the external system resource.
+  ///  @n
   ///  If empty all mutable fields will be updated.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::securitycenter::v1::ExternalSystem,google/cloud/securitycenter/v1/external_system.proto#L31}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.securitycenter.v1.ExternalSystem])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.securitycenter.v1.ExternalSystem]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/external_system.proto#L31}
-  /// [google.cloud.securitycenter.v1.UpdateExternalSystemRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2031}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securitycenter.v1.ExternalSystem]: @googleapis_reference_link{google/cloud/securitycenter/v1/external_system.proto#L31}
+  /// [google.cloud.securitycenter.v1.UpdateExternalSystemRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2034}
   ///
+  // clang-format on
   StatusOr<google::cloud::securitycenter::v1::ExternalSystem>
   UpdateExternalSystem(
       google::cloud::securitycenter::v1::ExternalSystem const& external_system,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
   ///
   /// Updates external system. This is for a given finding.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::securitycenter::v1::UpdateExternalSystemRequest,google/cloud/securitycenter/v1/securitycenter_service.proto#L2031}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.securitycenter.v1.UpdateExternalSystemRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::securitycenter::v1::ExternalSystem,google/cloud/securitycenter/v1/external_system.proto#L31}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.securitycenter.v1.ExternalSystem])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.securitycenter.v1.ExternalSystem]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/external_system.proto#L31}
-  /// [google.cloud.securitycenter.v1.UpdateExternalSystemRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2031}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securitycenter.v1.ExternalSystem]: @googleapis_reference_link{google/cloud/securitycenter/v1/external_system.proto#L31}
+  /// [google.cloud.securitycenter.v1.UpdateExternalSystemRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2034}
   ///
+  // clang-format on
   StatusOr<google::cloud::securitycenter::v1::ExternalSystem>
   UpdateExternalSystem(
       google::cloud::securitycenter::v1::UpdateExternalSystemRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates or updates a finding. The corresponding source must exist for a
   /// finding creation to succeed.
   ///
-  /// @param finding  Required. The finding resource to update or create if it
-  /// does not already
+  /// @param finding  Required. The finding resource to update or create if it does not already
   ///  exist. parent, security_marks, and update_time will be ignored.
+  ///  @n
   ///  In the case of creation, the finding id portion of the name must be
   ///  alphanumeric and less than or equal to 32 characters and greater than 0
   ///  characters in length.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::securitycenter::v1::Finding,google/cloud/securitycenter/v1/finding.proto#L57}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.securitycenter.v1.Finding])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.securitycenter.v1.Finding]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/finding.proto#L57}
-  /// [google.cloud.securitycenter.v1.UpdateFindingRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2042}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securitycenter.v1.Finding]: @googleapis_reference_link{google/cloud/securitycenter/v1/finding.proto#L57}
+  /// [google.cloud.securitycenter.v1.UpdateFindingRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2045}
   ///
+  // clang-format on
   StatusOr<google::cloud::securitycenter::v1::Finding> UpdateFinding(
       google::cloud::securitycenter::v1::Finding const& finding,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates or updates a finding. The corresponding source must exist for a
   /// finding creation to succeed.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::securitycenter::v1::UpdateFindingRequest,google/cloud/securitycenter/v1/securitycenter_service.proto#L2042}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.securitycenter.v1.UpdateFindingRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::securitycenter::v1::Finding,google/cloud/securitycenter/v1/finding.proto#L57}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.securitycenter.v1.Finding])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.securitycenter.v1.Finding]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/finding.proto#L57}
-  /// [google.cloud.securitycenter.v1.UpdateFindingRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2042}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securitycenter.v1.Finding]: @googleapis_reference_link{google/cloud/securitycenter/v1/finding.proto#L57}
+  /// [google.cloud.securitycenter.v1.UpdateFindingRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2045}
   ///
+  // clang-format on
   StatusOr<google::cloud::securitycenter::v1::Finding> UpdateFinding(
       google::cloud::securitycenter::v1::UpdateFindingRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Updates a mute config.
   ///
@@ -1597,37 +2490,59 @@ class SecurityCenterClient {
   ///  If empty all mutable fields will be updated.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::securitycenter::v1::MuteConfig,google/cloud/securitycenter/v1/mute_config.proto#L33}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.securitycenter.v1.MuteConfig])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.securitycenter.v1.MuteConfig]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/mute_config.proto#L33}
-  /// [google.cloud.securitycenter.v1.UpdateMuteConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2062}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securitycenter.v1.MuteConfig]: @googleapis_reference_link{google/cloud/securitycenter/v1/mute_config.proto#L33}
+  /// [google.cloud.securitycenter.v1.UpdateMuteConfigRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2065}
   ///
+  // clang-format on
   StatusOr<google::cloud::securitycenter::v1::MuteConfig> UpdateMuteConfig(
       google::cloud::securitycenter::v1::MuteConfig const& mute_config,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
   ///
   /// Updates a mute config.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::securitycenter::v1::UpdateMuteConfigRequest,google/cloud/securitycenter/v1/securitycenter_service.proto#L2062}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.securitycenter.v1.UpdateMuteConfigRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::securitycenter::v1::MuteConfig,google/cloud/securitycenter/v1/mute_config.proto#L33}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.securitycenter.v1.MuteConfig])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.securitycenter.v1.MuteConfig]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/mute_config.proto#L33}
-  /// [google.cloud.securitycenter.v1.UpdateMuteConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2062}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securitycenter.v1.MuteConfig]: @googleapis_reference_link{google/cloud/securitycenter/v1/mute_config.proto#L33}
+  /// [google.cloud.securitycenter.v1.UpdateMuteConfigRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2065}
   ///
+  // clang-format on
   StatusOr<google::cloud::securitycenter::v1::MuteConfig> UpdateMuteConfig(
       google::cloud::securitycenter::v1::UpdateMuteConfigRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   ///
   /// Updates a notification config. The following update
@@ -1636,130 +2551,189 @@ class SecurityCenterClient {
   /// @param notification_config  Required. The notification config to update.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::securitycenter::v1::NotificationConfig,google/cloud/securitycenter/v1/notification_config.proto#L38}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.securitycenter.v1.NotificationConfig])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.securitycenter.v1.NotificationConfig]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/notification_config.proto#L38}
-  /// [google.cloud.securitycenter.v1.UpdateNotificationConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2072}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securitycenter.v1.NotificationConfig]: @googleapis_reference_link{google/cloud/securitycenter/v1/notification_config.proto#L38}
+  /// [google.cloud.securitycenter.v1.UpdateNotificationConfigRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2075}
   ///
+  // clang-format on
   StatusOr<google::cloud::securitycenter::v1::NotificationConfig>
   UpdateNotificationConfig(
       google::cloud::securitycenter::v1::NotificationConfig const&
           notification_config,
       Options opts = {});
 
+  // clang-format off
   ///
   ///
   /// Updates a notification config. The following update
   /// fields are allowed: description, pubsub_topic, streaming_config.filter
   ///
   /// @param notification_config  Required. The notification config to update.
-  /// @param update_mask  The FieldMask to use when updating the notification
-  /// config.
+  /// @param update_mask  The FieldMask to use when updating the notification config.
+  ///  @n
   ///  If empty all mutable fields will be updated.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::securitycenter::v1::NotificationConfig,google/cloud/securitycenter/v1/notification_config.proto#L38}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.securitycenter.v1.NotificationConfig])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.securitycenter.v1.NotificationConfig]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/notification_config.proto#L38}
-  /// [google.cloud.securitycenter.v1.UpdateNotificationConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2072}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securitycenter.v1.NotificationConfig]: @googleapis_reference_link{google/cloud/securitycenter/v1/notification_config.proto#L38}
+  /// [google.cloud.securitycenter.v1.UpdateNotificationConfigRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2075}
   ///
+  // clang-format on
   StatusOr<google::cloud::securitycenter::v1::NotificationConfig>
   UpdateNotificationConfig(
       google::cloud::securitycenter::v1::NotificationConfig const&
           notification_config,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
   ///
   ///
   /// Updates a notification config. The following update
   /// fields are allowed: description, pubsub_topic, streaming_config.filter
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::securitycenter::v1::UpdateNotificationConfigRequest,google/cloud/securitycenter/v1/securitycenter_service.proto#L2072}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.securitycenter.v1.UpdateNotificationConfigRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::securitycenter::v1::NotificationConfig,google/cloud/securitycenter/v1/notification_config.proto#L38}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.securitycenter.v1.NotificationConfig])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.securitycenter.v1.NotificationConfig]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/notification_config.proto#L38}
-  /// [google.cloud.securitycenter.v1.UpdateNotificationConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2072}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securitycenter.v1.NotificationConfig]: @googleapis_reference_link{google/cloud/securitycenter/v1/notification_config.proto#L38}
+  /// [google.cloud.securitycenter.v1.UpdateNotificationConfigRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2075}
   ///
+  // clang-format on
   StatusOr<google::cloud::securitycenter::v1::NotificationConfig>
   UpdateNotificationConfig(
       google::cloud::securitycenter::v1::UpdateNotificationConfigRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Updates an organization's settings.
   ///
-  /// @param organization_settings  Required. The organization settings resource
-  /// to update.
+  /// @param organization_settings  Required. The organization settings resource to update.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::securitycenter::v1::OrganizationSettings,google/cloud/securitycenter/v1/organization_settings.proto#L30}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.securitycenter.v1.OrganizationSettings])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.securitycenter.v1.OrganizationSettings]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/organization_settings.proto#L30}
-  /// [google.cloud.securitycenter.v1.UpdateOrganizationSettingsRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2084}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securitycenter.v1.OrganizationSettings]: @googleapis_reference_link{google/cloud/securitycenter/v1/organization_settings.proto#L30}
+  /// [google.cloud.securitycenter.v1.UpdateOrganizationSettingsRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2087}
   ///
+  // clang-format on
   StatusOr<google::cloud::securitycenter::v1::OrganizationSettings>
   UpdateOrganizationSettings(
       google::cloud::securitycenter::v1::OrganizationSettings const&
           organization_settings,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Updates an organization's settings.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::securitycenter::v1::UpdateOrganizationSettingsRequest,google/cloud/securitycenter/v1/securitycenter_service.proto#L2084}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.securitycenter.v1.UpdateOrganizationSettingsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::securitycenter::v1::OrganizationSettings,google/cloud/securitycenter/v1/organization_settings.proto#L30}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.securitycenter.v1.OrganizationSettings])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.securitycenter.v1.OrganizationSettings]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/organization_settings.proto#L30}
-  /// [google.cloud.securitycenter.v1.UpdateOrganizationSettingsRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2084}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securitycenter.v1.OrganizationSettings]: @googleapis_reference_link{google/cloud/securitycenter/v1/organization_settings.proto#L30}
+  /// [google.cloud.securitycenter.v1.UpdateOrganizationSettingsRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2087}
   ///
+  // clang-format on
   StatusOr<google::cloud::securitycenter::v1::OrganizationSettings>
   UpdateOrganizationSettings(
       google::cloud::securitycenter::v1::
           UpdateOrganizationSettingsRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Updates the SecurityHealthAnalyticsCustomModule under the given name based
   /// on the given update mask. Updating the enablement state is supported on
-  /// both resident and inherited modules (though resident modules cannot have
-  /// an enablement state of "inherited"). Updating the display name and custom
+  /// both resident and inherited modules (though resident modules cannot have an
+  /// enablement state of "inherited"). Updating the display name and custom
   /// config of a module is supported on resident modules only.
   ///
-  /// @param security_health_analytics_custom_module  Required. The
-  /// SecurityHealthAnalytics custom module to update.
+  /// @param security_health_analytics_custom_module  Required. The SecurityHealthAnalytics custom module to update.
   /// @param update_mask  The list of fields to update.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule,google/cloud/securitycenter/v1/security_health_analytics_custom_module.proto#L43}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.securitycenter.v1.SecurityHealthAnalyticsCustomModule])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.securitycenter.v1.SecurityHealthAnalyticsCustomModule]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/security_health_analytics_custom_module.proto#L43}
-  /// [google.cloud.securitycenter.v1.UpdateSecurityHealthAnalyticsCustomModuleRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2096}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securitycenter.v1.SecurityHealthAnalyticsCustomModule]: @googleapis_reference_link{google/cloud/securitycenter/v1/security_health_analytics_custom_module.proto#L43}
+  /// [google.cloud.securitycenter.v1.UpdateSecurityHealthAnalyticsCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2099}
   ///
+  // clang-format on
   StatusOr<
       google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule>
   UpdateSecurityHealthAnalyticsCustomModule(
@@ -1768,25 +2742,38 @@ class SecurityCenterClient {
               security_health_analytics_custom_module,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
   ///
   /// Updates the SecurityHealthAnalyticsCustomModule under the given name based
   /// on the given update mask. Updating the enablement state is supported on
-  /// both resident and inherited modules (though resident modules cannot have
-  /// an enablement state of "inherited"). Updating the display name and custom
+  /// both resident and inherited modules (though resident modules cannot have an
+  /// enablement state of "inherited"). Updating the display name and custom
   /// config of a module is supported on resident modules only.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::securitycenter::v1::UpdateSecurityHealthAnalyticsCustomModuleRequest,google/cloud/securitycenter/v1/securitycenter_service.proto#L2096}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.securitycenter.v1.UpdateSecurityHealthAnalyticsCustomModuleRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule,google/cloud/securitycenter/v1/security_health_analytics_custom_module.proto#L43}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.securitycenter.v1.SecurityHealthAnalyticsCustomModule])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.securitycenter.v1.SecurityHealthAnalyticsCustomModule]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/security_health_analytics_custom_module.proto#L43}
-  /// [google.cloud.securitycenter.v1.UpdateSecurityHealthAnalyticsCustomModuleRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2096}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securitycenter.v1.SecurityHealthAnalyticsCustomModule]: @googleapis_reference_link{google/cloud/securitycenter/v1/security_health_analytics_custom_module.proto#L43}
+  /// [google.cloud.securitycenter.v1.UpdateSecurityHealthAnalyticsCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2099}
   ///
+  // clang-format on
   StatusOr<
       google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule>
   UpdateSecurityHealthAnalyticsCustomModule(
@@ -1794,165 +2781,253 @@ class SecurityCenterClient {
           UpdateSecurityHealthAnalyticsCustomModuleRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Updates a source.
   ///
   /// @param source  Required. The source resource to update.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::securitycenter::v1::Source,google/cloud/securitycenter/v1/source.proto#L32}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.securitycenter.v1.Source])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.securitycenter.v1.Source]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/source.proto#L32}
-  /// [google.cloud.securitycenter.v1.UpdateSourceRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2106}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securitycenter.v1.Source]: @googleapis_reference_link{google/cloud/securitycenter/v1/source.proto#L32}
+  /// [google.cloud.securitycenter.v1.UpdateSourceRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2109}
   ///
+  // clang-format on
   StatusOr<google::cloud::securitycenter::v1::Source> UpdateSource(
       google::cloud::securitycenter::v1::Source const& source,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Updates a source.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::securitycenter::v1::UpdateSourceRequest,google/cloud/securitycenter/v1/securitycenter_service.proto#L2106}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.securitycenter.v1.UpdateSourceRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::securitycenter::v1::Source,google/cloud/securitycenter/v1/source.proto#L32}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.securitycenter.v1.Source])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.securitycenter.v1.Source]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/source.proto#L32}
-  /// [google.cloud.securitycenter.v1.UpdateSourceRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2106}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securitycenter.v1.Source]: @googleapis_reference_link{google/cloud/securitycenter/v1/source.proto#L32}
+  /// [google.cloud.securitycenter.v1.UpdateSourceRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2109}
   ///
+  // clang-format on
   StatusOr<google::cloud::securitycenter::v1::Source> UpdateSource(
       google::cloud::securitycenter::v1::UpdateSourceRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Updates security marks.
   ///
   /// @param security_marks  Required. The security marks resource to update.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::securitycenter::v1::SecurityMarks,google/cloud/securitycenter/v1/security_marks.proto#L32}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.securitycenter.v1.SecurityMarks])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.securitycenter.v1.SecurityMarks]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/security_marks.proto#L32}
-  /// [google.cloud.securitycenter.v1.UpdateSecurityMarksRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2117}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securitycenter.v1.SecurityMarks]: @googleapis_reference_link{google/cloud/securitycenter/v1/security_marks.proto#L32}
+  /// [google.cloud.securitycenter.v1.UpdateSecurityMarksRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2120}
   ///
+  // clang-format on
   StatusOr<google::cloud::securitycenter::v1::SecurityMarks>
   UpdateSecurityMarks(
       google::cloud::securitycenter::v1::SecurityMarks const& security_marks,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Updates security marks.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::securitycenter::v1::UpdateSecurityMarksRequest,google/cloud/securitycenter/v1/securitycenter_service.proto#L2117}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.securitycenter.v1.UpdateSecurityMarksRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::securitycenter::v1::SecurityMarks,google/cloud/securitycenter/v1/security_marks.proto#L32}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.securitycenter.v1.SecurityMarks])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.securitycenter.v1.SecurityMarks]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/security_marks.proto#L32}
-  /// [google.cloud.securitycenter.v1.UpdateSecurityMarksRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2117}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securitycenter.v1.SecurityMarks]: @googleapis_reference_link{google/cloud/securitycenter/v1/security_marks.proto#L32}
+  /// [google.cloud.securitycenter.v1.UpdateSecurityMarksRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2120}
   ///
+  // clang-format on
   StatusOr<google::cloud::securitycenter::v1::SecurityMarks>
   UpdateSecurityMarks(
       google::cloud::securitycenter::v1::UpdateSecurityMarksRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a BigQuery export.
   ///
-  /// @param parent  Required. The name of the parent resource of the new
-  /// BigQuery export. Its
+  /// @param parent  Required. The name of the parent resource of the new BigQuery export. Its
   ///  format is "organizations/[organization_id]", "folders/[folder_id]", or
   ///  "projects/[project_id]".
   /// @param big_query_export  Required. The BigQuery export being created.
-  /// @param big_query_export_id  Required. Unique identifier provided by the
-  /// client within the parent scope.
-  ///  It must consist of lower case letters, numbers, and hyphen, with the
-  ///  first character a letter, the last a letter or a number, and a 63
-  ///  character maximum.
+  /// @param big_query_export_id  Required. Unique identifier provided by the client within the parent scope.
+  ///  It must consist of only lowercase letters, numbers, and hyphens, must start
+  ///  with a letter, must end with either a letter or a number, and must be 63
+  ///  characters or less.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::securitycenter::v1::BigQueryExport,google/cloud/securitycenter/v1/bigquery_export.proto#L32}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.securitycenter.v1.BigQueryExport])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.securitycenter.v1.BigQueryExport]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/bigquery_export.proto#L32}
-  /// [google.cloud.securitycenter.v1.CreateBigQueryExportRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2136}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securitycenter.v1.BigQueryExport]: @googleapis_reference_link{google/cloud/securitycenter/v1/bigquery_export.proto#L32}
+  /// [google.cloud.securitycenter.v1.CreateBigQueryExportRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2139}
   ///
+  // clang-format on
   StatusOr<google::cloud::securitycenter::v1::BigQueryExport>
   CreateBigQueryExport(
       std::string const& parent,
       google::cloud::securitycenter::v1::BigQueryExport const& big_query_export,
       std::string const& big_query_export_id, Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a BigQuery export.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::securitycenter::v1::CreateBigQueryExportRequest,google/cloud/securitycenter/v1/securitycenter_service.proto#L2136}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.securitycenter.v1.CreateBigQueryExportRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::securitycenter::v1::BigQueryExport,google/cloud/securitycenter/v1/bigquery_export.proto#L32}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.securitycenter.v1.BigQueryExport])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.securitycenter.v1.BigQueryExport]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/bigquery_export.proto#L32}
-  /// [google.cloud.securitycenter.v1.CreateBigQueryExportRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2136}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securitycenter.v1.BigQueryExport]: @googleapis_reference_link{google/cloud/securitycenter/v1/bigquery_export.proto#L32}
+  /// [google.cloud.securitycenter.v1.CreateBigQueryExportRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2139}
   ///
+  // clang-format on
   StatusOr<google::cloud::securitycenter::v1::BigQueryExport>
   CreateBigQueryExport(
       google::cloud::securitycenter::v1::CreateBigQueryExportRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes an existing BigQuery export.
   ///
-  /// @param name  Required. The name of the BigQuery export to delete. Its
-  /// format is
+  /// @param name  Required. The name of the BigQuery export to delete. Its format is
   ///  organizations/{organization}/bigQueryExports/{export_id},
   ///  folders/{folder}/bigQueryExports/{export_id}, or
   ///  projects/{project}/bigQueryExports/{export_id}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.securitycenter.v1.DeleteBigQueryExportRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2204}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securitycenter.v1.DeleteBigQueryExportRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2207}
   ///
+  // clang-format on
   Status DeleteBigQueryExport(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes an existing BigQuery export.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::securitycenter::v1::DeleteBigQueryExportRequest,google/cloud/securitycenter/v1/securitycenter_service.proto#L2204}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.securitycenter.v1.DeleteBigQueryExportRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.securitycenter.v1.DeleteBigQueryExportRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2204}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securitycenter.v1.DeleteBigQueryExportRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2207}
   ///
+  // clang-format on
   Status DeleteBigQueryExport(
       google::cloud::securitycenter::v1::DeleteBigQueryExportRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Updates a BigQuery export.
   ///
@@ -1961,40 +3036,62 @@ class SecurityCenterClient {
   ///  If empty all mutable fields will be updated.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::securitycenter::v1::BigQueryExport,google/cloud/securitycenter/v1/bigquery_export.proto#L32}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.securitycenter.v1.BigQueryExport])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.securitycenter.v1.BigQueryExport]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/bigquery_export.proto#L32}
-  /// [google.cloud.securitycenter.v1.UpdateBigQueryExportRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2158}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securitycenter.v1.BigQueryExport]: @googleapis_reference_link{google/cloud/securitycenter/v1/bigquery_export.proto#L32}
+  /// [google.cloud.securitycenter.v1.UpdateBigQueryExportRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2161}
   ///
+  // clang-format on
   StatusOr<google::cloud::securitycenter::v1::BigQueryExport>
   UpdateBigQueryExport(
       google::cloud::securitycenter::v1::BigQueryExport const& big_query_export,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
   ///
   /// Updates a BigQuery export.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::securitycenter::v1::UpdateBigQueryExportRequest,google/cloud/securitycenter/v1/securitycenter_service.proto#L2158}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.securitycenter.v1.UpdateBigQueryExportRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::securitycenter::v1::BigQueryExport,google/cloud/securitycenter/v1/bigquery_export.proto#L32}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.securitycenter.v1.BigQueryExport])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.securitycenter.v1.BigQueryExport]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/bigquery_export.proto#L32}
-  /// [google.cloud.securitycenter.v1.UpdateBigQueryExportRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2158}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securitycenter.v1.BigQueryExport]: @googleapis_reference_link{google/cloud/securitycenter/v1/bigquery_export.proto#L32}
+  /// [google.cloud.securitycenter.v1.UpdateBigQueryExportRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2161}
   ///
+  // clang-format on
   StatusOr<google::cloud::securitycenter::v1::BigQueryExport>
   UpdateBigQueryExport(
       google::cloud::securitycenter::v1::UpdateBigQueryExportRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists BigQuery exports. Note that when requesting BigQuery exports at a
   /// given level all exports under that level are also returned e.g. if
@@ -2002,23 +3099,40 @@ class SecurityCenterClient {
   /// immediately under the folder plus the ones created under the projects
   /// within the folder are returned.
   ///
-  /// @param parent  Required. The parent, which owns the collection of BigQuery
-  /// exports. Its
+  /// @param parent  Required. The parent, which owns the collection of BigQuery exports. Its
   ///  format is "organizations/[organization_id]", "folders/[folder_id]",
   ///  "projects/[project_id]".
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::securitycenter::v1::BigQueryExport,google/cloud/securitycenter/v1/bigquery_export.proto#L32}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.securitycenter.v1.BigQueryExport], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.securitycenter.v1.BigQueryExport]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/bigquery_export.proto#L32}
-  /// [google.cloud.securitycenter.v1.ListBigQueryExportsRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2169}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securitycenter.v1.BigQueryExport]: @googleapis_reference_link{google/cloud/securitycenter/v1/bigquery_export.proto#L32}
+  /// [google.cloud.securitycenter.v1.ListBigQueryExportsRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2172}
   ///
+  // clang-format on
   StreamRange<google::cloud::securitycenter::v1::BigQueryExport>
   ListBigQueryExports(std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Lists BigQuery exports. Note that when requesting BigQuery exports at a
   /// given level all exports under that level are also returned e.g. if
@@ -2026,18 +3140,39 @@ class SecurityCenterClient {
   /// immediately under the folder plus the ones created under the projects
   /// within the folder are returned.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::securitycenter::v1::ListBigQueryExportsRequest,google/cloud/securitycenter/v1/securitycenter_service.proto#L2169}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.securitycenter.v1.ListBigQueryExportsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::securitycenter::v1::BigQueryExport,google/cloud/securitycenter/v1/bigquery_export.proto#L32}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.securitycenter.v1.BigQueryExport], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.securitycenter.v1.BigQueryExport]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/bigquery_export.proto#L32}
-  /// [google.cloud.securitycenter.v1.ListBigQueryExportsRequest]:
-  /// @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2169}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.securitycenter.v1.BigQueryExport]: @googleapis_reference_link{google/cloud/securitycenter/v1/bigquery_export.proto#L32}
+  /// [google.cloud.securitycenter.v1.ListBigQueryExportsRequest]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2172}
   ///
+  // clang-format on
   StreamRange<google::cloud::securitycenter::v1::BigQueryExport>
   ListBigQueryExports(
       google::cloud::securitycenter::v1::ListBigQueryExportsRequest request,

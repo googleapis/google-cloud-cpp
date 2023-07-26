@@ -48,8 +48,9 @@ Options MetricsScopesDefaultOptions(Options options) {
   if (!options.has<
           monitoring_metricsscope_v1::MetricsScopesBackoffPolicyOption>()) {
     options.set<monitoring_metricsscope_v1::MetricsScopesBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options.has<
@@ -62,10 +63,9 @@ Options MetricsScopesDefaultOptions(Options options) {
                 .get<monitoring_metricsscope_v1::
                          MetricsScopesRetryPolicyOption>()
                 ->clone(),
-            options
-                .get<monitoring_metricsscope_v1::
-                         MetricsScopesBackoffPolicyOption>()
-                ->clone())
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
             .clone());
   }
   if (!options.has<monitoring_metricsscope_v1::

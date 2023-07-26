@@ -185,12 +185,26 @@ class MockStreambuf : public internal::ObjectWriteStreambuf {
   MOCK_METHOD(std::uint64_t, next_expected_byte, (), (const, override));
 };
 
-/// Create a client configured to use the given mock.
+/**
+ * Create a client configured to use the given mock.
+ *
+ * Unless you specifically need to mock the behavior of retries, prefer
+ * `UndecoratedClientFromMock()`.
+ */
 template <typename... Policies>
 Client ClientFromMock(std::shared_ptr<MockClient> const& mock,
                       Policies&&... p) {
   return internal::ClientImplDetails::CreateClient(
       mock, std::forward<Policies>(p)...);
+}
+
+/**
+ * Create a client configured to use the given mock.
+ *
+ * This client does not retry on transient errors.
+ */
+inline Client UndecoratedClientFromMock(std::shared_ptr<MockClient> mock) {
+  return internal::ClientImplDetails::CreateWithoutDecorations(std::move(mock));
 }
 
 }  // namespace testing

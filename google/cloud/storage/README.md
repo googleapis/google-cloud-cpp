@@ -64,23 +64,6 @@ int main(int argc, char* argv[]) {
 
 <!-- inject-quickstart-end -->
 
-## Build and Install
-
-- Packaging maintainers or developers who prefer to install the library in a
-  fixed directory (such as `/usr/local` or `/opt`) should consult the
-  [packaging guide](/doc/packaging.md).
-- Developers who prefer using a package manager such as
-  [vcpkg](https://vcpkg.io), or [Conda](https://conda.io), should follow the
-  instructions for their package manager.
-- Developers wanting to use the libraries as part of a larger CMake or Bazel
-  project should consult the [quickstart guides](#quickstart) for the library
-  or libraries they want to use.
-- Developers wanting to compile the library just to run some examples or
-  tests should read the project's top-level
-  [README](/README.md#building-and-installing).
-- Contributors and developers to `google-cloud-cpp` should consult the guide to
-  [set up a development workstation][howto-setup-dev-workstation].
-
 ## More Information
 
 - Official documentation about [Google Cloud Storage][cloud-storage-docs]
@@ -88,6 +71,5 @@ int main(int argc, char* argv[]) {
 - Detailed header comments in our [public `.h`][source-link] files
 
 [cloud-storage-docs]: https://cloud.google.com/storage/docs/
-[doxygen-link]: https://googleapis.dev/cpp/google-cloud-storage/latest/
-[howto-setup-dev-workstation]: /doc/contributor/howto-guide-setup-development-workstation.md
+[doxygen-link]: https://cloud.google.com/cpp/docs/reference/storage/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/storage

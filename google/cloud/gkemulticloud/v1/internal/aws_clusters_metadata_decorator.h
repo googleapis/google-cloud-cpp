@@ -22,6 +22,7 @@
 #include "google/cloud/gkemulticloud/v1/internal/aws_clusters_stub.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
+#include <map>
 #include <memory>
 #include <string>
 
@@ -33,7 +34,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class AwsClustersMetadata : public AwsClustersStub {
  public:
   ~AwsClustersMetadata() override = default;
-  explicit AwsClustersMetadata(std::shared_ptr<AwsClustersStub> child);
+  AwsClustersMetadata(std::shared_ptr<AwsClustersStub> child,
+                      std::multimap<std::string, std::string> fixed_metadata);
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateAwsCluster(
       google::cloud::CompletionQueue& cq,
@@ -121,6 +123,7 @@ class AwsClustersMetadata : public AwsClustersStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<AwsClustersStub> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

@@ -18,6 +18,7 @@
 
 #include "google/cloud/resourcemanager/v3/internal/folders_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/resourcemanager/v3/folders.grpc.pb.h>
@@ -28,15 +29,18 @@ namespace cloud {
 namespace resourcemanager_v3_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-FoldersMetadata::FoldersMetadata(std::shared_ptr<FoldersStub> child)
+FoldersMetadata::FoldersMetadata(
+    std::shared_ptr<FoldersStub> child,
+    std::multimap<std::string, std::string> fixed_metadata)
     : child_(std::move(child)),
+      fixed_metadata_(std::move(fixed_metadata)),
       api_client_header_(
           google::cloud::internal::ApiClientHeader("generator")) {}
 
 StatusOr<google::cloud::resourcemanager::v3::Folder> FoldersMetadata::GetFolder(
     grpc::ClientContext& context,
     google::cloud::resourcemanager::v3::GetFolderRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetFolder(context, request);
 }
 
@@ -70,7 +74,7 @@ FoldersMetadata::AsyncUpdateFolder(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::resourcemanager::v3::UpdateFolderRequest const& request) {
-  SetMetadata(*context, "folder.name=" + request.folder().name());
+  SetMetadata(*context, absl::StrCat("folder.name=", request.folder().name()));
   return child_->AsyncUpdateFolder(cq, std::move(context), request);
 }
 
@@ -79,7 +83,7 @@ FoldersMetadata::AsyncMoveFolder(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::resourcemanager::v3::MoveFolderRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncMoveFolder(cq, std::move(context), request);
 }
 
@@ -88,7 +92,7 @@ FoldersMetadata::AsyncDeleteFolder(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::resourcemanager::v3::DeleteFolderRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncDeleteFolder(cq, std::move(context), request);
 }
 
@@ -97,21 +101,21 @@ FoldersMetadata::AsyncUndeleteFolder(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::resourcemanager::v3::UndeleteFolderRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncUndeleteFolder(cq, std::move(context), request);
 }
 
 StatusOr<google::iam::v1::Policy> FoldersMetadata::GetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::GetIamPolicyRequest const& request) {
-  SetMetadata(context, "resource=" + request.resource());
+  SetMetadata(context, absl::StrCat("resource=", request.resource()));
   return child_->GetIamPolicy(context, request);
 }
 
 StatusOr<google::iam::v1::Policy> FoldersMetadata::SetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::SetIamPolicyRequest const& request) {
-  SetMetadata(context, "resource=" + request.resource());
+  SetMetadata(context, absl::StrCat("resource=", request.resource()));
   return child_->SetIamPolicy(context, request);
 }
 
@@ -119,7 +123,7 @@ StatusOr<google::iam::v1::TestIamPermissionsResponse>
 FoldersMetadata::TestIamPermissions(
     grpc::ClientContext& context,
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  SetMetadata(context, "resource=" + request.resource());
+  SetMetadata(context, absl::StrCat("resource=", request.resource()));
   return child_->TestIamPermissions(context, request);
 }
 
@@ -147,6 +151,9 @@ void FoldersMetadata::SetMetadata(grpc::ClientContext& context,
 }
 
 void FoldersMetadata::SetMetadata(grpc::ClientContext& context) {
+  for (auto const& kv : fixed_metadata_) {
+    context.AddMetadata(kv.first, kv.second);
+  }
   context.AddMetadata("x-goog-api-client", api_client_header_);
   auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {

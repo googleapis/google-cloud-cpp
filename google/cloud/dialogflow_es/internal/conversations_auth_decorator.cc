@@ -85,6 +85,16 @@ ConversationsAuth::SuggestConversationSummary(
   return child_->SuggestConversationSummary(context, request);
 }
 
+StatusOr<google::cloud::dialogflow::v2::GenerateStatelessSummaryResponse>
+ConversationsAuth::GenerateStatelessSummary(
+    grpc::ClientContext& context,
+    google::cloud::dialogflow::v2::GenerateStatelessSummaryRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GenerateStatelessSummary(context, request);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_es_internal
 }  // namespace cloud

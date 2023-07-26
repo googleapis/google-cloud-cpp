@@ -51,7 +51,8 @@ std::shared_ptr<EventarcStub> CreateDefaultEventarcStub(
   if (auth->RequiresConfigureContext()) {
     stub = std::make_shared<EventarcAuth>(std::move(auth), std::move(stub));
   }
-  stub = std::make_shared<EventarcMetadata>(std::move(stub));
+  stub = std::make_shared<EventarcMetadata>(
+      std::move(stub), std::multimap<std::string, std::string>{});
   if (internal::Contains(options.get<TracingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<EventarcLogging>(

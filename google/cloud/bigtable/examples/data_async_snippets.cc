@@ -388,7 +388,7 @@ void RunAll(std::vector<std::string> const& argv) {
   std::cout << "\nRunning the AsyncReadModifyWrite() example" << std::endl;
   AsyncReadModifyWrite(table, {"read-modify-write-row-key"});
 
-  (void)admin.DeleteTable(table_id);
+  (void)admin.DeleteTable(table.table_name());
 }
 
 }  // anonymous namespace

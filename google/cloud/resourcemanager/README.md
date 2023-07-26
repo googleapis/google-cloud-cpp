@@ -56,5 +56,5 @@ int main(int argc, char* argv[]) try {
 
 [cloud-product]: https://cloud.google.com/resource-manager
 [cloud-service-docs]: https://cloud.google.com/resource-manager/docs
-[doxygen-link]: https://googleapis.dev/cpp/google-cloud-resourcemanager/latest/
+[doxygen-link]: https://cloud.google.com/cpp/docs/reference/resourcemanager/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/resourcemanager

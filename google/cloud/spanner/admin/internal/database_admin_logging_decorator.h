@@ -37,7 +37,7 @@ class DatabaseAdminLogging : public DatabaseAdminStub {
   ~DatabaseAdminLogging() override = default;
   DatabaseAdminLogging(std::shared_ptr<DatabaseAdminStub> child,
                        TracingOptions tracing_options,
-                       std::set<std::string> components);
+                       std::set<std::string> const& components);
 
   StatusOr<google::spanner::admin::database::v1::ListDatabasesResponse>
   ListDatabases(
@@ -55,6 +55,12 @@ class DatabaseAdminLogging : public DatabaseAdminStub {
       grpc::ClientContext& context,
       google::spanner::admin::database::v1::GetDatabaseRequest const& request)
       override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncUpdateDatabase(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::spanner::admin::database::v1::UpdateDatabaseRequest const&
+          request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateDatabaseDdl(
       google::cloud::CompletionQueue& cq,
@@ -154,7 +160,7 @@ class DatabaseAdminLogging : public DatabaseAdminStub {
  private:
   std::shared_ptr<DatabaseAdminStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // DatabaseAdminLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -132,6 +132,22 @@ StatusOr<google::cloud::kms::v1::EkmConfig> EkmServiceClient::UpdateEkmConfig(
   return connection_->UpdateEkmConfig(request);
 }
 
+StatusOr<google::cloud::kms::v1::VerifyConnectivityResponse>
+EkmServiceClient::VerifyConnectivity(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::kms::v1::VerifyConnectivityRequest request;
+  request.set_name(name);
+  return connection_->VerifyConnectivity(request);
+}
+
+StatusOr<google::cloud::kms::v1::VerifyConnectivityResponse>
+EkmServiceClient::VerifyConnectivity(
+    google::cloud::kms::v1::VerifyConnectivityRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->VerifyConnectivity(request);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace kms_v1
 }  // namespace cloud

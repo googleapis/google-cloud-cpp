@@ -37,7 +37,7 @@ class BareMetalSolutionLogging : public BareMetalSolutionStub {
   ~BareMetalSolutionLogging() override = default;
   BareMetalSolutionLogging(std::shared_ptr<BareMetalSolutionStub> child,
                            TracingOptions tracing_options,
-                           std::set<std::string> components);
+                           std::set<std::string> const& components);
 
   StatusOr<google::cloud::baremetalsolution::v2::ListInstancesResponse>
   ListInstances(
@@ -164,7 +164,7 @@ class BareMetalSolutionLogging : public BareMetalSolutionStub {
  private:
   std::shared_ptr<BareMetalSolutionStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // BareMetalSolutionLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

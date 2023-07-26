@@ -29,6 +29,7 @@ namespace google {
 namespace cloud {
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+class GrpcChannelRefresh;
 class StorageStub;
 
 /**
@@ -241,6 +242,7 @@ class GrpcClient : public storage::internal::RawClient,
   Options options_;
   storage::ClientOptions backwards_compatibility_options_;
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
+  std::shared_ptr<storage_internal::GrpcChannelRefresh> refresh_;
   std::shared_ptr<storage_internal::StorageStub> stub_;
   std::shared_ptr<google::cloud::internal::MinimalIamCredentialsStub> iam_stub_;
 };

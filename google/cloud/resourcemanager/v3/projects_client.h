@@ -84,6 +84,7 @@ class ProjectsClient {
   }
   ///@}
 
+  // clang-format off
   ///
   /// Retrieves the project identified by the specified `name` (for example,
   /// `projects/415104041262`).
@@ -91,21 +92,29 @@ class ProjectsClient {
   /// The caller must have `resourcemanager.projects.get` permission
   /// for this project.
   ///
-  /// @param name  Required. The name of the project (for example,
-  /// `projects/415104041262`).
+  /// @param name  Required. The name of the project (for example, `projects/415104041262`).
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::resourcemanager::v3::Project,google/cloud/resourcemanager/v3/projects.proto#L295}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.resourcemanager.v3.Project])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.resourcemanager.v3.GetProjectRequest]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L386}
-  /// [google.cloud.resourcemanager.v3.Project]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L295}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.resourcemanager.v3.GetProjectRequest]: @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L386}
+  /// [google.cloud.resourcemanager.v3.Project]: @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L295}
   ///
+  // clang-format on
   StatusOr<google::cloud::resourcemanager::v3::Project> GetProject(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Retrieves the project identified by the specified `name` (for example,
   /// `projects/415104041262`).
@@ -113,22 +122,35 @@ class ProjectsClient {
   /// The caller must have `resourcemanager.projects.get` permission
   /// for this project.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::resourcemanager::v3::GetProjectRequest,google/cloud/resourcemanager/v3/projects.proto#L386}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.resourcemanager.v3.GetProjectRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::resourcemanager::v3::Project,google/cloud/resourcemanager/v3/projects.proto#L295}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.resourcemanager.v3.Project])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.resourcemanager.v3.GetProjectRequest]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L386}
-  /// [google.cloud.resourcemanager.v3.Project]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L295}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.resourcemanager.v3.GetProjectRequest]: @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L386}
+  /// [google.cloud.resourcemanager.v3.Project]: @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L295}
   ///
+  // clang-format on
   StatusOr<google::cloud::resourcemanager::v3::Project> GetProject(
       google::cloud::resourcemanager::v3::GetProjectRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists projects that are direct children of the specified folder or
   /// organization resource. `list()` provides a strongly consistent view of the
@@ -137,25 +159,43 @@ class ProjectsClient {
   /// `display_name`. The caller must have `resourcemanager.projects.list`
   /// permission on the identified parent.
   ///
-  /// @param parent  Required. The name of the parent resource whose projects
-  /// are being listed.
+  /// @param parent  Required. The name of the parent resource whose projects are being listed.
   ///  Only children of this parent resource are listed; descendants are not
   ///  listed.
+  ///  @n
   ///  If the parent is a folder, use the value `folders/{folder_id}`. If the
   ///  parent is an organization, use the value `organizations/{org_id}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::resourcemanager::v3::Project,google/cloud/resourcemanager/v3/projects.proto#L295}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.resourcemanager.v3.Project], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.resourcemanager.v3.ListProjectsRequest]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L399}
-  /// [google.cloud.resourcemanager.v3.Project]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L295}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.resourcemanager.v3.ListProjectsRequest]: @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L399}
+  /// [google.cloud.resourcemanager.v3.Project]: @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L295}
   ///
+  // clang-format on
   StreamRange<google::cloud::resourcemanager::v3::Project> ListProjects(
       std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Lists projects that are direct children of the specified folder or
   /// organization resource. `list()` provides a strongly consistent view of the
@@ -164,26 +204,47 @@ class ProjectsClient {
   /// `display_name`. The caller must have `resourcemanager.projects.list`
   /// permission on the identified parent.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::resourcemanager::v3::ListProjectsRequest,google/cloud/resourcemanager/v3/projects.proto#L399}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.resourcemanager.v3.ListProjectsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::resourcemanager::v3::Project,google/cloud/resourcemanager/v3/projects.proto#L295}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.resourcemanager.v3.Project], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.resourcemanager.v3.ListProjectsRequest]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L399}
-  /// [google.cloud.resourcemanager.v3.Project]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L295}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.resourcemanager.v3.ListProjectsRequest]: @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L399}
+  /// [google.cloud.resourcemanager.v3.Project]: @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L295}
   ///
+  // clang-format on
   StreamRange<google::cloud::resourcemanager::v3::Project> ListProjects(
       google::cloud::resourcemanager::v3::ListProjectsRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
-  /// Search for projects that the caller has both
-  /// `resourcemanager.projects.get` permission on, and also satisfy the
-  /// specified query.
+  /// Search for projects that the caller has both `resourcemanager.projects.get`
+  /// permission on, and also satisfy the specified query.
   ///
   /// This method returns projects in an unspecified order.
   ///
@@ -193,54 +254,47 @@ class ProjectsClient {
   /// retrieve the latest state of a project, use the
   /// [GetProject][google.cloud.resourcemanager.v3.Projects.GetProject] method.
   ///
-  /// @param query  Optional. A query string for searching for projects that the
-  /// caller has
+  /// @param query  Optional. A query string for searching for projects that the caller has
   ///  `resourcemanager.projects.get` permission to. If multiple fields are
   ///  included in the query, then it will return results that match any of the
-  ///  fields. Some eligible fields are:
-  ///  - **`displayName`, `name`**: Filters by displayName.
-  ///  - **`parent`**: Project's parent (for example: `folders/123`,
-  ///  `organizations/*`). Prefer `parent` field over `parent.type` and
-  ///  `parent.id`.
-  ///  - **`parent.type`**: Parent's type: `folder` or `organization`.
-  ///  - **`parent.id`**: Parent's id number (for example: `123`).
-  ///  - **`id`, `projectId`**: Filters by projectId.
-  ///  - **`state`, `lifecycleState`**: Filters by state.
-  ///  - **`labels`**: Filters by label name or value.
-  ///  - **`labels.<key>` (where `<key>` is the name of a label)**: Filters by
-  ///  label name. Search expressions are case insensitive. Some examples
-  ///  queries:
-  ///
-  ///  - **`name:how*`**: The project's name starts with "how".
-  ///  - **`name:Howl`**: The project's name is `Howl` or `howl`.
-  ///  - **`name:HOWL`**: Equivalent to above.
-  ///  - **`NAME:howl`**: Equivalent to above.
-  ///  - **`labels.color:*`**: The project has the label `color`.
-  ///  - **`labels.color:red`**:  The project's label `color` has the value
-  ///  `red`.
-  ///  - **`labels.color:red labels.size:big`**: The project's label `color` has
-  ///  the value `red` or its label `size` has the value `big`.
-  ///  If no query is specified, the call will return projects for which the
-  ///  user has the `resourcemanager.projects.get` permission.
+  ///  fields.
+  ///  @n
+  ///  For more information, see [SearchProjectsRequest][google.cloud.resourcemanager.v3.SearchProjectsRequest].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::resourcemanager::v3::Project,google/cloud/resourcemanager/v3/projects.proto#L295}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.resourcemanager.v3.Project], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.resourcemanager.v3.Project]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L295}
-  /// [google.cloud.resourcemanager.v3.Projects.GetProject]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L49}
-  /// [google.cloud.resourcemanager.v3.SearchProjectsRequest]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L457}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.resourcemanager.v3.Project]: @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L295}
+  /// [google.cloud.resourcemanager.v3.Projects.GetProject]: @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L49}
+  /// [google.cloud.resourcemanager.v3.SearchProjectsRequest]: @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L457}
   ///
+  // clang-format on
   StreamRange<google::cloud::resourcemanager::v3::Project> SearchProjects(
       std::string const& query, Options opts = {});
 
+  // clang-format off
   ///
-  /// Search for projects that the caller has both
-  /// `resourcemanager.projects.get` permission on, and also satisfy the
-  /// specified query.
+  /// Search for projects that the caller has both `resourcemanager.projects.get`
+  /// permission on, and also satisfy the specified query.
   ///
   /// This method returns projects in an unspecified order.
   ///
@@ -250,75 +304,132 @@ class ProjectsClient {
   /// retrieve the latest state of a project, use the
   /// [GetProject][google.cloud.resourcemanager.v3.Projects.GetProject] method.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::resourcemanager::v3::SearchProjectsRequest,google/cloud/resourcemanager/v3/projects.proto#L457}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.resourcemanager.v3.SearchProjectsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::resourcemanager::v3::Project,google/cloud/resourcemanager/v3/projects.proto#L295}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.resourcemanager.v3.Project], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.resourcemanager.v3.Project]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L295}
-  /// [google.cloud.resourcemanager.v3.Projects.GetProject]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L49}
-  /// [google.cloud.resourcemanager.v3.SearchProjectsRequest]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L457}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.resourcemanager.v3.Project]: @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L295}
+  /// [google.cloud.resourcemanager.v3.Projects.GetProject]: @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L49}
+  /// [google.cloud.resourcemanager.v3.SearchProjectsRequest]: @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L457}
   ///
+  // clang-format on
   StreamRange<google::cloud::resourcemanager::v3::Project> SearchProjects(
       google::cloud::resourcemanager::v3::SearchProjectsRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Request that a new project be created. The result is an `Operation` which
-  /// can be used to track the creation process. This process usually takes a
-  /// few seconds, but can sometimes take much longer. The tracking `Operation`
-  /// is automatically deleted after a few hours, so there is no need to call
+  /// can be used to track the creation process. This process usually takes a few
+  /// seconds, but can sometimes take much longer. The tracking `Operation` is
+  /// automatically deleted after a few hours, so there is no need to call
   /// `DeleteOperation`.
   ///
   /// @param project  Required. The Project to create.
+  ///  @n
   ///  Project ID is required. If the requested ID is unavailable, the request
   ///  fails.
+  ///  @n
   ///  If the `parent` field is set, the `resourcemanager.projects.create`
   ///  permission is checked on the parent resource. If no parent is set and
   ///  the authorization credentials belong to an Organization, the parent
   ///  will be set to that Organization.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::resourcemanager::v3::Project,google/cloud/resourcemanager/v3/projects.proto#L295}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.resourcemanager.v3.Project] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.resourcemanager.v3.CreateProjectRequest]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L533}
-  /// [google.cloud.resourcemanager.v3.Project]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L295}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.resourcemanager.v3.CreateProjectRequest]: @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L533}
+  /// [google.cloud.resourcemanager.v3.Project]: @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L295}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::resourcemanager::v3::Project>> CreateProject(
       google::cloud::resourcemanager::v3::Project const& project,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Request that a new project be created. The result is an `Operation` which
-  /// can be used to track the creation process. This process usually takes a
-  /// few seconds, but can sometimes take much longer. The tracking `Operation`
-  /// is automatically deleted after a few hours, so there is no need to call
+  /// can be used to track the creation process. This process usually takes a few
+  /// seconds, but can sometimes take much longer. The tracking `Operation` is
+  /// automatically deleted after a few hours, so there is no need to call
   /// `DeleteOperation`.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::resourcemanager::v3::CreateProjectRequest,google/cloud/resourcemanager/v3/projects.proto#L533}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.resourcemanager.v3.CreateProjectRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::resourcemanager::v3::Project,google/cloud/resourcemanager/v3/projects.proto#L295}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.resourcemanager.v3.Project] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.resourcemanager.v3.CreateProjectRequest]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L533}
-  /// [google.cloud.resourcemanager.v3.Project]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L295}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.resourcemanager.v3.CreateProjectRequest]: @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L533}
+  /// [google.cloud.resourcemanager.v3.Project]: @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L295}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::resourcemanager::v3::Project>> CreateProject(
       google::cloud::resourcemanager::v3::CreateProjectRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Updates the `display_name` and labels of the project identified by the
   /// specified `name` (for example, `projects/415104041262`). Deleting all
@@ -331,18 +442,33 @@ class ProjectsClient {
   /// @param update_mask  Optional. An update mask to selectively update fields.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::resourcemanager::v3::Project,google/cloud/resourcemanager/v3/projects.proto#L295}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.resourcemanager.v3.Project] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.resourcemanager.v3.Project]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L295}
-  /// [google.cloud.resourcemanager.v3.UpdateProjectRequest]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L569}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.resourcemanager.v3.Project]: @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L295}
+  /// [google.cloud.resourcemanager.v3.UpdateProjectRequest]: @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L569}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::resourcemanager::v3::Project>> UpdateProject(
       google::cloud::resourcemanager::v3::Project const& project,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
   ///
   /// Updates the `display_name` and labels of the project identified by the
   /// specified `name` (for example, `projects/415104041262`). Deleting all
@@ -351,22 +477,41 @@ class ProjectsClient {
   /// The caller must have `resourcemanager.projects.update` permission for this
   /// project.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::resourcemanager::v3::UpdateProjectRequest,google/cloud/resourcemanager/v3/projects.proto#L569}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.resourcemanager.v3.UpdateProjectRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::resourcemanager::v3::Project,google/cloud/resourcemanager/v3/projects.proto#L295}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.resourcemanager.v3.Project] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.resourcemanager.v3.Project]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L295}
-  /// [google.cloud.resourcemanager.v3.UpdateProjectRequest]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L569}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.resourcemanager.v3.Project]: @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L295}
+  /// [google.cloud.resourcemanager.v3.UpdateProjectRequest]: @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L569}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::resourcemanager::v3::Project>> UpdateProject(
       google::cloud::resourcemanager::v3::UpdateProjectRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Move a project to another place in your resource hierarchy, under a new
   /// resource parent.
@@ -386,22 +531,36 @@ class ProjectsClient {
   ///
   ///
   /// @param name  Required. The name of the project to move.
-  /// @param destination_parent  Required. The new parent to move the Project
-  /// under.
+  /// @param destination_parent  Required. The new parent to move the Project under.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::resourcemanager::v3::Project,google/cloud/resourcemanager/v3/projects.proto#L295}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.resourcemanager.v3.Project] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.resourcemanager.v3.MoveProjectRequest]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L585}
-  /// [google.cloud.resourcemanager.v3.Project]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L295}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.resourcemanager.v3.MoveProjectRequest]: @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L585}
+  /// [google.cloud.resourcemanager.v3.Project]: @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L295}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::resourcemanager::v3::Project>> MoveProject(
       std::string const& name, std::string const& destination_parent,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Move a project to another place in your resource hierarchy, under a new
   /// resource parent.
@@ -420,22 +579,41 @@ class ProjectsClient {
   ///
   ///
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::resourcemanager::v3::MoveProjectRequest,google/cloud/resourcemanager/v3/projects.proto#L585}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.resourcemanager.v3.MoveProjectRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::resourcemanager::v3::Project,google/cloud/resourcemanager/v3/projects.proto#L295}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.resourcemanager.v3.Project] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.resourcemanager.v3.MoveProjectRequest]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L585}
-  /// [google.cloud.resourcemanager.v3.Project]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L295}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.resourcemanager.v3.MoveProjectRequest]: @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L585}
+  /// [google.cloud.resourcemanager.v3.Project]: @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L295}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::resourcemanager::v3::Project>> MoveProject(
       google::cloud::resourcemanager::v3::MoveProjectRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Marks the project identified by the specified
   /// `name` (for example, `projects/415104041262`) for deletion.
@@ -468,26 +646,41 @@ class ProjectsClient {
   /// This method behaves idempotently, such that deleting a `DELETE_REQUESTED`
   /// project will not cause an error, but also won't do anything.
   ///
-  /// The caller must have `resourcemanager.projects.delete` permissions for
-  /// this project.
+  /// The caller must have `resourcemanager.projects.delete` permissions for this
+  /// project.
   ///
-  /// @param name  Required. The name of the Project (for example,
-  /// `projects/415104041262`).
+  /// @param name  Required. The name of the Project (for example, `projects/415104041262`).
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::resourcemanager::v3::Project,google/cloud/resourcemanager/v3/projects.proto#L295}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.resourcemanager.v3.Project] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.resourcemanager.v3.DeleteProjectRequest]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L607}
-  /// [google.cloud.resourcemanager.v3.Project]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L295}
-  /// [google.cloud.resourcemanager.v3.Projects.SearchProjects]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L79}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.resourcemanager.v3.DeleteProjectRequest]: @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L607}
+  /// [google.cloud.resourcemanager.v3.Project]: @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L295}
+  /// [google.cloud.resourcemanager.v3.Project.State.ACTIVE]: @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L309}
+  /// [google.cloud.resourcemanager.v3.Project.State.DELETE_REQUESTED]: @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L317}
+  /// [google.cloud.resourcemanager.v3.Projects.SearchProjects]: @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L79}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::resourcemanager::v3::Project>> DeleteProject(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Marks the project identified by the specified
   /// `name` (for example, `projects/415104041262`) for deletion.
@@ -520,27 +713,47 @@ class ProjectsClient {
   /// This method behaves idempotently, such that deleting a `DELETE_REQUESTED`
   /// project will not cause an error, but also won't do anything.
   ///
-  /// The caller must have `resourcemanager.projects.delete` permissions for
-  /// this project.
+  /// The caller must have `resourcemanager.projects.delete` permissions for this
+  /// project.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::resourcemanager::v3::DeleteProjectRequest,google/cloud/resourcemanager/v3/projects.proto#L607}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.resourcemanager.v3.DeleteProjectRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::resourcemanager::v3::Project,google/cloud/resourcemanager/v3/projects.proto#L295}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.resourcemanager.v3.Project] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.resourcemanager.v3.DeleteProjectRequest]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L607}
-  /// [google.cloud.resourcemanager.v3.Project]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L295}
-  /// [google.cloud.resourcemanager.v3.Projects.SearchProjects]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L79}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.resourcemanager.v3.DeleteProjectRequest]: @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L607}
+  /// [google.cloud.resourcemanager.v3.Project]: @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L295}
+  /// [google.cloud.resourcemanager.v3.Project.State.ACTIVE]: @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L309}
+  /// [google.cloud.resourcemanager.v3.Project.State.DELETE_REQUESTED]: @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L317}
+  /// [google.cloud.resourcemanager.v3.Projects.SearchProjects]: @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L79}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::resourcemanager::v3::Project>> DeleteProject(
       google::cloud::resourcemanager::v3::DeleteProjectRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Restores the project identified by the specified
   /// `name` (for example, `projects/415104041262`).
@@ -552,22 +765,37 @@ class ProjectsClient {
   /// The caller must have `resourcemanager.projects.undelete` permission for
   /// this project.
   ///
-  /// @param name  Required. The name of the project (for example,
-  /// `projects/415104041262`).
+  /// @param name  Required. The name of the project (for example, `projects/415104041262`).
+  ///  @n
   ///  Required.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::resourcemanager::v3::Project,google/cloud/resourcemanager/v3/projects.proto#L295}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.resourcemanager.v3.Project] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.resourcemanager.v3.Project]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L295}
-  /// [google.cloud.resourcemanager.v3.UndeleteProjectRequest]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L624}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.resourcemanager.v3.Project]: @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L295}
+  /// [google.cloud.resourcemanager.v3.UndeleteProjectRequest]: @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L624}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::resourcemanager::v3::Project>> UndeleteProject(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Restores the project identified by the specified
   /// `name` (for example, `projects/415104041262`).
@@ -579,63 +807,103 @@ class ProjectsClient {
   /// The caller must have `resourcemanager.projects.undelete` permission for
   /// this project.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::resourcemanager::v3::UndeleteProjectRequest,google/cloud/resourcemanager/v3/projects.proto#L624}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.resourcemanager.v3.UndeleteProjectRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::resourcemanager::v3::Project,google/cloud/resourcemanager/v3/projects.proto#L295}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.resourcemanager.v3.Project] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.resourcemanager.v3.Project]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L295}
-  /// [google.cloud.resourcemanager.v3.UndeleteProjectRequest]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L624}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.resourcemanager.v3.Project]: @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L295}
+  /// [google.cloud.resourcemanager.v3.UndeleteProjectRequest]: @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L624}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::resourcemanager::v3::Project>> UndeleteProject(
       google::cloud::resourcemanager::v3::UndeleteProjectRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Returns the IAM access control policy for the specified project, in the
   /// format `projects/{ProjectIdOrNumber}` e.g. projects/123.
   /// Permission is denied if the policy or the resource do not exist.
   ///
-  /// @param resource  REQUIRED: The resource for which the policy is being
-  /// requested.
+  /// @param resource  REQUIRED: The resource for which the policy is being requested.
   ///  See the operation documentation for the appropriate value for this field.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L98}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.iam.v1.Policy])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.iam.v1.GetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L123}
-  /// [google.iam.v1.Policy]:
-  /// @googleapis_reference_link{google/iam/v1/policy.proto#L98}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.iam.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L123}
+  /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L98}
   ///
+  // clang-format on
   StatusOr<google::iam::v1::Policy> GetIamPolicy(std::string const& resource,
                                                  Options opts = {});
 
+  // clang-format off
   ///
   /// Returns the IAM access control policy for the specified project, in the
   /// format `projects/{ProjectIdOrNumber}` e.g. projects/123.
   /// Permission is denied if the policy or the resource do not exist.
   ///
-  /// @param request
-  /// @googleapis_link{google::iam::v1::GetIamPolicyRequest,google/iam/v1/iam_policy.proto#L123}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.iam.v1.GetIamPolicyRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L98}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.iam.v1.Policy])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.iam.v1.GetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L123}
-  /// [google.iam.v1.Policy]:
-  /// @googleapis_reference_link{google/iam/v1/policy.proto#L98}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.iam.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L123}
+  /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L98}
   ///
+  // clang-format on
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
       google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
 
+  // clang-format off
   ///
   /// Sets the IAM access control policy for the specified project, in the
   /// format `projects/{ProjectIdOrNumber}` e.g. projects/123.
@@ -679,28 +947,35 @@ class ProjectsClient {
   /// rectified. If the project is part of an organization, you can remove all
   /// owners, potentially making the organization inaccessible.
   ///
-  /// @param resource  REQUIRED: The resource for which the policy is being
-  /// specified.
+  /// @param resource  REQUIRED: The resource for which the policy is being specified.
   ///  See the operation documentation for the appropriate value for this field.
-  /// @param policy  REQUIRED: The complete policy to be applied to the
-  /// `resource`. The size of
+  /// @param policy  REQUIRED: The complete policy to be applied to the `resource`. The size of
   ///  the policy is limited to a few 10s of KB. An empty policy is a
   ///  valid policy but certain Cloud Platform services (such as Projects)
   ///  might reject them.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L98}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.iam.v1.Policy])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.iam.v1.Policy]:
-  /// @googleapis_reference_link{google/iam/v1/policy.proto#L98}
-  /// [google.iam.v1.SetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L98}
+  /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
   ///
+  // clang-format on
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
       std::string const& resource, google::iam::v1::Policy const& policy,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Sets the IAM access control policy for the specified project, in the
   /// format `projects/{ProjectIdOrNumber}` e.g. projects/123.
@@ -744,63 +1019,95 @@ class ProjectsClient {
   /// rectified. If the project is part of an organization, you can remove all
   /// owners, potentially making the organization inaccessible.
   ///
-  /// @param request
-  /// @googleapis_link{google::iam::v1::SetIamPolicyRequest,google/iam/v1/iam_policy.proto#L101}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.iam.v1.SetIamPolicyRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L98}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.iam.v1.Policy])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.iam.v1.Policy]:
-  /// @googleapis_reference_link{google/iam/v1/policy.proto#L98}
-  /// [google.iam.v1.SetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L98}
+  /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
   ///
+  // clang-format on
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
       google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
 
+  // clang-format off
   ///
   /// Returns permissions that a caller has on the specified project, in the
   /// format `projects/{ProjectIdOrNumber}` e.g. projects/123..
   ///
-  /// @param resource  REQUIRED: The resource for which the policy detail is
-  /// being requested.
+  /// @param resource  REQUIRED: The resource for which the policy detail is being requested.
   ///  See the operation documentation for the appropriate value for this field.
-  /// @param permissions  The set of permissions to check for the `resource`.
-  /// Permissions with
+  /// @param permissions  The set of permissions to check for the `resource`. Permissions with
   ///  wildcards (such as '*' or 'storage.*') are not allowed. For more
   ///  information see
   ///  [IAM Overview](https://cloud.google.com/iam/docs/overview#permissions).
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::iam::v1::TestIamPermissionsResponse,google/iam/v1/iam_policy.proto#L151}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.iam.v1.TestIamPermissionsResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.iam.v1.TestIamPermissionsRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L136}
-  /// [google.iam.v1.TestIamPermissionsResponse]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L151}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.iam.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L136}
+  /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L151}
   ///
+  // clang-format on
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
       std::string const& resource, std::vector<std::string> const& permissions,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Returns permissions that a caller has on the specified project, in the
   /// format `projects/{ProjectIdOrNumber}` e.g. projects/123..
   ///
-  /// @param request
-  /// @googleapis_link{google::iam::v1::TestIamPermissionsRequest,google/iam/v1/iam_policy.proto#L136}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.iam.v1.TestIamPermissionsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::iam::v1::TestIamPermissionsResponse,google/iam/v1/iam_policy.proto#L151}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.iam.v1.TestIamPermissionsResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.iam.v1.TestIamPermissionsRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L136}
-  /// [google.iam.v1.TestIamPermissionsResponse]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L151}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.iam.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L136}
+  /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L151}
   ///
+  // clang-format on
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
       google::iam::v1::TestIamPermissionsRequest const& request,
       Options opts = {});

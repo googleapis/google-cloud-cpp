@@ -91,6 +91,7 @@ class CloudBuildClient {
   }
   ///@}
 
+  // clang-format off
   ///
   /// Starts a build with the specified configuration.
   ///
@@ -102,18 +103,33 @@ class CloudBuildClient {
   /// @param build  Required. Build resource to create.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::devtools::cloudbuild::v1::Build,google/devtools/cloudbuild/v1/cloudbuild.proto#L774}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.devtools.cloudbuild.v1.Build] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.devtools.cloudbuild.v1.Build]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L774}
-  /// [google.devtools.cloudbuild.v1.CreateBuildRequest]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1289}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.devtools.cloudbuild.v1.Build]: @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L892}
+  /// [google.devtools.cloudbuild.v1.CreateBuildRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1407}
   ///
+  // clang-format on
   future<StatusOr<google::devtools::cloudbuild::v1::Build>> CreateBuild(
       std::string const& project_id,
       google::devtools::cloudbuild::v1::Build const& build, Options opts = {});
 
+  // clang-format off
   ///
   /// Starts a build with the specified configuration.
   ///
@@ -121,22 +137,41 @@ class CloudBuildClient {
   /// ID. Pass the build ID to `GetBuild` to determine the build status (such as
   /// `SUCCESS` or `FAILURE`).
   ///
-  /// @param request
-  /// @googleapis_link{google::devtools::cloudbuild::v1::CreateBuildRequest,google/devtools/cloudbuild/v1/cloudbuild.proto#L1289}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.devtools.cloudbuild.v1.CreateBuildRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::devtools::cloudbuild::v1::Build,google/devtools/cloudbuild/v1/cloudbuild.proto#L774}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.devtools.cloudbuild.v1.Build] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.devtools.cloudbuild.v1.Build]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L774}
-  /// [google.devtools.cloudbuild.v1.CreateBuildRequest]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1289}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.devtools.cloudbuild.v1.Build]: @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L892}
+  /// [google.devtools.cloudbuild.v1.CreateBuildRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1407}
   ///
+  // clang-format on
   future<StatusOr<google::devtools::cloudbuild::v1::Build>> CreateBuild(
       google::devtools::cloudbuild::v1::CreateBuildRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Returns information about a previously requested build.
   ///
@@ -147,39 +182,61 @@ class CloudBuildClient {
   /// @param id  Required. ID of the build.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::devtools::cloudbuild::v1::Build,google/devtools/cloudbuild/v1/cloudbuild.proto#L774}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.devtools.cloudbuild.v1.Build])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.devtools.cloudbuild.v1.Build]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L774}
-  /// [google.devtools.cloudbuild.v1.GetBuildRequest]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1304}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.devtools.cloudbuild.v1.Build]: @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L892}
+  /// [google.devtools.cloudbuild.v1.GetBuildRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1422}
   ///
+  // clang-format on
   StatusOr<google::devtools::cloudbuild::v1::Build> GetBuild(
       std::string const& project_id, std::string const& id, Options opts = {});
 
+  // clang-format off
   ///
   /// Returns information about a previously requested build.
   ///
   /// The `Build` that is returned includes its status (such as `SUCCESS`,
   /// `FAILURE`, or `WORKING`), and timing information.
   ///
-  /// @param request
-  /// @googleapis_link{google::devtools::cloudbuild::v1::GetBuildRequest,google/devtools/cloudbuild/v1/cloudbuild.proto#L1304}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.devtools.cloudbuild.v1.GetBuildRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::devtools::cloudbuild::v1::Build,google/devtools/cloudbuild/v1/cloudbuild.proto#L774}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.devtools.cloudbuild.v1.Build])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.devtools.cloudbuild.v1.Build]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L774}
-  /// [google.devtools.cloudbuild.v1.GetBuildRequest]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1304}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.devtools.cloudbuild.v1.Build]: @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L892}
+  /// [google.devtools.cloudbuild.v1.GetBuildRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1422}
   ///
+  // clang-format on
   StatusOr<google::devtools::cloudbuild::v1::Build> GetBuild(
       google::devtools::cloudbuild::v1::GetBuildRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists previously requested builds.
   ///
@@ -190,40 +247,80 @@ class CloudBuildClient {
   /// @param filter  The raw filter text to constrain the results.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::devtools::cloudbuild::v1::Build,google/devtools/cloudbuild/v1/cloudbuild.proto#L774}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.devtools.cloudbuild.v1.Build], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.devtools.cloudbuild.v1.Build]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L774}
-  /// [google.devtools.cloudbuild.v1.ListBuildsRequest]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1319}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.devtools.cloudbuild.v1.Build]: @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L892}
+  /// [google.devtools.cloudbuild.v1.ListBuildsRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1437}
   ///
+  // clang-format on
   StreamRange<google::devtools::cloudbuild::v1::Build> ListBuilds(
       std::string const& project_id, std::string const& filter,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists previously requested builds.
   ///
   /// Previously requested builds may still be in-progress, or may have finished
   /// successfully or unsuccessfully.
   ///
-  /// @param request
-  /// @googleapis_link{google::devtools::cloudbuild::v1::ListBuildsRequest,google/devtools/cloudbuild/v1/cloudbuild.proto#L1319}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.devtools.cloudbuild.v1.ListBuildsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::devtools::cloudbuild::v1::Build,google/devtools/cloudbuild/v1/cloudbuild.proto#L774}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.devtools.cloudbuild.v1.Build], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.devtools.cloudbuild.v1.Build]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L774}
-  /// [google.devtools.cloudbuild.v1.ListBuildsRequest]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1319}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.devtools.cloudbuild.v1.Build]: @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L892}
+  /// [google.devtools.cloudbuild.v1.ListBuildsRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1437}
   ///
+  // clang-format on
   StreamRange<google::devtools::cloudbuild::v1::Build> ListBuilds(
       google::devtools::cloudbuild::v1::ListBuildsRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Cancels a build in progress.
   ///
@@ -231,41 +328,63 @@ class CloudBuildClient {
   /// @param id  Required. ID of the build.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::devtools::cloudbuild::v1::Build,google/devtools/cloudbuild/v1/cloudbuild.proto#L774}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.devtools.cloudbuild.v1.Build])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.devtools.cloudbuild.v1.Build]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L774}
-  /// [google.devtools.cloudbuild.v1.CancelBuildRequest]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1358}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.devtools.cloudbuild.v1.Build]: @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L892}
+  /// [google.devtools.cloudbuild.v1.CancelBuildRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1476}
   ///
+  // clang-format on
   StatusOr<google::devtools::cloudbuild::v1::Build> CancelBuild(
       std::string const& project_id, std::string const& id, Options opts = {});
 
+  // clang-format off
   ///
   /// Cancels a build in progress.
   ///
-  /// @param request
-  /// @googleapis_link{google::devtools::cloudbuild::v1::CancelBuildRequest,google/devtools/cloudbuild/v1/cloudbuild.proto#L1358}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.devtools.cloudbuild.v1.CancelBuildRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::devtools::cloudbuild::v1::Build,google/devtools/cloudbuild/v1/cloudbuild.proto#L774}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.devtools.cloudbuild.v1.Build])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.devtools.cloudbuild.v1.Build]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L774}
-  /// [google.devtools.cloudbuild.v1.CancelBuildRequest]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1358}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.devtools.cloudbuild.v1.Build]: @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L892}
+  /// [google.devtools.cloudbuild.v1.CancelBuildRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1476}
   ///
+  // clang-format on
   StatusOr<google::devtools::cloudbuild::v1::Build> CancelBuild(
       google::devtools::cloudbuild::v1::CancelBuildRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a new build based on the specified build.
   ///
-  /// This method creates a new build using the original build request, which
-  /// may or may not result in an identical build.
+  /// This method creates a new build using the original build request, which may
+  /// or may not result in an identical build.
   ///
   /// For triggered builds:
   ///
@@ -282,9 +401,9 @@ class CloudBuildClient {
   ///
   /// For builds that specify `StorageSource`:
   ///
-  /// * If the original build pulled source from Google Cloud Storage without
-  /// specifying the generation of the object, the new build will use the
-  /// current object, which may be different from the original build source.
+  /// * If the original build pulled source from Cloud Storage without
+  /// specifying the generation of the object, the new build will use the current
+  /// object, which may be different from the original build source.
   /// * If the original build pulled source from Cloud Storage and specified the
   /// generation of the object, the new build will attempt to use the same
   /// object, which may or may not be available depending on the bucket's
@@ -294,22 +413,37 @@ class CloudBuildClient {
   /// @param id  Required. Build ID of the original build.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::devtools::cloudbuild::v1::Build,google/devtools/cloudbuild/v1/cloudbuild.proto#L774}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.devtools.cloudbuild.v1.Build] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.devtools.cloudbuild.v1.Build]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L774}
-  /// [google.devtools.cloudbuild.v1.RetryBuildRequest]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L365}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.devtools.cloudbuild.v1.Build]: @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L892}
+  /// [google.devtools.cloudbuild.v1.RetryBuildRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L482}
   ///
+  // clang-format on
   future<StatusOr<google::devtools::cloudbuild::v1::Build>> RetryBuild(
       std::string const& project_id, std::string const& id, Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a new build based on the specified build.
   ///
-  /// This method creates a new build using the original build request, which
-  /// may or may not result in an identical build.
+  /// This method creates a new build using the original build request, which may
+  /// or may not result in an identical build.
   ///
   /// For triggered builds:
   ///
@@ -326,30 +460,49 @@ class CloudBuildClient {
   ///
   /// For builds that specify `StorageSource`:
   ///
-  /// * If the original build pulled source from Google Cloud Storage without
-  /// specifying the generation of the object, the new build will use the
-  /// current object, which may be different from the original build source.
+  /// * If the original build pulled source from Cloud Storage without
+  /// specifying the generation of the object, the new build will use the current
+  /// object, which may be different from the original build source.
   /// * If the original build pulled source from Cloud Storage and specified the
   /// generation of the object, the new build will attempt to use the same
   /// object, which may or may not be available depending on the bucket's
   /// lifecycle management settings.
   ///
-  /// @param request
-  /// @googleapis_link{google::devtools::cloudbuild::v1::RetryBuildRequest,google/devtools/cloudbuild/v1/cloudbuild.proto#L365}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.devtools.cloudbuild.v1.RetryBuildRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::devtools::cloudbuild::v1::Build,google/devtools/cloudbuild/v1/cloudbuild.proto#L774}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.devtools.cloudbuild.v1.Build] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.devtools.cloudbuild.v1.Build]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L774}
-  /// [google.devtools.cloudbuild.v1.RetryBuildRequest]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L365}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.devtools.cloudbuild.v1.Build]: @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L892}
+  /// [google.devtools.cloudbuild.v1.RetryBuildRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L482}
   ///
+  // clang-format on
   future<StatusOr<google::devtools::cloudbuild::v1::Build>> RetryBuild(
       google::devtools::cloudbuild::v1::RetryBuildRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Approves or rejects a pending build.
   ///
@@ -363,19 +516,34 @@ class CloudBuildClient {
   /// @param approval_result  Approval decision and metadata.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::devtools::cloudbuild::v1::Build,google/devtools/cloudbuild/v1/cloudbuild.proto#L774}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.devtools.cloudbuild.v1.Build] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.devtools.cloudbuild.v1.ApproveBuildRequest]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1373}
-  /// [google.devtools.cloudbuild.v1.Build]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L774}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.devtools.cloudbuild.v1.ApproveBuildRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1491}
+  /// [google.devtools.cloudbuild.v1.Build]: @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L892}
   ///
+  // clang-format on
   future<StatusOr<google::devtools::cloudbuild::v1::Build>> ApproveBuild(
       std::string const& name,
       google::devtools::cloudbuild::v1::ApprovalResult const& approval_result,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Approves or rejects a pending build.
   ///
@@ -384,151 +552,251 @@ class CloudBuildClient {
   ///
   /// If rejected, the returned LRO will be immediately done.
   ///
-  /// @param request
-  /// @googleapis_link{google::devtools::cloudbuild::v1::ApproveBuildRequest,google/devtools/cloudbuild/v1/cloudbuild.proto#L1373}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.devtools.cloudbuild.v1.ApproveBuildRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::devtools::cloudbuild::v1::Build,google/devtools/cloudbuild/v1/cloudbuild.proto#L774}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.devtools.cloudbuild.v1.Build] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.devtools.cloudbuild.v1.ApproveBuildRequest]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1373}
-  /// [google.devtools.cloudbuild.v1.Build]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L774}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.devtools.cloudbuild.v1.ApproveBuildRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1491}
+  /// [google.devtools.cloudbuild.v1.Build]: @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L892}
   ///
+  // clang-format on
   future<StatusOr<google::devtools::cloudbuild::v1::Build>> ApproveBuild(
       google::devtools::cloudbuild::v1::ApproveBuildRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a new `BuildTrigger`.
   ///
   /// This API is experimental.
   ///
-  /// @param project_id  Required. ID of the project for which to configure
-  /// automatic builds.
+  /// @param project_id  Required. ID of the project for which to configure automatic builds.
   /// @param trigger  Required. `BuildTrigger` to create.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::devtools::cloudbuild::v1::BuildTrigger,google/devtools/cloudbuild/v1/cloudbuild.proto#L1460}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.devtools.cloudbuild.v1.BuildTrigger])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.devtools.cloudbuild.v1.BuildTrigger]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1460}
-  /// [google.devtools.cloudbuild.v1.CreateBuildTriggerRequest]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1746}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.devtools.cloudbuild.v1.BuildTrigger]: @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1680}
+  /// [google.devtools.cloudbuild.v1.CreateBuildTriggerRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L2017}
   ///
+  // clang-format on
   StatusOr<google::devtools::cloudbuild::v1::BuildTrigger> CreateBuildTrigger(
       std::string const& project_id,
       google::devtools::cloudbuild::v1::BuildTrigger const& trigger,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a new `BuildTrigger`.
   ///
   /// This API is experimental.
   ///
-  /// @param request
-  /// @googleapis_link{google::devtools::cloudbuild::v1::CreateBuildTriggerRequest,google/devtools/cloudbuild/v1/cloudbuild.proto#L1746}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.devtools.cloudbuild.v1.CreateBuildTriggerRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::devtools::cloudbuild::v1::BuildTrigger,google/devtools/cloudbuild/v1/cloudbuild.proto#L1460}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.devtools.cloudbuild.v1.BuildTrigger])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.devtools.cloudbuild.v1.BuildTrigger]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1460}
-  /// [google.devtools.cloudbuild.v1.CreateBuildTriggerRequest]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1746}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.devtools.cloudbuild.v1.BuildTrigger]: @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1680}
+  /// [google.devtools.cloudbuild.v1.CreateBuildTriggerRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L2017}
   ///
+  // clang-format on
   StatusOr<google::devtools::cloudbuild::v1::BuildTrigger> CreateBuildTrigger(
       google::devtools::cloudbuild::v1::CreateBuildTriggerRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Returns information about a `BuildTrigger`.
   ///
   /// This API is experimental.
   ///
   /// @param project_id  Required. ID of the project that owns the trigger.
-  /// @param trigger_id  Required. Identifier (`id` or `name`) of the
-  /// `BuildTrigger` to get.
+  /// @param trigger_id  Required. Identifier (`id` or `name`) of the `BuildTrigger` to get.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::devtools::cloudbuild::v1::BuildTrigger,google/devtools/cloudbuild/v1/cloudbuild.proto#L1460}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.devtools.cloudbuild.v1.BuildTrigger])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.devtools.cloudbuild.v1.BuildTrigger]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1460}
-  /// [google.devtools.cloudbuild.v1.GetBuildTriggerRequest]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1761}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.devtools.cloudbuild.v1.BuildTrigger]: @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1680}
+  /// [google.devtools.cloudbuild.v1.GetBuildTriggerRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L2032}
   ///
+  // clang-format on
   StatusOr<google::devtools::cloudbuild::v1::BuildTrigger> GetBuildTrigger(
       std::string const& project_id, std::string const& trigger_id,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Returns information about a `BuildTrigger`.
   ///
   /// This API is experimental.
   ///
-  /// @param request
-  /// @googleapis_link{google::devtools::cloudbuild::v1::GetBuildTriggerRequest,google/devtools/cloudbuild/v1/cloudbuild.proto#L1761}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.devtools.cloudbuild.v1.GetBuildTriggerRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::devtools::cloudbuild::v1::BuildTrigger,google/devtools/cloudbuild/v1/cloudbuild.proto#L1460}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.devtools.cloudbuild.v1.BuildTrigger])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.devtools.cloudbuild.v1.BuildTrigger]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1460}
-  /// [google.devtools.cloudbuild.v1.GetBuildTriggerRequest]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1761}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.devtools.cloudbuild.v1.BuildTrigger]: @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1680}
+  /// [google.devtools.cloudbuild.v1.GetBuildTriggerRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L2032}
   ///
+  // clang-format on
   StatusOr<google::devtools::cloudbuild::v1::BuildTrigger> GetBuildTrigger(
       google::devtools::cloudbuild::v1::GetBuildTriggerRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists existing `BuildTrigger`s.
   ///
   /// This API is experimental.
   ///
-  /// @param project_id  Required. ID of the project for which to list
-  /// BuildTriggers.
+  /// @param project_id  Required. ID of the project for which to list BuildTriggers.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::devtools::cloudbuild::v1::BuildTrigger,google/devtools/cloudbuild/v1/cloudbuild.proto#L1460}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.devtools.cloudbuild.v1.BuildTrigger], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.devtools.cloudbuild.v1.BuildTrigger]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1460}
-  /// [google.devtools.cloudbuild.v1.ListBuildTriggersRequest]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1776}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.devtools.cloudbuild.v1.BuildTrigger]: @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1680}
+  /// [google.devtools.cloudbuild.v1.ListBuildTriggersRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L2047}
   ///
+  // clang-format on
   StreamRange<google::devtools::cloudbuild::v1::BuildTrigger> ListBuildTriggers(
       std::string const& project_id, Options opts = {});
 
+  // clang-format off
   ///
   /// Lists existing `BuildTrigger`s.
   ///
   /// This API is experimental.
   ///
-  /// @param request
-  /// @googleapis_link{google::devtools::cloudbuild::v1::ListBuildTriggersRequest,google/devtools/cloudbuild/v1/cloudbuild.proto#L1776}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.devtools.cloudbuild.v1.ListBuildTriggersRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::devtools::cloudbuild::v1::BuildTrigger,google/devtools/cloudbuild/v1/cloudbuild.proto#L1460}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.devtools.cloudbuild.v1.BuildTrigger], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.devtools.cloudbuild.v1.BuildTrigger]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1460}
-  /// [google.devtools.cloudbuild.v1.ListBuildTriggersRequest]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1776}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.devtools.cloudbuild.v1.BuildTrigger]: @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1680}
+  /// [google.devtools.cloudbuild.v1.ListBuildTriggersRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L2047}
   ///
+  // clang-format on
   StreamRange<google::devtools::cloudbuild::v1::BuildTrigger> ListBuildTriggers(
       google::devtools::cloudbuild::v1::ListBuildTriggersRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes a `BuildTrigger` by its project ID and trigger ID.
   ///
@@ -538,31 +806,55 @@ class CloudBuildClient {
   /// @param trigger_id  Required. ID of the `BuildTrigger` to delete.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
   ///
-  /// [google.devtools.cloudbuild.v1.DeleteBuildTriggerRequest]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1803}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.devtools.cloudbuild.v1.DeleteBuildTriggerRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L2074}
   ///
+  // clang-format on
   Status DeleteBuildTrigger(std::string const& project_id,
                             std::string const& trigger_id, Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes a `BuildTrigger` by its project ID and trigger ID.
   ///
   /// This API is experimental.
   ///
-  /// @param request
-  /// @googleapis_link{google::devtools::cloudbuild::v1::DeleteBuildTriggerRequest,google/devtools/cloudbuild/v1/cloudbuild.proto#L1803}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.devtools.cloudbuild.v1.DeleteBuildTriggerRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
   ///
-  /// [google.devtools.cloudbuild.v1.DeleteBuildTriggerRequest]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1803}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.devtools.cloudbuild.v1.DeleteBuildTriggerRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L2074}
   ///
+  // clang-format on
   Status DeleteBuildTrigger(
       google::devtools::cloudbuild::v1::DeleteBuildTriggerRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Updates a `BuildTrigger` by its project ID and trigger ID.
   ///
@@ -573,189 +865,325 @@ class CloudBuildClient {
   /// @param trigger  Required. `BuildTrigger` to update.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::devtools::cloudbuild::v1::BuildTrigger,google/devtools/cloudbuild/v1/cloudbuild.proto#L1460}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.devtools.cloudbuild.v1.BuildTrigger])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.devtools.cloudbuild.v1.BuildTrigger]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1460}
-  /// [google.devtools.cloudbuild.v1.UpdateBuildTriggerRequest]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1818}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.devtools.cloudbuild.v1.BuildTrigger]: @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1680}
+  /// [google.devtools.cloudbuild.v1.UpdateBuildTriggerRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L2089}
   ///
+  // clang-format on
   StatusOr<google::devtools::cloudbuild::v1::BuildTrigger> UpdateBuildTrigger(
       std::string const& project_id, std::string const& trigger_id,
       google::devtools::cloudbuild::v1::BuildTrigger const& trigger,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Updates a `BuildTrigger` by its project ID and trigger ID.
   ///
   /// This API is experimental.
   ///
-  /// @param request
-  /// @googleapis_link{google::devtools::cloudbuild::v1::UpdateBuildTriggerRequest,google/devtools/cloudbuild/v1/cloudbuild.proto#L1818}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.devtools.cloudbuild.v1.UpdateBuildTriggerRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::devtools::cloudbuild::v1::BuildTrigger,google/devtools/cloudbuild/v1/cloudbuild.proto#L1460}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.devtools.cloudbuild.v1.BuildTrigger])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.devtools.cloudbuild.v1.BuildTrigger]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1460}
-  /// [google.devtools.cloudbuild.v1.UpdateBuildTriggerRequest]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1818}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.devtools.cloudbuild.v1.BuildTrigger]: @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1680}
+  /// [google.devtools.cloudbuild.v1.UpdateBuildTriggerRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L2089}
   ///
+  // clang-format on
   StatusOr<google::devtools::cloudbuild::v1::BuildTrigger> UpdateBuildTrigger(
       google::devtools::cloudbuild::v1::UpdateBuildTriggerRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Runs a `BuildTrigger` at a particular source revision.
+  ///
+  /// To run a regional or global trigger, use the POST request
+  /// that includes the location endpoint in the path (ex.
+  /// v1/projects/{projectId}/locations/{region}/triggers/{triggerId}:run). The
+  /// POST request that does not include the location endpoint in the path can
+  /// only be used when running global triggers.
   ///
   /// @param project_id  Required. ID of the project.
   /// @param trigger_id  Required. ID of the trigger.
   /// @param source  Source to build against this trigger.
+  ///  Branch and tag names cannot consist of regular expressions.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::devtools::cloudbuild::v1::Build,google/devtools/cloudbuild/v1/cloudbuild.proto#L774}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.devtools.cloudbuild.v1.Build] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.devtools.cloudbuild.v1.Build]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L774}
-  /// [google.devtools.cloudbuild.v1.RunBuildTriggerRequest]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L380}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.devtools.cloudbuild.v1.Build]: @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L892}
+  /// [google.devtools.cloudbuild.v1.RunBuildTriggerRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L497}
   ///
+  // clang-format on
   future<StatusOr<google::devtools::cloudbuild::v1::Build>> RunBuildTrigger(
       std::string const& project_id, std::string const& trigger_id,
       google::devtools::cloudbuild::v1::RepoSource const& source,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Runs a `BuildTrigger` at a particular source revision.
   ///
-  /// @param request
-  /// @googleapis_link{google::devtools::cloudbuild::v1::RunBuildTriggerRequest,google/devtools/cloudbuild/v1/cloudbuild.proto#L380}
+  /// To run a regional or global trigger, use the POST request
+  /// that includes the location endpoint in the path (ex.
+  /// v1/projects/{projectId}/locations/{region}/triggers/{triggerId}:run). The
+  /// POST request that does not include the location endpoint in the path can
+  /// only be used when running global triggers.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.devtools.cloudbuild.v1.RunBuildTriggerRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::devtools::cloudbuild::v1::Build,google/devtools/cloudbuild/v1/cloudbuild.proto#L774}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.devtools.cloudbuild.v1.Build] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.devtools.cloudbuild.v1.Build]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L774}
-  /// [google.devtools.cloudbuild.v1.RunBuildTriggerRequest]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L380}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.devtools.cloudbuild.v1.Build]: @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L892}
+  /// [google.devtools.cloudbuild.v1.RunBuildTriggerRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L497}
   ///
+  // clang-format on
   future<StatusOr<google::devtools::cloudbuild::v1::Build>> RunBuildTrigger(
       google::devtools::cloudbuild::v1::RunBuildTriggerRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// ReceiveTriggerWebhook [Experimental] is called when the API receives a
   /// webhook request targeted at a specific trigger.
   ///
-  /// @param request
-  /// @googleapis_link{google::devtools::cloudbuild::v1::ReceiveTriggerWebhookRequest,google/devtools/cloudbuild/v1/cloudbuild.proto#L2015}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.devtools.cloudbuild.v1.ReceiveTriggerWebhookRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::devtools::cloudbuild::v1::ReceiveTriggerWebhookResponse,google/devtools/cloudbuild/v1/cloudbuild.proto#L2035}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.devtools.cloudbuild.v1.ReceiveTriggerWebhookResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.devtools.cloudbuild.v1.ReceiveTriggerWebhookRequest]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L2015}
-  /// [google.devtools.cloudbuild.v1.ReceiveTriggerWebhookResponse]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L2035}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.devtools.cloudbuild.v1.ReceiveTriggerWebhookRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L2298}
+  /// [google.devtools.cloudbuild.v1.ReceiveTriggerWebhookResponse]: @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L2318}
   ///
+  // clang-format on
   StatusOr<google::devtools::cloudbuild::v1::ReceiveTriggerWebhookResponse>
   ReceiveTriggerWebhook(
       google::devtools::cloudbuild::v1::ReceiveTriggerWebhookRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a `WorkerPool`.
   ///
-  /// @param parent  Required. The parent resource where this worker pool will
-  /// be created.
+  /// @param parent  Required. The parent resource where this worker pool will be created.
   ///  Format: `projects/{project}/locations/{location}`.
   /// @param worker_pool  Required. `WorkerPool` resource to create.
-  /// @param worker_pool_id  Required. Immutable. The ID to use for the
-  /// `WorkerPool`, which will become
+  /// @param worker_pool_id  Required. Immutable. The ID to use for the `WorkerPool`, which will become
   ///  the final component of the resource name.
+  ///  @n
   ///  This value should be 1-63 characters, and valid characters
   ///  are /[a-z][0-9]-/.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::devtools::cloudbuild::v1::WorkerPool,google/devtools/cloudbuild/v1/cloudbuild.proto#L2050}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.devtools.cloudbuild.v1.WorkerPool] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.devtools.cloudbuild.v1.CreateWorkerPoolRequest]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L2199}
-  /// [google.devtools.cloudbuild.v1.WorkerPool]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L2050}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.devtools.cloudbuild.v1.CreateWorkerPoolRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L2562}
+  /// [google.devtools.cloudbuild.v1.WorkerPool]: @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L2410}
   ///
+  // clang-format on
   future<StatusOr<google::devtools::cloudbuild::v1::WorkerPool>>
   CreateWorkerPool(
       std::string const& parent,
       google::devtools::cloudbuild::v1::WorkerPool const& worker_pool,
       std::string const& worker_pool_id, Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a `WorkerPool`.
   ///
-  /// @param request
-  /// @googleapis_link{google::devtools::cloudbuild::v1::CreateWorkerPoolRequest,google/devtools/cloudbuild/v1/cloudbuild.proto#L2199}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.devtools.cloudbuild.v1.CreateWorkerPoolRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::devtools::cloudbuild::v1::WorkerPool,google/devtools/cloudbuild/v1/cloudbuild.proto#L2050}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.devtools.cloudbuild.v1.WorkerPool] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.devtools.cloudbuild.v1.CreateWorkerPoolRequest]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L2199}
-  /// [google.devtools.cloudbuild.v1.WorkerPool]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L2050}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.devtools.cloudbuild.v1.CreateWorkerPoolRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L2562}
+  /// [google.devtools.cloudbuild.v1.WorkerPool]: @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L2410}
   ///
+  // clang-format on
   future<StatusOr<google::devtools::cloudbuild::v1::WorkerPool>>
   CreateWorkerPool(
       google::devtools::cloudbuild::v1::CreateWorkerPoolRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Returns details of a `WorkerPool`.
   ///
   /// @param name  Required. The name of the `WorkerPool` to retrieve.
-  ///  Format:
-  ///  `projects/{project}/locations/{location}/workerPools/{workerPool}`.
+  ///  Format: `projects/{project}/locations/{location}/workerPools/{workerPool}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::devtools::cloudbuild::v1::WorkerPool,google/devtools/cloudbuild/v1/cloudbuild.proto#L2050}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.devtools.cloudbuild.v1.WorkerPool])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.devtools.cloudbuild.v1.GetWorkerPoolRequest]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L2228}
-  /// [google.devtools.cloudbuild.v1.WorkerPool]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L2050}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.devtools.cloudbuild.v1.GetWorkerPoolRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L2591}
+  /// [google.devtools.cloudbuild.v1.WorkerPool]: @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L2410}
   ///
+  // clang-format on
   StatusOr<google::devtools::cloudbuild::v1::WorkerPool> GetWorkerPool(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Returns details of a `WorkerPool`.
   ///
-  /// @param request
-  /// @googleapis_link{google::devtools::cloudbuild::v1::GetWorkerPoolRequest,google/devtools/cloudbuild/v1/cloudbuild.proto#L2228}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.devtools.cloudbuild.v1.GetWorkerPoolRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::devtools::cloudbuild::v1::WorkerPool,google/devtools/cloudbuild/v1/cloudbuild.proto#L2050}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.devtools.cloudbuild.v1.WorkerPool])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.devtools.cloudbuild.v1.GetWorkerPoolRequest]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L2228}
-  /// [google.devtools.cloudbuild.v1.WorkerPool]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L2050}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.devtools.cloudbuild.v1.GetWorkerPoolRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L2591}
+  /// [google.devtools.cloudbuild.v1.WorkerPool]: @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L2410}
   ///
+  // clang-format on
   StatusOr<google::devtools::cloudbuild::v1::WorkerPool> GetWorkerPool(
       google::devtools::cloudbuild::v1::GetWorkerPoolRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes a `WorkerPool`.
   ///
@@ -764,83 +1192,150 @@ class CloudBuildClient {
   ///  `projects/{project}/locations/{location}/workerPools/{workerPool}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::devtools::cloudbuild::v1::DeleteWorkerPoolOperationMetadata,google/devtools/cloudbuild/v1/cloudbuild.proto#L2344}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.devtools.cloudbuild.v1.DeleteWorkerPoolOperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.devtools.cloudbuild.v1.DeleteWorkerPoolOperationMetadata]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L2344}
-  /// [google.devtools.cloudbuild.v1.DeleteWorkerPoolRequest]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L2240}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.devtools.cloudbuild.v1.DeleteWorkerPoolOperationMetadata]: @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L2707}
+  /// [google.devtools.cloudbuild.v1.DeleteWorkerPoolRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L2603}
   ///
+  // clang-format on
   future<StatusOr<
       google::devtools::cloudbuild::v1::DeleteWorkerPoolOperationMetadata>>
   DeleteWorkerPool(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes a `WorkerPool`.
   ///
-  /// @param request
-  /// @googleapis_link{google::devtools::cloudbuild::v1::DeleteWorkerPoolRequest,google/devtools/cloudbuild/v1/cloudbuild.proto#L2240}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.devtools.cloudbuild.v1.DeleteWorkerPoolRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::devtools::cloudbuild::v1::DeleteWorkerPoolOperationMetadata,google/devtools/cloudbuild/v1/cloudbuild.proto#L2344}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.devtools.cloudbuild.v1.DeleteWorkerPoolOperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.devtools.cloudbuild.v1.DeleteWorkerPoolOperationMetadata]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L2344}
-  /// [google.devtools.cloudbuild.v1.DeleteWorkerPoolRequest]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L2240}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.devtools.cloudbuild.v1.DeleteWorkerPoolOperationMetadata]: @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L2707}
+  /// [google.devtools.cloudbuild.v1.DeleteWorkerPoolRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L2603}
   ///
+  // clang-format on
   future<StatusOr<
       google::devtools::cloudbuild::v1::DeleteWorkerPoolOperationMetadata>>
   DeleteWorkerPool(
       google::devtools::cloudbuild::v1::DeleteWorkerPoolRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Updates a `WorkerPool`.
   ///
   /// @param worker_pool  Required. The `WorkerPool` to update.
+  ///  @n
   ///  The `name` field is used to identify the `WorkerPool` to update.
-  ///  Format:
-  ///  `projects/{project}/locations/{location}/workerPools/{workerPool}`.
-  /// @param update_mask  A mask specifying which fields in `worker_pool` to
-  /// update.
+  ///  Format: `projects/{project}/locations/{location}/workerPools/{workerPool}`.
+  /// @param update_mask  A mask specifying which fields in `worker_pool` to update.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::devtools::cloudbuild::v1::WorkerPool,google/devtools/cloudbuild/v1/cloudbuild.proto#L2050}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.devtools.cloudbuild.v1.WorkerPool] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.devtools.cloudbuild.v1.UpdateWorkerPoolRequest]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L2265}
-  /// [google.devtools.cloudbuild.v1.WorkerPool]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L2050}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.devtools.cloudbuild.v1.UpdateWorkerPoolRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L2628}
+  /// [google.devtools.cloudbuild.v1.WorkerPool]: @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L2410}
   ///
+  // clang-format on
   future<StatusOr<google::devtools::cloudbuild::v1::WorkerPool>>
   UpdateWorkerPool(
       google::devtools::cloudbuild::v1::WorkerPool const& worker_pool,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
   ///
   /// Updates a `WorkerPool`.
   ///
-  /// @param request
-  /// @googleapis_link{google::devtools::cloudbuild::v1::UpdateWorkerPoolRequest,google/devtools/cloudbuild/v1/cloudbuild.proto#L2265}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.devtools.cloudbuild.v1.UpdateWorkerPoolRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::devtools::cloudbuild::v1::WorkerPool,google/devtools/cloudbuild/v1/cloudbuild.proto#L2050}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.devtools.cloudbuild.v1.WorkerPool] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.devtools.cloudbuild.v1.UpdateWorkerPoolRequest]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L2265}
-  /// [google.devtools.cloudbuild.v1.WorkerPool]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L2050}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.devtools.cloudbuild.v1.UpdateWorkerPoolRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L2628}
+  /// [google.devtools.cloudbuild.v1.WorkerPool]: @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L2410}
   ///
+  // clang-format on
   future<StatusOr<google::devtools::cloudbuild::v1::WorkerPool>>
   UpdateWorkerPool(
       google::devtools::cloudbuild::v1::UpdateWorkerPoolRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists `WorkerPool`s.
   ///
@@ -848,32 +1343,71 @@ class CloudBuildClient {
   ///  Format: `projects/{project}/locations/{location}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::devtools::cloudbuild::v1::WorkerPool,google/devtools/cloudbuild/v1/cloudbuild.proto#L2050}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.devtools.cloudbuild.v1.WorkerPool], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.devtools.cloudbuild.v1.ListWorkerPoolsRequest]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L2281}
-  /// [google.devtools.cloudbuild.v1.WorkerPool]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L2050}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.devtools.cloudbuild.v1.ListWorkerPoolsRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L2644}
+  /// [google.devtools.cloudbuild.v1.WorkerPool]: @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L2410}
   ///
+  // clang-format on
   StreamRange<google::devtools::cloudbuild::v1::WorkerPool> ListWorkerPools(
       std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Lists `WorkerPool`s.
   ///
-  /// @param request
-  /// @googleapis_link{google::devtools::cloudbuild::v1::ListWorkerPoolsRequest,google/devtools/cloudbuild/v1/cloudbuild.proto#L2281}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.devtools.cloudbuild.v1.ListWorkerPoolsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::devtools::cloudbuild::v1::WorkerPool,google/devtools/cloudbuild/v1/cloudbuild.proto#L2050}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.devtools.cloudbuild.v1.WorkerPool], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.devtools.cloudbuild.v1.ListWorkerPoolsRequest]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L2281}
-  /// [google.devtools.cloudbuild.v1.WorkerPool]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L2050}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.devtools.cloudbuild.v1.ListWorkerPoolsRequest]: @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L2644}
+  /// [google.devtools.cloudbuild.v1.WorkerPool]: @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L2410}
   ///
+  // clang-format on
   StreamRange<google::devtools::cloudbuild::v1::WorkerPool> ListWorkerPools(
       google::devtools::cloudbuild::v1::ListWorkerPoolsRequest request,
       Options opts = {});

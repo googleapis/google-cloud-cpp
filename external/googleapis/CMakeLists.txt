@@ -14,6 +14,10 @@
 # limitations under the License.
 # ~~~
 
+if (NOT GOOGLE_CLOUD_CPP_ENABLE_GRPC)
+    return()
+endif ()
+
 include(GoogleapisConfig)
 
 set(GOOGLE_CLOUD_CPP_GOOGLEAPIS_URL
@@ -206,6 +210,10 @@ function (external_googleapis_set_version_and_alias short_name)
     add_library("google-cloud-cpp::${short_name}" ALIAS
                 "google_cloud_cpp_${short_name}")
 endfunction ()
+
+if (GOOGLE_CLOUD_CPP_USE_INSTALLED_COMMON)
+    return()
+endif ()
 
 set(external_googleapis_installed_libraries_list
     # cmake-format: sort

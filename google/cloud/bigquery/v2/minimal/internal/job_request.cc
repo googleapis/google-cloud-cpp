@@ -13,6 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/bigquery/v2/minimal/internal/job_request.h"
+#include "google/cloud/bigquery/v2/minimal/internal/job.h"
+#include "google/cloud/bigquery/v2/minimal/internal/json_utils.h"
 #include "google/cloud/bigquery/v2/minimal/internal/rest_stub_utils.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
@@ -80,6 +82,15 @@ std::string ListJobsRequest::DebugString(absl::string_view name,
       .SubMessage("projection", projection_)
       .SubMessage("state_filter", state_filter_)
       .StringField("parent_job_id", parent_job_id_)
+      .Build();
+}
+
+std::string InsertJobRequest::DebugString(absl::string_view name,
+                                          TracingOptions const& options,
+                                          int indent) const {
+  return internal::DebugFormatter(name, options, indent)
+      .StringField("project_id", project_id_)
+      .SubMessage("job", job_)
       .Build();
 }
 
@@ -187,6 +198,348 @@ std::ostream& operator<<(std::ostream& os, ListJobsRequest const& request) {
      << ", state_filter=" << request.state_filter().value
      << ", parent_job_id=" << request.parent_job_id();
   return os << "}";
+}
+
+StatusOr<rest_internal::RestRequest> BuildRestRequest(
+    InsertJobRequest const& r) {
+  auto const& opts = internal::CurrentOptions();
+
+  rest_internal::RestRequest request;
+  if (r.project_id().empty()) {
+    return internal::InvalidArgumentError(
+        "Invalid InsertJobRequest: Project Id is empty", GCP_ERROR_INFO());
+  }
+
+  // Builds InsertJob request path based on endpoint provided.
+  std::string endpoint = GetBaseEndpoint(opts);
+  std::string path =
+      absl::StrCat(endpoint, "/projects/", r.project_id(), "/jobs");
+  request.SetPath(std::move(path));
+
+  // Validate request body is a valid json Job payload.
+  nlohmann::json json_payload;
+  to_json(json_payload, r.job());
+
+  if (!json_payload.is_object()) {
+    return internal::InvalidArgumentError(
+        "Invalid InsertJobRequest: Invalid json payload", GCP_ERROR_INFO());
+  }
+
+  auto const& job = json_payload.get<Job>();
+
+  if (job.configuration.job_type.empty() || job.id != r.job().id) {
+    return internal::InvalidArgumentError(
+        "Invalid InsertJobRequest: Invalid Job object", GCP_ERROR_INFO());
+  }
+
+  return request;
+}
+
+StatusOr<rest_internal::RestRequest> BuildRestRequest(
+    CancelJobRequest const& r) {
+  auto const& opts = internal::CurrentOptions();
+
+  rest_internal::RestRequest request;
+  if (r.project_id().empty()) {
+    return internal::InvalidArgumentError(
+        "Invalid CancelJobRequest: Project Id is empty", GCP_ERROR_INFO());
+  }
+  if (r.job_id().empty()) {
+    return internal::InvalidArgumentError(
+        "Invalid CancelJobRequest: Job Id is empty", GCP_ERROR_INFO());
+  }
+
+  // Builds CancelJob request path based on endpoint provided.
+  std::string endpoint = GetBaseEndpoint(opts);
+  std::string path = absl::StrCat(endpoint, "/projects/", r.project_id(),
+                                  "/jobs/", r.job_id(), "/cancel");
+  request.SetPath(std::move(path));
+
+  // Add query params.
+  if (!r.location().empty()) {
+    request.AddQueryParameter("location", r.location());
+  }
+  return request;
+}
+
+std::string CancelJobRequest::DebugString(absl::string_view name,
+                                          TracingOptions const& options,
+                                          int indent) const {
+  return internal::DebugFormatter(name, options, indent)
+      .StringField("project_id", project_id_)
+      .StringField("job_id", job_id_)
+      .StringField("location", location_)
+      .Build();
+}
+
+void to_json(nlohmann::json& j, PostQueryRequest const& q) {
+  j = nlohmann::json{{"projectId", q.project_id()},
+                     {"queryRequest", q.query_request()}};
+}
+
+void to_json(nlohmann::json& j, QueryRequest const& q) {
+  j = nlohmann::json{{"query", q.query()},
+                     {"kind", q.kind()},
+                     {"parameterMode", q.parameter_mode()},
+                     {"location", q.location()},
+                     {"requestId", q.request_id()},
+                     {"dryRun", q.dry_run()},
+                     {"preserveNulls", q.preserve_nulls()},
+                     {"useQueryCache", q.use_query_cache()},
+                     {"useLegacySql", q.use_legacy_sql()},
+                     {"createSession", q.create_session()},
+                     {"maxResults", q.max_results()},
+                     {"maximumBytesBilled", q.maximum_bytes_billed()},
+                     {"connectionProperties", q.connection_properties()},
+                     {"queryParameters", q.query_parameters()},
+                     {"defaultDataset", q.default_dataset()},
+                     {"formatOptions", q.format_options()},
+                     {"labels", q.labels()}};
+
+  ToJson(q.timeout(), j, "timeoutMs");
+}
+
+void from_json(nlohmann::json const& j, PostQueryRequest& q) {
+  if (j.contains("projectId")) {
+    q.set_project_id(j.at("projectId").value("projectId", ""));
+  }
+  if (j.contains("queryRequest")) {
+    q.set_query_request(j.at("queryRequest").get<QueryRequest>());
+  }
+}
+
+void from_json(nlohmann::json const& j, QueryRequest& q) {
+  if (j.contains("query")) q.set_query(j.at("query").get<std::string>());
+  if (j.contains("kind")) q.set_kind(j.at("kind").get<std::string>());
+  if (j.contains("parameterMode")) {
+    q.set_parameter_mode(j.at("parameterMode").get<std::string>());
+  }
+  if (j.contains("location")) {
+    q.set_location(j.at("location").get<std::string>());
+  }
+  if (j.contains("requestId")) {
+    q.set_request_id(j.at("requestId").get<std::string>());
+  }
+  if (j.contains("dryRun")) q.set_dry_run(j.at("dryRun").get<bool>());
+  if (j.contains("preserveNulls")) {
+    q.set_preserve_nulls(j.at("preserveNulls").get<bool>());
+  }
+  if (j.contains("useQueryCache")) {
+    q.set_use_query_cache(j.at("useQueryCache").get<bool>());
+  }
+  if (j.contains("useLegacySql")) {
+    q.set_use_legacy_sql(j.at("useLegacySql").get<bool>());
+  }
+  if (j.contains("createSession")) {
+    q.set_create_session(j.at("createSession").get<bool>());
+  }
+  if (j.contains("maxResults")) {
+    q.set_max_results(j.at("maxResults").get<std::uint32_t>());
+  }
+  if (j.contains("maximumBytesBilled")) {
+    q.set_maximum_bytes_billed(j.at("maximumBytesBilled").get<std::int64_t>());
+  }
+  if (j.contains("connectionProperties")) {
+    q.set_connection_properties(
+        j.at("connectionProperties").get<std::vector<ConnectionProperty>>());
+  }
+  if (j.contains("queryParameters")) {
+    q.set_query_parameters(
+        j.at("queryParameters").get<std::vector<QueryParameter>>());
+  }
+  if (j.contains("defaultDataset")) {
+    q.set_default_dataset(j.at("defaultDataset").get<DatasetReference>());
+  }
+  if (j.contains("formatOptions")) {
+    q.set_format_options(j.at("formatOptions").get<DataFormatOptions>());
+  }
+  if (j.contains("labels")) {
+    q.set_labels(j.at("labels").get<std::map<std::string, std::string>>());
+  }
+
+  std::chrono::milliseconds timeout;
+  FromJson(timeout, j, "timeoutMs");
+  q.set_timeout(timeout);
+}
+
+StatusOr<rest_internal::RestRequest> BuildRestRequest(
+    PostQueryRequest const& r) {
+  auto const& opts = internal::CurrentOptions();
+  rest_internal::RestRequest request;
+
+  if (r.project_id().empty()) {
+    return internal::InvalidArgumentError(
+        "Invalid PostQueryRequest: Project Id is empty", GCP_ERROR_INFO());
+  }
+
+  // Builds PostQueryRequest path based on endpoint provided.
+  std::string endpoint = GetBaseEndpoint(opts);
+  std::string path =
+      absl::StrCat(endpoint, "/projects/", r.project_id(), "/queries");
+  request.SetPath(std::move(path));
+
+  // Validate request body is a valid json QueryRequest payload.
+  nlohmann::json json_payload;
+  to_json(json_payload, r.query_request());
+
+  if (!json_payload.is_object()) {
+    return internal::InvalidArgumentError(
+        "Invalid PostQueryRequest: Invalid json payload", GCP_ERROR_INFO());
+  }
+
+  auto const& query_request = json_payload.get<QueryRequest>();
+
+  if (query_request.query().empty()) {
+    return internal::InvalidArgumentError(
+        "Invalid PostQueryRequest: Missing required query field",
+        GCP_ERROR_INFO());
+  }
+
+  return request;
+}
+
+std::string PostQueryRequest::DebugString(absl::string_view name,
+                                          TracingOptions const& options,
+                                          int indent) const {
+  return internal::DebugFormatter(name, options, indent)
+      .StringField("project_id", project_id())
+      .SubMessage("query_request", query_request())
+      .Build();
+}
+
+std::string DataFormatOptions::DebugString(absl::string_view name,
+                                           TracingOptions const& options,
+                                           int indent) const {
+  return internal::DebugFormatter(name, options, indent)
+      .Field("use_int64_timestamp", use_int64_timestamp)
+      .Build();
+}
+
+std::string QueryRequest::DebugString(absl::string_view name,
+                                      TracingOptions const& options,
+                                      int indent) const {
+  return internal::DebugFormatter(name, options, indent)
+      .StringField("query", query())
+      .StringField("kind", kind())
+      .StringField("parameter_mode", parameter_mode())
+      .StringField("location", location())
+      .StringField("request_id", request_id())
+      .Field("dry_run", dry_run())
+      .Field("preserver_nulls", preserve_nulls())
+      .Field("use_query_cache", use_query_cache())
+      .Field("use_legacy_sql", use_legacy_sql())
+      .Field("create_session", create_session())
+      .Field("max_results", max_results())
+      .Field("maximum_bytes_biller", maximum_bytes_billed())
+      .Field("timeout", timeout())
+      .Field("connection_properties", connection_properties())
+      .Field("query_parameters", query_parameters())
+      .Field("labels", labels())
+      .SubMessage("default_dataset", default_dataset())
+      .SubMessage("format_options", format_options())
+      .Build();
+}
+
+void to_json(nlohmann::json& j, GetQueryResultsRequest const& q) {
+  j = nlohmann::json{
+      {"project_id", q.project_id()},        {"job_id", q.job_id()},
+      {"page_token", q.page_token()},        {"location", q.location()},
+      {"start_index", q.start_index()},      {"max_results", q.max_results()},
+      {"format_options", q.format_options()}};
+
+  ToJson(q.timeout(), j, "timeout");
+}
+
+void from_json(nlohmann::json const& j, GetQueryResultsRequest& q) {
+  if (j.contains("project_id")) {
+    q.set_project_id(j.at("project_id").value("project_id", ""));
+  }
+  if (j.contains("job_id")) {
+    q.set_job_id(j.at("job_id").value("job_id", ""));
+  }
+  if (j.contains("page_token")) {
+    q.set_page_token(j.at("page_token").value("page_token", ""));
+  }
+  if (j.contains("location")) {
+    q.set_location(j.at("location").value("location", ""));
+  }
+  if (j.contains("start_index")) {
+    q.set_start_index(j.at("start_index").get<std::uint64_t>());
+  }
+  if (j.contains("max_results")) {
+    q.set_max_results(j.at("max_results").get<std::uint32_t>());
+  }
+  if (j.contains("format_options")) {
+    q.set_format_options(j.at("format_options").get<DataFormatOptions>());
+  }
+
+  std::chrono::milliseconds timeout;
+  FromJson(timeout, j, "timeout");
+  q.set_timeout(timeout);
+}
+
+StatusOr<rest_internal::RestRequest> BuildRestRequest(
+    GetQueryResultsRequest const& r) {
+  auto const& opts = internal::CurrentOptions();
+  rest_internal::RestRequest request;
+
+  if (r.project_id().empty()) {
+    return internal::InvalidArgumentError(
+        "Invalid GetQueryResultsRequest: Project Id is empty",
+        GCP_ERROR_INFO());
+  }
+  if (r.job_id().empty()) {
+    return internal::InvalidArgumentError(
+        "Invalid GetQueryResultsRequest: Job Id is empty", GCP_ERROR_INFO());
+  }
+
+  // Builds GetQueryResultsRequest path based on endpoint provided.
+  std::string endpoint = GetBaseEndpoint(opts);
+  std::string path = absl::StrCat(endpoint, "/projects/", r.project_id(),
+                                  "/queries/", r.job_id());
+  request.SetPath(std::move(path));
+
+  // Add query params.
+  // https://cloud.google.com/bigquery/docs/reference/rest/v2/jobs/getQueryResults#query-parameters
+  auto if_not_empty_add = [&](char const* key, auto const& v) {
+    if (v.empty()) return;
+    request.AddQueryParameter(key, v);
+  };
+  if_not_empty_add("pageToken", r.page_token());
+  if_not_empty_add("location", r.location());
+
+  request.AddQueryParameter("startIndex", std::to_string(r.start_index()));
+  if (r.max_results() > 0) {
+    request.AddQueryParameter("maxResults", std::to_string(r.max_results()));
+  }
+  if (r.timeout() > std::chrono::milliseconds(0)) {
+    request.AddQueryParameter("timeoutMs", std::to_string(r.timeout().count()));
+  }
+
+  std::string format_options;
+  if (r.format_options().use_int64_timestamp) {
+    absl::StrAppend(&format_options, "{\"useInt64Timestamp\":true}");
+  } else {
+    absl::StrAppend(&format_options, "{\"useInt64Timestamp\":false}");
+  }
+  request.AddQueryParameter("formatOptions", format_options);
+
+  return request;
+}
+
+std::string GetQueryResultsRequest::DebugString(absl::string_view name,
+                                                TracingOptions const& options,
+                                                int indent) const {
+  return internal::DebugFormatter(name, options, indent)
+      .StringField("project_id", project_id())
+      .StringField("job_id", job_id())
+      .StringField("page_token", page_token())
+      .StringField("location", location())
+      .Field("start_index", start_index())
+      .Field("max_results", max_results())
+      .Field("timeout", timeout())
+      .SubMessage("format_options", format_options())
+      .Build();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

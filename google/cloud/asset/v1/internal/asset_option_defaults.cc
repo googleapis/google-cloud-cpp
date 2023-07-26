@@ -45,8 +45,9 @@ Options AssetServiceDefaultOptions(Options options) {
   }
   if (!options.has<asset_v1::AssetServiceBackoffPolicyOption>()) {
     options.set<asset_v1::AssetServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options.has<asset_v1::AssetServicePollingPolicyOption>()) {
@@ -54,7 +55,9 @@ Options AssetServiceDefaultOptions(Options options) {
         GenericPollingPolicy<asset_v1::AssetServiceRetryPolicyOption::Type,
                              asset_v1::AssetServiceBackoffPolicyOption::Type>(
             options.get<asset_v1::AssetServiceRetryPolicyOption>()->clone(),
-            options.get<asset_v1::AssetServiceBackoffPolicyOption>()->clone())
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
             .clone());
   }
   if (!options.has<asset_v1::AssetServiceConnectionIdempotencyPolicyOption>()) {

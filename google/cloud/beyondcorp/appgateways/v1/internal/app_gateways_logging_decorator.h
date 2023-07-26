@@ -37,7 +37,7 @@ class AppGatewaysServiceLogging : public AppGatewaysServiceStub {
   ~AppGatewaysServiceLogging() override = default;
   AppGatewaysServiceLogging(std::shared_ptr<AppGatewaysServiceStub> child,
                             TracingOptions tracing_options,
-                            std::set<std::string> components);
+                            std::set<std::string> const& components);
 
   StatusOr<google::cloud::beyondcorp::appgateways::v1::ListAppGatewaysResponse>
   ListAppGateways(
@@ -76,7 +76,7 @@ class AppGatewaysServiceLogging : public AppGatewaysServiceStub {
  private:
   std::shared_ptr<AppGatewaysServiceStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // AppGatewaysServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

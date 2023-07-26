@@ -21,6 +21,7 @@
 
 #include "google/cloud/scheduler/v1/internal/cloud_scheduler_stub.h"
 #include "google/cloud/version.h"
+#include <map>
 #include <memory>
 #include <string>
 
@@ -32,7 +33,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class CloudSchedulerMetadata : public CloudSchedulerStub {
  public:
   ~CloudSchedulerMetadata() override = default;
-  explicit CloudSchedulerMetadata(std::shared_ptr<CloudSchedulerStub> child);
+  CloudSchedulerMetadata(
+      std::shared_ptr<CloudSchedulerStub> child,
+      std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::scheduler::v1::ListJobsResponse> ListJobs(
       grpc::ClientContext& context,
@@ -72,6 +75,7 @@ class CloudSchedulerMetadata : public CloudSchedulerStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<CloudSchedulerStub> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

@@ -36,6 +36,11 @@ TEST(PublicDocs, Basic) {
       <compounddef id="not-deprecated" kind="page"></compounddef>
       <compounddef id="namespacegoogle" kind="namespace"></compounddef>
       <compounddef id="namespacegoogle_1_1cloud" kind="namespace"></compounddef>
+      <memberdef kind="function" id="classgoogle_1_1cloud_1_1AsyncOperation_1a94e0b5e72b871d6f9cabf588dbb00343" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type/>
+        <name>~AsyncOperation</name>
+        <qualifiedname>google::cloud::AsyncOperation::~AsyncOperation</qualifiedname>
+      </memberdef>
     </doxygen>)xml";
   pugi::xml_document doc;
   doc.load_string(kXml);
@@ -59,6 +64,9 @@ TEST(PublicDocs, Basic) {
       {"not-deprecated", true},
       {"namespacegoogle", false},
       {"namespacegoogle_1_1cloud", false},
+      {"classgoogle_1_1cloud_1_1AsyncOperation_"
+       "1a94e0b5e72b871d6f9cabf588dbb00343",
+       false},
   };
 
   auto vars = pugi::xpath_variable_set();

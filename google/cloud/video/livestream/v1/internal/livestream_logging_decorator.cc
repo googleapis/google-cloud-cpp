@@ -29,10 +29,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 LivestreamServiceLogging::LivestreamServiceLogging(
     std::shared_ptr<LivestreamServiceStub> child,
-    TracingOptions tracing_options, std::set<std::string> components)
+    TracingOptions tracing_options, std::set<std::string> const& components)
     : child_(std::move(child)),
       tracing_options_(std::move(tracing_options)),
-      components_(std::move(components)) {}
+      stream_logging_(components.find("rpc-streams") != components.end()) {}
 
 future<StatusOr<google::longrunning::Operation>>
 LivestreamServiceLogging::AsyncCreateChannel(
@@ -239,6 +239,86 @@ Status LivestreamServiceLogging::DeleteEvent(
              google::cloud::video::livestream::v1::DeleteEventRequest const&
                  request) { return child_->DeleteEvent(context, request); },
       context, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+LivestreamServiceLogging::AsyncCreateAsset(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::video::livestream::v1::CreateAssetRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::video::livestream::v1::CreateAssetRequest const&
+                 request) {
+        return child_->AsyncCreateAsset(cq, std::move(context), request);
+      },
+      cq, std::move(context), request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+LivestreamServiceLogging::AsyncDeleteAsset(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::video::livestream::v1::DeleteAssetRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::video::livestream::v1::DeleteAssetRequest const&
+                 request) {
+        return child_->AsyncDeleteAsset(cq, std::move(context), request);
+      },
+      cq, std::move(context), request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::video::livestream::v1::Asset>
+LivestreamServiceLogging::GetAsset(
+    grpc::ClientContext& context,
+    google::cloud::video::livestream::v1::GetAssetRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::video::livestream::v1::GetAssetRequest const&
+                 request) { return child_->GetAsset(context, request); },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::video::livestream::v1::ListAssetsResponse>
+LivestreamServiceLogging::ListAssets(
+    grpc::ClientContext& context,
+    google::cloud::video::livestream::v1::ListAssetsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::video::livestream::v1::ListAssetsRequest const&
+                 request) { return child_->ListAssets(context, request); },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::video::livestream::v1::Pool>
+LivestreamServiceLogging::GetPool(
+    grpc::ClientContext& context,
+    google::cloud::video::livestream::v1::GetPoolRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context,
+          google::cloud::video::livestream::v1::GetPoolRequest const& request) {
+        return child_->GetPool(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+LivestreamServiceLogging::AsyncUpdatePool(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::video::livestream::v1::UpdatePoolRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::video::livestream::v1::UpdatePoolRequest const&
+                 request) {
+        return child_->AsyncUpdatePool(cq, std::move(context), request);
+      },
+      cq, std::move(context), request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

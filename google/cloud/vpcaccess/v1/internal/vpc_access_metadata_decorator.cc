@@ -18,6 +18,7 @@
 
 #include "google/cloud/vpcaccess/v1/internal/vpc_access_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/vpcaccess/v1/vpc_access.grpc.pb.h>
@@ -29,8 +30,10 @@ namespace vpcaccess_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 VpcAccessServiceMetadata::VpcAccessServiceMetadata(
-    std::shared_ptr<VpcAccessServiceStub> child)
+    std::shared_ptr<VpcAccessServiceStub> child,
+    std::multimap<std::string, std::string> fixed_metadata)
     : child_(std::move(child)),
+      fixed_metadata_(std::move(fixed_metadata)),
       api_client_header_(
           google::cloud::internal::ApiClientHeader("generator")) {}
 
@@ -39,7 +42,7 @@ VpcAccessServiceMetadata::AsyncCreateConnector(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::vpcaccess::v1::CreateConnectorRequest const& request) {
-  SetMetadata(*context, "parent=" + request.parent());
+  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
   return child_->AsyncCreateConnector(cq, std::move(context), request);
 }
 
@@ -47,7 +50,7 @@ StatusOr<google::cloud::vpcaccess::v1::Connector>
 VpcAccessServiceMetadata::GetConnector(
     grpc::ClientContext& context,
     google::cloud::vpcaccess::v1::GetConnectorRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetConnector(context, request);
 }
 
@@ -55,7 +58,7 @@ StatusOr<google::cloud::vpcaccess::v1::ListConnectorsResponse>
 VpcAccessServiceMetadata::ListConnectors(
     grpc::ClientContext& context,
     google::cloud::vpcaccess::v1::ListConnectorsRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListConnectors(context, request);
 }
 
@@ -64,7 +67,7 @@ VpcAccessServiceMetadata::AsyncDeleteConnector(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::vpcaccess::v1::DeleteConnectorRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncDeleteConnector(cq, std::move(context), request);
 }
 
@@ -92,6 +95,9 @@ void VpcAccessServiceMetadata::SetMetadata(grpc::ClientContext& context,
 }
 
 void VpcAccessServiceMetadata::SetMetadata(grpc::ClientContext& context) {
+  for (auto const& kv : fixed_metadata_) {
+    context.AddMetadata(kv.first, kv.second);
+  }
   context.AddMetadata("x-goog-api-client", api_client_header_);
   auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {

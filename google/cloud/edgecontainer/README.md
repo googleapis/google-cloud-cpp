@@ -58,5 +58,5 @@ int main(int argc, char* argv[]) try {
 - Detailed header comments in our [public `.h`][source-link] files
 
 [cloud-service-docs]: https://cloud.google.com/distributed-cloud/edge/latest/docs
-[doxygen-link]: https://googleapis.dev/cpp/google-cloud-edgecontainer/latest/
+[doxygen-link]: https://cloud.google.com/cpp/docs/reference/edgecontainer/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/edgecontainer

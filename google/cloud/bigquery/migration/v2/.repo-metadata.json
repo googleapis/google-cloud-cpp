@@ -1,0 +1,14 @@
+{
+    "api_id": "bigquerymigration.googleapis.com",
+    "api_shortname": "bigquerymigration",
+    "client_documentation": "https://cloud.google.com/cpp/docs/reference/bigquery/latest",
+    "distribution_name": "google-cloud-cpp",
+    "issue_tracker": "https://issuetracker.google.com/savedsearches/559654",
+    "language": "cpp",
+    "library_type": "GAPIC_AUTO",
+    "name_pretty": "BigQuery Migration API",
+    "product_documentation": "https://cloud.google.com/bigquery/docs/",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-cpp",
+    "requires_billing": true
+}

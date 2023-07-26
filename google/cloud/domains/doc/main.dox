@@ -1,0 +1,46 @@
+/*!
+
+@mainpage Cloud Domains API C++ Client Library
+
+An idiomatic C++ client library for the [Cloud Domains API][cloud-service-docs],
+a service to enable management and configuration of domain names.
+
+While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
+[Semantic Versioning](https://semver.org/).
+
+@tableofcontents{HTML:2}
+
+## Quickstart
+
+The following shows the code that you'll run in the
+`google/cloud/domains/quickstart/` directory,
+which should give you a taste of the Cloud Domains API C++ client library API.
+
+@snippet quickstart.cc all
+
+## Main classes
+
+<!-- inject-client-list-start -->
+The main class in this library is
+[`domains_v1::DomainsClient`](@ref google::cloud::domains_v1::DomainsClient). All RPCs are exposed
+as member functions of this class. Other classes provide helpers, configuration
+parameters, and infrastructure to mock
+[`domains_v1::DomainsClient`](@ref google::cloud::domains_v1::DomainsClient) when testing your
+application.
+<!-- inject-client-list-end -->
+
+## More Information
+
+- @ref common-error-handling - describes how the library reports errors.
+- @ref domains-override-endpoint - describes how to override the default
+  endpoint.
+- @ref domains-override-authentication - describes how to change the
+  authentication credentials used by the library.
+- @ref domains-override-retry - describes how to change the default retry
+  policies.
+- @ref domains-env - describes environment variables that can configure the
+  behavior of the library.
+
+[cloud-service-docs]: https://cloud.google.com/domains
+
+*/

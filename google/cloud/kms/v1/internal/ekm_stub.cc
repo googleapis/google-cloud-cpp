@@ -105,6 +105,19 @@ DefaultEkmServiceStub::UpdateEkmConfig(
   return response;
 }
 
+StatusOr<google::cloud::kms::v1::VerifyConnectivityResponse>
+DefaultEkmServiceStub::VerifyConnectivity(
+    grpc::ClientContext& client_context,
+    google::cloud::kms::v1::VerifyConnectivityRequest const& request) {
+  google::cloud::kms::v1::VerifyConnectivityResponse response;
+  auto status =
+      grpc_stub_->VerifyConnectivity(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace kms_v1_internal
 }  // namespace cloud

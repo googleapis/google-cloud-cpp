@@ -88,6 +88,7 @@ class SqlInstancesServiceClient {
   }
   ///@}
 
+  // clang-format off
   ///
   /// Adds a new trusted Certificate Authority (CA) version for the specified
   /// instance. Required to prepare for a certificate rotation. If a CA version
@@ -95,101 +96,166 @@ class SqlInstancesServiceClient {
   /// operation replaces that version. There cannot be more than one CA version
   /// waiting to be rotated in.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::sql::v1::SqlInstancesAddServerCaRequest,google/cloud/sql/v1/cloud_sql_instances.proto#L261}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.sql.v1.SqlInstancesAddServerCaRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::sql::v1::Operation,google/cloud/sql/v1/cloud_sql_resources.proto#L628}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.sql.v1.Operation])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.sql.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L628}
-  /// [google.cloud.sql.v1.SqlInstancesAddServerCaRequest]:
-  /// @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L261}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.sql.v1.Operation]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L687}
+  /// [google.cloud.sql.v1.SqlInstancesAddServerCaRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L298}
   ///
+  // clang-format on
   StatusOr<google::cloud::sql::v1::Operation> AddServerCa(
       google::cloud::sql::v1::SqlInstancesAddServerCaRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a Cloud SQL instance as a clone of the source instance. Using this
   /// operation might cause your instance to restart.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::sql::v1::SqlInstancesCloneRequest,google/cloud/sql/v1/cloud_sql_instances.proto#L270}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.sql.v1.SqlInstancesCloneRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::sql::v1::Operation,google/cloud/sql/v1/cloud_sql_resources.proto#L628}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.sql.v1.Operation])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.sql.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L628}
-  /// [google.cloud.sql.v1.SqlInstancesCloneRequest]:
-  /// @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L270}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.sql.v1.Operation]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L687}
+  /// [google.cloud.sql.v1.SqlInstancesCloneRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L307}
   ///
+  // clang-format on
   StatusOr<google::cloud::sql::v1::Operation> Clone(
       google::cloud::sql::v1::SqlInstancesCloneRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes a Cloud SQL instance.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::sql::v1::SqlInstancesDeleteRequest,google/cloud/sql/v1/cloud_sql_instances.proto#L282}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.sql.v1.SqlInstancesDeleteRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::sql::v1::Operation,google/cloud/sql/v1/cloud_sql_resources.proto#L628}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.sql.v1.Operation])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.sql.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L628}
-  /// [google.cloud.sql.v1.SqlInstancesDeleteRequest]:
-  /// @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L282}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.sql.v1.Operation]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L687}
+  /// [google.cloud.sql.v1.SqlInstancesDeleteRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L319}
   ///
+  // clang-format on
   StatusOr<google::cloud::sql::v1::Operation> Delete(
       google::cloud::sql::v1::SqlInstancesDeleteRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Demotes the stand-alone instance to be a Cloud SQL read replica for an
   /// external database server.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::sql::v1::SqlInstancesDemoteMasterRequest,google/cloud/sql/v1/cloud_sql_instances.proto#L291}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.sql.v1.SqlInstancesDemoteMasterRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::sql::v1::Operation,google/cloud/sql/v1/cloud_sql_resources.proto#L628}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.sql.v1.Operation])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.sql.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L628}
-  /// [google.cloud.sql.v1.SqlInstancesDemoteMasterRequest]:
-  /// @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L291}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.sql.v1.Operation]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L687}
+  /// [google.cloud.sql.v1.SqlInstancesDemoteMasterRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L328}
   ///
+  // clang-format on
   StatusOr<google::cloud::sql::v1::Operation> DemoteMaster(
       google::cloud::sql::v1::SqlInstancesDemoteMasterRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Exports data from a Cloud SQL instance to a Cloud Storage bucket as a SQL
   /// dump or CSV file.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::sql::v1::SqlInstancesExportRequest,google/cloud/sql/v1/cloud_sql_instances.proto#L302}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.sql.v1.SqlInstancesExportRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::sql::v1::Operation,google/cloud/sql/v1/cloud_sql_resources.proto#L628}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.sql.v1.Operation])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.sql.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L628}
-  /// [google.cloud.sql.v1.SqlInstancesExportRequest]:
-  /// @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L302}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.sql.v1.Operation]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L687}
+  /// [google.cloud.sql.v1.SqlInstancesExportRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L339}
   ///
+  // clang-format on
   StatusOr<google::cloud::sql::v1::Operation> Export(
       google::cloud::sql::v1::SqlInstancesExportRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Initiates a manual failover of a high availability (HA) primary instance
   /// to a standby instance, which becomes the primary instance. Users are
@@ -200,378 +266,665 @@ class SqlInstancesServiceClient {
   /// If using Legacy HA (MySQL only), this causes the instance to failover to
   /// its failover replica instance.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::sql::v1::SqlInstancesFailoverRequest,google/cloud/sql/v1/cloud_sql_instances.proto#L313}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.sql.v1.SqlInstancesFailoverRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::sql::v1::Operation,google/cloud/sql/v1/cloud_sql_resources.proto#L628}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.sql.v1.Operation])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.sql.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L628}
-  /// [google.cloud.sql.v1.SqlInstancesFailoverRequest]:
-  /// @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L313}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.sql.v1.Operation]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L687}
+  /// [google.cloud.sql.v1.SqlInstancesFailoverRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L350}
   ///
+  // clang-format on
   StatusOr<google::cloud::sql::v1::Operation> Failover(
       google::cloud::sql::v1::SqlInstancesFailoverRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// Reencrypt CMEK instance with latest key version.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.sql.v1.SqlInstancesReencryptRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.sql.v1.Operation])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.sql.v1.Operation]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L687}
+  /// [google.cloud.sql.v1.SqlInstancesReencryptRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L549}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::sql::v1::Operation> Reencrypt(
+      google::cloud::sql::v1::SqlInstancesReencryptRequest const& request,
+      Options opts = {});
+
+  // clang-format off
   ///
   /// Retrieves a resource containing information about a Cloud SQL instance.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::sql::v1::SqlInstancesGetRequest,google/cloud/sql/v1/cloud_sql_instances.proto#L324}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.sql.v1.SqlInstancesGetRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::sql::v1::DatabaseInstance,google/cloud/sql/v1/cloud_sql_instances.proto#L693}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.sql.v1.DatabaseInstance])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.sql.v1.DatabaseInstance]:
-  /// @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L693}
-  /// [google.cloud.sql.v1.SqlInstancesGetRequest]:
-  /// @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L324}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.sql.v1.DatabaseInstance]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L848}
+  /// [google.cloud.sql.v1.SqlInstancesGetRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L361}
   ///
+  // clang-format on
   StatusOr<google::cloud::sql::v1::DatabaseInstance> Get(
       google::cloud::sql::v1::SqlInstancesGetRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Imports data into a Cloud SQL instance from a SQL dump  or CSV file in
   /// Cloud Storage.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::sql::v1::SqlInstancesImportRequest,google/cloud/sql/v1/cloud_sql_instances.proto#L333}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.sql.v1.SqlInstancesImportRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::sql::v1::Operation,google/cloud/sql/v1/cloud_sql_resources.proto#L628}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.sql.v1.Operation])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.sql.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L628}
-  /// [google.cloud.sql.v1.SqlInstancesImportRequest]:
-  /// @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L333}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.sql.v1.Operation]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L687}
+  /// [google.cloud.sql.v1.SqlInstancesImportRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L370}
   ///
+  // clang-format on
   StatusOr<google::cloud::sql::v1::Operation> Import(
       google::cloud::sql::v1::SqlInstancesImportRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a new Cloud SQL instance.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::sql::v1::SqlInstancesInsertRequest,google/cloud/sql/v1/cloud_sql_instances.proto#L344}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.sql.v1.SqlInstancesInsertRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::sql::v1::Operation,google/cloud/sql/v1/cloud_sql_resources.proto#L628}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.sql.v1.Operation])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.sql.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L628}
-  /// [google.cloud.sql.v1.SqlInstancesInsertRequest]:
-  /// @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L344}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.sql.v1.Operation]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L687}
+  /// [google.cloud.sql.v1.SqlInstancesInsertRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L381}
   ///
+  // clang-format on
   StatusOr<google::cloud::sql::v1::Operation> Insert(
       google::cloud::sql::v1::SqlInstancesInsertRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists instances under a given project.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::sql::v1::SqlInstancesListRequest,google/cloud/sql/v1/cloud_sql_instances.proto#L353}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.sql.v1.SqlInstancesListRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::sql::v1::DatabaseInstance,google/cloud/sql/v1/cloud_sql_instances.proto#L693}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.sql.v1.DatabaseInstance], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.sql.v1.DatabaseInstance]:
-  /// @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L693}
-  /// [google.cloud.sql.v1.SqlInstancesListRequest]:
-  /// @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L353}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.sql.v1.DatabaseInstance]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L848}
+  /// [google.cloud.sql.v1.SqlInstancesListRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L390}
   ///
+  // clang-format on
   StreamRange<google::cloud::sql::v1::DatabaseInstance> List(
       google::cloud::sql::v1::SqlInstancesListRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists all of the trusted Certificate Authorities (CAs) for the specified
-  /// instance. There can be up to three CAs listed: the CA that was used to
-  /// sign the certificate that is currently in use, a CA that has been added
-  /// but not yet used to sign a certificate, and a CA used to sign a
-  /// certificate that has previously rotated out.
+  /// instance. There can be up to three CAs listed: the CA that was used to sign
+  /// the certificate that is currently in use, a CA that has been added but not
+  /// yet used to sign a certificate, and a CA used to sign a certificate that
+  /// has previously rotated out.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::sql::v1::SqlInstancesListServerCasRequest,google/cloud/sql/v1/cloud_sql_instances.proto#L377}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.sql.v1.SqlInstancesListServerCasRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::sql::v1::InstancesListServerCasResponse,google/cloud/sql/v1/cloud_sql_instances.proto#L619}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.sql.v1.InstancesListServerCasResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.sql.v1.InstancesListServerCasResponse]:
-  /// @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L619}
-  /// [google.cloud.sql.v1.SqlInstancesListServerCasRequest]:
-  /// @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L377}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.sql.v1.InstancesListServerCasResponse]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L749}
+  /// [google.cloud.sql.v1.SqlInstancesListServerCasRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L417}
   ///
+  // clang-format on
   StatusOr<google::cloud::sql::v1::InstancesListServerCasResponse>
   ListServerCas(
       google::cloud::sql::v1::SqlInstancesListServerCasRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
-  /// Updates settings of a Cloud SQL instance.
-  /// This method supports patch semantics.
+  /// Partially updates settings of a Cloud SQL instance by merging the request
+  /// with the current configuration. This method supports patch semantics.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::sql::v1::SqlInstancesPatchRequest,google/cloud/sql/v1/cloud_sql_instances.proto#L386}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.sql.v1.SqlInstancesPatchRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::sql::v1::Operation,google/cloud/sql/v1/cloud_sql_resources.proto#L628}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.sql.v1.Operation])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.sql.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L628}
-  /// [google.cloud.sql.v1.SqlInstancesPatchRequest]:
-  /// @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L386}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.sql.v1.Operation]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L687}
+  /// [google.cloud.sql.v1.SqlInstancesPatchRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L426}
   ///
+  // clang-format on
   StatusOr<google::cloud::sql::v1::Operation> Patch(
       google::cloud::sql::v1::SqlInstancesPatchRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Promotes the read replica instance to be a stand-alone Cloud SQL instance.
   /// Using this operation might cause your instance to restart.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::sql::v1::SqlInstancesPromoteReplicaRequest,google/cloud/sql/v1/cloud_sql_instances.proto#L397}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.sql.v1.SqlInstancesPromoteReplicaRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::sql::v1::Operation,google/cloud/sql/v1/cloud_sql_resources.proto#L628}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.sql.v1.Operation])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.sql.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L628}
-  /// [google.cloud.sql.v1.SqlInstancesPromoteReplicaRequest]:
-  /// @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L397}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.sql.v1.Operation]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L687}
+  /// [google.cloud.sql.v1.SqlInstancesPromoteReplicaRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L437}
   ///
+  // clang-format on
   StatusOr<google::cloud::sql::v1::Operation> PromoteReplica(
       google::cloud::sql::v1::SqlInstancesPromoteReplicaRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes all client certificates and generates a new server SSL certificate
   /// for the instance.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::sql::v1::SqlInstancesResetSslConfigRequest,google/cloud/sql/v1/cloud_sql_instances.proto#L406}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.sql.v1.SqlInstancesResetSslConfigRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::sql::v1::Operation,google/cloud/sql/v1/cloud_sql_resources.proto#L628}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.sql.v1.Operation])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.sql.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L628}
-  /// [google.cloud.sql.v1.SqlInstancesResetSslConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L406}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.sql.v1.Operation]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L687}
+  /// [google.cloud.sql.v1.SqlInstancesResetSslConfigRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L446}
   ///
+  // clang-format on
   StatusOr<google::cloud::sql::v1::Operation> ResetSslConfig(
       google::cloud::sql::v1::SqlInstancesResetSslConfigRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Restarts a Cloud SQL instance.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::sql::v1::SqlInstancesRestartRequest,google/cloud/sql/v1/cloud_sql_instances.proto#L415}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.sql.v1.SqlInstancesRestartRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::sql::v1::Operation,google/cloud/sql/v1/cloud_sql_resources.proto#L628}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.sql.v1.Operation])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.sql.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L628}
-  /// [google.cloud.sql.v1.SqlInstancesRestartRequest]:
-  /// @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L415}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.sql.v1.Operation]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L687}
+  /// [google.cloud.sql.v1.SqlInstancesRestartRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L455}
   ///
+  // clang-format on
   StatusOr<google::cloud::sql::v1::Operation> Restart(
       google::cloud::sql::v1::SqlInstancesRestartRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
-  /// Restores a backup of a Cloud SQL instance. Using this operation might
-  /// cause your instance to restart.
+  /// Restores a backup of a Cloud SQL instance. Using this operation might cause
+  /// your instance to restart.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::sql::v1::SqlInstancesRestoreBackupRequest,google/cloud/sql/v1/cloud_sql_instances.proto#L424}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.sql.v1.SqlInstancesRestoreBackupRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::sql::v1::Operation,google/cloud/sql/v1/cloud_sql_resources.proto#L628}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.sql.v1.Operation])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.sql.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L628}
-  /// [google.cloud.sql.v1.SqlInstancesRestoreBackupRequest]:
-  /// @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L424}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.sql.v1.Operation]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L687}
+  /// [google.cloud.sql.v1.SqlInstancesRestoreBackupRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L464}
   ///
+  // clang-format on
   StatusOr<google::cloud::sql::v1::Operation> RestoreBackup(
       google::cloud::sql::v1::SqlInstancesRestoreBackupRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Rotates the server certificate to one signed by the Certificate Authority
   /// (CA) version previously added with the addServerCA method.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::sql::v1::SqlInstancesRotateServerCaRequest,google/cloud/sql/v1/cloud_sql_instances.proto#L435}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.sql.v1.SqlInstancesRotateServerCaRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::sql::v1::Operation,google/cloud/sql/v1/cloud_sql_resources.proto#L628}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.sql.v1.Operation])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.sql.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L628}
-  /// [google.cloud.sql.v1.SqlInstancesRotateServerCaRequest]:
-  /// @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L435}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.sql.v1.Operation]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L687}
+  /// [google.cloud.sql.v1.SqlInstancesRotateServerCaRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L475}
   ///
+  // clang-format on
   StatusOr<google::cloud::sql::v1::Operation> RotateServerCa(
       google::cloud::sql::v1::SqlInstancesRotateServerCaRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Starts the replication in the read replica instance.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::sql::v1::SqlInstancesStartReplicaRequest,google/cloud/sql/v1/cloud_sql_instances.proto#L446}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.sql.v1.SqlInstancesStartReplicaRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::sql::v1::Operation,google/cloud/sql/v1/cloud_sql_resources.proto#L628}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.sql.v1.Operation])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.sql.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L628}
-  /// [google.cloud.sql.v1.SqlInstancesStartReplicaRequest]:
-  /// @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L446}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.sql.v1.Operation]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L687}
+  /// [google.cloud.sql.v1.SqlInstancesStartReplicaRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L486}
   ///
+  // clang-format on
   StatusOr<google::cloud::sql::v1::Operation> StartReplica(
       google::cloud::sql::v1::SqlInstancesStartReplicaRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Stops the replication in the read replica instance.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::sql::v1::SqlInstancesStopReplicaRequest,google/cloud/sql/v1/cloud_sql_instances.proto#L455}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.sql.v1.SqlInstancesStopReplicaRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::sql::v1::Operation,google/cloud/sql/v1/cloud_sql_resources.proto#L628}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.sql.v1.Operation])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.sql.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L628}
-  /// [google.cloud.sql.v1.SqlInstancesStopReplicaRequest]:
-  /// @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L455}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.sql.v1.Operation]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L687}
+  /// [google.cloud.sql.v1.SqlInstancesStopReplicaRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L495}
   ///
+  // clang-format on
   StatusOr<google::cloud::sql::v1::Operation> StopReplica(
       google::cloud::sql::v1::SqlInstancesStopReplicaRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Truncate MySQL general and slow query log tables
   /// MySQL only.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::sql::v1::SqlInstancesTruncateLogRequest,google/cloud/sql/v1/cloud_sql_instances.proto#L464}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.sql.v1.SqlInstancesTruncateLogRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::sql::v1::Operation,google/cloud/sql/v1/cloud_sql_resources.proto#L628}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.sql.v1.Operation])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.sql.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L628}
-  /// [google.cloud.sql.v1.SqlInstancesTruncateLogRequest]:
-  /// @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L464}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.sql.v1.Operation]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L687}
+  /// [google.cloud.sql.v1.SqlInstancesTruncateLogRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L504}
   ///
+  // clang-format on
   StatusOr<google::cloud::sql::v1::Operation> TruncateLog(
       google::cloud::sql::v1::SqlInstancesTruncateLogRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Updates settings of a Cloud SQL instance. Using this operation might cause
   /// your instance to restart.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::sql::v1::SqlInstancesUpdateRequest,google/cloud/sql/v1/cloud_sql_instances.proto#L475}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.sql.v1.SqlInstancesUpdateRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::sql::v1::Operation,google/cloud/sql/v1/cloud_sql_resources.proto#L628}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.sql.v1.Operation])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.sql.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L628}
-  /// [google.cloud.sql.v1.SqlInstancesUpdateRequest]:
-  /// @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L475}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.sql.v1.Operation]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L687}
+  /// [google.cloud.sql.v1.SqlInstancesUpdateRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L527}
   ///
+  // clang-format on
   StatusOr<google::cloud::sql::v1::Operation> Update(
       google::cloud::sql::v1::SqlInstancesUpdateRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
-  /// Generates a short-lived X509 certificate containing the provided public
-  /// key and signed by a private key specific to the target instance. Users may
-  /// use the certificate to authenticate as themselves when connecting to the
+  /// Generates a short-lived X509 certificate containing the provided public key
+  /// and signed by a private key specific to the target instance. Users may use
+  /// the certificate to authenticate as themselves when connecting to the
   /// database.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::sql::v1::SqlInstancesCreateEphemeralCertRequest,google/cloud/sql/v1/cloud_sql_instances.proto#L553}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.sql.v1.SqlInstancesCreateEphemeralCertRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::sql::v1::SslCert,google/cloud/sql/v1/cloud_sql_resources.proto#L974}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.sql.v1.SslCert])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.sql.v1.SqlInstancesCreateEphemeralCertRequest]:
-  /// @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L553}
-  /// [google.cloud.sql.v1.SslCert]:
-  /// @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L974}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.sql.v1.SqlInstancesCreateEphemeralCertRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L683}
+  /// [google.cloud.sql.v1.SslCert]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L1145}
   ///
+  // clang-format on
   StatusOr<google::cloud::sql::v1::SslCert> CreateEphemeral(
       google::cloud::sql::v1::SqlInstancesCreateEphemeralCertRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Reschedules the maintenance on the given instance.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::sql::v1::SqlInstancesRescheduleMaintenanceRequest,google/cloud/sql/v1/cloud_sql_instances.proto#L486}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.sql.v1.SqlInstancesRescheduleMaintenanceRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::sql::v1::Operation,google/cloud/sql/v1/cloud_sql_resources.proto#L628}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.sql.v1.Operation])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.sql.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L628}
-  /// [google.cloud.sql.v1.SqlInstancesRescheduleMaintenanceRequest]:
-  /// @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L486}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.sql.v1.Operation]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L687}
+  /// [google.cloud.sql.v1.SqlInstancesRescheduleMaintenanceRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L538}
   ///
+  // clang-format on
   StatusOr<google::cloud::sql::v1::Operation> RescheduleMaintenance(
       google::cloud::sql::v1::SqlInstancesRescheduleMaintenanceRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Verify External primary instance external sync settings.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::sql::v1::SqlInstancesVerifyExternalSyncSettingsRequest,google/cloud/sql/v1/cloud_sql_instances.proto#L497}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.sql.v1.SqlInstancesVerifyExternalSyncSettingsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::sql::v1::SqlInstancesVerifyExternalSyncSettingsResponse,google/cloud/sql/v1/cloud_sql_instances.proto#L648}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.sql.v1.SqlInstancesVerifyExternalSyncSettingsResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.sql.v1.SqlInstancesVerifyExternalSyncSettingsRequest]:
-  /// @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L497}
-  /// [google.cloud.sql.v1.SqlInstancesVerifyExternalSyncSettingsResponse]:
-  /// @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L648}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.sql.v1.SqlInstancesVerifyExternalSyncSettingsRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L597}
+  /// [google.cloud.sql.v1.SqlInstancesVerifyExternalSyncSettingsResponse]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L778}
   ///
+  // clang-format on
   StatusOr<
       google::cloud::sql::v1::SqlInstancesVerifyExternalSyncSettingsResponse>
   VerifyExternalSyncSettings(
@@ -579,23 +932,136 @@ class SqlInstancesServiceClient {
           SqlInstancesVerifyExternalSyncSettingsRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Start External primary instance migration.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::sql::v1::SqlInstancesStartExternalSyncRequest,google/cloud/sql/v1/cloud_sql_instances.proto#L533}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.sql.v1.SqlInstancesStartExternalSyncRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::sql::v1::Operation,google/cloud/sql/v1/cloud_sql_resources.proto#L628}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.sql.v1.Operation])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.sql.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L628}
-  /// [google.cloud.sql.v1.SqlInstancesStartExternalSyncRequest]:
-  /// @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L533}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.sql.v1.Operation]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L687}
+  /// [google.cloud.sql.v1.SqlInstancesStartExternalSyncRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L634}
   ///
+  // clang-format on
   StatusOr<google::cloud::sql::v1::Operation> StartExternalSync(
       google::cloud::sql::v1::SqlInstancesStartExternalSyncRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Perform Disk Shrink on primary instance.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.sql.v1.SqlInstancesPerformDiskShrinkRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.sql.v1.Operation])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.sql.v1.Operation]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L687}
+  /// [google.cloud.sql.v1.SqlInstancesPerformDiskShrinkRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L515}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::sql::v1::Operation> PerformDiskShrink(
+      google::cloud::sql::v1::SqlInstancesPerformDiskShrinkRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Get Disk Shrink Config for a given instance.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.sql.v1.SqlInstancesGetDiskShrinkConfigRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.sql.v1.SqlInstancesGetDiskShrinkConfigResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.sql.v1.SqlInstancesGetDiskShrinkConfigRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L588}
+  /// [google.cloud.sql.v1.SqlInstancesGetDiskShrinkConfigResponse]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L790}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::sql::v1::SqlInstancesGetDiskShrinkConfigResponse>
+  GetDiskShrinkConfig(
+      google::cloud::sql::v1::SqlInstancesGetDiskShrinkConfigRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Reset Replica Size to primary instance disk size.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.sql.v1.SqlInstancesResetReplicaSizeRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.sql.v1.Operation])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.sql.v1.Operation]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L687}
+  /// [google.cloud.sql.v1.SqlInstancesResetReplicaSizeRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L674}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::sql::v1::Operation> ResetReplicaSize(
+      google::cloud::sql::v1::SqlInstancesResetReplicaSizeRequest const&
           request,
       Options opts = {});
 

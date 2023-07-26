@@ -45,8 +45,9 @@ Options PoliciesDefaultOptions(Options options) {
   }
   if (!options.has<iam_v2::PoliciesBackoffPolicyOption>()) {
     options.set<iam_v2::PoliciesBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options.has<iam_v2::PoliciesPollingPolicyOption>()) {
@@ -54,7 +55,9 @@ Options PoliciesDefaultOptions(Options options) {
         GenericPollingPolicy<iam_v2::PoliciesRetryPolicyOption::Type,
                              iam_v2::PoliciesBackoffPolicyOption::Type>(
             options.get<iam_v2::PoliciesRetryPolicyOption>()->clone(),
-            options.get<iam_v2::PoliciesBackoffPolicyOption>()->clone())
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
             .clone());
   }
   if (!options.has<iam_v2::PoliciesConnectionIdempotencyPolicyOption>()) {

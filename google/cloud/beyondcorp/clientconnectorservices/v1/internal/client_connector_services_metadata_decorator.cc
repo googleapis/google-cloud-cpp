@@ -19,6 +19,7 @@
 
 #include "google/cloud/beyondcorp/clientconnectorservices/v1/internal/client_connector_services_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/beyondcorp/clientconnectorservices/v1/client_connector_services_service.grpc.pb.h>
@@ -30,8 +31,10 @@ namespace beyondcorp_clientconnectorservices_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ClientConnectorServicesServiceMetadata::ClientConnectorServicesServiceMetadata(
-    std::shared_ptr<ClientConnectorServicesServiceStub> child)
+    std::shared_ptr<ClientConnectorServicesServiceStub> child,
+    std::multimap<std::string, std::string> fixed_metadata)
     : child_(std::move(child)),
+      fixed_metadata_(std::move(fixed_metadata)),
       api_client_header_(
           google::cloud::internal::ApiClientHeader("generator")) {}
 
@@ -41,7 +44,7 @@ ClientConnectorServicesServiceMetadata::ListClientConnectorServices(
     grpc::ClientContext& context,
     google::cloud::beyondcorp::clientconnectorservices::v1::
         ListClientConnectorServicesRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListClientConnectorServices(context, request);
 }
 
@@ -51,7 +54,7 @@ ClientConnectorServicesServiceMetadata::GetClientConnectorService(
     grpc::ClientContext& context,
     google::cloud::beyondcorp::clientconnectorservices::v1::
         GetClientConnectorServiceRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetClientConnectorService(context, request);
 }
 
@@ -61,7 +64,7 @@ ClientConnectorServicesServiceMetadata::AsyncCreateClientConnectorService(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::beyondcorp::clientconnectorservices::v1::
         CreateClientConnectorServiceRequest const& request) {
-  SetMetadata(*context, "parent=" + request.parent());
+  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
   return child_->AsyncCreateClientConnectorService(cq, std::move(context),
                                                    request);
 }
@@ -72,8 +75,9 @@ ClientConnectorServicesServiceMetadata::AsyncUpdateClientConnectorService(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::beyondcorp::clientconnectorservices::v1::
         UpdateClientConnectorServiceRequest const& request) {
-  SetMetadata(*context, "client_connector_service.name=" +
-                            request.client_connector_service().name());
+  SetMetadata(*context,
+              absl::StrCat("client_connector_service.name=",
+                           request.client_connector_service().name()));
   return child_->AsyncUpdateClientConnectorService(cq, std::move(context),
                                                    request);
 }
@@ -84,7 +88,7 @@ ClientConnectorServicesServiceMetadata::AsyncDeleteClientConnectorService(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::beyondcorp::clientconnectorservices::v1::
         DeleteClientConnectorServiceRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncDeleteClientConnectorService(cq, std::move(context),
                                                    request);
 }
@@ -114,6 +118,9 @@ void ClientConnectorServicesServiceMetadata::SetMetadata(
 
 void ClientConnectorServicesServiceMetadata::SetMetadata(
     grpc::ClientContext& context) {
+  for (auto const& kv : fixed_metadata_) {
+    context.AddMetadata(kv.first, kv.second);
+  }
   context.AddMetadata("x-goog-api-client", api_client_header_);
   auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {

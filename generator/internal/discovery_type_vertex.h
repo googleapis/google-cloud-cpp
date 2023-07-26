@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GENERATOR_INTERNAL_DISCOVERY_TYPE_VERTEX_H
 
 #include "google/cloud/status_or.h"
+#include <google/protobuf/descriptor.h>
 #include <nlohmann/json.hpp>
 #include <set>
 #include <string>
@@ -33,9 +34,11 @@ namespace generator_internal {
 // of edges are unidirectional, and both of the resulting graphs are acyclic.
 class DiscoveryTypeVertex {
  public:
-  DiscoveryTypeVertex();
+  // descriptor_pool should never be NULL, and the constructor will assert if it
+  // is.
   DiscoveryTypeVertex(std::string name, std::string package_name,
-                      nlohmann::json json);
+                      nlohmann::json json,
+                      google::protobuf::DescriptorPool const* descriptor_pool);
 
   std::string const& name() const { return name_; }
   std::string const& package_name() const { return package_name_; }
@@ -55,6 +58,8 @@ class DiscoveryTypeVertex {
   // field type.
   static std::string DetermineIntroducer(nlohmann::json const& field);
 
+  // TODO(#12225): Consider changing is_map and is_message from bool to enum.
+  // Possibly combine the two fields into one field of an enum.
   struct TypeInfo {
     std::string name;
     bool compare_package_name;
@@ -62,13 +67,26 @@ class DiscoveryTypeVertex {
     // synthesized.
     nlohmann::json const* properties;
     bool is_map;
+    bool is_message;
   };
+
   // Determines the type of the field and if a definition of that nested type
   // needs to be defined in the message.
   // Returns a pair containing the name of the type and possibly the json
   // that defines the type.
   static StatusOr<TypeInfo> DetermineTypeAndSynthesis(
       nlohmann::json const& v, std::string const& field_name);
+
+  struct MessageProperties {
+    std::set<int> reserved_numbers;
+    int next_available_field_number;
+  };
+
+  // Examines the message Descriptor to determine the reserved field numbers
+  // and the next available field number based on the currently used and/or
+  // reserved field numbers.
+  static MessageProperties DetermineReservedAndMaxFieldNumbers(
+      google::protobuf::Descriptor const& message_descriptor);
 
   // Formats the properties of the json into proto message fields.
   StatusOr<std::vector<std::string>> FormatProperties(

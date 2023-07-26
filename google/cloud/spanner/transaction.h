@@ -162,9 +162,12 @@ class Transaction {
  private:
   // Friendship for access by internal helpers.
   friend struct spanner_internal::TransactionInternals;
+  struct SingleUseCommitTag {};
 
   // Construction of a single-use transaction.
   explicit Transaction(SingleUseOptions opts);
+  // Construction of a single-use commit transaction.
+  Transaction(ReadWriteOptions opts, SingleUseCommitTag);
   // Construction of a transaction with existing IDs.
   Transaction(std::string session_id, std::string transaction_id,
               bool route_to_leader, std::string transaction_tag);
@@ -217,6 +220,12 @@ struct TransactionInternals {
     return spanner::Transaction(std::move(su_opts));
   }
 
+  static spanner::Transaction MakeSingleUseCommitTransaction(
+      spanner::Transaction::ReadWriteOptions opts) {
+    return spanner::Transaction(std::move(opts),
+                                spanner::Transaction::SingleUseCommitTag{});
+  }
+
   template <typename Functor>
   // Pass `txn` by value, despite being used only once. This avoids the
   // possibility of `txn` being destroyed by `f` before `Visit()` can
@@ -235,6 +244,11 @@ struct TransactionInternals {
 template <typename T>
 spanner::Transaction MakeSingleUseTransaction(T&& opts) {
   return TransactionInternals::MakeSingleUseTransaction(std::forward<T>(opts));
+}
+
+inline spanner::Transaction MakeSingleUseCommitTransaction(
+    spanner::Transaction::ReadWriteOptions opts) {
+  return TransactionInternals::MakeSingleUseCommitTransaction(std::move(opts));
 }
 
 template <typename Functor>

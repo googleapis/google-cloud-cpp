@@ -22,6 +22,7 @@
 #include "google/cloud/gkehub/v1/internal/gke_hub_stub.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
+#include <map>
 #include <memory>
 #include <string>
 
@@ -33,7 +34,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class GkeHubMetadata : public GkeHubStub {
  public:
   ~GkeHubMetadata() override = default;
-  explicit GkeHubMetadata(std::shared_ptr<GkeHubStub> child);
+  GkeHubMetadata(std::shared_ptr<GkeHubStub> child,
+                 std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::gkehub::v1::ListMembershipsResponse> ListMemberships(
       grpc::ClientContext& context,
@@ -107,6 +109,7 @@ class GkeHubMetadata : public GkeHubStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<GkeHubStub> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

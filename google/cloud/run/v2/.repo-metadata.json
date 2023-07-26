@@ -1,0 +1,14 @@
+{
+    "api_id": "run.googleapis.com",
+    "api_shortname": "run",
+    "client_documentation": "https://cloud.google.com/cpp/docs/reference/run/latest",
+    "distribution_name": "google-cloud-cpp",
+    "issue_tracker": "https://issuetracker.google.com/savedsearches/5447537",
+    "language": "cpp",
+    "library_type": "GAPIC_AUTO",
+    "name_pretty": "Cloud Run Admin API",
+    "product_documentation": "https://cloud.google.com/run/docs",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-cpp",
+    "requires_billing": true
+}

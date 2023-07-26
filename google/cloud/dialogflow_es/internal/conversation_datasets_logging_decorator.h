@@ -37,7 +37,7 @@ class ConversationDatasetsLogging : public ConversationDatasetsStub {
   ~ConversationDatasetsLogging() override = default;
   ConversationDatasetsLogging(std::shared_ptr<ConversationDatasetsStub> child,
                               TracingOptions tracing_options,
-                              std::set<std::string> components);
+                              std::set<std::string> const& components);
 
   future<StatusOr<google::longrunning::Operation>>
   AsyncCreateConversationDataset(
@@ -84,7 +84,7 @@ class ConversationDatasetsLogging : public ConversationDatasetsStub {
  private:
   std::shared_ptr<ConversationDatasetsStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // ConversationDatasetsLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -27,20 +27,18 @@ functions of the class. This library groups multiple gRPC services because they
 are part of the same product or are often used together. A typical example may
 be the administrative and data plane operations for a single product.
 
-The library also has other classes that provide helpers, retry policies,
-configuration parameters, and infrastructure to mock the `*Client` classes
-when testing your application.
+The library also has other classes that provide helpers, configuration
+parameters, and infrastructure to mock the `*Client` classes when testing your
+application.
 
 - [\c resourcemanager_v3::FoldersClient](@ref google::cloud::resourcemanager_v3::FoldersClient)
 - [\c resourcemanager_v3::OrganizationsClient](@ref google::cloud::resourcemanager_v3::OrganizationsClient)
 - [\c resourcemanager_v3::ProjectsClient](@ref google::cloud::resourcemanager_v3::ProjectsClient)
+- [\c resourcemanager_v3::TagBindingsClient](@ref google::cloud::resourcemanager_v3::TagBindingsClient)
+- [\c resourcemanager_v3::TagHoldsClient](@ref google::cloud::resourcemanager_v3::TagHoldsClient)
+- [\c resourcemanager_v3::TagKeysClient](@ref google::cloud::resourcemanager_v3::TagKeysClient)
+- [\c resourcemanager_v3::TagValuesClient](@ref google::cloud::resourcemanager_v3::TagValuesClient)
 <!-- inject-client-list-end -->
-
-## Retry, Backoff, and Idempotency Policies.
-
-The library automatically retries requests that fail with transient errors, and
-uses [exponential backoff] to backoff between retries. Application developers
-can override the default policies.
 
 ## More Information
 
@@ -49,8 +47,10 @@ can override the default policies.
   endpoint.
 - @ref resourcemanager-override-authentication - describes how to change the
   authentication credentials used by the library.
+- @ref resourcemanager-override-retry - describes how to change the default retry
+  policies.
+- @ref resourcemanager-env - describes environment variables that can configure the behavior of the library.
 
 [cloud-product]: https://cloud.google.com/resource-manager
-[exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff
 
 */

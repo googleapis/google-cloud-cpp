@@ -37,7 +37,7 @@ class CloudChannelServiceLogging : public CloudChannelServiceStub {
   ~CloudChannelServiceLogging() override = default;
   CloudChannelServiceLogging(std::shared_ptr<CloudChannelServiceStub> child,
                              TracingOptions tracing_options,
-                             std::set<std::string> components);
+                             std::set<std::string> const& components);
 
   StatusOr<google::cloud::channel::v1::ListCustomersResponse> ListCustomers(
       grpc::ClientContext& context,
@@ -243,6 +243,16 @@ class CloudChannelServiceLogging : public CloudChannelServiceStub {
       google::cloud::channel::v1::
           DeleteChannelPartnerRepricingConfigRequest const& request) override;
 
+  StatusOr<google::cloud::channel::v1::ListSkuGroupsResponse> ListSkuGroups(
+      grpc::ClientContext& context,
+      google::cloud::channel::v1::ListSkuGroupsRequest const& request) override;
+
+  StatusOr<google::cloud::channel::v1::ListSkuGroupBillableSkusResponse>
+  ListSkuGroupBillableSkus(
+      grpc::ClientContext& context,
+      google::cloud::channel::v1::ListSkuGroupBillableSkusRequest const&
+          request) override;
+
   StatusOr<google::cloud::channel::v1::Offer> LookupOffer(
       grpc::ClientContext& context,
       google::cloud::channel::v1::LookupOfferRequest const& request) override;
@@ -307,7 +317,7 @@ class CloudChannelServiceLogging : public CloudChannelServiceStub {
  private:
   std::shared_ptr<CloudChannelServiceStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // CloudChannelServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

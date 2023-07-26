@@ -411,6 +411,28 @@ CloudChannelServiceTracingConnection::DeleteChannelPartnerRepricingConfig(
       *span, child_->DeleteChannelPartnerRepricingConfig(request));
 }
 
+StreamRange<google::cloud::channel::v1::SkuGroup>
+CloudChannelServiceTracingConnection::ListSkuGroups(
+    google::cloud::channel::v1::ListSkuGroupsRequest request) {
+  auto span = internal::MakeSpan(
+      "channel_v1::CloudChannelServiceConnection::ListSkuGroups");
+  auto scope = opentelemetry::trace::Scope(span);
+  auto sr = child_->ListSkuGroups(std::move(request));
+  return internal::MakeTracedStreamRange<google::cloud::channel::v1::SkuGroup>(
+      std::move(span), std::move(sr));
+}
+
+StreamRange<google::cloud::channel::v1::BillableSku>
+CloudChannelServiceTracingConnection::ListSkuGroupBillableSkus(
+    google::cloud::channel::v1::ListSkuGroupBillableSkusRequest request) {
+  auto span = internal::MakeSpan(
+      "channel_v1::CloudChannelServiceConnection::ListSkuGroupBillableSkus");
+  auto scope = opentelemetry::trace::Scope(span);
+  auto sr = child_->ListSkuGroupBillableSkus(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::channel::v1::BillableSku>(std::move(span), std::move(sr));
+}
+
 StatusOr<google::cloud::channel::v1::Offer>
 CloudChannelServiceTracingConnection::LookupOffer(
     google::cloud::channel::v1::LookupOfferRequest const& request) {

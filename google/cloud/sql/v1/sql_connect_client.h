@@ -86,43 +86,69 @@ class SqlConnectServiceClient {
   }
   ///@}
 
+  // clang-format off
   ///
   /// Retrieves connect settings about a Cloud SQL instance.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::sql::v1::GetConnectSettingsRequest,google/cloud/sql/v1/cloud_sql_connect.proto#L59}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.sql.v1.GetConnectSettingsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::sql::v1::ConnectSettings,google/cloud/sql/v1/cloud_sql_connect.proto#L71}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.sql.v1.ConnectSettings])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.sql.v1.ConnectSettings]:
-  /// @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_connect.proto#L71}
-  /// [google.cloud.sql.v1.GetConnectSettingsRequest]:
-  /// @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_connect.proto#L59}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.sql.v1.ConnectSettings]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_connect.proto#L75}
+  /// [google.cloud.sql.v1.GetConnectSettingsRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_connect.proto#L61}
   ///
+  // clang-format on
   StatusOr<google::cloud::sql::v1::ConnectSettings> GetConnectSettings(
       google::cloud::sql::v1::GetConnectSettingsRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
-  /// Generates a short-lived X509 certificate containing the provided public
-  /// key and signed by a private key specific to the target instance. Users may
-  /// use the certificate to authenticate as themselves when connecting to the
+  /// Generates a short-lived X509 certificate containing the provided public key
+  /// and signed by a private key specific to the target instance. Users may use
+  /// the certificate to authenticate as themselves when connecting to the
   /// database.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::sql::v1::GenerateEphemeralCertRequest,google/cloud/sql/v1/cloud_sql_connect.proto#L104}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.sql.v1.GenerateEphemeralCertRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::sql::v1::GenerateEphemeralCertResponse,google/cloud/sql/v1/cloud_sql_connect.proto#L122}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.sql.v1.GenerateEphemeralCertResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.sql.v1.GenerateEphemeralCertRequest]:
-  /// @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_connect.proto#L104}
-  /// [google.cloud.sql.v1.GenerateEphemeralCertResponse]:
-  /// @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_connect.proto#L122}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.sql.v1.GenerateEphemeralCertRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_connect.proto#L113}
+  /// [google.cloud.sql.v1.GenerateEphemeralCertResponse]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_connect.proto#L137}
   ///
+  // clang-format on
   StatusOr<google::cloud::sql::v1::GenerateEphemeralCertResponse>
   GenerateEphemeralCert(
       google::cloud::sql::v1::GenerateEphemeralCertRequest const& request,

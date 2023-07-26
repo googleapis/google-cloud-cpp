@@ -22,6 +22,7 @@
 #include "google/cloud/vmwareengine/v1/internal/vmware_engine_stub.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
+#include <map>
 #include <memory>
 #include <string>
 
@@ -33,7 +34,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class VmwareEngineMetadata : public VmwareEngineStub {
  public:
   ~VmwareEngineMetadata() override = default;
-  explicit VmwareEngineMetadata(std::shared_ptr<VmwareEngineStub> child);
+  VmwareEngineMetadata(std::shared_ptr<VmwareEngineStub> child,
+                       std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::vmwareengine::v1::ListPrivateCloudsResponse>
   ListPrivateClouds(
@@ -101,6 +103,17 @@ class VmwareEngineMetadata : public VmwareEngineStub {
   StatusOr<google::cloud::vmwareengine::v1::ListSubnetsResponse> ListSubnets(
       grpc::ClientContext& context,
       google::cloud::vmwareengine::v1::ListSubnetsRequest const& request)
+      override;
+
+  StatusOr<google::cloud::vmwareengine::v1::Subnet> GetSubnet(
+      grpc::ClientContext& context,
+      google::cloud::vmwareengine::v1::GetSubnetRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncUpdateSubnet(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::vmwareengine::v1::UpdateSubnetRequest const& request)
       override;
 
   StatusOr<google::cloud::vmwareengine::v1::ListNodeTypesResponse>
@@ -215,6 +228,43 @@ class VmwareEngineMetadata : public VmwareEngineStub {
       google::cloud::vmwareengine::v1::ListVmwareEngineNetworksRequest const&
           request) override;
 
+  future<StatusOr<google::longrunning::Operation>> AsyncCreatePrivateConnection(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::vmwareengine::v1::CreatePrivateConnectionRequest const&
+          request) override;
+
+  StatusOr<google::cloud::vmwareengine::v1::PrivateConnection>
+  GetPrivateConnection(
+      grpc::ClientContext& context,
+      google::cloud::vmwareengine::v1::GetPrivateConnectionRequest const&
+          request) override;
+
+  StatusOr<google::cloud::vmwareengine::v1::ListPrivateConnectionsResponse>
+  ListPrivateConnections(
+      grpc::ClientContext& context,
+      google::cloud::vmwareengine::v1::ListPrivateConnectionsRequest const&
+          request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncUpdatePrivateConnection(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::vmwareengine::v1::UpdatePrivateConnectionRequest const&
+          request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncDeletePrivateConnection(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::vmwareengine::v1::DeletePrivateConnectionRequest const&
+          request) override;
+
+  StatusOr<google::cloud::vmwareengine::v1::
+               ListPrivateConnectionPeeringRoutesResponse>
+  ListPrivateConnectionPeeringRoutes(
+      grpc::ClientContext& context,
+      google::cloud::vmwareengine::v1::
+          ListPrivateConnectionPeeringRoutesRequest const& request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -231,6 +281,7 @@ class VmwareEngineMetadata : public VmwareEngineStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<VmwareEngineStub> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

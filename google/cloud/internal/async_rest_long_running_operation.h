@@ -32,9 +32,9 @@ namespace cloud {
 namespace rest_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-template <typename ReturnType>
+template <typename ReturnType, typename OperationType>
 using LongRunningOperationValueExtractor = std::function<StatusOr<ReturnType>(
-    StatusOr<google::longrunning::Operation>, std::string const&)>;
+    StatusOr<OperationType>, std::string const&)>;
 
 /**
  * Asynchronously starts and polls a long-running operation.
@@ -114,22 +114,65 @@ template <typename ReturnType, typename RequestType, typename StartFunctor,
           typename RetryPolicyType, typename CompletionQueue>
 future<StatusOr<ReturnType>> AsyncRestLongRunningOperation(
     CompletionQueue cq, RequestType&& request, StartFunctor&& start,
-    AsyncRestPollLongRunningOperation poll,
-    AsyncRestCancelLongRunningOperation cancel,
-    LongRunningOperationValueExtractor<ReturnType> value_extractor,
+    AsyncRestPollLongRunningOperation<google::longrunning::Operation,
+                                      google::longrunning::GetOperationRequest>
+        poll,
+    AsyncRestCancelLongRunningOperation<
+        google::longrunning::CancelOperationRequest>
+        cancel,
+    LongRunningOperationValueExtractor<ReturnType,
+                                       google::longrunning::Operation>
+        value_extractor,
     std::unique_ptr<RetryPolicyType> retry_policy,
     std::unique_ptr<BackoffPolicy> backoff_policy, Idempotency idempotent,
     std::unique_ptr<PollingPolicy> polling_policy, char const* location) {
-  using ::google::longrunning::Operation;
   auto operation =
       AsyncRestRetryLoop(std::move(retry_policy), std::move(backoff_policy),
                          idempotent, cq, std::forward<StartFunctor>(start),
                          std::forward<RequestType>(request), location);
   auto loc = std::string{location};
-  return AsyncRestPollingLoop(std::move(cq), std::move(operation),
-                              std::move(poll), std::move(cancel),
-                              std::move(polling_policy), std::move(location))
-      .then([value_extractor, loc](future<StatusOr<Operation>> g) {
+  return AsyncRestPollingLoopAip151(
+             std::move(cq), std::move(operation), std::move(poll),
+             std::move(cancel), std::move(polling_policy), std::move(location))
+      .then([value_extractor, loc](auto g) {
+        return value_extractor(g.get(), loc);
+      });
+}
+
+/*
+ * AsyncRestLongRunningOperation for services that do not conform to AIP-151.
+ */
+template <typename ReturnType, typename OperationType,
+          typename GetOperationRequestType, typename CancelOperationRequestType,
+          typename RequestType, typename StartFunctor, typename RetryPolicyType,
+          typename CompletionQueue>
+future<StatusOr<ReturnType>> AsyncRestLongRunningOperation(
+    CompletionQueue cq, RequestType&& request, StartFunctor&& start,
+    AsyncRestPollLongRunningOperation<OperationType, GetOperationRequestType>
+        poll,
+    AsyncRestCancelLongRunningOperation<CancelOperationRequestType> cancel,
+    LongRunningOperationValueExtractor<ReturnType, OperationType>
+        value_extractor,
+    std::unique_ptr<RetryPolicyType> retry_policy,
+    std::unique_ptr<BackoffPolicy> backoff_policy, Idempotency idempotent,
+    std::unique_ptr<PollingPolicy> polling_policy, char const* location,
+    std::function<bool(OperationType const&)> is_operation_done,
+    std::function<void(std::string const&, GetOperationRequestType&)>
+        get_request_set_operation_name,
+    std::function<void(std::string const&, CancelOperationRequestType&)>
+        cancel_request_set_operation_name) {
+  auto operation =
+      AsyncRestRetryLoop(std::move(retry_policy), std::move(backoff_policy),
+                         idempotent, cq, std::forward<StartFunctor>(start),
+                         std::forward<RequestType>(request), location);
+  auto loc = std::string{location};
+  return AsyncRestPollingLoop<OperationType, GetOperationRequestType,
+                              CancelOperationRequestType>(
+             std::move(cq), std::move(operation), std::move(poll),
+             std::move(cancel), std::move(polling_policy), std::move(location),
+             is_operation_done, get_request_set_operation_name,
+             cancel_request_set_operation_name)
+      .then([value_extractor, loc](future<StatusOr<OperationType>> g) {
         return value_extractor(g.get(), loc);
       });
 }

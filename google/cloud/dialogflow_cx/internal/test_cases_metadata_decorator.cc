@@ -18,6 +18,7 @@
 
 #include "google/cloud/dialogflow_cx/internal/test_cases_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/dialogflow/cx/v3/test_case.grpc.pb.h>
@@ -28,8 +29,11 @@ namespace cloud {
 namespace dialogflow_cx_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-TestCasesMetadata::TestCasesMetadata(std::shared_ptr<TestCasesStub> child)
+TestCasesMetadata::TestCasesMetadata(
+    std::shared_ptr<TestCasesStub> child,
+    std::multimap<std::string, std::string> fixed_metadata)
     : child_(std::move(child)),
+      fixed_metadata_(std::move(fixed_metadata)),
       api_client_header_(
           google::cloud::internal::ApiClientHeader("generator")) {}
 
@@ -37,7 +41,7 @@ StatusOr<google::cloud::dialogflow::cx::v3::ListTestCasesResponse>
 TestCasesMetadata::ListTestCases(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::ListTestCasesRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListTestCases(context, request);
 }
 
@@ -45,7 +49,7 @@ Status TestCasesMetadata::BatchDeleteTestCases(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::BatchDeleteTestCasesRequest const&
         request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->BatchDeleteTestCases(context, request);
 }
 
@@ -53,7 +57,7 @@ StatusOr<google::cloud::dialogflow::cx::v3::TestCase>
 TestCasesMetadata::GetTestCase(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::GetTestCaseRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetTestCase(context, request);
 }
 
@@ -61,7 +65,7 @@ StatusOr<google::cloud::dialogflow::cx::v3::TestCase>
 TestCasesMetadata::CreateTestCase(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::CreateTestCaseRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->CreateTestCase(context, request);
 }
 
@@ -69,7 +73,8 @@ StatusOr<google::cloud::dialogflow::cx::v3::TestCase>
 TestCasesMetadata::UpdateTestCase(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::UpdateTestCaseRequest const& request) {
-  SetMetadata(context, "test_case.name=" + request.test_case().name());
+  SetMetadata(context,
+              absl::StrCat("test_case.name=", request.test_case().name()));
   return child_->UpdateTestCase(context, request);
 }
 
@@ -78,7 +83,7 @@ TestCasesMetadata::AsyncRunTestCase(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dialogflow::cx::v3::RunTestCaseRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncRunTestCase(cq, std::move(context), request);
 }
 
@@ -88,7 +93,7 @@ TestCasesMetadata::AsyncBatchRunTestCases(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dialogflow::cx::v3::BatchRunTestCasesRequest const&
         request) {
-  SetMetadata(*context, "parent=" + request.parent());
+  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
   return child_->AsyncBatchRunTestCases(cq, std::move(context), request);
 }
 
@@ -97,7 +102,7 @@ TestCasesMetadata::CalculateCoverage(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::CalculateCoverageRequest const&
         request) {
-  SetMetadata(context, "agent=" + request.agent());
+  SetMetadata(context, absl::StrCat("agent=", request.agent()));
   return child_->CalculateCoverage(context, request);
 }
 
@@ -106,7 +111,7 @@ TestCasesMetadata::AsyncImportTestCases(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dialogflow::cx::v3::ImportTestCasesRequest const& request) {
-  SetMetadata(*context, "parent=" + request.parent());
+  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
   return child_->AsyncImportTestCases(cq, std::move(context), request);
 }
 
@@ -115,7 +120,7 @@ TestCasesMetadata::AsyncExportTestCases(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dialogflow::cx::v3::ExportTestCasesRequest const& request) {
-  SetMetadata(*context, "parent=" + request.parent());
+  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
   return child_->AsyncExportTestCases(cq, std::move(context), request);
 }
 
@@ -124,7 +129,7 @@ TestCasesMetadata::ListTestCaseResults(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::ListTestCaseResultsRequest const&
         request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListTestCaseResults(context, request);
 }
 
@@ -133,7 +138,7 @@ TestCasesMetadata::GetTestCaseResult(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::GetTestCaseResultRequest const&
         request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetTestCaseResult(context, request);
 }
 
@@ -161,6 +166,9 @@ void TestCasesMetadata::SetMetadata(grpc::ClientContext& context,
 }
 
 void TestCasesMetadata::SetMetadata(grpc::ClientContext& context) {
+  for (auto const& kv : fixed_metadata_) {
+    context.AddMetadata(kv.first, kv.second);
+  }
   context.AddMetadata("x-goog-api-client", api_client_header_);
   auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {

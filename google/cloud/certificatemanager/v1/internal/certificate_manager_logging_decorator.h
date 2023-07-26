@@ -37,7 +37,7 @@ class CertificateManagerLogging : public CertificateManagerStub {
   ~CertificateManagerLogging() override = default;
   CertificateManagerLogging(std::shared_ptr<CertificateManagerStub> child,
                             TracingOptions tracing_options,
-                            std::set<std::string> components);
+                            std::set<std::string> const& components);
 
   StatusOr<google::cloud::certificatemanager::v1::ListCertificatesResponse>
   ListCertificates(
@@ -202,7 +202,7 @@ class CertificateManagerLogging : public CertificateManagerStub {
  private:
   std::shared_ptr<CertificateManagerStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // CertificateManagerLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

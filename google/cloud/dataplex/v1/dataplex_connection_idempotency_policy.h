@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAPLEX_V1_DATAPLEX_CONNECTION_IDEMPOTENCY_POLICY_H
 
 #include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
 #include "google/cloud/version.h"
 #include <google/cloud/dataplex/v1/service.grpc.pb.h>
 #include <memory>
@@ -109,6 +108,9 @@ class DataplexServiceConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency ListJobs(
       google::cloud::dataplex::v1::ListJobsRequest request);
+
+  virtual google::cloud::Idempotency RunTask(
+      google::cloud::dataplex::v1::RunTaskRequest const& request);
 
   virtual google::cloud::Idempotency GetJob(
       google::cloud::dataplex::v1::GetJobRequest const& request);

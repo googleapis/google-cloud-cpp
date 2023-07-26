@@ -231,6 +231,12 @@ ClusterManagerConnection::ListUsableSubnetworks(
       StreamRange<google::container::v1::UsableSubnetwork>>();
 }
 
+StatusOr<google::container::v1::CheckAutopilotCompatibilityResponse>
+ClusterManagerConnection::CheckAutopilotCompatibility(
+    google::container::v1::CheckAutopilotCompatibilityRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 std::shared_ptr<ClusterManagerConnection> MakeClusterManagerConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,

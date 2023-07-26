@@ -17,9 +17,9 @@
 set -euo pipefail
 
 source "$(dirname "$0")/../../lib/init.sh"
-source module ci/lib/io.sh
-source module ci/cloudbuild/builds/lib/git.sh
 source module ci/cloudbuild/builds/lib/features.sh
+source module ci/cloudbuild/builds/lib/git.sh
+source module ci/lib/io.sh
 
 # Runs sed expressions (specified after -e) over the given files, editing them
 # in place. This function is exported so it can be run in subshells, such as
@@ -43,16 +43,16 @@ function sed_edit() {
         ;;
     esac
   done
+  local tmp
+  tmp="$(mktemp /tmp/checkers.XXXXXX.tmp)"
   for file in "${files[@]}"; do
-    local tmp="${file}.tmp"
     sed "${expressions[@]}" "${file}" >"${tmp}"
-    if cmp -s "${file}" "${tmp}"; then
-      rm -f "${tmp}"
-    else
+    if ! cmp -s "${file}" "${tmp}"; then
       chmod --reference="${file}" "${tmp}"
-      mv -f "${tmp}" "${file}"
+      cp -f "${tmp}" "${file}"
     fi
   done
+  rm -f "${tmp}"
 }
 export -f sed_edit
 
@@ -132,8 +132,11 @@ time {
   expressions+=("-e" "':x;/^\n*$/{\$d;N;bx;}'")
   # Adds a trailing newline if one doesn't already exist
   expressions+=("-e" "'\$a\'")
-  git_files -z | grep -zv '\.gz$' | grep -zv 'googleapis.patch$' | grep -zv '\.png$' |
-    (xargs -r -P "$(nproc)" -n 50 -0 grep -ZPL "\b[D]O NOT EDIT\b" || true) |
+  git_files -z | grep -zv 'googleapis.patch$' |
+    grep -zv '\.gz$' |
+    grep -zv '\.pb$' |
+    grep -zv '\.png$' |
+    (xargs -r -0 grep -ZPL "\b[D]O NOT EDIT\b" || true) |
     xargs -r -P "$(nproc)" -n 50 -0 bash -c "sed_edit ${expressions[*]} \"\$0\" \"\$@\""
 }
 
@@ -217,10 +220,7 @@ time {
 
 printf "%-50s" "Running doxygen landing-page updates:" >&2
 time {
-  mapfile -t libraries < <(features::libraries)
-  for library in "${libraries[@]}"; do
-    ci/generate-markdown/update-library-landing-dox.sh "${library}"
-  done
+  features::libraries | xargs -P "$(nproc)" -n 1 ci/generate-markdown/update-library-landing-dox.sh
 }
 
 # If there are any diffs, report them and exit with a non-zero status so

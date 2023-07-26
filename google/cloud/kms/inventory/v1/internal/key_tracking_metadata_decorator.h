@@ -21,6 +21,7 @@
 
 #include "google/cloud/kms/inventory/v1/internal/key_tracking_stub.h"
 #include "google/cloud/version.h"
+#include <map>
 #include <memory>
 #include <string>
 
@@ -32,8 +33,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class KeyTrackingServiceMetadata : public KeyTrackingServiceStub {
  public:
   ~KeyTrackingServiceMetadata() override = default;
-  explicit KeyTrackingServiceMetadata(
-      std::shared_ptr<KeyTrackingServiceStub> child);
+  KeyTrackingServiceMetadata(
+      std::shared_ptr<KeyTrackingServiceStub> child,
+      std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::kms::inventory::v1::ProtectedResourcesSummary>
   GetProtectedResourcesSummary(
@@ -53,6 +55,7 @@ class KeyTrackingServiceMetadata : public KeyTrackingServiceStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<KeyTrackingServiceStub> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

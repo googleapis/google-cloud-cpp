@@ -21,7 +21,7 @@ ARG ARCH=amd64
 # tools to compile the dependencies:
 RUN dnf makecache && \
     dnf install -y autoconf automake \
-        ccache clang clang-analyzer clang-tools-extra \
+        clang clang-analyzer clang-tools-extra \
         cmake diffutils findutils gcc-c++ git \
         libcurl-devel llvm make ninja-build \
         openssl-devel patch python python3 \
@@ -51,7 +51,7 @@ RUN echo 'root:' | chpasswd
 # from this bottleneck. For more details see
 # https://github.com/googleapis/google-cloud-cpp/issues/7052
 WORKDIR /var/tmp/build/pkg-config-cpp
-RUN curl -sSL https://pkgconfig.freedesktop.org/releases/pkg-config-0.29.2.tar.gz | \
+RUN curl -fsSL https://pkgconfig.freedesktop.org/releases/pkg-config-0.29.2.tar.gz | \
     tar -xzf - --strip-components=1 && \
     ./configure --with-internal-glib && \
     make -j ${NCPU:-4} && \
@@ -62,7 +62,7 @@ ENV PKG_CONFIG_PATH=/usr/local/lib64/pkgconfig:/usr/local/lib/pkgconfig:/usr/lib
 # Install Abseil, remove the downloaded files and the temporary artifacts
 # after a successful build to keep the image smaller (and with fewer layers)
 WORKDIR /var/tmp/build
-RUN curl -sSL https://github.com/abseil/abseil-cpp/archive/20230125.3.tar.gz | \
+RUN curl -fsSL https://github.com/abseil/abseil-cpp/archive/20230125.3.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_CXX_STANDARD=20 \
@@ -77,7 +77,7 @@ RUN curl -sSL https://github.com/abseil/abseil-cpp/archive/20230125.3.tar.gz | \
 # Install googletest, remove the downloaded files and the temporary artifacts
 # after a successful build to keep the image smaller (and with fewer layers)
 WORKDIR /var/tmp/build
-RUN curl -sSL https://github.com/google/googletest/archive/v1.13.0.tar.gz | \
+RUN curl -fsSL https://github.com/google/googletest/archive/v1.13.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_CXX_STANDARD=20 \
@@ -88,13 +88,12 @@ RUN curl -sSL https://github.com/google/googletest/archive/v1.13.0.tar.gz | \
     ldconfig && \
     cd /var/tmp && rm -fr build
 
-# TODO(#9508) - use CMAKE_CXX_STANDARD=20 here too, using 17 is a work around.
 # Download and compile Google microbenchmark support library:
 WORKDIR /var/tmp/build
-RUN curl -sSL https://github.com/google/benchmark/archive/v1.8.0.tar.gz | \
+RUN curl -fsSL https://github.com/google/benchmark/archive/v1.8.2.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
-        -DCMAKE_CXX_STANDARD=17 \
+        -DCMAKE_CXX_STANDARD=20 \
         -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=yes \
         -DBENCHMARK_ENABLE_TESTING=OFF \
@@ -104,7 +103,7 @@ RUN curl -sSL https://github.com/google/benchmark/archive/v1.8.0.tar.gz | \
     cd /var/tmp && rm -fr build
 
 WORKDIR /var/tmp/build
-RUN curl -sSL https://github.com/google/crc32c/archive/1.1.2.tar.gz | \
+RUN curl -fsSL https://github.com/google/crc32c/archive/1.1.2.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_CXX_STANDARD=20 \
@@ -119,7 +118,7 @@ RUN curl -sSL https://github.com/google/crc32c/archive/1.1.2.tar.gz | \
     cd /var/tmp && rm -fr build
 
 WORKDIR /var/tmp/build
-RUN curl -sSL https://github.com/nlohmann/json/archive/v3.11.2.tar.gz | \
+RUN curl -fsSL https://github.com/nlohmann/json/archive/v3.11.2.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_CXX_STANDARD=20 \
@@ -133,7 +132,7 @@ RUN curl -sSL https://github.com/nlohmann/json/archive/v3.11.2.tar.gz | \
     cd /var/tmp && rm -fr build
 
 WORKDIR /var/tmp/build/protobuf
-RUN curl -sSL https://github.com/protocolbuffers/protobuf/archive/v21.12.tar.gz | \
+RUN curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v23.4.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_CXX_STANDARD=20 \
@@ -150,7 +149,7 @@ RUN curl -sSL https://github.com/protocolbuffers/protobuf/archive/v21.12.tar.gz 
 # files. This may be fixed in Fedora:38, but until then it is easier to just
 # install the source code.
 WORKDIR /var/tmp/build/re2
-RUN curl -sSL https://github.com/google/re2/archive/2023-03-01.tar.gz | \
+RUN curl -fsSL https://github.com/google/re2/archive/2023-07-01.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=ON \
@@ -161,7 +160,7 @@ RUN curl -sSL https://github.com/google/re2/archive/2023-03-01.tar.gz | \
     ldconfig
 
 WORKDIR /var/tmp/build/grpc
-RUN curl -sSL https://github.com/grpc/grpc/archive/v1.54.0.tar.gz | \
+RUN curl -fsSL https://github.com/grpc/grpc/archive/v1.56.2.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_CXX_STANDARD=20 \
@@ -181,7 +180,7 @@ RUN curl -sSL https://github.com/grpc/grpc/archive/v1.54.0.tar.gz | \
     cd /var/tmp && rm -fr build
 
 WORKDIR /var/tmp/build/
-RUN curl -sSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.9.0.tar.gz | \
+RUN curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.9.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_CXX_STANDARD=20 \
@@ -192,7 +191,7 @@ RUN curl -sSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.9.0
         -DWITH_ABSEIL=ON \
         -DBUILD_TESTING=OFF \
         -DOPENTELEMETRY_INSTALL=ON \
-        -H. -Bcmake-out -GNinja && \
+        -S . -B cmake-out -GNinja && \
     cmake --build cmake-out --target install && \
     ldconfig && cd /var/tmp && rm -fr build
 
@@ -205,10 +204,12 @@ RUN /var/tmp/ci/install-cloud-sdk.sh
 ENV CLOUD_SDK_LOCATION=/usr/local/google-cloud-sdk
 ENV PATH=${CLOUD_SDK_LOCATION}/bin:${PATH}
 
-# Some of the above libraries may have installed in /usr/local, so make sure
-# those library directories will be found.
-RUN ldconfig /usr/local/lib*
+WORKDIR /var/tmp/sccache
+RUN curl -fsSL https://github.com/mozilla/sccache/releases/download/v0.5.4/sccache-v0.5.4-x86_64-unknown-linux-musl.tar.gz | \
+    tar -zxf - --strip-components=1 && \
+    mkdir -p /usr/local/bin && \
+    mv sccache /usr/local/bin/sccache && \
+    chmod +x /usr/local/bin/sccache
 
-RUN curl -o /usr/bin/bazelisk -sSL "https://github.com/bazelbuild/bazelisk/releases/download/v1.16.0/bazelisk-linux-${ARCH}" && \
-    chmod +x /usr/bin/bazelisk && \
-    ln -s /usr/bin/bazelisk /usr/bin/bazel
+# Update the ld.conf cache in case any libraries were installed in /usr/local/lib*
+RUN ldconfig /usr/local/lib*

@@ -115,6 +115,22 @@ class TopicBuilder {
   TopicBuilder&& set_encoding(google::pubsub::v1::Encoding encoding) && {
     return std::move(set_encoding(encoding));
   }
+  TopicBuilder& set_first_revision_id(std::string const& revision_id) & {
+    proto_.mutable_schema_settings()->set_first_revision_id(revision_id);
+    paths_.insert("schema_settings.first_revision_id");
+    return *this;
+  }
+  TopicBuilder&& set_first_revision_id(std::string const& revision_id) && {
+    return std::move(set_first_revision_id(revision_id));
+  }
+  TopicBuilder& set_last_revision_id(std::string const& revision_id) & {
+    proto_.mutable_schema_settings()->set_last_revision_id(revision_id);
+    paths_.insert("schema_settings.last_revision_id");
+    return *this;
+  }
+  TopicBuilder&& set_last_revision_id(std::string const& revision_id) && {
+    return std::move(set_last_revision_id(revision_id));
+  }
 
   template <typename Rep, typename Period>
   TopicBuilder& set_message_retention_duration(

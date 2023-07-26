@@ -42,6 +42,16 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 namespace bigtable {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+/// Wrap the arguments to `ReadRows()`.
+struct ReadRowsParams {
+  std::string table_name;
+  std::string app_profile_id;
+  RowSet row_set;
+  std::int64_t rows_limit;
+  Filter filter = Filter::PassAllFilter();
+  bool reverse = false;
+};
+
 /**
  * A connection to the Cloud Bigtable Data API.
  *
@@ -93,8 +103,11 @@ class DataConnection {
   virtual future<std::vector<FailedMutation>> AsyncBulkApply(
       std::string const& table_name, BulkMutation mut);
 
+  /// Prefer to use `ReadRowsFull()` in mocks.
   virtual RowReader ReadRows(std::string const& table_name, RowSet row_set,
                              std::int64_t rows_limit, Filter filter);
+
+  virtual RowReader ReadRowsFull(ReadRowsParams params);
 
   virtual StatusOr<std::pair<bool, Row>> ReadRow(std::string const& table_name,
                                                  std::string row_key,

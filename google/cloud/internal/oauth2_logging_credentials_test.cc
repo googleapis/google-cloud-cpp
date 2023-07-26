@@ -14,7 +14,6 @@
 
 #include "google/cloud/internal/oauth2_logging_credentials.h"
 #include "google/cloud/internal/make_status.h"
-#include "google/cloud/testing_util/contains_once.h"
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
@@ -27,16 +26,16 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::internal::UnavailableError;
-using ::google::cloud::testing_util::ContainsOnce;
 using ::google::cloud::testing_util::ScopedLog;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::AllOf;
+using ::testing::Contains;
 using ::testing::HasSubstr;
 using ::testing::Return;
 
 class MockCredentials : public Credentials {
  public:
-  MOCK_METHOD(StatusOr<internal::AccessToken>, GetToken,
+  MOCK_METHOD(StatusOr<AccessToken>, GetToken,
               (std::chrono::system_clock::time_point), (override));
   MOCK_METHOD(StatusOr<std::vector<std::uint8_t>>, SignBlob,
               (absl::optional<std::string> const&, std::string const&),
@@ -49,7 +48,7 @@ TEST(LoggingCredentials, GetTokenSuccess) {
   auto mock = std::make_shared<MockCredentials>();
   auto const now = std::chrono::system_clock::now();
   auto const expiration = now + std::chrono::hours(1);
-  auto const expected = internal::AccessToken{"test-token", expiration};
+  auto const expected = AccessToken{"test-token", expiration};
   auto const tp = now + std::chrono::seconds(123);
   EXPECT_CALL(*mock, GetToken(tp)).WillOnce(Return(expected));
   ScopedLog log;
@@ -58,15 +57,16 @@ TEST(LoggingCredentials, GetTokenSuccess) {
   ASSERT_STATUS_OK(actual);
   EXPECT_EQ(*actual, expected);
   EXPECT_THAT(log.ExtractLines(),
-              ContainsOnce(AllOf(HasSubstr("GetToken(testing)"),
-                                 HasSubstr("will expire in 57m57s"))));
+              Contains(AllOf(HasSubstr("GetToken(testing)"),
+                             HasSubstr("will expire in 57m57s")))
+                  .Times(1));
 }
 
 TEST(LoggingCredentials, GetTokenExpired) {
   auto mock = std::make_shared<MockCredentials>();
   auto const now = std::chrono::system_clock::now();
   auto const expiration = now + std::chrono::hours(1);
-  auto const expected = internal::AccessToken{"test-token", expiration};
+  auto const expected = AccessToken{"test-token", expiration};
   auto const tp = now + std::chrono::hours(1) + std::chrono::minutes(1);
   EXPECT_CALL(*mock, GetToken(tp)).WillOnce(Return(expected));
   ScopedLog log;
@@ -75,8 +75,9 @@ TEST(LoggingCredentials, GetTokenExpired) {
   ASSERT_STATUS_OK(actual);
   EXPECT_EQ(*actual, expected);
   EXPECT_THAT(log.ExtractLines(),
-              ContainsOnce(AllOf(HasSubstr("GetToken(testing)"),
-                                 HasSubstr("token expired 1m ago"))));
+              Contains(AllOf(HasSubstr("GetToken(testing)"),
+                             HasSubstr("token expired 1m ago")))
+                  .Times(1));
 }
 
 TEST(LoggingCredentials, GetTokenError) {
@@ -90,8 +91,9 @@ TEST(LoggingCredentials, GetTokenError) {
   auto actual = tested.GetToken(tp);
   EXPECT_THAT(actual, StatusIs(StatusCode::kUnavailable));
   EXPECT_THAT(log.ExtractLines(),
-              ContainsOnce(AllOf(HasSubstr("GetToken(testing) failed"),
-                                 HasSubstr("try-again"))));
+              Contains(AllOf(HasSubstr("GetToken(testing) failed"),
+                             HasSubstr("try-again")))
+                  .Times(1));
 }
 
 TEST(LoggingCredentials, SignBlob) {
@@ -104,10 +106,10 @@ TEST(LoggingCredentials, SignBlob) {
   LoggingCredentials tested("testing", TracingOptions(), mock);
   auto actual = tested.SignBlob("test-account", "test-blob");
   ASSERT_STATUS_OK(actual);
-  EXPECT_THAT(
-      log.ExtractLines(),
-      ContainsOnce(AllOf(HasSubstr("SignBlob(testing)"),
-                         HasSubstr("signing_service_account=test-account"))));
+  EXPECT_THAT(log.ExtractLines(),
+              Contains(AllOf(HasSubstr("SignBlob(testing)"),
+                             HasSubstr("signing_service_account=test-account")))
+                  .Times(1));
 }
 
 TEST(LoggingCredentials, SignBlobOptional) {
@@ -119,10 +121,10 @@ TEST(LoggingCredentials, SignBlobOptional) {
   LoggingCredentials tested("testing", TracingOptions(), mock);
   auto actual = tested.SignBlob(absl::nullopt, "test-blob");
   ASSERT_STATUS_OK(actual);
-  EXPECT_THAT(
-      log.ExtractLines(),
-      ContainsOnce(AllOf(HasSubstr("SignBlob(testing)"),
-                         HasSubstr("signing_service_account=<not set>"))));
+  EXPECT_THAT(log.ExtractLines(),
+              Contains(AllOf(HasSubstr("SignBlob(testing)"),
+                             HasSubstr("signing_service_account=<not set>")))
+                  .Times(1));
 }
 
 TEST(LoggingCredentials, AccountEmail) {
@@ -133,7 +135,7 @@ TEST(LoggingCredentials, AccountEmail) {
   auto const actual = tested.AccountEmail();
   EXPECT_EQ(actual, "test-account-email");
   EXPECT_THAT(log.ExtractLines(),
-              ContainsOnce(HasSubstr("AccountEmail(testing)")));
+              Contains(HasSubstr("AccountEmail(testing)")).Times(1));
 }
 
 TEST(LoggingCredentials, KeyId) {
@@ -143,7 +145,8 @@ TEST(LoggingCredentials, KeyId) {
   LoggingCredentials tested("testing", TracingOptions(), mock);
   auto const actual = tested.KeyId();
   EXPECT_EQ(actual, "test-key-id");
-  EXPECT_THAT(log.ExtractLines(), ContainsOnce(HasSubstr("KeyId(testing)")));
+  EXPECT_THAT(log.ExtractLines(),
+              Contains(HasSubstr("KeyId(testing)")).Times(1));
 }
 
 }  // namespace

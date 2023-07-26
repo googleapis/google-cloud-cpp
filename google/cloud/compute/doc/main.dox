@@ -1,0 +1,53 @@
+/*!
+
+@mainpage Compute Engine API C++ Client Library
+
+An idiomatic C++ client library for the [Compute Engine API][cloud-service-docs], a service to create
+and manage cloud computing resources.
+
+This library requires a C++14 compiler. It is supported (and tested) on multiple
+Linux distributions, as well as Windows and macOS. The [README][github-readme]
+on [GitHub][github-link] provides detailed instructions to install the necessary
+dependencies, as well as how to compile the client library.
+
+@tableofcontents{HTML:2}
+
+## Quickstart
+
+The following shows the code that you'll run in the
+`google/cloud/compute/quickstart/` directory,
+which should give you a taste of the Cloud Compute Engine API C++ client library.
+
+@snippet quickstart.cc all
+
+## Main classes
+
+<!-- inject-client-list-start -->
+This library offers multiple `*Client` classes, which are listed below. Each
+one of these classes exposes all the RPCs for a REST `resource` as member
+functions of the class. This library groups multiple REST services because they
+are part of the same product or are often used together. A typical example may
+be the administrative and data plane operations for a single product.
+
+The library also has other classes that provide helpers, configuration
+parameters, and infrastructure to mock the `*Client` classes when testing your
+application.
+
+- [\c compute_disks_v1::DisksClient](@ref google::cloud::compute_disks_v1::DisksClient)
+<!-- inject-client-list-end -->
+
+## More Information
+
+- @ref common-error-handling - describes how the library reports errors.
+- @ref compute-override-endpoint - describes how to override the default
+  endpoint.
+- @ref compute-override-authentication - describes how to change the
+  authentication credentials used by the library.
+- @ref compute-override-retry - describes how to change the default retry
+  policies.
+- @ref compute-env - describes environment variables that can configure the behavior of the library.
+
+[cloud-service-docs]: https://cloud.google.com/compute
+[exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff
+
+*/

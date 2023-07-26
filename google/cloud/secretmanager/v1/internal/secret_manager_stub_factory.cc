@@ -52,7 +52,8 @@ std::shared_ptr<SecretManagerServiceStub> CreateDefaultSecretManagerServiceStub(
     stub = std::make_shared<SecretManagerServiceAuth>(std::move(auth),
                                                       std::move(stub));
   }
-  stub = std::make_shared<SecretManagerServiceMetadata>(std::move(stub));
+  stub = std::make_shared<SecretManagerServiceMetadata>(
+      std::move(stub), std::multimap<std::string, std::string>{});
   if (internal::Contains(options.get<TracingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<SecretManagerServiceLogging>(

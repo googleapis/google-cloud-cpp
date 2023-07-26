@@ -127,6 +127,119 @@ DataMigrationServiceConnectionIdempotencyPolicy::DeleteConnectionProfile(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency
+DataMigrationServiceConnectionIdempotencyPolicy::CreatePrivateConnection(
+    google::cloud::clouddms::v1::CreatePrivateConnectionRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency
+DataMigrationServiceConnectionIdempotencyPolicy::GetPrivateConnection(
+    google::cloud::clouddms::v1::GetPrivateConnectionRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency
+DataMigrationServiceConnectionIdempotencyPolicy::ListPrivateConnections(
+    google::cloud::clouddms::v1::ListPrivateConnectionsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency
+DataMigrationServiceConnectionIdempotencyPolicy::DeletePrivateConnection(
+    google::cloud::clouddms::v1::DeletePrivateConnectionRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency
+DataMigrationServiceConnectionIdempotencyPolicy::GetConversionWorkspace(
+    google::cloud::clouddms::v1::GetConversionWorkspaceRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency
+DataMigrationServiceConnectionIdempotencyPolicy::ListConversionWorkspaces(
+    google::cloud::clouddms::v1::ListConversionWorkspacesRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency
+DataMigrationServiceConnectionIdempotencyPolicy::CreateConversionWorkspace(
+    google::cloud::clouddms::v1::CreateConversionWorkspaceRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency
+DataMigrationServiceConnectionIdempotencyPolicy::UpdateConversionWorkspace(
+    google::cloud::clouddms::v1::UpdateConversionWorkspaceRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency
+DataMigrationServiceConnectionIdempotencyPolicy::DeleteConversionWorkspace(
+    google::cloud::clouddms::v1::DeleteConversionWorkspaceRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency
+DataMigrationServiceConnectionIdempotencyPolicy::SeedConversionWorkspace(
+    google::cloud::clouddms::v1::SeedConversionWorkspaceRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency DataMigrationServiceConnectionIdempotencyPolicy::ImportMappingRules(
+    google::cloud::clouddms::v1::ImportMappingRulesRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency
+DataMigrationServiceConnectionIdempotencyPolicy::ConvertConversionWorkspace(
+    google::cloud::clouddms::v1::ConvertConversionWorkspaceRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency
+DataMigrationServiceConnectionIdempotencyPolicy::CommitConversionWorkspace(
+    google::cloud::clouddms::v1::CommitConversionWorkspaceRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency
+DataMigrationServiceConnectionIdempotencyPolicy::RollbackConversionWorkspace(
+    google::cloud::clouddms::v1::RollbackConversionWorkspaceRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency
+DataMigrationServiceConnectionIdempotencyPolicy::ApplyConversionWorkspace(
+    google::cloud::clouddms::v1::ApplyConversionWorkspaceRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency
+DataMigrationServiceConnectionIdempotencyPolicy::DescribeDatabaseEntities(
+    google::cloud::clouddms::v1::DescribeDatabaseEntitiesRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency
+DataMigrationServiceConnectionIdempotencyPolicy::SearchBackgroundJobs(
+    google::cloud::clouddms::v1::SearchBackgroundJobsRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency DataMigrationServiceConnectionIdempotencyPolicy::
+    DescribeConversionWorkspaceRevisions(
+        google::cloud::clouddms::v1::
+            DescribeConversionWorkspaceRevisionsRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency DataMigrationServiceConnectionIdempotencyPolicy::FetchStaticIps(
+    google::cloud::clouddms::v1::FetchStaticIpsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
 std::unique_ptr<DataMigrationServiceConnectionIdempotencyPolicy>
 MakeDefaultDataMigrationServiceConnectionIdempotencyPolicy() {
   return std::make_unique<DataMigrationServiceConnectionIdempotencyPolicy>();

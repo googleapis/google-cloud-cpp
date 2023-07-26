@@ -18,6 +18,7 @@
 
 #include "google/cloud/alloydb/v1/internal/alloy_db_admin_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/alloydb/v1/service.grpc.pb.h>
@@ -29,8 +30,10 @@ namespace alloydb_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 AlloyDBAdminMetadata::AlloyDBAdminMetadata(
-    std::shared_ptr<AlloyDBAdminStub> child)
+    std::shared_ptr<AlloyDBAdminStub> child,
+    std::multimap<std::string, std::string> fixed_metadata)
     : child_(std::move(child)),
+      fixed_metadata_(std::move(fixed_metadata)),
       api_client_header_(
           google::cloud::internal::ApiClientHeader("generator")) {}
 
@@ -38,14 +41,14 @@ StatusOr<google::cloud::alloydb::v1::ListClustersResponse>
 AlloyDBAdminMetadata::ListClusters(
     grpc::ClientContext& context,
     google::cloud::alloydb::v1::ListClustersRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListClusters(context, request);
 }
 
 StatusOr<google::cloud::alloydb::v1::Cluster> AlloyDBAdminMetadata::GetCluster(
     grpc::ClientContext& context,
     google::cloud::alloydb::v1::GetClusterRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetCluster(context, request);
 }
 
@@ -54,7 +57,7 @@ AlloyDBAdminMetadata::AsyncCreateCluster(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::alloydb::v1::CreateClusterRequest const& request) {
-  SetMetadata(*context, "parent=" + request.parent());
+  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
   return child_->AsyncCreateCluster(cq, std::move(context), request);
 }
 
@@ -63,7 +66,8 @@ AlloyDBAdminMetadata::AsyncUpdateCluster(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::alloydb::v1::UpdateClusterRequest const& request) {
-  SetMetadata(*context, "cluster.name=" + request.cluster().name());
+  SetMetadata(*context,
+              absl::StrCat("cluster.name=", request.cluster().name()));
   return child_->AsyncUpdateCluster(cq, std::move(context), request);
 }
 
@@ -72,8 +76,17 @@ AlloyDBAdminMetadata::AsyncDeleteCluster(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::alloydb::v1::DeleteClusterRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncDeleteCluster(cq, std::move(context), request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+AlloyDBAdminMetadata::AsyncPromoteCluster(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::alloydb::v1::PromoteClusterRequest const& request) {
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
+  return child_->AsyncPromoteCluster(cq, std::move(context), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -81,15 +94,24 @@ AlloyDBAdminMetadata::AsyncRestoreCluster(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::alloydb::v1::RestoreClusterRequest const& request) {
-  SetMetadata(*context, "parent=" + request.parent());
+  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
   return child_->AsyncRestoreCluster(cq, std::move(context), request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+AlloyDBAdminMetadata::AsyncCreateSecondaryCluster(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::alloydb::v1::CreateSecondaryClusterRequest const& request) {
+  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
+  return child_->AsyncCreateSecondaryCluster(cq, std::move(context), request);
 }
 
 StatusOr<google::cloud::alloydb::v1::ListInstancesResponse>
 AlloyDBAdminMetadata::ListInstances(
     grpc::ClientContext& context,
     google::cloud::alloydb::v1::ListInstancesRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListInstances(context, request);
 }
 
@@ -97,7 +119,7 @@ StatusOr<google::cloud::alloydb::v1::Instance>
 AlloyDBAdminMetadata::GetInstance(
     grpc::ClientContext& context,
     google::cloud::alloydb::v1::GetInstanceRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetInstance(context, request);
 }
 
@@ -106,8 +128,17 @@ AlloyDBAdminMetadata::AsyncCreateInstance(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::alloydb::v1::CreateInstanceRequest const& request) {
-  SetMetadata(*context, "parent=" + request.parent());
+  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
   return child_->AsyncCreateInstance(cq, std::move(context), request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+AlloyDBAdminMetadata::AsyncCreateSecondaryInstance(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::alloydb::v1::CreateSecondaryInstanceRequest const& request) {
+  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
+  return child_->AsyncCreateSecondaryInstance(cq, std::move(context), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -115,7 +146,7 @@ AlloyDBAdminMetadata::AsyncBatchCreateInstances(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::alloydb::v1::BatchCreateInstancesRequest const& request) {
-  SetMetadata(*context, "parent=" + request.parent());
+  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
   return child_->AsyncBatchCreateInstances(cq, std::move(context), request);
 }
 
@@ -124,7 +155,8 @@ AlloyDBAdminMetadata::AsyncUpdateInstance(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::alloydb::v1::UpdateInstanceRequest const& request) {
-  SetMetadata(*context, "instance.name=" + request.instance().name());
+  SetMetadata(*context,
+              absl::StrCat("instance.name=", request.instance().name()));
   return child_->AsyncUpdateInstance(cq, std::move(context), request);
 }
 
@@ -133,7 +165,7 @@ AlloyDBAdminMetadata::AsyncDeleteInstance(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::alloydb::v1::DeleteInstanceRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncDeleteInstance(cq, std::move(context), request);
 }
 
@@ -142,8 +174,17 @@ AlloyDBAdminMetadata::AsyncFailoverInstance(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::alloydb::v1::FailoverInstanceRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncFailoverInstance(cq, std::move(context), request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+AlloyDBAdminMetadata::AsyncInjectFault(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::alloydb::v1::InjectFaultRequest const& request) {
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
+  return child_->AsyncInjectFault(cq, std::move(context), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -151,7 +192,7 @@ AlloyDBAdminMetadata::AsyncRestartInstance(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::alloydb::v1::RestartInstanceRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncRestartInstance(cq, std::move(context), request);
 }
 
@@ -159,14 +200,14 @@ StatusOr<google::cloud::alloydb::v1::ListBackupsResponse>
 AlloyDBAdminMetadata::ListBackups(
     grpc::ClientContext& context,
     google::cloud::alloydb::v1::ListBackupsRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListBackups(context, request);
 }
 
 StatusOr<google::cloud::alloydb::v1::Backup> AlloyDBAdminMetadata::GetBackup(
     grpc::ClientContext& context,
     google::cloud::alloydb::v1::GetBackupRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetBackup(context, request);
 }
 
@@ -175,7 +216,7 @@ AlloyDBAdminMetadata::AsyncCreateBackup(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::alloydb::v1::CreateBackupRequest const& request) {
-  SetMetadata(*context, "parent=" + request.parent());
+  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
   return child_->AsyncCreateBackup(cq, std::move(context), request);
 }
 
@@ -184,7 +225,7 @@ AlloyDBAdminMetadata::AsyncUpdateBackup(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::alloydb::v1::UpdateBackupRequest const& request) {
-  SetMetadata(*context, "backup.name=" + request.backup().name());
+  SetMetadata(*context, absl::StrCat("backup.name=", request.backup().name()));
   return child_->AsyncUpdateBackup(cq, std::move(context), request);
 }
 
@@ -193,7 +234,7 @@ AlloyDBAdminMetadata::AsyncDeleteBackup(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::alloydb::v1::DeleteBackupRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncDeleteBackup(cq, std::move(context), request);
 }
 
@@ -202,8 +243,44 @@ AlloyDBAdminMetadata::ListSupportedDatabaseFlags(
     grpc::ClientContext& context,
     google::cloud::alloydb::v1::ListSupportedDatabaseFlagsRequest const&
         request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListSupportedDatabaseFlags(context, request);
+}
+
+StatusOr<google::cloud::alloydb::v1::ListUsersResponse>
+AlloyDBAdminMetadata::ListUsers(
+    grpc::ClientContext& context,
+    google::cloud::alloydb::v1::ListUsersRequest const& request) {
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  return child_->ListUsers(context, request);
+}
+
+StatusOr<google::cloud::alloydb::v1::User> AlloyDBAdminMetadata::GetUser(
+    grpc::ClientContext& context,
+    google::cloud::alloydb::v1::GetUserRequest const& request) {
+  SetMetadata(context, absl::StrCat("name=", request.name()));
+  return child_->GetUser(context, request);
+}
+
+StatusOr<google::cloud::alloydb::v1::User> AlloyDBAdminMetadata::CreateUser(
+    grpc::ClientContext& context,
+    google::cloud::alloydb::v1::CreateUserRequest const& request) {
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  return child_->CreateUser(context, request);
+}
+
+StatusOr<google::cloud::alloydb::v1::User> AlloyDBAdminMetadata::UpdateUser(
+    grpc::ClientContext& context,
+    google::cloud::alloydb::v1::UpdateUserRequest const& request) {
+  SetMetadata(context, absl::StrCat("user.name=", request.user().name()));
+  return child_->UpdateUser(context, request);
+}
+
+Status AlloyDBAdminMetadata::DeleteUser(
+    grpc::ClientContext& context,
+    google::cloud::alloydb::v1::DeleteUserRequest const& request) {
+  SetMetadata(context, absl::StrCat("name=", request.name()));
+  return child_->DeleteUser(context, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -230,6 +307,9 @@ void AlloyDBAdminMetadata::SetMetadata(grpc::ClientContext& context,
 }
 
 void AlloyDBAdminMetadata::SetMetadata(grpc::ClientContext& context) {
+  for (auto const& kv : fixed_metadata_) {
+    context.AddMetadata(kv.first, kv.second);
+  }
   context.AddMetadata("x-goog-api-client", api_client_header_);
   auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {

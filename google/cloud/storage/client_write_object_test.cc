@@ -138,16 +138,17 @@ TEST_F(WriteObjectTest, WriteObjectErrorInChunk) {
       .WillOnce(Return(Status(StatusCode::kDataLoss, "ooops")));
 
   auto constexpr kQuantum = internal::UploadChunkRequest::kChunkSizeQuantum;
-  client_options_.SetUploadBufferSize(kQuantum);
   auto client = ClientForMock();
-  auto stream = client.WriteObject("test-bucket-name", "test-object-name",
-                                   IfGenerationMatch(0));
+  auto stream = client.WriteObject(
+      "test-bucket-name", "test-object-name", IfGenerationMatch(0),
+      Options{}.set<UploadBufferSizeOption>(kQuantum));
   auto const data = std::string(2 * kQuantum, 'A');
   auto const size = static_cast<std::streamsize>(data.size());
   // The stream is set up to flush for buffers of `data`'s size. This triggers
   // the UploadChunk() mock, which returns an error. Because this is a permanent
   // error, no further upload attempts are made.
   stream.write(data.data(), size);
+  stream.flush();
   EXPECT_TRUE(stream.bad());
   EXPECT_THAT(stream.last_status(), StatusIs(StatusCode::kDataLoss));
   stream.write(data.data(), size);
@@ -167,7 +168,8 @@ TEST_F(WriteObjectTest, WriteObjectPermanentSessionFailurePropagates) {
   auto stream = client.WriteObject("test-bucket-name", "test-object-name");
 
   // make sure it is actually sent
-  std::vector<char> data(client_options_.upload_buffer_size() + 1, 'X');
+  std::vector<char> data(mock_->options().get<UploadBufferSizeOption>() + 1,
+                         'X');
   stream.write(data.data(), data.size());
   EXPECT_TRUE(stream.bad());
   stream.Close();

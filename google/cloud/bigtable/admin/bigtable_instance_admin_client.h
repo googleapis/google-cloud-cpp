@@ -92,40 +92,52 @@ class BigtableInstanceAdminClient {
   }
   ///@}
 
+  // clang-format off
   ///
   /// Create an instance within a project.
   ///
   /// Note that exactly one of Cluster.serve_nodes and
   /// Cluster.cluster_config.cluster_autoscaling_config can be set. If
   /// serve_nodes is set to non-zero, then the cluster is manually scaled. If
-  /// cluster_config.cluster_autoscaling_config is non-empty, then autoscaling
-  /// is enabled.
+  /// cluster_config.cluster_autoscaling_config is non-empty, then autoscaling is
+  /// enabled.
   ///
-  /// @param parent  Required. The unique name of the project in which to create
-  /// the new instance.
+  /// @param parent  Required. The unique name of the project in which to create the new instance.
   ///  Values are of the form `projects/{project}`.
-  /// @param instance_id  Required. The ID to be used when referring to the new
-  /// instance within its project,
+  /// @param instance_id  Required. The ID to be used when referring to the new instance within its project,
   ///  e.g., just `myinstance` rather than
   ///  `projects/myproject/instances/myinstance`.
   /// @param instance  Required. The instance to create.
   ///  Fields marked `OutputOnly` must be left blank.
-  /// @param clusters  Required. The clusters to be created within the instance,
-  /// mapped by desired
+  /// @param clusters  Required. The clusters to be created within the instance, mapped by desired
   ///  cluster ID, e.g., just `mycluster` rather than
   ///  `projects/myproject/instances/myinstance/clusters/mycluster`.
   ///  Fields marked `OutputOnly` must be left blank.
   ///  Currently, at most four clusters can be specified.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::bigtable::admin::v2::Instance,google/bigtable/admin/v2/instance.proto#L40}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.bigtable.admin.v2.Instance] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.bigtable.admin.v2.CreateInstanceRequest]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L289}
-  /// [google.bigtable.admin.v2.Instance]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L40}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.bigtable.admin.v2.CreateInstanceRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L289}
+  /// [google.bigtable.admin.v2.Instance]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L40}
   ///
+  // clang-format on
   future<StatusOr<google::bigtable::admin::v2::Instance>> CreateInstance(
       std::string const& parent, std::string const& instance_id,
       google::bigtable::admin::v2::Instance const& instance,
@@ -133,168 +145,276 @@ class BigtableInstanceAdminClient {
           clusters,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Create an instance within a project.
   ///
   /// Note that exactly one of Cluster.serve_nodes and
   /// Cluster.cluster_config.cluster_autoscaling_config can be set. If
   /// serve_nodes is set to non-zero, then the cluster is manually scaled. If
-  /// cluster_config.cluster_autoscaling_config is non-empty, then autoscaling
-  /// is enabled.
+  /// cluster_config.cluster_autoscaling_config is non-empty, then autoscaling is
+  /// enabled.
   ///
-  /// @param request
-  /// @googleapis_link{google::bigtable::admin::v2::CreateInstanceRequest,google/bigtable/admin/v2/bigtable_instance_admin.proto#L289}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.bigtable.admin.v2.CreateInstanceRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::bigtable::admin::v2::Instance,google/bigtable/admin/v2/instance.proto#L40}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.bigtable.admin.v2.Instance] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.bigtable.admin.v2.CreateInstanceRequest]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L289}
-  /// [google.bigtable.admin.v2.Instance]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L40}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.bigtable.admin.v2.CreateInstanceRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L289}
+  /// [google.bigtable.admin.v2.Instance]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L40}
   ///
+  // clang-format on
   future<StatusOr<google::bigtable::admin::v2::Instance>> CreateInstance(
       google::bigtable::admin::v2::CreateInstanceRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Gets information about an instance.
   ///
-  /// @param name  Required. The unique name of the requested instance. Values
-  /// are of the form
+  /// @param name  Required. The unique name of the requested instance. Values are of the form
   ///  `projects/{project}/instances/{instance}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::bigtable::admin::v2::Instance,google/bigtable/admin/v2/instance.proto#L40}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.bigtable.admin.v2.Instance])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.bigtable.admin.v2.GetInstanceRequest]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L317}
-  /// [google.bigtable.admin.v2.Instance]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L40}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.bigtable.admin.v2.GetInstanceRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L317}
+  /// [google.bigtable.admin.v2.Instance]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L40}
   ///
+  // clang-format on
   StatusOr<google::bigtable::admin::v2::Instance> GetInstance(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Gets information about an instance.
   ///
-  /// @param request
-  /// @googleapis_link{google::bigtable::admin::v2::GetInstanceRequest,google/bigtable/admin/v2/bigtable_instance_admin.proto#L317}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.bigtable.admin.v2.GetInstanceRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::bigtable::admin::v2::Instance,google/bigtable/admin/v2/instance.proto#L40}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.bigtable.admin.v2.Instance])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.bigtable.admin.v2.GetInstanceRequest]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L317}
-  /// [google.bigtable.admin.v2.Instance]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L40}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.bigtable.admin.v2.GetInstanceRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L317}
+  /// [google.bigtable.admin.v2.Instance]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L40}
   ///
+  // clang-format on
   StatusOr<google::bigtable::admin::v2::Instance> GetInstance(
       google::bigtable::admin::v2::GetInstanceRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists information about instances in a project.
   ///
-  /// @param parent  Required. The unique name of the project for which a list
-  /// of instances is requested.
+  /// @param parent  Required. The unique name of the project for which a list of instances is requested.
   ///  Values are of the form `projects/{project}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::bigtable::admin::v2::ListInstancesResponse,google/bigtable/admin/v2/bigtable_instance_admin.proto#L344}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.bigtable.admin.v2.ListInstancesResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.bigtable.admin.v2.ListInstancesRequest]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L329}
-  /// [google.bigtable.admin.v2.ListInstancesResponse]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L344}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.bigtable.admin.v2.ListInstancesRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L329}
+  /// [google.bigtable.admin.v2.ListInstancesResponse]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L344}
   ///
+  // clang-format on
   StatusOr<google::bigtable::admin::v2::ListInstancesResponse> ListInstances(
       std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Lists information about instances in a project.
   ///
-  /// @param request
-  /// @googleapis_link{google::bigtable::admin::v2::ListInstancesRequest,google/bigtable/admin/v2/bigtable_instance_admin.proto#L329}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.bigtable.admin.v2.ListInstancesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::bigtable::admin::v2::ListInstancesResponse,google/bigtable/admin/v2/bigtable_instance_admin.proto#L344}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.bigtable.admin.v2.ListInstancesResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.bigtable.admin.v2.ListInstancesRequest]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L329}
-  /// [google.bigtable.admin.v2.ListInstancesResponse]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L344}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.bigtable.admin.v2.ListInstancesRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L329}
+  /// [google.bigtable.admin.v2.ListInstancesResponse]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L344}
   ///
+  // clang-format on
   StatusOr<google::bigtable::admin::v2::ListInstancesResponse> ListInstances(
       google::bigtable::admin::v2::ListInstancesRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Updates an instance within a project. This method updates only the display
-  /// name and type for an Instance. To update other Instance properties, such
-  /// as labels, use PartialUpdateInstance.
+  /// name and type for an Instance. To update other Instance properties, such as
+  /// labels, use PartialUpdateInstance.
   ///
-  /// @param request
-  /// @googleapis_link{google::bigtable::admin::v2::Instance,google/bigtable/admin/v2/instance.proto#L40}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.bigtable.admin.v2.Instance].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::bigtable::admin::v2::Instance,google/bigtable/admin/v2/instance.proto#L40}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.bigtable.admin.v2.Instance])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.bigtable.admin.v2.Instance]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L40}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.bigtable.admin.v2.Instance]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L40}
   ///
+  // clang-format on
   StatusOr<google::bigtable::admin::v2::Instance> UpdateInstance(
       google::bigtable::admin::v2::Instance const& request, Options opts = {});
 
+  // clang-format off
   ///
   /// Partially updates an instance within a project. This method can modify all
   /// fields of an Instance and is the preferred way to update an Instance.
   ///
-  /// @param instance  Required. The Instance which will (partially) replace the
-  /// current value.
-  /// @param update_mask  Required. The subset of Instance fields which should
-  /// be replaced.
+  /// @param instance  Required. The Instance which will (partially) replace the current value.
+  /// @param update_mask  Required. The subset of Instance fields which should be replaced.
   ///  Must be explicitly set.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::bigtable::admin::v2::Instance,google/bigtable/admin/v2/instance.proto#L40}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.bigtable.admin.v2.Instance] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.bigtable.admin.v2.Instance]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L40}
-  /// [google.bigtable.admin.v2.PartialUpdateInstanceRequest]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L361}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.bigtable.admin.v2.Instance]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L40}
+  /// [google.bigtable.admin.v2.PartialUpdateInstanceRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L361}
   ///
+  // clang-format on
   future<StatusOr<google::bigtable::admin::v2::Instance>> PartialUpdateInstance(
       google::bigtable::admin::v2::Instance const& instance,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
   ///
   /// Partially updates an instance within a project. This method can modify all
   /// fields of an Instance and is the preferred way to update an Instance.
   ///
-  /// @param request
-  /// @googleapis_link{google::bigtable::admin::v2::PartialUpdateInstanceRequest,google/bigtable/admin/v2/bigtable_instance_admin.proto#L361}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.bigtable.admin.v2.PartialUpdateInstanceRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::bigtable::admin::v2::Instance,google/bigtable/admin/v2/instance.proto#L40}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.bigtable.admin.v2.Instance] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.bigtable.admin.v2.Instance]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L40}
-  /// [google.bigtable.admin.v2.PartialUpdateInstanceRequest]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L361}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.bigtable.admin.v2.Instance]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L40}
+  /// [google.bigtable.admin.v2.PartialUpdateInstanceRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L361}
   ///
+  // clang-format on
   future<StatusOr<google::bigtable::admin::v2::Instance>> PartialUpdateInstance(
       google::bigtable::admin::v2::PartialUpdateInstanceRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Delete an instance from a project.
   ///
@@ -302,163 +422,261 @@ class BigtableInstanceAdminClient {
   ///  Values are of the form `projects/{project}/instances/{instance}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
   ///
-  /// [google.bigtable.admin.v2.DeleteInstanceRequest]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L371}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.bigtable.admin.v2.DeleteInstanceRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L371}
   ///
+  // clang-format on
   Status DeleteInstance(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Delete an instance from a project.
   ///
-  /// @param request
-  /// @googleapis_link{google::bigtable::admin::v2::DeleteInstanceRequest,google/bigtable/admin/v2/bigtable_instance_admin.proto#L371}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.bigtable.admin.v2.DeleteInstanceRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
   ///
-  /// [google.bigtable.admin.v2.DeleteInstanceRequest]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L371}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.bigtable.admin.v2.DeleteInstanceRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L371}
   ///
+  // clang-format on
   Status DeleteInstance(
       google::bigtable::admin::v2::DeleteInstanceRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a cluster within an instance.
   ///
   /// Note that exactly one of Cluster.serve_nodes and
   /// Cluster.cluster_config.cluster_autoscaling_config can be set. If
   /// serve_nodes is set to non-zero, then the cluster is manually scaled. If
-  /// cluster_config.cluster_autoscaling_config is non-empty, then autoscaling
-  /// is enabled.
+  /// cluster_config.cluster_autoscaling_config is non-empty, then autoscaling is
+  /// enabled.
   ///
-  /// @param parent  Required. The unique name of the instance in which to
-  /// create the new cluster.
+  /// @param parent  Required. The unique name of the instance in which to create the new cluster.
   ///  Values are of the form
   ///  `projects/{project}/instances/{instance}`.
-  /// @param cluster_id  Required. The ID to be used when referring to the new
-  /// cluster within its instance,
+  /// @param cluster_id  Required. The ID to be used when referring to the new cluster within its instance,
   ///  e.g., just `mycluster` rather than
   ///  `projects/myproject/instances/myinstance/clusters/mycluster`.
   /// @param cluster  Required. The cluster to be created.
   ///  Fields marked `OutputOnly` must be left blank.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::bigtable::admin::v2::Cluster,google/bigtable/admin/v2/instance.proto#L143}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.bigtable.admin.v2.Cluster] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.bigtable.admin.v2.Cluster]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L143}
-  /// [google.bigtable.admin.v2.CreateClusterRequest]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L383}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.bigtable.admin.v2.Cluster]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L143}
+  /// [google.bigtable.admin.v2.CreateClusterRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L383}
   ///
+  // clang-format on
   future<StatusOr<google::bigtable::admin::v2::Cluster>> CreateCluster(
       std::string const& parent, std::string const& cluster_id,
       google::bigtable::admin::v2::Cluster const& cluster, Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a cluster within an instance.
   ///
   /// Note that exactly one of Cluster.serve_nodes and
   /// Cluster.cluster_config.cluster_autoscaling_config can be set. If
   /// serve_nodes is set to non-zero, then the cluster is manually scaled. If
-  /// cluster_config.cluster_autoscaling_config is non-empty, then autoscaling
-  /// is enabled.
+  /// cluster_config.cluster_autoscaling_config is non-empty, then autoscaling is
+  /// enabled.
   ///
-  /// @param request
-  /// @googleapis_link{google::bigtable::admin::v2::CreateClusterRequest,google/bigtable/admin/v2/bigtable_instance_admin.proto#L383}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.bigtable.admin.v2.CreateClusterRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::bigtable::admin::v2::Cluster,google/bigtable/admin/v2/instance.proto#L143}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.bigtable.admin.v2.Cluster] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.bigtable.admin.v2.Cluster]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L143}
-  /// [google.bigtable.admin.v2.CreateClusterRequest]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L383}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.bigtable.admin.v2.Cluster]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L143}
+  /// [google.bigtable.admin.v2.CreateClusterRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L383}
   ///
+  // clang-format on
   future<StatusOr<google::bigtable::admin::v2::Cluster>> CreateCluster(
       google::bigtable::admin::v2::CreateClusterRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Gets information about a cluster.
   ///
-  /// @param name  Required. The unique name of the requested cluster. Values
-  /// are of the form
+  /// @param name  Required. The unique name of the requested cluster. Values are of the form
   ///  `projects/{project}/instances/{instance}/clusters/{cluster}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::bigtable::admin::v2::Cluster,google/bigtable/admin/v2/instance.proto#L143}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.bigtable.admin.v2.Cluster])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.bigtable.admin.v2.Cluster]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L143}
-  /// [google.bigtable.admin.v2.GetClusterRequest]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L405}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.bigtable.admin.v2.Cluster]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L143}
+  /// [google.bigtable.admin.v2.GetClusterRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L405}
   ///
+  // clang-format on
   StatusOr<google::bigtable::admin::v2::Cluster> GetCluster(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Gets information about a cluster.
   ///
-  /// @param request
-  /// @googleapis_link{google::bigtable::admin::v2::GetClusterRequest,google/bigtable/admin/v2/bigtable_instance_admin.proto#L405}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.bigtable.admin.v2.GetClusterRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::bigtable::admin::v2::Cluster,google/bigtable/admin/v2/instance.proto#L143}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.bigtable.admin.v2.Cluster])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.bigtable.admin.v2.Cluster]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L143}
-  /// [google.bigtable.admin.v2.GetClusterRequest]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L405}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.bigtable.admin.v2.Cluster]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L143}
+  /// [google.bigtable.admin.v2.GetClusterRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L405}
   ///
+  // clang-format on
   StatusOr<google::bigtable::admin::v2::Cluster> GetCluster(
       google::bigtable::admin::v2::GetClusterRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists information about clusters in an instance.
   ///
-  /// @param parent  Required. The unique name of the instance for which a list
-  /// of clusters is requested.
+  /// @param parent  Required. The unique name of the instance for which a list of clusters is requested.
   ///  Values are of the form `projects/{project}/instances/{instance}`.
   ///  Use ``{instance} = '-'`` to list Clusters for all Instances in a project,
   ///  e.g., `projects/myproject/instances/-`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::bigtable::admin::v2::ListClustersResponse,google/bigtable/admin/v2/bigtable_instance_admin.proto#L434}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.bigtable.admin.v2.ListClustersResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.bigtable.admin.v2.ListClustersRequest]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L417}
-  /// [google.bigtable.admin.v2.ListClustersResponse]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L434}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.bigtable.admin.v2.ListClustersRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L417}
+  /// [google.bigtable.admin.v2.ListClustersResponse]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L434}
   ///
+  // clang-format on
   StatusOr<google::bigtable::admin::v2::ListClustersResponse> ListClusters(
       std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Lists information about clusters in an instance.
   ///
-  /// @param request
-  /// @googleapis_link{google::bigtable::admin::v2::ListClustersRequest,google/bigtable/admin/v2/bigtable_instance_admin.proto#L417}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.bigtable.admin.v2.ListClustersRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::bigtable::admin::v2::ListClustersResponse,google/bigtable/admin/v2/bigtable_instance_admin.proto#L434}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.bigtable.admin.v2.ListClustersResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.bigtable.admin.v2.ListClustersRequest]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L417}
-  /// [google.bigtable.admin.v2.ListClustersResponse]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L434}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.bigtable.admin.v2.ListClustersRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L417}
+  /// [google.bigtable.admin.v2.ListClustersResponse]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L434}
   ///
+  // clang-format on
   StatusOr<google::bigtable::admin::v2::ListClustersResponse> ListClusters(
       google::bigtable::admin::v2::ListClustersRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Updates a cluster within an instance.
   ///
@@ -466,19 +684,39 @@ class BigtableInstanceAdminClient {
   /// cluster_config.cluster_autoscaling_config. In order to update it, you
   /// must use PartialUpdateCluster.
   ///
-  /// @param request
-  /// @googleapis_link{google::bigtable::admin::v2::Cluster,google/bigtable/admin/v2/instance.proto#L143}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.bigtable.admin.v2.Cluster].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::bigtable::admin::v2::Cluster,google/bigtable/admin/v2/instance.proto#L143}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.bigtable.admin.v2.Cluster] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.bigtable.admin.v2.Cluster]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L143}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.bigtable.admin.v2.Cluster]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L143}
   ///
+  // clang-format on
   future<StatusOr<google::bigtable::admin::v2::Cluster>> UpdateCluster(
       google::bigtable::admin::v2::Cluster const& request, Options opts = {});
 
+  // clang-format off
   ///
   /// Partially updates a cluster within a project. This method is the preferred
   /// way to update a Cluster.
@@ -493,25 +731,38 @@ class BigtableInstanceAdminClient {
   /// To disable autoscaling, clear cluster_config.cluster_autoscaling_config,
   /// and explicitly set a serve_node count via the update_mask.
   ///
-  /// @param cluster  Required. The Cluster which contains the partial updates
-  /// to be applied, subject to
+  /// @param cluster  Required. The Cluster which contains the partial updates to be applied, subject to
   ///  the update_mask.
-  /// @param update_mask  Required. The subset of Cluster fields which should be
-  /// replaced.
+  /// @param update_mask  Required. The subset of Cluster fields which should be replaced.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::bigtable::admin::v2::Cluster,google/bigtable/admin/v2/instance.proto#L143}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.bigtable.admin.v2.Cluster] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.bigtable.admin.v2.Cluster]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L143}
-  /// [google.bigtable.admin.v2.PartialUpdateClusterRequest]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L563}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.bigtable.admin.v2.Cluster]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L143}
+  /// [google.bigtable.admin.v2.PartialUpdateClusterRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L563}
   ///
+  // clang-format on
   future<StatusOr<google::bigtable::admin::v2::Cluster>> PartialUpdateCluster(
       google::bigtable::admin::v2::Cluster const& cluster,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
   ///
   /// Partially updates a cluster within a project. This method is the preferred
   /// way to update a Cluster.
@@ -526,294 +777,489 @@ class BigtableInstanceAdminClient {
   /// To disable autoscaling, clear cluster_config.cluster_autoscaling_config,
   /// and explicitly set a serve_node count via the update_mask.
   ///
-  /// @param request
-  /// @googleapis_link{google::bigtable::admin::v2::PartialUpdateClusterRequest,google/bigtable/admin/v2/bigtable_instance_admin.proto#L563}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.bigtable.admin.v2.PartialUpdateClusterRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::bigtable::admin::v2::Cluster,google/bigtable/admin/v2/instance.proto#L143}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.bigtable.admin.v2.Cluster] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.bigtable.admin.v2.Cluster]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L143}
-  /// [google.bigtable.admin.v2.PartialUpdateClusterRequest]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L563}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.bigtable.admin.v2.Cluster]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L143}
+  /// [google.bigtable.admin.v2.PartialUpdateClusterRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L563}
   ///
+  // clang-format on
   future<StatusOr<google::bigtable::admin::v2::Cluster>> PartialUpdateCluster(
       google::bigtable::admin::v2::PartialUpdateClusterRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes a cluster from an instance.
   ///
-  /// @param name  Required. The unique name of the cluster to be deleted.
-  /// Values are of the form
+  /// @param name  Required. The unique name of the cluster to be deleted. Values are of the form
   ///  `projects/{project}/instances/{instance}/clusters/{cluster}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
   ///
-  /// [google.bigtable.admin.v2.DeleteClusterRequest]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L450}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.bigtable.admin.v2.DeleteClusterRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L450}
   ///
+  // clang-format on
   Status DeleteCluster(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes a cluster from an instance.
   ///
-  /// @param request
-  /// @googleapis_link{google::bigtable::admin::v2::DeleteClusterRequest,google/bigtable/admin/v2/bigtable_instance_admin.proto#L450}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.bigtable.admin.v2.DeleteClusterRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
   ///
-  /// [google.bigtable.admin.v2.DeleteClusterRequest]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L450}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.bigtable.admin.v2.DeleteClusterRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L450}
   ///
+  // clang-format on
   Status DeleteCluster(
       google::bigtable::admin::v2::DeleteClusterRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates an app profile within an instance.
   ///
-  /// @param parent  Required. The unique name of the instance in which to
-  /// create the new app profile.
+  /// @param parent  Required. The unique name of the instance in which to create the new app profile.
   ///  Values are of the form
   ///  `projects/{project}/instances/{instance}`.
-  /// @param app_profile_id  Required. The ID to be used when referring to the
-  /// new app profile within its
+  /// @param app_profile_id  Required. The ID to be used when referring to the new app profile within its
   ///  instance, e.g., just `myprofile` rather than
   ///  `projects/myproject/instances/myinstance/appProfiles/myprofile`.
   /// @param app_profile  Required. The app profile to be created.
   ///  Fields marked `OutputOnly` will be ignored.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::bigtable::admin::v2::AppProfile,google/bigtable/admin/v2/instance.proto#L244}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.bigtable.admin.v2.AppProfile])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.bigtable.admin.v2.AppProfile]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L244}
-  /// [google.bigtable.admin.v2.CreateAppProfileRequest]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L573}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.bigtable.admin.v2.AppProfile]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L244}
+  /// [google.bigtable.admin.v2.CreateAppProfileRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L573}
   ///
+  // clang-format on
   StatusOr<google::bigtable::admin::v2::AppProfile> CreateAppProfile(
       std::string const& parent, std::string const& app_profile_id,
       google::bigtable::admin::v2::AppProfile const& app_profile,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates an app profile within an instance.
   ///
-  /// @param request
-  /// @googleapis_link{google::bigtable::admin::v2::CreateAppProfileRequest,google/bigtable/admin/v2/bigtable_instance_admin.proto#L573}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.bigtable.admin.v2.CreateAppProfileRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::bigtable::admin::v2::AppProfile,google/bigtable/admin/v2/instance.proto#L244}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.bigtable.admin.v2.AppProfile])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.bigtable.admin.v2.AppProfile]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L244}
-  /// [google.bigtable.admin.v2.CreateAppProfileRequest]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L573}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.bigtable.admin.v2.AppProfile]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L244}
+  /// [google.bigtable.admin.v2.CreateAppProfileRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L573}
   ///
+  // clang-format on
   StatusOr<google::bigtable::admin::v2::AppProfile> CreateAppProfile(
       google::bigtable::admin::v2::CreateAppProfileRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Gets information about an app profile.
   ///
-  /// @param name  Required. The unique name of the requested app profile.
-  /// Values are of the form
+  /// @param name  Required. The unique name of the requested app profile. Values are of the form
   ///  `projects/{project}/instances/{instance}/appProfiles/{app_profile}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::bigtable::admin::v2::AppProfile,google/bigtable/admin/v2/instance.proto#L244}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.bigtable.admin.v2.AppProfile])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.bigtable.admin.v2.AppProfile]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L244}
-  /// [google.bigtable.admin.v2.GetAppProfileRequest]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L598}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.bigtable.admin.v2.AppProfile]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L244}
+  /// [google.bigtable.admin.v2.GetAppProfileRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L598}
   ///
+  // clang-format on
   StatusOr<google::bigtable::admin::v2::AppProfile> GetAppProfile(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Gets information about an app profile.
   ///
-  /// @param request
-  /// @googleapis_link{google::bigtable::admin::v2::GetAppProfileRequest,google/bigtable/admin/v2/bigtable_instance_admin.proto#L598}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.bigtable.admin.v2.GetAppProfileRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::bigtable::admin::v2::AppProfile,google/bigtable/admin/v2/instance.proto#L244}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.bigtable.admin.v2.AppProfile])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.bigtable.admin.v2.AppProfile]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L244}
-  /// [google.bigtable.admin.v2.GetAppProfileRequest]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L598}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.bigtable.admin.v2.AppProfile]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L244}
+  /// [google.bigtable.admin.v2.GetAppProfileRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L598}
   ///
+  // clang-format on
   StatusOr<google::bigtable::admin::v2::AppProfile> GetAppProfile(
       google::bigtable::admin::v2::GetAppProfileRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists information about app profiles in an instance.
   ///
-  /// @param parent  Required. The unique name of the instance for which a list
-  /// of app profiles is
+  /// @param parent  Required. The unique name of the instance for which a list of app profiles is
   ///  requested. Values are of the form
   ///  `projects/{project}/instances/{instance}`.
-  ///  Use ``{instance} = '-'`` to list AppProfiles for all Instances in a
-  ///  project, e.g., `projects/myproject/instances/-`.
+  ///  Use ``{instance} = '-'`` to list AppProfiles for all Instances in a project,
+  ///  e.g., `projects/myproject/instances/-`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::bigtable::admin::v2::AppProfile,google/bigtable/admin/v2/instance.proto#L244}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.bigtable.admin.v2.AppProfile], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.bigtable.admin.v2.AppProfile]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L244}
-  /// [google.bigtable.admin.v2.ListAppProfilesRequest]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L610}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.bigtable.admin.v2.AppProfile]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L244}
+  /// [google.bigtable.admin.v2.ListAppProfilesRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L610}
   ///
+  // clang-format on
   StreamRange<google::bigtable::admin::v2::AppProfile> ListAppProfiles(
       std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Lists information about app profiles in an instance.
   ///
-  /// @param request
-  /// @googleapis_link{google::bigtable::admin::v2::ListAppProfilesRequest,google/bigtable/admin/v2/bigtable_instance_admin.proto#L610}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.bigtable.admin.v2.ListAppProfilesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::bigtable::admin::v2::AppProfile,google/bigtable/admin/v2/instance.proto#L244}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.bigtable.admin.v2.AppProfile], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.bigtable.admin.v2.AppProfile]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L244}
-  /// [google.bigtable.admin.v2.ListAppProfilesRequest]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L610}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.bigtable.admin.v2.AppProfile]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L244}
+  /// [google.bigtable.admin.v2.ListAppProfilesRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L610}
   ///
+  // clang-format on
   StreamRange<google::bigtable::admin::v2::AppProfile> ListAppProfiles(
       google::bigtable::admin::v2::ListAppProfilesRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Updates an app profile within an instance.
   ///
-  /// @param app_profile  Required. The app profile which will (partially)
-  /// replace the current value.
-  /// @param update_mask  Required. The subset of app profile fields which
-  /// should be replaced.
+  /// @param app_profile  Required. The app profile which will (partially) replace the current value.
+  /// @param update_mask  Required. The subset of app profile fields which should be replaced.
   ///  If unset, all fields will be replaced.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::bigtable::admin::v2::AppProfile,google/bigtable/admin/v2/instance.proto#L244}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.bigtable.admin.v2.AppProfile] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.bigtable.admin.v2.AppProfile]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L244}
-  /// [google.bigtable.admin.v2.UpdateAppProfileRequest]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L656}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.bigtable.admin.v2.AppProfile]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L244}
+  /// [google.bigtable.admin.v2.UpdateAppProfileRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L656}
   ///
+  // clang-format on
   future<StatusOr<google::bigtable::admin::v2::AppProfile>> UpdateAppProfile(
       google::bigtable::admin::v2::AppProfile const& app_profile,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
   ///
   /// Updates an app profile within an instance.
   ///
-  /// @param request
-  /// @googleapis_link{google::bigtable::admin::v2::UpdateAppProfileRequest,google/bigtable/admin/v2/bigtable_instance_admin.proto#L656}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.bigtable.admin.v2.UpdateAppProfileRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::bigtable::admin::v2::AppProfile,google/bigtable/admin/v2/instance.proto#L244}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.bigtable.admin.v2.AppProfile] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.bigtable.admin.v2.AppProfile]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L244}
-  /// [google.bigtable.admin.v2.UpdateAppProfileRequest]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L656}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.bigtable.admin.v2.AppProfile]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L244}
+  /// [google.bigtable.admin.v2.UpdateAppProfileRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L656}
   ///
+  // clang-format on
   future<StatusOr<google::bigtable::admin::v2::AppProfile>> UpdateAppProfile(
       google::bigtable::admin::v2::UpdateAppProfileRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes an app profile from an instance.
   ///
-  /// @param request
-  /// @googleapis_link{google::bigtable::admin::v2::DeleteAppProfileRequest,google/bigtable/admin/v2/bigtable_instance_admin.proto#L669}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.bigtable.admin.v2.DeleteAppProfileRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
   ///
-  /// [google.bigtable.admin.v2.DeleteAppProfileRequest]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L669}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.bigtable.admin.v2.DeleteAppProfileRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L669}
   ///
+  // clang-format on
   Status DeleteAppProfile(
       google::bigtable::admin::v2::DeleteAppProfileRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Gets the access control policy for an instance resource. Returns an empty
   /// policy if an instance exists but does not have a policy set.
   ///
-  /// @param resource  REQUIRED: The resource for which the policy is being
-  /// requested.
+  /// @param resource  REQUIRED: The resource for which the policy is being requested.
   ///  See the operation documentation for the appropriate value for this field.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L98}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.iam.v1.Policy])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.iam.v1.GetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L123}
-  /// [google.iam.v1.Policy]:
-  /// @googleapis_reference_link{google/iam/v1/policy.proto#L98}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.iam.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L123}
+  /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L98}
   ///
+  // clang-format on
   StatusOr<google::iam::v1::Policy> GetIamPolicy(std::string const& resource,
                                                  Options opts = {});
 
+  // clang-format off
   ///
   /// Gets the access control policy for an instance resource. Returns an empty
   /// policy if an instance exists but does not have a policy set.
   ///
-  /// @param request
-  /// @googleapis_link{google::iam::v1::GetIamPolicyRequest,google/iam/v1/iam_policy.proto#L123}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.iam.v1.GetIamPolicyRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L98}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.iam.v1.Policy])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.iam.v1.GetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L123}
-  /// [google.iam.v1.Policy]:
-  /// @googleapis_reference_link{google/iam/v1/policy.proto#L98}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.iam.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L123}
+  /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L98}
   ///
+  // clang-format on
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
       google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
 
+  // clang-format off
   ///
   /// Sets the access control policy on an instance resource. Replaces any
   /// existing policy.
   ///
-  /// @param resource  REQUIRED: The resource for which the policy is being
-  /// specified.
+  /// @param resource  REQUIRED: The resource for which the policy is being specified.
   ///  See the operation documentation for the appropriate value for this field.
-  /// @param policy  REQUIRED: The complete policy to be applied to the
-  /// `resource`. The size of
+  /// @param policy  REQUIRED: The complete policy to be applied to the `resource`. The size of
   ///  the policy is limited to a few 10s of KB. An empty policy is a
   ///  valid policy but certain Cloud Platform services (such as Projects)
   ///  might reject them.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L98}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.iam.v1.Policy])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.iam.v1.Policy]:
-  /// @googleapis_reference_link{google/iam/v1/policy.proto#L98}
-  /// [google.iam.v1.SetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L98}
+  /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
   ///
+  // clang-format on
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
       std::string const& resource, google::iam::v1::Policy const& policy,
       Options opts = {});
@@ -842,71 +1288,103 @@ class BigtableInstanceAdminClient {
                                                  IamUpdater const& updater,
                                                  Options opts = {});
 
+  // clang-format off
   ///
   /// Sets the access control policy on an instance resource. Replaces any
   /// existing policy.
   ///
-  /// @param request
-  /// @googleapis_link{google::iam::v1::SetIamPolicyRequest,google/iam/v1/iam_policy.proto#L101}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.iam.v1.SetIamPolicyRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L98}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.iam.v1.Policy])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.iam.v1.Policy]:
-  /// @googleapis_reference_link{google/iam/v1/policy.proto#L98}
-  /// [google.iam.v1.SetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L98}
+  /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
   ///
+  // clang-format on
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
       google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
 
+  // clang-format off
   ///
-  /// Returns permissions that the caller has on the specified instance
-  /// resource.
+  /// Returns permissions that the caller has on the specified instance resource.
   ///
-  /// @param resource  REQUIRED: The resource for which the policy detail is
-  /// being requested.
+  /// @param resource  REQUIRED: The resource for which the policy detail is being requested.
   ///  See the operation documentation for the appropriate value for this field.
-  /// @param permissions  The set of permissions to check for the `resource`.
-  /// Permissions with
+  /// @param permissions  The set of permissions to check for the `resource`. Permissions with
   ///  wildcards (such as '*' or 'storage.*') are not allowed. For more
   ///  information see
   ///  [IAM Overview](https://cloud.google.com/iam/docs/overview#permissions).
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::iam::v1::TestIamPermissionsResponse,google/iam/v1/iam_policy.proto#L151}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.iam.v1.TestIamPermissionsResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.iam.v1.TestIamPermissionsRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L136}
-  /// [google.iam.v1.TestIamPermissionsResponse]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L151}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.iam.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L136}
+  /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L151}
   ///
+  // clang-format on
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
       std::string const& resource, std::vector<std::string> const& permissions,
       Options opts = {});
 
+  // clang-format off
   ///
-  /// Returns permissions that the caller has on the specified instance
-  /// resource.
+  /// Returns permissions that the caller has on the specified instance resource.
   ///
-  /// @param request
-  /// @googleapis_link{google::iam::v1::TestIamPermissionsRequest,google/iam/v1/iam_policy.proto#L136}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.iam.v1.TestIamPermissionsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::iam::v1::TestIamPermissionsResponse,google/iam/v1/iam_policy.proto#L151}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.iam.v1.TestIamPermissionsResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.iam.v1.TestIamPermissionsRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L136}
-  /// [google.iam.v1.TestIamPermissionsResponse]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L151}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.iam.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L136}
+  /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L151}
   ///
+  // clang-format on
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
       google::iam::v1::TestIamPermissionsRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists hot tablets in a cluster, within the time range provided. Hot
   /// tablets are ordered based on CPU usage.
@@ -916,33 +1394,72 @@ class BigtableInstanceAdminClient {
   ///  `projects/{project}/instances/{instance}/clusters/{cluster}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::bigtable::admin::v2::HotTablet,google/bigtable/admin/v2/instance.proto#L307}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.bigtable.admin.v2.HotTablet], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.bigtable.admin.v2.HotTablet]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L307}
-  /// [google.bigtable.admin.v2.ListHotTabletsRequest]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L689}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.bigtable.admin.v2.HotTablet]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L307}
+  /// [google.bigtable.admin.v2.ListHotTabletsRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L689}
   ///
+  // clang-format on
   StreamRange<google::bigtable::admin::v2::HotTablet> ListHotTablets(
       std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Lists hot tablets in a cluster, within the time range provided. Hot
   /// tablets are ordered based on CPU usage.
   ///
-  /// @param request
-  /// @googleapis_link{google::bigtable::admin::v2::ListHotTabletsRequest,google/bigtable/admin/v2/bigtable_instance_admin.proto#L689}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.bigtable.admin.v2.ListHotTabletsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::bigtable::admin::v2::HotTablet,google/bigtable/admin/v2/instance.proto#L307}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.bigtable.admin.v2.HotTablet], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.bigtable.admin.v2.HotTablet]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L307}
-  /// [google.bigtable.admin.v2.ListHotTabletsRequest]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L689}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.bigtable.admin.v2.HotTablet]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L307}
+  /// [google.bigtable.admin.v2.ListHotTabletsRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L689}
   ///
+  // clang-format on
   StreamRange<google::bigtable::admin::v2::HotTablet> ListHotTablets(
       google::bigtable::admin::v2::ListHotTabletsRequest request,
       Options opts = {});

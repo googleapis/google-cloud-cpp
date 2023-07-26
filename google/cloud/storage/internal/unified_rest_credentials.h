@@ -27,7 +27,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
 std::shared_ptr<oauth2::Credentials> MapCredentials(
-    std::shared_ptr<google::cloud::Credentials> const& credentials);
+    google::cloud::Credentials const& credentials);
 
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -7,20 +7,35 @@ library. Use the
 client library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `run_v2::RevisionsClient`:
+For example, this will override the default endpoint for `run_v2::ExecutionsClient`:
 
-@snippet revisions_client_samples.cc set-client-endpoint
+@snippet executions_client_samples.cc set-client-endpoint
 
 Follow these links to find examples for other \c *Client classes:
 
+- [\c run_v2::ExecutionsClient](@ref run_v2::ExecutionsClient-endpoint-snippet)
+- [\c run_v2::JobsClient](@ref run_v2::JobsClient-endpoint-snippet)
 - [\c run_v2::RevisionsClient](@ref run_v2::RevisionsClient-endpoint-snippet)
 - [\c run_v2::ServicesClient](@ref run_v2::ServicesClient-endpoint-snippet)
+- [\c run_v2::TasksClient](@ref run_v2::TasksClient-endpoint-snippet)
 
 <!-- inject-endpoint-snippet-end -->
 
 */
 
 // <!-- inject-endpoint-pages-start -->
+
+/*! @page run_v2::ExecutionsClient-endpoint-snippet Override run_v2::ExecutionsClient Endpoint Configuration
+
+@snippet google/cloud/run/v2/samples/executions_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page run_v2::JobsClient-endpoint-snippet Override run_v2::JobsClient Endpoint Configuration
+
+@snippet google/cloud/run/v2/samples/jobs_client_samples.cc set-client-endpoint
+
+*/
 
 /*! @page run_v2::RevisionsClient-endpoint-snippet Override run_v2::RevisionsClient Endpoint Configuration
 
@@ -31,6 +46,12 @@ Follow these links to find examples for other \c *Client classes:
 /*! @page run_v2::ServicesClient-endpoint-snippet Override run_v2::ServicesClient Endpoint Configuration
 
 @snippet google/cloud/run/v2/samples/services_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page run_v2::TasksClient-endpoint-snippet Override run_v2::TasksClient Endpoint Configuration
+
+@snippet google/cloud/run/v2/samples/tasks_client_samples.cc set-client-endpoint
 
 */
 // <!-- inject-endpoint-pages-end -->

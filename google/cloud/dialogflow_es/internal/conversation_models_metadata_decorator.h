@@ -22,6 +22,7 @@
 #include "google/cloud/dialogflow_es/internal/conversation_models_stub.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
+#include <map>
 #include <memory>
 #include <string>
 
@@ -33,8 +34,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class ConversationModelsMetadata : public ConversationModelsStub {
  public:
   ~ConversationModelsMetadata() override = default;
-  explicit ConversationModelsMetadata(
-      std::shared_ptr<ConversationModelsStub> child);
+  ConversationModelsMetadata(
+      std::shared_ptr<ConversationModelsStub> child,
+      std::multimap<std::string, std::string> fixed_metadata);
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateConversationModel(
       google::cloud::CompletionQueue& cq,
@@ -109,6 +111,7 @@ class ConversationModelsMetadata : public ConversationModelsStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<ConversationModelsStub> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

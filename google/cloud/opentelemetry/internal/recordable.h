@@ -99,6 +99,8 @@ class Recordable final : public opentelemetry::sdk::trace::Recordable {
  public:
   explicit Recordable(Project project) : project_(std::move(project)) {}
 
+  bool valid() const { return valid_; }
+
   google::devtools::cloudtrace::v2::Span&& as_proto() &&;
 
   void SetIdentity(
@@ -139,8 +141,20 @@ class Recordable final : public opentelemetry::sdk::trace::Recordable {
           instrumentation_scope) noexcept override;
 
  private:
+  void SetIdentityImpl(opentelemetry::trace::SpanContext const& span_context,
+                       opentelemetry::trace::SpanId parent_span_id);
+  void AddEventImpl(opentelemetry::nostd::string_view name,
+                    opentelemetry::common::SystemTimestamp timestamp,
+                    opentelemetry::common::KeyValueIterable const& attributes);
+  void AddLinkImpl(opentelemetry::trace::SpanContext const& span_context,
+                   opentelemetry::common::KeyValueIterable const& attributes);
+  void SetStatusImpl(opentelemetry::trace::StatusCode code,
+                     opentelemetry::nostd::string_view description);
+  void SetResourceImpl(opentelemetry::sdk::resource::Resource const& resource);
+
   Project project_;
   google::devtools::cloudtrace::v2::Span span_;
+  bool valid_ = true;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

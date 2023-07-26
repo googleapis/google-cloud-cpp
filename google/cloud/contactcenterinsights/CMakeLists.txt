@@ -183,8 +183,8 @@ google_cloud_cpp_add_pkgconfig(
     "The Contact Center AI Insights API C++ Client Library"
     "Provides C++ APIs to use the Contact Center AI Insights API."
     "google_cloud_cpp_grpc_utils"
-    " google_cloud_cpp_common"
-    " google_cloud_cpp_contactcenterinsights_protos")
+    "google_cloud_cpp_common"
+    "google_cloud_cpp_contactcenterinsights_protos")
 
 # Create and install the CMake configuration files.
 include(CMakePackageConfigHelpers)

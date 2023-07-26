@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "generator/internal/discovery_to_proto.h"
+#include "generator/testing/descriptor_pool_fixture.h"
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
@@ -35,7 +36,10 @@ using ::testing::Key;
 using ::testing::SizeIs;
 using ::testing::UnorderedElementsAre;
 
-TEST(ExtractTypesFromSchemaTest, Success) {
+class ExtractTypesFromSchemaTest
+    : public generator_testing::DescriptorPoolFixture {};
+
+TEST_F(ExtractTypesFromSchemaTest, Success) {
   auto constexpr kDiscoveryDocWithCorrectSchema = R"""(
 {
   "schemas": {
@@ -54,12 +58,12 @@ TEST(ExtractTypesFromSchemaTest, Success) {
   auto parsed_json =
       nlohmann::json::parse(kDiscoveryDocWithCorrectSchema, nullptr, false);
   ASSERT_TRUE(parsed_json.is_object());
-  auto types = ExtractTypesFromSchema({}, parsed_json);
+  auto types = ExtractTypesFromSchema({}, parsed_json, &pool());
   ASSERT_THAT(types, IsOk());
   EXPECT_THAT(*types, UnorderedElementsAre(Key("Foo"), Key("Bar")));
 }
 
-TEST(ExtractTypesFromSchemaTest, MissingSchema) {
+TEST_F(ExtractTypesFromSchemaTest, MissingSchema) {
   auto constexpr kDiscoveryDocMissingSchema = R"""(
 {
 }
@@ -68,12 +72,12 @@ TEST(ExtractTypesFromSchemaTest, MissingSchema) {
   auto parsed_json =
       nlohmann::json::parse(kDiscoveryDocMissingSchema, nullptr, false);
   ASSERT_TRUE(parsed_json.is_object());
-  auto types = ExtractTypesFromSchema({}, parsed_json);
+  auto types = ExtractTypesFromSchema({}, parsed_json, &pool());
   EXPECT_THAT(types, StatusIs(StatusCode::kInvalidArgument,
                               HasSubstr("does not contain schemas element")));
 }
 
-TEST(ExtractTypesFromSchemaTest, SchemaIdMissing) {
+TEST_F(ExtractTypesFromSchemaTest, SchemaIdMissing) {
   auto constexpr kDiscoveryDocSchemaIdMissing = R"""(
 {
   "schemas": {
@@ -92,7 +96,7 @@ TEST(ExtractTypesFromSchemaTest, SchemaIdMissing) {
   auto parsed_json =
       nlohmann::json::parse(kDiscoveryDocSchemaIdMissing, nullptr, false);
   ASSERT_TRUE(parsed_json.is_object());
-  auto types = ExtractTypesFromSchema({}, parsed_json);
+  auto types = ExtractTypesFromSchema({}, parsed_json, &pool());
   EXPECT_THAT(types, StatusIs(StatusCode::kInvalidArgument,
                               HasSubstr("schema without id")));
   auto const log_lines = log.ExtractLines();
@@ -101,7 +105,7 @@ TEST(ExtractTypesFromSchemaTest, SchemaIdMissing) {
       Contains(HasSubstr("current schema has no id. last schema with id=Foo")));
 }
 
-TEST(ExtractTypesFromSchemaTest, SchemaIdEmpty) {
+TEST_F(ExtractTypesFromSchemaTest, SchemaIdEmpty) {
   auto constexpr kDiscoveryDocSchemaIdEmpty = R"""(
 {
   "schemas": {
@@ -121,7 +125,7 @@ TEST(ExtractTypesFromSchemaTest, SchemaIdEmpty) {
   auto parsed_json =
       nlohmann::json::parse(kDiscoveryDocSchemaIdEmpty, nullptr, false);
   ASSERT_TRUE(parsed_json.is_object());
-  auto types = ExtractTypesFromSchema({}, parsed_json);
+  auto types = ExtractTypesFromSchema({}, parsed_json, &pool());
   EXPECT_THAT(types, StatusIs(StatusCode::kInvalidArgument,
                               HasSubstr("schema without id")));
   auto const log_lines = log.ExtractLines();
@@ -130,7 +134,7 @@ TEST(ExtractTypesFromSchemaTest, SchemaIdEmpty) {
                   "current schema has no id. last schema with id=(none)")));
 }
 
-TEST(ExtractTypesFromSchemaTest, SchemaMissingType) {
+TEST_F(ExtractTypesFromSchemaTest, SchemaMissingType) {
   auto constexpr kDiscoveryDocWithMissingType = R"""(
 {
   "schemas": {
@@ -145,7 +149,7 @@ TEST(ExtractTypesFromSchemaTest, SchemaMissingType) {
   auto parsed_json =
       nlohmann::json::parse(kDiscoveryDocWithMissingType, nullptr, false);
   ASSERT_TRUE(parsed_json.is_object());
-  auto types = ExtractTypesFromSchema({}, parsed_json);
+  auto types = ExtractTypesFromSchema({}, parsed_json, &pool());
   EXPECT_THAT(types, StatusIs(StatusCode::kInvalidArgument,
                               HasSubstr("contains non object schema")));
   auto const log_lines = log.ExtractLines();
@@ -154,7 +158,7 @@ TEST(ExtractTypesFromSchemaTest, SchemaMissingType) {
       Contains(HasSubstr("MissingType not type:object; is instead untyped")));
 }
 
-TEST(ExtractTypesFromSchemaTest, SchemaNonObject) {
+TEST_F(ExtractTypesFromSchemaTest, SchemaNonObject) {
   auto constexpr kDiscoveryDocWithNonObjectSchema = R"""(
 {
   "schemas": {
@@ -170,7 +174,7 @@ TEST(ExtractTypesFromSchemaTest, SchemaNonObject) {
   auto parsed_json =
       nlohmann::json::parse(kDiscoveryDocWithNonObjectSchema, nullptr, false);
   ASSERT_TRUE(parsed_json.is_object());
-  auto types = ExtractTypesFromSchema({}, parsed_json);
+  auto types = ExtractTypesFromSchema({}, parsed_json, &pool());
   EXPECT_THAT(types, StatusIs(StatusCode::kInvalidArgument,
                               HasSubstr("contains non object schema")));
   auto const log_lines = log.ExtractLines();
@@ -200,7 +204,10 @@ TEST(ExtractResourcesTest, NonEmptyResources) {
               UnorderedElementsAre(Key("resource1"), Key("resource2")));
 }
 
-TEST(DetermineAndVerifyResponseTypeNameTest, ResponseWithRef) {
+class DetermineAndVerifyResponseTypeNameTest
+    : public generator_testing::DescriptorPoolFixture {};
+
+TEST_F(DetermineAndVerifyResponseTypeNameTest, ResponseWithRef) {
   auto constexpr kResponseTypeJson = R"""({})""";
   auto constexpr kMethodJson = R"""({
   "response": {
@@ -214,13 +221,14 @@ TEST(DetermineAndVerifyResponseTypeNameTest, ResponseWithRef) {
   ASSERT_TRUE(method_json.is_object());
   DiscoveryResource resource;
   std::map<std::string, DiscoveryTypeVertex> types;
-  types.emplace("Foo", DiscoveryTypeVertex{"Foo", "", response_type_json});
+  types.emplace("Foo",
+                DiscoveryTypeVertex{"Foo", "", response_type_json, &pool()});
   auto response = DetermineAndVerifyResponseType(method_json, resource, types);
   ASSERT_STATUS_OK(response);
   EXPECT_THAT((*response)->name(), Eq("Foo"));
 }
 
-TEST(DetermineAndVerifyResponseTypeNameTest, ResponseMissingRef) {
+TEST_F(DetermineAndVerifyResponseTypeNameTest, ResponseMissingRef) {
   auto constexpr kResponseTypeJson = R"""({})""";
   auto constexpr kMethodJson = R"""({
   "response": {
@@ -233,13 +241,14 @@ TEST(DetermineAndVerifyResponseTypeNameTest, ResponseMissingRef) {
   ASSERT_TRUE(method_json.is_object());
   DiscoveryResource resource;
   std::map<std::string, DiscoveryTypeVertex> types;
-  types.emplace("Foo", DiscoveryTypeVertex{"Foo", "", response_type_json});
+  types.emplace("Foo",
+                DiscoveryTypeVertex{"Foo", "", response_type_json, &pool()});
   auto response = DetermineAndVerifyResponseType(method_json, resource, types);
   EXPECT_THAT(response, StatusIs(StatusCode::kInvalidArgument,
                                  HasSubstr("Missing $ref field in response")));
 }
 
-TEST(DetermineAndVerifyResponseTypeNameTest, ResponseFieldMissing) {
+TEST_F(DetermineAndVerifyResponseTypeNameTest, ResponseFieldMissing) {
   auto constexpr kResponseTypeJson = R"""({})""";
   auto constexpr kMethodJson = R"""({})""";
   auto response_type_json =
@@ -249,12 +258,16 @@ TEST(DetermineAndVerifyResponseTypeNameTest, ResponseFieldMissing) {
   ASSERT_TRUE(method_json.is_object());
   DiscoveryResource resource;
   std::map<std::string, DiscoveryTypeVertex> types;
-  types.emplace("Foo", DiscoveryTypeVertex{"Foo", "", response_type_json});
+  types.emplace("Foo",
+                DiscoveryTypeVertex{"Foo", "", response_type_json, &pool()});
   auto response = DetermineAndVerifyResponseType(method_json, resource, types);
   EXPECT_THAT(response, IsOkAndHolds(IsNull()));
 }
 
-TEST(SynthesizeRequestTypeTest, OperationResponseWithRefRequestField) {
+class SynthesizeRequestTypeTest
+    : public generator_testing::DescriptorPoolFixture {};
+
+TEST_F(SynthesizeRequestTypeTest, OperationResponseWithRefRequestField) {
   auto constexpr kResourceJson = R"""({})""";
   auto resource_json = nlohmann::json::parse(kResourceJson, nullptr, false);
   ASSERT_TRUE(resource_json.is_object());
@@ -320,14 +333,14 @@ TEST(SynthesizeRequestTypeTest, OperationResponseWithRefRequestField) {
       nlohmann::json::parse(kExpectedRequestTypeJson, nullptr, false);
   ASSERT_TRUE(expected_request_type_json.is_object());
   DiscoveryResource resource("foos", "", resource_json);
-  auto result =
-      SynthesizeRequestType(method_json, resource, "Operation", "create");
+  auto result = SynthesizeRequestType(method_json, resource, "Operation",
+                                      "create", &pool());
   ASSERT_STATUS_OK(result);
   EXPECT_THAT(result->json(), Eq(expected_request_type_json));
 }
 
-TEST(SynthesizeRequestTypeTest,
-     OperationResponseWithRefRequestFieldEndingInResource) {
+TEST_F(SynthesizeRequestTypeTest,
+       OperationResponseWithRefRequestFieldEndingInResource) {
   auto constexpr kResourceJson = R"""({})""";
   auto resource_json = nlohmann::json::parse(kResourceJson, nullptr, false);
   ASSERT_TRUE(resource_json.is_object());
@@ -393,13 +406,13 @@ TEST(SynthesizeRequestTypeTest,
       nlohmann::json::parse(kExpectedRequestTypeJson, nullptr, false);
   ASSERT_TRUE(expected_request_type_json.is_object());
   DiscoveryResource resource("foos", "", resource_json);
-  auto result =
-      SynthesizeRequestType(method_json, resource, "Operation", "create");
+  auto result = SynthesizeRequestType(method_json, resource, "Operation",
+                                      "create", &pool());
   ASSERT_STATUS_OK(result);
   EXPECT_THAT(result->json(), Eq(expected_request_type_json));
 }
 
-TEST(SynthesizeRequestTypeTest, NonOperationWithoutRequestField) {
+TEST_F(SynthesizeRequestTypeTest, NonOperationWithoutRequestField) {
   auto constexpr kResourceJson = R"""({})""";
   auto resource_json = nlohmann::json::parse(kResourceJson, nullptr, false);
   ASSERT_TRUE(resource_json.is_object());
@@ -454,12 +467,13 @@ TEST(SynthesizeRequestTypeTest, NonOperationWithoutRequestField) {
       nlohmann::json::parse(kExpectedRequestTypeJson, nullptr, false);
   ASSERT_TRUE(expected_request_type_json.is_object());
   DiscoveryResource resource("foos", "", resource_json);
-  auto result = SynthesizeRequestType(method_json, resource, "Foo", "get");
+  auto result =
+      SynthesizeRequestType(method_json, resource, "Foo", "get", &pool());
   ASSERT_STATUS_OK(result);
   EXPECT_THAT(result->json(), Eq(expected_request_type_json));
 }
 
-TEST(SynthesizeRequestTypeTest, MethodJsonMissingParameters) {
+TEST_F(SynthesizeRequestTypeTest, MethodJsonMissingParameters) {
   auto constexpr kResourceJson = R"""({})""";
   auto resource_json = nlohmann::json::parse(kResourceJson, nullptr, false);
   ASSERT_TRUE(resource_json.is_object());
@@ -473,8 +487,8 @@ TEST(SynthesizeRequestTypeTest, MethodJsonMissingParameters) {
   auto method_json = nlohmann::json::parse(kMethodJson, nullptr, false);
   ASSERT_TRUE(method_json.is_object());
   DiscoveryResource resource("foos", "", resource_json);
-  auto result =
-      SynthesizeRequestType(method_json, resource, "Operation", "create");
+  auto result = SynthesizeRequestType(method_json, resource, "Operation",
+                                      "create", &pool());
   EXPECT_THAT(
       result,
       StatusIs(StatusCode::kInternal,
@@ -484,7 +498,7 @@ TEST(SynthesizeRequestTypeTest, MethodJsonMissingParameters) {
                     Contains(Key("json"))));
 }
 
-TEST(SynthesizeRequestTypeTest, OperationResponseMissingRefInRequest) {
+TEST_F(SynthesizeRequestTypeTest, OperationResponseMissingRefInRequest) {
   auto constexpr kResourceJson = R"""({})""";
   auto resource_json = nlohmann::json::parse(kResourceJson, nullptr, false);
   ASSERT_TRUE(resource_json.is_object());
@@ -548,8 +562,8 @@ TEST(SynthesizeRequestTypeTest, OperationResponseMissingRefInRequest) {
       nlohmann::json::parse(kExpectedRequestTypeJson, nullptr, false);
   ASSERT_TRUE(expected_request_type_json.is_object());
   DiscoveryResource resource("foos", "", resource_json);
-  auto result =
-      SynthesizeRequestType(method_json, resource, "Operation", "create");
+  auto result = SynthesizeRequestType(method_json, resource, "Operation",
+                                      "create", &pool());
   EXPECT_THAT(
       result,
       StatusIs(
@@ -557,7 +571,10 @@ TEST(SynthesizeRequestTypeTest, OperationResponseMissingRefInRequest) {
           HasSubstr("resource foos has method Create with non $ref request")));
 }
 
-TEST(ProcessMethodRequestsAndResponsesTest, RequestWithOperationResponse) {
+class ProcessMethodRequestsAndResponsesTest
+    : public generator_testing::DescriptorPoolFixture {};
+
+TEST_F(ProcessMethodRequestsAndResponsesTest, RequestWithOperationResponse) {
   auto constexpr kResourceJson = R"""({
   "methods": {
     "create": {
@@ -579,6 +596,114 @@ TEST(ProcessMethodRequestsAndResponsesTest, RequestWithOperationResponse) {
       },
       "response": {
         "$ref": "Operation"
+      },
+      "request": {
+        "$ref": "Foo"
+      },
+      "parameterOrder": [
+        "project",
+        "zone",
+        "fooId"
+      ]
+    }
+  }
+})""";
+  auto const resource_json =
+      nlohmann::json::parse(kResourceJson, nullptr, false);
+  ASSERT_TRUE(resource_json.is_object());
+  auto constexpr kOperationTypeJson = R"""({
+})""";
+  auto const operation_type_json =
+      nlohmann::json::parse(kOperationTypeJson, nullptr, false);
+  ASSERT_TRUE(operation_type_json.is_object());
+  std::map<std::string, DiscoveryResource> resources;
+  resources.emplace("foos", DiscoveryResource("foos", "", resource_json));
+  std::map<std::string, DiscoveryTypeVertex> types;
+  types.emplace("Operation", DiscoveryTypeVertex("Operation", "",
+                                                 operation_type_json, &pool()));
+  auto result = ProcessMethodRequestsAndResponses(resources, types, &pool());
+  ASSERT_STATUS_OK(result);
+  EXPECT_THAT(
+      types, UnorderedElementsAre(Key("Foos.CreateRequest"), Key("Operation")));
+  EXPECT_THAT(resources.begin()->second.response_types(),
+              UnorderedElementsAre(Key("Operation")));
+  EXPECT_TRUE(resources.begin()->second.RequiresLROImport());
+}
+
+TEST_F(ProcessMethodRequestsAndResponsesTest, MethodWithEmptyRequest) {
+  auto constexpr kResourceJson = R"""({
+  "methods": {
+    "noop": {
+      "scopes": [
+        "https://www.googleapis.com/auth/cloud-platform"
+      ],
+      "path": "projects/myResources",
+      "httpMethod": "POST"
+    }
+  }
+})""";
+  auto const resource_json =
+      nlohmann::json::parse(kResourceJson, nullptr, false);
+  ASSERT_TRUE(resource_json.is_object());
+  std::map<std::string, DiscoveryResource> resources;
+  resources.emplace("foos", DiscoveryResource("foos", "", resource_json));
+  std::map<std::string, DiscoveryTypeVertex> types;
+  auto result = ProcessMethodRequestsAndResponses(resources, types, &pool());
+  ASSERT_STATUS_OK(result);
+  EXPECT_THAT(types, IsEmpty());
+  EXPECT_TRUE(resources.begin()->second.RequiresEmptyImport());
+}
+
+TEST_F(ProcessMethodRequestsAndResponsesTest, MethodWithEmptyResponse) {
+  auto constexpr kResourceJson = R"""({
+  "methods": {
+    "cancel": {
+      "scopes": [
+        "https://www.googleapis.com/auth/cloud-platform"
+      ],
+      "path": "projects/myResources",
+      "httpMethod": "POST",
+      "parameters": {
+        "project": {
+          "type": "string"
+        }
+      }
+    }
+  }
+})""";
+  auto const resource_json =
+      nlohmann::json::parse(kResourceJson, nullptr, false);
+  ASSERT_TRUE(resource_json.is_object());
+  std::map<std::string, DiscoveryResource> resources;
+  resources.emplace("foos", DiscoveryResource("foos", "", resource_json));
+  std::map<std::string, DiscoveryTypeVertex> types;
+  auto result = ProcessMethodRequestsAndResponses(resources, types, &pool());
+  ASSERT_STATUS_OK(result);
+  EXPECT_THAT(types, Not(IsEmpty()));
+  EXPECT_TRUE(resources.begin()->second.RequiresEmptyImport());
+}
+
+TEST_F(ProcessMethodRequestsAndResponsesTest, ResponseError) {
+  auto constexpr kResourceJson = R"""({
+  "methods": {
+    "create": {
+      "scopes": [
+        "https://www.googleapis.com/auth/cloud-platform"
+      ],
+      "path": "projects/{project}/zones/{zone}/myResources/{fooId}",
+      "httpMethod": "POST",
+      "parameters": {
+        "project": {
+          "type": "string"
+        },
+        "zone": {
+          "type": "string"
+        },
+        "fooId": {
+          "type": "string"
+        }
+      },
+      "response": {
       },
       "request": {
         "$ref": "Foo"
@@ -603,122 +728,15 @@ TEST(ProcessMethodRequestsAndResponsesTest, RequestWithOperationResponse) {
   resources.emplace("foos", DiscoveryResource("foos", "", resource_json));
   std::map<std::string, DiscoveryTypeVertex> types;
   types.emplace("Operation",
-                DiscoveryTypeVertex("Operation", "", operation_type_json));
-  auto result = ProcessMethodRequestsAndResponses(resources, types);
-  ASSERT_STATUS_OK(result);
-  EXPECT_THAT(
-      types, UnorderedElementsAre(Key("Foos.CreateRequest"), Key("Operation")));
-  EXPECT_THAT(resources.begin()->second.response_types(),
-              UnorderedElementsAre(Key("Operation")));
-  EXPECT_TRUE(resources.begin()->second.RequiresLROImport());
-}
-
-TEST(ProcessMethodRequestsAndResponsesTest, MethodWithEmptyRequest) {
-  auto constexpr kResourceJson = R"""({
-  "methods": {
-    "noop": {
-      "scopes": [
-        "https://www.googleapis.com/auth/cloud-platform"
-      ],
-      "path": "projects/myResources",
-      "httpMethod": "POST"
-    }
-  }
-})""";
-  auto const resource_json =
-      nlohmann::json::parse(kResourceJson, nullptr, false);
-  ASSERT_TRUE(resource_json.is_object());
-  std::map<std::string, DiscoveryResource> resources;
-  resources.emplace("foos", DiscoveryResource("foos", "", resource_json));
-  std::map<std::string, DiscoveryTypeVertex> types;
-  auto result = ProcessMethodRequestsAndResponses(resources, types);
-  ASSERT_STATUS_OK(result);
-  EXPECT_THAT(types, IsEmpty());
-  EXPECT_TRUE(resources.begin()->second.RequiresEmptyImport());
-}
-
-TEST(ProcessMethodRequestsAndResponsesTest, MethodWithEmptyResponse) {
-  auto constexpr kResourceJson = R"""({
-  "methods": {
-    "cancel": {
-      "scopes": [
-        "https://www.googleapis.com/auth/cloud-platform"
-      ],
-      "path": "projects/myResources",
-      "httpMethod": "POST",
-      "parameters": {
-        "project": {
-          "type": "string"
-        }
-      }
-    }
-  }
-})""";
-  auto const resource_json =
-      nlohmann::json::parse(kResourceJson, nullptr, false);
-  ASSERT_TRUE(resource_json.is_object());
-  std::map<std::string, DiscoveryResource> resources;
-  resources.emplace("foos", DiscoveryResource("foos", "", resource_json));
-  std::map<std::string, DiscoveryTypeVertex> types;
-  auto result = ProcessMethodRequestsAndResponses(resources, types);
-  ASSERT_STATUS_OK(result);
-  EXPECT_THAT(types, Not(IsEmpty()));
-  EXPECT_TRUE(resources.begin()->second.RequiresEmptyImport());
-}
-
-TEST(ProcessMethodRequestsAndResponsesTest, ResponseError) {
-  auto constexpr kResourceJson = R"""({
-  "methods": {
-    "create": {
-      "scopes": [
-        "https://www.googleapis.com/auth/cloud-platform"
-      ],
-      "path": "projects/{project}/zones/{zone}/myResources/{fooId}",
-      "httpMethod": "POST",
-      "parameters": {
-        "project": {
-          "type": "string"
-        },
-        "zone": {
-          "type": "string"
-        },
-        "fooId": {
-          "type": "string"
-        }
-      },
-      "response": {
-      },
-      "request": {
-        "$ref": "Foo"
-      },
-      "parameterOrder": [
-        "project",
-        "zone",
-        "fooId"
-      ]
-    }
-  }
-})""";
-  auto const resource_json =
-      nlohmann::json::parse(kResourceJson, nullptr, false);
-  ASSERT_TRUE(resource_json.is_object());
-  auto constexpr kOperationTypeJson = R"""({
-})""";
-  auto const operation_type_json =
-      nlohmann::json::parse(kOperationTypeJson, nullptr, false);
-  ASSERT_TRUE(operation_type_json.is_object());
-  std::map<std::string, DiscoveryResource> resources;
-  resources.emplace("foos", DiscoveryResource("foos", "", resource_json));
-  std::map<std::string, DiscoveryTypeVertex> types;
-  types.emplace("Operation", DiscoveryTypeVertex("", "", operation_type_json));
-  auto result = ProcessMethodRequestsAndResponses(resources, types);
+                DiscoveryTypeVertex("", "", operation_type_json, &pool()));
+  auto result = ProcessMethodRequestsAndResponses(resources, types, &pool());
   EXPECT_THAT(result, StatusIs(StatusCode::kInvalidArgument,
                                HasSubstr("Missing $ref field in response")));
   EXPECT_THAT(result.error_info().metadata(),
               AllOf(Contains(Key("resource")), Contains(Key("method"))));
 }
 
-TEST(ProcessMethodRequestsAndResponsesTest, RequestError) {
+TEST_F(ProcessMethodRequestsAndResponsesTest, RequestError) {
   auto constexpr kResourceJson = R"""({
   "methods": {
     "create": {
@@ -762,13 +780,14 @@ TEST(ProcessMethodRequestsAndResponsesTest, RequestError) {
   std::map<std::string, DiscoveryResource> resources;
   resources.emplace("foos", DiscoveryResource("foos", "", resource_json));
   std::map<std::string, DiscoveryTypeVertex> types;
-  types.emplace("Operation", DiscoveryTypeVertex("", "", operation_type_json));
-  auto result = ProcessMethodRequestsAndResponses(resources, types);
+  types.emplace("Operation",
+                DiscoveryTypeVertex("", "", operation_type_json, &pool()));
+  auto result = ProcessMethodRequestsAndResponses(resources, types, &pool());
   EXPECT_THAT(result, StatusIs(StatusCode::kInvalidArgument,
                                HasSubstr("with non $ref request")));
 }
 
-TEST(ProcessMethodRequestsAndResponsesTest, TypeInsertError) {
+TEST_F(ProcessMethodRequestsAndResponsesTest, TypeInsertError) {
   auto constexpr kResourceJson = R"""({
   "methods": {
     "create": {
@@ -818,11 +837,11 @@ TEST(ProcessMethodRequestsAndResponsesTest, TypeInsertError) {
   std::map<std::string, DiscoveryResource> resources;
   resources.emplace("foos", DiscoveryResource("foos", "", resource_json));
   std::map<std::string, DiscoveryTypeVertex> types;
-  types.emplace("Operation",
-                DiscoveryTypeVertex("Operation", "", operation_type_json));
+  types.emplace("Operation", DiscoveryTypeVertex("Operation", "",
+                                                 operation_type_json, &pool()));
   types.emplace("Foos.CreateRequest",
-                DiscoveryTypeVertex("", "", empty_type_json));
-  auto result = ProcessMethodRequestsAndResponses(resources, types);
+                DiscoveryTypeVertex("", "", empty_type_json, &pool()));
+  auto result = ProcessMethodRequestsAndResponses(resources, types, &pool());
   EXPECT_THAT(result,
               StatusIs(StatusCode::kInternal,
                        HasSubstr("Unable to insert type Foos.CreateRequest")));
@@ -870,7 +889,8 @@ TEST(CreateFilesFromResourcesTest, NonEmptyResources) {
       "foos",
       DiscoveryResource("foos", "google.cloud.cpp.product_name.foos.version",
                         resource_json));
-  DiscoveryDocumentProperties props{"", "", "product_name", "version"};
+  DiscoveryDocumentProperties props{"", "", "product_name", "version", "",
+                                    "", {}};
   auto result = CreateFilesFromResources(resources, props, "tmp");
   ASSERT_THAT(result, SizeIs(1));
   EXPECT_THAT(result.front().resource_name(), Eq("foos"));
@@ -882,13 +902,17 @@ TEST(CreateFilesFromResourcesTest, NonEmptyResources) {
 
 TEST(CreateFilesFromResourcesTest, EmptyResources) {
   std::map<std::string, DiscoveryResource> resources;
-  DiscoveryDocumentProperties props{"", "", "product_name", "version"};
+  DiscoveryDocumentProperties props{"", "", "product_name", "version", "",
+                                    "", {}};
   auto result = CreateFilesFromResources(resources, props, "tmp");
   EXPECT_THAT(result, IsEmpty());
 }
 
-TEST(AssignResourcesAndTypesToFilesTest,
-     TypesContainsBothSynthesizedAndNonsynthesizedTypes) {
+class AssignResourcesAndTypesToFilesTest
+    : public generator_testing::DescriptorPoolFixture {};
+
+TEST_F(AssignResourcesAndTypesToFilesTest,
+       TypesContainsBothSynthesizedAndNonsynthesizedTypes) {
   auto constexpr kResourceJson = R"""({
   "methods": {
     "create": {
@@ -936,15 +960,16 @@ TEST(AssignResourcesAndTypesToFilesTest,
   ASSERT_TRUE(synthesized_type_json.is_object());
   types.emplace(
       "Foos.CreateRequest",
-      DiscoveryTypeVertex("CreateRequest", "", synthesized_type_json));
+      DiscoveryTypeVertex("CreateRequest", "", synthesized_type_json, &pool()));
   auto constexpr kOperationTypeJson = R"""({
 })""";
   auto const operation_type_json =
       nlohmann::json::parse(kOperationTypeJson, nullptr, false);
   ASSERT_TRUE(operation_type_json.is_object());
-  types.emplace("Operation",
-                DiscoveryTypeVertex("Operation", "", operation_type_json));
-  DiscoveryDocumentProperties props{"", "", "product_name", "version"};
+  types.emplace("Operation", DiscoveryTypeVertex("Operation", "",
+                                                 operation_type_json, &pool()));
+  DiscoveryDocumentProperties props{"", "", "product_name", "version", "",
+                                    "", {}};
   auto result =
       AssignResourcesAndTypesToFiles(resources, types, props, "output_path");
   ASSERT_THAT(result.size(), Eq(2));
@@ -1003,7 +1028,7 @@ TEST(GenerateProtosFromDiscoveryDocTest, MissingDocumentProperty) {
   auto const document_json =
       nlohmann::json::parse(kDocumentJson, nullptr, false);
   ASSERT_TRUE(document_json.is_object());
-  auto result = GenerateProtosFromDiscoveryDoc(document_json, "", "", "");
+  auto result = GenerateProtosFromDiscoveryDoc(document_json, "", "", "", "");
   EXPECT_THAT(result,
               StatusIs(StatusCode::kInvalidArgument,
                        HasSubstr("Missing one or more document properties")));
@@ -1019,7 +1044,7 @@ TEST(GenerateProtosFromDiscoveryDocTest, ExtractTypesFromSchemaFailure) {
   auto const document_json =
       nlohmann::json::parse(kDocumentJson, nullptr, false);
   ASSERT_TRUE(document_json.is_object());
-  auto result = GenerateProtosFromDiscoveryDoc(document_json, "", "", "");
+  auto result = GenerateProtosFromDiscoveryDoc(document_json, "", "", "", "");
   EXPECT_THAT(
       result,
       StatusIs(
@@ -1043,7 +1068,7 @@ TEST(GenerateProtosFromDiscoveryDocTest, EmptyResourcesFailure) {
   auto const document_json =
       nlohmann::json::parse(kDocumentJson, nullptr, false);
   ASSERT_TRUE(document_json.is_object());
-  auto result = GenerateProtosFromDiscoveryDoc(document_json, "", "", "");
+  auto result = GenerateProtosFromDiscoveryDoc(document_json, "", "", "", "");
   EXPECT_THAT(result,
               StatusIs(StatusCode::kInvalidArgument,
                        HasSubstr("No resources found in Discovery Document")));
@@ -1077,7 +1102,7 @@ TEST(GenerateProtosFromDiscoveryDocTest, ProcessRequestResponseFailure) {
   auto const document_json =
       nlohmann::json::parse(kDocumentJson, nullptr, false);
   ASSERT_TRUE(document_json.is_object());
-  auto result = GenerateProtosFromDiscoveryDoc(document_json, "", "", "");
+  auto result = GenerateProtosFromDiscoveryDoc(document_json, "", "", "", "");
   EXPECT_THAT(result,
               StatusIs(StatusCode::kInvalidArgument,
                        HasSubstr("Response name=baz not found in types")));
@@ -1087,3 +1112,8 @@ TEST(GenerateProtosFromDiscoveryDocTest, ProcessRequestResponseFailure) {
 }  // namespace generator_internal
 }  // namespace cloud
 }  // namespace google
+
+int main(int argc, char** argv) {
+  ::testing::InitGoogleTest(&argc, argv);
+  return RUN_ALL_TESTS();
+}

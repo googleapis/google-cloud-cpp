@@ -36,7 +36,7 @@ class ConnectionServiceLogging : public ConnectionServiceStub {
   ~ConnectionServiceLogging() override = default;
   ConnectionServiceLogging(std::shared_ptr<ConnectionServiceStub> child,
                            TracingOptions tracing_options,
-                           std::set<std::string> components);
+                           std::set<std::string> const& components);
 
   StatusOr<google::cloud::apigeeconnect::v1::ListConnectionsResponse>
   ListConnections(
@@ -47,7 +47,7 @@ class ConnectionServiceLogging : public ConnectionServiceStub {
  private:
   std::shared_ptr<ConnectionServiceStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // ConnectionServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -21,6 +21,7 @@
 
 #include "google/cloud/iap/v1/internal/identity_aware_proxy_admin_stub.h"
 #include "google/cloud/version.h"
+#include <map>
 #include <memory>
 #include <string>
 
@@ -33,8 +34,9 @@ class IdentityAwareProxyAdminServiceMetadata
     : public IdentityAwareProxyAdminServiceStub {
  public:
   ~IdentityAwareProxyAdminServiceMetadata() override = default;
-  explicit IdentityAwareProxyAdminServiceMetadata(
-      std::shared_ptr<IdentityAwareProxyAdminServiceStub> child);
+  IdentityAwareProxyAdminServiceMetadata(
+      std::shared_ptr<IdentityAwareProxyAdminServiceStub> child,
+      std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
       grpc::ClientContext& context,
@@ -88,6 +90,7 @@ class IdentityAwareProxyAdminServiceMetadata
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<IdentityAwareProxyAdminServiceStub> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

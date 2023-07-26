@@ -45,8 +45,9 @@ Options ServicesDefaultOptions(Options options) {
   }
   if (!options.has<appengine_v1::ServicesBackoffPolicyOption>()) {
     options.set<appengine_v1::ServicesBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options.has<appengine_v1::ServicesPollingPolicyOption>()) {
@@ -54,7 +55,9 @@ Options ServicesDefaultOptions(Options options) {
         GenericPollingPolicy<appengine_v1::ServicesRetryPolicyOption::Type,
                              appengine_v1::ServicesBackoffPolicyOption::Type>(
             options.get<appengine_v1::ServicesRetryPolicyOption>()->clone(),
-            options.get<appengine_v1::ServicesBackoffPolicyOption>()->clone())
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
             .clone());
   }
   if (!options.has<appengine_v1::ServicesConnectionIdempotencyPolicyOption>()) {

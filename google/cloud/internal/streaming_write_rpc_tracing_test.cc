@@ -26,7 +26,7 @@ namespace internal {
 namespace {
 
 using ::google::cloud::testing_util::EventNamed;
-using ::google::cloud::testing_util::SpanAttribute;
+using ::google::cloud::testing_util::OTelAttribute;
 using ::google::cloud::testing_util::SpanEventAttributesAre;
 using ::google::cloud::testing_util::SpanHasAttributes;
 using ::google::cloud::testing_util::SpanNamed;
@@ -92,9 +92,9 @@ TEST(StreamingWriteRpcTracingTest, Write) {
   auto span = MakeSpan("span");
   TestedStream stream(std::make_shared<grpc::ClientContext>(), std::move(mock),
                       span);
-  stream.Write(100, grpc::WriteOptions{});
-  stream.Write(200, grpc::WriteOptions{});
-  stream.Write(300, grpc::WriteOptions{}.set_last_message());
+  EXPECT_TRUE(stream.Write(100, grpc::WriteOptions{}));
+  EXPECT_FALSE(stream.Write(200, grpc::WriteOptions{}));
+  EXPECT_TRUE(stream.Write(300, grpc::WriteOptions{}.set_last_message()));
   stream.Close();
 
   auto spans = span_catcher->GetSpans();
@@ -105,22 +105,22 @@ TEST(StreamingWriteRpcTracingTest, Write) {
           SpanEventsAre(
               AllOf(EventNamed("message"),
                     SpanEventAttributesAre(
-                        SpanAttribute<std::string>("message.type", "SENT"),
-                        SpanAttribute<int>("message.id", 1),
-                        SpanAttribute<bool>("message.is_last", false),
-                        SpanAttribute<bool>("message.success", true))),
+                        OTelAttribute<std::string>("message.type", "SENT"),
+                        OTelAttribute<int>("message.id", 1),
+                        OTelAttribute<bool>("message.is_last", false),
+                        OTelAttribute<bool>("message.success", true))),
               AllOf(EventNamed("message"),
                     SpanEventAttributesAre(
-                        SpanAttribute<std::string>("message.type", "SENT"),
-                        SpanAttribute<int>("message.id", 2),
-                        SpanAttribute<bool>("message.is_last", false),
-                        SpanAttribute<bool>("message.success", false))),
+                        OTelAttribute<std::string>("message.type", "SENT"),
+                        OTelAttribute<int>("message.id", 2),
+                        OTelAttribute<bool>("message.is_last", false),
+                        OTelAttribute<bool>("message.success", false))),
               AllOf(EventNamed("message"),
                     SpanEventAttributesAre(
-                        SpanAttribute<std::string>("message.type", "SENT"),
-                        SpanAttribute<int>("message.id", 3),
-                        SpanAttribute<bool>("message.is_last", true),
-                        SpanAttribute<bool>("message.success", true))),
+                        OTelAttribute<std::string>("message.type", "SENT"),
+                        OTelAttribute<int>("message.id", 3),
+                        OTelAttribute<bool>("message.is_last", true),
+                        OTelAttribute<bool>("message.success", true))),
               EventNamed("close")))));
 }
 
@@ -138,7 +138,7 @@ TEST(StreamingWriteRpcTracingTest, Close) {
   auto spans = span_catcher->GetSpans();
   EXPECT_THAT(spans,
               ElementsAre(AllOf(SpanNamed("span"),
-                                SpanHasAttributes(SpanAttribute<std::string>(
+                                SpanHasAttributes(OTelAttribute<std::string>(
                                     "grpc.peer", _)))));
 }
 

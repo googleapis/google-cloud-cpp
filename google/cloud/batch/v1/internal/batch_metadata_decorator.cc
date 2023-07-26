@@ -18,6 +18,7 @@
 
 #include "google/cloud/batch/v1/internal/batch_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/batch/v1/batch.grpc.pb.h>
@@ -29,22 +30,24 @@ namespace batch_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 BatchServiceMetadata::BatchServiceMetadata(
-    std::shared_ptr<BatchServiceStub> child)
+    std::shared_ptr<BatchServiceStub> child,
+    std::multimap<std::string, std::string> fixed_metadata)
     : child_(std::move(child)),
+      fixed_metadata_(std::move(fixed_metadata)),
       api_client_header_(
           google::cloud::internal::ApiClientHeader("generator")) {}
 
 StatusOr<google::cloud::batch::v1::Job> BatchServiceMetadata::CreateJob(
     grpc::ClientContext& context,
     google::cloud::batch::v1::CreateJobRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->CreateJob(context, request);
 }
 
 StatusOr<google::cloud::batch::v1::Job> BatchServiceMetadata::GetJob(
     grpc::ClientContext& context,
     google::cloud::batch::v1::GetJobRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetJob(context, request);
 }
 
@@ -53,7 +56,7 @@ BatchServiceMetadata::AsyncDeleteJob(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::batch::v1::DeleteJobRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncDeleteJob(cq, std::move(context), request);
 }
 
@@ -61,14 +64,14 @@ StatusOr<google::cloud::batch::v1::ListJobsResponse>
 BatchServiceMetadata::ListJobs(
     grpc::ClientContext& context,
     google::cloud::batch::v1::ListJobsRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListJobs(context, request);
 }
 
 StatusOr<google::cloud::batch::v1::Task> BatchServiceMetadata::GetTask(
     grpc::ClientContext& context,
     google::cloud::batch::v1::GetTaskRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetTask(context, request);
 }
 
@@ -76,7 +79,7 @@ StatusOr<google::cloud::batch::v1::ListTasksResponse>
 BatchServiceMetadata::ListTasks(
     grpc::ClientContext& context,
     google::cloud::batch::v1::ListTasksRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListTasks(context, request);
 }
 
@@ -104,6 +107,9 @@ void BatchServiceMetadata::SetMetadata(grpc::ClientContext& context,
 }
 
 void BatchServiceMetadata::SetMetadata(grpc::ClientContext& context) {
+  for (auto const& kv : fixed_metadata_) {
+    context.AddMetadata(kv.first, kv.second);
+  }
   context.AddMetadata("x-goog-api-client", api_client_header_);
   auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {

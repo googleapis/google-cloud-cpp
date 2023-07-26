@@ -42,6 +42,10 @@ environment variables are convenient when troubleshooting problems.
   `EndpointOption` (which defaults to "monitoring.googleapis.com")
   used by `MakeServiceMonitoringServiceConnection()`.
 
+- `GOOGLE_CLOUD_CPP_SNOOZE_SERVICE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "monitoring.googleapis.com")
+  used by `MakeSnoozeServiceConnection()`.
+
 - `GOOGLE_CLOUD_CPP_UPTIME_CHECK_SERVICE_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "monitoring.googleapis.com")
   used by `MakeUptimeCheckServiceConnection()`.
@@ -64,7 +68,7 @@ the program's console.
 including whether messages will be output on multiple lines, or whether
 string/bytes fields will be truncated.
 
-@see google::cloud::TracingOptionsOption
+@see google::cloud::GrpcTracingOptionsOption
 
 `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes`: turns on logging in the library, basically
 the library always "logs" but the logging infrastructure has no backend to

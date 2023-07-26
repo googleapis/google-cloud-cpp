@@ -22,6 +22,7 @@
 #include "google/cloud/speech/v2/internal/speech_stub.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
+#include <map>
 #include <memory>
 #include <string>
 
@@ -33,7 +34,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class SpeechMetadata : public SpeechStub {
  public:
   ~SpeechMetadata() override = default;
-  explicit SpeechMetadata(std::shared_ptr<SpeechStub> child);
+  SpeechMetadata(std::shared_ptr<SpeechStub> child,
+                 std::multimap<std::string, std::string> fixed_metadata);
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateRecognizer(
       google::cloud::CompletionQueue& cq,
@@ -173,6 +175,7 @@ class SpeechMetadata : public SpeechStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<SpeechStub> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

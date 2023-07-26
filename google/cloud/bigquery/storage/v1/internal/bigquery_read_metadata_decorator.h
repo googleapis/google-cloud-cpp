@@ -21,6 +21,7 @@
 
 #include "google/cloud/bigquery/storage/v1/internal/bigquery_read_stub.h"
 #include "google/cloud/version.h"
+#include <map>
 #include <memory>
 #include <string>
 
@@ -32,7 +33,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class BigQueryReadMetadata : public BigQueryReadStub {
  public:
   ~BigQueryReadMetadata() override = default;
-  explicit BigQueryReadMetadata(std::shared_ptr<BigQueryReadStub> child);
+  BigQueryReadMetadata(std::shared_ptr<BigQueryReadStub> child,
+                       std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::bigquery::storage::v1::ReadSession> CreateReadSession(
       grpc::ClientContext& context,
@@ -57,6 +59,7 @@ class BigQueryReadMetadata : public BigQueryReadStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<BigQueryReadStub> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

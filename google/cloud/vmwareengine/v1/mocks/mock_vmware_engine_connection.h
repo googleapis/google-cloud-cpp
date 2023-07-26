@@ -40,7 +40,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * While the example showcases types from the BigQuery library, the underlying
  * principles apply for any pair of `*Client` and `*Connection`.
  *
- * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
+ * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
 class MockVmwareEngineConnection
     : public vmwareengine_v1::VmwareEngineConnection {
@@ -112,6 +112,16 @@ class MockVmwareEngineConnection
   MOCK_METHOD(StreamRange<google::cloud::vmwareengine::v1::Subnet>, ListSubnets,
               (google::cloud::vmwareengine::v1::ListSubnetsRequest request),
               (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::vmwareengine::v1::Subnet>, GetSubnet,
+      (google::cloud::vmwareengine::v1::GetSubnetRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::vmwareengine::v1::Subnet>>, UpdateSubnet,
+      (google::cloud::vmwareengine::v1::UpdateSubnetRequest const& request),
+      (override));
 
   MOCK_METHOD(StreamRange<google::cloud::vmwareengine::v1::NodeType>,
               ListNodeTypes,
@@ -235,6 +245,46 @@ class MockVmwareEngineConnection
               ListVmwareEngineNetworks,
               (google::cloud::vmwareengine::v1::ListVmwareEngineNetworksRequest
                    request),
+              (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::vmwareengine::v1::PrivateConnection>>,
+      CreatePrivateConnection,
+      (google::cloud::vmwareengine::v1::CreatePrivateConnectionRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::vmwareengine::v1::PrivateConnection>,
+      GetPrivateConnection,
+      (google::cloud::vmwareengine::v1::GetPrivateConnectionRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      StreamRange<google::cloud::vmwareengine::v1::PrivateConnection>,
+      ListPrivateConnections,
+      (google::cloud::vmwareengine::v1::ListPrivateConnectionsRequest request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::vmwareengine::v1::PrivateConnection>>,
+      UpdatePrivateConnection,
+      (google::cloud::vmwareengine::v1::UpdatePrivateConnectionRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>,
+      DeletePrivateConnection,
+      (google::cloud::vmwareengine::v1::DeletePrivateConnectionRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(StreamRange<google::cloud::vmwareengine::v1::PeeringRoute>,
+              ListPrivateConnectionPeeringRoutes,
+              (google::cloud::vmwareengine::v1::
+                   ListPrivateConnectionPeeringRoutesRequest request),
               (override));
 };
 

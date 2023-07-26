@@ -436,6 +436,19 @@ DefaultClusterManagerStub::ListUsableSubnetworks(
   return response;
 }
 
+StatusOr<google::container::v1::CheckAutopilotCompatibilityResponse>
+DefaultClusterManagerStub::CheckAutopilotCompatibility(
+    grpc::ClientContext& client_context,
+    google::container::v1::CheckAutopilotCompatibilityRequest const& request) {
+  google::container::v1::CheckAutopilotCompatibilityResponse response;
+  auto status = grpc_stub_->CheckAutopilotCompatibility(&client_context,
+                                                        request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace container_v1_internal
 }  // namespace cloud

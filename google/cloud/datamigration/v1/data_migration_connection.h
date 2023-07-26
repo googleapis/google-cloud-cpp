@@ -23,6 +23,7 @@
 #include "google/cloud/datamigration/v1/internal/data_migration_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
+#include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -37,17 +38,138 @@ namespace cloud {
 namespace datamigration_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using DataMigrationServiceRetryPolicy =
-    ::google::cloud::internal::TraitBasedRetryPolicy<
-        datamigration_v1_internal::DataMigrationServiceRetryTraits>;
+/// The retry policy for `DataMigrationServiceConnection`.
+class DataMigrationServiceRetryPolicy : public ::google::cloud::RetryPolicy {
+ public:
+  /// Creates a new instance of the policy, reset to the initial state.
+  virtual std::unique_ptr<DataMigrationServiceRetryPolicy> clone() const = 0;
+};
 
-using DataMigrationServiceLimitedTimeRetryPolicy =
-    ::google::cloud::internal::LimitedTimeRetryPolicy<
-        datamigration_v1_internal::DataMigrationServiceRetryTraits>;
+/**
+ * A retry policy for `DataMigrationServiceConnection` based on counting errors.
+ *
+ * This policy stops retrying if:
+ * - An RPC returns a non-transient error.
+ * - More than a prescribed number of transient failures is detected.
+ *
+ * In this class the following status codes are treated as transient errors:
+ * - [`kUnavailable`](@ref google::cloud::StatusCode)
+ */
+class DataMigrationServiceLimitedErrorCountRetryPolicy
+    : public DataMigrationServiceRetryPolicy {
+ public:
+  /**
+   * Create an instance that tolerates up to @p maximum_failures transient
+   * errors.
+   *
+   * @note Disable the retry loop by providing an instance of this policy with
+   *     @p maximum_failures == 0.
+   */
+  explicit DataMigrationServiceLimitedErrorCountRetryPolicy(
+      int maximum_failures)
+      : impl_(maximum_failures) {}
 
-using DataMigrationServiceLimitedErrorCountRetryPolicy =
-    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        datamigration_v1_internal::DataMigrationServiceRetryTraits>;
+  DataMigrationServiceLimitedErrorCountRetryPolicy(
+      DataMigrationServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
+      : DataMigrationServiceLimitedErrorCountRetryPolicy(
+            rhs.maximum_failures()) {}
+  DataMigrationServiceLimitedErrorCountRetryPolicy(
+      DataMigrationServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
+      : DataMigrationServiceLimitedErrorCountRetryPolicy(
+            rhs.maximum_failures()) {}
+
+  int maximum_failures() const { return impl_.maximum_failures(); }
+
+  bool OnFailure(Status const& status) override {
+    return impl_.OnFailure(status);
+  }
+  bool IsExhausted() const override { return impl_.IsExhausted(); }
+  bool IsPermanentFailure(Status const& status) const override {
+    return impl_.IsPermanentFailure(status);
+  }
+  std::unique_ptr<DataMigrationServiceRetryPolicy> clone() const override {
+    return std::make_unique<DataMigrationServiceLimitedErrorCountRetryPolicy>(
+        maximum_failures());
+  }
+
+  // This is provided only for backwards compatibility.
+  using BaseType = DataMigrationServiceRetryPolicy;
+
+ private:
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      datamigration_v1_internal::DataMigrationServiceRetryTraits>
+      impl_;
+};
+
+/**
+ * A retry policy for `DataMigrationServiceConnection` based on elapsed time.
+ *
+ * This policy stops retrying if:
+ * - An RPC returns a non-transient error.
+ * - The elapsed time in the retry loop exceeds a prescribed duration.
+ *
+ * In this class the following status codes are treated as transient errors:
+ * - [`kUnavailable`](@ref google::cloud::StatusCode)
+ */
+class DataMigrationServiceLimitedTimeRetryPolicy
+    : public DataMigrationServiceRetryPolicy {
+ public:
+  /**
+   * Constructor given a `std::chrono::duration<>` object.
+   *
+   * @tparam DurationRep a placeholder to match the `Rep` tparam for @p
+   *     duration's type. The semantics of this template parameter are
+   *     documented in `std::chrono::duration<>`. In brief, the underlying
+   *     arithmetic type used to store the number of ticks. For our purposes it
+   *     is simply a formal parameter.
+   * @tparam DurationPeriod a placeholder to match the `Period` tparam for @p
+   *     duration's type. The semantics of this template parameter are
+   *     documented in `std::chrono::duration<>`. In brief, the length of the
+   *     tick in seconds, expressed as a `std::ratio<>`. For our purposes it is
+   *     simply a formal parameter.
+   * @param maximum_duration the maximum time allowed before the policy expires.
+   *     While the application can express this time in any units they desire,
+   *     the class truncates to milliseconds.
+   *
+   * @see https://en.cppreference.com/w/cpp/chrono/duration for more information
+   *     about `std::chrono::duration`.
+   */
+  template <typename DurationRep, typename DurationPeriod>
+  explicit DataMigrationServiceLimitedTimeRetryPolicy(
+      std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
+      : impl_(maximum_duration) {}
+
+  DataMigrationServiceLimitedTimeRetryPolicy(
+      DataMigrationServiceLimitedTimeRetryPolicy&& rhs) noexcept
+      : DataMigrationServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  DataMigrationServiceLimitedTimeRetryPolicy(
+      DataMigrationServiceLimitedTimeRetryPolicy const& rhs) noexcept
+      : DataMigrationServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+
+  std::chrono::milliseconds maximum_duration() const {
+    return impl_.maximum_duration();
+  }
+
+  bool OnFailure(Status const& status) override {
+    return impl_.OnFailure(status);
+  }
+  bool IsExhausted() const override { return impl_.IsExhausted(); }
+  bool IsPermanentFailure(Status const& status) const override {
+    return impl_.IsPermanentFailure(status);
+  }
+  std::unique_ptr<DataMigrationServiceRetryPolicy> clone() const override {
+    return std::make_unique<DataMigrationServiceLimitedTimeRetryPolicy>(
+        maximum_duration());
+  }
+
+  // This is provided only for backwards compatibility.
+  using BaseType = DataMigrationServiceRetryPolicy;
+
+ private:
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      datamigration_v1_internal::DataMigrationServiceRetryTraits>
+      impl_;
+};
 
 /**
  * The `DataMigrationServiceConnection` object for `DataMigrationServiceClient`.
@@ -136,6 +258,94 @@ class DataMigrationServiceConnection {
   DeleteConnectionProfile(
       google::cloud::clouddms::v1::DeleteConnectionProfileRequest const&
           request);
+
+  virtual future<StatusOr<google::cloud::clouddms::v1::PrivateConnection>>
+  CreatePrivateConnection(
+      google::cloud::clouddms::v1::CreatePrivateConnectionRequest const&
+          request);
+
+  virtual StatusOr<google::cloud::clouddms::v1::PrivateConnection>
+  GetPrivateConnection(
+      google::cloud::clouddms::v1::GetPrivateConnectionRequest const& request);
+
+  virtual StreamRange<google::cloud::clouddms::v1::PrivateConnection>
+  ListPrivateConnections(
+      google::cloud::clouddms::v1::ListPrivateConnectionsRequest request);
+
+  virtual future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>
+  DeletePrivateConnection(
+      google::cloud::clouddms::v1::DeletePrivateConnectionRequest const&
+          request);
+
+  virtual StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>
+  GetConversionWorkspace(
+      google::cloud::clouddms::v1::GetConversionWorkspaceRequest const&
+          request);
+
+  virtual StreamRange<google::cloud::clouddms::v1::ConversionWorkspace>
+  ListConversionWorkspaces(
+      google::cloud::clouddms::v1::ListConversionWorkspacesRequest request);
+
+  virtual future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
+  CreateConversionWorkspace(
+      google::cloud::clouddms::v1::CreateConversionWorkspaceRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
+  UpdateConversionWorkspace(
+      google::cloud::clouddms::v1::UpdateConversionWorkspaceRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>
+  DeleteConversionWorkspace(
+      google::cloud::clouddms::v1::DeleteConversionWorkspaceRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
+  SeedConversionWorkspace(
+      google::cloud::clouddms::v1::SeedConversionWorkspaceRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
+  ImportMappingRules(
+      google::cloud::clouddms::v1::ImportMappingRulesRequest const& request);
+
+  virtual future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
+  ConvertConversionWorkspace(
+      google::cloud::clouddms::v1::ConvertConversionWorkspaceRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
+  CommitConversionWorkspace(
+      google::cloud::clouddms::v1::CommitConversionWorkspaceRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
+  RollbackConversionWorkspace(
+      google::cloud::clouddms::v1::RollbackConversionWorkspaceRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
+  ApplyConversionWorkspace(
+      google::cloud::clouddms::v1::ApplyConversionWorkspaceRequest const&
+          request);
+
+  virtual StreamRange<google::cloud::clouddms::v1::DatabaseEntity>
+  DescribeDatabaseEntities(
+      google::cloud::clouddms::v1::DescribeDatabaseEntitiesRequest request);
+
+  virtual StatusOr<google::cloud::clouddms::v1::SearchBackgroundJobsResponse>
+  SearchBackgroundJobs(
+      google::cloud::clouddms::v1::SearchBackgroundJobsRequest const& request);
+
+  virtual StatusOr<
+      google::cloud::clouddms::v1::DescribeConversionWorkspaceRevisionsResponse>
+  DescribeConversionWorkspaceRevisions(
+      google::cloud::clouddms::v1::
+          DescribeConversionWorkspaceRevisionsRequest const& request);
+
+  virtual StreamRange<std::string> FetchStaticIps(
+      google::cloud::clouddms::v1::FetchStaticIpsRequest request);
 };
 
 /**

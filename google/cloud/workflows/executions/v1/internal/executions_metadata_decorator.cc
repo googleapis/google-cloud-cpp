@@ -18,6 +18,7 @@
 
 #include "google/cloud/workflows/executions/v1/internal/executions_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/workflows/executions/v1/executions.grpc.pb.h>
@@ -28,8 +29,11 @@ namespace cloud {
 namespace workflows_executions_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-ExecutionsMetadata::ExecutionsMetadata(std::shared_ptr<ExecutionsStub> child)
+ExecutionsMetadata::ExecutionsMetadata(
+    std::shared_ptr<ExecutionsStub> child,
+    std::multimap<std::string, std::string> fixed_metadata)
     : child_(std::move(child)),
+      fixed_metadata_(std::move(fixed_metadata)),
       api_client_header_(
           google::cloud::internal::ApiClientHeader("generator")) {}
 
@@ -38,7 +42,7 @@ ExecutionsMetadata::ListExecutions(
     grpc::ClientContext& context,
     google::cloud::workflows::executions::v1::ListExecutionsRequest const&
         request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListExecutions(context, request);
 }
 
@@ -47,7 +51,7 @@ ExecutionsMetadata::CreateExecution(
     grpc::ClientContext& context,
     google::cloud::workflows::executions::v1::CreateExecutionRequest const&
         request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->CreateExecution(context, request);
 }
 
@@ -56,7 +60,7 @@ ExecutionsMetadata::GetExecution(
     grpc::ClientContext& context,
     google::cloud::workflows::executions::v1::GetExecutionRequest const&
         request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetExecution(context, request);
 }
 
@@ -65,7 +69,7 @@ ExecutionsMetadata::CancelExecution(
     grpc::ClientContext& context,
     google::cloud::workflows::executions::v1::CancelExecutionRequest const&
         request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->CancelExecution(context, request);
 }
 
@@ -76,6 +80,9 @@ void ExecutionsMetadata::SetMetadata(grpc::ClientContext& context,
 }
 
 void ExecutionsMetadata::SetMetadata(grpc::ClientContext& context) {
+  for (auto const& kv : fixed_metadata_) {
+    context.AddMetadata(kv.first, kv.second);
+  }
   context.AddMetadata("x-goog-api-client", api_client_header_);
   auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {

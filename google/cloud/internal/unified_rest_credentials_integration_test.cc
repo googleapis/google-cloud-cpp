@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/oauth2_google_credentials.h"
@@ -36,15 +37,26 @@ using ::google::cloud::testing_util::ScopedEnvironment;
 
 StatusOr<std::unique_ptr<RestResponse>> RetryRestRequest(
     std::function<StatusOr<std::unique_ptr<RestResponse>>()> const& request) {
-  auto delay = std::chrono::seconds(1);
+  auto backoff = google::cloud::ExponentialBackoffPolicy(
+      std::chrono::seconds(1), std::chrono::minutes(5), 2.0);
   StatusOr<std::unique_ptr<RestResponse>> response;
-  for (auto i = 0; i != 3; ++i) {
+  for (auto i = 0; i != 10; ++i) {
     response = request();
     if (response.ok()) return response;
-    std::this_thread::sleep_for(delay);
-    delay *= 2;
+    std::this_thread::sleep_for(backoff.OnCompletion());
   }
   return response;
+}
+
+void HandleResponse(std::unique_ptr<RestResponse> response,
+                    std::string const& expected_kind) {
+  auto response_payload = std::move(*response).ExtractPayload();
+  auto payload = ReadAll(std::move(response_payload));
+  ASSERT_STATUS_OK(payload);
+  auto parsed = nlohmann::json::parse(*payload, nullptr, false);
+  ASSERT_TRUE(parsed.is_object()) << "parsed=" << parsed;
+  ASSERT_TRUE(parsed.contains("kind")) << "parsed=" << parsed;
+  EXPECT_EQ(parsed.value("kind", ""), expected_kind);
 }
 
 // BigQuery is a common REST API.
@@ -59,14 +71,7 @@ void MakeBigQueryRpcCall(Options options) {
     return client->Get(context, request);
   });
   ASSERT_STATUS_OK(response);
-
-  auto response_payload = std::move(**response).ExtractPayload();
-  auto payload = ReadAll(std::move(response_payload));
-  ASSERT_STATUS_OK(payload);
-  auto parsed = nlohmann::json::parse(*payload, nullptr, false);
-  ASSERT_TRUE(parsed.is_object()) << "parsed=" << parsed;
-  ASSERT_TRUE(parsed.contains("kind")) << "parsed=" << parsed;
-  EXPECT_EQ(parsed.value("kind", ""), "bigquery#datasetList");
+  HandleResponse(*std::move(response), "bigquery#datasetList");
 }
 
 // Storage has a fully public bucket which we can use to test insecure
@@ -81,14 +86,7 @@ void MakeStorageRpcCall(Options options) {
     return client->Get(context, request);
   });
   ASSERT_STATUS_OK(response);
-
-  auto response_payload = std::move(**response).ExtractPayload();
-  auto payload = ReadAll(std::move(response_payload));
-  ASSERT_STATUS_OK(payload);
-  auto parsed = nlohmann::json::parse(*payload, nullptr, false);
-  ASSERT_TRUE(parsed.is_object());
-  ASSERT_TRUE(parsed.contains("kind"));
-  EXPECT_EQ(parsed.value("kind", ""), "storage#bucket");
+  HandleResponse(*std::move(response), "storage#bucket");
 }
 
 TEST(UnifiedRestCredentialsIntegrationTest, InsecureCredentials) {

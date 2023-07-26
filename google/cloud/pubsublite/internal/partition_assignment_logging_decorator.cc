@@ -30,10 +30,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 PartitionAssignmentServiceLogging::PartitionAssignmentServiceLogging(
     std::shared_ptr<PartitionAssignmentServiceStub> child,
-    TracingOptions tracing_options, std::set<std::string> components)
+    TracingOptions tracing_options, std::set<std::string> const& components)
     : child_(std::move(child)),
       tracing_options_(std::move(tracing_options)),
-      components_(std::move(components)) {}
+      stream_logging_(components.find("rpc-streams") != components.end()) {}
 
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::cloud::pubsublite::v1::PartitionAssignmentRequest,
@@ -49,7 +49,7 @@ PartitionAssignmentServiceLogging::AsyncAssignPartitions(
   auto request_id = google::cloud::internal::RequestIdForLogging();
   GCP_LOG(DEBUG) << __func__ << "(" << request_id << ")";
   auto stream = child_->AsyncAssignPartitions(cq, std::move(context));
-  if (components_.count("rpc-streams") > 0) {
+  if (stream_logging_) {
     stream = std::make_unique<LoggingStream>(
         std::move(stream), tracing_options_, std::move(request_id));
   }

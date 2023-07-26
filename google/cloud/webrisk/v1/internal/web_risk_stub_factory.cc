@@ -45,13 +45,16 @@ std::shared_ptr<WebRiskServiceStub> CreateDefaultWebRiskServiceStub(
   auto service_grpc_stub =
       google::cloud::webrisk::v1::WebRiskService::NewStub(channel);
   std::shared_ptr<WebRiskServiceStub> stub =
-      std::make_shared<DefaultWebRiskServiceStub>(std::move(service_grpc_stub));
+      std::make_shared<DefaultWebRiskServiceStub>(
+          std::move(service_grpc_stub),
+          google::longrunning::Operations::NewStub(channel));
 
   if (auth->RequiresConfigureContext()) {
     stub =
         std::make_shared<WebRiskServiceAuth>(std::move(auth), std::move(stub));
   }
-  stub = std::make_shared<WebRiskServiceMetadata>(std::move(stub));
+  stub = std::make_shared<WebRiskServiceMetadata>(
+      std::move(stub), std::multimap<std::string, std::string>{});
   if (internal::Contains(options.get<TracingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<WebRiskServiceLogging>(

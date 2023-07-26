@@ -165,7 +165,7 @@ google_cloud_cpp_install_headers("google_cloud_cpp_alloydb_mocks"
 google_cloud_cpp_add_pkgconfig(
     alloydb "The AlloyDB API C++ Client Library"
     "Provides C++ APIs to use the AlloyDB API." "google_cloud_cpp_grpc_utils"
-    " google_cloud_cpp_common" " google_cloud_cpp_alloydb_protos")
+    "google_cloud_cpp_common" "google_cloud_cpp_alloydb_protos")
 
 # Create and install the CMake configuration files.
 include(CMakePackageConfigHelpers)

@@ -1,0 +1,14 @@
+{
+    "api_id": "eventarc.googleapis.com",
+    "api_shortname": "eventarc",
+    "client_documentation": "https://cloud.google.com/cpp/docs/reference/eventarc/latest",
+    "distribution_name": "google-cloud-cpp",
+    "issue_tracker": "https://issuetracker.google.com/savedsearches/5972217",
+    "language": "cpp",
+    "library_type": "GAPIC_AUTO",
+    "name_pretty": "Eventarc API",
+    "product_documentation": "https://cloud.google.com/eventarc",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-cpp",
+    "requires_billing": true
+}

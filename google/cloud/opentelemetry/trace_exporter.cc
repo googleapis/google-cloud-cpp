@@ -14,6 +14,8 @@
 
 #include "google/cloud/opentelemetry/trace_exporter.h"
 #include "google/cloud/trace/v2/trace_client.h"
+#include "google/cloud/internal/noexcept_action.h"
+#include "google/cloud/log.h"
 
 namespace google {
 namespace cloud {
@@ -29,29 +31,49 @@ class TraceExporter final : public opentelemetry::sdk::trace::SpanExporter {
 
   std::unique_ptr<opentelemetry::sdk::trace::Recordable>
   MakeRecordable() noexcept override {
-    return std::make_unique<otel_internal::Recordable>(project_);
+    auto recordable = internal::NoExceptAction<
+        std::unique_ptr<opentelemetry::sdk::trace::Recordable>>(
+        [&] { return std::make_unique<otel_internal::Recordable>(project_); });
+    if (recordable) return *std::move(recordable);
+    GCP_LOG(WARNING) << "Exception thrown while creating span.";
+    return nullptr;
   }
 
   opentelemetry::sdk::common::ExportResult Export(
       opentelemetry::nostd::span<
           std::unique_ptr<opentelemetry::sdk::trace::Recordable>> const&
           spans) noexcept override {
-    google::devtools::cloudtrace::v2::BatchWriteSpansRequest request;
-    request.set_name(project_.FullName());
-    for (auto& recordable : spans) {
-      auto span = std::unique_ptr<otel_internal::Recordable>(
-          static_cast<otel_internal::Recordable*>(recordable.release()));
-      *request.add_spans() = std::move(*span).as_proto();
-    }
-
-    auto status = client_.BatchWriteSpans(request);
-    return status.ok() ? opentelemetry::sdk::common::ExportResult::kSuccess
-                       : opentelemetry::sdk::common::ExportResult::kFailure;
+    auto result =
+        internal::NoExceptAction<opentelemetry::sdk::common::ExportResult>(
+            [&] { return ExportImpl(spans); });
+    if (result) return *std::move(result);
+    GCP_LOG(WARNING) << "Exception thrown while exporting spans.";
+    return opentelemetry::sdk::common::ExportResult::kFailure;
   }
 
   bool Shutdown(std::chrono::microseconds) noexcept override { return true; }
 
  private:
+  opentelemetry::sdk::common::ExportResult ExportImpl(
+      opentelemetry::nostd::span<
+          std::unique_ptr<opentelemetry::sdk::trace::Recordable>> const&
+          spans) {
+    google::devtools::cloudtrace::v2::BatchWriteSpansRequest request;
+    request.set_name(project_.FullName());
+    for (auto& recordable : spans) {
+      auto span = std::unique_ptr<otel_internal::Recordable>(
+          static_cast<otel_internal::Recordable*>(recordable.release()));
+      if (!span || !span->valid()) continue;
+      *request.add_spans() = std::move(*span).as_proto();
+    }
+
+    auto status = client_.BatchWriteSpans(request);
+    if (status.ok()) return opentelemetry::sdk::common::ExportResult::kSuccess;
+    GCP_LOG(WARNING) << "Cloud Trace Export of " << request.spans().size()
+                     << " span(s) failed with status=" << status;
+    return opentelemetry::sdk::common::ExportResult::kFailure;
+  }
+
   Project project_;
   trace_v2::TraceServiceClient client_;
 };

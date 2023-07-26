@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VMWAREENGINE_V1_VMWARE_ENGINE_CONNECTION_IDEMPOTENCY_POLICY_H
 
 #include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
 #include "google/cloud/version.h"
 #include <google/cloud/vmwareengine/v1/vmwareengine.grpc.pb.h>
 #include <memory>
@@ -77,6 +76,12 @@ class VmwareEngineConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency ListSubnets(
       google::cloud::vmwareengine::v1::ListSubnetsRequest request);
+
+  virtual google::cloud::Idempotency GetSubnet(
+      google::cloud::vmwareengine::v1::GetSubnetRequest const& request);
+
+  virtual google::cloud::Idempotency UpdateSubnet(
+      google::cloud::vmwareengine::v1::UpdateSubnetRequest const& request);
 
   virtual google::cloud::Idempotency ListNodeTypes(
       google::cloud::vmwareengine::v1::ListNodeTypesRequest request);
@@ -147,6 +152,29 @@ class VmwareEngineConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency ListVmwareEngineNetworks(
       google::cloud::vmwareengine::v1::ListVmwareEngineNetworksRequest request);
+
+  virtual google::cloud::Idempotency CreatePrivateConnection(
+      google::cloud::vmwareengine::v1::CreatePrivateConnectionRequest const&
+          request);
+
+  virtual google::cloud::Idempotency GetPrivateConnection(
+      google::cloud::vmwareengine::v1::GetPrivateConnectionRequest const&
+          request);
+
+  virtual google::cloud::Idempotency ListPrivateConnections(
+      google::cloud::vmwareengine::v1::ListPrivateConnectionsRequest request);
+
+  virtual google::cloud::Idempotency UpdatePrivateConnection(
+      google::cloud::vmwareengine::v1::UpdatePrivateConnectionRequest const&
+          request);
+
+  virtual google::cloud::Idempotency DeletePrivateConnection(
+      google::cloud::vmwareengine::v1::DeletePrivateConnectionRequest const&
+          request);
+
+  virtual google::cloud::Idempotency ListPrivateConnectionPeeringRoutes(
+      google::cloud::vmwareengine::v1::ListPrivateConnectionPeeringRoutesRequest
+          request);
 };
 
 std::unique_ptr<VmwareEngineConnectionIdempotencyPolicy>

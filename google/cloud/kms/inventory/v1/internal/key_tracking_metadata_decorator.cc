@@ -18,6 +18,7 @@
 
 #include "google/cloud/kms/inventory/v1/internal/key_tracking_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/kms/inventory/v1/key_tracking_service.grpc.pb.h>
@@ -29,8 +30,10 @@ namespace kms_inventory_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 KeyTrackingServiceMetadata::KeyTrackingServiceMetadata(
-    std::shared_ptr<KeyTrackingServiceStub> child)
+    std::shared_ptr<KeyTrackingServiceStub> child,
+    std::multimap<std::string, std::string> fixed_metadata)
     : child_(std::move(child)),
+      fixed_metadata_(std::move(fixed_metadata)),
       api_client_header_(
           google::cloud::internal::ApiClientHeader("generator")) {}
 
@@ -39,7 +42,7 @@ KeyTrackingServiceMetadata::GetProtectedResourcesSummary(
     grpc::ClientContext& context,
     google::cloud::kms::inventory::v1::
         GetProtectedResourcesSummaryRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetProtectedResourcesSummary(context, request);
 }
 
@@ -48,7 +51,7 @@ KeyTrackingServiceMetadata::SearchProtectedResources(
     grpc::ClientContext& context,
     google::cloud::kms::inventory::v1::SearchProtectedResourcesRequest const&
         request) {
-  SetMetadata(context, "scope=" + request.scope());
+  SetMetadata(context, absl::StrCat("scope=", request.scope()));
   return child_->SearchProtectedResources(context, request);
 }
 
@@ -59,6 +62,9 @@ void KeyTrackingServiceMetadata::SetMetadata(
 }
 
 void KeyTrackingServiceMetadata::SetMetadata(grpc::ClientContext& context) {
+  for (auto const& kv : fixed_metadata_) {
+    context.AddMetadata(kv.first, kv.second);
+  }
   context.AddMetadata("x-goog-api-client", api_client_header_);
   auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {

@@ -23,6 +23,11 @@ if (NOT GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
     set_target_properties(
         google_cloud_cpp_storage_grpc
         PROPERTIES EXPORT_NAME "google-cloud-cpp::experimental-storage-grpc")
+    if (GOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND)
+        target_compile_definitions(
+            google_cloud_cpp_storage_grpc
+            INTERFACE GOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND)
+    endif ()
 else ()
     add_library(
         google_cloud_cpp_storage_grpc # cmake-format: sort
@@ -46,6 +51,8 @@ else ()
         internal/grpc_bucket_request_parser.h
         internal/grpc_buffer_read_object_data.cc
         internal/grpc_buffer_read_object_data.h
+        internal/grpc_channel_refresh.cc
+        internal/grpc_channel_refresh.h
         internal/grpc_client.cc
         internal/grpc_client.h
         internal/grpc_configure_client_context.cc
@@ -85,8 +92,8 @@ else ()
         internal/storage_logging_decorator.h
         internal/storage_metadata_decorator.cc
         internal/storage_metadata_decorator.h
-        internal/storage_round_robin.cc
-        internal/storage_round_robin.h
+        internal/storage_round_robin_decorator.cc
+        internal/storage_round_robin_decorator.h
         internal/storage_stub.cc
         internal/storage_stub.h
         internal/storage_stub_factory.cc
@@ -139,13 +146,13 @@ google_cloud_cpp_add_pkgconfig(
     "The GCS (Google Cloud Storage) gRPC plugin"
     "An extension to the GCS C++ client library using gRPC for transport."
     "google_cloud_cpp_storage"
-    " google_cloud_cpp_grpc_utils"
-    " google_cloud_cpp_storage_protos"
-    " google_cloud_cpp_rpc_status_protos"
-    " google_cloud_cpp_rpc_error_details_protos"
-    " google_cloud_cpp_common"
-    " libcurl"
-    " openssl")
+    "google_cloud_cpp_grpc_utils"
+    "google_cloud_cpp_storage_protos"
+    "google_cloud_cpp_rpc_status_protos"
+    "google_cloud_cpp_rpc_error_details_protos"
+    "google_cloud_cpp_common"
+    "libcurl"
+    "openssl")
 
 install(
     TARGETS google_cloud_cpp_storage_grpc
@@ -206,7 +213,6 @@ if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
         internal/grpc_sign_blob_request_parser_test.cc
         internal/grpc_split_write_object_data_test.cc
         internal/grpc_synthetic_self_link_test.cc
-        internal/storage_round_robin_test.cc
         internal/storage_stub_factory_test.cc)
 
     foreach (fname ${storage_client_grpc_unit_tests})

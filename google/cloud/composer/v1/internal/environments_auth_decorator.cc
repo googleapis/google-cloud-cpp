@@ -111,6 +111,39 @@ EnvironmentsAuth::AsyncDeleteEnvironment(
       });
 }
 
+StatusOr<google::cloud::orchestration::airflow::service::v1::
+             ExecuteAirflowCommandResponse>
+EnvironmentsAuth::ExecuteAirflowCommand(
+    grpc::ClientContext& context,
+    google::cloud::orchestration::airflow::service::v1::
+        ExecuteAirflowCommandRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ExecuteAirflowCommand(context, request);
+}
+
+StatusOr<google::cloud::orchestration::airflow::service::v1::
+             StopAirflowCommandResponse>
+EnvironmentsAuth::StopAirflowCommand(
+    grpc::ClientContext& context,
+    google::cloud::orchestration::airflow::service::v1::
+        StopAirflowCommandRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->StopAirflowCommand(context, request);
+}
+
+StatusOr<google::cloud::orchestration::airflow::service::v1::
+             PollAirflowCommandResponse>
+EnvironmentsAuth::PollAirflowCommand(
+    grpc::ClientContext& context,
+    google::cloud::orchestration::airflow::service::v1::
+        PollAirflowCommandRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->PollAirflowCommand(context, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 EnvironmentsAuth::AsyncSaveSnapshot(
     google::cloud::CompletionQueue& cq,
@@ -149,6 +182,37 @@ EnvironmentsAuth::AsyncLoadSnapshot(
         }
         return child->AsyncLoadSnapshot(cq, *std::move(context), request);
       });
+}
+
+future<StatusOr<google::longrunning::Operation>>
+EnvironmentsAuth::AsyncDatabaseFailover(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::orchestration::airflow::service::v1::
+        DatabaseFailoverRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  auto& child = child_;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child,
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncDatabaseFailover(cq, *std::move(context), request);
+      });
+}
+
+StatusOr<google::cloud::orchestration::airflow::service::v1::
+             FetchDatabasePropertiesResponse>
+EnvironmentsAuth::FetchDatabaseProperties(
+    grpc::ClientContext& context,
+    google::cloud::orchestration::airflow::service::v1::
+        FetchDatabasePropertiesRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->FetchDatabaseProperties(context, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

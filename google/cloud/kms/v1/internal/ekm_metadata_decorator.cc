@@ -18,6 +18,7 @@
 
 #include "google/cloud/kms/v1/internal/ekm_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/kms/v1/ekm_service.grpc.pb.h>
@@ -28,8 +29,11 @@ namespace cloud {
 namespace kms_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-EkmServiceMetadata::EkmServiceMetadata(std::shared_ptr<EkmServiceStub> child)
+EkmServiceMetadata::EkmServiceMetadata(
+    std::shared_ptr<EkmServiceStub> child,
+    std::multimap<std::string, std::string> fixed_metadata)
     : child_(std::move(child)),
+      fixed_metadata_(std::move(fixed_metadata)),
       api_client_header_(
           google::cloud::internal::ApiClientHeader("generator")) {}
 
@@ -37,7 +41,7 @@ StatusOr<google::cloud::kms::v1::ListEkmConnectionsResponse>
 EkmServiceMetadata::ListEkmConnections(
     grpc::ClientContext& context,
     google::cloud::kms::v1::ListEkmConnectionsRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListEkmConnections(context, request);
 }
 
@@ -45,7 +49,7 @@ StatusOr<google::cloud::kms::v1::EkmConnection>
 EkmServiceMetadata::GetEkmConnection(
     grpc::ClientContext& context,
     google::cloud::kms::v1::GetEkmConnectionRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetEkmConnection(context, request);
 }
 
@@ -53,7 +57,7 @@ StatusOr<google::cloud::kms::v1::EkmConnection>
 EkmServiceMetadata::CreateEkmConnection(
     grpc::ClientContext& context,
     google::cloud::kms::v1::CreateEkmConnectionRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->CreateEkmConnection(context, request);
 }
 
@@ -61,23 +65,32 @@ StatusOr<google::cloud::kms::v1::EkmConnection>
 EkmServiceMetadata::UpdateEkmConnection(
     grpc::ClientContext& context,
     google::cloud::kms::v1::UpdateEkmConnectionRequest const& request) {
-  SetMetadata(context,
-              "ekm_connection.name=" + request.ekm_connection().name());
+  SetMetadata(context, absl::StrCat("ekm_connection.name=",
+                                    request.ekm_connection().name()));
   return child_->UpdateEkmConnection(context, request);
 }
 
 StatusOr<google::cloud::kms::v1::EkmConfig> EkmServiceMetadata::GetEkmConfig(
     grpc::ClientContext& context,
     google::cloud::kms::v1::GetEkmConfigRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetEkmConfig(context, request);
 }
 
 StatusOr<google::cloud::kms::v1::EkmConfig> EkmServiceMetadata::UpdateEkmConfig(
     grpc::ClientContext& context,
     google::cloud::kms::v1::UpdateEkmConfigRequest const& request) {
-  SetMetadata(context, "ekm_config.name=" + request.ekm_config().name());
+  SetMetadata(context,
+              absl::StrCat("ekm_config.name=", request.ekm_config().name()));
   return child_->UpdateEkmConfig(context, request);
+}
+
+StatusOr<google::cloud::kms::v1::VerifyConnectivityResponse>
+EkmServiceMetadata::VerifyConnectivity(
+    grpc::ClientContext& context,
+    google::cloud::kms::v1::VerifyConnectivityRequest const& request) {
+  SetMetadata(context, absl::StrCat("name=", request.name()));
+  return child_->VerifyConnectivity(context, request);
 }
 
 void EkmServiceMetadata::SetMetadata(grpc::ClientContext& context,
@@ -87,6 +100,9 @@ void EkmServiceMetadata::SetMetadata(grpc::ClientContext& context,
 }
 
 void EkmServiceMetadata::SetMetadata(grpc::ClientContext& context) {
+  for (auto const& kv : fixed_metadata_) {
+    context.AddMetadata(kv.first, kv.second);
+  }
   context.AddMetadata("x-goog-api-client", api_client_header_);
   auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {

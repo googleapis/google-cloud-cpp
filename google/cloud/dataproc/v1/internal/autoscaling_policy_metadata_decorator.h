@@ -21,6 +21,7 @@
 
 #include "google/cloud/dataproc/v1/internal/autoscaling_policy_stub.h"
 #include "google/cloud/version.h"
+#include <map>
 #include <memory>
 #include <string>
 
@@ -32,8 +33,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class AutoscalingPolicyServiceMetadata : public AutoscalingPolicyServiceStub {
  public:
   ~AutoscalingPolicyServiceMetadata() override = default;
-  explicit AutoscalingPolicyServiceMetadata(
-      std::shared_ptr<AutoscalingPolicyServiceStub> child);
+  AutoscalingPolicyServiceMetadata(
+      std::shared_ptr<AutoscalingPolicyServiceStub> child,
+      std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy>
   CreateAutoscalingPolicy(
@@ -69,6 +71,7 @@ class AutoscalingPolicyServiceMetadata : public AutoscalingPolicyServiceStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<AutoscalingPolicyServiceStub> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

@@ -1,0 +1,88 @@
+name: Windows-Builds
+
+on:
+  workflow_call:
+    inputs:
+      checkout-ref:
+        required: true
+        description: "The ref we want to compile"
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  bazel:
+    name: bazel + ${{ matrix.msvc }} + ${{ matrix.compilation_mode }} + ${{ matrix.shard }}
+    runs-on:
+      group: cpp-runners
+      labels: ${{ endsWith(matrix.msvc, '-2019') && 'windows-2019' || 'windows-2022' }}
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+    strategy:
+      # Continue other builds even if one fails
+      fail-fast: false
+      matrix:
+        msvc: [ msvc-2019 ]
+        # - dbg creates very large debugging files and GHA has limited storage.
+        # - fastbuild also takes too much storage.
+        compilation_mode: [ opt ]
+        shard: [ Core, Compute, Other ]
+        include:
+        - shard: Core
+          targets:
+          - //google/cloud:all
+          # - //generator/...  # Does not build on Windows
+          # - //docfx/...      # Does not build on Windows
+          - +//google/cloud/bigtable/...
+          - +//google/cloud/pubsub/...
+          - +//google/cloud/pubsublite/...
+          - +//google/cloud/spanner/...
+          - +//google/cloud/storage/...
+        - shard: Compute
+          targets:
+          - //google/cloud/compute/...
+        - shard: Other
+          targets:
+          - //...
+          # Skip top-level targets (e.g. //:bigtable).
+          - -//:all
+          # From Core
+          - -//google/cloud:all
+          - -//generator/...
+          - -//docfx/...
+          - -//google/cloud/bigtable/...
+          - -//google/cloud/pubsub/...
+          - -//google/cloud/pubsublite/...
+          - -//google/cloud/spanner/...
+          - -//google/cloud/storage/...
+          # From Compute
+          - -//google/cloud/compute/...
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        ref: ${{ inputs.checkout-ref }}
+    - uses: google-github-actions/auth@v1
+      with:
+        create_credentials_file: true
+        credentials_json: ${{ secrets.BUILD_CACHE_KEY }}
+    # go/github-actions#gha-bestpractices explains why we use a SHA instead of
+    # a named version for this runner. We could avoid using this runner with the
+    # ideas from:
+    #   https://github.com/microsoft/vswhere/wiki/Find-VC
+    # Note that in other runners the publisher is GitHub. If we trust GitHub
+    # to run the VM, we should trust their runners.
+    - uses: ilammy/msvc-dev-cmd@cec98b9d092141f74527d0afa6feb2af698cfe89 # @v1.21.1
+    - name: Build google-cloud-cpp
+      shell: bash
+      run: |
+        # Having `/usr/bin/link` in the path will conflict with the MSVC linker.
+        rm -f /usr/bin/link >/dev/null 2>&1
+        # Bazel creates really long paths, sometimes exceeding the MSVC limits.
+        # Using a short name like this avoids the problem in most cases.
+        mkdir -p 'c:\b' || true
+        export BAZEL_ROOT='c:\b'
+        ci/gha/builds/windows-bazel.sh ${{ matrix.compilation_mode }} ${{ join(matrix.targets, ' ') }}
+    env:
+      BAZEL_REMOTE_CACHE: https://storage.googleapis.com/cloud-cpp-gha-cache/bazel-cache/${{ matrix.msvc }}/${{ matrix.compilation_mode }}

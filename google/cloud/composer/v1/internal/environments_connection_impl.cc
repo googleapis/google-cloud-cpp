@@ -189,6 +189,54 @@ EnvironmentsConnectionImpl::DeleteEnvironment(
       __func__);
 }
 
+StatusOr<google::cloud::orchestration::airflow::service::v1::
+             ExecuteAirflowCommandResponse>
+EnvironmentsConnectionImpl::ExecuteAirflowCommand(
+    google::cloud::orchestration::airflow::service::v1::
+        ExecuteAirflowCommandRequest const& request) {
+  return google::cloud::internal::RetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->ExecuteAirflowCommand(request),
+      [this](grpc::ClientContext& context,
+             google::cloud::orchestration::airflow::service::v1::
+                 ExecuteAirflowCommandRequest const& request) {
+        return stub_->ExecuteAirflowCommand(context, request);
+      },
+      request, __func__);
+}
+
+StatusOr<google::cloud::orchestration::airflow::service::v1::
+             StopAirflowCommandResponse>
+EnvironmentsConnectionImpl::StopAirflowCommand(
+    google::cloud::orchestration::airflow::service::v1::
+        StopAirflowCommandRequest const& request) {
+  return google::cloud::internal::RetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->StopAirflowCommand(request),
+      [this](grpc::ClientContext& context,
+             google::cloud::orchestration::airflow::service::v1::
+                 StopAirflowCommandRequest const& request) {
+        return stub_->StopAirflowCommand(context, request);
+      },
+      request, __func__);
+}
+
+StatusOr<google::cloud::orchestration::airflow::service::v1::
+             PollAirflowCommandResponse>
+EnvironmentsConnectionImpl::PollAirflowCommand(
+    google::cloud::orchestration::airflow::service::v1::
+        PollAirflowCommandRequest const& request) {
+  return google::cloud::internal::RetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->PollAirflowCommand(request),
+      [this](grpc::ClientContext& context,
+             google::cloud::orchestration::airflow::service::v1::
+                 PollAirflowCommandRequest const& request) {
+        return stub_->PollAirflowCommand(context, request);
+      },
+      request, __func__);
+}
+
 future<StatusOr<
     google::cloud::orchestration::airflow::service::v1::SaveSnapshotResponse>>
 EnvironmentsConnectionImpl::SaveSnapshot(
@@ -251,6 +299,56 @@ EnvironmentsConnectionImpl::LoadSnapshot(
               LoadSnapshotResponse>,
       retry_policy(), backoff_policy(),
       idempotency_policy()->LoadSnapshot(request), polling_policy(), __func__);
+}
+
+future<StatusOr<google::cloud::orchestration::airflow::service::v1::
+                    DatabaseFailoverResponse>>
+EnvironmentsConnectionImpl::DatabaseFailover(
+    google::cloud::orchestration::airflow::service::v1::
+        DatabaseFailoverRequest const& request) {
+  auto& stub = stub_;
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::orchestration::airflow::service::v1::
+          DatabaseFailoverResponse>(
+      background_->cq(), request,
+      [stub](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::orchestration::airflow::service::v1::
+                 DatabaseFailoverRequest const& request) {
+        return stub->AsyncDatabaseFailover(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::orchestration::airflow::service::v1::
+              DatabaseFailoverResponse>,
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->DatabaseFailover(request), polling_policy(),
+      __func__);
+}
+
+StatusOr<google::cloud::orchestration::airflow::service::v1::
+             FetchDatabasePropertiesResponse>
+EnvironmentsConnectionImpl::FetchDatabaseProperties(
+    google::cloud::orchestration::airflow::service::v1::
+        FetchDatabasePropertiesRequest const& request) {
+  return google::cloud::internal::RetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->FetchDatabaseProperties(request),
+      [this](grpc::ClientContext& context,
+             google::cloud::orchestration::airflow::service::v1::
+                 FetchDatabasePropertiesRequest const& request) {
+        return stub_->FetchDatabaseProperties(context, request);
+      },
+      request, __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

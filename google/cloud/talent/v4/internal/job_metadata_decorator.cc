@@ -18,6 +18,7 @@
 
 #include "google/cloud/talent/v4/internal/job_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/talent/v4/job_service.grpc.pb.h>
@@ -28,15 +29,18 @@ namespace cloud {
 namespace talent_v4_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-JobServiceMetadata::JobServiceMetadata(std::shared_ptr<JobServiceStub> child)
+JobServiceMetadata::JobServiceMetadata(
+    std::shared_ptr<JobServiceStub> child,
+    std::multimap<std::string, std::string> fixed_metadata)
     : child_(std::move(child)),
+      fixed_metadata_(std::move(fixed_metadata)),
       api_client_header_(
           google::cloud::internal::ApiClientHeader("generator")) {}
 
 StatusOr<google::cloud::talent::v4::Job> JobServiceMetadata::CreateJob(
     grpc::ClientContext& context,
     google::cloud::talent::v4::CreateJobRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->CreateJob(context, request);
 }
 
@@ -45,21 +49,21 @@ JobServiceMetadata::AsyncBatchCreateJobs(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::talent::v4::BatchCreateJobsRequest const& request) {
-  SetMetadata(*context, "parent=" + request.parent());
+  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
   return child_->AsyncBatchCreateJobs(cq, std::move(context), request);
 }
 
 StatusOr<google::cloud::talent::v4::Job> JobServiceMetadata::GetJob(
     grpc::ClientContext& context,
     google::cloud::talent::v4::GetJobRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetJob(context, request);
 }
 
 StatusOr<google::cloud::talent::v4::Job> JobServiceMetadata::UpdateJob(
     grpc::ClientContext& context,
     google::cloud::talent::v4::UpdateJobRequest const& request) {
-  SetMetadata(context, "job.name=" + request.job().name());
+  SetMetadata(context, absl::StrCat("job.name=", request.job().name()));
   return child_->UpdateJob(context, request);
 }
 
@@ -68,14 +72,14 @@ JobServiceMetadata::AsyncBatchUpdateJobs(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::talent::v4::BatchUpdateJobsRequest const& request) {
-  SetMetadata(*context, "parent=" + request.parent());
+  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
   return child_->AsyncBatchUpdateJobs(cq, std::move(context), request);
 }
 
 Status JobServiceMetadata::DeleteJob(
     grpc::ClientContext& context,
     google::cloud::talent::v4::DeleteJobRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->DeleteJob(context, request);
 }
 
@@ -84,7 +88,7 @@ JobServiceMetadata::AsyncBatchDeleteJobs(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::talent::v4::BatchDeleteJobsRequest const& request) {
-  SetMetadata(*context, "parent=" + request.parent());
+  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
   return child_->AsyncBatchDeleteJobs(cq, std::move(context), request);
 }
 
@@ -92,7 +96,7 @@ StatusOr<google::cloud::talent::v4::ListJobsResponse>
 JobServiceMetadata::ListJobs(
     grpc::ClientContext& context,
     google::cloud::talent::v4::ListJobsRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListJobs(context, request);
 }
 
@@ -100,7 +104,7 @@ StatusOr<google::cloud::talent::v4::SearchJobsResponse>
 JobServiceMetadata::SearchJobs(
     grpc::ClientContext& context,
     google::cloud::talent::v4::SearchJobsRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->SearchJobs(context, request);
 }
 
@@ -108,7 +112,7 @@ StatusOr<google::cloud::talent::v4::SearchJobsResponse>
 JobServiceMetadata::SearchJobsForAlert(
     grpc::ClientContext& context,
     google::cloud::talent::v4::SearchJobsRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->SearchJobsForAlert(context, request);
 }
 
@@ -136,6 +140,9 @@ void JobServiceMetadata::SetMetadata(grpc::ClientContext& context,
 }
 
 void JobServiceMetadata::SetMetadata(grpc::ClientContext& context) {
+  for (auto const& kv : fixed_metadata_) {
+    context.AddMetadata(kv.first, kv.second);
+  }
   context.AddMetadata("x-goog-api-client", api_client_header_);
   auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {

@@ -47,7 +47,7 @@ std::unique_ptr<RestClient> MakePooledRestClient(std::string endpoint_address,
  * Provides methods corresponding to HTTP verbs to make HTTP requests.
  *
  * Concrete versions of this class make HTTP requests. While typically used with
- * RESTful services, the interface and implementions can be used to make any
+ * RESTful services, the interface and implementations can be used to make any
  * HTTP requests.
  *
  * The headers, payload, and query parameters for the request are passed in as

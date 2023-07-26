@@ -40,7 +40,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * While the example showcases types from the BigQuery library, the underlying
  * principles apply for any pair of `*Client` and `*Connection`.
  *
- * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
+ * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
 class MockRepositoryManagerConnection
     : public cloudbuild_v2::RepositoryManagerConnection {
@@ -127,6 +127,12 @@ class MockRepositoryManagerConnection
       FetchLinkableRepositories,
       (google::devtools::cloudbuild::v2::FetchLinkableRepositoriesRequest
            request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::devtools::cloudbuild::v2::FetchGitRefsResponse>,
+      FetchGitRefs,
+      (google::devtools::cloudbuild::v2::FetchGitRefsRequest const& request),
       (override));
 };
 

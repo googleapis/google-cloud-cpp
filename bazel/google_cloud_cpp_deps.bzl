@@ -17,8 +17,66 @@
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 load("@bazel_tools//tools/build_defs/repo:utils.bzl", "maybe")
 
+def google_cloud_cpp_development_deps(name = None):
+    """Loads dependencies needed to develop the google-cloud-cpp libraries.
+
+    google-cloud-cpp developers call this function from the top-level WORKSPACE
+    file to obtain all the necessary *development* dependencies for
+    google-cloud-cpp. This includes testing dependencies and dependencies used
+    by development tools.
+
+    It is a bug if the targets used for google-cloud-cpp can be used outside
+    the package. All such targets should have their visibility restricted, or
+    are deprecated. If you still need to use such targets, this function may
+    be useful in your own WORKSPACE file.
+
+    This function only loads dependencies that have not been previously loaded,
+    allowing developers to override the version of the dependencies they want to
+    use.
+
+    Args:
+        name: Unused. It is conventional to provide a `name` argument to all
+            workspace functions.
+    """
+
+    # This is only needed to run the microbenchmarks.
+    maybe(
+        http_archive,
+        name = "com_google_benchmark",
+        urls = [
+            "https://storage.googleapis.com/cloud-cpp-community-archive/com_google_benchmark/v1.8.2.tar.gz",
+            "https://github.com/google/benchmark/archive/v1.8.2.tar.gz",
+        ],
+        sha256 = "2aab2980d0376137f969d92848fbb68216abb07633034534fc8c65cc4e7a0e93",
+        strip_prefix = "benchmark-1.8.2",
+    )
+
+    # PugiXML, this is only used in the docfx internal tool.
+    maybe(
+        http_archive,
+        name = "com_github_zeux_pugixml",
+        urls = [
+            "https://storage.googleapis.com/cloud-cpp-community-archive/com_github_zeux_pugixml/v1.13.tar.gz",
+            "https://github.com/zeux/pugixml/archive/v1.13.tar.gz",
+        ],
+        sha256 = "5c5ad5d7caeb791420408042a7d88c2c6180781bf218feca259fd9d840a888e1",
+        strip_prefix = "pugixml-1.13",
+        build_file = Label("//bazel:pugixml.BUILD"),
+    )
+
+    maybe(
+        http_archive,
+        name = "com_github_jbeder_yaml_cpp",
+        urls = [
+            "https://storage.googleapis.com/cloud-cpp-community-archive/com_github_jbeder_yaml_cpp/yaml-cpp-0.7.0.tar.gz",
+            "https://github.com/jbeder/yaml-cpp/archive/yaml-cpp-0.7.0.tar.gz",
+        ],
+        sha256 = "43e6a9fcb146ad871515f0d0873947e5d497a1c9c60c58cb102a97b47208b7c3",
+        strip_prefix = "yaml-cpp-yaml-cpp-0.7.0",
+    )
+
 def google_cloud_cpp_deps(name = None):
-    """Loads dependencies need to compile the google-cloud-cpp library.
+    """Loads dependencies need to compile the google-cloud-cpp libraries.
 
     Application developers can call this function from their WORKSPACE file
     to obtain all the necessary dependencies for google-cloud-cpp, including
@@ -66,7 +124,8 @@ def google_cloud_cpp_deps(name = None):
         strip_prefix = "abseil-cpp-20230125.3",
     )
 
-    # Load a version of googletest that we know works.
+    # Load a version of googletest that we know works. This is needed to create
+    # //:.*mocks targets, which are public.
     maybe(
         http_archive,
         name = "com_google_googletest",
@@ -78,28 +137,16 @@ def google_cloud_cpp_deps(name = None):
         strip_prefix = "googletest-1.13.0",
     )
 
-    # Load a version of benchmark that we know works.
-    maybe(
-        http_archive,
-        name = "com_google_benchmark",
-        urls = [
-            "https://storage.googleapis.com/cloud-cpp-community-archive/com_google_benchmark/v1.8.0.tar.gz",
-            "https://github.com/google/benchmark/archive/v1.8.0.tar.gz",
-        ],
-        sha256 = "ea2e94c24ddf6594d15c711c06ccd4486434d9cf3eca954e2af8a20c88f9f172",
-        strip_prefix = "benchmark-1.8.0",
-    )
-
     # Load the googleapis dependency.
     maybe(
         http_archive,
         name = "com_google_googleapis",
         urls = [
-            "https://storage.googleapis.com/cloud-cpp-community-archive/com_google_googleapis/2da477b6a72168c65fdb4245530cfa702cc4b029.tar.gz",
-            "https://github.com/googleapis/googleapis/archive/2da477b6a72168c65fdb4245530cfa702cc4b029.tar.gz",
+            "https://storage.googleapis.com/cloud-cpp-community-archive/com_google_googleapis/a2223b18ac65e81c1dbc6c7d6785043799ae10b6.tar.gz",
+            "https://github.com/googleapis/googleapis/archive/a2223b18ac65e81c1dbc6c7d6785043799ae10b6.tar.gz",
         ],
-        sha256 = "3e48e5833fcd2e1fcb8b6a5b7a88e18503b670e8636b868cdb5ac32e00fbdafb",
-        strip_prefix = "googleapis-2da477b6a72168c65fdb4245530cfa702cc4b029",
+        sha256 = "daba312861e264170d0a392beb48e95ce42a9177c57c29d63651b4579a2a1f3e",
+        strip_prefix = "googleapis-a2223b18ac65e81c1dbc6c7d6785043799ae10b6",
         build_file = Label("//bazel:googleapis.BUILD"),
         # Scaffolding for patching googleapis after download. For example:
         #   patches = ["googleapis.patch"]
@@ -116,11 +163,11 @@ def google_cloud_cpp_deps(name = None):
         http_archive,
         name = "com_google_protobuf",
         urls = [
-            "https://storage.googleapis.com/cloud-cpp-community-archive/com_google_protobuf/v21.12.tar.gz",
-            "https://github.com/protocolbuffers/protobuf/archive/v21.12.tar.gz",
+            "https://storage.googleapis.com/cloud-cpp-community-archive/com_google_protobuf/v23.4.tar.gz",
+            "https://github.com/protocolbuffers/protobuf/archive/v23.4.tar.gz",
         ],
-        sha256 = "22fdaf641b31655d4b2297f9981fa5203b2866f8332d3c6333f6b0107bb320de",
-        strip_prefix = "protobuf-21.12",
+        sha256 = "a700a49470d301f1190a487a923b5095bf60f08f4ae4cac9f5f7c36883d17971",
+        strip_prefix = "protobuf-23.4",
     )
 
     # Load BoringSSL. This could be automatically loaded by gRPC. But as of
@@ -144,11 +191,11 @@ def google_cloud_cpp_deps(name = None):
         http_archive,
         name = "com_github_grpc_grpc",
         urls = [
-            "https://storage.googleapis.com/cloud-cpp-community-archive/com_github_grpc_grpc/v1.54.0.tar.gz",
-            "https://github.com/grpc/grpc/archive/v1.54.0.tar.gz",
+            "https://storage.googleapis.com/cloud-cpp-community-archive/com_github_grpc_grpc/v1.56.2.tar.gz",
+            "https://github.com/grpc/grpc/archive/v1.56.2.tar.gz",
         ],
-        sha256 = "5e53505a6c84030a26c4fddd71b3f46feec8e0a8eccff2a903b189d349ca6ff5",
-        strip_prefix = "grpc-1.54.0",
+        sha256 = "931f07db9d48cff6a6007c1033ba6d691fe655bea2765444bc1ad974dfc840aa",
+        strip_prefix = "grpc-1.56.2",
     )
 
     # We use the cc_proto_library() rule from @com_google_protobuf, which
@@ -210,33 +257,9 @@ def google_cloud_cpp_deps(name = None):
         http_archive,
         name = "io_opentelemetry_cpp",
         urls = [
-            "https://storage.googleapis.com/cloud-cpp-community-archive/io_opentelemetry_cpp/v1.9.0.tar.gz",
-            "https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.9.0.tar.gz",
+            "https://storage.googleapis.com/cloud-cpp-community-archive/io_opentelemetry_cpp/v1.9.1.tar.gz",
+            "https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.9.1.tar.gz",
         ],
-        sha256 = "0fdbefbdc2c154634728097e26de52a8210ed95cb032beb5f35da0a493cd5066",
-        strip_prefix = "opentelemetry-cpp-1.9.0",
-    )
-
-    # PugiXML, this is only used in the docfx internal tool.
-    maybe(
-        http_archive,
-        name = "com_github_zeux_pugixml",
-        urls = [
-            "https://storage.googleapis.com/cloud-cpp-community-archive/com_github_zeux_pugixml/v1.13.tar.gz",
-            "https://github.com/zeux/pugixml/archive/v1.13.tar.gz",
-        ],
-        sha256 = "5c5ad5d7caeb791420408042a7d88c2c6180781bf218feca259fd9d840a888e1",
-        strip_prefix = "pugixml-1.13",
-        build_file = Label("//bazel:pugixml.BUILD"),
-    )
-
-    maybe(
-        http_archive,
-        name = "com_github_jbeder_yaml_cpp",
-        urls = [
-            "https://storage.googleapis.com/cloud-cpp-community-archive/com_github_jbeder_yaml_cpp/yaml-cpp-0.7.0.tar.gz",
-            "https://github.com/jbeder/yaml-cpp/archive/yaml-cpp-0.7.0.tar.gz",
-        ],
-        sha256 = "43e6a9fcb146ad871515f0d0873947e5d497a1c9c60c58cb102a97b47208b7c3",
-        strip_prefix = "yaml-cpp-yaml-cpp-0.7.0",
+        sha256 = "668de24f81c8d36d75092ad9dcb02a97cd41473adbe72485ece05e336db48249",
+        strip_prefix = "opentelemetry-cpp-1.9.1",
     )

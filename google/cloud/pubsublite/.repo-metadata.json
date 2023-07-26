@@ -1,0 +1,14 @@
+{
+    "api_id": "pubsublite.googleapis.com",
+    "api_shortname": "pubsublite",
+    "client_documentation": "https://cloud.google.com/cpp/docs/reference/pubsublite/latest",
+    "distribution_name": "google-cloud-cpp",
+    "issue_tracker": "https://issuetracker.google.com/savedsearches/5836121",
+    "language": "cpp",
+    "library_type": "GAPIC_COMBO",
+    "name_pretty": "Pub/Sub Lite API",
+    "product_documentation": "https://cloud.google.com/pubsub/lite",
+    "release_level": "preview",
+    "repo": "googleapis/google-cloud-cpp",
+    "requires_billing": true
+}

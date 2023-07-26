@@ -47,8 +47,9 @@ Options SecurityCenterDefaultOptions(Options options) {
   }
   if (!options.has<securitycenter_v1::SecurityCenterBackoffPolicyOption>()) {
     options.set<securitycenter_v1::SecurityCenterBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options.has<securitycenter_v1::SecurityCenterPollingPolicyOption>()) {
@@ -58,8 +59,9 @@ Options SecurityCenterDefaultOptions(Options options) {
             securitycenter_v1::SecurityCenterBackoffPolicyOption::Type>(
             options.get<securitycenter_v1::SecurityCenterRetryPolicyOption>()
                 ->clone(),
-            options.get<securitycenter_v1::SecurityCenterBackoffPolicyOption>()
-                ->clone())
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
             .clone());
   }
   if (!options.has<securitycenter_v1::

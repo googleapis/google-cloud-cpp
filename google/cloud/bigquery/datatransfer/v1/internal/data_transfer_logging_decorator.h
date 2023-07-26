@@ -36,7 +36,7 @@ class DataTransferServiceLogging : public DataTransferServiceStub {
   ~DataTransferServiceLogging() override = default;
   DataTransferServiceLogging(std::shared_ptr<DataTransferServiceStub> child,
                              TracingOptions tracing_options,
-                             std::set<std::string> components);
+                             std::set<std::string> const& components);
 
   StatusOr<google::cloud::bigquery::datatransfer::v1::DataSource> GetDataSource(
       grpc::ClientContext& context,
@@ -126,7 +126,7 @@ class DataTransferServiceLogging : public DataTransferServiceStub {
  private:
   std::shared_ptr<DataTransferServiceStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // DataTransferServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

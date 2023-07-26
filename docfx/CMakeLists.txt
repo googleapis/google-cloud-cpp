@@ -14,6 +14,9 @@
 # limitations under the License.
 # ~~~
 
+if (NOT GOOGLE_CLOUD_CPP_INTERNAL_DOCFX)
+    return()
+endif ()
 if (APPLE OR WIN32)
     message(STATUS "The docfx directory is only used and tested on Linux")
     return()
@@ -55,6 +58,10 @@ add_library(
     function_classifiers.h
     generate_metadata.cc
     generate_metadata.h
+    linked_text_type.cc
+    linked_text_type.h
+    node_name.cc
+    node_name.h
     parse_arguments.cc
     parse_arguments.h
     public_docs.cc
@@ -102,6 +109,8 @@ set(unit_tests
     doxygen_pages_test.cc
     function_classifiers_test.cc
     generate_metadata_test.cc
+    linked_text_type_test.cc
+    node_name_test.cc
     parse_arguments_test.cc
     public_docs_test.cc
     yaml_context_test.cc)

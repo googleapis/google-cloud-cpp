@@ -105,6 +105,8 @@ class ObjectWriteStreambuf : public std::basic_streambuf<char> {
   /// The current used bytes in the put area (aka current_ios_buffer_)
   std::size_t put_area_size() const { return pptr() - pbase(); }
 
+  void UpdatePutArea();
+
   std::shared_ptr<RawClient> client_;
   ResumableUploadRequest request_;
   Status last_status_;

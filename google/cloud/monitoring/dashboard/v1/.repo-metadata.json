@@ -1,0 +1,14 @@
+{
+    "api_id": "monitoring.googleapis.com",
+    "api_shortname": "monitoring",
+    "client_documentation": "https://cloud.google.com/cpp/docs/reference/monitoring/latest",
+    "distribution_name": "google-cloud-cpp",
+    "issue_tracker": "https://issuetracker.google.com/savedsearches/559785",
+    "language": "cpp",
+    "library_type": "GAPIC_AUTO",
+    "name_pretty": "Cloud Monitoring API",
+    "product_documentation": "https://cloud.google.com/monitoring",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-cpp",
+    "requires_billing": true
+}

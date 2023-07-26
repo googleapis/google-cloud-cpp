@@ -208,6 +208,226 @@ DataMigrationServiceTracingConnection::DeleteConnectionProfile(
                            child_->DeleteConnectionProfile(request));
 }
 
+future<StatusOr<google::cloud::clouddms::v1::PrivateConnection>>
+DataMigrationServiceTracingConnection::CreatePrivateConnection(
+    google::cloud::clouddms::v1::CreatePrivateConnectionRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "datamigration_v1::DataMigrationServiceConnection::"
+      "CreatePrivateConnection");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreatePrivateConnection(request));
+}
+
+StatusOr<google::cloud::clouddms::v1::PrivateConnection>
+DataMigrationServiceTracingConnection::GetPrivateConnection(
+    google::cloud::clouddms::v1::GetPrivateConnectionRequest const& request) {
+  auto span = internal::MakeSpan(
+      "datamigration_v1::DataMigrationServiceConnection::GetPrivateConnection");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetPrivateConnection(request));
+}
+
+StreamRange<google::cloud::clouddms::v1::PrivateConnection>
+DataMigrationServiceTracingConnection::ListPrivateConnections(
+    google::cloud::clouddms::v1::ListPrivateConnectionsRequest request) {
+  auto span = internal::MakeSpan(
+      "datamigration_v1::DataMigrationServiceConnection::"
+      "ListPrivateConnections");
+  auto scope = opentelemetry::trace::Scope(span);
+  auto sr = child_->ListPrivateConnections(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::clouddms::v1::PrivateConnection>(std::move(span),
+                                                      std::move(sr));
+}
+
+future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>
+DataMigrationServiceTracingConnection::DeletePrivateConnection(
+    google::cloud::clouddms::v1::DeletePrivateConnectionRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "datamigration_v1::DataMigrationServiceConnection::"
+      "DeletePrivateConnection");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeletePrivateConnection(request));
+}
+
+StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>
+DataMigrationServiceTracingConnection::GetConversionWorkspace(
+    google::cloud::clouddms::v1::GetConversionWorkspaceRequest const& request) {
+  auto span = internal::MakeSpan(
+      "datamigration_v1::DataMigrationServiceConnection::"
+      "GetConversionWorkspace");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetConversionWorkspace(request));
+}
+
+StreamRange<google::cloud::clouddms::v1::ConversionWorkspace>
+DataMigrationServiceTracingConnection::ListConversionWorkspaces(
+    google::cloud::clouddms::v1::ListConversionWorkspacesRequest request) {
+  auto span = internal::MakeSpan(
+      "datamigration_v1::DataMigrationServiceConnection::"
+      "ListConversionWorkspaces");
+  auto scope = opentelemetry::trace::Scope(span);
+  auto sr = child_->ListConversionWorkspaces(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::clouddms::v1::ConversionWorkspace>(std::move(span),
+                                                        std::move(sr));
+}
+
+future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
+DataMigrationServiceTracingConnection::CreateConversionWorkspace(
+    google::cloud::clouddms::v1::CreateConversionWorkspaceRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "datamigration_v1::DataMigrationServiceConnection::"
+      "CreateConversionWorkspace");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateConversionWorkspace(request));
+}
+
+future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
+DataMigrationServiceTracingConnection::UpdateConversionWorkspace(
+    google::cloud::clouddms::v1::UpdateConversionWorkspaceRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "datamigration_v1::DataMigrationServiceConnection::"
+      "UpdateConversionWorkspace");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateConversionWorkspace(request));
+}
+
+future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>
+DataMigrationServiceTracingConnection::DeleteConversionWorkspace(
+    google::cloud::clouddms::v1::DeleteConversionWorkspaceRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "datamigration_v1::DataMigrationServiceConnection::"
+      "DeleteConversionWorkspace");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteConversionWorkspace(request));
+}
+
+future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
+DataMigrationServiceTracingConnection::SeedConversionWorkspace(
+    google::cloud::clouddms::v1::SeedConversionWorkspaceRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "datamigration_v1::DataMigrationServiceConnection::"
+      "SeedConversionWorkspace");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->SeedConversionWorkspace(request));
+}
+
+future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
+DataMigrationServiceTracingConnection::ImportMappingRules(
+    google::cloud::clouddms::v1::ImportMappingRulesRequest const& request) {
+  auto span = internal::MakeSpan(
+      "datamigration_v1::DataMigrationServiceConnection::ImportMappingRules");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->ImportMappingRules(request));
+}
+
+future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
+DataMigrationServiceTracingConnection::ConvertConversionWorkspace(
+    google::cloud::clouddms::v1::ConvertConversionWorkspaceRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "datamigration_v1::DataMigrationServiceConnection::"
+      "ConvertConversionWorkspace");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->ConvertConversionWorkspace(request));
+}
+
+future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
+DataMigrationServiceTracingConnection::CommitConversionWorkspace(
+    google::cloud::clouddms::v1::CommitConversionWorkspaceRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "datamigration_v1::DataMigrationServiceConnection::"
+      "CommitConversionWorkspace");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CommitConversionWorkspace(request));
+}
+
+future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
+DataMigrationServiceTracingConnection::RollbackConversionWorkspace(
+    google::cloud::clouddms::v1::RollbackConversionWorkspaceRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "datamigration_v1::DataMigrationServiceConnection::"
+      "RollbackConversionWorkspace");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->RollbackConversionWorkspace(request));
+}
+
+future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
+DataMigrationServiceTracingConnection::ApplyConversionWorkspace(
+    google::cloud::clouddms::v1::ApplyConversionWorkspaceRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "datamigration_v1::DataMigrationServiceConnection::"
+      "ApplyConversionWorkspace");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->ApplyConversionWorkspace(request));
+}
+
+StreamRange<google::cloud::clouddms::v1::DatabaseEntity>
+DataMigrationServiceTracingConnection::DescribeDatabaseEntities(
+    google::cloud::clouddms::v1::DescribeDatabaseEntitiesRequest request) {
+  auto span = internal::MakeSpan(
+      "datamigration_v1::DataMigrationServiceConnection::"
+      "DescribeDatabaseEntities");
+  auto scope = opentelemetry::trace::Scope(span);
+  auto sr = child_->DescribeDatabaseEntities(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::clouddms::v1::DatabaseEntity>(std::move(span),
+                                                   std::move(sr));
+}
+
+StatusOr<google::cloud::clouddms::v1::SearchBackgroundJobsResponse>
+DataMigrationServiceTracingConnection::SearchBackgroundJobs(
+    google::cloud::clouddms::v1::SearchBackgroundJobsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "datamigration_v1::DataMigrationServiceConnection::SearchBackgroundJobs");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->SearchBackgroundJobs(request));
+}
+
+StatusOr<
+    google::cloud::clouddms::v1::DescribeConversionWorkspaceRevisionsResponse>
+DataMigrationServiceTracingConnection::DescribeConversionWorkspaceRevisions(
+    google::cloud::clouddms::v1::
+        DescribeConversionWorkspaceRevisionsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "datamigration_v1::DataMigrationServiceConnection::"
+      "DescribeConversionWorkspaceRevisions");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(
+      *span, child_->DescribeConversionWorkspaceRevisions(request));
+}
+
+StreamRange<std::string> DataMigrationServiceTracingConnection::FetchStaticIps(
+    google::cloud::clouddms::v1::FetchStaticIpsRequest request) {
+  auto span = internal::MakeSpan(
+      "datamigration_v1::DataMigrationServiceConnection::FetchStaticIps");
+  auto scope = opentelemetry::trace::Scope(span);
+  auto sr = child_->FetchStaticIps(std::move(request));
+  return internal::MakeTracedStreamRange<std::string>(std::move(span),
+                                                      std::move(sr));
+}
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<datamigration_v1::DataMigrationServiceConnection>

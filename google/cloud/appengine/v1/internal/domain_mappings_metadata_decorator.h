@@ -22,6 +22,7 @@
 #include "google/cloud/appengine/v1/internal/domain_mappings_stub.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
+#include <map>
 #include <memory>
 #include <string>
 
@@ -33,7 +34,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class DomainMappingsMetadata : public DomainMappingsStub {
  public:
   ~DomainMappingsMetadata() override = default;
-  explicit DomainMappingsMetadata(std::shared_ptr<DomainMappingsStub> child);
+  DomainMappingsMetadata(
+      std::shared_ptr<DomainMappingsStub> child,
+      std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::appengine::v1::ListDomainMappingsResponse>
   ListDomainMappings(
@@ -78,6 +81,7 @@ class DomainMappingsMetadata : public DomainMappingsStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<DomainMappingsStub> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

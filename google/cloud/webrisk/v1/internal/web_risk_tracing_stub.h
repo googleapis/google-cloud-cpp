@@ -55,6 +55,21 @@ class WebRiskServiceTracingStub : public WebRiskServiceStub {
       google::cloud::webrisk::v1::CreateSubmissionRequest const& request)
       override;
 
+  future<StatusOr<google::longrunning::Operation>> AsyncSubmitUri(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::webrisk::v1::SubmitUriRequest const& request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::longrunning::GetOperationRequest const& request) override;
+
+  future<Status> AsyncCancelOperation(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::longrunning::CancelOperationRequest const& request) override;
+
  private:
   std::shared_ptr<WebRiskServiceStub> child_;
 };

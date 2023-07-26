@@ -14,16 +14,6 @@
 # limitations under the License.
 # ~~~
 
-# TODO(#8785): Enable on macOS.
-if (APPLE)
-    message(
-        WARNING
-            "Cannot build google/cloud/storagetransfer on Apple platforms."
-            " More details at https://github.com/googleapis/google-cloud-cpp/issues/8785 ."
-    )
-    return()
-endif ()
-
 include(GoogleapisConfig)
 set(DOXYGEN_PROJECT_NAME "Storage Transfer API C++ Client")
 set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for the Storage Transfer API")
@@ -185,8 +175,8 @@ google_cloud_cpp_add_pkgconfig(
     "The Storage Transfer API C++ Client Library"
     "Provides C++ APIs to use the Storage Transfer API."
     "google_cloud_cpp_grpc_utils"
-    " google_cloud_cpp_common"
-    " google_cloud_cpp_storagetransfer_protos")
+    "google_cloud_cpp_common"
+    "google_cloud_cpp_storagetransfer_protos")
 
 # Create and install the CMake configuration files.
 include(CMakePackageConfigHelpers)

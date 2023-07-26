@@ -86,48 +86,70 @@ class CloudBillingClient {
   }
   ///@}
 
+  // clang-format off
   ///
   /// Gets information about a billing account. The current authenticated user
   /// must be a [viewer of the billing
   /// account](https://cloud.google.com/billing/docs/how-to/billing-access).
   ///
-  /// @param name  Required. The resource name of the billing account to
-  /// retrieve. For
+  /// @param name  Required. The resource name of the billing account to retrieve. For
   ///  example, `billingAccounts/012345-567890-ABCDEF`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::billing::v1::BillingAccount,google/cloud/billing/v1/cloud_billing.proto#L208}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.billing.v1.BillingAccount])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.billing.v1.BillingAccount]:
-  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L208}
-  /// [google.cloud.billing.v1.GetBillingAccountRequest]:
-  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L265}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.billing.v1.BillingAccount]: @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L208}
+  /// [google.cloud.billing.v1.GetBillingAccountRequest]: @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L271}
   ///
+  // clang-format on
   StatusOr<google::cloud::billing::v1::BillingAccount> GetBillingAccount(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Gets information about a billing account. The current authenticated user
   /// must be a [viewer of the billing
   /// account](https://cloud.google.com/billing/docs/how-to/billing-access).
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::billing::v1::GetBillingAccountRequest,google/cloud/billing/v1/cloud_billing.proto#L265}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.billing.v1.GetBillingAccountRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::billing::v1::BillingAccount,google/cloud/billing/v1/cloud_billing.proto#L208}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.billing.v1.BillingAccount])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.billing.v1.BillingAccount]:
-  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L208}
-  /// [google.cloud.billing.v1.GetBillingAccountRequest]:
-  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L265}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.billing.v1.BillingAccount]: @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L208}
+  /// [google.cloud.billing.v1.GetBillingAccountRequest]: @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L271}
   ///
+  // clang-format on
   StatusOr<google::cloud::billing::v1::BillingAccount> GetBillingAccount(
       google::cloud::billing::v1::GetBillingAccountRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists the billing accounts that the current authenticated user has
   /// permission to
@@ -135,38 +157,78 @@ class CloudBillingClient {
   ///
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::billing::v1::BillingAccount,google/cloud/billing/v1/cloud_billing.proto#L208}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.billing.v1.BillingAccount], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.billing.v1.BillingAccount]:
-  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L208}
-  /// [google.cloud.billing.v1.ListBillingAccountsRequest]:
-  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L277}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.billing.v1.BillingAccount]: @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L208}
+  /// [google.cloud.billing.v1.ListBillingAccountsRequest]: @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L283}
   ///
+  // clang-format on
   StreamRange<google::cloud::billing::v1::BillingAccount> ListBillingAccounts(
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists the billing accounts that the current authenticated user has
   /// permission to
   /// [view](https://cloud.google.com/billing/docs/how-to/billing-access).
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::billing::v1::ListBillingAccountsRequest,google/cloud/billing/v1/cloud_billing.proto#L277}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.billing.v1.ListBillingAccountsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::billing::v1::BillingAccount,google/cloud/billing/v1/cloud_billing.proto#L208}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.billing.v1.BillingAccount], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.billing.v1.BillingAccount]:
-  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L208}
-  /// [google.cloud.billing.v1.ListBillingAccountsRequest]:
-  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L277}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.billing.v1.BillingAccount]: @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L208}
+  /// [google.cloud.billing.v1.ListBillingAccountsRequest]: @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L283}
   ///
+  // clang-format on
   StreamRange<google::cloud::billing::v1::BillingAccount> ListBillingAccounts(
       google::cloud::billing::v1::ListBillingAccountsRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Updates a billing account's fields.
   /// Currently the only field that can be edited is `display_name`.
@@ -175,26 +237,33 @@ class CloudBillingClient {
   /// [administrator](https://cloud.google.com/billing/docs/how-to/billing-access)
   /// of the billing account.
   ///
-  /// @param name  Required. The name of the billing account resource to be
-  /// updated.
-  /// @param account  Required. The billing account resource to replace the
-  /// resource on the
+  /// @param name  Required. The name of the billing account resource to be updated.
+  /// @param account  Required. The billing account resource to replace the resource on the
   ///  server.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::billing::v1::BillingAccount,google/cloud/billing/v1/cloud_billing.proto#L208}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.billing.v1.BillingAccount])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.billing.v1.BillingAccount]:
-  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L208}
-  /// [google.cloud.billing.v1.UpdateBillingAccountRequest]:
-  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L317}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.billing.v1.BillingAccount]: @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L208}
+  /// [google.cloud.billing.v1.UpdateBillingAccountRequest]: @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L323}
   ///
+  // clang-format on
   StatusOr<google::cloud::billing::v1::BillingAccount> UpdateBillingAccount(
       std::string const& name,
       google::cloud::billing::v1::BillingAccount const& account,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Updates a billing account's fields.
   /// Currently the only field that can be edited is `display_name`.
@@ -203,22 +272,35 @@ class CloudBillingClient {
   /// [administrator](https://cloud.google.com/billing/docs/how-to/billing-access)
   /// of the billing account.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::billing::v1::UpdateBillingAccountRequest,google/cloud/billing/v1/cloud_billing.proto#L317}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.billing.v1.UpdateBillingAccountRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::billing::v1::BillingAccount,google/cloud/billing/v1/cloud_billing.proto#L208}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.billing.v1.BillingAccount])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.billing.v1.BillingAccount]:
-  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L208}
-  /// [google.cloud.billing.v1.UpdateBillingAccountRequest]:
-  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L317}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.billing.v1.BillingAccount]: @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L208}
+  /// [google.cloud.billing.v1.UpdateBillingAccountRequest]: @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L323}
   ///
+  // clang-format on
   StatusOr<google::cloud::billing::v1::BillingAccount> UpdateBillingAccount(
       google::cloud::billing::v1::UpdateBillingAccountRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// This method creates [billing
   /// subaccounts](https://cloud.google.com/billing/docs/concepts#subaccounts).
@@ -242,18 +324,27 @@ class CloudBillingClient {
   ///  account.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::billing::v1::BillingAccount,google/cloud/billing/v1/cloud_billing.proto#L208}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.billing.v1.BillingAccount])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.billing.v1.BillingAccount]:
-  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L208}
-  /// [google.cloud.billing.v1.CreateBillingAccountRequest]:
-  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L308}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.billing.v1.BillingAccount]: @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L208}
+  /// [google.cloud.billing.v1.CreateBillingAccountRequest]: @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L314}
   ///
+  // clang-format on
   StatusOr<google::cloud::billing::v1::BillingAccount> CreateBillingAccount(
       google::cloud::billing::v1::BillingAccount const& billing_account,
       Options opts = {});
 
+  // clang-format off
   ///
   /// This method creates [billing
   /// subaccounts](https://cloud.google.com/billing/docs/concepts#subaccounts).
@@ -271,68 +362,120 @@ class CloudBillingClient {
   /// This method will return an error if the parent account has not been
   /// provisioned as a reseller account.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::billing::v1::CreateBillingAccountRequest,google/cloud/billing/v1/cloud_billing.proto#L308}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.billing.v1.CreateBillingAccountRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::billing::v1::BillingAccount,google/cloud/billing/v1/cloud_billing.proto#L208}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.billing.v1.BillingAccount])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.billing.v1.BillingAccount]:
-  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L208}
-  /// [google.cloud.billing.v1.CreateBillingAccountRequest]:
-  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L308}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.billing.v1.BillingAccount]: @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L208}
+  /// [google.cloud.billing.v1.CreateBillingAccountRequest]: @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L314}
   ///
+  // clang-format on
   StatusOr<google::cloud::billing::v1::BillingAccount> CreateBillingAccount(
       google::cloud::billing::v1::CreateBillingAccountRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists the projects associated with a billing account. The current
   /// authenticated user must have the `billing.resourceAssociations.list` IAM
   /// permission, which is often given to billing account
   /// [viewers](https://cloud.google.com/billing/docs/how-to/billing-access).
   ///
-  /// @param name  Required. The resource name of the billing account associated
-  /// with the
+  /// @param name  Required. The resource name of the billing account associated with the
   ///  projects that you want to list. For example,
   ///  `billingAccounts/012345-567890-ABCDEF`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::billing::v1::ProjectBillingInfo,google/cloud/billing/v1/cloud_billing.proto#L241}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.billing.v1.ProjectBillingInfo], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.billing.v1.ListProjectBillingInfoRequest]:
-  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L336}
-  /// [google.cloud.billing.v1.ProjectBillingInfo]:
-  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L241}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.billing.v1.ListProjectBillingInfoRequest]: @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L342}
+  /// [google.cloud.billing.v1.ProjectBillingInfo]: @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L241}
   ///
+  // clang-format on
   StreamRange<google::cloud::billing::v1::ProjectBillingInfo>
   ListProjectBillingInfo(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Lists the projects associated with a billing account. The current
   /// authenticated user must have the `billing.resourceAssociations.list` IAM
   /// permission, which is often given to billing account
   /// [viewers](https://cloud.google.com/billing/docs/how-to/billing-access).
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::billing::v1::ListProjectBillingInfoRequest,google/cloud/billing/v1/cloud_billing.proto#L336}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.billing.v1.ListProjectBillingInfoRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::billing::v1::ProjectBillingInfo,google/cloud/billing/v1/cloud_billing.proto#L241}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.billing.v1.ProjectBillingInfo], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.billing.v1.ListProjectBillingInfoRequest]:
-  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L336}
-  /// [google.cloud.billing.v1.ProjectBillingInfo]:
-  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L241}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.billing.v1.ListProjectBillingInfoRequest]: @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L342}
+  /// [google.cloud.billing.v1.ProjectBillingInfo]: @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L241}
   ///
+  // clang-format on
   StreamRange<google::cloud::billing::v1::ProjectBillingInfo>
   ListProjectBillingInfo(
       google::cloud::billing::v1::ListProjectBillingInfoRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Gets the billing information for a project. The current authenticated user
   /// must have the `resourcemanager.projects.get` permission for the project,
@@ -340,22 +483,30 @@ class CloudBillingClient {
   /// Viewer](https://cloud.google.com/iam/docs/understanding-roles#predefined_roles)
   /// role.
   ///
-  /// @param name  Required. The resource name of the project for which billing
-  /// information is
+  /// @param name  Required. The resource name of the project for which billing information is
   ///  retrieved. For example, `projects/tokyo-rain-123`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::billing::v1::ProjectBillingInfo,google/cloud/billing/v1/cloud_billing.proto#L241}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.billing.v1.ProjectBillingInfo])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.billing.v1.GetProjectBillingInfoRequest]:
-  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L370}
-  /// [google.cloud.billing.v1.ProjectBillingInfo]:
-  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L241}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.billing.v1.GetProjectBillingInfoRequest]: @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L376}
+  /// [google.cloud.billing.v1.ProjectBillingInfo]: @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L241}
   ///
+  // clang-format on
   StatusOr<google::cloud::billing::v1::ProjectBillingInfo>
   GetProjectBillingInfo(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Gets the billing information for a project. The current authenticated user
   /// must have the `resourcemanager.projects.get` permission for the project,
@@ -363,36 +514,49 @@ class CloudBillingClient {
   /// Viewer](https://cloud.google.com/iam/docs/understanding-roles#predefined_roles)
   /// role.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::billing::v1::GetProjectBillingInfoRequest,google/cloud/billing/v1/cloud_billing.proto#L370}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.billing.v1.GetProjectBillingInfoRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::billing::v1::ProjectBillingInfo,google/cloud/billing/v1/cloud_billing.proto#L241}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.billing.v1.ProjectBillingInfo])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.billing.v1.GetProjectBillingInfoRequest]:
-  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L370}
-  /// [google.cloud.billing.v1.ProjectBillingInfo]:
-  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L241}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.billing.v1.GetProjectBillingInfoRequest]: @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L376}
+  /// [google.cloud.billing.v1.ProjectBillingInfo]: @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L241}
   ///
+  // clang-format on
   StatusOr<google::cloud::billing::v1::ProjectBillingInfo>
   GetProjectBillingInfo(
       google::cloud::billing::v1::GetProjectBillingInfoRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Sets or updates the billing account associated with a project. You specify
   /// the new billing account by setting the `billing_account_name` in the
   /// `ProjectBillingInfo` resource to the resource name of a billing account.
   /// Associating a project with an open billing account enables billing on the
-  /// project and allows charges for resource usage. If the project already had
-  /// a billing account, this method changes the billing account used for
-  /// resource usage charges.
+  /// project and allows charges for resource usage. If the project already had a
+  /// billing account, this method changes the billing account used for resource
+  /// usage charges.
   ///
-  /// *Note:* Incurred charges that have not yet been reported in the
-  /// transaction history of the Google Cloud Console might be billed to the new
-  /// billing account, even if the charge occurred before the new billing
-  /// account was assigned to the project.
+  /// *Note:* Incurred charges that have not yet been reported in the transaction
+  /// history of the Google Cloud Console might be billed to the new billing
+  /// account, even if the charge occurred before the new billing account was
+  /// assigned to the project.
   ///
   /// The current authenticated user must have ownership privileges for both the
   /// [project](https://cloud.google.com/docs/permissions-overview#h.bgs0oxofvnoo
@@ -413,42 +577,49 @@ class CloudBillingClient {
   /// disable billing, you should always call this method with the name of an
   /// *open* billing account.
   ///
-  /// @param name  Required. The resource name of the project associated with
-  /// the billing
+  /// @param name  Required. The resource name of the project associated with the billing
   ///  information that you want to update. For example,
   ///  `projects/tokyo-rain-123`.
-  /// @param project_billing_info  The new billing information for the project.
-  /// Read-only fields are ignored;
+  /// @param project_billing_info  The new billing information for the project. Read-only fields are ignored;
   ///  thus, you can leave empty all fields except `billing_account_name`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::billing::v1::ProjectBillingInfo,google/cloud/billing/v1/cloud_billing.proto#L241}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.billing.v1.ProjectBillingInfo])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.billing.v1.ProjectBillingInfo]:
-  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L241}
-  /// [google.cloud.billing.v1.UpdateProjectBillingInfoRequest]:
-  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L377}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.billing.v1.ProjectBillingInfo]: @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L241}
+  /// [google.cloud.billing.v1.UpdateProjectBillingInfoRequest]: @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L388}
   ///
+  // clang-format on
   StatusOr<google::cloud::billing::v1::ProjectBillingInfo>
   UpdateProjectBillingInfo(std::string const& name,
                            google::cloud::billing::v1::ProjectBillingInfo const&
                                project_billing_info,
                            Options opts = {});
 
+  // clang-format off
   ///
   /// Sets or updates the billing account associated with a project. You specify
   /// the new billing account by setting the `billing_account_name` in the
   /// `ProjectBillingInfo` resource to the resource name of a billing account.
   /// Associating a project with an open billing account enables billing on the
-  /// project and allows charges for resource usage. If the project already had
-  /// a billing account, this method changes the billing account used for
-  /// resource usage charges.
+  /// project and allows charges for resource usage. If the project already had a
+  /// billing account, this method changes the billing account used for resource
+  /// usage charges.
   ///
-  /// *Note:* Incurred charges that have not yet been reported in the
-  /// transaction history of the Google Cloud Console might be billed to the new
-  /// billing account, even if the charge occurred before the new billing
-  /// account was assigned to the project.
+  /// *Note:* Incurred charges that have not yet been reported in the transaction
+  /// history of the Google Cloud Console might be billed to the new billing
+  /// account, even if the charge occurred before the new billing account was
+  /// assigned to the project.
   ///
   /// The current authenticated user must have ownership privileges for both the
   /// [project](https://cloud.google.com/docs/permissions-overview#h.bgs0oxofvnoo
@@ -469,91 +640,132 @@ class CloudBillingClient {
   /// disable billing, you should always call this method with the name of an
   /// *open* billing account.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::billing::v1::UpdateProjectBillingInfoRequest,google/cloud/billing/v1/cloud_billing.proto#L377}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.billing.v1.UpdateProjectBillingInfoRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::billing::v1::ProjectBillingInfo,google/cloud/billing/v1/cloud_billing.proto#L241}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.billing.v1.ProjectBillingInfo])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.billing.v1.ProjectBillingInfo]:
-  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L241}
-  /// [google.cloud.billing.v1.UpdateProjectBillingInfoRequest]:
-  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L377}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.billing.v1.ProjectBillingInfo]: @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L241}
+  /// [google.cloud.billing.v1.UpdateProjectBillingInfoRequest]: @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L388}
   ///
+  // clang-format on
   StatusOr<google::cloud::billing::v1::ProjectBillingInfo>
   UpdateProjectBillingInfo(
       google::cloud::billing::v1::UpdateProjectBillingInfoRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Gets the access control policy for a billing account.
   /// The caller must have the `billing.accounts.getIamPolicy` permission on the
   /// account, which is often given to billing account
   /// [viewers](https://cloud.google.com/billing/docs/how-to/billing-access).
   ///
-  /// @param resource  REQUIRED: The resource for which the policy is being
-  /// requested.
+  /// @param resource  REQUIRED: The resource for which the policy is being requested.
   ///  See the operation documentation for the appropriate value for this field.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L98}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.iam.v1.Policy])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.iam.v1.GetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L123}
-  /// [google.iam.v1.Policy]:
-  /// @googleapis_reference_link{google/iam/v1/policy.proto#L98}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.iam.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L123}
+  /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L98}
   ///
+  // clang-format on
   StatusOr<google::iam::v1::Policy> GetIamPolicy(std::string const& resource,
                                                  Options opts = {});
 
+  // clang-format off
   ///
   /// Gets the access control policy for a billing account.
   /// The caller must have the `billing.accounts.getIamPolicy` permission on the
   /// account, which is often given to billing account
   /// [viewers](https://cloud.google.com/billing/docs/how-to/billing-access).
   ///
-  /// @param request
-  /// @googleapis_link{google::iam::v1::GetIamPolicyRequest,google/iam/v1/iam_policy.proto#L123}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.iam.v1.GetIamPolicyRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L98}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.iam.v1.Policy])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.iam.v1.GetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L123}
-  /// [google.iam.v1.Policy]:
-  /// @googleapis_reference_link{google/iam/v1/policy.proto#L98}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.iam.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L123}
+  /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L98}
   ///
+  // clang-format on
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
       google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
 
+  // clang-format off
   ///
-  /// Sets the access control policy for a billing account. Replaces any
-  /// existing policy. The caller must have the `billing.accounts.setIamPolicy`
-  /// permission on the account, which is often given to billing account
+  /// Sets the access control policy for a billing account. Replaces any existing
+  /// policy.
+  /// The caller must have the `billing.accounts.setIamPolicy` permission on the
+  /// account, which is often given to billing account
   /// [administrators](https://cloud.google.com/billing/docs/how-to/billing-access).
   ///
-  /// @param resource  REQUIRED: The resource for which the policy is being
-  /// specified.
+  /// @param resource  REQUIRED: The resource for which the policy is being specified.
   ///  See the operation documentation for the appropriate value for this field.
-  /// @param policy  REQUIRED: The complete policy to be applied to the
-  /// `resource`. The size of
+  /// @param policy  REQUIRED: The complete policy to be applied to the `resource`. The size of
   ///  the policy is limited to a few 10s of KB. An empty policy is a
   ///  valid policy but certain Cloud Platform services (such as Projects)
   ///  might reject them.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L98}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.iam.v1.Policy])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.iam.v1.Policy]:
-  /// @googleapis_reference_link{google/iam/v1/policy.proto#L98}
-  /// [google.iam.v1.SetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L98}
+  /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
   ///
+  // clang-format on
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
       std::string const& resource, google::iam::v1::Policy const& policy,
       Options opts = {});
@@ -582,71 +794,105 @@ class CloudBillingClient {
                                                  IamUpdater const& updater,
                                                  Options opts = {});
 
+  // clang-format off
   ///
-  /// Sets the access control policy for a billing account. Replaces any
-  /// existing policy. The caller must have the `billing.accounts.setIamPolicy`
-  /// permission on the account, which is often given to billing account
+  /// Sets the access control policy for a billing account. Replaces any existing
+  /// policy.
+  /// The caller must have the `billing.accounts.setIamPolicy` permission on the
+  /// account, which is often given to billing account
   /// [administrators](https://cloud.google.com/billing/docs/how-to/billing-access).
   ///
-  /// @param request
-  /// @googleapis_link{google::iam::v1::SetIamPolicyRequest,google/iam/v1/iam_policy.proto#L101}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.iam.v1.SetIamPolicyRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L98}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.iam.v1.Policy])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.iam.v1.Policy]:
-  /// @googleapis_reference_link{google/iam/v1/policy.proto#L98}
-  /// [google.iam.v1.SetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L98}
+  /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
   ///
+  // clang-format on
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
       google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
 
+  // clang-format off
   ///
   /// Tests the access control policy for a billing account. This method takes
   /// the resource and a set of permissions as input and returns the subset of
   /// the input permissions that the caller is allowed for that resource.
   ///
-  /// @param resource  REQUIRED: The resource for which the policy detail is
-  /// being requested.
+  /// @param resource  REQUIRED: The resource for which the policy detail is being requested.
   ///  See the operation documentation for the appropriate value for this field.
-  /// @param permissions  The set of permissions to check for the `resource`.
-  /// Permissions with
+  /// @param permissions  The set of permissions to check for the `resource`. Permissions with
   ///  wildcards (such as '*' or 'storage.*') are not allowed. For more
   ///  information see
   ///  [IAM Overview](https://cloud.google.com/iam/docs/overview#permissions).
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::iam::v1::TestIamPermissionsResponse,google/iam/v1/iam_policy.proto#L151}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.iam.v1.TestIamPermissionsResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.iam.v1.TestIamPermissionsRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L136}
-  /// [google.iam.v1.TestIamPermissionsResponse]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L151}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.iam.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L136}
+  /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L151}
   ///
+  // clang-format on
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
       std::string const& resource, std::vector<std::string> const& permissions,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Tests the access control policy for a billing account. This method takes
   /// the resource and a set of permissions as input and returns the subset of
   /// the input permissions that the caller is allowed for that resource.
   ///
-  /// @param request
-  /// @googleapis_link{google::iam::v1::TestIamPermissionsRequest,google/iam/v1/iam_policy.proto#L136}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.iam.v1.TestIamPermissionsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::iam::v1::TestIamPermissionsResponse,google/iam/v1/iam_policy.proto#L151}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.iam.v1.TestIamPermissionsResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.iam.v1.TestIamPermissionsRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L136}
-  /// [google.iam.v1.TestIamPermissionsResponse]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L151}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.iam.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L136}
+  /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L151}
   ///
+  // clang-format on
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
       google::iam::v1::TestIamPermissionsRequest const& request,
       Options opts = {});

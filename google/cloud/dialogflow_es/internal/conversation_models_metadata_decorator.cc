@@ -18,6 +18,7 @@
 
 #include "google/cloud/dialogflow_es/internal/conversation_models_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/dialogflow/v2/conversation_model.grpc.pb.h>
@@ -29,8 +30,10 @@ namespace dialogflow_es_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ConversationModelsMetadata::ConversationModelsMetadata(
-    std::shared_ptr<ConversationModelsStub> child)
+    std::shared_ptr<ConversationModelsStub> child,
+    std::multimap<std::string, std::string> fixed_metadata)
     : child_(std::move(child)),
+      fixed_metadata_(std::move(fixed_metadata)),
       api_client_header_(
           google::cloud::internal::ApiClientHeader("generator")) {}
 
@@ -40,7 +43,7 @@ ConversationModelsMetadata::AsyncCreateConversationModel(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dialogflow::v2::CreateConversationModelRequest const&
         request) {
-  SetMetadata(*context, "parent=" + request.parent());
+  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
   return child_->AsyncCreateConversationModel(cq, std::move(context), request);
 }
 
@@ -48,7 +51,7 @@ StatusOr<google::cloud::dialogflow::v2::ConversationModel>
 ConversationModelsMetadata::GetConversationModel(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::GetConversationModelRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetConversationModel(context, request);
 }
 
@@ -57,7 +60,7 @@ ConversationModelsMetadata::ListConversationModels(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::ListConversationModelsRequest const&
         request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListConversationModels(context, request);
 }
 
@@ -67,7 +70,7 @@ ConversationModelsMetadata::AsyncDeleteConversationModel(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dialogflow::v2::DeleteConversationModelRequest const&
         request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncDeleteConversationModel(cq, std::move(context), request);
 }
 
@@ -77,7 +80,7 @@ ConversationModelsMetadata::AsyncDeployConversationModel(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dialogflow::v2::DeployConversationModelRequest const&
         request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncDeployConversationModel(cq, std::move(context), request);
 }
 
@@ -87,7 +90,7 @@ ConversationModelsMetadata::AsyncUndeployConversationModel(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dialogflow::v2::UndeployConversationModelRequest const&
         request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncUndeployConversationModel(cq, std::move(context),
                                                 request);
 }
@@ -97,7 +100,7 @@ ConversationModelsMetadata::GetConversationModelEvaluation(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::GetConversationModelEvaluationRequest const&
         request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetConversationModelEvaluation(context, request);
 }
 
@@ -107,7 +110,7 @@ ConversationModelsMetadata::ListConversationModelEvaluations(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::
         ListConversationModelEvaluationsRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListConversationModelEvaluations(context, request);
 }
 
@@ -117,7 +120,7 @@ ConversationModelsMetadata::AsyncCreateConversationModelEvaluation(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dialogflow::v2::
         CreateConversationModelEvaluationRequest const& request) {
-  SetMetadata(*context, "parent=" + request.parent());
+  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
   return child_->AsyncCreateConversationModelEvaluation(cq, std::move(context),
                                                         request);
 }
@@ -146,6 +149,9 @@ void ConversationModelsMetadata::SetMetadata(
 }
 
 void ConversationModelsMetadata::SetMetadata(grpc::ClientContext& context) {
+  for (auto const& kv : fixed_metadata_) {
+    context.AddMetadata(kv.first, kv.second);
+  }
   context.AddMetadata("x-goog-api-client", api_client_header_);
   auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {

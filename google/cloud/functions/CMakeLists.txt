@@ -23,7 +23,7 @@ set(DOXYGEN_EXAMPLE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/quickstart")
 
 unset(mocks_globs)
 unset(source_globs)
-set(service_dirs "" "v1/")
+set(service_dirs "" "v1/" "v2/")
 foreach (dir IN LISTS service_dirs)
     string(REPLACE "/" "_" ns "${dir}")
     list(APPEND source_globs "${dir}*.h" "${dir}*.cc" "${dir}internal/*")
@@ -170,8 +170,8 @@ google_cloud_cpp_add_pkgconfig(
     "The Cloud Functions API C++ Client Library"
     "Provides C++ APIs to use the Cloud Functions API."
     "google_cloud_cpp_grpc_utils"
-    " google_cloud_cpp_common"
-    " google_cloud_cpp_functions_protos")
+    "google_cloud_cpp_common"
+    "google_cloud_cpp_functions_protos")
 
 # Create and install the CMake configuration files.
 include(CMakePackageConfigHelpers)

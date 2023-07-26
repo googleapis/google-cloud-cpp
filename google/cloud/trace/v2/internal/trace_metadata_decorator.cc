@@ -18,6 +18,7 @@
 
 #include "google/cloud/trace/v2/internal/trace_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/devtools/cloudtrace/v2/tracing.grpc.pb.h>
@@ -29,15 +30,17 @@ namespace trace_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 TraceServiceMetadata::TraceServiceMetadata(
-    std::shared_ptr<TraceServiceStub> child)
+    std::shared_ptr<TraceServiceStub> child,
+    std::multimap<std::string, std::string> fixed_metadata)
     : child_(std::move(child)),
+      fixed_metadata_(std::move(fixed_metadata)),
       api_client_header_(
           google::cloud::internal::ApiClientHeader("generator")) {}
 
 Status TraceServiceMetadata::BatchWriteSpans(
     grpc::ClientContext& context,
     google::devtools::cloudtrace::v2::BatchWriteSpansRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->BatchWriteSpans(context, request);
 }
 
@@ -45,7 +48,7 @@ StatusOr<google::devtools::cloudtrace::v2::Span>
 TraceServiceMetadata::CreateSpan(
     grpc::ClientContext& context,
     google::devtools::cloudtrace::v2::Span const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->CreateSpan(context, request);
 }
 
@@ -56,6 +59,9 @@ void TraceServiceMetadata::SetMetadata(grpc::ClientContext& context,
 }
 
 void TraceServiceMetadata::SetMetadata(grpc::ClientContext& context) {
+  for (auto const& kv : fixed_metadata_) {
+    context.AddMetadata(kv.first, kv.second);
+  }
   context.AddMetadata("x-goog-api-client", api_client_header_);
   auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {

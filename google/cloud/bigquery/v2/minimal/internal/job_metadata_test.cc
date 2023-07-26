@@ -14,6 +14,9 @@
 
 #include "google/cloud/bigquery/v2/minimal/internal/job_metadata.h"
 #include "google/cloud/bigquery/v2/minimal/internal/job_rest_stub.h"
+#include "google/cloud/bigquery/v2/minimal/testing/job_query_test_utils.h"
+#include "google/cloud/bigquery/v2/minimal/testing/job_test_utils.h"
+#include "google/cloud/bigquery/v2/minimal/testing/metadata_test_utils.h"
 #include "google/cloud/bigquery/v2/minimal/testing/mock_job_rest_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/testing_util/status_matchers.h"
@@ -25,35 +28,18 @@ namespace cloud {
 namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+using ::google::cloud::bigquery_v2_minimal_testing::GetMetadataOptions;
+using ::google::cloud::bigquery_v2_minimal_testing::MakePartialJob;
+using ::google::cloud::bigquery_v2_minimal_testing::MakeQueryRequest;
+using ::google::cloud::bigquery_v2_minimal_testing::MakeQueryResponsePayload;
 using ::google::cloud::bigquery_v2_minimal_testing::MockBigQueryJobRestStub;
-using ::testing::Contains;
-using ::testing::ElementsAre;
-using ::testing::HasSubstr;
-using ::testing::IsEmpty;
+using ::google::cloud::bigquery_v2_minimal_testing::VerifyMetadataContext;
 
-static auto const kUserProject = "test-only-project";
-static auto const kQuotaUser = "test-quota-user";
+using ::testing::IsEmpty;
 
 std::shared_ptr<BigQueryJobMetadata> CreateMockJobMetadata(
     std::shared_ptr<BigQueryJobRestStub> mock) {
   return std::make_shared<BigQueryJobMetadata>(std::move(mock));
-}
-
-void VerifyMetadataContext(rest_internal::RestContext& context) {
-  EXPECT_THAT(context.GetHeader("x-goog-api-client"),
-              Contains(HasSubstr("bigquery_v2_job")));
-  EXPECT_THAT(context.GetHeader("x-goog-request-params"), IsEmpty());
-  EXPECT_THAT(context.GetHeader("x-goog-user-project"),
-              ElementsAre(kUserProject));
-  EXPECT_THAT(context.GetHeader("x-goog-quota-user"), ElementsAre(kQuotaUser));
-  EXPECT_THAT(context.GetHeader("x-server-timeout"), ElementsAre("3.141"));
-}
-
-Options GetMetadataOptions() {
-  return Options{}
-      .set<UserProjectOption>(kUserProject)
-      .set<QuotaUserOption>(kQuotaUser)
-      .set<ServerTimeoutOption>(std::chrono::milliseconds(3141));
 }
 
 TEST(JobMetadataTest, GetJob) {
@@ -62,13 +48,13 @@ TEST(JobMetadataTest, GetJob) {
       R"({"kind": "jkind",
           "etag": "jtag",
           "id": "j123",
-          "self_link": "jselfLink",
+          "selfLink": "jselfLink",
           "user_email": "juserEmail",
           "status": {"state": "DONE"},
-          "reference": {"project_id": "p123", "job_id": "j123"},
+          "jobReference": {"projectId": "p123", "jobId": "j123"},
           "configuration": {
-            "job_type": "QUERY",
-            "query_config": {"query": "select 1;"}
+            "jobType": "QUERY",
+            "query": {"query": "select 1;"}
           }})";
 
   EXPECT_CALL(*mock_stub, GetJob)
@@ -91,7 +77,7 @@ TEST(JobMetadataTest, GetJob) {
 
   auto result = metadata->GetJob(context, request);
   ASSERT_STATUS_OK(result);
-  VerifyMetadataContext(context);
+  VerifyMetadataContext(context, "bigquery_v2_job");
 }
 
 TEST(JobMetadataTest, ListJobs) {
@@ -99,16 +85,16 @@ TEST(JobMetadataTest, ListJobs) {
   auto constexpr kExpectedPayload =
       R"({"etag": "tag-1",
           "kind": "kind-1",
-          "next_page_token": "npt-123",
+          "nextPageToken": "npt-123",
           "jobs": [
               {
                 "id": "1",
                 "kind": "kind-2",
-                "reference": {"project_id": "p123", "job_id": "j123"},
+                "jobReference": {"projectId": "p123", "jobId": "j123"},
                 "state": "DONE",
                 "configuration": {
-                   "job_type": "QUERY",
-                   "query_config": {"query": "select 1;"}
+                   "jobType": "QUERY",
+                   "query": {"query": "select 1;"}
                 },
                 "status": {"state": "DONE"},
                 "user_email": "user-email",
@@ -136,7 +122,114 @@ TEST(JobMetadataTest, ListJobs) {
 
   auto result = metadata->ListJobs(context, request);
   ASSERT_STATUS_OK(result);
-  VerifyMetadataContext(context);
+  VerifyMetadataContext(context, "bigquery_v2_job");
+}
+
+TEST(JobMetadataTest, InsertJob) {
+  auto mock_stub = std::make_shared<MockBigQueryJobRestStub>();
+  auto constexpr kExpectedPayload =
+      R"({"kind": "jkind",
+          "etag": "jtag",
+          "id": "j123",
+          "selfLink": "jselfLink",
+          "user_email": "juserEmail",
+          "status": {"state": "DONE"},
+          "jobReference": {"projectId": "p123", "jobId": "j123"},
+          "configuration": {
+            "jobType": "QUERY",
+            "query": {"query": "select 1;"}
+          }})";
+
+  EXPECT_CALL(*mock_stub, InsertJob)
+      .WillOnce(
+          [&](rest_internal::RestContext&,
+              InsertJobRequest const& request) -> StatusOr<InsertJobResponse> {
+            EXPECT_THAT(request.project_id(), Not(IsEmpty()));
+            BigQueryHttpResponse http_response;
+            http_response.payload = kExpectedPayload;
+            return InsertJobResponse::BuildFromHttpResponse(
+                std::move(http_response));
+          });
+
+  auto metadata = CreateMockJobMetadata(std::move(mock_stub));
+
+  rest_internal::RestContext context;
+  InsertJobRequest request("test-project-id", MakePartialJob());
+
+  internal::OptionsSpan span(GetMetadataOptions());
+
+  auto result = metadata->InsertJob(context, request);
+  ASSERT_STATUS_OK(result);
+  VerifyMetadataContext(context, "bigquery_v2_job");
+}
+
+TEST(JobMetadataTest, CancelJob) {
+  auto mock_stub = std::make_shared<MockBigQueryJobRestStub>();
+  auto constexpr kExpectedPayload =
+      R"({"kind":"cancel-job",
+          "job":{"kind": "jkind",
+          "etag": "jtag",
+          "id": "j123",
+          "selfLink": "jselfLink",
+          "user_email": "juserEmail",
+          "status": {"state": "DONE"},
+          "jobReference": {"projectId": "p123", "jobId": "j123"},
+          "configuration": {
+            "jobType": "QUERY",
+            "query": {"query": "select 1;"}
+          }}})";
+
+  EXPECT_CALL(*mock_stub, CancelJob)
+      .WillOnce(
+          [&](rest_internal::RestContext&,
+              CancelJobRequest const& request) -> StatusOr<CancelJobResponse> {
+            EXPECT_THAT(request.project_id(), Not(IsEmpty()));
+            EXPECT_THAT(request.job_id(), Not(IsEmpty()));
+            BigQueryHttpResponse http_response;
+            http_response.payload = kExpectedPayload;
+            return CancelJobResponse::BuildFromHttpResponse(
+                std::move(http_response));
+          });
+
+  auto metadata = CreateMockJobMetadata(std::move(mock_stub));
+
+  rest_internal::RestContext context;
+  CancelJobRequest request("test-project-id", "test-job-id");
+
+  internal::OptionsSpan span(GetMetadataOptions());
+
+  auto result = metadata->CancelJob(context, request);
+  ASSERT_STATUS_OK(result);
+  VerifyMetadataContext(context, "bigquery_v2_job");
+}
+
+TEST(JobMetadataTest, Query) {
+  auto mock_stub = std::make_shared<MockBigQueryJobRestStub>();
+  auto expected_payload = MakeQueryResponsePayload();
+
+  EXPECT_CALL(*mock_stub, Query)
+      .WillOnce(
+          [&](rest_internal::RestContext&,
+              PostQueryRequest const& request) -> StatusOr<QueryResponse> {
+            EXPECT_THAT(request.project_id(), Not(IsEmpty()));
+            BigQueryHttpResponse http_response;
+            http_response.payload = expected_payload;
+            return QueryResponse::BuildFromHttpResponse(
+                std::move(http_response));
+          });
+
+  auto metadata = CreateMockJobMetadata(std::move(mock_stub));
+
+  PostQueryRequest job_request;
+  job_request.set_project_id("p123");
+  job_request.set_query_request(MakeQueryRequest());
+
+  rest_internal::RestContext context;
+  internal::OptionsSpan span(GetMetadataOptions());
+
+  auto result = metadata->Query(context, job_request);
+  ASSERT_STATUS_OK(result);
+  VerifyMetadataContext(context, "bigquery_v2_job");
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

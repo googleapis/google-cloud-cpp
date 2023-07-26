@@ -53,8 +53,9 @@ Options DocumentProcessorServiceDefaultOptions(std::string const& location,
   if (!options
            .has<documentai_v1::DocumentProcessorServiceBackoffPolicyOption>()) {
     options.set<documentai_v1::DocumentProcessorServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options
@@ -66,10 +67,9 @@ Options DocumentProcessorServiceDefaultOptions(std::string const& location,
             options
                 .get<documentai_v1::DocumentProcessorServiceRetryPolicyOption>()
                 ->clone(),
-            options
-                .get<documentai_v1::
-                         DocumentProcessorServiceBackoffPolicyOption>()
-                ->clone())
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
             .clone());
   }
   if (!options.has<

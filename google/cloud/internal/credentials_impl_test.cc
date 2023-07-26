@@ -28,29 +28,29 @@ using ::testing::IsNull;
 struct Visitor : public CredentialsVisitor {
   std::string name;
   AccessToken access_token;
-  ImpersonateServiceAccountConfig* impersonate = nullptr;
+  ImpersonateServiceAccountConfig const* impersonate = nullptr;
   std::string json_object;
   Options options;
 
-  void visit(InsecureCredentialsConfig&) override {
+  void visit(InsecureCredentialsConfig const&) override {
     name = "InsecureCredentialsConfig";
   }
-  void visit(GoogleDefaultCredentialsConfig&) override {
+  void visit(GoogleDefaultCredentialsConfig const&) override {
     name = "GoogleDefaultCredentialsConfig";
   }
-  void visit(AccessTokenConfig& cfg) override {
+  void visit(AccessTokenConfig const& cfg) override {
     name = "AccessTokenConfig";
     access_token = cfg.access_token();
   }
-  void visit(ImpersonateServiceAccountConfig& cfg) override {
+  void visit(ImpersonateServiceAccountConfig const& cfg) override {
     name = "ImpersonateServiceAccountConfig";
     impersonate = &cfg;
   }
-  void visit(ServiceAccountConfig& cfg) override {
+  void visit(ServiceAccountConfig const& cfg) override {
     name = "ServiceAccountConfig";
     json_object = cfg.json_object();
   }
-  void visit(ExternalAccountConfig& cfg) override {
+  void visit(ExternalAccountConfig const& cfg) override {
     name = "ExternalAccountConfig";
     json_object = cfg.json_object();
     options = cfg.options();

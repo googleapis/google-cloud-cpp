@@ -7,9 +7,15 @@ library. Use the
 client library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `logging_v2::LoggingServiceV2Client`:
+For example, this will override the default endpoint for `logging_v2::ConfigServiceV2Client`:
 
-@snippet logging_service_v2_client_samples.cc set-client-endpoint
+@snippet config_service_v2_client_samples.cc set-client-endpoint
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c logging_v2::ConfigServiceV2Client](@ref logging_v2::ConfigServiceV2Client-endpoint-snippet)
+- [\c logging_v2::LoggingServiceV2Client](@ref logging_v2::LoggingServiceV2Client-endpoint-snippet)
+- [\c logging_v2::MetricsServiceV2Client](@ref logging_v2::MetricsServiceV2Client-endpoint-snippet)
 
 <!-- inject-endpoint-snippet-end -->
 
@@ -17,9 +23,21 @@ For example, this will override the default endpoint for `logging_v2::LoggingSer
 
 // <!-- inject-endpoint-pages-start -->
 
+/*! @page logging_v2::ConfigServiceV2Client-endpoint-snippet Override logging_v2::ConfigServiceV2Client Endpoint Configuration
+
+@snippet google/cloud/logging/v2/samples/config_service_v2_client_samples.cc set-client-endpoint
+
+*/
+
 /*! @page logging_v2::LoggingServiceV2Client-endpoint-snippet Override logging_v2::LoggingServiceV2Client Endpoint Configuration
 
 @snippet google/cloud/logging/v2/samples/logging_service_v2_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page logging_v2::MetricsServiceV2Client-endpoint-snippet Override logging_v2::MetricsServiceV2Client Endpoint Configuration
+
+@snippet google/cloud/logging/v2/samples/metrics_service_v2_client_samples.cc set-client-endpoint
 
 */
 // <!-- inject-endpoint-pages-end -->

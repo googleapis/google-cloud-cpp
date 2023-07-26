@@ -37,7 +37,7 @@ class DocumentProcessorServiceLogging : public DocumentProcessorServiceStub {
   ~DocumentProcessorServiceLogging() override = default;
   DocumentProcessorServiceLogging(
       std::shared_ptr<DocumentProcessorServiceStub> child,
-      TracingOptions tracing_options, std::set<std::string> components);
+      TracingOptions tracing_options, std::set<std::string> const& components);
 
   StatusOr<google::cloud::documentai::v1::ProcessResponse> ProcessDocument(
       grpc::ClientContext& context,
@@ -178,7 +178,7 @@ class DocumentProcessorServiceLogging : public DocumentProcessorServiceStub {
  private:
   std::shared_ptr<DocumentProcessorServiceStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // DocumentProcessorServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

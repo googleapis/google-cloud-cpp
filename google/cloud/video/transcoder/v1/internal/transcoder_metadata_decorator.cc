@@ -18,6 +18,7 @@
 
 #include "google/cloud/video/transcoder/v1/internal/transcoder_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/video/transcoder/v1/services.grpc.pb.h>
@@ -29,8 +30,10 @@ namespace video_transcoder_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 TranscoderServiceMetadata::TranscoderServiceMetadata(
-    std::shared_ptr<TranscoderServiceStub> child)
+    std::shared_ptr<TranscoderServiceStub> child,
+    std::multimap<std::string, std::string> fixed_metadata)
     : child_(std::move(child)),
+      fixed_metadata_(std::move(fixed_metadata)),
       api_client_header_(
           google::cloud::internal::ApiClientHeader("generator")) {}
 
@@ -38,7 +41,7 @@ StatusOr<google::cloud::video::transcoder::v1::Job>
 TranscoderServiceMetadata::CreateJob(
     grpc::ClientContext& context,
     google::cloud::video::transcoder::v1::CreateJobRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->CreateJob(context, request);
 }
 
@@ -46,7 +49,7 @@ StatusOr<google::cloud::video::transcoder::v1::ListJobsResponse>
 TranscoderServiceMetadata::ListJobs(
     grpc::ClientContext& context,
     google::cloud::video::transcoder::v1::ListJobsRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListJobs(context, request);
 }
 
@@ -54,14 +57,14 @@ StatusOr<google::cloud::video::transcoder::v1::Job>
 TranscoderServiceMetadata::GetJob(
     grpc::ClientContext& context,
     google::cloud::video::transcoder::v1::GetJobRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetJob(context, request);
 }
 
 Status TranscoderServiceMetadata::DeleteJob(
     grpc::ClientContext& context,
     google::cloud::video::transcoder::v1::DeleteJobRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->DeleteJob(context, request);
 }
 
@@ -70,7 +73,7 @@ TranscoderServiceMetadata::CreateJobTemplate(
     grpc::ClientContext& context,
     google::cloud::video::transcoder::v1::CreateJobTemplateRequest const&
         request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->CreateJobTemplate(context, request);
 }
 
@@ -79,7 +82,7 @@ TranscoderServiceMetadata::ListJobTemplates(
     grpc::ClientContext& context,
     google::cloud::video::transcoder::v1::ListJobTemplatesRequest const&
         request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListJobTemplates(context, request);
 }
 
@@ -88,7 +91,7 @@ TranscoderServiceMetadata::GetJobTemplate(
     grpc::ClientContext& context,
     google::cloud::video::transcoder::v1::GetJobTemplateRequest const&
         request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetJobTemplate(context, request);
 }
 
@@ -96,7 +99,7 @@ Status TranscoderServiceMetadata::DeleteJobTemplate(
     grpc::ClientContext& context,
     google::cloud::video::transcoder::v1::DeleteJobTemplateRequest const&
         request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->DeleteJobTemplate(context, request);
 }
 
@@ -107,6 +110,9 @@ void TranscoderServiceMetadata::SetMetadata(grpc::ClientContext& context,
 }
 
 void TranscoderServiceMetadata::SetMetadata(grpc::ClientContext& context) {
+  for (auto const& kv : fixed_metadata_) {
+    context.AddMetadata(kv.first, kv.second);
+  }
   context.AddMetadata("x-goog-api-client", api_client_header_);
   auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {

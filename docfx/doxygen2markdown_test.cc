@@ -235,6 +235,73 @@ Second paragraph (4).)md";
   EXPECT_EQ(kExpected, os.str());
 }
 
+TEST(Doxygen2Markdown, DetailedDescriptionNotSkipped) {
+  auto constexpr kXml = R"xml(<?xml version="1.0" standalone="yes"?>
+    <doxygen version="1.9.1" xml:lang="en-US">
+      <compounddef xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="namespacegoogle_1_1cloud_1_1kms" kind="namespace" language="C++">
+          <compoundname>google::cloud::kms</compoundname>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+            <para><xrefsect id="deprecated_1_deprecated000001"><xreftitle>Deprecated</xreftitle><xrefdescription><para>This namespace exists for backwards compatibility. Use the types defined in <ref refid="namespacegoogle_1_1cloud_1_1kms__v1" kindref="compound">kms_v1</ref> instead of the aliases defined in this namespace.</para>
+            </xrefdescription></xrefsect></para>
+            <para><xrefsect id="deprecated_1_deprecated000014"><xreftitle>Deprecated</xreftitle><xrefdescription><para>This namespace exists for backwards compatibility. Use the types defined in <ref refid="namespacegoogle_1_1cloud_1_1kms__v1" kindref="compound">kms_v1</ref> instead of the aliases defined in this namespace.</para>
+            </xrefdescription></xrefsect></para>
+          </detaileddescription>
+      </compounddef>
+    </doxygen>)xml";
+
+  auto constexpr kExpected = R"md(<aside class="deprecated"><b>Deprecated:</b>
+This namespace exists for backwards compatibility. Use the types defined in [kms_v1](xref:namespacegoogle_1_1cloud_1_1kms__v1) instead of the aliases defined in this namespace.
+</aside>
+
+<aside class="deprecated"><b>Deprecated:</b>
+
+
+This namespace exists for backwards compatibility. Use the types defined in [kms_v1](xref:namespacegoogle_1_1cloud_1_1kms__v1) instead of the aliases defined in this namespace.
+</aside>)md";
+  pugi::xml_document doc;
+  doc.load_string(kXml);
+  auto selected = doc.select_node("//detaileddescription");
+  ASSERT_TRUE(selected);
+  std::ostringstream os;
+  MarkdownContext ctx;
+  ctx.paragraph_start = "";
+  EXPECT_TRUE(AppendIfDetailedDescription(os, ctx, selected.node()));
+  EXPECT_EQ(kExpected, os.str());
+}
+
+TEST(Doxygen2Markdown, DetailedDescriptionSkipped) {
+  auto constexpr kXml = R"xml(<?xml version="1.0" standalone="yes"?>
+    <doxygen version="1.9.1" xml:lang="en-US">
+      <compounddef xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="namespacegoogle_1_1cloud_1_1kms" kind="namespace" language="C++">
+          <compoundname>google::cloud::kms</compoundname>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+            <para><xrefsect id="deprecated_1_deprecated000001"><xreftitle>Deprecated</xreftitle><xrefdescription><para>This namespace exists for backwards compatibility. Use the types defined in <ref refid="namespacegoogle_1_1cloud_1_1kms__v1" kindref="compound">kms_v1</ref> instead of the aliases defined in this namespace.</para>
+</xrefdescription></xrefsect></para>
+            <para><xrefsect id="deprecated_1_deprecated000014"><xreftitle>Deprecated</xreftitle><xrefdescription><para>This namespace exists for backwards compatibility. Use the types defined in <ref refid="namespacegoogle_1_1cloud_1_1kms__v1" kindref="compound">kms_v1</ref> instead of the aliases defined in this namespace.</para>
+</xrefdescription></xrefsect></para>
+          </detaileddescription>
+      </compounddef>
+    </doxygen>)xml";
+
+  auto constexpr kExpected = R"md(
+
+)md";
+  pugi::xml_document doc;
+  doc.load_string(kXml);
+  auto selected = doc.select_node("//detaileddescription");
+  ASSERT_TRUE(selected);
+  std::ostringstream os;
+  MarkdownContext ctx;
+  ctx.paragraph_start = "";
+  ctx.skip_xrefsect = true;
+  EXPECT_TRUE(AppendIfDetailedDescription(os, ctx, selected.node()));
+  EXPECT_EQ(kExpected, os.str());
+}
+
 TEST(Doxygen2Markdown, BriefDescription) {
   auto constexpr kXml = R"xml(<?xml version="1.0" standalone="yes"?>
     <doxygen version="1.9.1" xml:lang="en-US">
@@ -532,13 +599,15 @@ TEST(Doxygen2Markdown, ParagraphSimpleSect) {
 
 
 
-> Remark:
-> First remark paragraph.
-> Second remark paragraph.
+<aside class="note"><b>Remark:</b>
+First remark paragraph.
+Second remark paragraph.
+</aside>
 
-> **Warning:**
-> First warning paragraph.
-> Second warning paragraph.)md";
+<aside class="warning"><b>Warning:</b>
+First warning paragraph.
+Second warning paragraph.
+</aside>)md";
 
   pugi::xml_document doc;
   doc.load_string(kXml);
@@ -744,7 +813,7 @@ TEST(Doxygen2Markdown, ParagraphXrefSect) {
   auto constexpr kXml = R"xml(<?xml version="1.0" standalone="yes"?>
     <doxygen version="1.9.1" xml:lang="en-US">
       <para id='tested-node'>
-        <xrefsect id="deprecated_1_deprecated000007">
+        <xrefsect id="deprecated_1_deprecated000001">
           <xreftitle>Deprecated</xreftitle>
           <xrefdescription>
             <para>Use <computeroutput><ref refid="classgoogle_1_1cloud_1_1Options" kindref="compound">Options</ref></computeroutput> and <computeroutput><ref refid="structgoogle_1_1cloud_1_1EndpointOption" kindref="compound">EndpointOption</ref></computeroutput>.</para>
@@ -753,17 +822,17 @@ TEST(Doxygen2Markdown, ParagraphXrefSect) {
       </para>
     </doxygen>)xml";
 
-  auto constexpr kExpected = R"md(
-
-**Deprecated**
-
-Use [`Options`](xref:classgoogle_1_1cloud_1_1Options) and [`EndpointOption`](xref:structgoogle_1_1cloud_1_1EndpointOption).)md";
+  auto constexpr kExpected = R"md(<aside class="deprecated"><b>Deprecated:</b>
+Use [`Options`](xref:classgoogle_1_1cloud_1_1Options) and [`EndpointOption`](xref:structgoogle_1_1cloud_1_1EndpointOption).
+</aside>)md";
   pugi::xml_document doc;
   doc.load_string(kXml);
   auto selected = doc.select_node("//*[@id='tested-node']");
   ASSERT_TRUE(selected);
   std::ostringstream os;
-  ASSERT_TRUE(AppendIfParagraph(os, {}, selected.node()));
+  MarkdownContext ctx;
+  ctx.paragraph_start = "";
+  ASSERT_TRUE(AppendIfParagraph(os, ctx, selected.node()));
   EXPECT_EQ(kExpected, os.str());
 }
 
@@ -988,6 +1057,34 @@ Second paragraph.)md";
   EXPECT_EQ(kExpected, os.str());
 }
 
+TEST(Doxygen2Markdown, SimpleSectSeeAlsoContext) {
+  auto constexpr kXml = R"xml(<?xml version="1.0" standalone="yes"?>
+    <doxygen version="1.9.1" xml:lang="en-US">
+        <simplesect id='test-node' kind="see">
+          <para>First paragraph.</para>
+          <para>Second paragraph.</para>
+        </simplesect>
+    </doxygen>)xml";
+
+  auto constexpr kExpected = R"md(
+
+###### See Also
+
+First paragraph.
+
+Second paragraph.)md";
+
+  pugi::xml_document doc;
+  doc.load_string(kXml);
+
+  auto selected = doc.select_node("//*[@id='test-node']");
+  std::ostringstream os;
+  MarkdownContext ctx;
+  ctx.paragraph_start = "";
+  ASSERT_TRUE(AppendIfSimpleSect(os, ctx, selected.node()));
+  EXPECT_EQ(kExpected, os.str());
+}
+
 TEST(Doxygen2Markdown, SimpleSectBlockQuote) {
   auto constexpr kXmlPrefix = R"xml(<?xml version="1.0" standalone="yes"?>
     <doxygen version="1.9.1" xml:lang="en-US">)xml";
@@ -998,17 +1095,18 @@ TEST(Doxygen2Markdown, SimpleSectBlockQuote) {
     </doxygen>)xml";
 
   auto constexpr kExpectedBody = R"md(
-> First paragraph.
-> Second paragraph.)md";
+First paragraph.
+Second paragraph.
+</aside>)md";
 
   struct TestCase {
     std::string kind;
     std::string header;
   } const cases[] = {
-      {"warning", "> **Warning:**"},
-      {"note", "> **Note:**"},
-      {"remark", "> Remark:"},
-      {"attention", "> Attention:"},
+      {"warning", "<aside class=\"warning\"><b>Warning:</b>"},
+      {"note", "<aside class=\"note\"><b>Note:</b>"},
+      {"remark", "<aside class=\"note\"><b>Remark:</b>"},
+      {"attention", "<aside class=\"caution\"><b>Attention:</b>"},
   };
 
   for (auto const& test : cases) {

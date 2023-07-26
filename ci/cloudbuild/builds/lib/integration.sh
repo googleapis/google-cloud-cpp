@@ -23,8 +23,8 @@ if ((CI_CLOUDBUILD_BUILDS_LIB_INTEGRATION_SH__++ != 0)); then
 fi # include guard
 
 source module ci/etc/integration-tests-config.sh
-source module ci/lib/io.sh
 source module ci/cloudbuild/builds/lib/git.sh
+source module ci/lib/io.sh
 
 # To run the integration tests we need to install the dependencies for the storage emulator
 export PATH="${HOME}/.local/bin:${PATH}"
@@ -34,7 +34,7 @@ python3 -m pip install --upgrade --user --quiet --disable-pip-version-check \
 
 # Some of the tests will need a valid roots.pem file.
 rm -f /dev/shm/roots.pem
-ci/retry-command.sh 3 120 curl -sSL -o /dev/shm/roots.pem https://pki.google.com/roots.pem
+ci/retry-command.sh 3 120 curl -fsSL -o /dev/shm/roots.pem https://pki.google.com/roots.pem
 
 # Outputs a list of Bazel arguments that should be used when running
 # integration tests. These do not include the common `bazel::common_args`.
@@ -47,6 +47,10 @@ ci/retry-command.sh 3 120 curl -sSL -o /dev/shm/roots.pem https://pki.google.com
 #
 function integration::bazel_args() {
   declare -a args
+
+  # Integration tests are inherently flaky. Make up to three attempts to get the
+  # test passing.
+  args+=(--flaky_test_attempts=3)
 
   args+=(
     # Common settings
@@ -104,6 +108,9 @@ function integration::bazel_args() {
     "--test_env=GOOGLE_CLOUD_CPP_SPANNER_TEST_SERVICE_ACCOUNT=${GOOGLE_CLOUD_CPP_SPANNER_TEST_SERVICE_ACCOUNT}"
     "--test_env=GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_ENDPOINT=${GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_ENDPOINT:-}"
     "--test_env=GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_AUTHORITY=${GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_AUTHORITY:-}"
+
+    # Cloud Batch
+    "--test_env=GOOGLE_CLOUD_CPP_BATCH_TEST_TEMPLATE_NAME=${GOOGLE_CLOUD_CPP_BATCH_TEST_TEMPLATE_NAME:-}"
   )
 
   # Adds environment variables that need to reference a specific service
@@ -153,6 +160,8 @@ function integration::bazel_with_emulators() {
     "generator/..."
     # BigQuery integration tests
     "google/cloud/bigquery/..."
+    # Compute integration tests
+    "google/cloud/compute/integration_tests/..."
     # IAM and IAM Credentials integration tests
     "google/cloud/iam/..."
     # Logging integration tests
@@ -266,6 +275,9 @@ function integration::ctest_with_emulators() {
 
   local cmake_out="$1"
   mapfile -t ctest_args < <(ctest::common_args)
+  # Integration tests are inherently flaky. Make up to three attempts to get the
+  # test passing.
+  ctest_args+=(--repeat until-pass:3)
 
   io::log_h2 "Running Pub/Sub integration tests (with emulator)"
   "google/cloud/pubsub/ci/${EMULATOR_SCRIPT}" \

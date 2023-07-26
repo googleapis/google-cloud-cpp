@@ -46,8 +46,9 @@ Options ClusterManagerDefaultOptions(Options options) {
   }
   if (!options.has<container_v1::ClusterManagerBackoffPolicyOption>()) {
     options.set<container_v1::ClusterManagerBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options.has<

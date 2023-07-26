@@ -15,6 +15,7 @@
 #include "generator/internal/stub_rest_generator.h"
 #include "generator/internal/codegen_utils.h"
 #include "generator/internal/http_option_utils.h"
+#include "generator/internal/longrunning.h"
 #include "generator/internal/predicate_utils.h"
 #include "generator/internal/printer.h"
 #include "absl/strings/str_split.h"
@@ -52,10 +53,11 @@ Status StubRestGenerator::GenerateHeader() {
   std::vector<std::string> additional_pb_header_paths =
       absl::StrSplit(vars("additional_pb_header_paths"), absl::ByChar(','));
   HeaderSystemIncludes(additional_pb_header_paths);
-  HeaderSystemIncludes(
-      {vars("proto_header_path"),
-       HasLongrunningMethod() ? "google/longrunning/operations.pb.h" : "",
-       "memory"});
+  HeaderSystemIncludes({vars("proto_header_path"),
+                        HasLongrunningMethod()
+                            ? vars("longrunning_operation_include_header")
+                            : "",
+                        "memory"});
 
   auto result = HeaderOpenNamespaces(NamespaceType::kInternal);
   if (!result.ok()) return result;
@@ -72,7 +74,7 @@ class $stub_rest_class_name$ {
     if (!HasHttpAnnotation(method)) continue;
     if (IsLongrunningOperation(method)) {
       HeaderPrintMethod(method, __FILE__, __LINE__, R"""(
-  virtual future<StatusOr<google::longrunning::Operation>> Async$method_name$(
+  virtual future<StatusOr<$response_type$>> Async$method_name$(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       $request_type$ const& request) = 0;
@@ -114,10 +116,11 @@ class $stub_rest_class_name$ {
     }
   }
 
-  // long running operation support methods
   if (HasLongrunningMethod()) {
-    HeaderPrint(
-        R"""(
+    // long running operation support methods
+    if (HasGRPCLongrunningOperation()) {
+      HeaderPrint(
+          R"""(
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
@@ -128,6 +131,20 @@ class $stub_rest_class_name$ {
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::longrunning::CancelOperationRequest const& request) = 0;
 )""");
+    } else {
+      HeaderPrint(
+          R"""(
+  virtual future<StatusOr<$longrunning_response_type$>> AsyncGetOperation(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      $longrunning_get_operation_request_type$ const& request) = 0;
+
+  virtual future<Status> AsyncCancelOperation(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      $longrunning_cancel_operation_request_type$ const& request) = 0;
+)""");
+    }
   }
 
   // close abstract interface Stub base class
@@ -154,7 +171,7 @@ class Default$stub_rest_class_name$ : public $stub_rest_class_name$ {
     if (HasHttpAnnotation(method) && IsNonStreaming(method)) {
       if (IsLongrunningOperation(method)) {
         HeaderPrintMethod(method, __FILE__, __LINE__, R"""(
-  future<StatusOr<google::longrunning::Operation>> Async$method_name$(
+  future<StatusOr<$response_type$>> Async$method_name$(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       $request_type$ const& request) override;
@@ -197,18 +214,17 @@ class Default$stub_rest_class_name$ : public $stub_rest_class_name$ {
   }
 
   if (HasLongrunningMethod()) {
-    // long running operation support methods
     HeaderPrint(
         R"""(
-  future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
+  future<StatusOr<$longrunning_response_type$>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::longrunning::GetOperationRequest const& request) override;
+      $longrunning_get_operation_request_type$ const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::longrunning::CancelOperationRequest const& request) override;
+      $longrunning_cancel_operation_request_type$ const& request) override;
 )""");
   }
 
@@ -258,8 +274,17 @@ Status StubRestGenerator::GenerateCc() {
 Default$stub_rest_class_name$::Default$stub_rest_class_name$(Options options)
     : service_(rest_internal::MakePooledRestClient(
           options.get<EndpointOption>(), options)),
-      operations_(rest_internal::MakePooledRestClient(
-          options.get<rest_internal::LongrunningEndpointOption>(), options)),
+      operations_(rest_internal::MakePooledRestClient()""");
+
+    if (HasGRPCLongrunningOperation()) {
+      CcPrint(R"""(
+          options.get<rest_internal::LongrunningEndpointOption>(), options)),)""");
+    } else {
+      CcPrint(R"""(
+          options.get<EndpointOption>(), options)),)""");
+    }
+
+    CcPrint(R"""(
       options_(std::move(options)) {}
 
 Default$stub_rest_class_name$::Default$stub_rest_class_name$(
@@ -291,16 +316,16 @@ Default$stub_rest_class_name$::Default$stub_rest_class_name$(
     if (!HasHttpAnnotation(method)) continue;
     if (IsLongrunningOperation(method)) {
       CcPrintMethod(method, __FILE__, __LINE__, R"""(
-future<StatusOr<google::longrunning::Operation>>
+future<StatusOr<$response_type$>>
 Default$stub_rest_class_name$::Async$method_name$(
       CompletionQueue& cq,
       std::unique_ptr<rest_internal::RestContext> rest_context,
       $request_type$ const& request) {
-  promise<StatusOr<google::longrunning::Operation>> p;
-  future<StatusOr<google::longrunning::Operation>> f = p.get_future();
+  promise<StatusOr<$response_type$>> p;
+  future<StatusOr<$response_type$>> f = p.get_future();
   std::thread t{[](auto p, auto service, auto request, auto rest_context) {
-      p.set_value(rest_internal::$method_http_verb$<google::longrunning::Operation>(
-          *service, *rest_context, request,
+      p.set_value(rest_internal::$method_http_verb$<$response_type$>(
+          *service, *rest_context, $request_resource$,
           $method_rest_path$$method_http_query_parameters$));
   }, std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -318,7 +343,7 @@ Status Default$stub_rest_class_name$::$method_name$(
       google::cloud::rest_internal::RestContext& rest_context,
       $request_type$ const& request) {
   return rest_internal::$method_http_verb$(
-      *service_, rest_context, request,
+      *service_, rest_context, $request_resource$,
       $method_rest_path$$method_http_query_parameters$);
 }
 )""");
@@ -329,7 +354,7 @@ Default$stub_rest_class_name$::$method_name$(
       google::cloud::rest_internal::RestContext& rest_context,
       $request_type$ const& request) {
   return rest_internal::$method_http_verb$<$response_type$>(
-      *service_, rest_context, request,
+      *service_, rest_context, $request_resource$,
       $method_rest_path$$method_http_query_parameters$);
 }
 )""");
@@ -351,7 +376,7 @@ Default$stub_rest_class_name$::Async$method_name$(
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
   std::thread t{[](auto p, auto service, auto request, auto rest_context) {
       p.set_value(rest_internal::$method_http_verb$<google::protobuf::Empty>(
-          *service, *rest_context, request,
+          *service, *rest_context, $request_resource$,
           $method_rest_path$$method_http_query_parameters$));
   }, std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -373,7 +398,7 @@ Default$stub_rest_class_name$::Async$method_name$(
   future<StatusOr<$response_type$>> f = p.get_future();
   std::thread t{[](auto p, auto service, auto request, auto rest_context) {
       p.set_value(rest_internal::$method_http_verb$<$response_type$>(
-          *service, *rest_context, request,
+          *service, *rest_context, $request_resource$,
           $method_rest_path$$method_http_query_parameters$));
   }, std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -388,20 +413,19 @@ Default$stub_rest_class_name$::Async$method_name$(
   }
 
   if (HasLongrunningMethod()) {
-    // long running operation support methods
     CcPrint(
         R"""(
-future<StatusOr<google::longrunning::Operation>>
+future<StatusOr<$longrunning_response_type$>>
 Default$stub_rest_class_name$::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::longrunning::GetOperationRequest const& request) {
-  promise<StatusOr<google::longrunning::Operation>> p;
-  future<StatusOr<google::longrunning::Operation>> f = p.get_future();
+    $longrunning_get_operation_request_type$ const& request) {
+  promise<StatusOr<$longrunning_response_type$>> p;
+  future<StatusOr<$longrunning_response_type$>> f = p.get_future();
   std::thread t{[](auto p, auto operations, auto request, auto rest_context) {
-      p.set_value(rest_internal::Get<google::longrunning::Operation>(
+      p.set_value(rest_internal::Get<$longrunning_response_type$>(
           *operations, *rest_context, request,
-          absl::StrCat("/v1/", request.name())));
+          $longrunning_get_operation_path$));
   }, std::move(p), operations_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable {
@@ -415,13 +439,13 @@ future<Status>
 Default$stub_rest_class_name$::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::longrunning::CancelOperationRequest const& request) {
+    $longrunning_cancel_operation_request_type$ const& request) {
   promise<StatusOr<google::protobuf::Empty>> p;
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
   std::thread t{[](auto p, auto operations, auto request, auto rest_context) {
       p.set_value(rest_internal::Post<google::protobuf::Empty>(
           *operations, *rest_context, request,
-          absl::StrCat("/v1/", request.name(), ":cancel")));
+          $longrunning_cancel_operation_path$));
   }, std::move(p), operations_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable {

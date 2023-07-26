@@ -61,10 +61,16 @@ sudo update-alternatives --install /usr/bin/clang-tidy clang-tidy /usr/bin/clang
 sudo update-alternatives --install /usr/bin/clang-format clang-format /usr/bin/clang-format-10 100
 ```
 
+Note: newer versions of Ubuntu might require:
+
+```console
+sudo apt install -y clang libc++-dev libc++abi-dev cmake ninja-build
+```
+
 Install the buildifier tool, which we use to format `BUILD.bazel` files:
 
 ```console
-sudo curl -sSL -o /usr/bin/buildifier https://github.com/bazelbuild/buildtools/releases/download/6.0.0/buildifier-linux-amd64
+sudo curl -fsSL -o /usr/bin/buildifier https://github.com/bazelbuild/buildtools/releases/download/6.0.0/buildifier-linux-amd64
 sudo chmod 755 /usr/bin/buildifier
 ```
 
@@ -105,7 +111,7 @@ Install `typos-cli` for spell and typo checking:
 
 ```
 sudo apt install cargo
-cargo install typos-cli --version 1.3.9
+cargo install typos-cli --version 1.16.1
 ```
 
 Install the Python modules used in the integration tests:
@@ -127,7 +133,7 @@ on the [Google Cloud SDK website](https://cloud.google.com/sdk/) for
 alternatives.
 
 ```console
-./ci/install-cloud-sdk.sh
+sudo ./ci/install-cloud-sdk.sh
 ```
 
 ### (Optional) Enable clang-based tooling in your IDE

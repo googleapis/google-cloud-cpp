@@ -50,8 +50,9 @@ Options JobControllerDefaultOptions(std::string const& location,
   }
   if (!options.has<dataproc_v1::JobControllerBackoffPolicyOption>()) {
     options.set<dataproc_v1::JobControllerBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options.has<dataproc_v1::JobControllerPollingPolicyOption>()) {
@@ -60,8 +61,9 @@ Options JobControllerDefaultOptions(std::string const& location,
             dataproc_v1::JobControllerRetryPolicyOption::Type,
             dataproc_v1::JobControllerBackoffPolicyOption::Type>(
             options.get<dataproc_v1::JobControllerRetryPolicyOption>()->clone(),
-            options.get<dataproc_v1::JobControllerBackoffPolicyOption>()
-                ->clone())
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
             .clone());
   }
   if (!options.has<

@@ -18,6 +18,7 @@
 
 #include "google/cloud/profiler/v2/internal/profiler_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/devtools/cloudprofiler/v2/profiler.grpc.pb.h>
@@ -29,8 +30,10 @@ namespace profiler_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ProfilerServiceMetadata::ProfilerServiceMetadata(
-    std::shared_ptr<ProfilerServiceStub> child)
+    std::shared_ptr<ProfilerServiceStub> child,
+    std::multimap<std::string, std::string> fixed_metadata)
     : child_(std::move(child)),
+      fixed_metadata_(std::move(fixed_metadata)),
       api_client_header_(
           google::cloud::internal::ApiClientHeader("generator")) {}
 
@@ -38,7 +41,7 @@ StatusOr<google::devtools::cloudprofiler::v2::Profile>
 ProfilerServiceMetadata::CreateProfile(
     grpc::ClientContext& context,
     google::devtools::cloudprofiler::v2::CreateProfileRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->CreateProfile(context, request);
 }
 
@@ -47,7 +50,7 @@ ProfilerServiceMetadata::CreateOfflineProfile(
     grpc::ClientContext& context,
     google::devtools::cloudprofiler::v2::CreateOfflineProfileRequest const&
         request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->CreateOfflineProfile(context, request);
 }
 
@@ -55,7 +58,7 @@ StatusOr<google::devtools::cloudprofiler::v2::Profile>
 ProfilerServiceMetadata::UpdateProfile(
     grpc::ClientContext& context,
     google::devtools::cloudprofiler::v2::UpdateProfileRequest const& request) {
-  SetMetadata(context, "profile.name=" + request.profile().name());
+  SetMetadata(context, absl::StrCat("profile.name=", request.profile().name()));
   return child_->UpdateProfile(context, request);
 }
 
@@ -66,6 +69,9 @@ void ProfilerServiceMetadata::SetMetadata(grpc::ClientContext& context,
 }
 
 void ProfilerServiceMetadata::SetMetadata(grpc::ClientContext& context) {
+  for (auto const& kv : fixed_metadata_) {
+    context.AddMetadata(kv.first, kv.second);
+  }
   context.AddMetadata("x-goog-api-client", api_client_header_);
   auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {

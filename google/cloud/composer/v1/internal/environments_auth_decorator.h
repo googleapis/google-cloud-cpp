@@ -68,6 +68,25 @@ class EnvironmentsAuth : public EnvironmentsStub {
       google::cloud::orchestration::airflow::service::v1::
           DeleteEnvironmentRequest const& request) override;
 
+  StatusOr<google::cloud::orchestration::airflow::service::v1::
+               ExecuteAirflowCommandResponse>
+  ExecuteAirflowCommand(
+      grpc::ClientContext& context,
+      google::cloud::orchestration::airflow::service::v1::
+          ExecuteAirflowCommandRequest const& request) override;
+
+  StatusOr<google::cloud::orchestration::airflow::service::v1::
+               StopAirflowCommandResponse>
+  StopAirflowCommand(grpc::ClientContext& context,
+                     google::cloud::orchestration::airflow::service::v1::
+                         StopAirflowCommandRequest const& request) override;
+
+  StatusOr<google::cloud::orchestration::airflow::service::v1::
+               PollAirflowCommandResponse>
+  PollAirflowCommand(grpc::ClientContext& context,
+                     google::cloud::orchestration::airflow::service::v1::
+                         PollAirflowCommandRequest const& request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncSaveSnapshot(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -79,6 +98,19 @@ class EnvironmentsAuth : public EnvironmentsStub {
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::orchestration::airflow::service::v1::
           LoadSnapshotRequest const& request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncDatabaseFailover(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::orchestration::airflow::service::v1::
+          DatabaseFailoverRequest const& request) override;
+
+  StatusOr<google::cloud::orchestration::airflow::service::v1::
+               FetchDatabasePropertiesResponse>
+  FetchDatabaseProperties(
+      grpc::ClientContext& context,
+      google::cloud::orchestration::airflow::service::v1::
+          FetchDatabasePropertiesRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,

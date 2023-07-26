@@ -23,6 +23,7 @@
 #include "google/cloud/beyondcorp/appconnections/v1/internal/app_connections_stub.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
+#include <map>
 #include <memory>
 #include <string>
 
@@ -34,8 +35,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class AppConnectionsServiceMetadata : public AppConnectionsServiceStub {
  public:
   ~AppConnectionsServiceMetadata() override = default;
-  explicit AppConnectionsServiceMetadata(
-      std::shared_ptr<AppConnectionsServiceStub> child);
+  AppConnectionsServiceMetadata(
+      std::shared_ptr<AppConnectionsServiceStub> child,
+      std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<
       google::cloud::beyondcorp::appconnections::v1::ListAppConnectionsResponse>
@@ -89,6 +91,7 @@ class AppConnectionsServiceMetadata : public AppConnectionsServiceStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<AppConnectionsServiceStub> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

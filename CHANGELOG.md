@@ -2,17 +2,6 @@
 
 ## FUTURE BREAKING CHANGES:
 
-<details>
-<summary>2023-05-31: remove the Cloud Debugger Library</summary>
-<br>
-
-Sometime after 2023-05-31 the Cloud Debugger service (aka Stackdriver Debugger
-API) will be [shutdown][cloud-debugger-deprecated]. Once the service is shutdown
-the corresponding [library][cloud-debugger-library] cannot be of any use, and we
-plan to remove it without changing the major version number.
-
-</details>
-
 The following breaking changes will be included in our next major release, which
 is scheduled for no sooner than 2023-07.
 
@@ -119,7 +108,169 @@ info, see [#7463] and [#5976].
 
 </details>
 
-## v2.11.0 - TBD
+## v2.14.0 - TBD
+
+### [Channel Services](/google/cloud/channel/README.md)
+
+The library has been expanded to include the Reporting API.
+
+### [Cloud Monitoring](/google/cloud/monitoring/README.md)
+
+The library has been expanded to include the [Snooze][monitoring-snooze] API.
+
+### [Cloud Functions](/google/cloud/functions/README.md)
+
+The library has been expanded to include the [2nd gen][functions-v2] API.
+
+### [Cloud Run](/google/cloud/run/README.md)
+
+The library has been expanded to include the
+[Job Executions][cloud-run-jobs] API.
+
+### [Compute Engine OS Config](/google/cloud/osconfig/README.md)
+
+The library has been expanded to include the Zonal OS Config API.
+
+### [Dataproc](/google/cloud/dataproc/README.md)
+
+The library has been expanded to include the [Node Groups][dataproc-node-groups]
+API.
+
+### [Logging](/google/cloud/logging/README.md)
+
+The library has been expanded to include the
+[Log-based Metrics][logging-metrics] API and the [Log Router][logging-config]
+API.
+
+### [Retail](/google/cloud/retail/README.md)
+
+The library has been expanded to include new services.
+
+### [Resource Manager](/google/cloud/resourcemanager/README.md)
+
+The library has been expanded to include the [Tags][resource-manager-tags] API.
+
+### [Speech](/google/cloud/speech/README.md)
+
+The library has been expanded to include the
+[Model Adaptation][speech-model-adaptation] API.
+
+## v2.13.0 - 2023-07
+
+### New Libraries
+
+We are happy to announce the following GA libraries.  Unless specifically noted,
+the APIs in these libraries are stable, and are ready for production use.
+
+- [Cloud Data Fusion](/google/cloud/datafusion/README.md)
+- [Dataproc Metastore](/google/cloud/metastore/README.md)
+- [Migration Center](google/cloud/migrationcenter/README.md)
+- [Rapid Migration Assessment](/google/cloud/rapidmigrationassessment/README.md)
+- [Secure Web Proxy](/google/cloud/networksecurity/README.md)
+
+### [Batch](/google/cloud/batch/README.md)
+
+- docs: an example to extract Cloud Batch logs ([#11935](https://github.com/googleapis/google-cloud-cpp/pull/11935))
+- docs(batch): introduce basic snippets ([#11915](https://github.com/googleapis/google-cloud-cpp/pull/11915))
+
+### [Spanner](/google/cloud/spanner/README.md)
+
+- doc(spanner): add an example for CommitAtLeastOnce() ([#11905](https://github.com/googleapis/google-cloud-cpp/pull/11905))
+- feat(spanner): implement at-least-once Commit ([#11899](https://github.com/googleapis/google-cloud-cpp/pull/11899))
+
+### [Common Libraries](/google/cloud/README.md)
+
+- feat(generator): separate page for retry policy overrides ([#11950](https://github.com/googleapis/google-cloud-cpp/pull/11950))
+- fix(common): pagination must support empty pages ([#11937](https://github.com/googleapis/google-cloud-cpp/pull/11937))
+- feat(generator): create retry policy samples ([#11930](https://github.com/googleapis/google-cloud-cpp/pull/11930))
+- fix(common): use 64-bit API on Windows to get file sizes ([#11906](https://github.com/googleapis/google-cloud-cpp/pull/11906))
+
+## v2.12.0 - 2023-06
+
+### New Libraries
+
+We are happy to announce the following GA libraries.  Unless specifically noted,
+the APIs in these libraries are stable, and are ready for production use.
+
+- [Content Warehouse](/google/cloud/contentwarehouse/README.md)
+- [Cloud Domains](/google/cloud/domains/README.md)
+- [Essential Contacts](/google/cloud/essentialcontacts/README.md)
+- [reCAPTCHA Enterprise](/google/cloud/recaptchaenterprise/README.md)
+- [Timeseries Insights](/google/cloud/timeseriesinsights/README.md)
+- [Traffic Director](/google/cloud/networkservices/README.md)
+- [Vertex AI](/google/cloud/aiplatform/README.md)
+
+### Cloud Debugger
+
+The Cloud Debugger service (aka Stackdriver Debugger API) has been
+[shutdown][cloud-debugger-deprecated]. The corresponding client library has been
+removed.
+
+### [BigQuery](/google/cloud/bigquery/README.md)
+
+This library has been expanded to include the BigLake API ([#11882](https://github.com/googleapis/google-cloud-cpp/pull/11882))
+
+### [Pub/Sub](/google/cloud/pubsub/README.md)
+
+- doc(pubsub): add new samples for schemas ([#11872](https://github.com/googleapis/google-cloud-cpp/pull/11872))
+  ([#11848](https://github.com/googleapis/google-cloud-cpp/pull/11848))
+  ([#11840](https://github.com/googleapis/google-cloud-cpp/pull/11840))
+
+### [Common Libraries](/google/cloud/README.md)
+
+- docs: use c.g.com/cpp mocking guide ([#11869](https://github.com/googleapis/google-cloud-cpp/pull/11869))
+- docs: link reference docs at c.g.c/cpp/docs/reference ([#11799](https://github.com/googleapis/google-cloud-cpp/pull/11799))
+- fix(generator): correct URL for reference docs ([#11765](https://github.com/googleapis/google-cloud-cpp/pull/11765))
+
+## v2.11.0 - 2023-06
+
+### New Libraries
+
+We are happy to announce the following GA libraries.  Unless specifically noted,
+the APIs in these libraries are stable, and are ready for production use.
+
+- [Cloud Support API](/google/cloud/support/README.md)
+
+### [Bigtable](/google/cloud/bigtable/README.md)
+
+- docs(bigtable): async Table APIs are stable ([#11711](https://github.com/googleapis/google-cloud-cpp/pull/11711))
+- doc(bigtable): deprecate DataClient in doxygen ([#11550](https://github.com/googleapis/google-cloud-cpp/pull/11550))
+
+### [Cloud Asset](/google/cloud/asset/README.md)
+
+The library has been re-enabled on Windows. See
+[#11714](https://github.com/googleapis/google-cloud-cpp/issues/11714) for details.
+
+### [Spanner](/google/cloud/spanner/README.md)
+
+- docs(spanner): some documentation tweaks ([#11641](https://github.com/googleapis/google-cloud-cpp/pull/11641))
+- feat(spanner): tests and samples for drop-database protection ([#11637](https://github.com/googleapis/google-cloud-cpp/pull/11637))
+- feat(spanner): make `ResultSourceInterface` public ([#11636](https://github.com/googleapis/google-cloud-cpp/pull/11636))
+
+### [Storage](/google/cloud/storage/README.md)
+
+- fix(storage): consistent project id overrides ([#11754](https://github.com/googleapis/google-cloud-cpp/pull/11754))
+- feat(storage): better error messages in signed URLs ([#11741](https://github.com/googleapis/google-cloud-cpp/pull/11741))
+- feat(storage): offer mock client without decorators ([#11697](https://github.com/googleapis/google-cloud-cpp/pull/11697))
+- feat(storage): lazy allocation for upload buffer ([#11633](https://github.com/googleapis/google-cloud-cpp/pull/11633))
+
+### [Storage Transfer Service](/google/cloud/storagetransfer/README.md)
+
+The library has been re-enabled on macOS. See
+[#8785](https://github.com/googleapis/google-cloud-cpp/issues/8785) for details.
+
+### [Common Libraries](/google/cloud/README.md)
+
+- feat: use full jitter exp backoff policy in the generator ([#11748](https://github.com/googleapis/google-cloud-cpp/pull/11748))
+- feat: add new constructor for exponential backoff policy  ([#11650](https://github.com/googleapis/google-cloud-cpp/pull/11650))
+- feat: avoid development dependencies with Bazel ([#11724](https://github.com/googleapis/google-cloud-cpp/pull/11724))
+- docs(common): better exception descriptions ([#11705](https://github.com/googleapis/google-cloud-cpp/pull/11705))
+- fix(rest): support rewinds in libcurl ([#11703](https://github.com/googleapis/google-cloud-cpp/pull/11703), [#11709](https://github.com/googleapis/google-cloud-cpp/pull/11709))
+- fix: workaround curl_multi_poll returning an error on EINTR ([#11649](https://github.com/googleapis/google-cloud-cpp/pull/11649))
+- docs(common): improve `StatusOr<>` documentation ([#11631](https://github.com/googleapis/google-cloud-cpp/pull/11631))
+- fix: Correct exponential backoff ranges ([#11529](https://github.com/googleapis/google-cloud-cpp/pull/11529))
+- fix: patch releases do not change the ABI ([#11499](https://github.com/googleapis/google-cloud-cpp/pull/11499))
+- fix(rest): missing user-agent separator ([#11473](https://github.com/googleapis/google-cloud-cpp/pull/11473))
 
 ## v2.10.0 - 2023-05
 
@@ -3537,25 +3688,32 @@ releases.  The relevant notes are:
 [architecture design]: /ARCHITECTURE.md#the-client-classes
 [architecture-connection]: /ARCHITECTURE.md#the-connection-classes
 [bq-analytics-hub]: https://cloud.google.com/bigquery/docs/analytics-hub-introduction
-[cbt-dataclient-migration]: https://googleapis.dev/cpp/google-cloud-bigtable/latest/migrating-from-dataclient.html
+[cbt-dataclient-migration]: https://cloud.google.com/cpp/docs/reference/bigtable/latest/migrating-from-dataclient
 [cloud bigtable admin api]: https://cloud.google.com/bigtable/docs/reference/admin/rpc
 [cloud tasks]: /google/cloud/tasks/README.md
 [cloud-debugger-deprecated]: https://cloud.google.com/debugger/docs/deprecations
-[cloud-debugger-library]: /google/cloud/debugger/README.md
+[cloud-run-jobs]: https://cloud.google.com/run/docs/managing/job-executions
+[dataproc-node-groups]: https://cloud.google.com/dataproc/docs/guides/node-groups/dataproc-driver-node-groups
+[functions-v2]: https://cloud.google.com/functions/docs/concepts/version-comparison
 [github-cpp-common]: https://github.com/googleapis/google-cloud-cpp-common
 [google.pubsub.v1.schemaserviceclient]: https://cloud.google.com/pubsub/docs/reference/rpc/google.pubsub.v1#google.pubsub.v1.SchemaService
-[guac-dox]: https://googleapis.dev/cpp/google-cloud-common/latest/credentials_8h.html
-[howto-mock-data-api]: https://googleapis.dev/cpp/google-cloud-bigtable/latest/bigtable-mocking.html
+[guac-dox]: https://cloud.google.com/cpp/docs/reference/common/latest/group__guac
+[howto-mock-data-api]: https://cloud.google.com/cpp/docs/reference/bigtable/latest/bigtable-mocking
 [iam-conditions-link]: https://cloud.google.com/iam/docs/conditions-overview
 [iam-policy-link]: https://cloud.google.com/iam/docs/manage-access-other-resources
 [issue-2567]: https://github.com/googleapis/google-cloud-cpp/issues/2567
+[logging-config]: https://cloud.google.com/logging/docs/routing/overview
+[logging-metrics]: https://cloud.google.com/logging/docs/logs-based-metrics
 [modern-table-ctor]: https://github.com/googleapis/google-cloud-cpp/blob/62740c8e9180056db77d4dd3e80a6fa7ae71295a/google/cloud/bigtable/table.h#L182-L214
+[monitoring-snooze]: https://cloud.google.com/monitoring/alerts/snooze
 [nlohmann-json-gh]: https://github.com/nlohmann/json.git
 [oss-cxx-support]: https://opensource.google/documentation/policies/cplusplus-support
 [product-launch-stages]: https://cloud.google.com/products/#product-launch-stages
 [pub/sub lite]: /google/cloud/pubsublite/README.md
+[resource-manager-tags]: https://cloud.google.com/resource-manager/docs/tags/tags-overview
 [resource-types-with-policies]: https://cloud.google.com/iam/docs/resource-types-with-policies
 [secret manager]: /google/cloud/secretmanager/README.md
-[storage-dox-link]: https://googleapis.dev/cpp/google-cloud-storage/latest/
-[storage-mocking-link]: https://googleapis.dev/cpp/google-cloud-storage/latest/storage-mocking.html
+[speech-model-adaptation]: https://cloud.google.com/speech-to-text/docs/adaptation-model
+[storage-dox-link]: https://cloud.google.com/cpp/docs/reference/storage/latest/
+[storage-mocking-link]: https://cloud.google.com/cpp/docs/reference/storage/latest/storage-mocking
 [vcpkg-github]: https://github.com/microsoft/vcpkg

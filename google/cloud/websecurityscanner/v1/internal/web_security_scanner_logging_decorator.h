@@ -36,7 +36,7 @@ class WebSecurityScannerLogging : public WebSecurityScannerStub {
   ~WebSecurityScannerLogging() override = default;
   WebSecurityScannerLogging(std::shared_ptr<WebSecurityScannerStub> child,
                             TracingOptions tracing_options,
-                            std::set<std::string> components);
+                            std::set<std::string> const& components);
 
   StatusOr<google::cloud::websecurityscanner::v1::ScanConfig> CreateScanConfig(
       grpc::ClientContext& context,
@@ -109,7 +109,7 @@ class WebSecurityScannerLogging : public WebSecurityScannerStub {
  private:
   std::shared_ptr<WebSecurityScannerStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // WebSecurityScannerLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

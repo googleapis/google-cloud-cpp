@@ -88,6 +88,7 @@ class ServiceControllerClient {
   }
   ///@}
 
+  // clang-format off
   ///
   /// Checks whether an operation on a service should be allowed to proceed
   /// based on the configuration of the service and related policies. It must be
@@ -97,8 +98,8 @@ class ServiceControllerClient {
   /// 60 seconds. In case of any server errors, the client should rely on the
   /// cached results for much longer time to avoid outage.
   /// WARNING: There is general 60s delay for the configuration and policy
-  /// propagation, therefore callers MUST NOT depend on the `Check` method
-  /// having the latest policy information.
+  /// propagation, therefore callers MUST NOT depend on the `Check` method having
+  /// the latest policy information.
   ///
   /// NOTE: the [CheckRequest][google.api.servicecontrol.v1.CheckRequest] has
   /// the size limit (wire-format byte size) of 1MB.
@@ -107,22 +108,35 @@ class ServiceControllerClient {
   /// on the specified service. For more information, see
   /// [Cloud IAM](https://cloud.google.com/iam).
   ///
-  /// @param request
-  /// @googleapis_link{google::api::servicecontrol::v1::CheckRequest,google/api/servicecontrol/v1/service_controller.proto#L93}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.api.servicecontrol.v1.CheckRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::api::servicecontrol::v1::CheckResponse,google/api/servicecontrol/v1/service_controller.proto#L114}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.api.servicecontrol.v1.CheckResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.api.servicecontrol.v1.CheckRequest]:
-  /// @googleapis_reference_link{google/api/servicecontrol/v1/service_controller.proto#L93}
-  /// [google.api.servicecontrol.v1.CheckResponse]:
-  /// @googleapis_reference_link{google/api/servicecontrol/v1/service_controller.proto#L114}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.api.servicecontrol.v1.CheckRequest]: @googleapis_reference_link{google/api/servicecontrol/v1/service_controller.proto#L93}
+  /// [google.api.servicecontrol.v1.CheckResponse]: @googleapis_reference_link{google/api/servicecontrol/v1/service_controller.proto#L114}
   ///
+  // clang-format on
   StatusOr<google::api::servicecontrol::v1::CheckResponse> Check(
       google::api::servicecontrol::v1::CheckRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Reports operation results to Google Service Control, such as logs and
   /// metrics. It should be called after an operation is completed.
@@ -140,18 +154,30 @@ class ServiceControllerClient {
   /// on the specified service. For more information, see
   /// [Google Cloud IAM](https://cloud.google.com/iam).
   ///
-  /// @param request
-  /// @googleapis_link{google::api::servicecontrol::v1::ReportRequest,google/api/servicecontrol/v1/service_controller.proto#L189}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.api.servicecontrol.v1.ReportRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::api::servicecontrol::v1::ReportResponse,google/api/servicecontrol/v1/service_controller.proto#L220}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.api.servicecontrol.v1.ReportResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.api.servicecontrol.v1.ReportRequest]:
-  /// @googleapis_reference_link{google/api/servicecontrol/v1/service_controller.proto#L189}
-  /// [google.api.servicecontrol.v1.ReportResponse]:
-  /// @googleapis_reference_link{google/api/servicecontrol/v1/service_controller.proto#L220}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.api.servicecontrol.v1.ReportRequest]: @googleapis_reference_link{google/api/servicecontrol/v1/service_controller.proto#L189}
+  /// [google.api.servicecontrol.v1.ReportResponse]: @googleapis_reference_link{google/api/servicecontrol/v1/service_controller.proto#L220}
   ///
+  // clang-format on
   StatusOr<google::api::servicecontrol::v1::ReportResponse> Report(
       google::api::servicecontrol::v1::ReportRequest const& request,
       Options opts = {});

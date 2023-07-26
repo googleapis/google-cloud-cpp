@@ -36,7 +36,7 @@ class ContentServiceLogging : public ContentServiceStub {
   ~ContentServiceLogging() override = default;
   ContentServiceLogging(std::shared_ptr<ContentServiceStub> child,
                         TracingOptions tracing_options,
-                        std::set<std::string> components);
+                        std::set<std::string> const& components);
 
   StatusOr<google::cloud::dataplex::v1::Content> CreateContent(
       grpc::ClientContext& context,
@@ -75,7 +75,7 @@ class ContentServiceLogging : public ContentServiceStub {
  private:
   std::shared_ptr<ContentServiceStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // ContentServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

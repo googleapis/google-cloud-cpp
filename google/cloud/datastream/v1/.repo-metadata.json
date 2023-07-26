@@ -1,0 +1,14 @@
+{
+    "api_id": "datastream.googleapis.com",
+    "api_shortname": "datastream",
+    "client_documentation": "https://cloud.google.com/cpp/docs/reference/datastream/latest",
+    "distribution_name": "google-cloud-cpp",
+    "issue_tracker": "https://issuetracker.google.com/savedsearches/6166733",
+    "language": "cpp",
+    "library_type": "GAPIC_AUTO",
+    "name_pretty": "Datastream API",
+    "product_documentation": "https://cloud.google.com/datastream",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-cpp",
+    "requires_billing": true
+}

@@ -22,6 +22,7 @@
 #include "google/cloud/privateca/v1/internal/certificate_authority_stub.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
+#include <map>
 #include <memory>
 #include <string>
 
@@ -34,8 +35,9 @@ class CertificateAuthorityServiceMetadata
     : public CertificateAuthorityServiceStub {
  public:
   ~CertificateAuthorityServiceMetadata() override = default;
-  explicit CertificateAuthorityServiceMetadata(
-      std::shared_ptr<CertificateAuthorityServiceStub> child);
+  CertificateAuthorityServiceMetadata(
+      std::shared_ptr<CertificateAuthorityServiceStub> child,
+      std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::security::privateca::v1::Certificate>
   CreateCertificate(
@@ -239,6 +241,7 @@ class CertificateAuthorityServiceMetadata
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<CertificateAuthorityServiceStub> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

@@ -18,6 +18,7 @@
 
 #include "google/cloud/talent/v4/internal/company_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/talent/v4/company_service.grpc.pb.h>
@@ -29,8 +30,10 @@ namespace talent_v4_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 CompanyServiceMetadata::CompanyServiceMetadata(
-    std::shared_ptr<CompanyServiceStub> child)
+    std::shared_ptr<CompanyServiceStub> child,
+    std::multimap<std::string, std::string> fixed_metadata)
     : child_(std::move(child)),
+      fixed_metadata_(std::move(fixed_metadata)),
       api_client_header_(
           google::cloud::internal::ApiClientHeader("generator")) {}
 
@@ -38,14 +41,14 @@ StatusOr<google::cloud::talent::v4::Company>
 CompanyServiceMetadata::CreateCompany(
     grpc::ClientContext& context,
     google::cloud::talent::v4::CreateCompanyRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->CreateCompany(context, request);
 }
 
 StatusOr<google::cloud::talent::v4::Company> CompanyServiceMetadata::GetCompany(
     grpc::ClientContext& context,
     google::cloud::talent::v4::GetCompanyRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetCompany(context, request);
 }
 
@@ -53,14 +56,14 @@ StatusOr<google::cloud::talent::v4::Company>
 CompanyServiceMetadata::UpdateCompany(
     grpc::ClientContext& context,
     google::cloud::talent::v4::UpdateCompanyRequest const& request) {
-  SetMetadata(context, "company.name=" + request.company().name());
+  SetMetadata(context, absl::StrCat("company.name=", request.company().name()));
   return child_->UpdateCompany(context, request);
 }
 
 Status CompanyServiceMetadata::DeleteCompany(
     grpc::ClientContext& context,
     google::cloud::talent::v4::DeleteCompanyRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->DeleteCompany(context, request);
 }
 
@@ -68,7 +71,7 @@ StatusOr<google::cloud::talent::v4::ListCompaniesResponse>
 CompanyServiceMetadata::ListCompanies(
     grpc::ClientContext& context,
     google::cloud::talent::v4::ListCompaniesRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListCompanies(context, request);
 }
 
@@ -79,6 +82,9 @@ void CompanyServiceMetadata::SetMetadata(grpc::ClientContext& context,
 }
 
 void CompanyServiceMetadata::SetMetadata(grpc::ClientContext& context) {
+  for (auto const& kv : fixed_metadata_) {
+    context.AddMetadata(kv.first, kv.second);
+  }
   context.AddMetadata("x-goog-api-client", api_client_header_);
   auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {

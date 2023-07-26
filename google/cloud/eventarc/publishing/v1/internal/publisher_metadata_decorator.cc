@@ -18,6 +18,7 @@
 
 #include "google/cloud/eventarc/publishing/v1/internal/publisher_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/eventarc/publishing/v1/publisher.grpc.pb.h>
@@ -28,8 +29,11 @@ namespace cloud {
 namespace eventarc_publishing_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-PublisherMetadata::PublisherMetadata(std::shared_ptr<PublisherStub> child)
+PublisherMetadata::PublisherMetadata(
+    std::shared_ptr<PublisherStub> child,
+    std::multimap<std::string, std::string> fixed_metadata)
     : child_(std::move(child)),
+      fixed_metadata_(std::move(fixed_metadata)),
       api_client_header_(
           google::cloud::internal::ApiClientHeader("generator")) {}
 
@@ -39,7 +43,8 @@ PublisherMetadata::PublishChannelConnectionEvents(
     grpc::ClientContext& context,
     google::cloud::eventarc::publishing::v1::
         PublishChannelConnectionEventsRequest const& request) {
-  SetMetadata(context, "channel_connection=" + request.channel_connection());
+  SetMetadata(context, absl::StrCat("channel_connection=",
+                                    request.channel_connection()));
   return child_->PublishChannelConnectionEvents(context, request);
 }
 
@@ -48,7 +53,7 @@ PublisherMetadata::PublishEvents(
     grpc::ClientContext& context,
     google::cloud::eventarc::publishing::v1::PublishEventsRequest const&
         request) {
-  SetMetadata(context, "channel=" + request.channel());
+  SetMetadata(context, absl::StrCat("channel=", request.channel()));
   return child_->PublishEvents(context, request);
 }
 
@@ -59,6 +64,9 @@ void PublisherMetadata::SetMetadata(grpc::ClientContext& context,
 }
 
 void PublisherMetadata::SetMetadata(grpc::ClientContext& context) {
+  for (auto const& kv : fixed_metadata_) {
+    context.AddMetadata(kv.first, kv.second);
+  }
   context.AddMetadata("x-goog-api-client", api_client_header_);
   auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {

@@ -22,8 +22,15 @@ set(DOXYGEN_EXAMPLE_PATH
     "${CMAKE_CURRENT_SOURCE_DIR}/examples"
     "${CMAKE_CURRENT_SOURCE_DIR}/admin/samples"
     "${CMAKE_CURRENT_SOURCE_DIR}/quickstart")
-set(DOXYGEN_EXCLUDE_SYMBOLS "benchmarks" "bigtable_admin_internal"
-                            "bigtable_internal" "internal" "testing" "examples")
+set(DOXYGEN_EXCLUDE_SYMBOLS
+    "benchmarks"
+    "bigtable_admin_internal"
+    "bigtable_internal"
+    "internal"
+    "testing"
+    "examples"
+    "testproxy"
+    "test_proxy")
 
 include(GoogleCloudCppDoxygen)
 google_cloud_cpp_doxygen_targets("bigtable" DEPENDS cloud-docs
@@ -169,6 +176,8 @@ add_library(
     internal/convert_policies.h
     internal/data_connection_impl.cc
     internal/data_connection_impl.h
+    internal/data_tracing_connection.cc
+    internal/data_tracing_connection.h
     internal/default_row_reader.cc
     internal/default_row_reader.h
     internal/defaults.cc
@@ -189,9 +198,12 @@ add_library(
     internal/prefix_range_end.h
     internal/readrowsparser.cc
     internal/readrowsparser.h
+    internal/retry_traits.h
     internal/row_reader_impl.h
     internal/rpc_policy_parameters.h
     internal/rpc_policy_parameters.inc
+    internal/traced_row_reader.cc
+    internal/traced_row_reader.h
     internal/unary_client_utils.h
     metadata_update_policy.cc
     metadata_update_policy.h
@@ -206,6 +218,7 @@ add_library(
     read_modify_write_rule.h
     resource_names.cc
     resource_names.h
+    retry_policy.h
     row.h
     row_key.h
     row_key_sample.h
@@ -339,6 +352,7 @@ if (BUILD_TESTING)
         cluster_config_test.cc
         column_family_test.cc
         data_client_test.cc
+        data_connection_test.cc
         expr_test.cc
         filters_test.cc
         force_sanitizer_failures_test.cc
@@ -361,6 +375,7 @@ if (BUILD_TESTING)
         internal/connection_refresh_state_test.cc
         internal/convert_policies_test.cc
         internal/data_connection_impl_test.cc
+        internal/data_tracing_connection_test.cc
         internal/default_row_reader_test.cc
         internal/defaults_test.cc
         internal/google_bytes_traits_test.cc
@@ -371,6 +386,8 @@ if (BUILD_TESTING)
         internal/legacy_row_reader_test.cc
         internal/logging_data_client_test.cc
         internal/prefix_range_end_test.cc
+        internal/retry_traits_test.cc
+        internal/traced_row_reader_test.cc
         legacy_table_test.cc
         metadata_update_policy_test.cc
         mocks/mock_row_reader_test.cc
@@ -496,8 +513,8 @@ google_cloud_cpp_add_pkgconfig(
     "The Google Cloud Bigtable C++ Client Library"
     "Provides C++ APIs to access Google Cloud Bigtable."
     "google_cloud_cpp_grpc_utils"
-    " google_cloud_cpp_common"
-    " google_cloud_cpp_bigtable_protos")
+    "google_cloud_cpp_common"
+    "google_cloud_cpp_bigtable_protos")
 
 # Create and install the CMake configuration files.
 include(CMakePackageConfigHelpers)

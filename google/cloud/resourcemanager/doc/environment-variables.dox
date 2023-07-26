@@ -22,6 +22,22 @@ environment variables are convenient when troubleshooting problems.
   `EndpointOption` (which defaults to "cloudresourcemanager.googleapis.com")
   used by `MakeProjectsConnection()`.
 
+- `GOOGLE_CLOUD_CPP_TAG_BINDINGS_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "cloudresourcemanager.googleapis.com")
+  used by `MakeTagBindingsConnection()`.
+
+- `GOOGLE_CLOUD_CPP_TAG_HOLDS_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "cloudresourcemanager.googleapis.com")
+  used by `MakeTagHoldsConnection()`.
+
+- `GOOGLE_CLOUD_CPP_TAG_KEYS_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "cloudresourcemanager.googleapis.com")
+  used by `MakeTagKeysConnection()`.
+
+- `GOOGLE_CLOUD_CPP_TAG_VALUES_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "cloudresourcemanager.googleapis.com")
+  used by `MakeTagValuesConnection()`.
+
 <!-- inject-endpoint-env-vars-end -->
 
 @see google::cloud::EndpointOption
@@ -40,7 +56,7 @@ the program's console.
 including whether messages will be output on multiple lines, or whether
 string/bytes fields will be truncated.
 
-@see google::cloud::TracingOptionsOption
+@see google::cloud::GrpcTracingOptionsOption
 
 `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes`: turns on logging in the library, basically
 the library always "logs" but the logging infrastructure has no backend to

@@ -1,6 +1,6 @@
 /*!
 
-@mainpage Transcoder API C++ Client Library
+@mainpage Video Services C++ Client Library
 
 An idiomatic C++ client library for video services, including:
 
@@ -20,7 +20,7 @@ While this library is **GA**, please note Google Cloud C++ client libraries do *
 
 The following shows the code that you'll run in the
 `google/cloud/video/quickstart/` directory,
-which should give you a taste of the Transcoder API C++ client library API.
+which should give you a taste of the video services C++ client library.
 
 @snippet quickstart.cc all
 
@@ -33,20 +33,14 @@ functions of the class. This library groups multiple gRPC services because they
 are part of the same product or are often used together. A typical example may
 be the administrative and data plane operations for a single product.
 
-The library also has other classes that provide helpers, retry policies,
-configuration parameters, and infrastructure to mock the `*Client` classes
-when testing your application.
+The library also has other classes that provide helpers, configuration
+parameters, and infrastructure to mock the `*Client` classes when testing your
+application.
 
 - [\c video_livestream_v1::LivestreamServiceClient](@ref google::cloud::video_livestream_v1::LivestreamServiceClient)
 - [\c video_stitcher_v1::VideoStitcherServiceClient](@ref google::cloud::video_stitcher_v1::VideoStitcherServiceClient)
 - [\c video_transcoder_v1::TranscoderServiceClient](@ref google::cloud::video_transcoder_v1::TranscoderServiceClient)
 <!-- inject-client-list-end -->
-
-## Retry, Backoff, and Idempotency Policies.
-
-The library automatically retries requests that fail with transient errors, and
-uses [exponential backoff] to backoff between retries. Application developers
-can override the default policies.
 
 ## More Information
 
@@ -55,10 +49,12 @@ can override the default policies.
   endpoint.
 - @ref video-override-authentication - describes how to change the
   authentication credentials used by the library.
+- @ref video-override-retry - describes how to change the default retry
+  policies.
+- @ref video-env - describes environment variables that can configure the behavior of the library.
 
 [livestream-service-docs]: https://cloud.google.com/livestream
 [transcoder-service-docs]: https://cloud.google.com/transcoder
 [stitcher-service-docs]: https://cloud.google.com/video-stitcher
-[exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff
 
 */

@@ -49,8 +49,9 @@ Options VideoStitcherServiceDefaultOptions(Options options) {
   if (!options
            .has<video_stitcher_v1::VideoStitcherServiceBackoffPolicyOption>()) {
     options.set<video_stitcher_v1::VideoStitcherServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options
@@ -62,10 +63,9 @@ Options VideoStitcherServiceDefaultOptions(Options options) {
             options
                 .get<video_stitcher_v1::VideoStitcherServiceRetryPolicyOption>()
                 ->clone(),
-            options
-                .get<video_stitcher_v1::
-                         VideoStitcherServiceBackoffPolicyOption>()
-                ->clone())
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
             .clone());
   }
   if (!options

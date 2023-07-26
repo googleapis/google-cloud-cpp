@@ -40,7 +40,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * While the example showcases types from the BigQuery library, the underlying
  * principles apply for any pair of `*Client` and `*Connection`.
  *
- * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
+ * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
 class MockKeyManagementServiceConnection
     : public kms_v1::KeyManagementServiceConnection {
@@ -144,6 +144,14 @@ class MockKeyManagementServiceConnection
 
   MOCK_METHOD(StatusOr<google::cloud::kms::v1::DecryptResponse>, Decrypt,
               (google::cloud::kms::v1::DecryptRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::kms::v1::RawEncryptResponse>, RawEncrypt,
+              (google::cloud::kms::v1::RawEncryptRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::kms::v1::RawDecryptResponse>, RawDecrypt,
+              (google::cloud::kms::v1::RawDecryptRequest const& request),
               (override));
 
   MOCK_METHOD(StatusOr<google::cloud::kms::v1::AsymmetricSignResponse>,

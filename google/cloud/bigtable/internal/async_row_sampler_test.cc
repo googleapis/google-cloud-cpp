@@ -15,8 +15,13 @@
 #include "google/cloud/bigtable/internal/async_row_sampler.h"
 #include "google/cloud/bigtable/testing/mock_bigtable_stub.h"
 #include "google/cloud/grpc_options.h"
+#include "google/cloud/internal/async_streaming_read_rpc_impl.h"
+#include "google/cloud/internal/background_threads_impl.h"
+#include "google/cloud/internal/make_status.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/testing_util/mock_backoff_policy.h"
 #include "google/cloud/testing_util/mock_completion_queue_impl.h"
+#include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <chrono>
@@ -432,6 +437,70 @@ TEST(AsyncSampleRowKeysTest, CurrentOptionsContinuedOnRetries) {
   internal::OptionsSpan clear(Options{});
   timer_promise.set_value(make_status_or(std::chrono::system_clock::now()));
 }
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+using ::google::cloud::testing_util::EnableTracing;
+using ::google::cloud::testing_util::IsActive;
+using ::google::cloud::testing_util::SpanNamed;
+using ::testing::AllOf;
+using ::testing::Each;
+using ::testing::SizeIs;
+using ErrorStream =
+    internal::AsyncStreamingReadRpcError<v2::SampleRowKeysResponse>;
+
+TEST(AsyncSampleRowKeysTest, TracedBackoff) {
+  auto span_catcher = testing_util::InstallSpanCatcher();
+
+  auto mock = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*mock, AsyncSampleRowKeys)
+      .Times(kNumRetries + 1)
+      .WillRepeatedly([] {
+        return std::make_unique<ErrorStream>(
+            internal::UnavailableError("try again"));
+      });
+
+  internal::AutomaticallyCreatedBackgroundThreads background;
+  auto retry = DataLimitedErrorCountRetryPolicy(kNumRetries).clone();
+  auto mock_b = std::make_unique<MockBackoffPolicy>();
+  EXPECT_CALL(*mock_b, OnCompletion).Times(kNumRetries);
+
+  internal::OptionsSpan o(EnableTracing(Options{}));
+  (void)AsyncRowSampler::Create(background.cq(), mock, std::move(retry),
+                                std::move(mock_b), kAppProfile, kTableName)
+      .get();
+
+  EXPECT_THAT(span_catcher->GetSpans(),
+              AllOf(SizeIs(kNumRetries), Each(SpanNamed("Async Backoff"))));
+}
+
+TEST(AsyncSampleRowKeysTest, CallSpanActiveThroughout) {
+  auto span_catcher = testing_util::InstallSpanCatcher();
+
+  auto span = internal::MakeSpan("span");
+
+  auto mock = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*mock, AsyncSampleRowKeys)
+      .Times(kNumRetries + 1)
+      .WillRepeatedly([span] {
+        EXPECT_THAT(span, IsActive());
+        return std::make_unique<ErrorStream>(
+            internal::UnavailableError("try again"));
+      });
+
+  internal::AutomaticallyCreatedBackgroundThreads background;
+  auto retry = DataLimitedErrorCountRetryPolicy(kNumRetries).clone();
+  auto mock_b = std::make_unique<MockBackoffPolicy>();
+  EXPECT_CALL(*mock_b, OnCompletion).Times(kNumRetries);
+
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::OptionsSpan o(EnableTracing(Options{}));
+  auto f = AsyncRowSampler::Create(background.cq(), mock, std::move(retry),
+                                   std::move(mock_b), kAppProfile, kTableName);
+
+  auto overlay = opentelemetry::trace::Scope(internal::MakeSpan("overlay"));
+  (void)f.get();
+}
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

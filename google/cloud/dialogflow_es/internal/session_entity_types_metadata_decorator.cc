@@ -18,6 +18,7 @@
 
 #include "google/cloud/dialogflow_es/internal/session_entity_types_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/dialogflow/v2/session_entity_type.grpc.pb.h>
@@ -29,8 +30,10 @@ namespace dialogflow_es_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 SessionEntityTypesMetadata::SessionEntityTypesMetadata(
-    std::shared_ptr<SessionEntityTypesStub> child)
+    std::shared_ptr<SessionEntityTypesStub> child,
+    std::multimap<std::string, std::string> fixed_metadata)
     : child_(std::move(child)),
+      fixed_metadata_(std::move(fixed_metadata)),
       api_client_header_(
           google::cloud::internal::ApiClientHeader("generator")) {}
 
@@ -39,7 +42,7 @@ SessionEntityTypesMetadata::ListSessionEntityTypes(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::ListSessionEntityTypesRequest const&
         request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListSessionEntityTypes(context, request);
 }
 
@@ -47,7 +50,7 @@ StatusOr<google::cloud::dialogflow::v2::SessionEntityType>
 SessionEntityTypesMetadata::GetSessionEntityType(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::GetSessionEntityTypeRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetSessionEntityType(context, request);
 }
 
@@ -56,7 +59,7 @@ SessionEntityTypesMetadata::CreateSessionEntityType(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::CreateSessionEntityTypeRequest const&
         request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->CreateSessionEntityType(context, request);
 }
 
@@ -65,8 +68,8 @@ SessionEntityTypesMetadata::UpdateSessionEntityType(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::UpdateSessionEntityTypeRequest const&
         request) {
-  SetMetadata(context, "session_entity_type.name=" +
-                           request.session_entity_type().name());
+  SetMetadata(context, absl::StrCat("session_entity_type.name=",
+                                    request.session_entity_type().name()));
   return child_->UpdateSessionEntityType(context, request);
 }
 
@@ -74,7 +77,7 @@ Status SessionEntityTypesMetadata::DeleteSessionEntityType(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::DeleteSessionEntityTypeRequest const&
         request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->DeleteSessionEntityType(context, request);
 }
 
@@ -85,6 +88,9 @@ void SessionEntityTypesMetadata::SetMetadata(
 }
 
 void SessionEntityTypesMetadata::SetMetadata(grpc::ClientContext& context) {
+  for (auto const& kv : fixed_metadata_) {
+    context.AddMetadata(kv.first, kv.second);
+  }
   context.AddMetadata("x-goog-api-client", api_client_header_);
   auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {

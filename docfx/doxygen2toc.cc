@@ -18,10 +18,10 @@
 #include "docfx/doxygen_groups.h"
 #include "docfx/doxygen_pages.h"
 #include "docfx/function_classifiers.h"
+#include "docfx/node_name.h"
 #include "docfx/public_docs.h"
 #include <yaml-cpp/yaml.h>
 #include <functional>
-#include <iostream>
 #include <map>
 #include <sstream>
 
@@ -36,26 +36,28 @@ std::shared_ptr<TocEntry> NamedEntry(std::string_view name) {
 
 std::shared_ptr<TocEntry> CompoundEntry(pugi::xml_node node) {
   auto const id = std::string_view{node.attribute("id").as_string()};
-  auto const name = std::string_view{node.child("compoundname").child_value()};
   auto overview = NamedEntry("Overview");
   overview->attr.emplace("uid", id);
-  auto entry = NamedEntry(name);
+  auto entry = NamedEntry(NodeName(node));
   entry->items.push_back(std::move(overview));
   return entry;
 }
 
-std::shared_ptr<TocEntry> MemberEntry(pugi::xml_node node) {
-  auto const id = std::string_view{node.attribute("id").as_string()};
-  auto const name = std::string_view{node.child("name").child_value()};
+TocItems MemberEntry(YamlContext const& ctx, pugi::xml_node node) {
+  // Skip MOCK_METHOD() functions.
+  auto const name = NodeName(node);
+  if (name.rfind("MOCK_METHOD", 0) == 0) return {};
+
+  auto actual = MockingNode(ctx, node);
+  auto const id = std::string_view{actual.attribute("id").as_string()};
   auto entry = NamedEntry(name);
   entry->attr.emplace("uid", id);
-  return entry;
+  return {entry};
 }
 
 std::shared_ptr<TocEntry> EnumValueEntry(pugi::xml_node node) {
   auto const id = std::string_view{node.attribute("id").as_string()};
-  auto const name = std::string_view{node.child("name").child_value()};
-  auto entry = NamedEntry(name);
+  auto entry = NamedEntry(NodeName(node));
   entry->attr.emplace("uid", id);
   return entry;
 }
@@ -80,23 +82,23 @@ bool IsTypedef(pugi::xml_node node) {
   return std::string_view{node.attribute("kind").as_string()} == "typedef";
 }
 
-TocItems NamespaceToc(Config const& cfg, pugi::xml_document const& doc,
+TocItems NamespaceToc(YamlContext const& ctx, pugi::xml_document const& doc,
                       pugi::xml_node node);
-TocItems ClassToc(Config const& cfg, pugi::xml_document const& doc,
+TocItems ClassToc(YamlContext const& ctx, pugi::xml_document const& doc,
                   pugi::xml_node node);
-TocItems EnumToc(Config const& cfg, pugi::xml_document const& doc,
+TocItems EnumToc(YamlContext const& ctx, pugi::xml_document const& doc,
                  pugi::xml_node node);
 
 // Generate ToC entries for any elements
-TocItems GenericToc(Config const& cfg, pugi::xml_document const& doc,
+TocItems GenericToc(YamlContext const& ctx, pugi::xml_document const& doc,
                     pugi::xml_node node) {
-  if (!IncludeInPublicDocuments(cfg, node)) return {};
-  if (IsClass(node)) return ClassToc(cfg, doc, node);
-  if (IsStruct(node)) return ClassToc(cfg, doc, node);
-  if (IsEnum(node)) return EnumToc(cfg, doc, node);
-  if (IsNamespace(node)) return NamespaceToc(cfg, doc, node);
+  if (!IncludeInPublicDocuments(ctx.config, node)) return {};
+  if (IsClass(node)) return ClassToc(ctx, doc, node);
+  if (IsStruct(node)) return ClassToc(ctx, doc, node);
+  if (IsEnum(node)) return EnumToc(ctx, doc, node);
+  if (IsNamespace(node)) return NamespaceToc(ctx, doc, node);
   auto const element = std::string_view{node.name()};
-  if (element == "memberdef") return {MemberEntry(node)};
+  if (element == "memberdef") return MemberEntry(ctx, node);
   if (element == "enumvalue") return {EnumValueEntry(node)};
   return {};
 }
@@ -108,20 +110,21 @@ TocItems GenericToc(Config const& cfg, pugi::xml_document const& doc,
 // e.g. all the "Constructors" are grouped. The filtering does not recurse
 // for things like "classes" we want to list all the attributes of the matching
 // classes.
-template <typename Predicate>
-TocItems Recurse(Config const& cfg, pugi::xml_document const& doc,
-                 pugi::xml_node node, Predicate&& pred) {
-  if (!IncludeInPublicDocuments(cfg, node)) return {};
+using Predicate = std::function<bool(pugi::xml_node node)>;
+
+TocItems Recurse(YamlContext const& ctx, pugi::xml_document const& doc,
+                 pugi::xml_node node, Predicate const& pred) {
+  if (!IncludeInPublicDocuments(ctx.config, node)) return {};
   TocItems items;
   for (auto const child : node) {
-    if (!IncludeInPublicDocuments(cfg, child)) continue;
+    if (!IncludeInPublicDocuments(ctx.config, child)) continue;
     auto const element = std::string_view{child.name()};
     // A <sectiondef> element defines groups of members, such as, "public
     // functions", or "private member variables". They currently do not get
     // a representation in the ToC.
     if (element == "sectiondef") {
       items.splice(items.end(),
-                   Recurse(cfg, doc, child, std::forward<Predicate>(pred)));
+                   Recurse(NestedYamlContext(ctx, node), doc, child, pred));
       continue;
     }
     // In the Doxygen XML file classes are referenced, but not defined, as
@@ -147,32 +150,32 @@ TocItems Recurse(Config const& cfg, pugi::xml_document const& doc,
       auto child = doc.select_node(query);
       // Skip the referenced element if it does not match the predicate.
       if (!child || !pred(child.node())) continue;
-      items.splice(items.end(), GenericToc(cfg, doc, child.node()));
+      items.splice(items.end(), GenericToc(ctx, doc, child.node()));
       continue;
     }
     // Skip the element if it does not match the predicate.
     if (!pred(child)) continue;
-    items.splice(items.end(), GenericToc(cfg, doc, child));
+    items.splice(items.end(), GenericToc(ctx, doc, child));
   }
   return items;
 }
 
 using TocItemsProducer = std::function<TocItems()>;
 
-TocItems NamespaceToc(Config const& cfg, pugi::xml_document const& doc,
+TocItems NamespaceToc(YamlContext const& ctx, pugi::xml_document const& doc,
                       pugi::xml_node node) {
-  if (!IncludeInPublicDocuments(cfg, node)) return {};
+  if (!IncludeInPublicDocuments(ctx.config, node)) return {};
   auto entry = CompoundEntry(node);
   struct Node {
     std::string_view name;
     TocItemsProducer producer;
   } nodes[] = {
-      {"Classes", [&] { return Recurse(cfg, doc, node, IsClass); }},
-      {"Structs", [&] { return Recurse(cfg, doc, node, IsStruct); }},
-      {"Functions", [&] { return Recurse(cfg, doc, node, IsPlainFunction); }},
-      {"Operators", [&] { return Recurse(cfg, doc, node, IsOperator); }},
-      {"Enums", [&] { return Recurse(cfg, doc, node, IsEnum); }},
-      {"Types", [&] { return Recurse(cfg, doc, node, IsTypedef); }},
+      {"Classes", [&] { return Recurse(ctx, doc, node, IsClass); }},
+      {"Structs", [&] { return Recurse(ctx, doc, node, IsStruct); }},
+      {"Functions", [&] { return Recurse(ctx, doc, node, IsPlainFunction); }},
+      {"Operators", [&] { return Recurse(ctx, doc, node, IsOperator); }},
+      {"Enums", [&] { return Recurse(ctx, doc, node, IsEnum); }},
+      {"Types", [&] { return Recurse(ctx, doc, node, IsTypedef); }},
   };
   for (auto const& [name, generator] : nodes) {
     auto items = generator();
@@ -184,23 +187,26 @@ TocItems NamespaceToc(Config const& cfg, pugi::xml_document const& doc,
   return {std::move(entry)};
 }
 
-TocItems ClassToc(Config const& cfg, pugi::xml_document const& doc,
+TocItems ClassToc(YamlContext const& ctx, pugi::xml_document const& doc,
                   pugi::xml_node node) {
-  if (!IncludeInPublicDocuments(cfg, node)) return {};
+  if (!IncludeInPublicDocuments(ctx.config, node)) return {};
+  auto const nested = NestedYamlContext(ctx, node);
   auto entry = CompoundEntry(node);
   struct Node {
     std::string_view name;
     TocItemsProducer producer;
   } nodes[] = {
-      {"Types", [&] { return Recurse(cfg, doc, node, IsTypedef); }},
-      {"Constructors", [&] { return Recurse(cfg, doc, node, IsConstructor); }},
-      {"Operators", [&] { return Recurse(cfg, doc, node, IsOperator); }},
-      {"Functions", [&] { return Recurse(cfg, doc, node, IsPlainFunction); }},
-      {"Enums", [&] { return Recurse(cfg, doc, node, IsEnum); }},
       // Skip these. They also appear as `<innerclass>` elements in the
       // namespace.
       // {"Classes", [&] { return Recurse(cfg, doc, node, IsClass); }},
       // {"Structs", [&] { return Recurse(cfg, doc, node, IsStruct); }},
+      {"Constructors",
+       [&] { return Recurse(nested, doc, node, IsConstructor); }},
+      {"Operators", [&] { return Recurse(nested, doc, node, IsOperator); }},
+      {"Functions",
+       [&] { return Recurse(nested, doc, node, IsPlainFunction); }},
+      {"Enums", [&] { return Recurse(nested, doc, node, IsEnum); }},
+      {"Types", [&] { return Recurse(nested, doc, node, IsTypedef); }},
   };
   for (auto const& [name, generator] : nodes) {
     auto items = generator();
@@ -212,20 +218,20 @@ TocItems ClassToc(Config const& cfg, pugi::xml_document const& doc,
   return {std::move(entry)};
 }
 
-TocItems EnumToc(Config const& cfg, pugi::xml_document const& doc,
+TocItems EnumToc(YamlContext const& ctx, pugi::xml_document const& doc,
                  pugi::xml_node node) {
-  if (!IncludeInPublicDocuments(cfg, node)) return {};
+  if (!IncludeInPublicDocuments(ctx.config, node)) return {};
+  auto const nested = NestedYamlContext(ctx, node);
   auto const id = std::string_view{node.attribute("id").as_string()};
-  auto const name = std::string_view{node.child("name").child_value()};
-  auto entry = NamedEntry(name);
+  auto entry = NamedEntry(NodeName(node));
   auto overview = NamedEntry("Overview");
   overview->attr.emplace("uid", id);
   entry->items.push_back(std::move(overview));
   for (auto const child : node) {
-    if (!IncludeInPublicDocuments(cfg, child)) continue;
+    if (!IncludeInPublicDocuments(ctx.config, child)) continue;
     auto const element = std::string_view{child.name()};
     if (element == "enumvalue") {
-      entry->items.splice(entry->items.end(), GenericToc(cfg, doc, child));
+      entry->items.splice(entry->items.end(), GenericToc(nested, doc, child));
       continue;
     }
   }
@@ -283,17 +289,19 @@ TocItems Groups(Config const& /*config*/, pugi::xml_document const& doc) {
 }
 
 TocItems Namespaces(Config const& config, pugi::xml_document const& doc) {
+  YamlContext ctx;
+  ctx.config = config;
   TocItems items;
   for (auto const& i : doc.select_nodes("//compounddef[@kind='namespace']")) {
     if (!IncludeInPublicDocuments(config, i.node())) continue;
-    items.splice(items.end(), NamespaceToc(config, doc, i.node()));
+    items.splice(items.end(), NamespaceToc(ctx, doc, i.node()));
   }
   return items;
 }
 
 void Toc2Yaml(YAML::Emitter& out, TocEntry const& e) {
   out << YAML::BeginMap;
-  out << YAML::Key << "name" << YAML::Value << e.name;
+  out << YAML::Key << "name" << YAML::Value << YAML::DoubleQuoted << e.name;
   for (auto const& [key, value] : e.attr) {
     out << YAML::Key << key << YAML::Value << value;
   }

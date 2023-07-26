@@ -19,7 +19,6 @@
 #include "google/cloud/internal/rest_client.h"
 #include "google/cloud/log.h"
 #include "google/cloud/testing_util/chrono_output.h"
-#include "google/cloud/testing_util/contains_once.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "absl/strings/match.h"
 #include "absl/strings/str_split.h"
@@ -32,7 +31,6 @@ namespace rest_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-using ::google::cloud::testing_util::ContainsOnce;
 using ::testing::_;
 using ::testing::Contains;
 using ::testing::Eq;
@@ -456,7 +454,7 @@ TEST_F(RestClientIntegrationTest, PeerPseudoHeader) {
   ASSERT_STATUS_OK(response_status);
   auto response = *std::move(response_status);
   EXPECT_THAT(response->StatusCode(), Eq(HttpStatusCode::kOk));
-  EXPECT_THAT(response->Headers(), ContainsOnce(Pair(":curl-peer", _)));
+  EXPECT_THAT(response->Headers(), Contains(Pair(":curl-peer", _)).Times(1));
 
   // Reading in small buffers used to cause errors.
   auto payload = std::move(*response).ExtractPayload();
@@ -467,7 +465,8 @@ TEST_F(RestClientIntegrationTest, PeerPseudoHeader) {
     ASSERT_STATUS_OK(bytes);
     if (*bytes == 0) break;
   }
-  EXPECT_THAT(payload->DebugHeaders(), ContainsOnce(Pair(":curl-peer", _)));
+  EXPECT_THAT(payload->DebugHeaders(),
+              Contains(Pair(":curl-peer", _)).Times(1));
 }
 
 TEST_F(RestClientIntegrationTest, RestContextHeaders) {

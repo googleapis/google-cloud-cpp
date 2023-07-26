@@ -29,10 +29,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 StorageTransferServiceLogging::StorageTransferServiceLogging(
     std::shared_ptr<StorageTransferServiceStub> child,
-    TracingOptions tracing_options, std::set<std::string> components)
+    TracingOptions tracing_options, std::set<std::string> const& components)
     : child_(std::move(child)),
       tracing_options_(std::move(tracing_options)),
-      components_(std::move(components)) {}
+      stream_logging_(components.find("rpc-streams") != components.end()) {}
 
 StatusOr<google::storagetransfer::v1::GoogleServiceAccount>
 StorageTransferServiceLogging::GetGoogleServiceAccount(

@@ -18,6 +18,7 @@
 
 #include "google/cloud/dataproc/v1/internal/batch_controller_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/dataproc/v1/batches.grpc.pb.h>
@@ -29,8 +30,10 @@ namespace dataproc_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 BatchControllerMetadata::BatchControllerMetadata(
-    std::shared_ptr<BatchControllerStub> child)
+    std::shared_ptr<BatchControllerStub> child,
+    std::multimap<std::string, std::string> fixed_metadata)
     : child_(std::move(child)),
+      fixed_metadata_(std::move(fixed_metadata)),
       api_client_header_(
           google::cloud::internal::ApiClientHeader("generator")) {}
 
@@ -39,14 +42,14 @@ BatchControllerMetadata::AsyncCreateBatch(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dataproc::v1::CreateBatchRequest const& request) {
-  SetMetadata(*context, "parent=" + request.parent());
+  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
   return child_->AsyncCreateBatch(cq, std::move(context), request);
 }
 
 StatusOr<google::cloud::dataproc::v1::Batch> BatchControllerMetadata::GetBatch(
     grpc::ClientContext& context,
     google::cloud::dataproc::v1::GetBatchRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetBatch(context, request);
 }
 
@@ -54,14 +57,14 @@ StatusOr<google::cloud::dataproc::v1::ListBatchesResponse>
 BatchControllerMetadata::ListBatches(
     grpc::ClientContext& context,
     google::cloud::dataproc::v1::ListBatchesRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListBatches(context, request);
 }
 
 Status BatchControllerMetadata::DeleteBatch(
     grpc::ClientContext& context,
     google::cloud::dataproc::v1::DeleteBatchRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->DeleteBatch(context, request);
 }
 
@@ -89,6 +92,9 @@ void BatchControllerMetadata::SetMetadata(grpc::ClientContext& context,
 }
 
 void BatchControllerMetadata::SetMetadata(grpc::ClientContext& context) {
+  for (auto const& kv : fixed_metadata_) {
+    context.AddMetadata(kv.first, kv.second);
+  }
   context.AddMetadata("x-goog-api-client", api_client_header_);
   auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {

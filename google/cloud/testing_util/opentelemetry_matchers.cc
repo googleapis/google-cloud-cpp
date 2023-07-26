@@ -15,6 +15,7 @@
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
+#include "google/cloud/opentelemetry_options.h"
 #include <opentelemetry/context/propagation/global_propagator.h>
 #include <opentelemetry/sdk/trace/simple_processor.h>
 #include <opentelemetry/sdk/trace/tracer.h>
@@ -143,19 +144,31 @@ bool ThereIsAnActiveSpan() {
   return opentelemetry::trace::Tracer::GetCurrentSpan()->GetContext().IsValid();
 }
 
-std::shared_ptr<opentelemetry::exporter::memory::InMemorySpanData>
-InstallSpanCatcher() {
+SpanCatcher::SpanCatcher()
+    : previous_(opentelemetry::trace::Provider::GetTracerProvider()) {
   auto exporter =
       std::make_unique<opentelemetry::exporter::memory::InMemorySpanExporter>();
-  auto span_data = exporter->GetData();
+  span_data_ = exporter->GetData();
   auto processor =
       std::make_unique<opentelemetry::sdk::trace::SimpleSpanProcessor>(
           std::move(exporter));
   std::shared_ptr<opentelemetry::trace::TracerProvider> provider =
       opentelemetry::sdk::trace::TracerProviderFactory::Create(
           std::move(processor));
-  opentelemetry::trace::Provider::SetTracerProvider(provider);
-  return span_data;
+  opentelemetry::trace::Provider::SetTracerProvider(std::move(provider));
+}
+
+SpanCatcher::~SpanCatcher() {
+  opentelemetry::trace::Provider::SetTracerProvider(std::move(previous_));
+}
+
+std::vector<std::unique_ptr<opentelemetry::sdk::trace::SpanData>>
+SpanCatcher::GetSpans() {
+  return span_data_->GetSpans();
+}
+
+std::shared_ptr<SpanCatcher> InstallSpanCatcher() {
+  return std::make_shared<SpanCatcher>();
 }
 
 std::shared_ptr<MockTextMapPropagator> InstallMockPropagator() {
@@ -167,11 +180,11 @@ std::shared_ptr<MockTextMapPropagator> InstallMockPropagator() {
 }
 
 Options EnableTracing(Options options) {
-  return options.set<internal::OpenTelemetryTracingOption>(true);
+  return options.set<experimental::OpenTelemetryTracingOption>(true);
 }
 
 Options DisableTracing(Options options) {
-  return options.set<internal::OpenTelemetryTracingOption>(false);
+  return options.set<experimental::OpenTelemetryTracingOption>(false);
 }
 
 }  // namespace testing_util

@@ -86,6 +86,7 @@ class EnvironmentsClient {
   }
   ///@}
 
+  // clang-format off
   ///
   /// Create a new environment.
   ///
@@ -94,14 +95,28 @@ class EnvironmentsClient {
   /// @param environment  The environment to create.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::orchestration::airflow::service::v1::Environment,google/cloud/orchestration/airflow/service/v1/environments.proto#L1083}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.orchestration.airflow.service.v1.Environment] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.orchestration.airflow.service.v1.CreateEnvironmentRequest]:
-  /// @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L129}
-  /// [google.cloud.orchestration.airflow.service.v1.Environment]:
-  /// @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L1083}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.orchestration.airflow.service.v1.CreateEnvironmentRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L177}
+  /// [google.cloud.orchestration.airflow.service.v1.Environment]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L1297}
   ///
+  // clang-format on
   future<
       StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>>
   CreateEnvironment(
@@ -110,27 +125,47 @@ class EnvironmentsClient {
           environment,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Create a new environment.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::orchestration::airflow::service::v1::CreateEnvironmentRequest,google/cloud/orchestration/airflow/service/v1/environments.proto#L129}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.orchestration.airflow.service.v1.CreateEnvironmentRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::orchestration::airflow::service::v1::Environment,google/cloud/orchestration/airflow/service/v1/environments.proto#L1083}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.orchestration.airflow.service.v1.Environment] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.orchestration.airflow.service.v1.CreateEnvironmentRequest]:
-  /// @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L129}
-  /// [google.cloud.orchestration.airflow.service.v1.Environment]:
-  /// @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L1083}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.orchestration.airflow.service.v1.CreateEnvironmentRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L177}
+  /// [google.cloud.orchestration.airflow.service.v1.Environment]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L1297}
   ///
+  // clang-format on
   future<
       StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>>
   CreateEnvironment(google::cloud::orchestration::airflow::service::v1::
                         CreateEnvironmentRequest const& request,
                     Options opts = {});
 
+  // clang-format off
   ///
   /// Get an existing environment.
   ///
@@ -138,213 +173,177 @@ class EnvironmentsClient {
   ///  "projects/{projectId}/locations/{locationId}/environments/{environmentId}"
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::orchestration::airflow::service::v1::Environment,google/cloud/orchestration/airflow/service/v1/environments.proto#L1083}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.orchestration.airflow.service.v1.Environment])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.orchestration.airflow.service.v1.Environment]:
-  /// @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L1083}
-  /// [google.cloud.orchestration.airflow.service.v1.GetEnvironmentRequest]:
-  /// @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L139}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.orchestration.airflow.service.v1.Environment]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L1297}
+  /// [google.cloud.orchestration.airflow.service.v1.GetEnvironmentRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L187}
   ///
+  // clang-format on
   StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>
   GetEnvironment(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Get an existing environment.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::orchestration::airflow::service::v1::GetEnvironmentRequest,google/cloud/orchestration/airflow/service/v1/environments.proto#L139}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.orchestration.airflow.service.v1.GetEnvironmentRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::orchestration::airflow::service::v1::Environment,google/cloud/orchestration/airflow/service/v1/environments.proto#L1083}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.orchestration.airflow.service.v1.Environment])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.orchestration.airflow.service.v1.Environment]:
-  /// @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L1083}
-  /// [google.cloud.orchestration.airflow.service.v1.GetEnvironmentRequest]:
-  /// @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L139}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.orchestration.airflow.service.v1.Environment]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L1297}
+  /// [google.cloud.orchestration.airflow.service.v1.GetEnvironmentRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L187}
   ///
+  // clang-format on
   StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>
   GetEnvironment(google::cloud::orchestration::airflow::service::v1::
                      GetEnvironmentRequest const& request,
                  Options opts = {});
 
+  // clang-format off
   ///
   /// List environments.
   ///
-  /// @param parent  List environments in the given project and location, in the
-  /// form:
+  /// @param parent  List environments in the given project and location, in the form:
   ///  "projects/{projectId}/locations/{locationId}"
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::orchestration::airflow::service::v1::Environment,google/cloud/orchestration/airflow/service/v1/environments.proto#L1083}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.orchestration.airflow.service.v1.Environment], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.orchestration.airflow.service.v1.Environment]:
-  /// @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L1083}
-  /// [google.cloud.orchestration.airflow.service.v1.ListEnvironmentsRequest]:
-  /// @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L146}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.orchestration.airflow.service.v1.Environment]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L1297}
+  /// [google.cloud.orchestration.airflow.service.v1.ListEnvironmentsRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L194}
   ///
+  // clang-format on
   StreamRange<google::cloud::orchestration::airflow::service::v1::Environment>
   ListEnvironments(std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// List environments.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::orchestration::airflow::service::v1::ListEnvironmentsRequest,google/cloud/orchestration/airflow/service/v1/environments.proto#L146}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.orchestration.airflow.service.v1.ListEnvironmentsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::orchestration::airflow::service::v1::Environment,google/cloud/orchestration/airflow/service/v1/environments.proto#L1083}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.orchestration.airflow.service.v1.Environment], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.orchestration.airflow.service.v1.Environment]:
-  /// @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L1083}
-  /// [google.cloud.orchestration.airflow.service.v1.ListEnvironmentsRequest]:
-  /// @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L146}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.orchestration.airflow.service.v1.Environment]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L1297}
+  /// [google.cloud.orchestration.airflow.service.v1.ListEnvironmentsRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L194}
   ///
+  // clang-format on
   StreamRange<google::cloud::orchestration::airflow::service::v1::Environment>
   ListEnvironments(google::cloud::orchestration::airflow::service::v1::
                        ListEnvironmentsRequest request,
                    Options opts = {});
 
+  // clang-format off
   ///
   /// Update an environment.
   ///
-  /// @param name  The relative resource name of the environment to update, in
-  /// the form:
+  /// @param name  The relative resource name of the environment to update, in the form:
   ///  "projects/{projectId}/locations/{locationId}/environments/{environmentId}"
-  /// @param environment  A patch environment. Fields specified by the
-  /// `updateMask` will be copied
+  /// @param environment  A patch environment. Fields specified by the `updateMask` will be copied
   ///  from the patch environment into the environment under update.
-  /// @param update_mask  Required. A comma-separated list of paths, relative to
-  /// `Environment`, of
+  /// @param update_mask  Required. A comma-separated list of paths, relative to `Environment`, of
   ///  fields to update.
   ///  For example, to set the version of scikit-learn to install in the
   ///  environment to 0.19.0 and to remove an existing installation of
   ///  numpy, the `updateMask` parameter would include the following two
   ///  `paths` values: "config.softwareConfig.pypiPackages.scikit-learn" and
-  ///  "config.softwareConfig.pypiPackages.numpy". The included patch
-  ///  environment would specify the scikit-learn version as follows:
-  ///      {
-  ///        "config":{
-  ///          "softwareConfig":{
-  ///            "pypiPackages":{
-  ///              "scikit-learn":"==0.19.0"
-  ///            }
-  ///          }
-  ///        }
-  ///      }
-  ///  Note that in the above example, any existing PyPI packages
-  ///  other than scikit-learn and numpy will be unaffected.
-  ///  Only one update type may be included in a single request's `updateMask`.
-  ///  For example, one cannot update both the PyPI packages and
-  ///  labels in the same request. However, it is possible to update multiple
-  ///  members of a map field simultaneously in the same request. For example,
-  ///  to set the labels "label1" and "label2" while clearing "label3" (assuming
-  ///  it already exists), one can
-  ///  provide the paths "labels.label1", "labels.label2", and "labels.label3"
-  ///  and populate the patch environment as follows:
-  ///      {
-  ///        "labels":{
-  ///          "label1":"new-label1-value"
-  ///          "label2":"new-label2-value"
-  ///        }
-  ///      }
-  ///  Note that in the above example, any existing labels that are not
-  ///  included in the `updateMask` will be unaffected.
-  ///  It is also possible to replace an entire map field by providing the
-  ///  map field's path in the `updateMask`. The new value of the field will
-  ///  be that which is provided in the patch environment. For example, to
-  ///  delete all pre-existing user-specified PyPI packages and
-  ///  install botocore at version 1.7.14, the `updateMask` would contain
-  ///  the path "config.softwareConfig.pypiPackages", and
-  ///  the patch environment would be the following:
-  ///      {
-  ///        "config":{
-  ///          "softwareConfig":{
-  ///            "pypiPackages":{
-  ///              "botocore":"==1.7.14"
-  ///            }
-  ///          }
-  ///        }
-  ///      }
-  ///  **Note:** Only the following fields can be updated:
-  ///  * `config.softwareConfig.pypiPackages`
-  ///      * Replace all custom custom PyPI packages. If a replacement
-  ///        package map is not included in `environment`, all custom
-  ///        PyPI packages are cleared. It is an error to provide both
-  ///        this mask and a mask specifying an individual package.
-  ///  * `config.softwareConfig.pypiPackages.`packagename
-  ///      * Update the custom PyPI package *packagename*,
-  ///        preserving other packages. To delete the package, include it in
-  ///        `updateMask`, and omit the mapping for it in
-  ///        `environment.config.softwareConfig.pypiPackages`. It is an error
-  ///        to provide both a mask of this form and the
-  ///        `config.softwareConfig.pypiPackages` mask.
-  ///  * `labels`
-  ///      * Replace all environment labels. If a replacement labels map is not
-  ///        included in `environment`, all labels are cleared. It is an error
-  ///        to provide both this mask and a mask specifying one or more
-  ///        individual labels.
-  ///  * `labels.`labelName
-  ///      * Set the label named *labelName*, while preserving other
-  ///        labels. To delete the label, include it in `updateMask` and omit
-  ///        its mapping in `environment.labels`. It is an error to provide both
-  ///        a mask of this form and the `labels` mask.
-  ///  * `config.nodeCount`
-  ///      * Horizontally scale the number of nodes in the environment. An
-  ///      integer
-  ///        greater than or equal to 3 must be provided in the
-  ///        `config.nodeCount` field. Supported for Cloud Composer environments
-  ///        in versions composer-1.*.*-airflow-*.*.*.
-  ///  * `config.webServerNetworkAccessControl`
-  ///      * Replace the environment's current `WebServerNetworkAccessControl`.
-  ///  * `config.softwareConfig.airflowConfigOverrides`
-  ///      * Replace all Apache Airflow config overrides. If a replacement
-  ///      config
-  ///        overrides map is not included in `environment`, all config
-  ///        overrides are cleared. It is an error to provide both this mask and
-  ///        a mask specifying one or more individual config overrides.
-  ///  * `config.softwareConfig.airflowConfigOverrides.`section-name
-  ///      * Override the Apache Airflow config property *name* in the
-  ///        section named *section*, preserving other properties. To
-  ///        delete the property override, include it in `updateMask` and omit
-  ///        its mapping in
-  ///        `environment.config.softwareConfig.airflowConfigOverrides`.
-  ///        It is an error to provide both a mask of this form and the
-  ///        `config.softwareConfig.airflowConfigOverrides` mask.
-  ///  * `config.softwareConfig.envVariables`
-  ///      * Replace all environment variables. If a replacement environment
-  ///        variable map is not included in `environment`, all custom
-  ///        environment variables are cleared.
-  ///  * `config.softwareConfig.schedulerCount`
-  ///      * Horizontally scale the number of schedulers in Airflow. A positive
-  ///        integer not greater than the number of nodes must be provided in
-  ///        the `config.softwareConfig.schedulerCount` field. Supported for
-  ///        Cloud Composer environments in versions
-  ///        composer-1.*.*-airflow-2.*.*.
-  ///  * `config.databaseConfig.machineType`
-  ///      * Cloud SQL machine type used by Airflow database.
-  ///        It has to be one of: db-n1-standard-2, db-n1-standard-4,
-  ///        db-n1-standard-8 or db-n1-standard-16. Supported for Cloud Composer
-  ///        environments in versions composer-1.*.*-airflow-*.*.*.
-  ///  * `config.webServerConfig.machineType`
-  ///      * Machine type on which Airflow web server is running.
-  ///        It has to be one of: composer-n1-webserver-2,
-  ///        composer-n1-webserver-4 or composer-n1-webserver-8. Supported for
-  ///        Cloud Composer environments in versions
-  ///        composer-1.*.*-airflow-*.*.*.
+  ///  "config.softwareConfig.pypiPackages.numpy".
+  ///  @n
+  ///  For more information, see [UpdateEnvironmentRequest][google.cloud.orchestration.airflow.service.v1.UpdateEnvironmentRequest].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::orchestration::airflow::service::v1::Environment,google/cloud/orchestration/airflow/service/v1/environments.proto#L1083}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.orchestration.airflow.service.v1.Environment] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.orchestration.airflow.service.v1.Environment]:
-  /// @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L1083}
-  /// [google.cloud.orchestration.airflow.service.v1.UpdateEnvironmentRequest]:
-  /// @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L175}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.orchestration.airflow.service.v1.Environment]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L1297}
+  /// [google.cloud.orchestration.airflow.service.v1.UpdateEnvironmentRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L223}
   ///
+  // clang-format on
   future<
       StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>>
   UpdateEnvironment(
@@ -353,27 +352,47 @@ class EnvironmentsClient {
           environment,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
   ///
   /// Update an environment.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::orchestration::airflow::service::v1::UpdateEnvironmentRequest,google/cloud/orchestration/airflow/service/v1/environments.proto#L175}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.orchestration.airflow.service.v1.UpdateEnvironmentRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::orchestration::airflow::service::v1::Environment,google/cloud/orchestration/airflow/service/v1/environments.proto#L1083}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.orchestration.airflow.service.v1.Environment] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.orchestration.airflow.service.v1.Environment]:
-  /// @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L1083}
-  /// [google.cloud.orchestration.airflow.service.v1.UpdateEnvironmentRequest]:
-  /// @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L175}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.orchestration.airflow.service.v1.Environment]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L1297}
+  /// [google.cloud.orchestration.airflow.service.v1.UpdateEnvironmentRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L223}
   ///
+  // clang-format on
   future<
       StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>>
   UpdateEnvironment(google::cloud::orchestration::airflow::service::v1::
                         UpdateEnvironmentRequest const& request,
                     Options opts = {});
 
+  // clang-format off
   ///
   /// Delete an environment.
   ///
@@ -381,86 +400,333 @@ class EnvironmentsClient {
   ///  "projects/{projectId}/locations/{locationId}/environments/{environmentId}"
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::orchestration::airflow::service::v1::OperationMetadata,google/cloud/orchestration/airflow/service/v1/operations.proto#L27}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.orchestration.airflow.service.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.orchestration.airflow.service.v1.DeleteEnvironmentRequest]:
-  /// @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L168}
-  /// [google.cloud.orchestration.airflow.service.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/operations.proto#L27}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.orchestration.airflow.service.v1.DeleteEnvironmentRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L216}
+  /// [google.cloud.orchestration.airflow.service.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/operations.proto#L27}
   ///
+  // clang-format on
   future<StatusOr<
       google::cloud::orchestration::airflow::service::v1::OperationMetadata>>
   DeleteEnvironment(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Delete an environment.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::orchestration::airflow::service::v1::DeleteEnvironmentRequest,google/cloud/orchestration/airflow/service/v1/environments.proto#L168}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.orchestration.airflow.service.v1.DeleteEnvironmentRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::orchestration::airflow::service::v1::OperationMetadata,google/cloud/orchestration/airflow/service/v1/operations.proto#L27}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.orchestration.airflow.service.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.orchestration.airflow.service.v1.DeleteEnvironmentRequest]:
-  /// @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L168}
-  /// [google.cloud.orchestration.airflow.service.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/operations.proto#L27}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.orchestration.airflow.service.v1.DeleteEnvironmentRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L216}
+  /// [google.cloud.orchestration.airflow.service.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/operations.proto#L27}
   ///
+  // clang-format on
   future<StatusOr<
       google::cloud::orchestration::airflow::service::v1::OperationMetadata>>
   DeleteEnvironment(google::cloud::orchestration::airflow::service::v1::
                         DeleteEnvironmentRequest const& request,
                     Options opts = {});
 
+  // clang-format off
+  ///
+  /// Executes Airflow CLI command.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.orchestration.airflow.service.v1.ExecuteAirflowCommandRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.orchestration.airflow.service.v1.ExecuteAirflowCommandResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.orchestration.airflow.service.v1.ExecuteAirflowCommandRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L359}
+  /// [google.cloud.orchestration.airflow.service.v1.ExecuteAirflowCommandResponse]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L378}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::orchestration::airflow::service::v1::
+               ExecuteAirflowCommandResponse>
+  ExecuteAirflowCommand(google::cloud::orchestration::airflow::service::v1::
+                            ExecuteAirflowCommandRequest const& request,
+                        Options opts = {});
+
+  // clang-format off
+  ///
+  /// Stops Airflow CLI command execution.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.orchestration.airflow.service.v1.StopAirflowCommandRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.orchestration.airflow.service.v1.StopAirflowCommandResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.orchestration.airflow.service.v1.StopAirflowCommandRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L393}
+  /// [google.cloud.orchestration.airflow.service.v1.StopAirflowCommandResponse]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L413}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::orchestration::airflow::service::v1::
+               StopAirflowCommandResponse>
+  StopAirflowCommand(google::cloud::orchestration::airflow::service::v1::
+                         StopAirflowCommandRequest const& request,
+                     Options opts = {});
+
+  // clang-format off
+  ///
+  /// Polls Airflow CLI command execution and fetches logs.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.orchestration.airflow.service.v1.PollAirflowCommandRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.orchestration.airflow.service.v1.PollAirflowCommandResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.orchestration.airflow.service.v1.PollAirflowCommandRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L422}
+  /// [google.cloud.orchestration.airflow.service.v1.PollAirflowCommandResponse]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L441}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::orchestration::airflow::service::v1::
+               PollAirflowCommandResponse>
+  PollAirflowCommand(google::cloud::orchestration::airflow::service::v1::
+                         PollAirflowCommandRequest const& request,
+                     Options opts = {});
+
+  // clang-format off
   ///
   /// Creates a snapshots of a Cloud Composer environment.
   ///
   /// As a result of this operation, snapshot of environment's state is stored
   /// in a location specified in the SaveSnapshotRequest.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::orchestration::airflow::service::v1::SaveSnapshotRequest,google/cloud/orchestration/airflow/service/v1/environments.proto#L311}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.orchestration.airflow.service.v1.SaveSnapshotRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::orchestration::airflow::service::v1::SaveSnapshotResponse,google/cloud/orchestration/airflow/service/v1/environments.proto#L322}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.orchestration.airflow.service.v1.SaveSnapshotResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.orchestration.airflow.service.v1.SaveSnapshotRequest]:
-  /// @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L311}
-  /// [google.cloud.orchestration.airflow.service.v1.SaveSnapshotResponse]:
-  /// @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L322}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.orchestration.airflow.service.v1.SaveSnapshotRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L472}
+  /// [google.cloud.orchestration.airflow.service.v1.SaveSnapshotResponse]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L483}
   ///
+  // clang-format on
   future<StatusOr<
       google::cloud::orchestration::airflow::service::v1::SaveSnapshotResponse>>
   SaveSnapshot(google::cloud::orchestration::airflow::service::v1::
                    SaveSnapshotRequest const& request,
                Options opts = {});
 
+  // clang-format off
   ///
   /// Loads a snapshot of a Cloud Composer environment.
   ///
   /// As a result of this operation, a snapshot of environment's specified in
   /// LoadSnapshotRequest is loaded into the environment.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::orchestration::airflow::service::v1::LoadSnapshotRequest,google/cloud/orchestration/airflow/service/v1/environments.proto#L331}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.orchestration.airflow.service.v1.LoadSnapshotRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::orchestration::airflow::service::v1::LoadSnapshotResponse,google/cloud/orchestration/airflow/service/v1/environments.proto#L358}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.orchestration.airflow.service.v1.LoadSnapshotResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.orchestration.airflow.service.v1.LoadSnapshotRequest]:
-  /// @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L331}
-  /// [google.cloud.orchestration.airflow.service.v1.LoadSnapshotResponse]:
-  /// @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L358}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.orchestration.airflow.service.v1.LoadSnapshotRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L492}
+  /// [google.cloud.orchestration.airflow.service.v1.LoadSnapshotResponse]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L519}
   ///
+  // clang-format on
   future<StatusOr<
       google::cloud::orchestration::airflow::service::v1::LoadSnapshotResponse>>
   LoadSnapshot(google::cloud::orchestration::airflow::service::v1::
                    LoadSnapshotRequest const& request,
                Options opts = {});
+
+  // clang-format off
+  ///
+  /// Triggers database failover (only for highly resilient environments).
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.orchestration.airflow.service.v1.DatabaseFailoverRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.orchestration.airflow.service.v1.DatabaseFailoverResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.orchestration.airflow.service.v1.DatabaseFailoverRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L523}
+  /// [google.cloud.orchestration.airflow.service.v1.DatabaseFailoverResponse]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L530}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::orchestration::airflow::service::v1::
+                      DatabaseFailoverResponse>>
+  DatabaseFailover(google::cloud::orchestration::airflow::service::v1::
+                       DatabaseFailoverRequest const& request,
+                   Options opts = {});
+
+  // clang-format off
+  ///
+  /// Fetches database properties.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.orchestration.airflow.service.v1.FetchDatabasePropertiesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.orchestration.airflow.service.v1.FetchDatabasePropertiesResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.orchestration.airflow.service.v1.FetchDatabasePropertiesRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L533}
+  /// [google.cloud.orchestration.airflow.service.v1.FetchDatabasePropertiesResponse]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L545}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::orchestration::airflow::service::v1::
+               FetchDatabasePropertiesResponse>
+  FetchDatabaseProperties(google::cloud::orchestration::airflow::service::v1::
+                              FetchDatabasePropertiesRequest const& request,
+                          Options opts = {});
 
  private:
   std::shared_ptr<EnvironmentsConnection> connection_;

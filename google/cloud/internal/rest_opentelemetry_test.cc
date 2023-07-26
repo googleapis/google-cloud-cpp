@@ -14,7 +14,6 @@
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include "google/cloud/internal/rest_opentelemetry.h"
-#include "google/cloud/internal/opentelemetry_options.h"
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
@@ -29,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::testing_util::InstallSpanCatcher;
-using ::google::cloud::testing_util::SpanAttribute;
+using ::google::cloud::testing_util::OTelAttribute;
 using ::google::cloud::testing_util::SpanHasAttributes;
 using ::google::cloud::testing_util::SpanHasInstrumentationScope;
 using ::google::cloud::testing_util::SpanKindIsClient;
@@ -67,16 +66,16 @@ TEST(RestOpentelemetry, MakeSpanHttp) {
           SpanHasInstrumentationScope(), SpanKindIsClient(),
           SpanNamed("HTTP/GET"),
           SpanHasAttributes(
-              SpanAttribute<std::string>(sc::kNetTransport,
+              OTelAttribute<std::string>(sc::kNetTransport,
                                          sc::NetTransportValues::kIpTcp),
-              SpanAttribute<std::string>(sc::kHttpMethod, "GET"),
-              SpanAttribute<std::string>(sc::kHttpUrl, kUrl),
-              SpanAttribute<std::string>("http.request.header.empty", ""),
-              SpanAttribute<std::string>("http.request.header.x-goog-foo",
+              OTelAttribute<std::string>(sc::kHttpMethod, "GET"),
+              OTelAttribute<std::string>(sc::kHttpUrl, kUrl),
+              OTelAttribute<std::string>("http.request.header.empty", ""),
+              OTelAttribute<std::string>("http.request.header.x-goog-foo",
                                          "bar"),
-              SpanAttribute<std::string>("http.request.header.x-goog-bar",
+              OTelAttribute<std::string>("http.request.header.x-goog-bar",
                                          kLongValue),
-              SpanAttribute<std::string>("http.request.header.authorization",
+              OTelAttribute<std::string>("http.request.header.authorization",
                                          secret.substr(0, 32))))));
 }
 

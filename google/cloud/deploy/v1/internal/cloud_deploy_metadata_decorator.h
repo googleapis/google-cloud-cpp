@@ -22,6 +22,7 @@
 #include "google/cloud/deploy/v1/internal/cloud_deploy_stub.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
+#include <map>
 #include <memory>
 #include <string>
 
@@ -33,7 +34,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class CloudDeployMetadata : public CloudDeployStub {
  public:
   ~CloudDeployMetadata() override = default;
-  explicit CloudDeployMetadata(std::shared_ptr<CloudDeployStub> child);
+  CloudDeployMetadata(std::shared_ptr<CloudDeployStub> child,
+                      std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::deploy::v1::ListDeliveryPipelinesResponse>
   ListDeliveryPipelines(
@@ -170,6 +172,7 @@ class CloudDeployMetadata : public CloudDeployStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<CloudDeployStub> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

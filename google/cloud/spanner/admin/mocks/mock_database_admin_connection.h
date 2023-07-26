@@ -40,7 +40,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * While the example showcases types from the BigQuery library, the underlying
  * principles apply for any pair of `*Client` and `*Connection`.
  *
- * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
+ * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
 class MockDatabaseAdminConnection
     : public spanner_admin::DatabaseAdminConnection {
@@ -63,6 +63,13 @@ class MockDatabaseAdminConnection
   MOCK_METHOD(
       StatusOr<google::spanner::admin::database::v1::Database>, GetDatabase,
       (google::spanner::admin::database::v1::GetDatabaseRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::spanner::admin::database::v1::Database>>,
+      UpdateDatabase,
+      (google::spanner::admin::database::v1::UpdateDatabaseRequest const&
+           request),
       (override));
 
   MOCK_METHOD(

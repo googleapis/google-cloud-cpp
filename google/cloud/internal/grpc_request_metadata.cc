@@ -15,7 +15,7 @@
 #include "google/cloud/internal/grpc_request_metadata.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
-#include <grpc/compression.h>
+#include <grpcpp/grpcpp.h>
 
 namespace google {
 namespace cloud {

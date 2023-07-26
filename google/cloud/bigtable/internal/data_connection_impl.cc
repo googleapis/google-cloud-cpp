@@ -173,13 +173,12 @@ DataConnectionImpl::AsyncBulkApply(std::string const& table_name,
                                   app_profile_id(), table_name, std::move(mut));
 }
 
-bigtable::RowReader DataConnectionImpl::ReadRows(std::string const& table_name,
-                                                 bigtable::RowSet row_set,
-                                                 std::int64_t rows_limit,
-                                                 bigtable::Filter filter) {
+bigtable::RowReader DataConnectionImpl::ReadRowsFull(
+    bigtable::ReadRowsParams params) {
   auto impl = std::make_shared<DefaultRowReader>(
-      stub_, app_profile_id(), table_name, std::move(row_set), rows_limit,
-      std::move(filter), retry_policy(), backoff_policy());
+      stub_, std::move(params.app_profile_id), std::move(params.table_name),
+      std::move(params.row_set), params.rows_limit, std::move(params.filter),
+      params.reverse, retry_policy(), backoff_policy());
   return MakeRowReader(std::move(impl));
 }
 
@@ -188,8 +187,9 @@ StatusOr<std::pair<bool, bigtable::Row>> DataConnectionImpl::ReadRow(
     bigtable::Filter filter) {
   bigtable::RowSet row_set(std::move(row_key));
   std::int64_t const rows_limit = 1;
-  auto reader =
-      ReadRows(table_name, std::move(row_set), rows_limit, std::move(filter));
+  auto reader = ReadRowsFull(
+      bigtable::ReadRowsParams{table_name, app_profile_id(), std::move(row_set),
+                               rows_limit, std::move(filter)});
 
   auto it = reader.begin();
   if (it == reader.end()) return std::make_pair(false, bigtable::Row("", {}));
@@ -374,10 +374,11 @@ void DataConnectionImpl::AsyncReadRows(
     std::function<future<bool>(bigtable::Row)> on_row,
     std::function<void(Status)> on_finish, bigtable::RowSet row_set,
     std::int64_t rows_limit, bigtable::Filter filter) {
+  auto reverse = internal::CurrentOptions().get<bigtable::ReverseScanOption>();
   bigtable_internal::AsyncRowReader::Create(
       background_->cq(), stub_, app_profile_id(), table_name, std::move(on_row),
       std::move(on_finish), std::move(row_set), rows_limit, std::move(filter),
-      retry_policy(), backoff_policy());
+      reverse, retry_policy(), backoff_policy());
 }
 
 future<StatusOr<std::pair<bool, bigtable::Row>>>

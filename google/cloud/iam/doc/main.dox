@@ -5,50 +5,17 @@
 The Cloud IAM C++ Client library offers types and functions to use Cloud
 IAM from C++ applications.
 
-This library requires a C++14 compiler. It is supported (and tested) on multiple
-Linux distributions, macOS, and Windows.
+While this library is **GA**, please note Google Cloud C++ client libraries do **not** follow [Semantic Versioning](https://semver.org/).
 
 @tableofcontents{HTML:2}
 
 ## Quickstart
 
-The following instructions show you how to perform basic tasks in Cloud IAM
-using the C++ client library.
-
-### Before you begin
-
-1. Select or create a Google Cloud Platform (GCP) project using the
-   [manage resource page][resource-link]. Make a note of the project id as you
-   will need to use it later.
-2. Make sure that [billing is enabled][billing-link] for your project.
-3. Learn about [key terms and concepts][concepts-link] for Cloud IAM.
-4. Setup the authentication for the examples:
-   - [Configure a service account][gcloud-authorizing],
-   - or [login with your personal account][gcloud-authorizing]
-
-## Setting up your repo
-
-In order to use the Cloud IAM C++ client library from your own code, you'll
-need to configure your build system to fetch and compile the Cloud C++
-client library. The Cloud IAM C++ client library natively supports the
-[Bazel](https://bazel.build/) and [CMake](https://cmake.org/) build systems.
-We've created a minimal, "Hello world", [quickstart repo][quickstart-link] that
-includes detailed instructions on how to compile the library for use in your
-application. You can fetch the source from [GitHub][github-link] as normal:
-
-@code{.sh}
-git clone https://github.com/googleapis/google-cloud-cpp.git
-cd google-cloud-cpp/google/cloud/iam/quickstart
-@endcode
-
-@par Example: Hello World
-@parblock
 The following shows the code that you'll run in the
 `google/cloud/iam/quickstart/` directory, which should give you a taste of
 the Cloud IAM C++ client library API.
 
 @snippet quickstart.cc all
-@endparblock
 
 ## Main classes
 
@@ -59,9 +26,9 @@ functions of the class. This library groups multiple gRPC services because they
 are part of the same product or are often used together. A typical example may
 be the administrative and data plane operations for a single product.
 
-The library also has other classes that provide helpers, retry policies,
-configuration parameters, and infrastructure to mock the `*Client` classes
-when testing your application.
+The library also has other classes that provide helpers, configuration
+parameters, and infrastructure to mock the `*Client` classes when testing your
+application.
 
 - [\c iam_admin_v1::IAMClient](@ref google::cloud::iam_admin_v1::IAMClient)
 - [\c iam_credentials_v1::IAMCredentialsClient](@ref google::cloud::iam_credentials_v1::IAMCredentialsClient)
@@ -71,16 +38,21 @@ when testing your application.
 
 ## Next Steps
 
-* @ref iam-mock
-* @ref iam-credentials-mock
+- @ref common-error-handling - describes how the library reports errors.
+- @ref iam-override-endpoint - describes how to override the default
+  endpoint.
+- @ref iam-override-authentication - describes how to change the
+  authentication credentials used by the library.
+- @ref iam-override-retry - describes how to change the default retry
+  policies.
+- @ref iam-env - describes environment variables that can configure the behavior of the library.
+- @ref iam-mock
+- @ref iam-credentials-mock
 
 [resource-link]: https://console.cloud.google.com/cloud-resource-manager 'Console Resource Manager'
 [billing-link]: https://cloud.google.com/billing/docs/how-to/modify-project 'How to: Modify Project'
 [concepts-link]: https://cloud.google.com/iam/docs/concepts 'IAM Concepts'
-[authentication-quickstart]: https://cloud.google.com/docs/authentication/getting-started 'Authentication Getting Started'
-[gcloud-quickstart]: https://cloud.google.com/sdk/docs/quickstarts
 [github-link]: https://github.com/googleapis/google-cloud-cpp 'GitHub Repository'
 [quickstart-link]:  https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/iam/quickstart
-[status-or-header]: https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/status_or.h
 
 */

@@ -1,0 +1,52 @@
+/*!
+
+@mainpage Google Cloud Support API C++ Client Library
+
+An idiomatic C++ client library for the [Google Cloud Support API][cloud-service-docs], a service
+to Manages Google Cloud technical support cases for Customer Care support offerings.
+
+While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
+[Semantic Versioning](https://semver.org/).
+
+@tableofcontents{HTML:2}
+
+## Quickstart
+
+The following shows the code that you'll run in the
+`google/cloud/support/quickstart/` directory,
+which should give you a taste of the Google Cloud Support API C++ client library API.
+
+@snippet quickstart.cc all
+
+## Main classes
+
+<!-- inject-client-list-start -->
+This library offers multiple `*Client` classes, which are listed below. Each
+one of these classes exposes all the RPCs for a gRPC `service` as member
+functions of the class. This library groups multiple gRPC services because they
+are part of the same product or are often used together. A typical example may
+be the administrative and data plane operations for a single product.
+
+The library also has other classes that provide helpers, configuration
+parameters, and infrastructure to mock the `*Client` classes when testing your
+application.
+
+- [\c support_v2::CaseAttachmentServiceClient](@ref google::cloud::support_v2::CaseAttachmentServiceClient)
+- [\c support_v2::CaseServiceClient](@ref google::cloud::support_v2::CaseServiceClient)
+- [\c support_v2::CommentServiceClient](@ref google::cloud::support_v2::CommentServiceClient)
+<!-- inject-client-list-end -->
+
+## More Information
+
+- @ref common-error-handling - describes how the library reports errors.
+- @ref support-override-endpoint - describes how to override the default
+  endpoint.
+- @ref support-override-authentication - describes how to change the
+  authentication credentials used by the library.
+- @ref support-override-retry - describes how to change the default retry
+  policies.
+- @ref support-env - describes environment variables that can configure the behavior of the library.
+
+[cloud-service-docs]: https://cloud.google.com/support
+
+*/

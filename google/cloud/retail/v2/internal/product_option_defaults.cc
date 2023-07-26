@@ -46,8 +46,9 @@ Options ProductServiceDefaultOptions(Options options) {
   }
   if (!options.has<retail_v2::ProductServiceBackoffPolicyOption>()) {
     options.set<retail_v2::ProductServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options.has<retail_v2::ProductServicePollingPolicyOption>()) {
@@ -56,8 +57,9 @@ Options ProductServiceDefaultOptions(Options options) {
             retail_v2::ProductServiceRetryPolicyOption::Type,
             retail_v2::ProductServiceBackoffPolicyOption::Type>(
             options.get<retail_v2::ProductServiceRetryPolicyOption>()->clone(),
-            options.get<retail_v2::ProductServiceBackoffPolicyOption>()
-                ->clone())
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
             .clone());
   }
   if (!options

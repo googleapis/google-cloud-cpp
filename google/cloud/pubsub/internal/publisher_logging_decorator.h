@@ -36,7 +36,7 @@ class PublisherLogging : public PublisherStub {
   ~PublisherLogging() override = default;
   PublisherLogging(std::shared_ptr<PublisherStub> child,
                    TracingOptions tracing_options,
-                   std::set<std::string> components);
+                   std::set<std::string> const& components);
 
   StatusOr<google::pubsub::v1::Topic> CreateTopic(
       grpc::ClientContext& context,
@@ -84,7 +84,7 @@ class PublisherLogging : public PublisherStub {
  private:
   std::shared_ptr<PublisherStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // PublisherLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

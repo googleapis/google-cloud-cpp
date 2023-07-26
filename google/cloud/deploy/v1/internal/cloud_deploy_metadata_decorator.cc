@@ -18,6 +18,7 @@
 
 #include "google/cloud/deploy/v1/internal/cloud_deploy_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/deploy/v1/cloud_deploy.grpc.pb.h>
@@ -28,8 +29,11 @@ namespace cloud {
 namespace deploy_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-CloudDeployMetadata::CloudDeployMetadata(std::shared_ptr<CloudDeployStub> child)
+CloudDeployMetadata::CloudDeployMetadata(
+    std::shared_ptr<CloudDeployStub> child,
+    std::multimap<std::string, std::string> fixed_metadata)
     : child_(std::move(child)),
+      fixed_metadata_(std::move(fixed_metadata)),
       api_client_header_(
           google::cloud::internal::ApiClientHeader("generator")) {}
 
@@ -37,7 +41,7 @@ StatusOr<google::cloud::deploy::v1::ListDeliveryPipelinesResponse>
 CloudDeployMetadata::ListDeliveryPipelines(
     grpc::ClientContext& context,
     google::cloud::deploy::v1::ListDeliveryPipelinesRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListDeliveryPipelines(context, request);
 }
 
@@ -45,7 +49,7 @@ StatusOr<google::cloud::deploy::v1::DeliveryPipeline>
 CloudDeployMetadata::GetDeliveryPipeline(
     grpc::ClientContext& context,
     google::cloud::deploy::v1::GetDeliveryPipelineRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetDeliveryPipeline(context, request);
 }
 
@@ -54,7 +58,7 @@ CloudDeployMetadata::AsyncCreateDeliveryPipeline(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::deploy::v1::CreateDeliveryPipelineRequest const& request) {
-  SetMetadata(*context, "parent=" + request.parent());
+  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
   return child_->AsyncCreateDeliveryPipeline(cq, std::move(context), request);
 }
 
@@ -63,8 +67,8 @@ CloudDeployMetadata::AsyncUpdateDeliveryPipeline(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::deploy::v1::UpdateDeliveryPipelineRequest const& request) {
-  SetMetadata(*context,
-              "delivery_pipeline.name=" + request.delivery_pipeline().name());
+  SetMetadata(*context, absl::StrCat("delivery_pipeline.name=",
+                                     request.delivery_pipeline().name()));
   return child_->AsyncUpdateDeliveryPipeline(cq, std::move(context), request);
 }
 
@@ -73,7 +77,7 @@ CloudDeployMetadata::AsyncDeleteDeliveryPipeline(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::deploy::v1::DeleteDeliveryPipelineRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncDeleteDeliveryPipeline(cq, std::move(context), request);
 }
 
@@ -81,14 +85,14 @@ StatusOr<google::cloud::deploy::v1::ListTargetsResponse>
 CloudDeployMetadata::ListTargets(
     grpc::ClientContext& context,
     google::cloud::deploy::v1::ListTargetsRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListTargets(context, request);
 }
 
 StatusOr<google::cloud::deploy::v1::Target> CloudDeployMetadata::GetTarget(
     grpc::ClientContext& context,
     google::cloud::deploy::v1::GetTargetRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetTarget(context, request);
 }
 
@@ -97,7 +101,7 @@ CloudDeployMetadata::AsyncCreateTarget(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::deploy::v1::CreateTargetRequest const& request) {
-  SetMetadata(*context, "parent=" + request.parent());
+  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
   return child_->AsyncCreateTarget(cq, std::move(context), request);
 }
 
@@ -106,7 +110,7 @@ CloudDeployMetadata::AsyncUpdateTarget(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::deploy::v1::UpdateTargetRequest const& request) {
-  SetMetadata(*context, "target.name=" + request.target().name());
+  SetMetadata(*context, absl::StrCat("target.name=", request.target().name()));
   return child_->AsyncUpdateTarget(cq, std::move(context), request);
 }
 
@@ -115,7 +119,7 @@ CloudDeployMetadata::AsyncDeleteTarget(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::deploy::v1::DeleteTargetRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncDeleteTarget(cq, std::move(context), request);
 }
 
@@ -123,14 +127,14 @@ StatusOr<google::cloud::deploy::v1::ListReleasesResponse>
 CloudDeployMetadata::ListReleases(
     grpc::ClientContext& context,
     google::cloud::deploy::v1::ListReleasesRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListReleases(context, request);
 }
 
 StatusOr<google::cloud::deploy::v1::Release> CloudDeployMetadata::GetRelease(
     grpc::ClientContext& context,
     google::cloud::deploy::v1::GetReleaseRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetRelease(context, request);
 }
 
@@ -139,7 +143,7 @@ CloudDeployMetadata::AsyncCreateRelease(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::deploy::v1::CreateReleaseRequest const& request) {
-  SetMetadata(*context, "parent=" + request.parent());
+  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
   return child_->AsyncCreateRelease(cq, std::move(context), request);
 }
 
@@ -147,7 +151,7 @@ StatusOr<google::cloud::deploy::v1::AbandonReleaseResponse>
 CloudDeployMetadata::AbandonRelease(
     grpc::ClientContext& context,
     google::cloud::deploy::v1::AbandonReleaseRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->AbandonRelease(context, request);
 }
 
@@ -155,7 +159,7 @@ StatusOr<google::cloud::deploy::v1::ApproveRolloutResponse>
 CloudDeployMetadata::ApproveRollout(
     grpc::ClientContext& context,
     google::cloud::deploy::v1::ApproveRolloutRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->ApproveRollout(context, request);
 }
 
@@ -163,7 +167,7 @@ StatusOr<google::cloud::deploy::v1::AdvanceRolloutResponse>
 CloudDeployMetadata::AdvanceRollout(
     grpc::ClientContext& context,
     google::cloud::deploy::v1::AdvanceRolloutRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->AdvanceRollout(context, request);
 }
 
@@ -171,7 +175,7 @@ StatusOr<google::cloud::deploy::v1::CancelRolloutResponse>
 CloudDeployMetadata::CancelRollout(
     grpc::ClientContext& context,
     google::cloud::deploy::v1::CancelRolloutRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->CancelRollout(context, request);
 }
 
@@ -179,14 +183,14 @@ StatusOr<google::cloud::deploy::v1::ListRolloutsResponse>
 CloudDeployMetadata::ListRollouts(
     grpc::ClientContext& context,
     google::cloud::deploy::v1::ListRolloutsRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListRollouts(context, request);
 }
 
 StatusOr<google::cloud::deploy::v1::Rollout> CloudDeployMetadata::GetRollout(
     grpc::ClientContext& context,
     google::cloud::deploy::v1::GetRolloutRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetRollout(context, request);
 }
 
@@ -195,7 +199,7 @@ CloudDeployMetadata::AsyncCreateRollout(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::deploy::v1::CreateRolloutRequest const& request) {
-  SetMetadata(*context, "parent=" + request.parent());
+  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
   return child_->AsyncCreateRollout(cq, std::move(context), request);
 }
 
@@ -203,7 +207,7 @@ StatusOr<google::cloud::deploy::v1::IgnoreJobResponse>
 CloudDeployMetadata::IgnoreJob(
     grpc::ClientContext& context,
     google::cloud::deploy::v1::IgnoreJobRequest const& request) {
-  SetMetadata(context, "rollout=" + request.rollout());
+  SetMetadata(context, absl::StrCat("rollout=", request.rollout()));
   return child_->IgnoreJob(context, request);
 }
 
@@ -211,7 +215,7 @@ StatusOr<google::cloud::deploy::v1::RetryJobResponse>
 CloudDeployMetadata::RetryJob(
     grpc::ClientContext& context,
     google::cloud::deploy::v1::RetryJobRequest const& request) {
-  SetMetadata(context, "rollout=" + request.rollout());
+  SetMetadata(context, absl::StrCat("rollout=", request.rollout()));
   return child_->RetryJob(context, request);
 }
 
@@ -219,14 +223,14 @@ StatusOr<google::cloud::deploy::v1::ListJobRunsResponse>
 CloudDeployMetadata::ListJobRuns(
     grpc::ClientContext& context,
     google::cloud::deploy::v1::ListJobRunsRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListJobRuns(context, request);
 }
 
 StatusOr<google::cloud::deploy::v1::JobRun> CloudDeployMetadata::GetJobRun(
     grpc::ClientContext& context,
     google::cloud::deploy::v1::GetJobRunRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetJobRun(context, request);
 }
 
@@ -234,14 +238,14 @@ StatusOr<google::cloud::deploy::v1::TerminateJobRunResponse>
 CloudDeployMetadata::TerminateJobRun(
     grpc::ClientContext& context,
     google::cloud::deploy::v1::TerminateJobRunRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->TerminateJobRun(context, request);
 }
 
 StatusOr<google::cloud::deploy::v1::Config> CloudDeployMetadata::GetConfig(
     grpc::ClientContext& context,
     google::cloud::deploy::v1::GetConfigRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetConfig(context, request);
 }
 
@@ -269,6 +273,9 @@ void CloudDeployMetadata::SetMetadata(grpc::ClientContext& context,
 }
 
 void CloudDeployMetadata::SetMetadata(grpc::ClientContext& context) {
+  for (auto const& kv : fixed_metadata_) {
+    context.AddMetadata(kv.first, kv.second);
+  }
   context.AddMetadata("x-goog-api-client", api_client_header_);
   auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {

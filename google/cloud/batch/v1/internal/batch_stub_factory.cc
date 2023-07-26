@@ -52,7 +52,8 @@ std::shared_ptr<BatchServiceStub> CreateDefaultBatchServiceStub(
   if (auth->RequiresConfigureContext()) {
     stub = std::make_shared<BatchServiceAuth>(std::move(auth), std::move(stub));
   }
-  stub = std::make_shared<BatchServiceMetadata>(std::move(stub));
+  stub = std::make_shared<BatchServiceMetadata>(
+      std::move(stub), std::multimap<std::string, std::string>{});
   if (internal::Contains(options.get<TracingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<BatchServiceLogging>(

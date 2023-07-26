@@ -526,6 +526,32 @@ Status CloudChannelServiceTracingStub::DeleteChannelPartnerRepricingConfig(
       child_->DeleteChannelPartnerRepricingConfig(context, request));
 }
 
+StatusOr<google::cloud::channel::v1::ListSkuGroupsResponse>
+CloudChannelServiceTracingStub::ListSkuGroups(
+    grpc::ClientContext& context,
+    google::cloud::channel::v1::ListSkuGroupsRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.channel.v1.CloudChannelService", "ListSkuGroups");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListSkuGroups(context, request));
+}
+
+StatusOr<google::cloud::channel::v1::ListSkuGroupBillableSkusResponse>
+CloudChannelServiceTracingStub::ListSkuGroupBillableSkus(
+    grpc::ClientContext& context,
+    google::cloud::channel::v1::ListSkuGroupBillableSkusRequest const&
+        request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.channel.v1.CloudChannelService",
+                             "ListSkuGroupBillableSkus");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListSkuGroupBillableSkus(context, request));
+}
+
 StatusOr<google::cloud::channel::v1::Offer>
 CloudChannelServiceTracingStub::LookupOffer(
     grpc::ClientContext& context,

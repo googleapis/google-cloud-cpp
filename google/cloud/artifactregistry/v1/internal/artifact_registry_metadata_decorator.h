@@ -22,6 +22,7 @@
 #include "google/cloud/artifactregistry/v1/internal/artifact_registry_stub.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
+#include <map>
 #include <memory>
 #include <string>
 
@@ -33,8 +34,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class ArtifactRegistryMetadata : public ArtifactRegistryStub {
  public:
   ~ArtifactRegistryMetadata() override = default;
-  explicit ArtifactRegistryMetadata(
-      std::shared_ptr<ArtifactRegistryStub> child);
+  ArtifactRegistryMetadata(
+      std::shared_ptr<ArtifactRegistryStub> child,
+      std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::devtools::artifactregistry::v1::ListDockerImagesResponse>
   ListDockerImages(
@@ -242,6 +244,7 @@ class ArtifactRegistryMetadata : public ArtifactRegistryStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<ArtifactRegistryStub> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

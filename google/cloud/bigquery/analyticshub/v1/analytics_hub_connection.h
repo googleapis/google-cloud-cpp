@@ -22,6 +22,7 @@
 #include "google/cloud/bigquery/analyticshub/v1/analytics_hub_connection_idempotency_policy.h"
 #include "google/cloud/bigquery/analyticshub/v1/internal/analytics_hub_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -34,17 +35,137 @@ namespace cloud {
 namespace bigquery_analyticshub_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using AnalyticsHubServiceRetryPolicy =
-    ::google::cloud::internal::TraitBasedRetryPolicy<
-        bigquery_analyticshub_v1_internal::AnalyticsHubServiceRetryTraits>;
+/// The retry policy for `AnalyticsHubServiceConnection`.
+class AnalyticsHubServiceRetryPolicy : public ::google::cloud::RetryPolicy {
+ public:
+  /// Creates a new instance of the policy, reset to the initial state.
+  virtual std::unique_ptr<AnalyticsHubServiceRetryPolicy> clone() const = 0;
+};
 
-using AnalyticsHubServiceLimitedTimeRetryPolicy =
-    ::google::cloud::internal::LimitedTimeRetryPolicy<
-        bigquery_analyticshub_v1_internal::AnalyticsHubServiceRetryTraits>;
+/**
+ * A retry policy for `AnalyticsHubServiceConnection` based on counting errors.
+ *
+ * This policy stops retrying if:
+ * - An RPC returns a non-transient error.
+ * - More than a prescribed number of transient failures is detected.
+ *
+ * In this class the following status codes are treated as transient errors:
+ * - [`kUnavailable`](@ref google::cloud::StatusCode)
+ */
+class AnalyticsHubServiceLimitedErrorCountRetryPolicy
+    : public AnalyticsHubServiceRetryPolicy {
+ public:
+  /**
+   * Create an instance that tolerates up to @p maximum_failures transient
+   * errors.
+   *
+   * @note Disable the retry loop by providing an instance of this policy with
+   *     @p maximum_failures == 0.
+   */
+  explicit AnalyticsHubServiceLimitedErrorCountRetryPolicy(int maximum_failures)
+      : impl_(maximum_failures) {}
 
-using AnalyticsHubServiceLimitedErrorCountRetryPolicy =
-    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        bigquery_analyticshub_v1_internal::AnalyticsHubServiceRetryTraits>;
+  AnalyticsHubServiceLimitedErrorCountRetryPolicy(
+      AnalyticsHubServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
+      : AnalyticsHubServiceLimitedErrorCountRetryPolicy(
+            rhs.maximum_failures()) {}
+  AnalyticsHubServiceLimitedErrorCountRetryPolicy(
+      AnalyticsHubServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
+      : AnalyticsHubServiceLimitedErrorCountRetryPolicy(
+            rhs.maximum_failures()) {}
+
+  int maximum_failures() const { return impl_.maximum_failures(); }
+
+  bool OnFailure(Status const& status) override {
+    return impl_.OnFailure(status);
+  }
+  bool IsExhausted() const override { return impl_.IsExhausted(); }
+  bool IsPermanentFailure(Status const& status) const override {
+    return impl_.IsPermanentFailure(status);
+  }
+  std::unique_ptr<AnalyticsHubServiceRetryPolicy> clone() const override {
+    return std::make_unique<AnalyticsHubServiceLimitedErrorCountRetryPolicy>(
+        maximum_failures());
+  }
+
+  // This is provided only for backwards compatibility.
+  using BaseType = AnalyticsHubServiceRetryPolicy;
+
+ private:
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      bigquery_analyticshub_v1_internal::AnalyticsHubServiceRetryTraits>
+      impl_;
+};
+
+/**
+ * A retry policy for `AnalyticsHubServiceConnection` based on elapsed time.
+ *
+ * This policy stops retrying if:
+ * - An RPC returns a non-transient error.
+ * - The elapsed time in the retry loop exceeds a prescribed duration.
+ *
+ * In this class the following status codes are treated as transient errors:
+ * - [`kUnavailable`](@ref google::cloud::StatusCode)
+ */
+class AnalyticsHubServiceLimitedTimeRetryPolicy
+    : public AnalyticsHubServiceRetryPolicy {
+ public:
+  /**
+   * Constructor given a `std::chrono::duration<>` object.
+   *
+   * @tparam DurationRep a placeholder to match the `Rep` tparam for @p
+   *     duration's type. The semantics of this template parameter are
+   *     documented in `std::chrono::duration<>`. In brief, the underlying
+   *     arithmetic type used to store the number of ticks. For our purposes it
+   *     is simply a formal parameter.
+   * @tparam DurationPeriod a placeholder to match the `Period` tparam for @p
+   *     duration's type. The semantics of this template parameter are
+   *     documented in `std::chrono::duration<>`. In brief, the length of the
+   *     tick in seconds, expressed as a `std::ratio<>`. For our purposes it is
+   *     simply a formal parameter.
+   * @param maximum_duration the maximum time allowed before the policy expires.
+   *     While the application can express this time in any units they desire,
+   *     the class truncates to milliseconds.
+   *
+   * @see https://en.cppreference.com/w/cpp/chrono/duration for more information
+   *     about `std::chrono::duration`.
+   */
+  template <typename DurationRep, typename DurationPeriod>
+  explicit AnalyticsHubServiceLimitedTimeRetryPolicy(
+      std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
+      : impl_(maximum_duration) {}
+
+  AnalyticsHubServiceLimitedTimeRetryPolicy(
+      AnalyticsHubServiceLimitedTimeRetryPolicy&& rhs) noexcept
+      : AnalyticsHubServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  AnalyticsHubServiceLimitedTimeRetryPolicy(
+      AnalyticsHubServiceLimitedTimeRetryPolicy const& rhs) noexcept
+      : AnalyticsHubServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+
+  std::chrono::milliseconds maximum_duration() const {
+    return impl_.maximum_duration();
+  }
+
+  bool OnFailure(Status const& status) override {
+    return impl_.OnFailure(status);
+  }
+  bool IsExhausted() const override { return impl_.IsExhausted(); }
+  bool IsPermanentFailure(Status const& status) const override {
+    return impl_.IsPermanentFailure(status);
+  }
+  std::unique_ptr<AnalyticsHubServiceRetryPolicy> clone() const override {
+    return std::make_unique<AnalyticsHubServiceLimitedTimeRetryPolicy>(
+        maximum_duration());
+  }
+
+  // This is provided only for backwards compatibility.
+  using BaseType = AnalyticsHubServiceRetryPolicy;
+
+ private:
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      bigquery_analyticshub_v1_internal::AnalyticsHubServiceRetryTraits>
+      impl_;
+};
 
 /**
  * The `AnalyticsHubServiceConnection` object for `AnalyticsHubServiceClient`.

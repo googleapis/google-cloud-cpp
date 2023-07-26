@@ -18,6 +18,7 @@
 
 #include "generator/integration_tests/golden/v1/internal/golden_kitchen_sink_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/routing_matcher.h"
@@ -31,15 +32,17 @@ namespace golden_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 GoldenKitchenSinkMetadata::GoldenKitchenSinkMetadata(
-    std::shared_ptr<GoldenKitchenSinkStub> child)
+    std::shared_ptr<GoldenKitchenSinkStub> child,
+    std::multimap<std::string, std::string> fixed_metadata)
     : child_(std::move(child)),
+      fixed_metadata_(std::move(fixed_metadata)),
       api_client_header_(google::cloud::internal::ApiClientHeader("generator")) {}
 
 StatusOr<google::test::admin::database::v1::GenerateAccessTokenResponse>
 GoldenKitchenSinkMetadata::GenerateAccessToken(
     grpc::ClientContext& context,
     google::test::admin::database::v1::GenerateAccessTokenRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GenerateAccessToken(context, request);
 }
 
@@ -63,7 +66,7 @@ StatusOr<google::test::admin::database::v1::ListLogsResponse>
 GoldenKitchenSinkMetadata::ListLogs(
     grpc::ClientContext& context,
     google::test::admin::database::v1::ListLogsRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListLogs(context, request);
 }
 
@@ -71,7 +74,7 @@ StatusOr<google::test::admin::database::v1::ListServiceAccountKeysResponse>
 GoldenKitchenSinkMetadata::ListServiceAccountKeys(
     grpc::ClientContext& context,
     google::test::admin::database::v1::ListServiceAccountKeysRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->ListServiceAccountKeys(context, request);
 }
 
@@ -220,6 +223,9 @@ void GoldenKitchenSinkMetadata::SetMetadata(grpc::ClientContext& context,
 }
 
 void GoldenKitchenSinkMetadata::SetMetadata(grpc::ClientContext& context) {
+  for (auto const& kv : fixed_metadata_) {
+    context.AddMetadata(kv.first, kv.second);
+  }
   context.AddMetadata("x-goog-api-client", api_client_header_);
   auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {

@@ -42,6 +42,7 @@ add_library(
     internal/async_read_write_stream_auth.h
     internal/async_read_write_stream_impl.h
     internal/async_read_write_stream_logging.h
+    internal/async_read_write_stream_tracing.h
     internal/async_retry_loop.h
     internal/async_retry_unary_rpc.h
     internal/async_rpc_details.h
@@ -49,10 +50,12 @@ add_library(
     internal/async_streaming_read_rpc_auth.h
     internal/async_streaming_read_rpc_impl.h
     internal/async_streaming_read_rpc_logging.h
+    internal/async_streaming_read_rpc_tracing.h
     internal/async_streaming_write_rpc.h
     internal/async_streaming_write_rpc_auth.h
     internal/async_streaming_write_rpc_impl.h
     internal/async_streaming_write_rpc_logging.h
+    internal/async_streaming_write_rpc_tracing.h
     internal/background_threads_impl.cc
     internal/background_threads_impl.h
     internal/completion_queue_impl.h
@@ -172,15 +175,15 @@ google_cloud_cpp_add_pkgconfig(
     "gRPC Utilities for the Google Cloud C++ Client Library"
     "Provides gRPC Utilities for the Google Cloud C++ Client Library."
     "google_cloud_cpp_common"
-    " google_cloud_cpp_iam_protos"
-    " google_cloud_cpp_longrunning_operations_protos"
-    " google_cloud_cpp_rpc_status_protos"
-    " absl_function_ref"
-    " absl_strings"
-    " absl_time"
-    " absl_time_zone"
-    " absl_variant"
-    " openssl")
+    "google_cloud_cpp_iam_protos"
+    "google_cloud_cpp_longrunning_operations_protos"
+    "google_cloud_cpp_rpc_status_protos"
+    "absl_function_ref"
+    "absl_strings"
+    "absl_time"
+    "absl_time_zone"
+    "absl_variant"
+    "openssl")
 
 # Create and install the CMake configuration files.
 configure_file("grpc_utils/config.cmake.in"
@@ -238,14 +241,17 @@ if (BUILD_TESTING)
         internal/async_read_write_stream_auth_test.cc
         internal/async_read_write_stream_impl_test.cc
         internal/async_read_write_stream_logging_test.cc
+        internal/async_read_write_stream_tracing_test.cc
         internal/async_retry_loop_test.cc
         internal/async_retry_unary_rpc_test.cc
         internal/async_streaming_read_rpc_auth_test.cc
         internal/async_streaming_read_rpc_impl_test.cc
         internal/async_streaming_read_rpc_logging_test.cc
+        internal/async_streaming_read_rpc_tracing_test.cc
         internal/async_streaming_write_rpc_auth_test.cc
         internal/async_streaming_write_rpc_impl_test.cc
         internal/async_streaming_write_rpc_logging_test.cc
+        internal/async_streaming_write_rpc_tracing_test.cc
         internal/background_threads_impl_test.cc
         internal/debug_string_protobuf_test.cc
         internal/debug_string_status_test.cc

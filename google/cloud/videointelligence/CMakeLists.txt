@@ -129,7 +129,7 @@ if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
     set_tests_properties(
         videointelligence_quickstart
         PROPERTIES
-            DISABLED TRUE LABELS "integration-test;quickstart" ENVIRONMENT
+            LABELS "integration-test;quickstart" ENVIRONMENT
             GOOGLE_CLOUD_CPP_USER_PROJECT=$ENV{GOOGLE_CLOUD_CPP_USER_PROJECT})
 endif ()
 
@@ -181,8 +181,8 @@ google_cloud_cpp_add_pkgconfig(
     "The Cloud Video Intelligence API C++ Client Library"
     "Provides C++ APIs to use the Cloud Video Intelligence API."
     "google_cloud_cpp_grpc_utils"
-    " google_cloud_cpp_common"
-    " google_cloud_cpp_videointelligence_protos")
+    "google_cloud_cpp_common"
+    "google_cloud_cpp_videointelligence_protos")
 
 # Create and install the CMake configuration files.
 include(CMakePackageConfigHelpers)

@@ -29,10 +29,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 KeyManagementServiceLogging::KeyManagementServiceLogging(
     std::shared_ptr<KeyManagementServiceStub> child,
-    TracingOptions tracing_options, std::set<std::string> components)
+    TracingOptions tracing_options, std::set<std::string> const& components)
     : child_(std::move(child)),
       tracing_options_(std::move(tracing_options)),
-      components_(std::move(components)) {}
+      stream_logging_(components.find("rpc-streams") != components.end()) {}
 
 StatusOr<google::cloud::kms::v1::ListKeyRingsResponse>
 KeyManagementServiceLogging::ListKeyRings(
@@ -291,6 +291,30 @@ KeyManagementServiceLogging::Decrypt(
       [this](grpc::ClientContext& context,
              google::cloud::kms::v1::DecryptRequest const& request) {
         return child_->Decrypt(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::kms::v1::RawEncryptResponse>
+KeyManagementServiceLogging::RawEncrypt(
+    grpc::ClientContext& context,
+    google::cloud::kms::v1::RawEncryptRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::kms::v1::RawEncryptRequest const& request) {
+        return child_->RawEncrypt(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::kms::v1::RawDecryptResponse>
+KeyManagementServiceLogging::RawDecrypt(
+    grpc::ClientContext& context,
+    google::cloud::kms::v1::RawDecryptRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::kms::v1::RawDecryptRequest const& request) {
+        return child_->RawDecrypt(context, request);
       },
       context, request, __func__, tracing_options_);
 }

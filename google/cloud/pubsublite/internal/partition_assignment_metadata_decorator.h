@@ -21,6 +21,7 @@
 
 #include "google/cloud/pubsublite/internal/partition_assignment_stub.h"
 #include "google/cloud/version.h"
+#include <map>
 #include <memory>
 #include <string>
 
@@ -33,8 +34,9 @@ class PartitionAssignmentServiceMetadata
     : public PartitionAssignmentServiceStub {
  public:
   ~PartitionAssignmentServiceMetadata() override = default;
-  explicit PartitionAssignmentServiceMetadata(
-      std::shared_ptr<PartitionAssignmentServiceStub> child);
+  PartitionAssignmentServiceMetadata(
+      std::shared_ptr<PartitionAssignmentServiceStub> child,
+      std::multimap<std::string, std::string> fixed_metadata);
 
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::pubsublite::v1::PartitionAssignmentRequest,
@@ -48,6 +50,7 @@ class PartitionAssignmentServiceMetadata
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<PartitionAssignmentServiceStub> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

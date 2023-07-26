@@ -20,9 +20,8 @@
 #define GOOGLE_CLOUD_CPP_GENERATOR_INTEGRATION_TESTS_GOLDEN_V1_GOLDEN_REST_ONLY_CONNECTION_IDEMPOTENCY_POLICY_H
 
 #include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
 #include "google/cloud/version.h"
-#include <generator/integration_tests/test2.grpc.pb.h>
+#include <generator/integration_tests/test2.pb.h>
 #include <memory>
 
 namespace google {

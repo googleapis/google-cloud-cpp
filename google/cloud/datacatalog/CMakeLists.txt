@@ -174,8 +174,8 @@ google_cloud_cpp_add_pkgconfig(
     "The Google Cloud Data Catalog API C++ Client Library"
     "Provides C++ APIs to use the Google Cloud Data Catalog API."
     "google_cloud_cpp_grpc_utils"
-    " google_cloud_cpp_common"
-    " google_cloud_cpp_datacatalog_protos")
+    "google_cloud_cpp_common"
+    "google_cloud_cpp_datacatalog_protos")
 
 # Create and install the CMake configuration files.
 include(CMakePackageConfigHelpers)

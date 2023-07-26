@@ -53,7 +53,8 @@ std::shared_ptr<ValidationHelperV1Stub> CreateDefaultValidationHelperV1Stub(
     stub = std::make_shared<ValidationHelperV1Auth>(std::move(auth),
                                                     std::move(stub));
   }
-  stub = std::make_shared<ValidationHelperV1Metadata>(std::move(stub));
+  stub = std::make_shared<ValidationHelperV1Metadata>(
+      std::move(stub), std::multimap<std::string, std::string>{});
   if (internal::Contains(options.get<TracingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<ValidationHelperV1Logging>(

@@ -22,6 +22,10 @@ fi # include guard
 
 # The name of the project used to run the integration tests and examples.
 export GOOGLE_CLOUD_PROJECT="cloud-cpp-testing-resources"
+# Some services seemingly require project numbers. If you ever need to generate
+# this again use:
+#   gcloud projects describe "${GOOGLE_CLOUD_PROJECT}"
+export GOOGLE_CLOUD_CPP_TEST_PROJECT_NUMBER="936212892354"
 # Some quickstarts require a x-goog-user-project header, either when using
 # our own user account in local builds, or when using the GCB service
 # account
@@ -88,8 +92,18 @@ export GOOGLE_CLOUD_CPP_SPANNER_TEST_QUICKSTART_DATABASE="quickstart-db"
 # Cloud Pub/Sub configuration parameters
 export GOOGLE_CLOUD_CPP_PUBSUB_TEST_QUICKSTART_TOPIC="quickstart"
 
+# Cloud Batch configuration parameters
+# Created using:
+#    gcloud compute instance-templates create \
+#        --project=cloud-cpp-testing-resources "cloud-batch-sample-template" \
+#        --region us-central1 --machine-type e2-standard-4
+export GOOGLE_CLOUD_CPP_BATCH_TEST_TEMPLATE_NAME="cloud-batch-sample-template"
+
 # Cloud BigQuery configuration parameters
 export GOOGLE_CLOUD_CPP_BIGQUERY_TEST_QUICKSTART_TABLE="projects/bigquery-public-data/datasets/usa_names/tables/usa_1910_current"
+
+# Content Warehouse
+export GOOGLE_CLOUD_CPP_CONTENTWAREHOUSE_TEST_LOCATION_ID="us"
 
 # Document AI
 export GOOGLE_CLOUD_CPP_DOCUMENTAI_TEST_LOCATION_ID="us"
@@ -110,12 +124,13 @@ export GOOGLE_CLOUD_CPP_TEST_HELLO_WORLD_HTTP_URL=""
 # Rest configuration parameters
 export GOOGLE_CLOUD_CPP_REST_TEST_SIGNING_SERVICE_ACCOUNT="kokoro-run@${GOOGLE_CLOUD_PROJECT}.iam.gserviceaccount.com"
 
-# To run google/cloud/gameservices' quickstart
-export GOOGLE_CLOUD_CPP_GAMESERVICES_TEST_LOCATION="global"
-export GOOGLE_CLOUD_CPP_GAMESERVICES_TEST_REALM="test-realm"
-
 # To run google/cloud/resourcemanager's quickstart, this is the Cloud C++ team community folder
 export GOOGLE_CLOUD_CPP_RESOURCEMANAGER_TEST_FOLDER="204009073908"
 
 # To run google/cloud/gkemulticloud's quickstart. The service is not available in `us-central1`
 export GOOGLE_CLOUD_CPP_GKEMULTICLOUD_TEST_REGION="us-west1"
+
+# google/cloud/policytroubleshooter's quickstart
+export GOOGLE_CLOUD_CPP_POLICYTROUBLESHOOTER_PRINCIPAL="${GOOGLE_CLOUD_CPP_STORAGE_TEST_SERVICE_ACCOUNT}"
+export GOOGLE_CLOUD_CPP_POLICYTROUBLESHOOTER_RESOURCE="//cloudresourcemanager.googleapis.com/projects/${GOOGLE_CLOUD_PROJECT}"
+export GOOGLE_CLOUD_CPP_POLICYTROUBLESHOOTER_PERMISSION="storage.buckets.get"

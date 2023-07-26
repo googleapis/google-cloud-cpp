@@ -22,6 +22,7 @@
 #include "google/cloud/beyondcorp/appgateways/v1/internal/app_gateways_stub.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
+#include <map>
 #include <memory>
 #include <string>
 
@@ -33,8 +34,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class AppGatewaysServiceMetadata : public AppGatewaysServiceStub {
  public:
   ~AppGatewaysServiceMetadata() override = default;
-  explicit AppGatewaysServiceMetadata(
-      std::shared_ptr<AppGatewaysServiceStub> child);
+  AppGatewaysServiceMetadata(
+      std::shared_ptr<AppGatewaysServiceStub> child,
+      std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::beyondcorp::appgateways::v1::ListAppGatewaysResponse>
   ListAppGateways(
@@ -76,6 +78,7 @@ class AppGatewaysServiceMetadata : public AppGatewaysServiceStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<AppGatewaysServiceStub> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

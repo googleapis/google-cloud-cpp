@@ -37,7 +37,7 @@ class RepositoryManagerLogging : public RepositoryManagerStub {
   ~RepositoryManagerLogging() override = default;
   RepositoryManagerLogging(std::shared_ptr<RepositoryManagerStub> child,
                            TracingOptions tracing_options,
-                           std::set<std::string> components);
+                           std::set<std::string> const& components);
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateConnection(
       google::cloud::CompletionQueue& cq,
@@ -114,6 +114,11 @@ class RepositoryManagerLogging : public RepositoryManagerStub {
       google::devtools::cloudbuild::v2::FetchLinkableRepositoriesRequest const&
           request) override;
 
+  StatusOr<google::devtools::cloudbuild::v2::FetchGitRefsResponse> FetchGitRefs(
+      grpc::ClientContext& context,
+      google::devtools::cloudbuild::v2::FetchGitRefsRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -127,7 +132,7 @@ class RepositoryManagerLogging : public RepositoryManagerStub {
  private:
   std::shared_ptr<RepositoryManagerStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // RepositoryManagerLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

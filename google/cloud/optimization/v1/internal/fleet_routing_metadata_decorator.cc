@@ -18,6 +18,7 @@
 
 #include "google/cloud/optimization/v1/internal/fleet_routing_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/optimization/v1/fleet_routing.grpc.pb.h>
@@ -29,8 +30,10 @@ namespace optimization_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 FleetRoutingMetadata::FleetRoutingMetadata(
-    std::shared_ptr<FleetRoutingStub> child)
+    std::shared_ptr<FleetRoutingStub> child,
+    std::multimap<std::string, std::string> fixed_metadata)
     : child_(std::move(child)),
+      fixed_metadata_(std::move(fixed_metadata)),
       api_client_header_(
           google::cloud::internal::ApiClientHeader("generator")) {}
 
@@ -38,7 +41,7 @@ StatusOr<google::cloud::optimization::v1::OptimizeToursResponse>
 FleetRoutingMetadata::OptimizeTours(
     grpc::ClientContext& context,
     google::cloud::optimization::v1::OptimizeToursRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->OptimizeTours(context, request);
 }
 
@@ -47,7 +50,7 @@ FleetRoutingMetadata::AsyncBatchOptimizeTours(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::optimization::v1::BatchOptimizeToursRequest const& request) {
-  SetMetadata(*context, "parent=" + request.parent());
+  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
   return child_->AsyncBatchOptimizeTours(cq, std::move(context), request);
 }
 
@@ -75,6 +78,9 @@ void FleetRoutingMetadata::SetMetadata(grpc::ClientContext& context,
 }
 
 void FleetRoutingMetadata::SetMetadata(grpc::ClientContext& context) {
+  for (auto const& kv : fixed_metadata_) {
+    context.AddMetadata(kv.first, kv.second);
+  }
   context.AddMetadata("x-goog-api-client", api_client_header_);
   auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {

@@ -89,28 +89,42 @@ class CompletionServiceClient {
   }
   ///@}
 
+  // clang-format off
   ///
   /// Completes the specified prefix with keyword suggestions.
   ///
   /// This feature is only available for users who have Retail Search enabled.
   /// Enable Retail Search on Cloud Console before using this feature.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::retail::v2::CompleteQueryRequest,google/cloud/retail/v2/completion_service.proto#L78}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.retail.v2.CompleteQueryRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::retail::v2::CompleteQueryResponse,google/cloud/retail/v2/completion_service.proto#L164}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.retail.v2.CompleteQueryResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.retail.v2.CompleteQueryRequest]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/completion_service.proto#L78}
-  /// [google.cloud.retail.v2.CompleteQueryResponse]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/completion_service.proto#L164}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.retail.v2.CompleteQueryRequest]: @googleapis_reference_link{google/cloud/retail/v2/completion_service.proto#L78}
+  /// [google.cloud.retail.v2.CompleteQueryResponse]: @googleapis_reference_link{google/cloud/retail/v2/completion_service.proto#L164}
   ///
+  // clang-format on
   StatusOr<google::cloud::retail::v2::CompleteQueryResponse> CompleteQuery(
       google::cloud::retail::v2::CompleteQueryRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Bulk import of processed completion dataset.
   ///
@@ -122,18 +136,36 @@ class CompletionServiceClient {
   /// This feature is only available for users who have Retail Search enabled.
   /// Enable Retail Search on Cloud Console before using this feature.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::retail::v2::ImportCompletionDataRequest,google/cloud/retail/v2/import_config.proto#L239}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.retail.v2.ImportCompletionDataRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::retail::v2::ImportCompletionDataResponse,google/cloud/retail/v2/import_config.proto#L383}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.retail.v2.ImportCompletionDataResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.retail.v2.ImportCompletionDataRequest]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/import_config.proto#L239}
-  /// [google.cloud.retail.v2.ImportCompletionDataResponse]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/import_config.proto#L383}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.retail.v2.ImportCompletionDataRequest]: @googleapis_reference_link{google/cloud/retail/v2/import_config.proto#L239}
+  /// [google.cloud.retail.v2.ImportCompletionDataResponse]: @googleapis_reference_link{google/cloud/retail/v2/import_config.proto#L383}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::retail::v2::ImportCompletionDataResponse>>
   ImportCompletionData(
       google::cloud::retail::v2::ImportCompletionDataRequest const& request,

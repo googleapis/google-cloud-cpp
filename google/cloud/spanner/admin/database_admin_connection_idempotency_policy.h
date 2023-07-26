@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_ADMIN_DATABASE_ADMIN_CONNECTION_IDEMPOTENCY_POLICY_H
 
 #include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
 #include "google/cloud/version.h"
 #include <google/spanner/admin/database/v1/spanner_database_admin.grpc.pb.h>
 #include <memory>
@@ -47,6 +46,10 @@ class DatabaseAdminConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency GetDatabase(
       google::spanner::admin::database::v1::GetDatabaseRequest const& request);
+
+  virtual google::cloud::Idempotency UpdateDatabase(
+      google::spanner::admin::database::v1::UpdateDatabaseRequest const&
+          request);
 
   virtual google::cloud::Idempotency UpdateDatabaseDdl(
       google::spanner::admin::database::v1::UpdateDatabaseDdlRequest const&

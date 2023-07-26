@@ -49,10 +49,8 @@ Status IdempotencyPolicyGenerator::GenerateHeader() {
 
   // includes
   HeaderPrint("\n");
-  HeaderLocalIncludes({"google/cloud/idempotency.h",
-                       "google/cloud/internal/retry_policy.h",
-                       "google/cloud/version.h"});
-  HeaderSystemIncludes({vars("proto_grpc_header_path"), "memory"});
+  HeaderLocalIncludes({"google/cloud/idempotency.h", "google/cloud/version.h"});
+  HeaderSystemIncludes({GetPbIncludeByTransport(), "memory"});
 
   auto result = HeaderOpenNamespaces();
   if (!result.ok()) return result;

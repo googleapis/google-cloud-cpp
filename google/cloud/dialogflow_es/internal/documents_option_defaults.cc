@@ -48,8 +48,9 @@ Options DocumentsDefaultOptions(std::string const& location, Options options) {
   }
   if (!options.has<dialogflow_es::DocumentsBackoffPolicyOption>()) {
     options.set<dialogflow_es::DocumentsBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
   if (!options.has<dialogflow_es::DocumentsPollingPolicyOption>()) {
@@ -57,7 +58,9 @@ Options DocumentsDefaultOptions(std::string const& location, Options options) {
         GenericPollingPolicy<dialogflow_es::DocumentsRetryPolicyOption::Type,
                              dialogflow_es::DocumentsBackoffPolicyOption::Type>(
             options.get<dialogflow_es::DocumentsRetryPolicyOption>()->clone(),
-            options.get<dialogflow_es::DocumentsBackoffPolicyOption>()->clone())
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
             .clone());
   }
   if (!options

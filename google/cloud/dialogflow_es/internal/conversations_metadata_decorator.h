@@ -21,6 +21,7 @@
 
 #include "google/cloud/dialogflow_es/internal/conversations_stub.h"
 #include "google/cloud/version.h"
+#include <map>
 #include <memory>
 #include <string>
 
@@ -32,7 +33,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class ConversationsMetadata : public ConversationsStub {
  public:
   ~ConversationsMetadata() override = default;
-  explicit ConversationsMetadata(std::shared_ptr<ConversationsStub> child);
+  ConversationsMetadata(std::shared_ptr<ConversationsStub> child,
+                        std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::dialogflow::v2::Conversation> CreateConversation(
       grpc::ClientContext& context,
@@ -66,12 +68,19 @@ class ConversationsMetadata : public ConversationsStub {
       google::cloud::dialogflow::v2::SuggestConversationSummaryRequest const&
           request) override;
 
+  StatusOr<google::cloud::dialogflow::v2::GenerateStatelessSummaryResponse>
+  GenerateStatelessSummary(
+      grpc::ClientContext& context,
+      google::cloud::dialogflow::v2::GenerateStatelessSummaryRequest const&
+          request) override;
+
  private:
   void SetMetadata(grpc::ClientContext& context,
                    std::string const& request_params);
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<ConversationsStub> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

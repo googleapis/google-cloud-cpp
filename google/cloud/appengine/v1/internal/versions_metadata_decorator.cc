@@ -18,6 +18,7 @@
 
 #include "google/cloud/appengine/v1/internal/versions_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/appengine/v1/appengine.grpc.pb.h>
@@ -28,8 +29,11 @@ namespace cloud {
 namespace appengine_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-VersionsMetadata::VersionsMetadata(std::shared_ptr<VersionsStub> child)
+VersionsMetadata::VersionsMetadata(
+    std::shared_ptr<VersionsStub> child,
+    std::multimap<std::string, std::string> fixed_metadata)
     : child_(std::move(child)),
+      fixed_metadata_(std::move(fixed_metadata)),
       api_client_header_(
           google::cloud::internal::ApiClientHeader("generator")) {}
 
@@ -37,14 +41,14 @@ StatusOr<google::appengine::v1::ListVersionsResponse>
 VersionsMetadata::ListVersions(
     grpc::ClientContext& context,
     google::appengine::v1::ListVersionsRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListVersions(context, request);
 }
 
 StatusOr<google::appengine::v1::Version> VersionsMetadata::GetVersion(
     grpc::ClientContext& context,
     google::appengine::v1::GetVersionRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetVersion(context, request);
 }
 
@@ -53,7 +57,7 @@ VersionsMetadata::AsyncCreateVersion(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::appengine::v1::CreateVersionRequest const& request) {
-  SetMetadata(*context, "parent=" + request.parent());
+  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
   return child_->AsyncCreateVersion(cq, std::move(context), request);
 }
 
@@ -62,7 +66,7 @@ VersionsMetadata::AsyncUpdateVersion(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::appengine::v1::UpdateVersionRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncUpdateVersion(cq, std::move(context), request);
 }
 
@@ -71,7 +75,7 @@ VersionsMetadata::AsyncDeleteVersion(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::appengine::v1::DeleteVersionRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncDeleteVersion(cq, std::move(context), request);
 }
 
@@ -99,6 +103,9 @@ void VersionsMetadata::SetMetadata(grpc::ClientContext& context,
 }
 
 void VersionsMetadata::SetMetadata(grpc::ClientContext& context) {
+  for (auto const& kv : fixed_metadata_) {
+    context.AddMetadata(kv.first, kv.second);
+  }
   context.AddMetadata("x-goog-api-client", api_client_header_);
   auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {

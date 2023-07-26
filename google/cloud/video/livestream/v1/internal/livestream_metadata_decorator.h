@@ -22,6 +22,7 @@
 #include "google/cloud/video/livestream/v1/internal/livestream_stub.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
+#include <map>
 #include <memory>
 #include <string>
 
@@ -33,8 +34,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class LivestreamServiceMetadata : public LivestreamServiceStub {
  public:
   ~LivestreamServiceMetadata() override = default;
-  explicit LivestreamServiceMetadata(
-      std::shared_ptr<LivestreamServiceStub> child);
+  LivestreamServiceMetadata(
+      std::shared_ptr<LivestreamServiceStub> child,
+      std::multimap<std::string, std::string> fixed_metadata);
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateChannel(
       google::cloud::CompletionQueue& cq,
@@ -124,6 +126,39 @@ class LivestreamServiceMetadata : public LivestreamServiceStub {
       google::cloud::video::livestream::v1::DeleteEventRequest const& request)
       override;
 
+  future<StatusOr<google::longrunning::Operation>> AsyncCreateAsset(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::video::livestream::v1::CreateAssetRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncDeleteAsset(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::video::livestream::v1::DeleteAssetRequest const& request)
+      override;
+
+  StatusOr<google::cloud::video::livestream::v1::Asset> GetAsset(
+      grpc::ClientContext& context,
+      google::cloud::video::livestream::v1::GetAssetRequest const& request)
+      override;
+
+  StatusOr<google::cloud::video::livestream::v1::ListAssetsResponse> ListAssets(
+      grpc::ClientContext& context,
+      google::cloud::video::livestream::v1::ListAssetsRequest const& request)
+      override;
+
+  StatusOr<google::cloud::video::livestream::v1::Pool> GetPool(
+      grpc::ClientContext& context,
+      google::cloud::video::livestream::v1::GetPoolRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncUpdatePool(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::video::livestream::v1::UpdatePoolRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -140,6 +175,7 @@ class LivestreamServiceMetadata : public LivestreamServiceStub {
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<LivestreamServiceStub> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 

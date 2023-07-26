@@ -1,0 +1,36 @@
+/*!
+@page metastore-override-endpoint How to Override the Default Endpoint
+
+In some cases, you may need to override the default endpoint used by the client
+library. Use the
+[EndpointOption](@ref google::cloud::EndpointOption) when initializing the
+client library to change this default.
+
+<!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `metastore_v1::DataprocMetastoreClient`:
+
+@snippet dataproc_metastore_client_samples.cc set-client-endpoint
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c metastore_v1::DataprocMetastoreClient](@ref metastore_v1::DataprocMetastoreClient-endpoint-snippet)
+- [\c metastore_v1::DataprocMetastoreFederationClient](@ref metastore_v1::DataprocMetastoreFederationClient-endpoint-snippet)
+
+<!-- inject-endpoint-snippet-end -->
+
+*/
+
+// <!-- inject-endpoint-pages-start -->
+
+/*! @page metastore_v1::DataprocMetastoreClient-endpoint-snippet Override metastore_v1::DataprocMetastoreClient Endpoint Configuration
+
+@snippet google/cloud/metastore/v1/samples/dataproc_metastore_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page metastore_v1::DataprocMetastoreFederationClient-endpoint-snippet Override metastore_v1::DataprocMetastoreFederationClient Endpoint Configuration
+
+@snippet google/cloud/metastore/v1/samples/dataproc_metastore_federation_client_samples.cc set-client-endpoint
+
+*/
+// <!-- inject-endpoint-pages-end -->

@@ -1,0 +1,14 @@
+{
+    "api_id": "connectors.googleapis.com",
+    "api_shortname": "connectors",
+    "client_documentation": "https://cloud.google.com/cpp/docs/reference/connectors/latest",
+    "distribution_name": "google-cloud-cpp",
+    "issue_tracker": "https://issuetracker.google.com/savedsearches/5929031",
+    "language": "cpp",
+    "library_type": "GAPIC_AUTO",
+    "name_pretty": "Connectors API",
+    "product_documentation": "https://cloud.google.com/apigee/docs/api-platform/connectors/about-connectors",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-cpp",
+    "requires_billing": true
+}

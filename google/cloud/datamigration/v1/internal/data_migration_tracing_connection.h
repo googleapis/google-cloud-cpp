@@ -118,6 +118,99 @@ class DataMigrationServiceTracingConnection
       google::cloud::clouddms::v1::DeleteConnectionProfileRequest const&
           request) override;
 
+  future<StatusOr<google::cloud::clouddms::v1::PrivateConnection>>
+  CreatePrivateConnection(
+      google::cloud::clouddms::v1::CreatePrivateConnectionRequest const&
+          request) override;
+
+  StatusOr<google::cloud::clouddms::v1::PrivateConnection> GetPrivateConnection(
+      google::cloud::clouddms::v1::GetPrivateConnectionRequest const& request)
+      override;
+
+  StreamRange<google::cloud::clouddms::v1::PrivateConnection>
+  ListPrivateConnections(
+      google::cloud::clouddms::v1::ListPrivateConnectionsRequest request)
+      override;
+
+  future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>
+  DeletePrivateConnection(
+      google::cloud::clouddms::v1::DeletePrivateConnectionRequest const&
+          request) override;
+
+  StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>
+  GetConversionWorkspace(
+      google::cloud::clouddms::v1::GetConversionWorkspaceRequest const& request)
+      override;
+
+  StreamRange<google::cloud::clouddms::v1::ConversionWorkspace>
+  ListConversionWorkspaces(
+      google::cloud::clouddms::v1::ListConversionWorkspacesRequest request)
+      override;
+
+  future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
+  CreateConversionWorkspace(
+      google::cloud::clouddms::v1::CreateConversionWorkspaceRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
+  UpdateConversionWorkspace(
+      google::cloud::clouddms::v1::UpdateConversionWorkspaceRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>
+  DeleteConversionWorkspace(
+      google::cloud::clouddms::v1::DeleteConversionWorkspaceRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
+  SeedConversionWorkspace(
+      google::cloud::clouddms::v1::SeedConversionWorkspaceRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
+  ImportMappingRules(
+      google::cloud::clouddms::v1::ImportMappingRulesRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
+  ConvertConversionWorkspace(
+      google::cloud::clouddms::v1::ConvertConversionWorkspaceRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
+  CommitConversionWorkspace(
+      google::cloud::clouddms::v1::CommitConversionWorkspaceRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
+  RollbackConversionWorkspace(
+      google::cloud::clouddms::v1::RollbackConversionWorkspaceRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
+  ApplyConversionWorkspace(
+      google::cloud::clouddms::v1::ApplyConversionWorkspaceRequest const&
+          request) override;
+
+  StreamRange<google::cloud::clouddms::v1::DatabaseEntity>
+  DescribeDatabaseEntities(
+      google::cloud::clouddms::v1::DescribeDatabaseEntitiesRequest request)
+      override;
+
+  StatusOr<google::cloud::clouddms::v1::SearchBackgroundJobsResponse>
+  SearchBackgroundJobs(
+      google::cloud::clouddms::v1::SearchBackgroundJobsRequest const& request)
+      override;
+
+  StatusOr<
+      google::cloud::clouddms::v1::DescribeConversionWorkspaceRevisionsResponse>
+  DescribeConversionWorkspaceRevisions(
+      google::cloud::clouddms::v1::
+          DescribeConversionWorkspaceRevisionsRequest const& request) override;
+
+  StreamRange<std::string> FetchStaticIps(
+      google::cloud::clouddms::v1::FetchStaticIpsRequest request) override;
+
  private:
   std::shared_ptr<datamigration_v1::DataMigrationServiceConnection> child_;
 };

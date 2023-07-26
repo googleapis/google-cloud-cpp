@@ -105,6 +105,29 @@ class LivestreamServiceTracingConnection
       google::cloud::video::livestream::v1::DeleteEventRequest const& request)
       override;
 
+  future<StatusOr<google::cloud::video::livestream::v1::Asset>> CreateAsset(
+      google::cloud::video::livestream::v1::CreateAssetRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
+  DeleteAsset(google::cloud::video::livestream::v1::DeleteAssetRequest const&
+                  request) override;
+
+  StatusOr<google::cloud::video::livestream::v1::Asset> GetAsset(
+      google::cloud::video::livestream::v1::GetAssetRequest const& request)
+      override;
+
+  StreamRange<google::cloud::video::livestream::v1::Asset> ListAssets(
+      google::cloud::video::livestream::v1::ListAssetsRequest request) override;
+
+  StatusOr<google::cloud::video::livestream::v1::Pool> GetPool(
+      google::cloud::video::livestream::v1::GetPoolRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::video::livestream::v1::Pool>> UpdatePool(
+      google::cloud::video::livestream::v1::UpdatePoolRequest const& request)
+      override;
+
  private:
   std::shared_ptr<video_livestream_v1::LivestreamServiceConnection> child_;
 };

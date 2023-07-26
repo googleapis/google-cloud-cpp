@@ -37,7 +37,7 @@ class StorageTransferServiceLogging : public StorageTransferServiceStub {
   ~StorageTransferServiceLogging() override = default;
   StorageTransferServiceLogging(
       std::shared_ptr<StorageTransferServiceStub> child,
-      TracingOptions tracing_options, std::set<std::string> components);
+      TracingOptions tracing_options, std::set<std::string> const& components);
 
   StatusOr<google::storagetransfer::v1::GoogleServiceAccount>
   GetGoogleServiceAccount(
@@ -123,7 +123,7 @@ class StorageTransferServiceLogging : public StorageTransferServiceStub {
  private:
   std::shared_ptr<StorageTransferServiceStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // StorageTransferServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

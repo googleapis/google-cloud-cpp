@@ -1,0 +1,41 @@
+/*!
+
+@mainpage Google Cloud C++ OpenTelemetry Exporters
+
+This directory contains components to export [traces] captured with
+[OpenTelemetry] to [Cloud Trace]. Traces are a form of telemetry where
+calls across multiple distributed systems can be collected in a centralized
+view, showing the sequence of calls and their latency. Cloud Trace can provide
+such views of your system calls.
+
+The C++ client libraries are already instrumented to collect traces. You can
+enable the collection and export of traces with minimal changes to your
+application. It is not necessary to instrument your application too.
+
+This library is **experimental**. Its APIs are subject to change without notice.
+
+Please note Google Cloud C++ client libraries do **not** follow
+[Semantic Versioning](https://semver.org/).
+
+@tableofcontents{HTML:2}
+
+## Quickstart
+
+The following shows the code that you'll run in the
+`google/cloud/opentelemetry/quickstart/` directory, which demonstrates how to
+enable tracing in the Google Cloud client libraries.
+
+@snippet quickstart.cc all
+
+## More Information
+
+- The [Setting up your development environment] guide describes how to set up
+  a C++ development environment in various platforms, including the Google Cloud
+  C++ client libraries.
+
+[cloud trace]: https://cloud.google.com/trace
+[opentelemetry]: https://opentelemetry.io/
+[setting up your development environment]: https://cloud.google.com/cpp/docs/setup
+[traces]: https://opentelemetry.io/docs/concepts/observability-primer/#distributed-traces
+
+*/

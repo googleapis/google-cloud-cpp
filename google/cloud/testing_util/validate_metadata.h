@@ -60,11 +60,11 @@ class ValidateMetadataFixture {
    * Verify that the metadata in the context is appropriate for a gRPC method.
    *
    * `ClientContext` should instruct gRPC to set a `x-goog-request-params` HTTP
-   * header with a value dictated by a `google.api.http` option in the gRPC
-   * service specification. This function checks if the header is set and
-   * whether it has a valid value.
+   * header with a value determined by the `google.api.routing` or
+   * `google.api.http` option in the gRPC service specification. This function
+   * checks if the header is set and whether it has a valid value.
    *
-   * @note A `grpc::ClientContext` can be used in only one gRPC. The caller
+   * @note A `grpc::ClientContext` can be used in only one RPC. The caller
    *   cannot reuse @p context for other RPCs or other calls to this function.
    *
    * @param context the context to validate
@@ -73,8 +73,6 @@ class ValidateMetadataFixture {
    *     header.
    * @param resource_prefix_header if specified, this is the expected value for
    *     the google-cloud-resource-prefix metadata header.
-   *
-   * @return an OK status if the `context` is properly set up
    */
   void IsContextMDValid(
       grpc::ClientContext& context, std::string const& method_name,

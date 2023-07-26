@@ -30,10 +30,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 AgentEndpointServiceLogging::AgentEndpointServiceLogging(
     std::shared_ptr<AgentEndpointServiceStub> child,
-    TracingOptions tracing_options, std::set<std::string> components)
+    TracingOptions tracing_options, std::set<std::string> const& components)
     : child_(std::move(child)),
       tracing_options_(std::move(tracing_options)),
-      components_(std::move(components)) {}
+      stream_logging_(components.find("rpc-streams") != components.end()) {}
 
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<
     google::cloud::osconfig::agentendpoint::v1::
@@ -51,7 +51,7 @@ AgentEndpointServiceLogging::ReceiveTaskNotification(
                   ReceiveTaskNotificationResponse>> {
         auto stream =
             child_->ReceiveTaskNotification(std::move(context), request);
-        if (components_.count("rpc-streams") > 0) {
+        if (stream_logging_) {
           stream =
               std::make_unique<google::cloud::internal::StreamingReadRpcLogging<
                   google::cloud::osconfig::agentendpoint::v1::

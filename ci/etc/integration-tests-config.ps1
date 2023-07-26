@@ -14,6 +14,10 @@
 
 # The name of the project used to run the integration tests and examples.
 $env:GOOGLE_CLOUD_PROJECT="cloud-cpp-testing-resources"
+# Some services seemingly require project numbers. If you ever need to generate
+# this again use:
+#   gcloud projects describe "${GOOGLE_CLOUD_PROJECT}"
+$env:GOOGLE_CLOUD_CPP_TEST_PROJECT_NUMBER="936212892354"
 # Some quickstarts require a x-goog-user-project header, either when using
 # our own user account in local builds, or when using the GCB service
 # account
@@ -71,8 +75,14 @@ $env:GOOGLE_CLOUD_CPP_SPANNER_TEST_QUICKSTART_DATABASE="quickstart-db"
 # Cloud Pub/Sub configuration parameters
 $env:GOOGLE_CLOUD_CPP_PUBSUB_TEST_QUICKSTART_TOPIC="quickstart"
 
+# Cloud Batch configuration parameters
+$env:GOOGLE_CLOUD_CPP_BATCH_TEST_TEMPLATE_NAME="cloud-batch-sample-template"
+
 # Cloud BigQuery configuration parameters
 $env:GOOGLE_CLOUD_CPP_BIGQUERY_TEST_QUICKSTART_TABLE="projects/bigquery-public-data/datasets/usa_names/tables/usa_1910_current"
+
+# Content Warehouse
+$env:GOOGLE_CLOUD_CPP_CONTENTWAREHOUSE_TEST_LOCATION_ID="us"
 
 # Document AI
 $env:GOOGLE_CLOUD_CPP_DOCUMENTAI_TEST_LOCATION_ID="us"
@@ -87,12 +97,13 @@ $env:GOOGLE_CLOUD_CPP_IAM_INVALID_TEST_SERVICE_ACCOUNT="invalid-test-account@clo
 # Rest configuration parameters
 $env:GOOGLE_CLOUD_CPP_REST_TEST_SIGNING_SERVICE_ACCOUNT="kokoro-run@${env:GOOGLE_CLOUD_PROJECT}.iam.gserviceaccount.com"
 
-# To run google/cloud/gameservices' quickstart
-$env:GOOGLE_CLOUD_CPP_GAMESERVICES_TEST_LOCATION="global"
-$env:GOOGLE_CLOUD_CPP_GAMESERVICES_TEST_REALM="test-realm"
-
 # To run google/cloud/resourcemanager's quickstart, this is the Cloud C++ team community folder
 $env:GOOGLE_CLOUD_CPP_RESOURCEMANAGER_TEST_FOLDER="204009073908"
 
 # To run google/cloud/gkemulticloud's quickstart. The service is not available in `us-central1`
 $env:GOOGLE_CLOUD_CPP_GKEMULTICLOUD_TEST_REGION="us-west1"
+
+# google/cloud/policytroubleshooter's quickstart
+$env:GOOGLE_CLOUD_CPP_POLICYTROUBLESHOOTER_PRINCIPAL="${env:GOOGLE_CLOUD_CPP_STORAGE_TEST_SERVICE_ACCOUNT}"
+$env:GOOGLE_CLOUD_CPP_POLICYTROUBLESHOOTER_RESOURCE="//cloudresourcemanager.googleapis.com/projects/${env:GOOGLE_CLOUD_PROJECT}"
+$env:GOOGLE_CLOUD_CPP_POLICYTROUBLESHOOTER_PERMISSION="storage.buckets.get"

@@ -29,10 +29,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 CloudChannelServiceLogging::CloudChannelServiceLogging(
     std::shared_ptr<CloudChannelServiceStub> child,
-    TracingOptions tracing_options, std::set<std::string> components)
+    TracingOptions tracing_options, std::set<std::string> const& components)
     : child_(std::move(child)),
       tracing_options_(std::move(tracing_options)),
-      components_(std::move(components)) {}
+      stream_logging_(components.find("rpc-streams") != components.end()) {}
 
 StatusOr<google::cloud::channel::v1::ListCustomersResponse>
 CloudChannelServiceLogging::ListCustomers(
@@ -531,6 +531,32 @@ Status CloudChannelServiceLogging::DeleteChannelPartnerRepricingConfig(
              google::cloud::channel::v1::
                  DeleteChannelPartnerRepricingConfigRequest const& request) {
         return child_->DeleteChannelPartnerRepricingConfig(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::channel::v1::ListSkuGroupsResponse>
+CloudChannelServiceLogging::ListSkuGroups(
+    grpc::ClientContext& context,
+    google::cloud::channel::v1::ListSkuGroupsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::channel::v1::ListSkuGroupsRequest const& request) {
+        return child_->ListSkuGroups(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::channel::v1::ListSkuGroupBillableSkusResponse>
+CloudChannelServiceLogging::ListSkuGroupBillableSkus(
+    grpc::ClientContext& context,
+    google::cloud::channel::v1::ListSkuGroupBillableSkusRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::channel::v1::ListSkuGroupBillableSkusRequest const&
+                 request) {
+        return child_->ListSkuGroupBillableSkus(context, request);
       },
       context, request, __func__, tracing_options_);
 }

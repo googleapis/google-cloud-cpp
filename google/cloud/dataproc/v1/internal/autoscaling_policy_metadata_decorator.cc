@@ -18,6 +18,7 @@
 
 #include "google/cloud/dataproc/v1/internal/autoscaling_policy_metadata_decorator.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/dataproc/v1/autoscaling_policies.grpc.pb.h>
@@ -29,8 +30,10 @@ namespace dataproc_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 AutoscalingPolicyServiceMetadata::AutoscalingPolicyServiceMetadata(
-    std::shared_ptr<AutoscalingPolicyServiceStub> child)
+    std::shared_ptr<AutoscalingPolicyServiceStub> child,
+    std::multimap<std::string, std::string> fixed_metadata)
     : child_(std::move(child)),
+      fixed_metadata_(std::move(fixed_metadata)),
       api_client_header_(
           google::cloud::internal::ApiClientHeader("generator")) {}
 
@@ -39,7 +42,7 @@ AutoscalingPolicyServiceMetadata::CreateAutoscalingPolicy(
     grpc::ClientContext& context,
     google::cloud::dataproc::v1::CreateAutoscalingPolicyRequest const&
         request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->CreateAutoscalingPolicy(context, request);
 }
 
@@ -48,7 +51,7 @@ AutoscalingPolicyServiceMetadata::UpdateAutoscalingPolicy(
     grpc::ClientContext& context,
     google::cloud::dataproc::v1::UpdateAutoscalingPolicyRequest const&
         request) {
-  SetMetadata(context, "policy.name=" + request.policy().name());
+  SetMetadata(context, absl::StrCat("policy.name=", request.policy().name()));
   return child_->UpdateAutoscalingPolicy(context, request);
 }
 
@@ -56,7 +59,7 @@ StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy>
 AutoscalingPolicyServiceMetadata::GetAutoscalingPolicy(
     grpc::ClientContext& context,
     google::cloud::dataproc::v1::GetAutoscalingPolicyRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->GetAutoscalingPolicy(context, request);
 }
 
@@ -65,7 +68,7 @@ AutoscalingPolicyServiceMetadata::ListAutoscalingPolicies(
     grpc::ClientContext& context,
     google::cloud::dataproc::v1::ListAutoscalingPoliciesRequest const&
         request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
   return child_->ListAutoscalingPolicies(context, request);
 }
 
@@ -73,7 +76,7 @@ Status AutoscalingPolicyServiceMetadata::DeleteAutoscalingPolicy(
     grpc::ClientContext& context,
     google::cloud::dataproc::v1::DeleteAutoscalingPolicyRequest const&
         request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, absl::StrCat("name=", request.name()));
   return child_->DeleteAutoscalingPolicy(context, request);
 }
 
@@ -85,6 +88,9 @@ void AutoscalingPolicyServiceMetadata::SetMetadata(
 
 void AutoscalingPolicyServiceMetadata::SetMetadata(
     grpc::ClientContext& context) {
+  for (auto const& kv : fixed_metadata_) {
+    context.AddMetadata(kv.first, kv.second);
+  }
   context.AddMetadata("x-goog-api-client", api_client_header_);
   auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {

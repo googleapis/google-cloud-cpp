@@ -92,124 +92,210 @@ class ServiceMonitoringServiceClient {
   }
   ///@}
 
+  // clang-format off
   ///
   /// Create a `Service`.
   ///
-  /// @param parent  Required. Resource
-  /// [name](https://cloud.google.com/monitoring/api/v3#project_name) of
+  /// @param parent  Required. Resource [name](https://cloud.google.com/monitoring/api/v3#project_name) of
   ///  the parent workspace. The format is:
+  ///  @n
   ///      projects/[PROJECT_ID_OR_NUMBER]
   /// @param service  Required. The `Service` to create.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::monitoring::v3::Service,google/monitoring/v3/service.proto#L36}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.monitoring.v3.Service])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.monitoring.v3.CreateServiceRequest]:
-  /// @googleapis_reference_link{google/monitoring/v3/service_service.proto#L132}
-  /// [google.monitoring.v3.Service]:
-  /// @googleapis_reference_link{google/monitoring/v3/service.proto#L36}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.monitoring.v3.CreateServiceRequest]: @googleapis_reference_link{google/monitoring/v3/service_service.proto#L132}
+  /// [google.monitoring.v3.Service]: @googleapis_reference_link{google/monitoring/v3/service.proto#L36}
   ///
+  // clang-format on
   StatusOr<google::monitoring::v3::Service> CreateService(
       std::string const& parent, google::monitoring::v3::Service const& service,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Create a `Service`.
   ///
-  /// @param request
-  /// @googleapis_link{google::monitoring::v3::CreateServiceRequest,google/monitoring/v3/service_service.proto#L132}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.monitoring.v3.CreateServiceRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::monitoring::v3::Service,google/monitoring/v3/service.proto#L36}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.monitoring.v3.Service])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.monitoring.v3.CreateServiceRequest]:
-  /// @googleapis_reference_link{google/monitoring/v3/service_service.proto#L132}
-  /// [google.monitoring.v3.Service]:
-  /// @googleapis_reference_link{google/monitoring/v3/service.proto#L36}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.monitoring.v3.CreateServiceRequest]: @googleapis_reference_link{google/monitoring/v3/service_service.proto#L132}
+  /// [google.monitoring.v3.Service]: @googleapis_reference_link{google/monitoring/v3/service.proto#L36}
   ///
+  // clang-format on
   StatusOr<google::monitoring::v3::Service> CreateService(
       google::monitoring::v3::CreateServiceRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Get the named `Service`.
   ///
   /// @param name  Required. Resource name of the `Service`. The format is:
+  ///  @n
   ///      projects/[PROJECT_ID_OR_NUMBER]/services/[SERVICE_ID]
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::monitoring::v3::Service,google/monitoring/v3/service.proto#L36}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.monitoring.v3.Service])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.monitoring.v3.GetServiceRequest]:
-  /// @googleapis_reference_link{google/monitoring/v3/service_service.proto#L153}
-  /// [google.monitoring.v3.Service]:
-  /// @googleapis_reference_link{google/monitoring/v3/service.proto#L36}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.monitoring.v3.GetServiceRequest]: @googleapis_reference_link{google/monitoring/v3/service_service.proto#L153}
+  /// [google.monitoring.v3.Service]: @googleapis_reference_link{google/monitoring/v3/service.proto#L36}
   ///
+  // clang-format on
   StatusOr<google::monitoring::v3::Service> GetService(std::string const& name,
                                                        Options opts = {});
 
+  // clang-format off
   ///
   /// Get the named `Service`.
   ///
-  /// @param request
-  /// @googleapis_link{google::monitoring::v3::GetServiceRequest,google/monitoring/v3/service_service.proto#L153}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.monitoring.v3.GetServiceRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::monitoring::v3::Service,google/monitoring/v3/service.proto#L36}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.monitoring.v3.Service])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.monitoring.v3.GetServiceRequest]:
-  /// @googleapis_reference_link{google/monitoring/v3/service_service.proto#L153}
-  /// [google.monitoring.v3.Service]:
-  /// @googleapis_reference_link{google/monitoring/v3/service.proto#L36}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.monitoring.v3.GetServiceRequest]: @googleapis_reference_link{google/monitoring/v3/service_service.proto#L153}
+  /// [google.monitoring.v3.Service]: @googleapis_reference_link{google/monitoring/v3/service.proto#L36}
   ///
+  // clang-format on
   StatusOr<google::monitoring::v3::Service> GetService(
       google::monitoring::v3::GetServiceRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// List `Service`s for this workspace.
   ///
-  /// @param parent  Required. Resource name of the parent containing the listed
-  /// services, either a
+  /// @param parent  Required. Resource name of the parent containing the listed services, either a
   ///  [project](https://cloud.google.com/monitoring/api/v3#project_name) or a
   ///  Monitoring Workspace. The formats are:
+  ///  @n
   ///      projects/[PROJECT_ID_OR_NUMBER]
   ///      workspaces/[HOST_PROJECT_ID_OR_NUMBER]
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::monitoring::v3::Service,google/monitoring/v3/service.proto#L36}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.monitoring.v3.Service], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.monitoring.v3.ListServicesRequest]:
-  /// @googleapis_reference_link{google/monitoring/v3/service_service.proto#L166}
-  /// [google.monitoring.v3.Service]:
-  /// @googleapis_reference_link{google/monitoring/v3/service.proto#L36}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.monitoring.v3.ListServicesRequest]: @googleapis_reference_link{google/monitoring/v3/service_service.proto#L166}
+  /// [google.monitoring.v3.Service]: @googleapis_reference_link{google/monitoring/v3/service.proto#L36}
   ///
+  // clang-format on
   StreamRange<google::monitoring::v3::Service> ListServices(
       std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// List `Service`s for this workspace.
   ///
-  /// @param request
-  /// @googleapis_link{google::monitoring::v3::ListServicesRequest,google/monitoring/v3/service_service.proto#L166}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.monitoring.v3.ListServicesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::monitoring::v3::Service,google/monitoring/v3/service.proto#L36}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.monitoring.v3.Service], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.monitoring.v3.ListServicesRequest]:
-  /// @googleapis_reference_link{google/monitoring/v3/service_service.proto#L166}
-  /// [google.monitoring.v3.Service]:
-  /// @googleapis_reference_link{google/monitoring/v3/service.proto#L36}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.monitoring.v3.ListServicesRequest]: @googleapis_reference_link{google/monitoring/v3/service_service.proto#L166}
+  /// [google.monitoring.v3.Service]: @googleapis_reference_link{google/monitoring/v3/service.proto#L36}
   ///
+  // clang-format on
   StreamRange<google::monitoring::v3::Service> ListServices(
       google::monitoring::v3::ListServicesRequest request, Options opts = {});
 
+  // clang-format off
   ///
   /// Update this `Service`.
   ///
@@ -217,85 +303,138 @@ class ServiceMonitoringServiceClient {
   ///  The given `name` specifies the resource to update.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::monitoring::v3::Service,google/monitoring/v3/service.proto#L36}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.monitoring.v3.Service])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.monitoring.v3.Service]:
-  /// @googleapis_reference_link{google/monitoring/v3/service.proto#L36}
-  /// [google.monitoring.v3.UpdateServiceRequest]:
-  /// @googleapis_reference_link{google/monitoring/v3/service_service.proto#L223}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.monitoring.v3.Service]: @googleapis_reference_link{google/monitoring/v3/service.proto#L36}
+  /// [google.monitoring.v3.UpdateServiceRequest]: @googleapis_reference_link{google/monitoring/v3/service_service.proto#L223}
   ///
+  // clang-format on
   StatusOr<google::monitoring::v3::Service> UpdateService(
       google::monitoring::v3::Service const& service, Options opts = {});
 
+  // clang-format off
   ///
   /// Update this `Service`.
   ///
-  /// @param request
-  /// @googleapis_link{google::monitoring::v3::UpdateServiceRequest,google/monitoring/v3/service_service.proto#L223}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.monitoring.v3.UpdateServiceRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::monitoring::v3::Service,google/monitoring/v3/service.proto#L36}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.monitoring.v3.Service])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.monitoring.v3.Service]:
-  /// @googleapis_reference_link{google/monitoring/v3/service.proto#L36}
-  /// [google.monitoring.v3.UpdateServiceRequest]:
-  /// @googleapis_reference_link{google/monitoring/v3/service_service.proto#L223}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.monitoring.v3.Service]: @googleapis_reference_link{google/monitoring/v3/service.proto#L36}
+  /// [google.monitoring.v3.UpdateServiceRequest]: @googleapis_reference_link{google/monitoring/v3/service_service.proto#L223}
   ///
+  // clang-format on
   StatusOr<google::monitoring::v3::Service> UpdateService(
       google::monitoring::v3::UpdateServiceRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Soft delete this `Service`.
   ///
-  /// @param name  Required. Resource name of the `Service` to delete. The
-  /// format is:
+  /// @param name  Required. Resource name of the `Service` to delete. The format is:
+  ///  @n
   ///      projects/[PROJECT_ID_OR_NUMBER]/services/[SERVICE_ID]
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
   ///
-  /// [google.monitoring.v3.DeleteServiceRequest]:
-  /// @googleapis_reference_link{google/monitoring/v3/service_service.proto#L233}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.monitoring.v3.DeleteServiceRequest]: @googleapis_reference_link{google/monitoring/v3/service_service.proto#L233}
   ///
+  // clang-format on
   Status DeleteService(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Soft delete this `Service`.
   ///
-  /// @param request
-  /// @googleapis_link{google::monitoring::v3::DeleteServiceRequest,google/monitoring/v3/service_service.proto#L233}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.monitoring.v3.DeleteServiceRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
   ///
-  /// [google.monitoring.v3.DeleteServiceRequest]:
-  /// @googleapis_reference_link{google/monitoring/v3/service_service.proto#L233}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.monitoring.v3.DeleteServiceRequest]: @googleapis_reference_link{google/monitoring/v3/service_service.proto#L233}
   ///
+  // clang-format on
   Status DeleteService(
       google::monitoring::v3::DeleteServiceRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Create a `ServiceLevelObjective` for the given `Service`.
   ///
-  /// @param parent  Required. Resource name of the parent `Service`. The format
-  /// is:
+  /// @param parent  Required. Resource name of the parent `Service`. The format is:
+  ///  @n
   ///      projects/[PROJECT_ID_OR_NUMBER]/services/[SERVICE_ID]
-  /// @param service_level_objective  Required. The `ServiceLevelObjective` to
-  /// create.
-  ///  The provided `name` will be respected if no `ServiceLevelObjective`
-  ///  exists with this name.
+  /// @param service_level_objective  Required. The `ServiceLevelObjective` to create.
+  ///  The provided `name` will be respected if no `ServiceLevelObjective` exists
+  ///  with this name.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::monitoring::v3::ServiceLevelObjective,google/monitoring/v3/service.proto#L183}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.monitoring.v3.ServiceLevelObjective])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.monitoring.v3.CreateServiceLevelObjectiveRequest]:
-  /// @googleapis_reference_link{google/monitoring/v3/service_service.proto#L246}
-  /// [google.monitoring.v3.ServiceLevelObjective]:
-  /// @googleapis_reference_link{google/monitoring/v3/service.proto#L183}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.monitoring.v3.CreateServiceLevelObjectiveRequest]: @googleapis_reference_link{google/monitoring/v3/service_service.proto#L246}
+  /// [google.monitoring.v3.ServiceLevelObjective]: @googleapis_reference_link{google/monitoring/v3/service.proto#L183}
   ///
+  // clang-format on
   StatusOr<google::monitoring::v3::ServiceLevelObjective>
   CreateServiceLevelObjective(
       std::string const& parent,
@@ -303,174 +442,294 @@ class ServiceMonitoringServiceClient {
           service_level_objective,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Create a `ServiceLevelObjective` for the given `Service`.
   ///
-  /// @param request
-  /// @googleapis_link{google::monitoring::v3::CreateServiceLevelObjectiveRequest,google/monitoring/v3/service_service.proto#L246}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.monitoring.v3.CreateServiceLevelObjectiveRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::monitoring::v3::ServiceLevelObjective,google/monitoring/v3/service.proto#L183}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.monitoring.v3.ServiceLevelObjective])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.monitoring.v3.CreateServiceLevelObjectiveRequest]:
-  /// @googleapis_reference_link{google/monitoring/v3/service_service.proto#L246}
-  /// [google.monitoring.v3.ServiceLevelObjective]:
-  /// @googleapis_reference_link{google/monitoring/v3/service.proto#L183}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.monitoring.v3.CreateServiceLevelObjectiveRequest]: @googleapis_reference_link{google/monitoring/v3/service_service.proto#L246}
+  /// [google.monitoring.v3.ServiceLevelObjective]: @googleapis_reference_link{google/monitoring/v3/service.proto#L183}
   ///
+  // clang-format on
   StatusOr<google::monitoring::v3::ServiceLevelObjective>
   CreateServiceLevelObjective(
       google::monitoring::v3::CreateServiceLevelObjectiveRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Get a `ServiceLevelObjective` by name.
   ///
-  /// @param name  Required. Resource name of the `ServiceLevelObjective` to
-  /// get. The format is:
+  /// @param name  Required. Resource name of the `ServiceLevelObjective` to get. The format is:
+  ///  @n
   ///      projects/[PROJECT_ID_OR_NUMBER]/services/[SERVICE_ID]/serviceLevelObjectives/[SLO_NAME]
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::monitoring::v3::ServiceLevelObjective,google/monitoring/v3/service.proto#L183}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.monitoring.v3.ServiceLevelObjective])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.monitoring.v3.GetServiceLevelObjectiveRequest]:
-  /// @googleapis_reference_link{google/monitoring/v3/service_service.proto#L269}
-  /// [google.monitoring.v3.ServiceLevelObjective]:
-  /// @googleapis_reference_link{google/monitoring/v3/service.proto#L183}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.monitoring.v3.GetServiceLevelObjectiveRequest]: @googleapis_reference_link{google/monitoring/v3/service_service.proto#L269}
+  /// [google.monitoring.v3.ServiceLevelObjective]: @googleapis_reference_link{google/monitoring/v3/service.proto#L183}
   ///
+  // clang-format on
   StatusOr<google::monitoring::v3::ServiceLevelObjective>
   GetServiceLevelObjective(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Get a `ServiceLevelObjective` by name.
   ///
-  /// @param request
-  /// @googleapis_link{google::monitoring::v3::GetServiceLevelObjectiveRequest,google/monitoring/v3/service_service.proto#L269}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.monitoring.v3.GetServiceLevelObjectiveRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::monitoring::v3::ServiceLevelObjective,google/monitoring/v3/service.proto#L183}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.monitoring.v3.ServiceLevelObjective])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.monitoring.v3.GetServiceLevelObjectiveRequest]:
-  /// @googleapis_reference_link{google/monitoring/v3/service_service.proto#L269}
-  /// [google.monitoring.v3.ServiceLevelObjective]:
-  /// @googleapis_reference_link{google/monitoring/v3/service.proto#L183}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.monitoring.v3.GetServiceLevelObjectiveRequest]: @googleapis_reference_link{google/monitoring/v3/service_service.proto#L269}
+  /// [google.monitoring.v3.ServiceLevelObjective]: @googleapis_reference_link{google/monitoring/v3/service.proto#L183}
   ///
+  // clang-format on
   StatusOr<google::monitoring::v3::ServiceLevelObjective>
   GetServiceLevelObjective(
       google::monitoring::v3::GetServiceLevelObjectiveRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// List the `ServiceLevelObjective`s for the given `Service`.
   ///
-  /// @param parent  Required. Resource name of the parent containing the listed
-  /// SLOs, either a
+  /// @param parent  Required. Resource name of the parent containing the listed SLOs, either a
   ///  project or a Monitoring Workspace. The formats are:
+  ///  @n
   ///      projects/[PROJECT_ID_OR_NUMBER]/services/[SERVICE_ID]
   ///      workspaces/[HOST_PROJECT_ID_OR_NUMBER]/services/-
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::monitoring::v3::ServiceLevelObjective,google/monitoring/v3/service.proto#L183}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.monitoring.v3.ServiceLevelObjective], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.monitoring.v3.ListServiceLevelObjectivesRequest]:
-  /// @googleapis_reference_link{google/monitoring/v3/service_service.proto#L288}
-  /// [google.monitoring.v3.ServiceLevelObjective]:
-  /// @googleapis_reference_link{google/monitoring/v3/service.proto#L183}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.monitoring.v3.ListServiceLevelObjectivesRequest]: @googleapis_reference_link{google/monitoring/v3/service_service.proto#L288}
+  /// [google.monitoring.v3.ServiceLevelObjective]: @googleapis_reference_link{google/monitoring/v3/service.proto#L183}
   ///
+  // clang-format on
   StreamRange<google::monitoring::v3::ServiceLevelObjective>
   ListServiceLevelObjectives(std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// List the `ServiceLevelObjective`s for the given `Service`.
   ///
-  /// @param request
-  /// @googleapis_link{google::monitoring::v3::ListServiceLevelObjectivesRequest,google/monitoring/v3/service_service.proto#L288}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.monitoring.v3.ListServiceLevelObjectivesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::monitoring::v3::ServiceLevelObjective,google/monitoring/v3/service.proto#L183}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.monitoring.v3.ServiceLevelObjective], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.monitoring.v3.ListServiceLevelObjectivesRequest]:
-  /// @googleapis_reference_link{google/monitoring/v3/service_service.proto#L288}
-  /// [google.monitoring.v3.ServiceLevelObjective]:
-  /// @googleapis_reference_link{google/monitoring/v3/service.proto#L183}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.monitoring.v3.ListServiceLevelObjectivesRequest]: @googleapis_reference_link{google/monitoring/v3/service_service.proto#L288}
+  /// [google.monitoring.v3.ServiceLevelObjective]: @googleapis_reference_link{google/monitoring/v3/service.proto#L183}
   ///
+  // clang-format on
   StreamRange<google::monitoring::v3::ServiceLevelObjective>
   ListServiceLevelObjectives(
       google::monitoring::v3::ListServiceLevelObjectivesRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Update the given `ServiceLevelObjective`.
   ///
-  /// @param service_level_objective  Required. The `ServiceLevelObjective` to
-  /// draw updates from.
+  /// @param service_level_objective  Required. The `ServiceLevelObjective` to draw updates from.
   ///  The given `name` specifies the resource to update.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::monitoring::v3::ServiceLevelObjective,google/monitoring/v3/service.proto#L183}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.monitoring.v3.ServiceLevelObjective])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.monitoring.v3.ServiceLevelObjective]:
-  /// @googleapis_reference_link{google/monitoring/v3/service.proto#L183}
-  /// [google.monitoring.v3.UpdateServiceLevelObjectiveRequest]:
-  /// @googleapis_reference_link{google/monitoring/v3/service_service.proto#L332}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.monitoring.v3.ServiceLevelObjective]: @googleapis_reference_link{google/monitoring/v3/service.proto#L183}
+  /// [google.monitoring.v3.UpdateServiceLevelObjectiveRequest]: @googleapis_reference_link{google/monitoring/v3/service_service.proto#L332}
   ///
+  // clang-format on
   StatusOr<google::monitoring::v3::ServiceLevelObjective>
   UpdateServiceLevelObjective(
       google::monitoring::v3::ServiceLevelObjective const&
           service_level_objective,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Update the given `ServiceLevelObjective`.
   ///
-  /// @param request
-  /// @googleapis_link{google::monitoring::v3::UpdateServiceLevelObjectiveRequest,google/monitoring/v3/service_service.proto#L332}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.monitoring.v3.UpdateServiceLevelObjectiveRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::monitoring::v3::ServiceLevelObjective,google/monitoring/v3/service.proto#L183}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.monitoring.v3.ServiceLevelObjective])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.monitoring.v3.ServiceLevelObjective]:
-  /// @googleapis_reference_link{google/monitoring/v3/service.proto#L183}
-  /// [google.monitoring.v3.UpdateServiceLevelObjectiveRequest]:
-  /// @googleapis_reference_link{google/monitoring/v3/service_service.proto#L332}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.monitoring.v3.ServiceLevelObjective]: @googleapis_reference_link{google/monitoring/v3/service.proto#L183}
+  /// [google.monitoring.v3.UpdateServiceLevelObjectiveRequest]: @googleapis_reference_link{google/monitoring/v3/service_service.proto#L332}
   ///
+  // clang-format on
   StatusOr<google::monitoring::v3::ServiceLevelObjective>
   UpdateServiceLevelObjective(
       google::monitoring::v3::UpdateServiceLevelObjectiveRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Delete the given `ServiceLevelObjective`.
   ///
-  /// @param name  Required. Resource name of the `ServiceLevelObjective` to
-  /// delete. The format is:
+  /// @param name  Required. Resource name of the `ServiceLevelObjective` to delete. The format is:
+  ///  @n
   ///      projects/[PROJECT_ID_OR_NUMBER]/services/[SERVICE_ID]/serviceLevelObjectives/[SLO_NAME]
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
   ///
-  /// [google.monitoring.v3.DeleteServiceLevelObjectiveRequest]:
-  /// @googleapis_reference_link{google/monitoring/v3/service_service.proto#L342}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.monitoring.v3.DeleteServiceLevelObjectiveRequest]: @googleapis_reference_link{google/monitoring/v3/service_service.proto#L342}
   ///
+  // clang-format on
   Status DeleteServiceLevelObjective(std::string const& name,
                                      Options opts = {});
 
+  // clang-format off
   ///
   /// Delete the given `ServiceLevelObjective`.
   ///
-  /// @param request
-  /// @googleapis_link{google::monitoring::v3::DeleteServiceLevelObjectiveRequest,google/monitoring/v3/service_service.proto#L342}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.monitoring.v3.DeleteServiceLevelObjectiveRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
   ///
-  /// [google.monitoring.v3.DeleteServiceLevelObjectiveRequest]:
-  /// @googleapis_reference_link{google/monitoring/v3/service_service.proto#L342}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.monitoring.v3.DeleteServiceLevelObjectiveRequest]: @googleapis_reference_link{google/monitoring/v3/service_service.proto#L342}
   ///
+  // clang-format on
   Status DeleteServiceLevelObjective(
       google::monitoring::v3::DeleteServiceLevelObjectiveRequest const& request,
       Options opts = {});

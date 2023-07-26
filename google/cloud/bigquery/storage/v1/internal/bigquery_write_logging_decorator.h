@@ -36,7 +36,7 @@ class BigQueryWriteLogging : public BigQueryWriteStub {
   ~BigQueryWriteLogging() override = default;
   BigQueryWriteLogging(std::shared_ptr<BigQueryWriteStub> child,
                        TracingOptions tracing_options,
-                       std::set<std::string> components);
+                       std::set<std::string> const& components);
 
   StatusOr<google::cloud::bigquery::storage::v1::WriteStream> CreateWriteStream(
       grpc::ClientContext& context,
@@ -75,7 +75,7 @@ class BigQueryWriteLogging : public BigQueryWriteStub {
  private:
   std::shared_ptr<BigQueryWriteStub> child_;
   TracingOptions tracing_options_;
-  std::set<std::string> components_;
+  bool stream_logging_;
 };  // BigQueryWriteLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -122,6 +122,37 @@ class LivestreamServiceStub {
       google::cloud::video::livestream::v1::DeleteEventRequest const&
           request) = 0;
 
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateAsset(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::video::livestream::v1::CreateAssetRequest const&
+          request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteAsset(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::video::livestream::v1::DeleteAssetRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::cloud::video::livestream::v1::Asset> GetAsset(
+      grpc::ClientContext& context,
+      google::cloud::video::livestream::v1::GetAssetRequest const& request) = 0;
+
+  virtual StatusOr<google::cloud::video::livestream::v1::ListAssetsResponse>
+  ListAssets(grpc::ClientContext& context,
+             google::cloud::video::livestream::v1::ListAssetsRequest const&
+                 request) = 0;
+
+  virtual StatusOr<google::cloud::video::livestream::v1::Pool> GetPool(
+      grpc::ClientContext& context,
+      google::cloud::video::livestream::v1::GetPoolRequest const& request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncUpdatePool(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::video::livestream::v1::UpdatePoolRequest const&
+          request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -229,6 +260,39 @@ class DefaultLivestreamServiceStub : public LivestreamServiceStub {
   Status DeleteEvent(
       grpc::ClientContext& client_context,
       google::cloud::video::livestream::v1::DeleteEventRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncCreateAsset(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::video::livestream::v1::CreateAssetRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncDeleteAsset(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::video::livestream::v1::DeleteAssetRequest const& request)
+      override;
+
+  StatusOr<google::cloud::video::livestream::v1::Asset> GetAsset(
+      grpc::ClientContext& client_context,
+      google::cloud::video::livestream::v1::GetAssetRequest const& request)
+      override;
+
+  StatusOr<google::cloud::video::livestream::v1::ListAssetsResponse> ListAssets(
+      grpc::ClientContext& client_context,
+      google::cloud::video::livestream::v1::ListAssetsRequest const& request)
+      override;
+
+  StatusOr<google::cloud::video::livestream::v1::Pool> GetPool(
+      grpc::ClientContext& client_context,
+      google::cloud::video::livestream::v1::GetPoolRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncUpdatePool(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::video::livestream::v1::UpdatePoolRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(

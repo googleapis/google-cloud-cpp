@@ -31,9 +31,11 @@ bool IncludeInPublicDocuments(Config const& cfg, pugi::xml_node node) {
   if (kind(node) == "private-attrib" || kind(node) == "private-func") {
     return false;
   }
-  // We do not generate documents for types in the C++ `std::` namespace:
+  // We do not generate documents for types in the C++ `std::` namespace or the
+  // `absl::` namespace.
   auto const id = std::string_view{node.attribute("id").as_string()};
-  for (std::string_view prefix : {"namespacestd", "classstd", "structstd"}) {
+  for (std::string_view prefix : {"namespacestd", "classstd", "structstd",
+                                  "namespaceabsl", "classabsl", "structabsl"}) {
     if (id.substr(0, prefix.size()) == prefix) return false;
   }
   // Doxygen generates a page listing all deprecated symbols. It does not seem
@@ -48,6 +50,13 @@ bool IncludeInPublicDocuments(Config const& cfg, pugi::xml_node node) {
   // `google::cloud::` namespace.
   if (cfg.library != "cloud" && id == "namespacegoogle_1_1cloud") {
     return false;
+  }
+  // Skip destructors in the public documents. There is rarely something
+  // interesting to say about them, and we would need to create a completely
+  // new organization
+  if (kind(node) == "function") {
+    auto const name = std::string_view{node.child_value("name")};
+    if (name[0] == '~') return false;
   }
   // We do not generate documentation for private members or sections.
   auto const prot = std::string_view{node.attribute("prot").as_string()};

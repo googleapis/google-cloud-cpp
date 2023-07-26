@@ -21,6 +21,8 @@
 
 #include "google/cloud/webrisk/v1/internal/web_risk_stub.h"
 #include "google/cloud/version.h"
+#include <google/longrunning/operations.grpc.pb.h>
+#include <map>
 #include <memory>
 #include <string>
 
@@ -32,7 +34,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class WebRiskServiceMetadata : public WebRiskServiceStub {
  public:
   ~WebRiskServiceMetadata() override = default;
-  explicit WebRiskServiceMetadata(std::shared_ptr<WebRiskServiceStub> child);
+  WebRiskServiceMetadata(
+      std::shared_ptr<WebRiskServiceStub> child,
+      std::multimap<std::string, std::string> fixed_metadata);
 
   StatusOr<google::cloud::webrisk::v1::ComputeThreatListDiffResponse>
   ComputeThreatListDiff(
@@ -53,12 +57,28 @@ class WebRiskServiceMetadata : public WebRiskServiceStub {
       google::cloud::webrisk::v1::CreateSubmissionRequest const& request)
       override;
 
+  future<StatusOr<google::longrunning::Operation>> AsyncSubmitUri(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::webrisk::v1::SubmitUriRequest const& request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::longrunning::GetOperationRequest const& request) override;
+
+  future<Status> AsyncCancelOperation(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::longrunning::CancelOperationRequest const& request) override;
+
  private:
   void SetMetadata(grpc::ClientContext& context,
                    std::string const& request_params);
   void SetMetadata(grpc::ClientContext& context);
 
   std::shared_ptr<WebRiskServiceStub> child_;
+  std::multimap<std::string, std::string> fixed_metadata_;
   std::string api_client_header_;
 };
 
