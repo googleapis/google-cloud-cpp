@@ -320,10 +320,10 @@ DiscoveryTypeVertex::FormatProperties(  // NOLINT(misc-no-recursion)
     }
 
     std::string const introducer = DetermineIntroducer(field);
-    auto field_number_status = GetFieldNumber(
-        message_descriptor, field_name,
-        absl::StrCat(introducer, qualified_type_name),
-        message_properties.next_available_field_number);
+    auto field_number_status =
+        GetFieldNumber(message_descriptor, field_name,
+                       absl::StrCat(introducer, qualified_type_name),
+                       message_properties.next_available_field_number);
     if (!field_number_status) return std::move(field_number_status).status();
     message_properties.lines.push_back(
         absl::StrFormat("%s%s%s%s %s = %d%s;", description, indent, introducer,
