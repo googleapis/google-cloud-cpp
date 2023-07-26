@@ -87,7 +87,7 @@ struct SpannerPollingPolicyOption {
  * List of all "policy" options.
  */
 using SpannerPolicyOptionList =
-    OptionList<spanner::SpannerRetryPolicyOption, SpannerBackoffPolicyOption,
+    OptionList<SpannerRetryPolicyOption, SpannerBackoffPolicyOption,
                SpannerPollingPolicyOption>;
 
 /**
@@ -155,7 +155,13 @@ struct SessionPoolMaxIdleSessionsOption {
 };
 
 /// Action to take when the session pool is exhausted.
-enum class ActionOnExhaustion { kBlock, kFail };
+enum class ActionOnExhaustion {
+  /// Wait until a session is returned to the pool.
+  kBlock,
+  /// Fail the operation immediately.
+  kFail,
+};
+
 /**
  * Option for `google::cloud::Options` to set the action to take when
  * attempting to allocate a session when the pool is exhausted.
