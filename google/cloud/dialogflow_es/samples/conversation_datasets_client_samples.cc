@@ -95,7 +95,7 @@ void SetRetryPolicy(std::vector<std::string> const& argv) {
       google::cloud::dialogflow_es::ConversationDatasetsClient(connection);
 
   // You can override any of the policies in a new client. This new client
-  // will share the policies from c1 (or c2) *except* from the retry policy.
+  // will share the policies from c1 (or c2) *except* for the retry policy.
   auto c3 = google::cloud::dialogflow_es::ConversationDatasetsClient(
       connection, google::cloud::Options{}
                       .set<google::cloud::dialogflow_es::
