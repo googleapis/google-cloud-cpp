@@ -34,9 +34,11 @@ namespace generator_internal {
 // of edges are unidirectional, and both of the resulting graphs are acyclic.
 class DiscoveryTypeVertex {
  public:
-  DiscoveryTypeVertex();
+  // descriptor_pool should never be NULL, and the constructor will assert if it
+  // is.
   DiscoveryTypeVertex(std::string name, std::string package_name,
-                      nlohmann::json json);
+                      nlohmann::json json,
+                      google::protobuf::DescriptorPool const* descriptor_pool);
 
   std::string const& name() const { return name_; }
   std::string const& package_name() const { return package_name_; }

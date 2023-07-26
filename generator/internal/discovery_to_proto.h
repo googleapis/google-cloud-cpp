@@ -32,7 +32,8 @@ namespace generator_internal {
 // Discovery Document.
 StatusOr<std::map<std::string, DiscoveryTypeVertex>> ExtractTypesFromSchema(
     DiscoveryDocumentProperties const& document_properties,
-    nlohmann::json const& discovery_doc);
+    nlohmann::json const& discovery_doc,
+    google::protobuf::DescriptorPool const* descriptor_pool);
 
 // Creates a DiscoveryResource for every resource defined in the Discovery
 // Document.
@@ -49,13 +50,15 @@ StatusOr<DiscoveryTypeVertex const*> DetermineAndVerifyResponseType(
 // Creates a type from the method parameters to represent the request.
 StatusOr<DiscoveryTypeVertex> SynthesizeRequestType(
     nlohmann::json const& method_json, DiscoveryResource const& resource,
-    std::string const& response_type_name, std::string method_name);
+    std::string const& response_type_name, std::string method_name,
+    google::protobuf::DescriptorPool const* descriptor_pool);
 
 // Iterate through all the methods in all the resources and invoke
 // DetermineAndVerifyResponseTypeName and SynthesizeRequestType as needed.
 Status ProcessMethodRequestsAndResponses(
     std::map<std::string, DiscoveryResource>& resources,
-    std::map<std::string, DiscoveryTypeVertex>& types);
+    std::map<std::string, DiscoveryTypeVertex>& types,
+    google::protobuf::DescriptorPool const* descriptor_pool);
 
 // Creates a DiscoveryFile object for each DiscoveryResource in resources.
 std::vector<DiscoveryFile> CreateFilesFromResources(

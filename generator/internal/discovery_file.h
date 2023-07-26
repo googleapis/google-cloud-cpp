@@ -34,10 +34,13 @@ class DiscoveryFile {
 
   // Set resources == nullptr to indicate the file only contains messages.
   DiscoveryFile(DiscoveryResource const* resource, std::string file_path,
-                std::string package_name,
+                std::string relative_proto_path, std::string package_name,
                 std::vector<DiscoveryTypeVertex const*> types);
 
   std::string const& file_path() const { return file_path_; }
+  std::string const& relative_proto_path() const {
+    return relative_proto_path_;
+  }
   std::string const& package_name() const { return package_name_; }
   std::string resource_name() const {
     return (resource_ ? resource_->name() : "");
@@ -62,6 +65,7 @@ class DiscoveryFile {
  private:
   DiscoveryResource const* resource_;
   std::string file_path_;
+  std::string relative_proto_path_;
   std::string package_name_;
   std::set<std::string> import_paths_;
   std::vector<DiscoveryTypeVertex const*> types_;
