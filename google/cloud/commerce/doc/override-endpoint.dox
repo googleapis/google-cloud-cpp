@@ -1,0 +1,25 @@
+/*!
+@page commerce-override-endpoint How to Override the Default Endpoint
+
+In some cases, you may need to override the default endpoint used by the client
+library. Use the
+[EndpointOption](@ref google::cloud::EndpointOption) when initializing the
+client library to change this default.
+
+<!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `commerce_consumer_procurement_v1::ConsumerProcurementServiceClient`:
+
+@snippet consumer_procurement_client_samples.cc set-client-endpoint
+
+<!-- inject-endpoint-snippet-end -->
+
+*/
+
+// <!-- inject-endpoint-pages-start -->
+
+/*! @page commerce_consumer_procurement_v1::ConsumerProcurementServiceClient-endpoint-snippet Override commerce_consumer_procurement_v1::ConsumerProcurementServiceClient Endpoint Configuration
+
+@snippet google/cloud/commerce/consumer/procurement/v1/samples/consumer_procurement_client_samples.cc set-client-endpoint
+
+*/
+// <!-- inject-endpoint-pages-end -->
