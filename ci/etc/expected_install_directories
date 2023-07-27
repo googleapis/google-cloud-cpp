@@ -185,6 +185,12 @@
 ./include/google/cloud/cloudbuild/v2/mocks
 ./include/google/cloud/clouddms
 ./include/google/cloud/clouddms/v1
+./include/google/cloud/commerce
+./include/google/cloud/commerce/consumer
+./include/google/cloud/commerce/consumer/procurement
+./include/google/cloud/commerce/consumer/procurement/v1
+./include/google/cloud/commerce/consumer/procurement/v1/internal
+./include/google/cloud/commerce/consumer/procurement/v1/mocks
 ./include/google/cloud/composer
 ./include/google/cloud/composer/mocks
 ./include/google/cloud/composer/v1
@@ -1134,6 +1140,7 @@
 ./lib64/cmake/google_cloud_cpp_certificatemanager
 ./lib64/cmake/google_cloud_cpp_channel
 ./lib64/cmake/google_cloud_cpp_cloudbuild
+./lib64/cmake/google_cloud_cpp_commerce
 ./lib64/cmake/google_cloud_cpp_composer
 ./lib64/cmake/google_cloud_cpp_compute
 ./lib64/cmake/google_cloud_cpp_confidentialcomputing
