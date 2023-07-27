@@ -21,6 +21,8 @@
 #include "absl/strings/str_format.h"
 #include "absl/strings/str_split.h"
 #include "absl/types/optional.h"
+#include <cassert>
+#include <set>
 
 // We need to use FieldDescriptor::has_optional_keyword as its "replacement"
 // FieldDescriptor::has_presence does not exhibit the same behavior.
@@ -51,7 +53,7 @@ DiscoveryTypeVertex::DiscoveryTypeVertex(
       package_name_(std::move(package_name)),
       json_(std::move(json)),
       descriptor_pool_(descriptor_pool) {
-  assert(descriptor_pool != nullptr);
+  assert(descriptor_pool_ != nullptr);
 }
 
 bool DiscoveryTypeVertex::IsSynthesizedRequestType() const {
@@ -320,17 +322,15 @@ DiscoveryTypeVertex::FormatProperties(  // NOLINT(misc-no-recursion)
     }
 
     std::string const introducer = DetermineIntroducer(field);
-    auto field_number_status =
+    auto field_number =
         GetFieldNumber(message_descriptor, field_name,
                        absl::StrCat(introducer, qualified_type_name),
                        message_properties.next_available_field_number);
-    if (!field_number_status) return std::move(field_number_status).status();
-    message_properties.lines.push_back(
-        absl::StrFormat("%s%s%s%s %s = %d%s;", description, indent, introducer,
-                        type_name, field_name, *field_number_status,
-                        FormatFieldOptions(field_name, field)));
-    if (*field_number_status ==
-        message_properties.next_available_field_number) {
+    if (!field_number) return std::move(field_number).status();
+    message_properties.lines.push_back(absl::StrFormat(
+        "%s%s%s%s %s = %d%s;", description, indent, introducer, type_name,
+        field_name, *field_number, FormatFieldOptions(field_name, field)));
+    if (*field_number == message_properties.next_available_field_number) {
       ++message_properties.next_available_field_number;
     }
   }
@@ -383,48 +383,46 @@ StatusOr<int> DiscoveryTypeVertex::GetFieldNumber(
     google::protobuf::Descriptor const* message_descriptor,
     std::string const& field_name, std::string const& field_type,
     int candidate_field_number) {
-  if (message_descriptor != nullptr) {
-    auto qualified_type_name = [](google::protobuf::FieldDescriptor const& f) {
-      if (f.type() == google::protobuf::FieldDescriptor::TYPE_MESSAGE) {
-        return f.message_type()->full_name();
-      }
-      return std::string(f.type_name());
-    };
+  if (message_descriptor == nullptr) return candidate_field_number;
 
-    // Keep the field number the same for existing fields.
-    for (auto i = 0; i != message_descriptor->field_count(); ++i) {
-      auto const* field_descriptor = message_descriptor->field(i);
-      std::string type_name;
-      if (field_descriptor->is_map()) {
-        // Currently, all map types in discovery protos use a string key.
-        type_name = absl::StrFormat(
-            "map<string, %s>",
-            qualified_type_name(
-                *field_descriptor->message_type()->map_value()));
+  auto qualified_type_name = [](google::protobuf::FieldDescriptor const& f) {
+    if (f.type() == google::protobuf::FieldDescriptor::TYPE_MESSAGE) {
+      return f.message_type()->full_name();
+    }
+    return std::string(f.type_name());
+  };
+
+  // Keep the field number the same for existing fields.
+  for (auto i = 0; i != message_descriptor->field_count(); ++i) {
+    auto const* field_descriptor = message_descriptor->field(i);
+    std::string type_name;
+    if (field_descriptor->is_map()) {
+      // Currently, all map types in discovery protos use a string key.
+      type_name = absl::StrFormat(
+          "map<string, %s>",
+          qualified_type_name(*field_descriptor->message_type()->map_value()));
+    } else {
+      if (field_descriptor->is_repeated()) {
+        type_name =
+            absl::StrCat("repeated ", qualified_type_name(*field_descriptor));
+      } else if (field_descriptor->has_optional_keyword()) {
+        type_name =
+            absl::StrCat("optional ", qualified_type_name(*field_descriptor));
       } else {
-        if (field_descriptor->is_repeated()) {
-          type_name =
-              absl::StrCat("repeated ", qualified_type_name(*field_descriptor));
-        } else if (field_descriptor->has_optional_keyword()) {
-          type_name =
-              absl::StrCat("optional ", qualified_type_name(*field_descriptor));
-        } else {
-          type_name = qualified_type_name(*field_descriptor);
-        }
+        type_name = qualified_type_name(*field_descriptor);
       }
+    }
 
-      if (field_descriptor->name() == field_name && type_name == field_type) {
-        return field_descriptor->number();
-      }
+    if (field_descriptor->name() == field_name && type_name == field_type) {
+      return field_descriptor->number();
+    }
 
-      if (field_descriptor->name() == field_name && type_name != field_type) {
-        // Existing field type has changed, this is a breaking change.
-        return internal::InvalidArgumentError(
-            absl::StrFormat("Message: %s has field: %s whose type has changed "
-                            "from: %s to: %s\n",
-                            message_descriptor->full_name(), field_name,
-                            type_name, field_type));
-      }
+    if (field_descriptor->name() == field_name && type_name != field_type) {
+      // Existing field type has changed. This is a breaking change.
+      return internal::InvalidArgumentError(absl::StrFormat(
+          "Message: %s has field: %s whose type has changed "
+          "from: %s to: %s\n",
+          message_descriptor->full_name(), field_name, type_name, field_type));
     }
   }
   return candidate_field_number;
