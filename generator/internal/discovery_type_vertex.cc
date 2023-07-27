@@ -44,6 +44,34 @@ absl::optional<std::string> CheckForScalarType(nlohmann::json const& j) {
   return absl::nullopt;
 }
 
+std::string FormatMessageDescription(nlohmann::json const& field,
+                                     int indent_level) {
+  std::string description;
+  if (field.contains("description")) {
+    description = absl::StrCat(
+        FormatCommentBlock(std::string(field["description"]), indent_level),
+        "\n");
+  }
+
+  if (field.contains("enum")) {
+    std::vector<std::pair<std::string, std::string>> enum_comments;
+    for (unsigned int i = 0; i < field["enum"].size(); ++i) {
+      if (field.contains("enumDescriptions") &&
+          i < field["enumDescriptions"].size()) {
+        enum_comments.emplace_back(std::string(field["enum"][i]),
+                                   std::string(field["enumDescriptions"][i]));
+      } else {
+        enum_comments.emplace_back(std::string(field["enum"][i]),
+                                   std::string());
+      }
+    }
+    absl::StrAppend(&description,
+                    FormatCommentKeyValueList(enum_comments, indent_level),
+                    "\n");
+  }
+  return description;
+}
+
 }  // namespace
 
 DiscoveryTypeVertex::DiscoveryTypeVertex(
@@ -230,6 +258,32 @@ DiscoveryTypeVertex::DetermineReservedAndMaxFieldNumbers(
   return message_properties;
 }
 
+Status DiscoveryTypeVertex::UpdateTypeNames(
+    std::map<std::string, DiscoveryTypeVertex> const& types,
+    DiscoveryTypeVertex::TypeInfo const& type_and_synthesize,
+    std::string& type_name, std::string& qualified_type_name) const {
+  if (type_and_synthesize.compare_package_name) {
+    auto iter = types.find(type_and_synthesize.name);
+    if (iter == types.end()) {
+      return internal::InvalidArgumentError(
+          absl::StrFormat("unable to find type=%s", type_and_synthesize.name));
+    }
+    if (iter->second.package_name() != package_name()) {
+      type_name = absl::StrCat(iter->second.package_name(), ".", type_name);
+      qualified_type_name = type_name;
+    } else {
+      qualified_type_name = absl::StrCat(package_name(), ".", type_name);
+    }
+  }
+
+  if (type_and_synthesize.is_map) {
+    type_name = absl::StrFormat("map<string, %s>", type_name);
+    qualified_type_name =
+        absl::StrFormat("map<string, %s>", qualified_type_name);
+  }
+  return {};
+}
+
 // TODO(#12234): Refactor this function into multiple smaller functions to
 // reduce cognitive burden.
 StatusOr<DiscoveryTypeVertex::MessageProperties>
@@ -255,8 +309,8 @@ DiscoveryTypeVertex::FormatProperties(  // NOLINT(misc-no-recursion)
   auto const& properties = json.find("properties");
   for (auto p = properties->begin(); p != properties->end(); ++p) {
     auto const& field = p.value();
-    std::string field_name = field.value("id", p.key());
-    auto type_and_synthesize = DetermineTypeAndSynthesis(field, field_name);
+    auto type_and_synthesize =
+        DetermineTypeAndSynthesis(field, field.value("id", p.key()));
     if (!type_and_synthesize) return std::move(type_and_synthesize).status();
 
     std::string type_name = type_and_synthesize->name;
@@ -275,61 +329,24 @@ DiscoveryTypeVertex::FormatProperties(  // NOLINT(misc-no-recursion)
       message_properties.lines.push_back(*std::move(result));
     }
 
-    std::string description;
-    if (field.contains("description")) {
-      description = absl::StrCat(
-          FormatCommentBlock(std::string(field["description"]), indent_level),
-          "\n");
-    }
-
-    if (field.contains("enum")) {
-      std::vector<std::pair<std::string, std::string>> enum_comments;
-      for (unsigned int i = 0; i < field["enum"].size(); ++i) {
-        if (field.contains("enumDescriptions") &&
-            i < field["enumDescriptions"].size()) {
-          enum_comments.emplace_back(std::string(field["enum"][i]),
-                                     std::string(field["enumDescriptions"][i]));
-        } else {
-          enum_comments.emplace_back(std::string(field["enum"][i]),
-                                     std::string());
-        }
-      }
-      absl::StrAppend(&description,
-                      FormatCommentKeyValueList(enum_comments, indent_level),
-                      "\n");
-    }
-
-    field_name = CamelCaseToSnakeCase(field_name);
-    current_field_names.insert(field_name);
-    if (type_and_synthesize->compare_package_name) {
-      auto iter = types.find(type_and_synthesize->name);
-      if (iter == types.end()) {
-        return internal::InvalidArgumentError(absl::StrFormat(
-            "unable to find type=%s", type_and_synthesize->name));
-      }
-      if (iter->second.package_name() != package_name_) {
-        type_name = absl::StrCat(iter->second.package_name(), ".", type_name);
-        qualified_type_name = type_name;
-      } else {
-        qualified_type_name = absl::StrCat(package_name(), ".", type_name);
-      }
-    }
-
-    if (type_and_synthesize->is_map) {
-      type_name = absl::StrFormat("map<string, %s>", type_name);
-      qualified_type_name =
-          absl::StrFormat("map<string, %s>", qualified_type_name);
-    }
+    auto update_type_name_status = UpdateTypeNames(
+        types, *type_and_synthesize, type_name, qualified_type_name);
+    if (!update_type_name_status.ok()) return update_type_name_status;
 
     std::string const introducer = DetermineIntroducer(field);
+    std::string field_name = CamelCaseToSnakeCase(field.value("id", p.key()));
+    current_field_names.insert(field_name);
+
     auto field_number =
         GetFieldNumber(message_descriptor, field_name,
                        absl::StrCat(introducer, qualified_type_name),
                        message_properties.next_available_field_number);
     if (!field_number) return std::move(field_number).status();
+
     message_properties.lines.push_back(absl::StrFormat(
-        "%s%s%s%s %s = %d%s;", description, indent, introducer, type_name,
-        field_name, *field_number, FormatFieldOptions(field_name, field)));
+        "%s%s%s%s %s = %d%s;", FormatMessageDescription(field, indent_level),
+        indent, introducer, type_name, field_name, *field_number,
+        FormatFieldOptions(field_name, field)));
     if (*field_number == message_properties.next_available_field_number) {
       ++message_properties.next_available_field_number;
     }

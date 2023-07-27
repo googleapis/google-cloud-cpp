@@ -121,6 +121,11 @@ class DiscoveryTypeVertex {
   std::string DebugString() const;
 
  private:
+  Status UpdateTypeNames(
+      std::map<std::string, DiscoveryTypeVertex> const& types,
+      TypeInfo const& type_and_synthesize, std::string& type_name,
+      std::string& qualified_type_name) const;
+
   std::string name_;
   std::string package_name_;
   nlohmann::json json_;
