@@ -39,12 +39,7 @@ void to_json(nlohmann::json& j, QueryParameterStructType const& q) {
 
 void from_json(nlohmann::json const& j, QueryParameterStructType& q) {
   SafeGetTo(q.name, j, "name");
-  if (j.contains("type")) {
-    if (q.type == nullptr) {
-      q.type = std::make_shared<QueryParameterType>();
-    }
-    SafeGetTo(*q.type, j, "type");
-  }
+  SafeGetTo(q.type, j, "type");
   SafeGetTo(q.description, j, "description");
 }
 
@@ -60,12 +55,7 @@ void to_json(nlohmann::json& j, QueryParameterType const& q) {
 
 void from_json(nlohmann::json const& j, QueryParameterType& q) {
   SafeGetTo(q.type, j, "type");
-  if (j.contains("arrayType")) {
-    if (q.array_type == nullptr) {
-      q.array_type = std::make_shared<QueryParameterType>();
-    }
-    SafeGetTo(*q.array_type, j, "arrayType");
-  }
+  SafeGetTo(q.array_type, j, "arrayType");
   SafeGetTo(q.struct_types, j, "structTypes");
 }
 
@@ -139,9 +129,8 @@ void from_json(nlohmann::json const& j, StandardSqlDataType& t) {
     auto const index = j.at("sub_type_index").get<int>();
     switch (index) {
       case 1: {
-        std::shared_ptr<StandardSqlDataType> sub_type =
-            std::make_shared<StandardSqlDataType>();
-        SafeGetTo(*sub_type, j, "arrayElementType");
+        std::shared_ptr<StandardSqlDataType> sub_type;
+        SafeGetTo(sub_type, j, "arrayElementType");
         t.sub_type = sub_type;
         break;
       }
@@ -197,32 +186,37 @@ void from_json(nlohmann::json const& j, Value& v) {
         break;
       case 1: {
         double val;
-        SafeGetTo(val, j, "valueKind");
-        v.value_kind = val;
+        if (SafeGetTo(val, j, "valueKind")) {
+          v.value_kind = val;
+        }
         break;
       }
       case 2: {
         std::string val;
-        SafeGetTo(val, j, "valueKind");
-        v.value_kind = val;
+        if (SafeGetTo(val, j, "valueKind")) {
+          v.value_kind = val;
+        }
         break;
       }
       case 3: {
         bool val;
-        SafeGetTo(val, j, "valueKind");
-        v.value_kind = val;
+        if (SafeGetTo(val, j, "valueKind")) {
+          v.value_kind = val;
+        }
         break;
       }
       case 4: {
-        std::shared_ptr<Struct> val = std::make_shared<Struct>();
-        SafeGetTo(*val, j, "valueKind");
-        v.value_kind = val;
+        std::shared_ptr<Struct> val;
+        if (SafeGetTo(val, j, "valueKind") != nullptr) {
+          v.value_kind = val;
+        }
         break;
       }
       case 5: {
         std::vector<Value> val;
-        SafeGetTo(val, j, "valueKind");
-        v.value_kind = val;
+        if (SafeGetTo(val, j, "valueKind")) {
+          v.value_kind = val;
+        }
         break;
       }
       default:

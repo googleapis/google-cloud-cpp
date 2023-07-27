@@ -22,7 +22,8 @@ namespace cloud {
 namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using ::testing::IsEmpty;
+using ::testing::IsNull;
+using ::testing::Not;
 
 TEST(JsonUtilsTest, FromJsonMilliseconds) {
   auto const* const name = "start_time";
@@ -108,8 +109,7 @@ TEST(JsonUtilsTest, SafeGetToKeyPresent) {
   EXPECT_TRUE(json.is_object());
 
   std::string val;
-  SafeGetTo(val, json, key);
-
+  EXPECT_TRUE(SafeGetTo(val, json, key));
   EXPECT_EQ(val, "123");
 }
 
@@ -120,9 +120,7 @@ TEST(JsonUtilsTest, SafeGetToKeyAbsent) {
   EXPECT_TRUE(json.is_object());
 
   std::string val;
-  SafeGetTo(val, json, key);
-
-  EXPECT_THAT(val, IsEmpty());
+  EXPECT_FALSE(SafeGetTo(val, json, key));
 }
 
 TEST(JsonUtilsTest, SafeGetToCustomType) {
@@ -146,6 +144,30 @@ TEST(JsonUtilsTest, SafeGetToCustomType) {
 
   EXPECT_EQ(expected, actual);
 }
+
+TEST(JsonUtilsTest, SafeGetToSharedPtrKeyPresent) {
+  auto const* const key = "project_id";
+  auto const* json_text = R"({"project_id":"123"})";
+  auto json = nlohmann::json::parse(json_text, nullptr, false);
+  EXPECT_TRUE(json.is_object());
+
+  std::shared_ptr<std::string> val;
+  val = SafeGetTo(val, json, key);
+  EXPECT_THAT(val, Not(IsNull()));
+  EXPECT_EQ(*val, "123");
+}
+
+TEST(JsonUtilsTest, SafeGetToSharedPtrKeyAbsent) {
+  auto const* const key = "job_id";
+  auto const* json_text = R"({"project_id":"123"})";
+  auto json = nlohmann::json::parse(json_text, nullptr, false);
+  EXPECT_TRUE(json.is_object());
+
+  std::shared_ptr<std::string> val;
+  val = SafeGetTo(val, json, key);
+  EXPECT_THAT(val, IsNull());
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_v2_minimal_internal
 }  // namespace cloud
