@@ -43,7 +43,7 @@ cc_library(
     deps = [
         "//:common",
         "//:grpc_utils",
-        "@com_google_googleapis//google/cloud/commerce/consumer/procurement/v1:commerce_cc_grpc",
+        "@com_google_googleapis//google/cloud/commerce/consumer/procurement/v1:procurement_cc_grpc",
     ],
 )
 

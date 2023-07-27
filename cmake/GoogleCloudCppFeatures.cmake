@@ -63,6 +63,7 @@ set(GOOGLE_CLOUD_CPP_GA_LIBRARIES
     "certificatemanager"
     "channel"
     "cloudbuild"
+    "commerce"
     "composer"
     "confidentialcomputing"
     "connectors"
