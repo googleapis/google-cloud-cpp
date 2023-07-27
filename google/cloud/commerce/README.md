@@ -1,7 +1,7 @@
 # Cloud Commerce Consumer Procurement API C++ Client Library
 
 This directory contains an idiomatic C++ client library for the
-[Cloud Commerce Consumer Procurement API][cloud-service-docs], a service to Enables consumers to procure products served by Cloud Marketplace platform
+[Cloud Commerce Consumer Procurement API][cloud-service-docs], a service that enables consumers to procure products served by Cloud Marketplace platform
 
 While this library is **GA**, please note that the Google Cloud C++ client
 libraries do **not** follow [Semantic Versioning](https://semver.org/).
@@ -16,21 +16,22 @@ this library.
 <!-- inject-quickstart-start -->
 
 ```cc
-#include "google/cloud/commerce/ EDIT HERE .h"
+#include "google/cloud/commerce/consumer/procurement/v1/consumer_procurement_client.h"
 #include "google/cloud/project.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
   if (argc != 2) {
-    std::cerr << "Usage: " << argv[0] << " project-id\n";
+    std::cerr << "Usage: " << argv[0] << " billing-account\n";
     return 1;
   }
 
-  namespace commerce = ::google::cloud::commerce;
-  auto client = commerce::Client(commerce::MakeConnection());
+  namespace commerce = ::google::cloud::commerce_consumer_procurement_v1;
+  auto client = commerce::ConsumerProcurementServiceClient(
+      commerce::MakeConsumerProcurementServiceConnection());
 
-  auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
+  auto const billing_account = argv[1];
+  for (auto r : client.ListOrders(billing_account)) {
     if (!r) throw std::move(r).status();
     std::cout << r->DebugString() << "\n";
   }

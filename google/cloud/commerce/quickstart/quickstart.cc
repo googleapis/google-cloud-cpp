@@ -13,21 +13,22 @@
 // limitations under the License.
 
 //! [all]
-#include "google/cloud/commerce/ EDIT HERE .h"
+#include "google/cloud/commerce/consumer/procurement/v1/consumer_procurement_client.h"
 #include "google/cloud/project.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
   if (argc != 2) {
-    std::cerr << "Usage: " << argv[0] << " project-id\n";
+    std::cerr << "Usage: " << argv[0] << " billing-account\n";
     return 1;
   }
 
-  namespace commerce = ::google::cloud::commerce;
-  auto client = commerce::Client(commerce::MakeConnection());
+  namespace commerce = ::google::cloud::commerce_consumer_procurement_v1;
+  auto client = commerce::ConsumerProcurementServiceClient(
+      commerce::MakeConsumerProcurementServiceConnection());
 
-  auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
+  auto const billing_account = argv[1];
+  for (auto r : client.ListOrders(billing_account)) {
     if (!r) throw std::move(r).status();
     std::cout << r->DebugString() << "\n";
   }
