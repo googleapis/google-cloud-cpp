@@ -29,6 +29,15 @@ namespace cloud {
 namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+template <typename C, typename T, typename R>
+void SafeValueOr(nlohmann::json const& j, std::string const& key,
+                 R& (C::*f)(T) &, C& obj) {
+  auto i = j.find(key);
+  if (i != j.end()) {
+    (obj.*f)(i->get<T>());
+  }
+}
+
 Projection Projection::Full() {
   Projection projection;
   projection.value = "FULL";
@@ -300,83 +309,30 @@ void to_json(nlohmann::json& j, QueryRequest const& q) {
 }
 
 void from_json(nlohmann::json const& j, PostQueryRequest& q) {
-  std::string project_id;
-  SafeGetTo(project_id, j, "projectId");
-  q.set_project_id(project_id);
-
-  QueryRequest query_request;
-  SafeGetTo(query_request, j, "queryRequest");
-  q.set_query_request(query_request);
+  SafeValueOr(j, "project_id", &PostQueryRequest::set_project_id, q);
+  SafeValueOr(j, "queryRequest", &PostQueryRequest::set_query_request, q);
 }
 
 void from_json(nlohmann::json const& j, QueryRequest& q) {
-  std::string query;
-  SafeGetTo(query, j, "query");
-  q.set_query(query);
-
-  std::string kind;
-  SafeGetTo(kind, j, "kind");
-  q.set_kind(kind);
-
-  std::string parameter_mode;
-  SafeGetTo(parameter_mode, j, "parameterMode");
-  q.set_parameter_mode(parameter_mode);
-
-  std::string location;
-  SafeGetTo(location, j, "location");
-  q.set_location(location);
-
-  std::string request_id;
-  SafeGetTo(request_id, j, "requestId");
-  q.set_request_id(request_id);
-
-  bool dry_run;
-  SafeGetTo(dry_run, j, "dryRun");
-  q.set_dry_run(dry_run);
-
-  bool preserve_nulls;
-  SafeGetTo(preserve_nulls, j, "preserveNulls");
-  q.set_preserve_nulls(preserve_nulls);
-
-  bool use_query_cache;
-  SafeGetTo(use_query_cache, j, "useQueryCache");
-  q.set_use_query_cache(use_query_cache);
-
-  bool use_legacy_sql;
-  SafeGetTo(use_legacy_sql, j, "useLegacySql");
-  q.set_use_legacy_sql(use_legacy_sql);
-
-  bool create_session;
-  SafeGetTo(create_session, j, "createSession");
-  q.set_create_session(create_session);
-
-  std::int32_t max_results;
-  SafeGetTo(max_results, j, "maxResults");
-  q.set_max_results(max_results);
-
-  std::int64_t maximum_bytes_billed;
-  SafeGetTo(maximum_bytes_billed, j, "maximumBytesBilled");
-  q.set_maximum_bytes_billed(maximum_bytes_billed);
-
-  std::vector<ConnectionProperty> connection_properties;
-  SafeGetTo(connection_properties, j, "connectionProperties");
-  q.set_connection_properties(connection_properties);
-
-  std::vector<QueryParameter> query_parameters;
-  SafeGetTo(query_parameters, j, "queryParameters");
-  q.set_query_parameters(query_parameters);
-
-  DatasetReference default_dataset;
-  SafeGetTo(default_dataset, j, "defaultDataset");
-  q.set_default_dataset(default_dataset);
-
-  DataFormatOptions format_options;
-  SafeGetTo(format_options, j, "formatOptions");
-  q.set_format_options(format_options);
-
-  std::map<std::string, std::string> labels;
-  SafeGetTo(labels, j, "labels");
-  q.set_labels(labels);
+  SafeValueOr(j, "query", &QueryRequest::set_query, q);
+  SafeValueOr(j, "kind", &QueryRequest::set_kind, q);
+  SafeValueOr(j, "parameterMode", &QueryRequest::set_parameter_mode, q);
+  SafeValueOr(j, "location", &QueryRequest::set_location, q);
+  SafeValueOr(j, "requestId", &QueryRequest::set_request_id, q);
+  SafeValueOr(j, "dryRun", &QueryRequest::set_dry_run, q);
+  SafeValueOr(j, "preserveNulls", &QueryRequest::set_preserve_nulls, q);
+  SafeValueOr(j, "useQueryCache", &QueryRequest::set_use_query_cache, q);
+  SafeValueOr(j, "useLegacySql", &QueryRequest::set_use_legacy_sql, q);
+  SafeValueOr(j, "createSession", &QueryRequest::set_create_session, q);
+  SafeValueOr(j, "maxResults", &QueryRequest::set_max_results, q);
+  SafeValueOr(j, "maximumBytesBilled", &QueryRequest::set_maximum_bytes_billed,
+              q);
+  SafeValueOr(j, "connectionProperties",
+              &QueryRequest::set_connection_properties, q);
+  SafeValueOr(j, "queryParameters", &QueryRequest::set_query_parameters, q);
+  SafeValueOr(j, "defaultDataset", &QueryRequest::set_default_dataset, q);
+  SafeValueOr(j, "formatOptions", &QueryRequest::set_format_options, q);
+  SafeValueOr(j, "labels", &QueryRequest::set_labels, q);
 
   std::chrono::milliseconds timeout;
   FromJson(timeout, j, "timeoutMs");
@@ -472,33 +428,14 @@ void to_json(nlohmann::json& j, GetQueryResultsRequest const& q) {
 }
 
 void from_json(nlohmann::json const& j, GetQueryResultsRequest& q) {
-  std::string project_id;
-  SafeGetTo(project_id, j, "projectId");
-  q.set_project_id(project_id);
-
-  std::string job_id;
-  SafeGetTo(job_id, j, "jobId");
-  q.set_job_id(job_id);
-
-  std::string page_token;
-  SafeGetTo(page_token, j, "pageToken");
-  q.set_page_token(page_token);
-
-  std::string location;
-  SafeGetTo(location, j, "location");
-  q.set_location(location);
-
-  std::uint64_t start_index;
-  SafeGetTo(start_index, j, "startIndex");
-  q.set_start_index(start_index);
-
-  std::uint32_t max_results;
-  SafeGetTo(max_results, j, "maxResults");
-  q.set_max_results(max_results);
-
-  DataFormatOptions format_options;
-  SafeGetTo(format_options, j, "formatOptions");
-  q.set_format_options(format_options);
+  SafeValueOr(j, "projectId", &GetQueryResultsRequest::set_project_id, q);
+  SafeValueOr(j, "jobId", &GetQueryResultsRequest::set_job_id, q);
+  SafeValueOr(j, "pageToken", &GetQueryResultsRequest::set_page_token, q);
+  SafeValueOr(j, "location", &GetQueryResultsRequest::set_location, q);
+  SafeValueOr(j, "startIndex", &GetQueryResultsRequest::set_start_index, q);
+  SafeValueOr(j, "maxResults", &GetQueryResultsRequest::set_max_results, q);
+  SafeValueOr(j, "formatOptions", &GetQueryResultsRequest::set_format_options,
+              q);
 
   std::chrono::milliseconds timeout;
   FromJson(timeout, j, "timeoutMs");
