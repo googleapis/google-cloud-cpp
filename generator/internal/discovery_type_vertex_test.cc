@@ -26,6 +26,7 @@ using ::google::cloud::testing_util::StatusIs;
 using ::testing::Eq;
 using ::testing::HasSubstr;
 using ::testing::IsEmpty;
+using ::testing::IsNull;
 using ::testing::NotNull;
 
 TEST(DiscoveryTypeVertexTest, DetermineIntroducerEmpty) {
@@ -761,6 +762,436 @@ message ReservedHighest {
   EXPECT_THAT(message_properties.next_available_field_number, Eq(26));
   EXPECT_THAT(message_properties.reserved_numbers,
               testing::ElementsAre(4, 5, 6, 25));
+}
+
+TEST_F(DiscoveryTypeVertexDescriptorTest, GetFieldNumber) {
+  auto constexpr kImportedProtoFile = R"""(
+syntax = "proto3";
+package generator.imported;
+
+message Bar {}
+)""";
+
+  auto constexpr kProtoFile = R"""(
+syntax = "proto3";
+package generator.test;
+
+import "imported.proto";
+
+message Foo {}
+
+message FieldsOnly {
+  optional string field1 = 1;
+  Foo field2 = 2;
+  map<string, Foo> field3 = 3;
+  int32 field4 = 4;
+  repeated generator.imported.Bar field5 = 5;
+  map<string, generator.imported.Bar> field6 = 6;
+}
+
+)""";
+
+  ASSERT_TRUE(AddProtoFile("imported.proto", kImportedProtoFile));
+  auto const* imported_file_descriptor =
+      pool().FindFileByName("imported.proto");
+  ASSERT_THAT(imported_file_descriptor, NotNull());
+
+  ASSERT_TRUE(AddProtoFile("test.proto", kProtoFile));
+  auto const* file_descriptor = pool().FindFileByName("test.proto");
+  ASSERT_THAT(file_descriptor, NotNull());
+  auto const* message_descriptor =
+      file_descriptor->FindMessageTypeByName("NoPreviousMessage");
+  ASSERT_THAT(message_descriptor, IsNull());
+
+  auto field_number = DiscoveryTypeVertex::GetFieldNumber(
+      message_descriptor, "new_field", "string", 1);
+  ASSERT_STATUS_OK(field_number);
+  EXPECT_THAT(*field_number, Eq(1));
+
+  int const candidate_field_number = 7;
+  message_descriptor = file_descriptor->FindMessageTypeByName("FieldsOnly");
+
+  ASSERT_THAT(message_descriptor, NotNull());
+  auto new_field_number = DiscoveryTypeVertex::GetFieldNumber(
+      message_descriptor, "new_field", "string", candidate_field_number);
+  ASSERT_STATUS_OK(new_field_number);
+  EXPECT_THAT(*new_field_number, Eq(candidate_field_number));
+
+  auto existing_optional_field_number = DiscoveryTypeVertex::GetFieldNumber(
+      message_descriptor, "field1", "optional string", candidate_field_number);
+  ASSERT_STATUS_OK(existing_optional_field_number);
+  EXPECT_THAT(*existing_optional_field_number, Eq(1));
+
+  auto existing_message_field_number = DiscoveryTypeVertex::GetFieldNumber(
+      message_descriptor, "field2", "generator.test.Foo",
+      candidate_field_number);
+  ASSERT_STATUS_OK(existing_message_field_number);
+  EXPECT_THAT(*existing_message_field_number, Eq(2));
+
+  auto existing_map_field_number = DiscoveryTypeVertex::GetFieldNumber(
+      message_descriptor, "field3", "map<string, generator.test.Foo>",
+      candidate_field_number);
+  ASSERT_STATUS_OK(existing_map_field_number);
+  EXPECT_THAT(*existing_map_field_number, Eq(3));
+
+  auto existing_pod_field_number = DiscoveryTypeVertex::GetFieldNumber(
+      message_descriptor, "field4", "int32", candidate_field_number);
+  ASSERT_STATUS_OK(existing_pod_field_number);
+  EXPECT_THAT(*existing_pod_field_number, Eq(4));
+
+  auto existing_repeated_different_package_field_number =
+      DiscoveryTypeVertex::GetFieldNumber(message_descriptor, "field5",
+                                          "repeated generator.imported.Bar",
+                                          candidate_field_number);
+  ASSERT_STATUS_OK(existing_repeated_different_package_field_number);
+  EXPECT_THAT(*existing_repeated_different_package_field_number, Eq(5));
+
+  auto existing_map_different_package_field_number =
+      DiscoveryTypeVertex::GetFieldNumber(message_descriptor, "field6",
+                                          "map<string, generator.imported.Bar>",
+                                          candidate_field_number);
+  ASSERT_STATUS_OK(existing_map_different_package_field_number);
+  EXPECT_THAT(*existing_map_different_package_field_number, Eq(6));
+
+  auto field_type_changed = DiscoveryTypeVertex::GetFieldNumber(
+      message_descriptor, "field6", "map<string, generator.test.Bar>",
+      candidate_field_number);
+  EXPECT_THAT(
+      field_type_changed,
+      StatusIs(
+          StatusCode::kInvalidArgument,
+          HasSubstr(
+              "Message: generator.test.FieldsOnly has field: field6 "
+              "whose type has changed from: map<string, "
+              "generator.imported.Bar> to: map<string, generator.test.Bar>")));
+}
+
+TEST_F(DiscoveryTypeVertexDescriptorTest,
+       JsonToProtobufMessageWithReservedFieldNumberLessThanMax) {
+  auto constexpr kPreviousProto = R"""(
+syntax = "proto3";
+package test.package;
+// Description of the message.
+message TestSchema {
+  reserved 1;
+  // Description for existingField.
+  optional string existing_field = 2;
+}
+)""";
+
+  auto constexpr kSchemaJson = R"""(
+{
+  "description": "Description of the message.",
+  "type": "object",
+  "id": "TestSchema",
+  "properties": {
+    "newField": {
+      "$ref": "Foo",
+      "description": "Description for newField."
+    },
+    "existingField": {
+      "type": "string",
+      "description": "Description for existingField."
+    }
+  }
+}
+)""";
+
+  auto constexpr kExpectedProto = R"""(// Description of the message.
+message TestSchema {
+  reserved 1;
+  // Description for existingField.
+  optional string existing_field = 2;
+
+  // Description for newField.
+  optional Foo new_field = 3;
+}
+)""";
+
+  ASSERT_TRUE(AddProtoFile("test.proto", kPreviousProto));
+  auto json = nlohmann::json::parse(kSchemaJson, nullptr, false);
+  ASSERT_TRUE(json.is_object());
+  DiscoveryTypeVertex t("TestSchema", "test.package", json, &pool());
+  std::map<std::string, DiscoveryTypeVertex> types;
+  types.emplace("Foo", DiscoveryTypeVertex{"Foo", "test.package", {}, &pool()});
+  auto result = t.JsonToProtobufMessage(types, "test.package");
+  ASSERT_STATUS_OK(result);
+  EXPECT_THAT(*result, Eq(kExpectedProto));
+}
+
+TEST_F(DiscoveryTypeVertexDescriptorTest,
+       JsonToProtobufMessageWithReservedFieldNumberGreaterThanMax) {
+  auto constexpr kPreviousProto = R"""(
+syntax = "proto3";
+package test.package;
+// Description of the message.
+message TestSchema {
+  reserved 3;
+  // Description for existingField.
+  optional string existing_field = 1;
+
+  // Description for otherExistingField.
+  map<string, string> other_existing_field = 2;
+}
+)""";
+
+  auto constexpr kSchemaJson = R"""(
+{
+  "description": "Description of the message.",
+  "type": "object",
+  "id": "TestSchema",
+  "properties": {
+    "newMapField": {
+      "additionalProperties": {
+        "type": "string"
+      },
+      "type": "object",
+      "description": "Description for newMapField."
+    },
+    "existingField": {
+      "type": "string",
+      "description": "Description for existingField."
+    },
+    "otherExistingField": {
+      "additionalProperties": {
+        "type": "string"
+      },
+      "type": "object",
+      "description": "Description for otherExistingField."
+    }
+  }
+}
+)""";
+
+  auto constexpr kExpectedProto = R"""(// Description of the message.
+message TestSchema {
+  reserved 3;
+  // Description for existingField.
+  optional string existing_field = 1;
+
+  // Description for newMapField.
+  map<string, string> new_map_field = 4;
+
+  // Description for otherExistingField.
+  map<string, string> other_existing_field = 2;
+}
+)""";
+
+  ASSERT_TRUE(AddProtoFile("test.proto", kPreviousProto));
+  auto json = nlohmann::json::parse(kSchemaJson, nullptr, false);
+  ASSERT_TRUE(json.is_object());
+  DiscoveryTypeVertex t("TestSchema", "test.package", json, &pool());
+  std::map<std::string, DiscoveryTypeVertex> types;
+  types.emplace("Foo", DiscoveryTypeVertex{"Foo", "test.package", {}, &pool()});
+  auto result = t.JsonToProtobufMessage(types, "test.package");
+  ASSERT_STATUS_OK(result);
+  EXPECT_THAT(*result, Eq(kExpectedProto));
+}
+
+TEST_F(DiscoveryTypeVertexDescriptorTest,
+       JsonToProtobufMessageWithDeletedField) {
+  auto constexpr kPreviousProto = R"""(
+syntax = "proto3";
+package test.package;
+// Description of the message.
+message TestSchema {
+  reserved 3;
+  // Description for existingField.
+  optional string existing_field = 1;
+
+  // Description for deletedField.
+  optional string deleted_field = 2;
+}
+)""";
+
+  auto constexpr kSchemaJson = R"""(
+{
+  "description": "Description of the message.",
+  "type": "object",
+  "id": "TestSchema",
+  "properties": {
+    "existingField": {
+      "type": "string",
+      "description": "Description for existingField."
+    }
+  }
+}
+)""";
+
+  auto constexpr kExpectedProto = R"""(// Description of the message.
+message TestSchema {
+  reserved 2, 3;
+  // Description for existingField.
+  optional string existing_field = 1;
+}
+)""";
+
+  ASSERT_TRUE(AddProtoFile("test.proto", kPreviousProto));
+  auto json = nlohmann::json::parse(kSchemaJson, nullptr, false);
+  ASSERT_TRUE(json.is_object());
+  DiscoveryTypeVertex t("TestSchema", "test.package", json, &pool());
+  std::map<std::string, DiscoveryTypeVertex> types;
+  types.emplace("Foo", DiscoveryTypeVertex{"Foo", "test.package", {}, &pool()});
+  auto result = t.JsonToProtobufMessage(types, "test.package");
+  ASSERT_STATUS_OK(result);
+  EXPECT_THAT(*result, Eq(kExpectedProto));
+}
+
+TEST_F(DiscoveryTypeVertexDescriptorTest,
+       JsonToProtobufMessageWithMultipleDeletedFields) {
+  auto constexpr kPreviousProto = R"""(
+syntax = "proto3";
+package test.package;
+// Description of the message.
+message TestSchema {
+  reserved 3;
+  // Description for existingField.
+  optional string existing_field = 1;
+
+  // Description for deletedField.
+  optional string deleted_field = 2;
+
+  // Description for alsoDeletedField.
+  optional string also_deleted_field = 4;
+}
+)""";
+
+  auto constexpr kSchemaJson = R"""(
+{
+  "description": "Description of the message.",
+  "type": "object",
+  "id": "TestSchema",
+  "properties": {
+    "existingField": {
+      "type": "string",
+      "description": "Description for existingField."
+    }
+  }
+}
+)""";
+
+  auto constexpr kExpectedProto = R"""(// Description of the message.
+message TestSchema {
+  reserved 2, 3, 4;
+  // Description for existingField.
+  optional string existing_field = 1;
+}
+)""";
+
+  ASSERT_TRUE(AddProtoFile("test.proto", kPreviousProto));
+  auto json = nlohmann::json::parse(kSchemaJson, nullptr, false);
+  ASSERT_TRUE(json.is_object());
+  DiscoveryTypeVertex t("TestSchema", "test.package", json, &pool());
+  std::map<std::string, DiscoveryTypeVertex> types;
+  types.emplace("Foo", DiscoveryTypeVertex{"Foo", "test.package", {}, &pool()});
+  auto result = t.JsonToProtobufMessage(types, "test.package");
+  ASSERT_STATUS_OK(result);
+  EXPECT_THAT(*result, Eq(kExpectedProto));
+}
+
+TEST_F(DiscoveryTypeVertexDescriptorTest,
+       JsonToProtobufMessageWithDeletedFieldAndNewField) {
+  auto constexpr kPreviousProto = R"""(
+syntax = "proto3";
+package test.package;
+// Description of the message.
+message TestSchema {
+  reserved 3;
+  // Description for existingField.
+  optional string existing_field = 1;
+
+  // Description for deletedField.
+  repeated string deleted_field = 2;
+}
+)""";
+
+  auto constexpr kSchemaJson = R"""(
+{
+  "description": "Description of the message.",
+  "type": "object",
+  "id": "TestSchema",
+  "properties": {
+    "existingField": {
+      "type": "string",
+      "description": "Description for existingField."
+    },
+    "newField": {
+      "type": "array",
+      "description": "Description for newField.",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}
+)""";
+
+  auto constexpr kExpectedProto = R"""(// Description of the message.
+message TestSchema {
+  reserved 2, 3;
+  // Description for existingField.
+  optional string existing_field = 1;
+
+  // Description for newField.
+  repeated string new_field = 4;
+}
+)""";
+
+  ASSERT_TRUE(AddProtoFile("test.proto", kPreviousProto));
+  auto json = nlohmann::json::parse(kSchemaJson, nullptr, false);
+  ASSERT_TRUE(json.is_object());
+  DiscoveryTypeVertex t("TestSchema", "test.package", json, &pool());
+  std::map<std::string, DiscoveryTypeVertex> types;
+  types.emplace("Foo", DiscoveryTypeVertex{"Foo", "test.package", {}, &pool()});
+  auto result = t.JsonToProtobufMessage(types, "test.package");
+  ASSERT_STATUS_OK(result);
+  EXPECT_THAT(*result, Eq(kExpectedProto));
+}
+
+TEST_F(DiscoveryTypeVertexDescriptorTest,
+       JsonToProtobufMessageWithBreakingTypeChange) {
+  auto constexpr kPreviousProto = R"""(
+syntax = "proto3";
+package test.package;
+// Description of the message.
+message TestSchema {
+  reserved 1;
+  // Description for existingField.
+  optional string existing_field = 2;
+}
+)""";
+
+  auto constexpr kSchemaJson = R"""(
+{
+  "description": "Description of the message.",
+  "type": "object",
+  "id": "TestSchema",
+  "properties": {
+    "newField": {
+      "$ref": "Foo",
+      "description": "Description for newField."
+    },
+    "existingField": {
+      "type": "number",
+      "format": "double",
+      "description": "Description for existingField."
+    }
+  }
+}
+)""";
+
+  ASSERT_TRUE(AddProtoFile("test.proto", kPreviousProto));
+  auto json = nlohmann::json::parse(kSchemaJson, nullptr, false);
+  ASSERT_TRUE(json.is_object());
+  DiscoveryTypeVertex t("TestSchema", "test.package", json, &pool());
+  std::map<std::string, DiscoveryTypeVertex> types;
+  types.emplace("Foo", DiscoveryTypeVertex{"Foo", "test.package", {}, &pool()});
+  auto result = t.JsonToProtobufMessage(types, "test.package");
+  EXPECT_THAT(result,
+              StatusIs(StatusCode::kInvalidArgument,
+                       HasSubstr("Message: test.package.TestSchema has field: "
+                                 "existing_field whose type has changed from: "
+                                 "optional string to: optional double")));
 }
 
 }  // namespace

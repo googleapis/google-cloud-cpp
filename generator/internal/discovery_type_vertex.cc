@@ -15,15 +15,25 @@
 #include "generator/internal/discovery_type_vertex.h"
 #include "generator/internal/codegen_utils.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
+#include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/log.h"
 #include "absl/strings/str_format.h"
+#include "absl/strings/str_split.h"
 #include "absl/types/optional.h"
+#include <cassert>
+#include <set>
+
+// We need to use FieldDescriptor::has_optional_keyword as its "replacement"
+// FieldDescriptor::has_presence does not exhibit the same behavior.
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 
 namespace google {
 namespace cloud {
 namespace generator_internal {
 namespace {
+
+auto constexpr kInitialFieldNumber = 1;
 
 absl::optional<std::string> CheckForScalarType(nlohmann::json const& j) {
   std::string type = j.value("type", "");
@@ -38,10 +48,13 @@ absl::optional<std::string> CheckForScalarType(nlohmann::json const& j) {
 
 DiscoveryTypeVertex::DiscoveryTypeVertex(
     std::string name, std::string package_name, nlohmann::json json,
-    google::protobuf::DescriptorPool const*)
+    google::protobuf::DescriptorPool const* descriptor_pool)
     : name_(std::move(name)),
       package_name_(std::move(package_name)),
-      json_(std::move(json)) {}
+      json_(std::move(json)),
+      descriptor_pool_(descriptor_pool) {
+  assert(descriptor_pool_ != nullptr);
+}
 
 bool DiscoveryTypeVertex::IsSynthesizedRequestType() const {
   return json_.value("synthesized_request", false);
@@ -172,87 +185,113 @@ auto constexpr kMaxRecursionDepth = 32;
 // NOLINTNEXTLINE(misc-no-recursion)
 StatusOr<std::string> DiscoveryTypeVertex::FormatMessage(
     std::map<std::string, DiscoveryTypeVertex> const& types,
-    std::string const& name, std::string const& file_package_name,
-    nlohmann::json const& json, int indent_level) const {
+    std::string const& name, std::string const& qualified_name,
+    std::string const& file_package_name, nlohmann::json const& json,
+    int indent_level) const {
   if (indent_level > kMaxRecursionDepth) {
     GCP_LOG(FATAL) << __func__ << " exceeded kMaxRecursionDepth";
   }
   std::string indent(indent_level * 2, ' ');
-  auto lines =
-      FormatProperties(types, name, file_package_name, json, indent_level + 1);
-  if (!lines) return std::move(lines).status();
-  return absl::StrCat(indent, absl::StrFormat("message %s {\n", name),
-                      absl::StrJoin(*lines, "\n\n"), "\n", indent, "}");
+  auto properties = FormatProperties(types, name, qualified_name,
+                                     file_package_name, json, indent_level + 1);
+  if (!properties) return std::move(properties).status();
+  std::vector<std::string> message_name_parts =
+      absl::StrSplit(name, absl::ByChar('.'));
+  std::string reserved_numbers;
+  if (!properties->reserved_numbers.empty()) {
+    reserved_numbers =
+        absl::StrCat(indent, "  reserved ",
+                     absl::StrJoin(properties->reserved_numbers, ", "), ";\n");
+  }
+  return absl::StrCat(
+      indent, absl::StrFormat("message %s {\n", message_name_parts.back()),
+      reserved_numbers, absl::StrJoin(properties->lines, "\n\n"), "\n", indent,
+      "}");
 }
 
 DiscoveryTypeVertex::MessageProperties
 DiscoveryTypeVertex::DetermineReservedAndMaxFieldNumbers(
     google::protobuf::Descriptor const& message_descriptor) {
-  MessageProperties message_properties{{}, 0};
+  MessageProperties message_properties{{}, {}, 0};
   for (auto r = 0; r != message_descriptor.reserved_range_count(); ++r) {
     auto const* reserved_range = message_descriptor.reserved_range(r);
     for (int j = reserved_range->start; j < reserved_range->end; ++j) {
       message_properties.reserved_numbers.insert(j);
     }
-    // google::protobuf::ReservedRange.end returns the next available value, not
-    // the actual end reserved value.
     message_properties.next_available_field_number =
         std::max(message_properties.next_available_field_number,
                  message_descriptor.reserved_range(r)->end);
   }
-
   for (auto i = 0; i != message_descriptor.field_count(); ++i) {
     message_properties.next_available_field_number =
         std::max(message_properties.next_available_field_number,
                  message_descriptor.field(i)->number() + 1);
   }
-
   return message_properties;
 }
 
-// NOLINTNEXTLINE(misc-no-recursion)
-StatusOr<std::vector<std::string>> DiscoveryTypeVertex::FormatProperties(
+// TODO(#12234): Refactor this function into multiple smaller functions to
+// reduce cognitive burden.
+StatusOr<DiscoveryTypeVertex::MessageProperties>
+DiscoveryTypeVertex::FormatProperties(  // NOLINT(misc-no-recursion)
     std::map<std::string, DiscoveryTypeVertex> const& types,
-    std::string const& message_name, std::string const& file_package_name,
-    nlohmann::json const& json, int indent_level) const {
+    std::string const& message_name, std::string const& qualified_message_name,
+    std::string const& file_package_name, nlohmann::json const& json,
+    int indent_level) const {
   if (indent_level > kMaxRecursionDepth) {
     GCP_LOG(FATAL) << __func__ << " exceeded kMaxRecursionDepth";
   }
-  int field_number = 1;
+
+  MessageProperties message_properties{{}, {}, kInitialFieldNumber};
+  auto const* message_descriptor =
+      descriptor_pool_->FindMessageTypeByName(qualified_message_name);
+  if (message_descriptor != nullptr) {
+    message_properties =
+        DetermineReservedAndMaxFieldNumbers(*message_descriptor);
+  }
+
   std::string indent(indent_level * 2, ' ');
-  std::vector<std::string> text;
+  std::set<std::string> current_field_names;
   auto const& properties = json.find("properties");
   for (auto p = properties->begin(); p != properties->end(); ++p) {
-    auto const& v = p.value();
-    std::string field_name = v.value("id", p.key());
-    auto type_and_synthesize = DetermineTypeAndSynthesis(v, field_name);
+    auto const& field = p.value();
+    std::string field_name = field.value("id", p.key());
+    auto type_and_synthesize = DetermineTypeAndSynthesis(field, field_name);
     if (!type_and_synthesize) return std::move(type_and_synthesize).status();
 
     std::string type_name = type_and_synthesize->name;
+    std::string qualified_type_name = type_and_synthesize->name;
+    if (type_and_synthesize->is_message) {
+      qualified_type_name =
+          absl::StrCat(qualified_message_name, ".", type_name);
+    }
+
     if (type_and_synthesize->properties) {
-      auto result =
-          FormatMessage(types, type_name, file_package_name,
-                        *type_and_synthesize->properties, indent_level);
+      auto result = FormatMessage(
+          types, absl::StrCat(message_name, ".", type_name),
+          absl::StrCat(qualified_message_name, ".", type_name),
+          file_package_name, *type_and_synthesize->properties, indent_level);
       if (!result) return std::move(result).status();
-      text.push_back(*std::move(result));
+      message_properties.lines.push_back(*std::move(result));
     }
 
     std::string description;
-    if (v.contains("description")) {
+    if (field.contains("description")) {
       description = absl::StrCat(
-          FormatCommentBlock(std::string(v["description"]), indent_level),
+          FormatCommentBlock(std::string(field["description"]), indent_level),
           "\n");
     }
 
-    if (v.contains("enum")) {
+    if (field.contains("enum")) {
       std::vector<std::pair<std::string, std::string>> enum_comments;
-      for (unsigned int i = 0; i < v["enum"].size(); ++i) {
-        if (v.contains("enumDescriptions") &&
-            i < v["enumDescriptions"].size()) {
-          enum_comments.emplace_back(std::string(v["enum"][i]),
-                                     std::string(v["enumDescriptions"][i]));
+      for (unsigned int i = 0; i < field["enum"].size(); ++i) {
+        if (field.contains("enumDescriptions") &&
+            i < field["enumDescriptions"].size()) {
+          enum_comments.emplace_back(std::string(field["enum"][i]),
+                                     std::string(field["enumDescriptions"][i]));
         } else {
-          enum_comments.emplace_back(std::string(v["enum"][i]), std::string());
+          enum_comments.emplace_back(std::string(field["enum"][i]),
+                                     std::string());
         }
       }
       absl::StrAppend(&description,
@@ -261,10 +300,7 @@ StatusOr<std::vector<std::string>> DiscoveryTypeVertex::FormatProperties(
     }
 
     field_name = CamelCaseToSnakeCase(field_name);
-    auto field_number_status =
-        GetFieldNumber(message_name, field_name, type_name, field_number);
-    if (!field_number_status) return std::move(field_number_status).status();
-    field_number = *std::move(field_number_status);
+    current_field_names.insert(field_name);
     if (type_and_synthesize->compare_package_name) {
       auto iter = types.find(type_and_synthesize->name);
       if (iter == types.end()) {
@@ -273,19 +309,43 @@ StatusOr<std::vector<std::string>> DiscoveryTypeVertex::FormatProperties(
       }
       if (iter->second.package_name() != package_name_) {
         type_name = absl::StrCat(iter->second.package_name(), ".", type_name);
+        qualified_type_name = type_name;
+      } else {
+        qualified_type_name = absl::StrCat(package_name(), ".", type_name);
       }
     }
+
     if (type_and_synthesize->is_map) {
       type_name = absl::StrFormat("map<string, %s>", type_name);
+      qualified_type_name =
+          absl::StrFormat("map<string, %s>", qualified_type_name);
     }
-    text.push_back(absl::StrFormat("%s%s%s%s %s = %d%s;", description, indent,
-                                   DetermineIntroducer(v), type_name,
-                                   field_name, field_number,
-                                   FormatFieldOptions(field_name, v)));
-    ++field_number;
+
+    std::string const introducer = DetermineIntroducer(field);
+    auto field_number =
+        GetFieldNumber(message_descriptor, field_name,
+                       absl::StrCat(introducer, qualified_type_name),
+                       message_properties.next_available_field_number);
+    if (!field_number) return std::move(field_number).status();
+    message_properties.lines.push_back(absl::StrFormat(
+        "%s%s%s%s %s = %d%s;", description, indent, introducer, type_name,
+        field_name, *field_number, FormatFieldOptions(field_name, field)));
+    if (*field_number == message_properties.next_available_field_number) {
+      ++message_properties.next_available_field_number;
+    }
   }
 
-  return text;
+  // Identify field numbers of deleted fields.
+  if (message_descriptor != nullptr) {
+    for (auto i = 0; i != message_descriptor->field_count(); ++i) {
+      auto const* field_descriptor = message_descriptor->field(i);
+      if (!internal::Contains(current_field_names, field_descriptor->name())) {
+        message_properties.reserved_numbers.insert(field_descriptor->number());
+      }
+    }
+  }
+
+  return message_properties;
 }
 
 std::string DiscoveryTypeVertex::FormatFieldOptions(
@@ -319,14 +379,53 @@ std::string DiscoveryTypeVertex::FormatFieldOptions(
   return {};
 }
 
-StatusOr<int> DiscoveryTypeVertex::GetFieldNumber(std::string const&,
-                                                  std::string const&,
-                                                  std::string const&,
-                                                  int field_number) {
-  // TODO(#11095): check protoc descriptors of previous generation protobuf
-  // files for an existing field and the correct field_number to use.
-  // For now, just return back the field_number provided.
-  return field_number;
+StatusOr<int> DiscoveryTypeVertex::GetFieldNumber(
+    google::protobuf::Descriptor const* message_descriptor,
+    std::string const& field_name, std::string const& field_type,
+    int candidate_field_number) {
+  if (message_descriptor == nullptr) return candidate_field_number;
+
+  auto qualified_type_name = [](google::protobuf::FieldDescriptor const& f) {
+    if (f.type() == google::protobuf::FieldDescriptor::TYPE_MESSAGE) {
+      return f.message_type()->full_name();
+    }
+    return std::string(f.type_name());
+  };
+
+  // Keep the field number the same for existing fields.
+  for (auto i = 0; i != message_descriptor->field_count(); ++i) {
+    auto const* field_descriptor = message_descriptor->field(i);
+    std::string type_name;
+    if (field_descriptor->is_map()) {
+      // Currently, all map types in discovery protos use a string key.
+      type_name = absl::StrFormat(
+          "map<string, %s>",
+          qualified_type_name(*field_descriptor->message_type()->map_value()));
+    } else {
+      if (field_descriptor->is_repeated()) {
+        type_name =
+            absl::StrCat("repeated ", qualified_type_name(*field_descriptor));
+      } else if (field_descriptor->has_optional_keyword()) {
+        type_name =
+            absl::StrCat("optional ", qualified_type_name(*field_descriptor));
+      } else {
+        type_name = qualified_type_name(*field_descriptor);
+      }
+    }
+
+    if (field_descriptor->name() == field_name && type_name == field_type) {
+      return field_descriptor->number();
+    }
+
+    if (field_descriptor->name() == field_name && type_name != field_type) {
+      // Existing field type has changed. This is a breaking change.
+      return internal::InvalidArgumentError(absl::StrFormat(
+          "Message: %s has field: %s whose type has changed "
+          "from: %s to: %s\n",
+          message_descriptor->full_name(), field_name, type_name, field_type));
+    }
+  }
+  return candidate_field_number;
 }
 
 StatusOr<std::string> DiscoveryTypeVertex::JsonToProtobufMessage(
@@ -341,7 +440,8 @@ StatusOr<std::string> DiscoveryTypeVertex::JsonToProtobufMessage(
         "\n");
   }
   auto message =
-      FormatMessage(types, name_, file_package_name, json_, indent_level);
+      FormatMessage(types, name_, absl::StrCat(file_package_name, ".", name_),
+                    file_package_name, json_, indent_level);
   if (!message) return std::move(message).status();
   absl::StrAppend(&proto, *message, "\n");
   return proto;
