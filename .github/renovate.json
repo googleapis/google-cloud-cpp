@@ -32,6 +32,17 @@
       "datasourceTemplate": "github-releases",
       "depNameTemplate": "bazelbuild/bazel",
       "versioningTemplate": "loose"
+    },
+    {
+      "fileMatch": [
+        "ci/etc/vcpkg-version.txt$"
+      ],
+      "matchStrings": [
+        "(?^<currentValue>$?)"
+      ],
+      "datasourceTemplate": "github-releases",
+      "depNameTemplate": "microsoft/vcpkg",
+      "versioningTemplate": "loose"
     }
   ],
   "packageRules": [
