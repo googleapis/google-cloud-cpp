@@ -38,7 +38,7 @@
         "ci/etc/vcpkg-version.txt$"
       ],
       "matchStrings": [
-        "(?^<currentValue>$?)"
+        "(<currentValue>^[0-9]{4}\\.[0-9]{2}\\.[0-9]{2}$)"
       ],
       "datasourceTemplate": "github-releases",
       "depNameTemplate": "microsoft/vcpkg",
