@@ -529,6 +529,14 @@ service {
   retryable_status_codes: ["kUnavailable"]
 }
 
+# Cloud Consumer Procurement Service
+service {
+  service_proto_path: "google/cloud/commerce/consumer/procurement/v1/procurement_service.proto"
+  product_path: "google/cloud/commerce/consumer/procurement/v1"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # Cloud Channel
 service {
   service_proto_path: "google/cloud/channel/v1/service.proto"
