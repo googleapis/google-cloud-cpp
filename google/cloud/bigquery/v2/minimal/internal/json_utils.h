@@ -51,6 +51,28 @@ void SafeGetTo(ResponseType& value, nlohmann::json const& j,
   auto i = j.find(key);
   if (i != j.end()) i->get_to(value);
 }
+
+template <typename T>
+std::shared_ptr<T> SafeGetTo(std::shared_ptr<T>& value, nlohmann::json const& j,
+                             std::string const& key) {
+  auto i = j.find(key);
+  if (i == j.end()) return value;
+  if (value == nullptr) {
+    value = std::make_shared<T>();
+  }
+  i->get_to(*value);
+  return value;
+}
+
+template <typename T>
+bool SafeValueOr(T& value, nlohmann::json const& j, std::string const& key) {
+  auto i = j.find(key);
+  if (i != j.end()) {
+    i->get_to(value);
+    return true;
+  }
+  return false;
+}
 // NOLINTEND(misc-no-recursion)
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
