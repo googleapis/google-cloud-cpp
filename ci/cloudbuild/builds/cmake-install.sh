@@ -113,6 +113,7 @@ expected_dirs+=(
   ./include/google/cloud/secretmanager/logging
   ./include/google/cloud/secretmanager/logging/v1
   ./include/google/cloud/spanner/mocks
+  ./include/google/cloud/storage/internal/async
   ./include/google/cloud/storage/internal/grpc
   ./include/google/cloud/storage/oauth2
   ./include/google/cloud/storage/testing

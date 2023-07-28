@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/storage/internal/async_connection_impl.h"
+#include "google/cloud/storage/internal/async/connection_impl.h"
 #include "google/cloud/storage/internal/grpc/client.h"
 #include "google/cloud/storage/testing/canonical_errors.h"
 #include "google/cloud/storage/testing/mock_storage_stub.h"
