@@ -112,7 +112,7 @@ info, see [#7463] and [#5976].
 
 ### New Libraries
 
-We are happy to announce the following GA libraries.  Unless specifically noted,
+We are happy to announce the following GA libraries. Unless specifically noted,
 the APIs in these libraries are stable, and are ready for production use.
 
 - [Commerce](/google/cloud/commerce/README.md)
