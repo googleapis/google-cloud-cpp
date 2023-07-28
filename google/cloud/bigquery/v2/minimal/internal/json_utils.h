@@ -46,26 +46,8 @@ void ToJson(std::chrono::hours const& field, nlohmann::json& j,
 //
 // NOLINTBEGIN(misc-no-recursion)
 template <typename ResponseType>
-void SafeGetTo(ResponseType& value, nlohmann::json const& j,
+bool SafeGetTo(ResponseType& value, nlohmann::json const& j,
                std::string const& key) {
-  auto i = j.find(key);
-  if (i != j.end()) i->get_to(value);
-}
-
-template <typename T>
-std::shared_ptr<T> SafeGetTo(std::shared_ptr<T>& value, nlohmann::json const& j,
-                             std::string const& key) {
-  auto i = j.find(key);
-  if (i == j.end()) return value;
-  if (value == nullptr) {
-    value = std::make_shared<T>();
-  }
-  i->get_to(*value);
-  return value;
-}
-
-template <typename T>
-bool SafeValueOr(T& value, nlohmann::json const& j, std::string const& key) {
   auto i = j.find(key);
   if (i != j.end()) {
     i->get_to(value);
@@ -73,7 +55,18 @@ bool SafeValueOr(T& value, nlohmann::json const& j, std::string const& key) {
   }
   return false;
 }
-// NOLINTEND(misc-no-recursion)
+
+template <typename T>
+bool SafeGetTo(std::shared_ptr<T>& value, nlohmann::json const& j,
+               std::string const& key) {
+  auto i = j.find(key);
+  if (i == j.end()) return false;
+  if (value == nullptr) {
+    value = std::make_shared<T>();
+  }
+  i->get_to(*value);
+  return true;
+}
 
 template <typename C, typename T, typename R>
 void SafeGetTo(nlohmann::json const& j, std::string const& key, R& (C::*f)(T) &,
@@ -83,6 +76,7 @@ void SafeGetTo(nlohmann::json const& j, std::string const& key, R& (C::*f)(T) &,
     (obj.*f)(i->get<T>());
   }
 }
+// NOLINTEND(misc-no-recursion)
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_v2_minimal_internal

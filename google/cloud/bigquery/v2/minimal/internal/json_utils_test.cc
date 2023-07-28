@@ -22,7 +22,6 @@ namespace cloud {
 namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using ::testing::IsEmpty;
 using ::testing::IsNull;
 using ::testing::Not;
 
@@ -103,30 +102,6 @@ TEST(JsonUtilsTest, ToJsonTimepoint) {
   EXPECT_EQ(expected_json, actual_json);
 }
 
-TEST(JsonUtilsTest, SafeGetToKeyPresent) {
-  auto const* const key = "project_id";
-  auto const* json_text = R"({"project_id":"123"})";
-  auto json = nlohmann::json::parse(json_text, nullptr, false);
-  EXPECT_TRUE(json.is_object());
-
-  std::string val;
-  SafeGetTo(val, json, key);
-
-  EXPECT_EQ(val, "123");
-}
-
-TEST(JsonUtilsTest, SafeGetToKeyAbsent) {
-  auto const* const key = "job_id";
-  auto const* json_text = R"({"project_id":"123"})";
-  auto json = nlohmann::json::parse(json_text, nullptr, false);
-  EXPECT_TRUE(json.is_object());
-
-  std::string val;
-  SafeGetTo(val, json, key);
-
-  EXPECT_THAT(val, IsEmpty());
-}
-
 TEST(JsonUtilsTest, SafeGetToCustomType) {
   auto const* const key = "error_result";
   auto const* json_text =
@@ -156,7 +131,7 @@ TEST(JsonUtilsTest, SafeGetToSharedPtrKeyPresent) {
   EXPECT_TRUE(json.is_object());
 
   std::shared_ptr<std::string> val;
-  val = SafeGetTo(val, json, key);
+  EXPECT_TRUE(SafeGetTo(val, json, key));
   EXPECT_THAT(val, Not(IsNull()));
   EXPECT_EQ(*val, "123");
 }
@@ -168,29 +143,29 @@ TEST(JsonUtilsTest, SafeGetToSharedPtrKeyAbsent) {
   EXPECT_TRUE(json.is_object());
 
   std::shared_ptr<std::string> val;
-  val = SafeGetTo(val, json, key);
+  EXPECT_FALSE(SafeGetTo(val, json, key));
   EXPECT_THAT(val, IsNull());
 }
 
-TEST(JsonUtilsTest, SafeValueOrKeyPresent) {
+TEST(JsonUtilsTest, SafeGetToKeyPresent) {
   auto const* const key = "project_id";
   auto const* json_text = R"({"project_id":"123"})";
   auto json = nlohmann::json::parse(json_text, nullptr, false);
   EXPECT_TRUE(json.is_object());
 
   std::string val;
-  EXPECT_TRUE(SafeValueOr(val, json, key));
+  EXPECT_TRUE(SafeGetTo(val, json, key));
   EXPECT_EQ(val, "123");
 }
 
-TEST(JsonUtilsTest, SafeValueOrKeyAbsent) {
+TEST(JsonUtilsTest, SafeGetToKeyAbsent) {
   auto const* const key = "job_id";
   auto const* json_text = R"({"project_id":"123"})";
   auto json = nlohmann::json::parse(json_text, nullptr, false);
   EXPECT_TRUE(json.is_object());
 
   std::string val;
-  EXPECT_FALSE(SafeValueOr(val, json, key));
+  EXPECT_FALSE(SafeGetTo(val, json, key));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
