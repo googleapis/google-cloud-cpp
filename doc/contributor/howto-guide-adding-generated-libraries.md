@@ -5,9 +5,9 @@ This document describes the steps required to add a new library to
 familiar with the existing libraries, the build systems used in those libraries,
 and which libraries are based on gRPC.
 
-  - [Adding a new library](#adding-a-new-library)
-  - [Expanding a library](#expanding-a-library)
-  
+- [Adding a new library](#adding-a-new-library)
+- [Expanding a library](#expanding-a-library)
+
 ## Adding a new library
 
 > :warning: For libraries that include multiple services, the scaffold README
@@ -44,13 +44,16 @@ If the command fails, it returns something like this:
 ERROR: no targets found beneath 'commerce'
 ```
 
-This means the dependency does not exist at the pinned version of the googleapis repo.
+This means the dependency does not exist at the pinned version of the googleapis
+repo.
 [Send a PR to update the googleapis SHA to the latest version](../contributor/howto-guide-update-googleapis-sha.md).
 Wait until that is submitted before proceeding any further.
 
 ### Edit the scripts and configuration
 
-Update the [external/googleapis/update_libraries.sh](../../external/googleapis/update_libraries.sh) script.
+Update the
+[external/googleapis/update_libraries.sh](../../external/googleapis/update_libraries.sh)
+script.
 
 <details>
 <summary>Expand for an example</summary>
@@ -81,7 +84,9 @@ index cdaa0bc9f..b0381d72d 100755
 Determine the retryable status codes by looking in the service config JSON. For
 example, [here][retryable-status-codes].
 
-Manually edit [generator/generator_config.textproto](../../generator/generator_config.textproto) and add the new service.
+Manually edit
+[generator/generator_config.textproto](../../generator/generator_config.textproto)
+and add the new service.
 
 Find the list of `.proto` files that will need to be included:
 
@@ -202,14 +207,16 @@ knows about one such subdirectory. You may need to manually update the
 
 ### Update the root files
 
-Manually edit [cmake/GoogleCloudCppFeatures.cmake](../../cmake/GoogleCloudCppFeatures.cmake) to include the new target. If
-you are generating a GA library, add it to `GOOGLE_CLOUD_CPP_GA_LIBRARIES`.
-Otherwise, if you are generating an experimental library, add it to
-`GOOGLE_CLOUD_CPP_EXPERIMENTAL_LIBRARIES` and note in a comment when the library
-was generated.
+Manually edit
+[cmake/GoogleCloudCppFeatures.cmake](../../cmake/GoogleCloudCppFeatures.cmake)
+to include the new target. If you are generating a GA library, add it to
+`GOOGLE_CLOUD_CPP_GA_LIBRARIES`. Otherwise, if you are generating an
+experimental library, add it to `GOOGLE_CLOUD_CPP_EXPERIMENTAL_LIBRARIES` and
+note in a comment when the library was generated.
 
-Update  [libraries.bzl](../../libraries.bzl) to include the new library. While this can be done by
-running a cmake-based build, it is fastest to edit the file manually.
+Update [libraries.bzl](../../libraries.bzl) to include the new library. While
+this can be done by running a cmake-based build, it is fastest to edit the file
+manually.
 
 ### Update the quickstart
 
@@ -260,7 +267,8 @@ with older services we need to edit a few places:
 
 ### Edit the top-level CHANGELOG file
 
-Announce the new library in the [CHANGELOG.md](../CHANGELOG.md) for the next release.
+Announce the new library in the [CHANGELOG.md](../CHANGELOG.md) for the next
+release.
 
 ### Fix formatting nits
 
@@ -355,5 +363,5 @@ bazel build //google/cloud/${library}/...
 ci/cloudbuild/build.sh -t cmake-install-pr
 ```
 
- [#10237]: https://github.com/googleapis/google-cloud-cpp/issues/10237
- [retryable-status-codes]: https://github.com/googleapis/googleapis/blob/70147caca58ebf4c8cd7b96f5d569a72723e11c1/google/cloud/secretmanager/v1/secretmanager_grpc_service_config.json#L77-L80
+[#10237]: https://github.com/googleapis/google-cloud-cpp/issues/10237
+[retryable-status-codes]: https://github.com/googleapis/googleapis/blob/70147caca58ebf4c8cd7b96f5d569a72723e11c1/google/cloud/secretmanager/v1/secretmanager_grpc_service_config.json#L77-L80
