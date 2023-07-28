@@ -110,6 +110,13 @@ info, see [#7463] and [#5976].
 
 ## v2.14.0 - TBD
 
+### New Libraries
+
+We are happy to announce the following GA libraries. Unless specifically noted,
+the APIs in these libraries are stable, and are ready for production use.
+
+- [Commerce](/google/cloud/commerce/README.md)
+
 ### [Channel Services](/google/cloud/channel/README.md)
 
 The library has been expanded to include the Reporting API.
