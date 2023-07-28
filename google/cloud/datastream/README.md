@@ -1,10 +1,10 @@
 # Datastream API C++ Client Library
 
 This directory contains an idiomatic C++ client library for the
-[Datastream API][cloud-service-docs],
-a serverless and easy-to-use change data capture (CDC) and replication service.
-It allows you to synchronize data across heterogeneous databases and
-applications reliably, and with minimal latency and downtime.
+[Datastream API][cloud-service-docs], a serverless and easy-to-use change data
+capture (CDC) and replication service. It allows you to synchronize data across
+heterogeneous databases and applications reliably, and with minimal latency and
+downtime.
 
 While this library is **GA**, please note that the Google Cloud C++ client
 libraries do **not** follow [Semantic Versioning](https://semver.org/).

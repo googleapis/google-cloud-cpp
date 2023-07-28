@@ -14,8 +14,8 @@ prefer to use CMake for whatever reason.
 - Developers wanting to use the libraries as part of a larger CMake or Bazel
   project should consult the [quickstart guides](/README.md#quickstart) for the
   library or libraries they want to use.
-- Developers wanting to compile the library just to run some examples or
-  tests should read the [build and install](/README.md#building-and-installing)
+- Developers wanting to compile the library just to run some examples or tests
+  should read the [build and install](/README.md#building-and-installing)
   section from the top-level README.
 - Contributors and developers to `google-cloud-cpp` wanting to work with CMake
   should read the current document.
@@ -35,12 +35,12 @@ cd google-cloud-cpp
 
 ## Download and bootstrap `vcpkg`
 
-[vcpkg](https://vcpkg.io) is a package manager for C++ that builds
-from source and installs any binary artifacts in `$HOME`. We recommend
-using `vcpkg` for local development.  In these instructions, we will
-install `vcpkg` descriptions in `$HOME/vcpkg`, you can change the
-`vcpkg` location, just remember to adapt these instructions as you go
-along. Download the `vcpkg` package descriptions using `git`:
+[vcpkg](https://vcpkg.io) is a package manager for C++ that builds from source
+and installs any binary artifacts in `$HOME`. We recommend using `vcpkg` for
+local development. In these instructions, we will install `vcpkg` descriptions
+in `$HOME/vcpkg`, you can change the `vcpkg` location, just remember to adapt
+these instructions as you go along. Download the `vcpkg` package descriptions
+using `git`:
 
 ```shell
 git -C $HOME clone https://github.com/microsoft/vcpkg
@@ -54,8 +54,8 @@ env VCPKG_ROOT="${vcpkg_dir}" $HOME/vcpkg/bootstrap-vcpkg.sh
 
 ## Building `google-cloud-cpp` with vcpkg
 
-Now you can use `vcpkg` to compile `google-cloud-cpp`. Just add one option
-to the `cmake` configure step:
+Now you can use `vcpkg` to compile `google-cloud-cpp`. Just add one option to
+the `cmake` configure step:
 
 ```shell
 cd $HOME/google-cloud-cpp
@@ -118,9 +118,8 @@ cmake --build build-out/clang
 ```
 
 `vcpkg` uses the compiler as part of its binary cache inputs, that is, changing
-the compiler will require rebuilding the dependencies from source. The good
-news is that `vcpkg` can hold multiple versions of a binary artifact in its
-cache.
+the compiler will require rebuilding the dependencies from source. The good news
+is that `vcpkg` can hold multiple versions of a binary artifact in its cache.
 
 ### Changing the build type
 

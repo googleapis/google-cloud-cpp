@@ -5,8 +5,8 @@ This directory contains an idiomatic C++ client library for the
 you to view, monitor, and analyze all your GCP and Anthos assets across projects
 and services.
 
-While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
-[Semantic Versioning](https://semver.org/).
+While this library is **GA**, please note that the Google Cloud C++ client
+libraries do **not** follow [Semantic Versioning](https://semver.org/).
 
 ## Quickstart
 

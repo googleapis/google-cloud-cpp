@@ -4,8 +4,8 @@
 manage Bare Metal Solution hardware installed in a regional extension located
 near a Google Cloud data center.
 
-While this library is **GA**, please note that the Google Cloud C++
-client libraries do **not** follow [Semantic Versioning](https://semver.org/).
+While this library is **GA**, please note that the Google Cloud C++ client
+libraries do **not** follow [Semantic Versioning](https://semver.org/).
 
 ## Quickstart
 
@@ -51,7 +51,8 @@ int main(int argc, char* argv[]) try {
 
 ## More Information
 
-- Official documentation about the [Bare Metal Solution API][cloud-service-docs] service
+- Official documentation about the [Bare Metal Solution API][cloud-service-docs]
+  service
 - [Reference doxygen documentation][doxygen-link] for each release of this
   client library
 - Detailed header comments in our [public `.h`][source-link] files

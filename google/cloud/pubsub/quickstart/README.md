@@ -1,8 +1,8 @@
 # HOWTO: using the Cloud Pub/Sub C++ client in your project
 
 This directory contains small examples showing how to use the Cloud Pub/Sub C++
-client library in your own project. These instructions assume that you have
-some experience as a C++ developer and that you have a working C++ toolchain
+client library in your own project. These instructions assume that you have some
+experience as a C++ developer and that you have a working C++ toolchain
 (compiler, linker, etc.) installed on your platform.
 
 - Packaging maintainers or developers who prefer to install the library in a
@@ -14,8 +14,8 @@ some experience as a C++ developer and that you have a working C++ toolchain
 - Developers wanting to use the libraries as part of a larger CMake or Bazel
   project should consult the current document. Note that there are similar
   documents for each library in their corresponding directories.
-- Developers wanting to compile the library just to run some examples or
-  tests should consult the
+- Developers wanting to compile the library just to run some examples or tests
+  should consult the
   [building and installing](/README.md#building-and-installing) section of the
   top-level README file.
 - Contributors and developers to `google-cloud-cpp` should consult the guide to
@@ -24,19 +24,19 @@ some experience as a C++ developer and that you have a working C++ toolchain
 ## Before you Begin
 
 To run the quickstart program you will need a working Google Cloud Platform
-(GCP) project, and an existing Cloud Pub/Sub Topic.
-The [Cloud Pub/Sub quickstarts][pubsub-quickstart-link] is a good place to find
-information on how to setup a GCP project and create a topic. Make a note of
-the project and topic ids as you will need them later.
+(GCP) project, and an existing Cloud Pub/Sub Topic. The
+[Cloud Pub/Sub quickstarts][pubsub-quickstart-link] is a good place to find
+information on how to setup a GCP project and create a topic. Make a note of the
+project and topic ids as you will need them later.
 
 ## Configuring authentication for the C++ Client Library
 
-Like most Google Cloud Platform (GCP) services, Cloud Pub/Sub requires that
-your application authenticates with the service before accessing any data. If
-you are not familiar with GCP authentication please take this opportunity to
-review the [Authentication Overview][authentication-quickstart]. This library
-uses the `GOOGLE_APPLICATION_CREDENTIALS` environment variable to find the
-credentials file. For example:
+Like most Google Cloud Platform (GCP) services, Cloud Pub/Sub requires that your
+application authenticates with the service before accessing any data. If you are
+not familiar with GCP authentication please take this opportunity to review the
+[Authentication Overview][authentication-quickstart]. This library uses the
+`GOOGLE_APPLICATION_CREDENTIALS` environment variable to find the credentials
+file. For example:
 
 | Shell              | Command                                                                              |
 | :----------------- | ------------------------------------------------------------------------------------ |
@@ -48,9 +48,10 @@ credentials file. For example:
 
 Setting this environment variable is the recommended way to configure the
 authentication preferences, though if the environment variable is not set, the
-library searches for a credentials file in the same location as the [Cloud
-SDK](https://cloud.google.com/sdk/). For more information about *Application
-Default Credentials*, see https://cloud.google.com/docs/authentication/production
+library searches for a credentials file in the same location as the
+[Cloud SDK](https://cloud.google.com/sdk/). For more information about
+*Application Default Credentials*, see
+https://cloud.google.com/docs/authentication/production
 
 ## Using with Bazel
 
@@ -70,13 +71,15 @@ Default Credentials*, see https://cloud.google.com/docs/authentication/productio
    Note that, as it is often the case with C++ libraries, compiling these
    dependencies may take several minutes.
 
-1. Publish messages by running the example, changing the placeholder(s) to appropriate values:
+1. Publish messages by running the example, changing the placeholder(s) to
+   appropriate values:
 
    ```bash
    bazel run :quickstart -- [GCP PROJECT ID] [PUB/SUB TOPIC ID]
    ```
 
-1. Subscribe to messages by running the example, changing the placeholder(s) to appropriate values:
+1. Subscribe to messages by running the example, changing the placeholder(s) to
+   appropriate values:
 
    ```bash
    bazel run :subscriber_quickstart -- [GCP PROJECT ID] [PUB/SUB SUBSCRIPTION ID]
@@ -113,13 +116,15 @@ Default Credentials*, see https://cloud.google.com/docs/authentication/productio
    cmake --build .build
    ```
 
-1. Publish messages by running the example, changing the placeholder(s) to appropriate values:
+1. Publish messages by running the example, changing the placeholder(s) to
+   appropriate values:
 
    ```bash
       .build/quickstart [GCP PROJECT ID] [PUB/SUB TOPIC ID]
    ```
 
-1. Subscribe to messages by running the example, changing the placeholder(s) to appropriate values:
+1. Subscribe to messages by running the example, changing the placeholder(s) to
+   appropriate values:
 
    ```bash
       .build/subscriber_quickstart [GCP PROJECT ID] [PUB/SUB SUBSCRIPTION ID]
@@ -140,8 +145,8 @@ export GRPC_DEFAULT_SSL_ROOTS_FILE_PATH="$PWD/roots.pem"
 ### Windows
 
 Bazel tends to create very long file names and paths. You may need to use a
-short directory to store the build output, such as `c:\b`, and instruct Bazel
-to use it via:
+short directory to store the build output, such as `c:\b`, and instruct Bazel to
+use it via:
 
 ```shell
 bazel --output_user_root=c:\b build ...

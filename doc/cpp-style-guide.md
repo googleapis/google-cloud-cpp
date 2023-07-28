@@ -7,17 +7,17 @@ differ from the GSG.
 
 ## Include Guards
 
-All header files should have include guards formatted like
-`PROJECT_DIR_FILE_H`. This differs from the advice in the GSG in that ours do
-not end with a trailing underscore.
+All header files should have include guards formatted like `PROJECT_DIR_FILE_H`.
+This differs from the advice in the GSG in that ours do not end with a trailing
+underscore.
 
 [link to GSG's section on include guards](https://google.github.io/styleguide/cppguide.html#The__define_Guard)
 
 ## Where to put `const`
 
-Put the const on the right of what it modifies, as in `std::string const&`.
-This simplifies the rules for const making it *always* modify what is on its
-left. This is sometimes referred to as ["east const"][east-const-link].
+Put the const on the right of what it modifies, as in `std::string const&`. This
+simplifies the rules for const making it *always* modify what is on its left.
+This is sometimes referred to as ["east const"][east-const-link].
 
 [link to GSG's section on using const](https://google.github.io/styleguide/cppguide.html#Use_of_const)
 
@@ -40,11 +40,11 @@ string const & str;  // BAD
 ## Order of Includes
 
 Order includes from local to global to minimize implicit dependencies between
-headers. That is, start with the `.h` file that corresponds to the current
-`.cc` file (also do this for the corresponding unit test file), followed by
-other `.h` files from the same project, followed by includes from external
-projects, followed by C++ standard library headers, followed by C system
-headers. For example:
+headers. That is, start with the `.h` file that corresponds to the current `.cc`
+file (also do this for the corresponding unit test file), followed by other `.h`
+files from the same project, followed by includes from external projects,
+followed by C++ standard library headers, followed by C system headers. For
+example:
 
 ```C++
 // Within the file google/cloud/x/foo.cc

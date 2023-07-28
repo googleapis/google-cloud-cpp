@@ -1,14 +1,14 @@
 # Cloud Trace API C++ Client Library
 
 This directory contains an idiomatic C++ client library for the
-[Cloud Trace API][cloud-service-docs], a service to send application trace
-data to Cloud Trace for viewing. This library is used to interact with the
-Trace API directly. If you are looking to instrument your application for
-Cloud Trace, we recommend using [OpenTelemetry](https://opentelemetry.io)
-or a similar framework.
+[Cloud Trace API][cloud-service-docs], a service to send application trace data
+to Cloud Trace for viewing. This library is used to interact with the Trace API
+directly. If you are looking to instrument your application for Cloud Trace, we
+recommend using [OpenTelemetry](https://opentelemetry.io) or a similar
+framework.
 
-While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
-[Semantic Versioning](https://semver.org/).
+While this library is **GA**, please note that the Google Cloud C++ client
+libraries do **not** follow [Semantic Versioning](https://semver.org/).
 
 ## Quickstart
 

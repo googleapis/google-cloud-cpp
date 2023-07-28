@@ -14,8 +14,8 @@ contributions to the project.
 - Developers wanting to use the libraries as part of a larger CMake or Bazel
   project should consult the [quickstart guides](/README.md#quickstart) for the
   library or libraries they want to use.
-- Developers wanting to compile the library just to run some examples or
-  tests should consult the
+- Developers wanting to compile the library just to run some examples or tests
+  should consult the
   [building and installing](/README.md#building-and-installing) section of the
   top-level README file.
 - Contributors and developers **to** `google-cloud-cpp`, this is the right
@@ -32,9 +32,9 @@ contributions to the project.
 ## Linux
 
 Install the dependencies needed for your distribution. The top-level
-[README](/README.md) file lists the minimal development tools necessary
-to compile `google-cloud-cpp`. But for active development you may want to
-install additional tools to run the unit and integration tests.
+[README](/README.md) file lists the minimal development tools necessary to
+compile `google-cloud-cpp`. But for active development you may want to install
+additional tools to run the unit and integration tests.
 
 These instructions will describe how to install these tools for Ubuntu 18.04
 (Bionic Beaver). For other distributions you may consult the Dockerfiles in
@@ -84,8 +84,8 @@ sudo chmod 755 /usr/local/bin/shfmt
 
 Install `cmake_format` to automatically format the CMake list files. We pin this
 tool to a specific version because the formatting changes when the "latest"
-version is updated, and we do not want the builds to break just
-because some third party changed something.
+version is updated, and we do not want the builds to break just because some
+third party changed something.
 
 ```console
 sudo apt install -y python3 python3-pip
@@ -127,10 +127,9 @@ Add the pip directory to your PATH:
 export PATH=$PATH:$HOME/.local/bin
 ```
 
-You need to install the Google Cloud SDK. These instructions work for a GCE
-VM, but you may need to adapt them for your environment. Check the instructions
-on the [Google Cloud SDK website](https://cloud.google.com/sdk/) for
-alternatives.
+You need to install the Google Cloud SDK. These instructions work for a GCE VM,
+but you may need to adapt them for your environment. Check the instructions on
+the [Google Cloud SDK website](https://cloud.google.com/sdk/) for alternatives.
 
 ```console
 sudo ./ci/install-cloud-sdk.sh
@@ -144,9 +143,9 @@ a `compile_commands.json` file at the top of the repo, which CMake knows how to
 create for us.
 
 For the purposes of clang-tooling, it's best to build all the code and
-dependencies from source so that clangd can find all the symbols and jump you
-to the right spot in the source files. We prefer using `vcpkg` for this, so
-clone the vcpkg repo if you don't already have it checked out somewhere.
+dependencies from source so that clangd can find all the symbols and jump you to
+the right spot in the source files. We prefer using `vcpkg` for this, so clone
+the vcpkg repo if you don't already have it checked out somewhere.
 
 ```shell
 VCPKG_ROOT=~/vcpkg  # We'll use this later
@@ -167,7 +166,8 @@ cmake -S . -B .build -G Ninja \
 cmake --build .build
 ```
 
-Finally, symlink the `.build/compile_commands.json` file into the top of the repo.
+Finally, symlink the `.build/compile_commands.json` file into the top of the
+repo.
 
 ```shell
 ln -s .build/compile_commands.json .
@@ -205,8 +205,9 @@ env -C cmake-out/home \
 ### Installing Docker
 
 You may want to [install Docker](https://docs.docker.com/engine/installation/).
-This will allow you to [use the build scripts](howto-guide-running-ci-builds-locally.md)
-to test on multiple platforms.
+This will allow you to
+[use the build scripts](howto-guide-running-ci-builds-locally.md) to test on
+multiple platforms.
 
 Once Docker is installed, to avoid needing to prepend `sudo` to Docker
 invocations, add yourself to the Docker group:
@@ -217,9 +218,9 @@ sudo usermod -aG docker $USER
 
 ## Windows
 
-If you mainly use Windows as your development environment, you need to install
-a number of tools.  We use [Chocolatey](https://www.chocolatey.org) to drive the
-installation, so you would need to install it first.  This needs to be executed
+If you mainly use Windows as your development environment, you need to install a
+number of tools. We use [Chocolatey](https://www.chocolatey.org) to drive the
+installation, so you would need to install it first. This needs to be executed
 in a `cmd.exe` shell, running as the `Administrator`:
 
 ```console
@@ -236,8 +237,8 @@ choco install -y git cmake ninja bazelisk
 
 ### Clone `google-cloud-cpp`
 
-You may need to create a new key pair to connect to GitHub.  Search the web
-for how to do this.  Then you can clone the code:
+You may need to create a new key pair to connect to GitHub. Search the web for
+how to do this. Then you can clone the code:
 
 ```console
 > cd \Users\%USERNAME%
@@ -247,8 +248,8 @@ for how to do this.  Then you can clone the code:
 
 ### Use the CI scripts to compile `google-cloud-cpp`
 
-You can use the CI driver scripts to compile the code. You need to load the
-MSVC environment variables:
+You can use the CI driver scripts to compile the code. You need to load the MSVC
+environment variables:
 
 ```console
 > set MSVC_VERSION=2022
@@ -262,8 +263,8 @@ Or to setup for 32-bit builds:
 > call "c:\Program Files (x86)\Microsoft Visual Studio\%MSVC_VERSION%\Community\VC\Auxiliary\Build\vcvars32.bat"
 ```
 
-Then run the CI scripts, for example, to compile and run the tests with CMake
-in debug mode:
+Then run the CI scripts, for example, to compile and run the tests with CMake in
+debug mode:
 
 ```console
 > cd google-cloud-cpp
@@ -456,8 +457,8 @@ Reset the password for your account:
 $ gcloud compute --project "${PROJECT_ID}" reset-windows-password --zone "${ZONE}" "${VM}"
 ```
 
-Save that password in some kind of password manager.  Then connect to the VM
-using your favorite RDP client.  The Google Cloud Compute Engine
+Save that password in some kind of password manager. Then connect to the VM
+using your favorite RDP client. The Google Cloud Compute Engine
 [documentation](https://cloud.google.com/compute/docs/quickstart-windows)
 suggests some third-party clients that may be useful.
 

@@ -1,11 +1,11 @@
 # Cloud Build API C++ Client Library
 
-This directory contains an idiomatic C++ client library for the [Cloud Build
-API][cloud-service-docs], a service that executes your builds on Google Cloud
-Platform's infrastructure.
+This directory contains an idiomatic C++ client library for the
+[Cloud Build API][cloud-service-docs], a service that executes your builds on
+Google Cloud Platform's infrastructure.
 
-While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
-[Semantic Versioning](https://semver.org/).
+While this library is **GA**, please note that the Google Cloud C++ client
+libraries do **not** follow [Semantic Versioning](https://semver.org/).
 
 ## Quickstart
 

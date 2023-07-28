@@ -7,14 +7,14 @@ consume excessive CPU or memory resources to do so.
 
 In general, a single threaded process, running on a n1-standard-8 GCE instance
 should be able to download data at around 400 MiB/s (with MD5 hashes disabled),
-and upload data at about 50 MiB/s.  The time to first byte (TTFB) is high, so
-these throughput numbers only make sense for relatively large objects (say
-over 500 MiB).
+and upload data at about 50 MiB/s. The time to first byte (TTFB) is high, so
+these throughput numbers only make sense for relatively large objects (say over
+500 MiB).
 
 ## Compiling for Benchmarks
 
-Make sure to compile all the dependencies with the right optimization level.
-The [contributor documentation](/doc/contributor/README.md) has the relevant
+Make sure to compile all the dependencies with the right optimization level. The
+[contributor documentation](/doc/contributor/README.md) has the relevant
 information.
 
 ## Running the Benchmarks
@@ -102,11 +102,11 @@ download speed. Consider excluding results with MD5 enabled from your analysis.
 ## Appendix: Installing Python Dependencies
 
 There are probably multiple ways to install the Python dependencies used to
-generate the benchmark result plots. If you prefer a different procedure then
-by all means use it.
+generate the benchmark result plots. If you prefer a different procedure then by
+all means use it.
 
-The Python scripts use Python3 and assume that the `venv` module is
-installed on your workstation.
+The Python scripts use Python3 and assume that the `venv` module is installed on
+your workstation.
 
 We will use a Python [virtual environment][python-venv] to install the
 dependencies, this is a self-contained directory tree, in your `$HOME` so we can

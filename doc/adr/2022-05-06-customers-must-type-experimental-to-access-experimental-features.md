@@ -20,8 +20,8 @@ existing workarounds (e.g. `ABSL_DEPRECATED()`), the generated warning messages
 are misleading; they include the literal word `deprecated` in the warnings.
 
 Sometimes it is possible to add new features in a separate namespace, such as
-`google::cloud::experimental`, or `google::cloud::${service}_experimental`.
-That is often cumbersome for features added to a core class like
+`google::cloud::experimental`, or `google::cloud::${service}_experimental`. That
+is often cumbersome for features added to a core class like
 `google::cloud::${service}::Client` or `google::cloud::${service}::Connection`.
 
 We could use a separate branch for experimental features, but then customers
@@ -42,15 +42,15 @@ Examples of acceptable approaches include:
   initializer, the caller would need to type `Experimental` when using such
   functions.
 - Adding new libraries, where the target name includes `experimental-`. For
-  CMake we generally use `google-cloud-cpp::experimental-${library}`, for
-  Bazel we generally use `//:experimental-${library}` (note this is a top-level)
+  CMake we generally use `google-cloud-cpp::experimental-${library}`, for Bazel
+  we generally use `//:experimental-${library}` (note this is a top-level)
   target.
 
 **Consequences**: This decision makes it possible to add experimental features
 while clearly signalling to any users of the feature that it is indeed
-experimental and subject to change.  Customers can use these new features, but
-are forewarned about their stability.  Without this, we would not be able to add
+experimental and subject to change. Customers can use these new features, but
+are forewarned about their stability. Without this, we would not be able to add
 features until we are ready to commit to the final, stable API for it. The only
 possible way to do so would be a "preview" branch, maybe without releases. This
-is very hard for customers to use, and does not clearly delineate the stable
-vs. experimental parts of the branch.
+is very hard for customers to use, and does not clearly delineate the stable vs.
+experimental parts of the branch.

@@ -1,8 +1,8 @@
 # GCS C++ client integration test resources
 
-To run the integration tests against the production environment one must setup
-a number of resources. This document describes how to do so, assuming you have
-an existing project in Google Cloud Platform.
+To run the integration tests against the production environment one must setup a
+number of resources. This document describes how to do so, assuming you have an
+existing project in Google Cloud Platform.
 
 ## Setting up a Project
 

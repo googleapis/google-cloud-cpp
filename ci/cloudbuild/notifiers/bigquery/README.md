@@ -3,8 +3,8 @@
 Sometimes we need to analyze our build results, looking for patterns of build
 latency, flakiness, etc. These analyses often require looking at the results
 over long periods of time, so the usual dashboards and squinting may not work.
-Putting the results in some sort of database works better for that purpose.
-The Cloud Build BigQuery notifier allows us to store build results in BigQuery.
+Putting the results in some sort of database works better for that purpose. The
+Cloud Build BigQuery notifier allows us to store build results in BigQuery.
 
 This directory contains files needed to use the Cloud Build BigQuery notifier.
 The high-level description of how this works (as I understand it) is the
@@ -18,10 +18,10 @@ following:
 - We run the GCB BigQuery Notifier as a Cloud Run service, which subscribes to
   the build notifications and writes them to a BigQuery table.
 
-The `bigquery.yaml` file is the config that we give to the GCB BigQuery
-Notifier service. It is read from a GCS bucket, so we first copy the file there
-before deploying the service. The steps to deploy are captured in the
-`deploy.sh` script.
+The `bigquery.yaml` file is the config that we give to the GCB BigQuery Notifier
+service. It is read from a GCS bucket, so we first copy the file there before
+deploying the service. The steps to deploy are captured in the `deploy.sh`
+script.
 
 Links:
 

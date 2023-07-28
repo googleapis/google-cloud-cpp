@@ -38,5 +38,5 @@ go test -v -proxy_addr=:9999
 
 ## Notes
 
-The CMake files are used to run sanitizers/linters on the code. For building
-and testing, Bazel is recommended (as shown above).
+The CMake files are used to run sanitizers/linters on the code. For building and
+testing, Bazel is recommended (as shown above).

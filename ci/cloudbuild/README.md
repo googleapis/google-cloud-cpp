@@ -1,9 +1,9 @@
 # Google Cloud Build
 
-This directory contains the files needed for our GCB presubmit ("PR builds")
-and postsubmit ("CI builds") builds. The `cloudbuild.yaml` file is the main
-config file for Google Cloud Build (GCB). Cloud builds may be managed from the
-command line with the `gcloud builds` command. To make this process easier, the
+This directory contains the files needed for our GCB presubmit ("PR builds") and
+postsubmit ("CI builds") builds. The `cloudbuild.yaml` file is the main config
+file for Google Cloud Build (GCB). Cloud builds may be managed from the command
+line with the `gcloud builds` command. To make this process easier, the
 `build.sh` script can be used to submit builds to GCB, run builds locally in a
 docker container, or even run builds directly in your local environment. See
 `build.sh --help` for more details.
@@ -25,8 +25,8 @@ we prefer to configure them with version controlled YAML files that live in the
 also, but we have the local `trigger.sh` script to make this process a bit
 easier. See `trigger.sh --help` for more details.
 
-The internal-only doc at http://go/cloud-cxx:gcb-project has more info about
-how we've configured the Google Cloud project where these builds run.
+The internal-only doc at http://go/cloud-cxx:gcb-project has more info about how
+we've configured the Google Cloud project where these builds run.
 
 ## Adding a new build
 
@@ -37,23 +37,23 @@ adds the `cxx17-pr` and `cxx17-ci` builds. The steps to add a new build are:
 1. (Optional) If your build needs to run in a unique environment, you should
    start by creating a new Dockerfile in `dockerfiles/`. If you don't need a
    specific environment, we typically use the `dockerfiles/fedora.Dockerfile`
-   image, which is simply called the "fedora" distro. Here's an [example
-   PR](https://github.com/googleapis/google-cloud-cpp/pull/6259) that adds a
-   build with its own Dockerfile.
+   image, which is simply called the "fedora" distro. Here's an
+   [example PR](https://github.com/googleapis/google-cloud-cpp/pull/6259) that
+   adds a build with its own Dockerfile.
 1. Create the new build script in `builds/` that runs the commands you want.
    - You can test this script right away with `build.sh` by explicitly
-     specifying the `--distro` you want your build to run in.  For example:
+     specifying the `--distro` you want your build to run in. For example:
    ```
    $ build.sh --distro fedora my-new-build # or ...
    $ build.sh --distro fedora my-new-build --docker
    ```
-1. Create your trigger file(s) in the `triggers/` directory. If you want both
-   PR (presubmit) and CI (postsubmit) builds you can generate the trigger files
+1. Create your trigger file(s) in the `triggers/` directory. If you want both PR
+   (presubmit) and CI (postsubmit) builds you can generate the trigger files
    with the command `trigger.sh --generate my-new-build`, which will write the
    new files in the `triggers/` directory. You may need to tweak the files at
    this point, for example to change the distro (fedora is the default).
-1. At this point, you're pretty much done. You can now test your build using
-   the trigger name as shown here:
+1. At this point, you're pretty much done. You can now test your build using the
+   trigger name as shown here:
    ```
    $ build.sh -t my-new-build-pr # or ...
    $ build.sh -t my-new-build-pr --docker # or ...
@@ -84,11 +84,11 @@ test are:
 - C++ Language: C++14, ..., C++20
 - Installation: CMake, pkg-config
 
-In addition to these main dimensions, we also want to use tools and analyzers
-to help us catch bugs: clang-tidy, clang static analyzer, asan, msan, tsan,
-ubsan, etc. The full matrix of all combinations is infeasible to test
-completely, so we follow the following principles to minimize the test space
-while achieving high likelihood of the code working for our customers.
+In addition to these main dimensions, we also want to use tools and analyzers to
+help us catch bugs: clang-tidy, clang static analyzer, asan, msan, tsan, ubsan,
+etc. The full matrix of all combinations is infeasible to test completely, so we
+follow the following principles to minimize the test space while achieving high
+likelihood of the code working for our customers.
 
 - For simple dimensions (e.g. things that are "on/off") we want at least one
   build for each 'value' of the setting.
@@ -99,13 +99,14 @@ while achieving high likelihood of the code working for our customers.
   we need to be careful of quotas
 - Code coverage builds need to run integration tests
 - Sanitizer builds need to run integration tests
-- We want to test our user-facing instructions (i.e., how to install and use)
-  as much as possible (this is difficult on macOS and Windows without docker)
+- We want to test our user-facing instructions (i.e., how to install and use) as
+  much as possible (this is difficult on macOS and Windows without docker)
 
 ## GCB Worker Pool
 
-We use a lot of GCB quota, so our GCB builds are run in a [custom worker
-pool][custom-worker-pool]. You can see our worker pool(s) in the web UI at
+We use a lot of GCB quota, so our GCB builds are run in a
+[custom worker pool][custom-worker-pool]. You can see our worker pool(s) in the
+web UI at
 https://console.cloud.google.com/cloud-build/settings/worker-pool?project=cloud-cpp-testing-resources
 See `gcloud beta builds worker-pools --help` for more info about worker pools.
 

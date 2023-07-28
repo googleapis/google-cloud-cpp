@@ -1,8 +1,8 @@
 # HOWTO: using the Cloud BigQuery C++ client in your project
 
 This directory contains small examples showing how to use the Cloud BigQuery C++
-client library in your own project. These instructions assume that you have
-some experience as a C++ developer and that you have a working C++ toolchain
+client library in your own project. These instructions assume that you have some
+experience as a C++ developer and that you have a working C++ toolchain
 (compiler, linker, etc.) installed on your platform.
 
 - Packaging maintainers or developers who prefer to install the library in a
@@ -14,8 +14,8 @@ some experience as a C++ developer and that you have a working C++ toolchain
 - Developers wanting to use the libraries as part of a larger CMake or Bazel
   project should consult the current document. Note that there are similar
   documents for each library in their corresponding directories.
-- Developers wanting to compile the library just to run some examples or
-  tests should consult the
+- Developers wanting to compile the library just to run some examples or tests
+  should consult the
   [building and installing](/README.md#building-and-installing) section of the
   top-level README file.
 - Contributors and developers to `google-cloud-cpp` should consult the guide to
@@ -24,10 +24,9 @@ some experience as a C++ developer and that you have a working C++ toolchain
 ## Before you Begin
 
 To run the quickstart program you will need a working Google Cloud Platform
-(GCP) project.
-The [Cloud BigQuery quickstarts][bigquery-quickstart-link] is a good place to
-find information on how to setup a GCP project. Make a note of the project name
-as you will need them later.
+(GCP) project. The [Cloud BigQuery quickstarts][bigquery-quickstart-link] is a
+good place to find information on how to setup a GCP project. Make a note of the
+project name as you will need them later.
 
 ## Configuring authentication for the C++ Client Library
 
@@ -48,9 +47,9 @@ credentials file. For example:
 
 Setting this environment variable is the recommended way to configure the
 authentication preferences, though if the environment variable is not set, the
-library searches for a credentials file in the same location as the [Cloud
-SDK](https://cloud.google.com/sdk/). For more information about *Application
-Default Credentials*, see
+library searches for a credentials file in the same location as the
+[Cloud SDK](https://cloud.google.com/sdk/). For more information about
+*Application Default Credentials*, see
 https://cloud.google.com/docs/authentication/production
 
 ## Using with Bazel
@@ -129,8 +128,8 @@ export GRPC_DEFAULT_SSL_ROOTS_FILE_PATH="$PWD/roots.pem"
 ### Windows
 
 Bazel tends to create very long file names and paths. You may need to use a
-short directory to store the build output, such as `c:\b`, and instruct Bazel
-to use it via:
+short directory to store the build output, such as `c:\b`, and instruct Bazel to
+use it via:
 
 ```shell
 bazel --output_user_root=c:\b build ...

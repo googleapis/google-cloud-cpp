@@ -2,8 +2,8 @@
 
 This document describes the steps required to add a new library to
 `google-cloud-cpp`. It is intended for contributors, and assumes you are
-familiar with the existing libraries, the build systems used in those
-libraries, and which libraries are based on gRPC.
+familiar with the existing libraries, the build systems used in those libraries,
+and which libraries are based on gRPC.
 
 ## Adding a new library
 
@@ -80,10 +80,9 @@ find "${bazel_output_base}/external/com_google_googleapis/${subdir}" -name '*.pr
   xargs -0 grep -l '^service'
 ```
 
-> **Note:**
-> While older service definitions may not include the version specification
-> in the `product_path` field, all new services are required to include the
-> version.
+> **Note:** While older service definitions may not include the version
+> specification in the `product_path` field, all new services are required to
+> include the version.
 
 <details>
 <summary>Expand for an example</summary>
@@ -187,8 +186,8 @@ knows about one such subdirectory. You may need to manually update the
 
 ### Update the root files
 
-Manually edit `cmake/GoogleCloudCppFeatures.cmake` to include the new target.
-If you are generating a GA library, add it to `GOOGLE_CLOUD_CPP_GA_LIBRARIES`.
+Manually edit `cmake/GoogleCloudCppFeatures.cmake` to include the new target. If
+you are generating a GA library, add it to `GOOGLE_CLOUD_CPP_GA_LIBRARIES`.
 Otherwise, if you are generating an experimental library, add it to
 `GOOGLE_CLOUD_CPP_EXPERIMENTAL_LIBRARIES` and note in a comment when the library
 was generated.
@@ -207,14 +206,14 @@ gcloud services enable --project=cloud-cpp-testing-resources "${library}.googlea
 bazel run -- //google/cloud/${library}/quickstart:quickstart $params
 ```
 
-Edit the tests so this new quickstart receives the right command-line
-arguments in the CI builds.
+Edit the tests so this new quickstart receives the right command-line arguments
+in the CI builds.
 
 - `google/cloud/${library}/CMakeLists.txt`
 
 ### Add the API baseline
 
-For new GA libraries you need to create the API baseline.  You can leave this
+For new GA libraries you need to create the API baseline. You can leave this
 running while you work on tweaks to the quickstart and documentation.
 
 ```shell
@@ -238,8 +237,8 @@ not always valid. Find the correct urls and update the links.
 
 ### Review the metadata file
 
-Newer services provide all the data needed to generate this file correctly,
-but with older services we need to edit a few places:
+Newer services provide all the data needed to generate this file correctly, but
+with older services we need to edit a few places:
 
 - `google/cloud/${library}/**/.repo-metadata.json`
 

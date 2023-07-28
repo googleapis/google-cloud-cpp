@@ -4,8 +4,8 @@ This directory contains an idiomatic C++ client library for the
 [Cloud IoT API][cloud-service-docs], a service to register and manage IoT
 (Internet of Things) devices that connect to the Google Cloud Platform.
 
-While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
-[Semantic Versioning](https://semver.org/).
+While this library is **GA**, please note that the Google Cloud C++ client
+libraries do **not** follow [Semantic Versioning](https://semver.org/).
 
 ## Quickstart
 

@@ -10,20 +10,19 @@
 This repository contains idiomatic C++ client libraries for the following
 [Google Cloud Platform](https://cloud.google.com/) services.
 
-> Please check the [CHANGELOG] for important announcements and upcoming
-> changes.
+> Please check the [CHANGELOG] for important announcements and upcoming changes.
 
 ## Quickstart
 
 Each library (see below) contains a directory named `quickstart/` that's
 intended to help you get up and running in a matter of minutes. This
 `quickstart/` directory contains a minimal "Hello World" program demonstrating
-how to use the library, along with minimal build files for common build
-systems, such as CMake and Bazel.
+how to use the library, along with minimal build files for common build systems,
+such as CMake and Bazel.
 
-As an example, the following code snippet, taken from [Google Cloud
-Storage](google/cloud/storage/README.md), should give you a sense of what it's
-like to use one of these C++ libraries.
+As an example, the following code snippet, taken from
+[Google Cloud Storage](google/cloud/storage/README.md), should give you a sense
+of what it's like to use one of these C++ libraries.
 
 <!-- inject-quickstart-start -->
 
@@ -445,10 +444,10 @@ run the examples included with the libraries.
   [vcpkg](https://vcpkg.io), or [Conda](https://conda.io), should follow the
   instructions for their package manager.
 - Developers wanting to use the libraries as part of a larger CMake or Bazel
-  project should consult the [quickstart guides](#quickstart) for the library
-  or libraries they want to use.
-- Developers wanting to compile the library just to run some examples or
-  tests should read the current document.
+  project should consult the [quickstart guides](#quickstart) for the library or
+  libraries they want to use.
+- Developers wanting to compile the library just to run some examples or tests
+  should read the current document.
 - Contributors and developers to `google-cloud-cpp` should consult the guide to
   [set up a development workstation][howto-setup-dev-workstation].
 
@@ -463,10 +462,10 @@ bazel build //...
 
 ### Building with CMake
 
-This library requires CMake >= 3.10. If you are planning to install the libraries
-please consult the [packaging guide](/doc/packaging.md), these instructions will
-**NOT** produce artifacts that you can put in `/usr/local`, or share with your
-colleagues.
+This library requires CMake >= 3.10. If you are planning to install the
+libraries please consult the [packaging guide](/doc/packaging.md), these
+instructions will **NOT** produce artifacts that you can put in `/usr/local`, or
+share with your colleagues.
 
 From the top-level directory of `google-cloud-cpp` run these commands:
 
@@ -481,32 +480,36 @@ The binary artifacts, such as examples, will be placed in `cmake-out/`.
 
 ## Support
 
-- This project follows Google's [Foundational C++ Support Policy][support-policy],
-  which is summarized in the [Foundational C++ Support Matrix][support-matrix].
+- This project follows Google's
+  [Foundational C++ Support Policy][support-policy], which is summarized in the
+  [Foundational C++ Support Matrix][support-matrix].
   - Language Version (>= C++14).
   - Operating Systems: Windows, macOS, and Linux.
   - Build Systems: Bazel (>= 5.4), CMake (>= 3.10).
-  - Compilers: GCC (>= 7.3), Clang (>= 6.0), MSVC (>= 2019), Apple Clang (>= 12).
-- This project uses dependencies described in [doc/packaging.md](https://github.com/googleapis/google-cloud-cpp/blob/main/doc/packaging.md).
+  - Compilers: GCC (>= 7.3), Clang (>= 6.0), MSVC (>= 2019), Apple Clang (>=
+    12).
+- This project uses dependencies described in
+  [doc/packaging.md](https://github.com/googleapis/google-cloud-cpp/blob/main/doc/packaging.md).
 - This project works with or without exceptions enabled.
-- This project cuts [monthly releases](https://github.com/googleapis/google-cloud-cpp/releases) with detailed release notes.
+- This project cuts
+  [monthly releases](https://github.com/googleapis/google-cloud-cpp/releases)
+  with detailed release notes.
 
 ## Public API and API Breaking Changes
 
 This project follows Google's [OSS Library Breaking Change Policy].
 
 In general, we avoid making backwards incompatible changes to our
-[public API](/doc/public-api.md). Sometimes such changes yield benefits to
-our customers, in the form of better performance, easier-to-understand APIs,
-and/or more consistent APIs across services. When these benefits warrant it, we
-will:
+[public API](/doc/public-api.md). Sometimes such changes yield benefits to our
+customers, in the form of better performance, easier-to-understand APIs, and/or
+more consistent APIs across services. When these benefits warrant it, we will:
 
 - Announce these changes prominently in our `CHANGELOG.md` file and in the
   affected release's notes.
 - Increase the major version for `google-cloud-cpp`.
 
-Nevertheless, though we take commercially reasonable efforts to prevent this,
-it is possible that backwards incompatible changes go undetected and, therefore,
+Nevertheless, though we take commercially reasonable efforts to prevent this, it
+is possible that backwards incompatible changes go undetected and, therefore,
 undocumented. We apologize if this is the case and welcome feedback or bug
 reports to rectify the problem.
 

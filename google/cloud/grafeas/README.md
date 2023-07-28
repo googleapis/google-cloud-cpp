@@ -7,7 +7,7 @@ govern your software supply chain.
 
 Several Google Cloud Platform services use the Grafeas APIs and protocol buffer
 definitions. This directory contains CMake targets to generate the C++ libraries
-corresponding to this code.  Customers are not expected to use these libraries
+corresponding to this code. Customers are not expected to use these libraries
 directly (though they might), instead we recommend using the idiomatic C++
 libraries for the GCP services.
 

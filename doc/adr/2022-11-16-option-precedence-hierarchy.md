@@ -19,7 +19,8 @@ use.
 value to use when the same option is set via multiple mechanisms:
 
 1. Environment variables
-1. Per function call/GCS `Request` instance (if both are set with different values, an error is returned)
+1. Per function call/GCS `Request` instance (if both are set with different
+   values, an error is returned)
 1. `<service>Client` constructor `Options`
 1. `Make<service>Connection` factory function `Options`
 1. Default values
@@ -29,4 +30,5 @@ Thus:
 
 - Failure to detect conflicts is a bug in the library.
 - Any changes in behavior are bug fixes.
-- The number of conflicts is expected to be small as the overlap is tiny and the features are rarely used.
+- The number of conflicts is expected to be small as the overlap is tiny and the
+  features are rarely used.

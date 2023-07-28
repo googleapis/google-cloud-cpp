@@ -173,8 +173,8 @@ Depending on the user’s needs, they can choose one of the two options:
 ### Computing the optimal number of shards
 
 The formula for the optimal number of shards was obtained by experimenting with
-a simple benchmark. The raw results and discussion is in the [github
-issue](https://github.com/googleapis/google-cloud-cpp/issues/2951#issuecomment-565760791).
+a simple benchmark. The raw results and discussion is in the
+[github issue](https://github.com/googleapis/google-cloud-cpp/issues/2951#issuecomment-565760791).
 We split the file into shards which are no less than 32MiB but cap their number
 to 64. The short summary for this decision is:
 
@@ -281,8 +281,7 @@ upload and resuming.
 
 Initiating the upload works just like the stateless version, except:
 
-- the generation of the destination object is obtained (via
-  `GetObjectMetadata`)
+- the generation of the destination object is obtained (via `GetObjectMetadata`)
 - instead of the lock file, the state object is created and the streams are
   created _before_ the state object
 

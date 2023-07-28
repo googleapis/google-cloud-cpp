@@ -5,8 +5,8 @@ This directory contains an idiomatic C++ client library for the
 notebooks in Google Cloud. Learn more about notebooks at the
 [Vertex AI Workbench] site.
 
-While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
-[Semantic Versioning](https://semver.org/).
+While this library is **GA**, please note that the Google Cloud C++ client
+libraries do **not** follow [Semantic Versioning](https://semver.org/).
 
 ## Quickstart
 

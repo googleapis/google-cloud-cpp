@@ -1,7 +1,7 @@
 # Updating the golden files
 
 We keep a set of "golden" files to ensure the generator has not changed its
-output in unexpected ways.  If you need to update these files, use this command:
+output in unexpected ways. If you need to update these files, use this command:
 
 ```shell
 bazel_output_base="$(bazel info output_base)"
@@ -21,6 +21,6 @@ using `git diff`.
 ## Keep hand-crafted tests separate from golden files
 
 We write unit tests to verify the generated files work as expected. These tests
-are in the `tests/` subdirectory.  Do **not** insert hand-crafted code into
-the `golden/` subdirectory. That directory does not get the usual creature
-comforts, such as automatic code formatting.
+are in the `tests/` subdirectory. Do **not** insert hand-crafted code into the
+`golden/` subdirectory. That directory does not get the usual creature comforts,
+such as automatic code formatting.

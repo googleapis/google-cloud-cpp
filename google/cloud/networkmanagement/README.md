@@ -4,8 +4,8 @@ This directory contains an idiomatic C++ client library for the
 [Network Management API][cloud-service-docs]. Provides a collection of network
 performance monitoring and diagnostic capabilities.
 
-While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
-[Semantic Versioning](https://semver.org/).
+While this library is **GA**, please note that the Google Cloud C++ client
+libraries do **not** follow [Semantic Versioning](https://semver.org/).
 
 ## Quickstart
 
@@ -51,7 +51,8 @@ int main(int argc, char* argv[]) try {
 
 ## More Information
 
-- Official documentation about the [Network Management API][cloud-service-docs] service
+- Official documentation about the [Network Management API][cloud-service-docs]
+  service
 - [Reference doxygen documentation][doxygen-link] for each release of this
   client library
 - Detailed header comments in our [public `.h`][source-link] files

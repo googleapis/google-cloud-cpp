@@ -3,9 +3,9 @@
 :construction:
 
 This directory contains an idiomatic C++ client library for
-[Cloud Pub/Sub Lite][cloud-service-root], a high-volume
-messaging service built for very low cost of operation by offering zonal storage
-and pre-provisioned capacity.
+[Cloud Pub/Sub Lite][cloud-service-root], a high-volume messaging service built
+for very low cost of operation by offering zonal storage and pre-provisioned
+capacity.
 
 This library is **experimental**. Its APIs are subject to change without notice.
 
@@ -64,7 +64,8 @@ int main(int argc, char* argv[]) try {
 
 ## More Information
 
-- Official documentation about the [Cloud Pub/Sub Lite][cloud-service-docs] service
+- Official documentation about the [Cloud Pub/Sub Lite][cloud-service-docs]
+  service
 - [Reference doxygen documentation][doxygen-link] for each release of this
   client library
 - Detailed header comments in our [public `.h`][source-link] files

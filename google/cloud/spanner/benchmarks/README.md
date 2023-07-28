@@ -2,8 +2,8 @@
 
 This directory contains end-to-end benchmarks for the Cloud Spanner C++ client
 library. The benchmarks execute experiments against the production environment.
-You need a working Google Cloud Platform project and Cloud Spanner instance
-to run these benchmarks. We recommend that you use an isolated instance, that is
+You need a working Google Cloud Platform project and Cloud Spanner instance to
+run these benchmarks. We recommend that you use an isolated instance, that is
 one without any other workloads, to run each experiment, and that you do not run
 more than one experiment at a time in said instance.
 
@@ -36,8 +36,8 @@ instructions for your platform.
 
 ### Compiling the library
 
-You must compile both the library and its dependencies with optimization.
-The [contributor documentation](/doc/contributor/README.md) has the relevant
+You must compile both the library and its dependencies with optimization. The
+[contributor documentation](/doc/contributor/README.md) has the relevant
 information.
 
 ### Configuring Authentication
@@ -96,9 +96,9 @@ done
 
 ### Inspecting the results
 
-At this time we have not developed scripts to analyze the benchmark results,
-but some simple R commands can help, start R in your command line and then
-issue the following commands:
+At this time we have not developed scripts to analyze the benchmark results, but
+some simple R commands can help, start R in your command line and then issue the
+following commands:
 
 ```R
 require(ggplot2) # may require install.packages("ggplot2") the first time
@@ -125,8 +125,8 @@ single-row reads using different numbers of channels and threads. The objective
 is to verify the client library scales well with more threads and those not
 introduce bottlenecks.
 
-To run the experiment reading data for approximately 5 minutes use 20 samples
-of 15 seconds each:
+To run the experiment reading data for approximately 5 minutes use 20 samples of
+15 seconds each:
 
 ```bash
 .build/google/cloud/spanner/benchmarks/single_row_throughput_benchmark \

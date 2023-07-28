@@ -45,9 +45,9 @@ cmake -S . -B ... -DGOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND=OFF
 ```
 
 If you are not building `google-cloud-cpp` from source, then you are probably
-using a package manager, such as [vcpkg](https://vcpkg.io)
-or [Conda](https://conda.io). The `google-cloud-cpp` recipes in the package
-manager should match the Protobuf version in that package manager. If their
+using a package manager, such as [vcpkg](https://vcpkg.io) or
+[Conda](https://conda.io). The `google-cloud-cpp` recipes in the package manager
+should match the Protobuf version in that package manager. If their
 configuration is incorrect, please file a bug with the package maintainers.
 
 ## Enabling ctype=CORD workarounds with Bazel
@@ -71,15 +71,15 @@ bazel build --@google_cloud_cpp//:enable-ctype-cord-workaround=false ...
 ## Defaults during the transition period
 
 As of 2023-04-10 the proto files for the Google Cloud Storage service do not
-contain any `[ctype = CORD]` annotations. The default will be to disable
-the workarounds until this annotation is added. As long as the annotation is
-not present, this is the correct default with **any** Protobuf version.
+contain any `[ctype = CORD]` annotations. The default will be to disable the
+workarounds until this annotation is added. As long as the annotation is not
+present, this is the correct default with **any** Protobuf version.
 
 Once the `[ctype = CORD]` annotation is included in the proto files then the
 correct default depends on the Protobuf version. If `google-cloud-cpp` is using
 Protobuf \< v23 and the annotation is included in the proto files, then
 `google-cloud-cpp` will enable the workarounds by default.
 
-It is very likely that the default value for this option is incorrect during
-the transition period. This is cumbersome, but unavoidable until Protobuf >= v23
-is widely deployed.
+It is very likely that the default value for this option is incorrect during the
+transition period. This is cumbersome, but unavoidable until Protobuf >= v23 is
+widely deployed.

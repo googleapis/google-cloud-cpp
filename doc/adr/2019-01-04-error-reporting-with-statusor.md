@@ -4,8 +4,8 @@ throwing exceptions.
 **Status**: accepted
 
 **Context**: We know there will be users of these C++ libraries who want to use
-C++ exceptions as well as those who are not able to. Our C++ libraries must
-work for all of our users, regardless of their ability to use exceptions.
+C++ exceptions as well as those who are not able to. Our C++ libraries must work
+for all of our users, regardless of their ability to use exceptions.
 
 **Decision**: None of our APIs will throw exceptions to indicate errors.
 Instead, our APIs will typically report errors to callers by returning a
@@ -23,9 +23,9 @@ for the [50+%][survey-link] of users who might prefer exceptions for error
 reporting.
 
 Changing existing APIs from throwing exceptions to returning `StatusOr<T>` is a
-breaking change. As of this writing (Jan 2019), this project has a [Google
-Cloud Storage][gcs-link] component that is at the Alpha quality level, and a
-[Google Cloud Bigtable][bigtable-link] that is already at the Beta quality
+breaking change. As of this writing (Jan 2019), this project has a
+[Google Cloud Storage][gcs-link] component that is at the Alpha quality level,
+and a [Google Cloud Bigtable][bigtable-link] that is already at the Beta quality
 level. We plan to immediately change the API for Google Cloud Storage. We have
 no immediate plans to change the API for Cloud Bigtable. We will communicate a
 timeline to change this API in a separate document.

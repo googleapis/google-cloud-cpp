@@ -4,8 +4,8 @@ This directory contains an idiomatic C++ client library for the
 [Cloud Optimization API][cloud-service-root], a service that provides a
 portfolio of solvers to address common optimization use cases.
 
-While this library is **GA**, please note that the Google Cloud C++
-client libraries do **not** follow [Semantic Versioning](https://semver.org/).
+While this library is **GA**, please note that the Google Cloud C++ client
+libraries do **not** follow [Semantic Versioning](https://semver.org/).
 
 ## Quickstart
 
@@ -72,7 +72,8 @@ int main(int argc, char* argv[]) try {
 
 ## More Information
 
-- Official documentation about the [Cloud Optimization API][cloud-service-docs] service
+- Official documentation about the [Cloud Optimization API][cloud-service-docs]
+  service
 - [Reference doxygen documentation][doxygen-link] for each release of this
   client library
 - Detailed header comments in our [public `.h`][source-link] files

@@ -5,8 +5,8 @@ This directory contains an idiomatic C++ client library for the
 Kubernetes clusters to Google Cloud, and the management of multi-cluster
 features over those clusters.
 
-While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
-[Semantic Versioning](https://semver.org/).
+While this library is **GA**, please note that the Google Cloud C++ client
+libraries do **not** follow [Semantic Versioning](https://semver.org/).
 
 ## Quickstart
 

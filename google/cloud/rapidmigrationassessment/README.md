@@ -2,8 +2,8 @@
 
 This directory contains an idiomatic C++ client library for the
 [Rapid Migration Assessment API][cloud-service-docs], a unified migration
-platform that helps you accelerate your end-to-end cloud migration journey
-from your current on-premises environment to Google Cloud.
+platform that helps you accelerate your end-to-end cloud migration journey from
+your current on-premises environment to Google Cloud.
 
 While this library is **GA**, please note that the Google Cloud C++ client
 libraries do **not** follow [Semantic Versioning](https://semver.org/).
@@ -50,7 +50,8 @@ int main(int argc, char* argv[]) try {
 
 ## More Information
 
-- Official documentation about the [Rapid Migration Assessment API][cloud-service-docs] service
+- Official documentation about the
+  [Rapid Migration Assessment API][cloud-service-docs] service
 - [Reference doxygen documentation][doxygen-link] for each release of this
   client library
 - Detailed header comments in our [public `.h`][source-link] files

@@ -5,8 +5,8 @@ This directory contains an idiomatic C++ client library for the
 build end-to-end personalized recommendation systems without requiring a high
 level of expertise in machine learning, recommendation system, or Google Cloud.
 
-While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
-[Semantic Versioning](https://semver.org/).
+While this library is **GA**, please note that the Google Cloud C++ client
+libraries do **not** follow [Semantic Versioning](https://semver.org/).
 
 ## Quickstart
 

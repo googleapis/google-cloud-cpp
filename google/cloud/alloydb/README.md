@@ -9,10 +9,10 @@ transactional workloads and up to 100x faster for analytical queries than
 standard PostgreSQL in our performance tests. AlloyDB for PostgreSQL offers a
 99.99 percent availability SLA inclusive of maintenance.
 
-AlloyDB is optimized for the most demanding use cases, allowing you to build
-new applications that require high transaction throughput, large database sizes,
-or multiple read resources; scale existing PostgreSQL workloads with no
-application changes; and modernize legacy proprietary databases.
+AlloyDB is optimized for the most demanding use cases, allowing you to build new
+applications that require high transaction throughput, large database sizes, or
+multiple read resources; scale existing PostgreSQL workloads with no application
+changes; and modernize legacy proprietary databases.
 
 While this library is **GA**, please note that the Google Cloud C++ client
 libraries do **not** follow [Semantic Versioning](https://semver.org/).
