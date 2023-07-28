@@ -31,7 +31,7 @@ int main(int argc, char* argv[]) try {
   auto client = commerce::ConsumerProcurementServiceClient(
       commerce::MakeConsumerProcurementServiceConnection());
 
-  auto const parent = std::string("billingAcounts/") + argv[1];
+  auto const parent = std::string("billingAccounts/") + argv[1];
   for (auto r : client.ListOrders(parent)) {
     if (!r) throw std::move(r).status();
     std::cout << r->DebugString() << "\n";
