@@ -1,8 +1,8 @@
 # VMware Engine API C++ Client Library
 
 This directory contains an idiomatic C++ client library for the
-[VMware Engine API][cloud-service-docs], a service to programmatically
-manage VMware environments.
+[VMware Engine API][cloud-service-docs], a service to programmatically manage
+VMware environments.
 
 While this library is **GA**, please note that the Google Cloud C++ client
 libraries do **not** follow [Semantic Versioning](https://semver.org/).

@@ -1,11 +1,11 @@
 # Artifact Registry API C++ Client Library
 
 This directory contains an idiomatic C++ client library for the
-[Artifact Registry API][cloud-service-docs]. Store and manage build
-artifacts in a scalable and integrated service built on Google infrastructure.
+[Artifact Registry API][cloud-service-docs]. Store and manage build artifacts in
+a scalable and integrated service built on Google infrastructure.
 
-While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
-[Semantic Versioning](https://semver.org/).
+While this library is **GA**, please note that the Google Cloud C++ client
+libraries do **not** follow [Semantic Versioning](https://semver.org/).
 
 ## Quickstart
 
@@ -51,7 +51,8 @@ int main(int argc, char* argv[]) try {
 
 ## More Information
 
-- Official documentation about the [Artifact Registry API][cloud-service-docs] service
+- Official documentation about the [Artifact Registry API][cloud-service-docs]
+  service
 - [Reference doxygen documentation][doxygen-link] for each release of this
   client library
 - Detailed header comments in our [public `.h`][source-link] files

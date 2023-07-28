@@ -1,16 +1,16 @@
 # Cloud Profiler API C++ Client Library
 
 This directory contains an idiomatic C++ client library for the
-[Cloud Profiler API][cloud-service], a service that manages continuous CPU
-and heap profiling to improve performance and reduce costs.
+[Cloud Profiler API][cloud-service], a service that manages continuous CPU and
+heap profiling to improve performance and reduce costs.
 
 Note that this library allows you to interact with Cloud Profiler, but Cloud
 Profiler does not yet offer profiling of C++ applications. The
 [types of profiling available][profiling] are listed in the service
 documentation.
 
-While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
-[Semantic Versioning](https://semver.org/).
+While this library is **GA**, please note that the Google Cloud C++ client
+libraries do **not** follow [Semantic Versioning](https://semver.org/).
 
 ## Quickstart
 
@@ -61,7 +61,8 @@ int main(int argc, char* argv[]) try {
 
 ## More Information
 
-- Official documentation about the [Cloud Profiler API][cloud-service-docs] service
+- Official documentation about the [Cloud Profiler API][cloud-service-docs]
+  service
 - [Reference doxygen documentation][doxygen-link] for each release of this
   client library
 - Detailed header comments in our [public `.h`][source-link] files

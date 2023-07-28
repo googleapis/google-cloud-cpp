@@ -17,8 +17,9 @@ mkdir C:\b
 bazel --output_user_root=C:\b build //google/cloud/spanner/samples:samples
 ```
 
-If you are using a Bazel version before 2.2.0 you may need to run the following command
-to workaround [bazelbuild/bazel#10621](https://github.com/bazelbuild/bazel/issues/10621).
+If you are using a Bazel version before 2.2.0 you may need to run the following
+command to workaround
+[bazelbuild/bazel#10621](https://github.com/bazelbuild/bazel/issues/10621).
 
 ```console
 bazel --output_user_root=C:\b test //google/cloud/spanner/samples:samples
@@ -43,9 +44,9 @@ set GRPC_DEFAULT_SSL_ROOTS_FILE_PATH=%cd%\roots.pem
 
 You will need a Google Cloud Project with billing and the spanner API enabled.
 Please consult the Spanner [quickstart guide][spanner-quickstart-link] for
-detailed instructions on how to enable billing for your project.
-Once your project is properly configured you can run the samples using
-`bazel run`, for example:
+detailed instructions on how to enable billing for your project. Once your
+project is properly configured you can run the samples using `bazel run`, for
+example:
 
 ```console
 bazel run //google/cloud/spanner/samples:samples -- create-instance [PROJECT ID] [SPANNER INSTANCE] "My Test Instance"

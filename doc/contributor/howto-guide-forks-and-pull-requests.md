@@ -24,8 +24,8 @@ branches (you can, but don't!), and generally do all the version control things
 you may be used to. Note that these local changes do not affect either of the
 previous two copies.
 
-The cloned repo that you created in the previous step will have its `origin`
-set to your forked repo. You should now tell git about the main `upstream` repo,
+The cloned repo that you created in the previous step will have its `origin` set
+to your forked repo. You should now tell git about the main `upstream` repo,
 which you'll use to pull commits made by others in order to keep your local repo
 and fork up to date.
 
@@ -44,8 +44,8 @@ git push  # Pushes new commits up to your fork on GitHub
 ```
 
 > :warning: you probably want to do this periodically, and almost certainly
-> before starting any new branches. Keeping your default branch (aka `main`)
-> in sync is important to make your pull requests easy to review.
+> before starting any new branches. Keeping your default branch (aka `main`) in
+> sync is important to make your pull requests easy to review.
 
 ## Preparing to make a pull requests
 
@@ -65,32 +65,31 @@ change for review you need to create a pull request. Typically you start by:
 1. And then submit a [pull-request][about-pull-requests] to merge your branch
    into `googleapis/google-cloud-cpp`.
 1. Your reviewers may ask questions, suggest improvements or alternatives. You
-   address those by either answering the questions in the review or
-   **adding more [commits][about-commits]** to your branch and `git push` -ing
-   those commits to your fork.
+   address those by either answering the questions in the review or **adding
+   more [commits][about-commits]** to your branch and `git push` -ing those
+   commits to your fork.
 
 ## Merging the changes
 
 Eventually the reviewers accept your changes, and they are merged into the
 `main` branch. We use "squash commits", where all your commits become a single
-commit into the default branch. A project owner needs to merge your changes,
-if you are a project owner, the expectation is that you will perform the merge
+commit into the default branch. A project owner needs to merge your changes, if
+you are a project owner, the expectation is that you will perform the merge
 operation, and update the commit comments to something readable.
 
 ## When the PR requires more work
 
 The previous steps described a happy case for a PR (hopefully for most PRs),
-where no build failures or conflicts are detected in the PR.  The next two
+where no build failures or conflicts are detected in the PR. The next two
 sections explain what to do when things are not so rosy.
 
 ### Resolving Conflicts and Rebasing
 
 From time to time your pull request may have conflicts with the destination
-branch (likely `main`). If so, we request that you [rebase][about-rebase]
-your branch instead of merging. The reviews can become very confusing if you
-merge during a pull request. You should first ensure that your `main`
-branch has all the latest commits by syncing your fork (see above), then do
-the following:
+branch (likely `main`). If so, we request that you [rebase][about-rebase] your
+branch instead of merging. The reviews can become very confusing if you merge
+during a pull request. You should first ensure that your `main` branch has all
+the latest commits by syncing your fork (see above), then do the following:
 
 ```shell
 git checkout my-feature-branch
@@ -100,7 +99,7 @@ git push --force-with-lease
 
 If there are conflicts, the `git rebase` command will show you the conflicts.
 These will not be automatically resolved, if they were, `git rebase` would not
-have required human intervention!  You will need to edit the code to resolve
+have required human intervention! You will need to edit the code to resolve
 these conflicts, potentially `git add` or `git rm` files as needed. Once the
 conflicts are resolved you `git add` the files to indicate the conflict
 resolution is complete, and then continue the rebase with:
@@ -121,11 +120,11 @@ We run so many builds because we need to test the libraries under as many
 compilers, platforms, and configurations as possible. Our customers will not
 necessarily use the same environment as we do to build and run these libraries.
 
-There is a completely separate
-[guide](howto-guide-running-ci-builds-locally.md) explaining how to run these
-builds locally in case one fails. It's also a good idea to run some of these
-builds locally, before sending a PR, to verify that your change (likely) works.
-Running the following builds locally should identify most common issues:
+There is a completely separate [guide](howto-guide-running-ci-builds-locally.md)
+explaining how to run these builds locally in case one fails. It's also a good
+idea to run some of these builds locally, before sending a PR, to verify that
+your change (likely) works. Running the following builds locally should identify
+most common issues:
 
 ```
 ci/cloudbuild/build.sh -t checkers-pr

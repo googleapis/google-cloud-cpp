@@ -8,8 +8,8 @@ scenarios including serving website content, storing data for archival and
 disaster recovery, or distributing large data objects to users via direct
 download.
 
-While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
-[Semantic Versioning](http://semver.org/).
+While this library is **GA**, please note that the Google Cloud C++ client
+libraries do **not** follow [Semantic Versioning](http://semver.org/).
 
 ## Quickstart
 
@@ -67,7 +67,8 @@ int main(int argc, char* argv[]) {
 ## More Information
 
 - Official documentation about [Google Cloud Storage][cloud-storage-docs]
-- [Reference doxygen documentation][doxygen-link] for each release of this client library
+- [Reference doxygen documentation][doxygen-link] for each release of this
+  client library
 - Detailed header comments in our [public `.h`][source-link] files
 
 [cloud-storage-docs]: https://cloud.google.com/storage/docs/

@@ -1,15 +1,14 @@
 # Cloud IDS API C++ Client Library
 
 This directory contains an idiomatic C++ client library for the
-[Cloud Intrusion Detection System (IDS) API][cloud-service-docs], a
-service to detect malware, spyware, command-and-control attacks, and
-other network-based threats. Its security efficacy is industry leading,
-built with Palo Alto Networks technologies. When you use this product,
-your organization name and consumption levels will be shared with Palo
-Alto Networks.
+[Cloud Intrusion Detection System (IDS) API][cloud-service-docs], a service to
+detect malware, spyware, command-and-control attacks, and other network-based
+threats. Its security efficacy is industry leading, built with Palo Alto
+Networks technologies. When you use this product, your organization name and
+consumption levels will be shared with Palo Alto Networks.
 
-While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
-[Semantic Versioning](https://semver.org/).
+While this library is **GA**, please note that the Google Cloud C++ client
+libraries do **not** follow [Semantic Versioning](https://semver.org/).
 
 ## Quickstart
 

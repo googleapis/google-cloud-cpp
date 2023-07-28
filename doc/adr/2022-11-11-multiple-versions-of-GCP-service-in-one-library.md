@@ -2,9 +2,9 @@
 
 **Status**: accepted
 
-**Context**:
-The current directory and namespace structure does not support the addition of
-new versions of a service. We need to change the libraries to fix this.
+**Context**: The current directory and namespace structure does not support the
+addition of new versions of a service. We need to change the libraries to fix
+this.
 
 Note that we are talking about different versions of the GCP service. That is,
 the version that would appear in that service's API reference docs. We are not
@@ -28,11 +28,11 @@ these services in a flat hierarchy under `google/cloud/<library>`. We have only
 generated clients for the "latest" version of these services. These clients all
 exist in the `google::cloud::library` namespace.
 
-**Decision**:
-We will continue to pick some directory in the `googleapis` repo, and map it to
-a library in `google-cloud-cpp` (e.g. `googleapis//google/privacy/dlp` ->
-`google-cloud-cpp//google/cloud/dlp`). This process involves human judgment, but
-there is a lot of precedence to fall back on.
+**Decision**: We will continue to pick some directory in the `googleapis` repo,
+and map it to a library in `google-cloud-cpp` (e.g.
+`googleapis//google/privacy/dlp` -> `google-cloud-cpp//google/cloud/dlp`). This
+process involves human judgment, but there is a lot of precedence to fall back
+on.
 
 The library in our repo will match the subdirectory structure of the source
 directory in the `googleapis` repo. We will **not** continue to place the code
@@ -50,12 +50,11 @@ Libraries will thus contain **all** versions of the nested GCP services
 We will not initially break any existing code. This ADR has nothing to say about
 if or when non-versioned library namespaces are removed.
 
-**Consequences**:
-Customers will be able to use multiple versions of an active GCP service from a
-single version of `google-cloud-cpp`.
+**Consequences**: Customers will be able to use multiple versions of an active
+GCP service from a single version of `google-cloud-cpp`.
 
-Service namespaces will become more verbose, as they will necessarily
-include some version information.
+Service namespaces will become more verbose, as they will necessarily include
+some version information.
 
 It will become easier for `google-cloud-cpp` library maintainers to update
 existing GCP services (because we now have a protocol).

@@ -1,11 +1,11 @@
 # Service Usage API C++ Client Library
 
 This directory contains an idiomatic C++ client library for the
-[Service Usage API][cloud-service], an infrastructure service of Google
-Cloud that lets you list and manage APIs and Services in your Cloud projects.
+[Service Usage API][cloud-service], an infrastructure service of Google Cloud
+that lets you list and manage APIs and Services in your Cloud projects.
 
-While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
-[Semantic Versioning](https://semver.org/).
+While this library is **GA**, please note that the Google Cloud C++ client
+libraries do **not** follow [Semantic Versioning](https://semver.org/).
 
 ## Quickstart
 
@@ -54,7 +54,8 @@ int main(int argc, char* argv[]) try {
 
 ## More Information
 
-- Official documentation about the [Service Usage API][cloud-service-docs] service
+- Official documentation about the [Service Usage API][cloud-service-docs]
+  service
 - [Reference doxygen documentation][doxygen-link] for each release of this
   client library
 - Detailed header comments in our [public `.h`][source-link] files

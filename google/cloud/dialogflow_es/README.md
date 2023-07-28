@@ -2,11 +2,11 @@
 
 This directory contains an idiomatic C++ client library for the
 [Dialogflow ES API][cloud-service-docs], a service to build conversational
-interfaces (for example, chatbots, and voice-powered apps and devices).
-There are [two editions] of Dialogflow, this library supports the ES edition.
+interfaces (for example, chatbots, and voice-powered apps and devices). There
+are [two editions] of Dialogflow, this library supports the ES edition.
 
-While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
-[Semantic Versioning](https://semver.org/).
+While this library is **GA**, please note that the Google Cloud C++ client
+libraries do **not** follow [Semantic Versioning](https://semver.org/).
 
 ## Quickstart
 

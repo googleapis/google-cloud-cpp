@@ -2,8 +2,8 @@
 
 Unless there are no changes, we create releases for `google-cloud-cpp` at the
 beginning of each month, usually on the first business day. We also create
-releases if there is a major announcement or change to the status of one
-of the libraries (like reaching the "Alpha" or "Beta" milestone).
+releases if there is a major announcement or change to the status of one of the
+libraries (like reaching the "Alpha" or "Beta" milestone).
 
 The intended audience of this document are developers in the `google-cloud-cpp`
 project that need to create a new release. We expect the reader to be familiar
@@ -17,8 +17,8 @@ enumerated below.
 
 ### Verify CI passing
 
-Before beginning the release process, verify all CI builds are passing on
-the `main` branch. This is displayed in the GitHub page for the project.
+Before beginning the release process, verify all CI builds are passing on the
+`main` branch. This is displayed in the GitHub page for the project.
 
 ### Update the root CMakeLists.txt
 
@@ -30,8 +30,8 @@ set(PROJECT_VERSION_PRE_RELEASE "")
 
 ### Update CHANGELOG.md
 
-To update the [`CHANGELOG.md`] file, first change the "TBD" placeholder
-in the latest release header to the current YYYY-MM.
+To update the [`CHANGELOG.md`] file, first change the "TBD" placeholder in the
+latest release header to the current YYYY-MM.
 
 Then run the script
 
@@ -40,21 +40,23 @@ release/changes.sh
 ```
 
 to output a summary of the potentially interesting changes since the previous
-release. Paste that output below the release header updated above,
-and manually tweak as needed.
+release. Paste that output below the release header updated above, and manually
+tweak as needed.
 
 - A change in an existing library warrants its own library section.
-- Library sections should be listed in alphabetical order (Update `sections` in `release/changes.sh`).
+- Library sections should be listed in alphabetical order (Update `sections` in
+  `release/changes.sh`).
 - Do not list changes for libraries under development.
 - Do not list changes for internal components.
-- A change that affects all libraries should only be documented in the `Common Libraries` section.
+- A change that affects all libraries should only be documented in the
+  `Common Libraries` section.
 
 ### Send a PR with all these changes
 
 In general, do not create the release branch before this PR is *merged*. We want
-to create the release from a stable point in the default branch (`main`), and
-we want this point to include the updated release notes and API baselines.
-There may be exceptions to this guideline, you are encouraged to use your own
+to create the release from a stable point in the default branch (`main`), and we
+want this point to include the updated release notes and API baselines. There
+may be exceptions to this guideline, you are encouraged to use your own
 judgment.
 
 ## Creating the release
@@ -65,8 +67,8 @@ said steps.
 
 *No PR is needed for this step.*
 
-First run the following command -- which will *NOT* make any changes to the
-repo -- and verify that the output and *version numbers* look correct.
+First run the following command -- which will *NOT* make any changes to the repo
+-- and verify that the output and *version numbers* look correct.
 
 ```bash
 release/release.sh googleapis/google-cloud-cpp
@@ -84,8 +86,8 @@ specified repo.
 
 ### Publish the release
 
-Review the new release in the GitHub web UI (the link to the pre-release will
-be output from the `release.sh` script that was run in the previous step). If
+Review the new release in the GitHub web UI (the link to the pre-release will be
+output from the `release.sh` script that was run in the previous step). If
 everything looks OK:
 
 1. Uncheck the pre-release checkbox.
@@ -100,15 +102,15 @@ URLs:
 
 - https://cloud.google.com/cpp/docs/reference/
 
-It can take up to a day after the build finishes for the new docs to show up
-at the above URL. You can watch the status of the build at
+It can take up to a day after the build finishes for the new docs to show up at
+the above URL. You can watch the status of the build at
 https://console.cloud.google.com/cloud-build/builds;region=us-east1?project=cloud-cpp-testing-resources&query=tags%3D%22publish-docs%22
 
 ## Bump the version number in `main`
 
 Working in your fork of `google-cloud-cpp`: bump the version numbers to the
-*next* version, i.e., one version past the release you just did above. Then
-send the PR for review against `main`. You need to:
+*next* version, i.e., one version past the release you just did above. Then send
+the PR for review against `main`. You need to:
 
 - In the top-level `CMakeLists.txt` file:
   - Increment the version number in the `project()` function.
@@ -116,8 +118,8 @@ send the PR for review against `main`. You need to:
 - In the `CHANGELOG.md` file:
   - Add a "vX.Y.Z - TBD" header, corresponding to the new version number.
 - Update the ABI baseline to include the new version numbers in the inline
-  namespace by running `ci/cloudbuild/build.sh -t check-api-pr`. This will
-  leave the updated ABI files in `ci/abi-dumps`, and also update the
+  namespace by running `ci/cloudbuild/build.sh -t check-api-pr`. This will leave
+  the updated ABI files in `ci/abi-dumps`, and also update the
   `google/cloud/internal/version_info.h` file.
 
 **NOTE:** The Renovate bot will automatically update the Bazel deps in the
@@ -134,15 +136,15 @@ Please note that we use more strict settings for release branches than for
 
 - We require at least one review, but stale reviews are dismissed.
 
-- The `Require status checks to pass before merging` option is set.
-  This prevents merges into the release branches that break the build.
+- The `Require status checks to pass before merging` option is set. This
+  prevents merges into the release branches that break the build.
 
-  - The `Require branches to be up to date before merging` sub-option
-    is set. This prevents two merges that do not conflict, but nevertheless
-    break if both are pushed, to actually merge.
-  - _At a minimum_ the `cla/google`, `asan-pr`, and `clang-tidy-pr` checks should
-    be marked as "required". You may consider adding additional builds if it
-    would prevent embarrassing failures, but consider the tradeoff of merges
+  - The `Require branches to be up to date before merging` sub-option is set.
+    This prevents two merges that do not conflict, but nevertheless break if
+    both are pushed, to actually merge.
+  - _At a minimum_ the `cla/google`, `asan-pr`, and `clang-tidy-pr` checks
+    should be marked as "required". You may consider adding additional builds if
+    it would prevent embarrassing failures, but consider the tradeoff of merges
     blocked by flaky builds.
 
 - The `Include administrators` checkbox is turned on, we want to stop ourselves
@@ -190,8 +192,8 @@ Please note that we use more strict settings for release branches than for
 
 On [Conda](https://conda.io) things are mostly automated. A robot will create a
 PR, similar to [PR#138]. If you want, subscribe to notifications in the
-[conda feedstock repository] or just look at the PRs in that repository over
-the next 24 hours.
+[conda feedstock repository] or just look at the PRs in that repository over the
+next 24 hours.
 
 ## Push the release to Conan
 
@@ -201,8 +203,8 @@ the next 24 hours.
 This package manager requires patches to our code. These patches need to be
 updated on each release. Package management systems tend to apply patches with
 very strict settings, so even small changes around the patches break them.
-Sometimes one can use `patch(1)` manually, with looser settings, and use that
-to update the patches.
+Sometimes one can use `patch(1)` manually, with looser settings, and use that to
+update the patches.
 
 [PR#17988] is probably a good example of the changes you will need to make.
 
@@ -213,7 +215,8 @@ to update the patches.
   git -C $HOME/google-cloud-cpp-2.13.0/ add .
   git -C $HOME/google-cloud-cpp-2.13.0/ commit -q -m"Prepare for conan patches"
   ```
-- Create a fork of [conan-center-index](https://github.com/conan-io/conan-center-index.git)
+- Create a fork of
+  [conan-center-index](https://github.com/conan-io/conan-center-index.git)
 - Clone the fork:
   ```shell
   git clone git@github.com:${GITHUB_USERNAME}/conan-center-index
@@ -257,8 +260,8 @@ In your development fork:
   ```shell
   git commit -m"chore: prepare for ${PATCH}"
   ```
-- If this is the first patch release for that branch, you need to update the
-  GCB triggers.
+- If this is the first patch release for that branch, you need to update the GCB
+  triggers.
   - Update the Google Cloud Build trigger definitions to compile this branch:
     ```shell
     ci/cloudbuild/convert-to-branch-triggers.sh

@@ -1,8 +1,8 @@
 # How-to Guide: Declare a library as GA
 
 This document describes the steps required to promote a `google-cloud-cpp`
-library to GA (General Availability). It is intended for contributors,
-and assumes you are familiar with the build system used in the library.
+library to GA (General Availability). It is intended for contributors, and
+assumes you are familiar with the build system used in the library.
 
 This document applies to both hand-crafted and generated libraries, but mostly
 it will be using generated libraries as examples.
@@ -11,8 +11,8 @@ it will be using generated libraries as examples.
 
 Declaring a library "GA" is largely a matter of updating the documentation and
 the target names to indicate that the library is no longer experimental. You
-typically need to take three steps, with an intermediate release before the
-last step:
+typically need to take three steps, with an intermediate release before the last
+step:
 
 - Update the README files and Doxygen reference pages to indicate the library is
   now GA.
@@ -22,8 +22,8 @@ last step:
 ## Pre-requisites
 
 Before we can declare a library GA we need to ensure it is of sufficient
-quality. We largely follow the internal guidelines at (go/client-quality).
-For a generated library there are 3 critical checks:
+quality. We largely follow the internal guidelines at (go/client-quality). For a
+generated library there are 3 critical checks:
 
 - The server API is GA: this can be non-trivial if you are developing a library
   while the service is still in private and/or public preview.
@@ -34,7 +34,7 @@ For a generated library there are 3 critical checks:
   you need to wait 28 days after the latest release which included your library.
 
 In addition, we (the Cloud C++ team) require a simple `quickstart.cc` for each
-library.  This program is typically created when the library is generated.
+library. This program is typically created when the library is generated.
 
 ### `cmake/GoogleCloudCppFeatures.cmake`
 

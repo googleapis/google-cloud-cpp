@@ -4,8 +4,8 @@ This directory contains an idiomatic C++ client library for the
 [API Gateway API][cloud-service-docs], a service to develop, deploy, secure, and
 manage APIs with a fully managed gateway.
 
-While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
-[Semantic Versioning](https://semver.org/).
+While this library is **GA**, please note that the Google Cloud C++ client
+libraries do **not** follow [Semantic Versioning](https://semver.org/).
 
 ## Quickstart
 

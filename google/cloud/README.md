@@ -2,8 +2,8 @@
 
 The source files in `google/cloud/` define types and functions shared by the
 several Google Cloud C++ libraries. Here is where you will find the
-implementation of types used throughout the libraries, such as
-`StatusOr<T>`, `Status`, `future<T>`, or `CompletionQueue`.
+implementation of types used throughout the libraries, such as `StatusOr<T>`,
+`Status`, `future<T>`, or `CompletionQueue`.
 
 We consider this code stable and generally available. Please note that the
 Google Cloud C++ client libraries do **not** follow
@@ -18,8 +18,8 @@ notice. These include `google/cloud/internal/`, and
 ## Supported Platforms
 
 - Windows, macOS, Linux
-- C++14 (and higher) compilers (we test with GCC >= 7.3, Clang >= 6.0, and
-  MSVC >= 2019)
+- C++14 (and higher) compilers (we test with GCC >= 7.3, Clang >= 6.0, and MSVC
+  \>= 2019)
 - Environments with or without exceptions
 - Bazel (>= 5.4) and CMake (>= 3.5) builds
 
@@ -31,9 +31,9 @@ notice. These include `google/cloud/internal/`, and
 
 ## Contributing changes
 
-See [`CONTRIBUTING.md`](/CONTRIBUTING.md) for details on how to
-contribute to this project, including how to build and test your changes
-as well as how to properly format your code.
+See [`CONTRIBUTING.md`](/CONTRIBUTING.md) for details on how to contribute to
+this project, including how to build and test your changes as well as how to
+properly format your code.
 
 ## Licensing
 

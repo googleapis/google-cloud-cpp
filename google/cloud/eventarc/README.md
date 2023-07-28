@@ -3,8 +3,8 @@
 This directory contains an idiomatic C++ client library for the
 [Eventarc API][cloud-service-docs], a service to asynchronously deliver events.
 
-While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
-[Semantic Versioning](https://semver.org/).
+While this library is **GA**, please note that the Google Cloud C++ client
+libraries do **not** follow [Semantic Versioning](https://semver.org/).
 
 ## Quickstart
 

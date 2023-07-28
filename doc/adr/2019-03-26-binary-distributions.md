@@ -11,15 +11,15 @@ instead there are a variety of others that users might want to use (e.g., dpkg,
 rpm, vcpkg).
 
 **Decision**: We will not directly support nor provide any binary packages. We
-will not test binary distributions of our code. And we will not host configs
-for binary distributions, since that would involve hosting files which we do
-not test. However, we will do our best to make our code easily packageable by
-others in a wide variety of formats. For more context, see
+will not test binary distributions of our code. And we will not host configs for
+binary distributions, since that would involve hosting files which we do not
+test. However, we will do our best to make our code easily packageable by others
+in a wide variety of formats. For more context, see
 [#333](https://github.com/googleapis/google-cloud-cpp/issues/333).
 
-**Consequences**: This decision will shield from endorsing any particular
-binary package management system. Other individuals who want to build and
-maintain a binary distribution of our code may do so without our permission or
-knowledge. If they need small and reasonable tweaks from us to support their
-binary distributions, they may file an issue and we'll do our best to
-accommodate them within reason.
+**Consequences**: This decision will shield from endorsing any particular binary
+package management system. Other individuals who want to build and maintain a
+binary distribution of our code may do so without our permission or knowledge.
+If they need small and reasonable tweaks from us to support their binary
+distributions, they may file an issue and we'll do our best to accommodate them
+within reason.

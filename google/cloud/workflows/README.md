@@ -4,8 +4,8 @@ This directory contains an idiomatic C++ client library for the
 [Workflows API][cloud-service-docs], a service to orchestrate and automate
 Google Cloud and HTTP-based API services with serverless workflows.
 
-While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
-[Semantic Versioning](https://semver.org/).
+While this library is **GA**, please note that the Google Cloud C++ client
+libraries do **not** follow [Semantic Versioning](https://semver.org/).
 
 ## Quickstart
 
@@ -52,7 +52,8 @@ int main(int argc, char* argv[]) try {
 
 ## More Information
 
-- Official documentation about the [Workflow Executions API][cloud-service-docs] service
+- Official documentation about the [Workflow Executions API][cloud-service-docs]
+  service
 - [Reference doxygen documentation][doxygen-link] for each release of this
   client library
 - Detailed header comments in our [public `.h`][source-link] files

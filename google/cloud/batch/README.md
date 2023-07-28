@@ -4,8 +4,8 @@ This directory contains an idiomatic C++ client library for the
 [Batch API][cloud-service-docs], a fully managed service to schedule, queue, and
 execute batch jobs on Google's infrastructure.
 
-While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
-[Semantic Versioning](https://semver.org/).
+While this library is **GA**, please note that the Google Cloud C++ client
+libraries do **not** follow [Semantic Versioning](https://semver.org/).
 
 ## Quickstart
 

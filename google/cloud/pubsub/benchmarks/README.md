@@ -14,9 +14,9 @@ will be running on different machines.
 
 In the publisher role the benchmark creates a single `pubsub::Publisher` object,
 and then creates a configurable number of threads to publish messages to this
-object. A simple flow-control loop is used to avoid unbounded memory usage:
-the publishing threads stop publishing if the number of pending messages (that
-is, not acked by Cloud Pub/Sub) goes over some high watermark value. The threads
+object. A simple flow-control loop is used to avoid unbounded memory usage: the
+publishing threads stop publishing if the number of pending messages (that is,
+not acked by Cloud Pub/Sub) goes over some high watermark value. The threads
 resume publishing once the number of pending messages goes below a low
 watermark.
 
@@ -144,8 +144,8 @@ The test proceeds as follows:
 - Create N randomly-named subscriptions to the test.
 - The test will keep a pool of publishers and a pool of subscribers.
 - As the test executes, it may randomly replace one of the publishers.
-- As the test executes, it may randomly replace one of the subscribers.
-  The subscription associated with this subscriber is selected at random.
+- As the test executes, it may randomly replace one of the subscribers. The
+  subscription associated with this subscriber is selected at random.
 
 After running for T seconds or capturing N samples the test stops.
 

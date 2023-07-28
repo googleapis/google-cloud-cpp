@@ -10,8 +10,8 @@ projects. This tool is only used as part of the documentation pipeline for
 
 ## End-to-End Testing
 
-This assumes you are building with CMake. More details on CMake configuration
-in the [How-to Guide](/doc/contributor/howto-guide-setup-environment.md).
+This assumes you are building with CMake. More details on CMake configuration in
+the [How-to Guide](/doc/contributor/howto-guide-setup-environment.md).
 
 ### Create the input files for the common library
 

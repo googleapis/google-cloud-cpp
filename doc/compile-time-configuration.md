@@ -1,8 +1,8 @@
 # Compile time configuration for google-cloud-cpp
 
 The `google-cloud-cpp` libraries have a number of compile-time configuration
-options. This document describes these options and provides some motivation
-to use them (or not).
+options. This document describes these options and provides some motivation to
+use them (or not).
 
 The bulk of this document is about CMake-based builds. Bazel-based builds also
 have a small number of options and are also described here.
@@ -11,8 +11,8 @@ have a small number of options and are also described here.
 
 We expect that most application developers using CMake will compile and install
 `google-cloud-cpp` and then use it as an external dependency. Some application
-developers may use `google-cloud-cpp` via `FetchContent()` or some other kind
-of super build. In the latter case you should note how this project configures
+developers may use `google-cloud-cpp` via `FetchContent()` or some other kind of
+super build. In the latter case you should note how this project configures
 testing and features.
 
 As usual, application developers can use [ccmake], or run `cmake -L` to discover
@@ -23,16 +23,16 @@ all options in the project.
 The `GOOGLE_CLOUD_CPP_ENABLE` CMake option configures what features are enabled
 at compile time.
 
-Most features correspond to a single library. For example,
-enabling the `kms` compiles and installs the `google-cloud-cpp::kms` library.
+Most features correspond to a single library. For example, enabling the `kms`
+compiles and installs the `google-cloud-cpp::kms` library.
 
 Some features represent groups of libraries. For example, `__ga_libraries__`
 requests all the GA libraries, and `__experimental_libraries__` represent the
 libraries that are not yet GA.
 
 A few features enable experimental functionality. We do not expect that
-customers will need to use these. If you have specific questions please start
-a [GitHub Discussion]. With that said:
+customers will need to use these. If you have specific questions please start a
+[GitHub Discussion]. With that said:
 
 - `generator` enables an internal-only tool to generate new libraries.
 - `experimental-storage-grpc` enables the GCS+gRPC plugin. Contact your account
@@ -43,12 +43,12 @@ a [GitHub Discussion]. With that said:
 
 ### Override Protobuf compiler and gRPC's plugin
 
-`google-cloud-cpp` uses the protobuf compiler and gRPC's plugin to generate
-code from the Protobuf API definitions. By default it finds these tools using
-the targets exported by `find_package(Protobuf CONFIG)` and
-`find_package(gRPC CONFIG)`.  These defaults do not work when cross-compiling,
-as the packages will point to the tools for the **target** environment, and
-they may not run in the host environment, where the build is running.
+`google-cloud-cpp` uses the protobuf compiler and gRPC's plugin to generate code
+from the Protobuf API definitions. By default it finds these tools using the
+targets exported by `find_package(Protobuf CONFIG)` and
+`find_package(gRPC CONFIG)`. These defaults do not work when cross-compiling, as
+the packages will point to the tools for the **target** environment, and they
+may not run in the host environment, where the build is running.
 
 You can override these tools using `-DProtobuf_PROTOC_EXECUTABLE=/path/...` and
 `-DGOOGLE_CLOUD_CPP_GRPC_PLUGIN_EXECUTABLE=/other-path/...`.
@@ -56,10 +56,9 @@ You can override these tools using `-DProtobuf_PROTOC_EXECUTABLE=/path/...` and
 ### Disabling C++ Exceptions
 
 `google-cloud-cpp` does not throw exceptions to signal errors. Though in some
-cases the application may call a function to throw an exception on errors.
-Some applications require their libraries to be compiled without exception
-support. Use `-DGOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS=OFF` if that is the
-case.
+cases the application may call a function to throw an exception on errors. Some
+applications require their libraries to be compiled without exception support.
+Use `-DGOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS=OFF` if that is the case.
 
 ### Checking OpenSSL version on macOS
 
@@ -71,7 +70,7 @@ environment use `-DGOOGLE_CLOUD_CPP_ENABLE_MACOS_OPENSSL_CHECK=OFF`.
 ### Enabling tests and examples
 
 The tests are enabled via `-DBUILD_TESTING=ON`. You can disable the examples
-using  `-DGOOGLE_CLOUD_CPP_ENABLE_EXAMPLES=OFF`. This may speed up your build
+using `-DGOOGLE_CLOUD_CPP_ENABLE_EXAMPLES=OFF`. This may speed up your build
 times.
 
 ## Bazel Options
@@ -91,16 +90,16 @@ either:
   Bazel command-line.
 - Add the same options in your Bazel `.bazelrc` file.
 
-The `--host_cxxopt` may be unfamiliar. This is required to support Protobuf
-and gRPC, which compile code generators for the "host" environment, and
-generate libraries for the "target" environment.
+The `--host_cxxopt` may be unfamiliar. This is required to support Protobuf and
+gRPC, which compile code generators for the "host" environment, and generate
+libraries for the "target" environment.
 
 ### Disabling OpenTelemetry
 
-[OpenTelemetry] is enabled by default.  Turning this off may reduce your build
+[OpenTelemetry] is enabled by default. Turning this off may reduce your build
 times but will also lose the benefits of instrumenting the libraries for
-distributed tracing.  Add `--//:experimental-opentelemetry=false` to your
-Bazel command-line parameters to disable Open Telemetry.
+distributed tracing. Add `--//:experimental-opentelemetry=false` to your Bazel
+command-line parameters to disable Open Telemetry.
 
 [ccmake]: https://cmake.org/cmake/help/latest/manual/ccmake.1.html
 [github discussion]: https://github.com/googleapis/google-cloud-cpp/discussions

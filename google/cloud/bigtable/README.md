@@ -5,8 +5,8 @@ This directory contains an idiomatic C++ client library for interacting with
 NoSQL Big Data database service. It's the same database that powers many core
 Google services, including Search, Analytics, Maps, and Gmail.
 
-While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
-[Semantic Versioning](http://semver.org/).
+While this library is **GA**, please note that the Google Cloud C++ client
+libraries do **not** follow [Semantic Versioning](http://semver.org/).
 
 ## Quickstart
 
@@ -69,7 +69,8 @@ int main(int argc, char* argv[]) try {
 ## More Information
 
 - Official documentation about the [Cloud Bigtable][cloud-bigtable-docs] service
-- [Reference doxygen documentation][doxygen-link] for each release of this client library
+- [Reference doxygen documentation][doxygen-link] for each release of this
+  client library
 - Detailed header comments in our \[public `.h`\]\[source-link\] files
 
 [cloud-bigtable-docs]: https://cloud.google.com/bigtable/docs/

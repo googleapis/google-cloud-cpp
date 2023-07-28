@@ -177,8 +177,8 @@ export GRPC_DEFAULT_SSL_ROOTS_FILE_PATH="$PWD/roots.pem"
 ### Windows
 
 Bazel tends to create very long file names and paths. You may need to use a
-short directory to store the build output, such as `c:\b`, and instruct Bazel
-to use it via:
+short directory to store the build output, such as `c:\b`, and instruct Bazel to
+use it via:
 
 ```shell
 bazel --output_user_root=c:\b build ...

@@ -1,11 +1,11 @@
 # Cloud Tasks API C++ Client Library
 
 This directory contains an idiomatic C++ client library for
-[Cloud Tasks API][cloud-service-root], a service that manages the
-execution of large numbers of distributed requests.
+[Cloud Tasks API][cloud-service-root], a service that manages the execution of
+large numbers of distributed requests.
 
-While this library is **GA**, please note that the Google Cloud C++
-client libraries do **not** follow [Semantic Versioning](https://semver.org/).
+While this library is **GA**, please note that the Google Cloud C++ client
+libraries do **not** follow [Semantic Versioning](https://semver.org/).
 
 ## Quickstart
 

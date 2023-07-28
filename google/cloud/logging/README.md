@@ -1,11 +1,11 @@
 # Google Cloud Logging C++ Client Library
 
 This directory contains an idiomatic C++ client library for interacting with
-[Cloud Logging](https://cloud.google.com/logging/),
-a service for real-time log management and analysis at scale.
+[Cloud Logging](https://cloud.google.com/logging/), a service for real-time log
+management and analysis at scale.
 
-While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
-[Semantic Versioning](https://semver.org/).
+While this library is **GA**, please note that the Google Cloud C++ client
+libraries do **not** follow [Semantic Versioning](https://semver.org/).
 
 ## Quickstart
 

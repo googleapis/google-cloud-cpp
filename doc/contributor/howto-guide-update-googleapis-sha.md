@@ -7,9 +7,9 @@ with the build systems used in these libraries.
 
 `google-cloud-cpp` depends on the proto files in the
 [googleapis][googleapis-repo]. The build scripts in `google-cloud-cpp` are
-pinned to a specific commit SHA of this repository.  That avoids unexpected
+pinned to a specific commit SHA of this repository. That avoids unexpected
 breakage for us and our customers as `googleapis` makes changes. From time to
-time we need to manually update this commit SHA.  This document describes these
+time we need to manually update this commit SHA. This document describes these
 steps.
 
 ## Set your working directory

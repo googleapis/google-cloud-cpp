@@ -5,8 +5,8 @@ This directory contains an idiomatic C++ client library for interacting with
 managed, scalable, relational database service for regional and global
 application data.
 
-While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
-[Semantic Versioning](http://semver.org/).
+While this library is **GA**, please note that the Google Cloud C++ client
+libraries do **not** follow [Semantic Versioning](http://semver.org/).
 
 ## Quickstart
 
@@ -52,7 +52,8 @@ int main(int argc, char* argv[]) {
 ## More Information
 
 - Official documentation about the [Cloud Spanner][cloud-spanner-docs] service
-- [Reference doxygen documentation][doxygen-link] for each release of this client library
+- [Reference doxygen documentation][doxygen-link] for each release of this
+  client library
 - Detailed header comments in our [public `.h`][source-link] files
 
 [cloud-spanner-docs]: https://cloud.google.com/spanner/docs/

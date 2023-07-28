@@ -1,8 +1,8 @@
 # Cloud Run Admin API C++ Client Library
 
 This directory contains an idiomatic C++ client library for
-[Cloud Run][cloud-service-root], a managed compute platform that lets
-you run containers directly on top of Google's scalable infrastructure.
+[Cloud Run][cloud-service-root], a managed compute platform that lets you run
+containers directly on top of Google's scalable infrastructure.
 
 Note that this library only provides tools to **manage** Cloud Run resources. To
 actually deploy a C++ function to Cloud Run, see the
@@ -55,7 +55,8 @@ int main(int argc, char* argv[]) try {
 
 ## More Information
 
-- Official documentation about the [Cloud Run Admin API][cloud-service-docs] service
+- Official documentation about the [Cloud Run Admin API][cloud-service-docs]
+  service
 - [Reference doxygen documentation][doxygen-link] for each release of this
   client library
 - Detailed header comments in our [public `.h`][source-link] files
