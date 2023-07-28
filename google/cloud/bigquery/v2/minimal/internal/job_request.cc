@@ -300,30 +300,30 @@ void to_json(nlohmann::json& j, QueryRequest const& q) {
 }
 
 void from_json(nlohmann::json const& j, PostQueryRequest& q) {
-  SafeValueOr(j, "project_id", &PostQueryRequest::set_project_id, q);
-  SafeValueOr(j, "queryRequest", &PostQueryRequest::set_query_request, q);
+  SafeGetTo(j, "project_id", &PostQueryRequest::set_project_id, q);
+  SafeGetTo(j, "queryRequest", &PostQueryRequest::set_query_request, q);
 }
 
 void from_json(nlohmann::json const& j, QueryRequest& q) {
-  SafeValueOr(j, "query", &QueryRequest::set_query, q);
-  SafeValueOr(j, "kind", &QueryRequest::set_kind, q);
-  SafeValueOr(j, "parameterMode", &QueryRequest::set_parameter_mode, q);
-  SafeValueOr(j, "location", &QueryRequest::set_location, q);
-  SafeValueOr(j, "requestId", &QueryRequest::set_request_id, q);
-  SafeValueOr(j, "dryRun", &QueryRequest::set_dry_run, q);
-  SafeValueOr(j, "preserveNulls", &QueryRequest::set_preserve_nulls, q);
-  SafeValueOr(j, "useQueryCache", &QueryRequest::set_use_query_cache, q);
-  SafeValueOr(j, "useLegacySql", &QueryRequest::set_use_legacy_sql, q);
-  SafeValueOr(j, "createSession", &QueryRequest::set_create_session, q);
-  SafeValueOr(j, "maxResults", &QueryRequest::set_max_results, q);
-  SafeValueOr(j, "maximumBytesBilled", &QueryRequest::set_maximum_bytes_billed,
-              q);
-  SafeValueOr(j, "connectionProperties",
-              &QueryRequest::set_connection_properties, q);
-  SafeValueOr(j, "queryParameters", &QueryRequest::set_query_parameters, q);
-  SafeValueOr(j, "defaultDataset", &QueryRequest::set_default_dataset, q);
-  SafeValueOr(j, "formatOptions", &QueryRequest::set_format_options, q);
-  SafeValueOr(j, "labels", &QueryRequest::set_labels, q);
+  SafeGetTo(j, "query", &QueryRequest::set_query, q);
+  SafeGetTo(j, "kind", &QueryRequest::set_kind, q);
+  SafeGetTo(j, "parameterMode", &QueryRequest::set_parameter_mode, q);
+  SafeGetTo(j, "location", &QueryRequest::set_location, q);
+  SafeGetTo(j, "requestId", &QueryRequest::set_request_id, q);
+  SafeGetTo(j, "dryRun", &QueryRequest::set_dry_run, q);
+  SafeGetTo(j, "preserveNulls", &QueryRequest::set_preserve_nulls, q);
+  SafeGetTo(j, "useQueryCache", &QueryRequest::set_use_query_cache, q);
+  SafeGetTo(j, "useLegacySql", &QueryRequest::set_use_legacy_sql, q);
+  SafeGetTo(j, "createSession", &QueryRequest::set_create_session, q);
+  SafeGetTo(j, "maxResults", &QueryRequest::set_max_results, q);
+  SafeGetTo(j, "maximumBytesBilled", &QueryRequest::set_maximum_bytes_billed,
+            q);
+  SafeGetTo(j, "connectionProperties", &QueryRequest::set_connection_properties,
+            q);
+  SafeGetTo(j, "queryParameters", &QueryRequest::set_query_parameters, q);
+  SafeGetTo(j, "defaultDataset", &QueryRequest::set_default_dataset, q);
+  SafeGetTo(j, "formatOptions", &QueryRequest::set_format_options, q);
+  SafeGetTo(j, "labels", &QueryRequest::set_labels, q);
 
   std::chrono::milliseconds timeout;
   FromJson(timeout, j, "timeoutMs");
@@ -419,14 +419,13 @@ void to_json(nlohmann::json& j, GetQueryResultsRequest const& q) {
 }
 
 void from_json(nlohmann::json const& j, GetQueryResultsRequest& q) {
-  SafeValueOr(j, "projectId", &GetQueryResultsRequest::set_project_id, q);
-  SafeValueOr(j, "jobId", &GetQueryResultsRequest::set_job_id, q);
-  SafeValueOr(j, "pageToken", &GetQueryResultsRequest::set_page_token, q);
-  SafeValueOr(j, "location", &GetQueryResultsRequest::set_location, q);
-  SafeValueOr(j, "startIndex", &GetQueryResultsRequest::set_start_index, q);
-  SafeValueOr(j, "maxResults", &GetQueryResultsRequest::set_max_results, q);
-  SafeValueOr(j, "formatOptions", &GetQueryResultsRequest::set_format_options,
-              q);
+  SafeGetTo(j, "projectId", &GetQueryResultsRequest::set_project_id, q);
+  SafeGetTo(j, "jobId", &GetQueryResultsRequest::set_job_id, q);
+  SafeGetTo(j, "pageToken", &GetQueryResultsRequest::set_page_token, q);
+  SafeGetTo(j, "location", &GetQueryResultsRequest::set_location, q);
+  SafeGetTo(j, "startIndex", &GetQueryResultsRequest::set_start_index, q);
+  SafeGetTo(j, "maxResults", &GetQueryResultsRequest::set_max_results, q);
+  SafeGetTo(j, "formatOptions", &GetQueryResultsRequest::set_format_options, q);
 
   std::chrono::milliseconds timeout;
   FromJson(timeout, j, "timeoutMs");

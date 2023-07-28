@@ -50,8 +50,8 @@ void SafeGetTo(ResponseType& value, nlohmann::json const& j,
 }
 
 template <typename C, typename T, typename R>
-void SafeValueOr(nlohmann::json const& j, std::string const& key,
-                 R& (C::*f)(T) &, C& obj) {
+void SafeGetTo(nlohmann::json const& j, std::string const& key, R& (C::*f)(T) &,
+               C& obj) {
   auto i = j.find(key);
   if (i != j.end()) {
     (obj.*f)(i->get<T>());
