@@ -90,9 +90,8 @@ void to_json(nlohmann::json& j, MaterializedViewDefinition const& m) {
   ToJson(m.last_refresh_time, j, "lastRefreshTime");
 }
 void from_json(nlohmann::json const& j, MaterializedViewDefinition& m) {
-  if (j.contains("query")) j.at("query").get_to(m.query);
-  if (j.contains("enableRefresh"))
-    j.at("enableRefresh").get_to(m.enable_refresh);
+  SafeGetTo(m.query, j, "query");
+  SafeGetTo(m.enable_refresh, j, "enableRefresh");
 
   FromJson(m.refresh_interval_time, j, "refreshIntervalMs");
   FromJson(m.last_refresh_time, j, "lastRefreshTime");
@@ -103,8 +102,7 @@ void to_json(nlohmann::json& j, MaterializedViewStatus const& m) {
   ToJson(m.refresh_watermark, j, "refreshWatermark");
 }
 void from_json(nlohmann::json const& j, MaterializedViewStatus& m) {
-  if (j.contains("lastRefreshStatus"))
-    j.at("lastRefreshStatus").get_to(m.last_refresh_status);
+  SafeGetTo(m.last_refresh_status, j, "lastRefreshStatus");
   FromJson(m.refresh_watermark, j, "refreshWatermark");
 }
 
@@ -115,14 +113,10 @@ void to_json(nlohmann::json& j, ViewDefinition const& v) {
       {"userDefinedFunctionResources", v.user_defined_function_resources}};
 }
 void from_json(nlohmann::json const& j, ViewDefinition& v) {
-  // TODO(#12188): Implement SafeGetTo(...) for potential performance
-  // improvement.
-  if (j.contains("query")) j.at("query").get_to(v.query);
-  if (j.contains("useLegacySql")) j.at("useLegacySql").get_to(v.use_legacy_sql);
-  if (j.contains("userDefinedFunctionResources")) {
-    j.at("userDefinedFunctionResources")
-        .get_to(v.user_defined_function_resources);
-  }
+  SafeGetTo(v.query, j, "query");
+  SafeGetTo(v.use_legacy_sql, j, "useLegacySql");
+  SafeGetTo(v.user_defined_function_resources, j,
+            "userDefinedFunctionResources");
 }
 
 void to_json(nlohmann::json& j, UserDefinedFunctionResource const& u) {
@@ -130,10 +124,8 @@ void to_json(nlohmann::json& j, UserDefinedFunctionResource const& u) {
                      {"inlineCode", u.inline_code}};
 }
 void from_json(nlohmann::json const& j, UserDefinedFunctionResource& u) {
-  // TODO(#12188): Implement SafeGetTo(...) for potential performance
-  // improvement.
-  if (j.contains("resourceUri")) j.at("resourceUri").get_to(u.resource_uri);
-  if (j.contains("inlineCode")) j.at("inlineCode").get_to(u.inline_code);
+  SafeGetTo(u.resource_uri, j, "resourceUri");
+  SafeGetTo(u.inline_code, j, "inlineCode");
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

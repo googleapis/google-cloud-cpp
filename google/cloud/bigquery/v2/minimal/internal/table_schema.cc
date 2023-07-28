@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigquery/v2/minimal/internal/table_schema.h"
+#include "google/cloud/bigquery/v2/minimal/internal/json_utils.h"
 #include "google/cloud/internal/debug_string.h"
 #include "google/cloud/internal/format_time_point.h"
 
@@ -87,12 +88,10 @@ void to_json(nlohmann::json& j,
 
 void from_json(nlohmann::json const& j,
                std::vector<std::shared_ptr<TableFieldSchema>>& t) {
-  if (j.contains("fields")) {
-    std::vector<TableFieldSchema> fields;
-    j.at("fields").get_to(fields);
-    for (auto const& f : fields) {
-      t.push_back(std::make_shared<TableFieldSchema>(f));
-    }
+  std::vector<TableFieldSchema> fields;
+  SafeGetTo(fields, j, "fields");
+  for (auto const& f : fields) {
+    t.push_back(std::make_shared<TableFieldSchema>(f));
   }
 }
 
@@ -114,22 +113,20 @@ void to_json(nlohmann::json& j, TableFieldSchema const& t) {
 }
 
 void from_json(nlohmann::json const& j, TableFieldSchema& t) {
-  if (j.contains("name")) j.at("name").get_to(t.name);
-  if (j.contains("type")) j.at("type").get_to(t.type);
-  if (j.contains("mode")) j.at("mode").get_to(t.mode);
-  if (j.contains("description")) j.at("description").get_to(t.description);
-  if (j.contains("collation")) j.at("collation").get_to(t.collation);
-  if (j.contains("defaultValueExpression"))
-    j.at("defaultValueExpression").get_to(t.default_value_expression);
-  if (j.contains("maxLength")) j.at("maxLength").get_to(t.max_length);
-  if (j.contains("precision")) j.at("precision").get_to(t.precision);
-  if (j.contains("scale")) j.at("scale").get_to(t.scale);
-  if (j.contains("fields")) j.at("fields").get_to(t.fields);
-  if (j.contains("categories")) j.at("categories").get_to(t.categories);
-  if (j.contains("policyTags")) j.at("policyTags").get_to(t.policy_tags);
-  if (j.contains("roundingMode")) j.at("roundingMode").get_to(t.rounding_mode);
-  if (j.contains("rangeElementType"))
-    j.at("rangeElementType").get_to(t.range_element_type);
+  SafeGetTo(t.name, j, "name");
+  SafeGetTo(t.type, j, "type");
+  SafeGetTo(t.mode, j, "mode");
+  SafeGetTo(t.description, j, "description");
+  SafeGetTo(t.collation, j, "collation");
+  SafeGetTo(t.default_value_expression, j, "defaultValueExpression");
+  SafeGetTo(t.max_length, j, "maxLength");
+  SafeGetTo(t.precision, j, "precision");
+  SafeGetTo(t.scale, j, "scale");
+  SafeGetTo(t.fields, j, "fields");
+  SafeGetTo(t.categories, j, "categories");
+  SafeGetTo(t.policy_tags, j, "policyTags");
+  SafeGetTo(t.rounding_mode, j, "roundingMode");
+  SafeGetTo(t.range_element_type, j, "rangeElementType");
 }
 
 void to_json(nlohmann::json& j, TableSchema const& t) {
@@ -137,7 +134,7 @@ void to_json(nlohmann::json& j, TableSchema const& t) {
 }
 
 void from_json(nlohmann::json const& j, TableSchema& t) {
-  if (j.contains("fields")) j.at("fields").get_to(t.fields);
+  SafeGetTo(t.fields, j, "fields");
 }
 
 // NOLINTEND
