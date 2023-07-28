@@ -15,7 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_STORAGE_STUB_FACTORY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_STORAGE_STUB_FACTORY_H
 
-#include "google/cloud/storage/internal/grpc_channel_refresh.h"
+#include "google/cloud/storage/internal/grpc/channel_refresh.h"
 #include "google/cloud/storage/internal/storage_stub.h"
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/internal/minimal_iam_credentials_stub.h"

@@ -14,8 +14,8 @@
 
 #include "google/cloud/storage/internal/async_accumulate_read_object.h"
 #include "google/cloud/storage/internal/crc32c.h"
-#include "google/cloud/storage/internal/grpc_ctype_cord_workaround.h"
-#include "google/cloud/storage/internal/grpc_object_metadata_parser.h"
+#include "google/cloud/storage/internal/grpc/ctype_cord_workaround.h"
+#include "google/cloud/storage/internal/grpc/object_metadata_parser.h"
 #include <iterator>
 #include <numeric>
 #include <sstream>

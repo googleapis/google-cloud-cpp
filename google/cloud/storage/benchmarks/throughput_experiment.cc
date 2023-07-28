@@ -15,7 +15,7 @@
 #include "google/cloud/storage/benchmarks/throughput_experiment.h"
 #include "google/cloud/storage/benchmarks/benchmark_utils.h"
 #include "google/cloud/storage/client.h"
-#include "google/cloud/storage/internal/grpc_ctype_cord_workaround.h"
+#include "google/cloud/storage/internal/grpc/ctype_cord_workaround.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include <google/storage/v2/storage.grpc.pb.h>
 #include <curl/curl.h>
