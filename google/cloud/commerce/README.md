@@ -1,7 +1,7 @@
 # Cloud Commerce Consumer Procurement API C++ Client Library
 
 This directory contains an idiomatic C++ client library for the
-[Cloud Commerce Consumer Procurement API][cloud-service-docs], a service that enables consumers to procure products served by Cloud Marketplace platform
+[Cloud Commerce Consumer Procurement API][cloud-service-docs], a service that enables consumers to procure products served by Cloud Marketplace platform.
 
 While this library is **GA**, please note that the Google Cloud C++ client
 libraries do **not** follow [Semantic Versioning](https://semver.org/).
