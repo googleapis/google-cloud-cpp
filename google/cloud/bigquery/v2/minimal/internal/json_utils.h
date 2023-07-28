@@ -57,15 +57,15 @@ bool SafeGetTo(ResponseType& value, nlohmann::json const& j,
 }
 
 template <typename T>
-std::shared_ptr<T> SafeGetTo(std::shared_ptr<T>& value, nlohmann::json const& j,
-                             std::string const& key) {
+bool SafeGetTo(std::shared_ptr<T>& value, nlohmann::json const& j,
+               std::string const& key) {
   auto i = j.find(key);
-  if (i == j.end()) return value;
+  if (i == j.end()) return false;
   if (value == nullptr) {
     value = std::make_shared<T>();
   }
   i->get_to(*value);
-  return value;
+  return true;
 }
 
 template <typename C, typename T, typename R>

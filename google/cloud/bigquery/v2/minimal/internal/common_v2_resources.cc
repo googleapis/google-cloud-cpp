@@ -81,10 +81,7 @@ void to_json(nlohmann::json& j, StandardSqlField const& f) {
 
 void from_json(nlohmann::json const& j, StandardSqlField& f) {
   SafeGetTo(f.name, j, "name");
-  if (f.type == nullptr) {
-    f.type = std::make_shared<StandardSqlDataType>();
-  }
-  SafeGetTo(*f.type, j, "type");
+  SafeGetTo(f.type, j, "type");
 }
 
 void to_json(nlohmann::json& j, StandardSqlStructType const& t) {
@@ -125,19 +122,22 @@ void to_json(nlohmann::json& j, StandardSqlDataType const& t) {
 
 void from_json(nlohmann::json const& j, StandardSqlDataType& t) {
   SafeGetTo(t.type_kind, j, "typeKind");
-  if (j.contains("sub_type_index")) {
-    auto const index = j.at("sub_type_index").get<int>();
+  int index;
+  auto index_exists = SafeGetTo(index, j, "sub_type_index");
+  if (index_exists) {
     switch (index) {
       case 1: {
         std::shared_ptr<StandardSqlDataType> sub_type;
-        SafeGetTo(sub_type, j, "arrayElementType");
-        t.sub_type = sub_type;
+        if (SafeGetTo(sub_type, j, "arrayElementType")) {
+          t.sub_type = sub_type;
+        }
         break;
       }
       case 2: {
         StandardSqlStructType sub_type;
-        SafeGetTo(sub_type, j, "structType");
-        t.sub_type = sub_type;
+        if (SafeGetTo(sub_type, j, "structType")) {
+          t.sub_type = sub_type;
+        }
         break;
       }
       default:
@@ -178,8 +178,9 @@ void to_json(nlohmann::json& j, Value const& v) {
 }
 
 void from_json(nlohmann::json const& j, Value& v) {
-  if (j.contains("kind_index") && j.contains("valueKind")) {
-    auto const index = j.at("kind_index").get<int>();
+  int index;
+  auto kind_index_exists = SafeGetTo(index, j, "kind_index");
+  if (kind_index_exists) {
     switch (index) {
       case 0:
         // Do not set any value
@@ -207,7 +208,7 @@ void from_json(nlohmann::json const& j, Value& v) {
       }
       case 4: {
         std::shared_ptr<Struct> val;
-        if (SafeGetTo(val, j, "valueKind") != nullptr) {
+        if (SafeGetTo(val, j, "valueKind")) {
           v.value_kind = val;
         }
         break;
