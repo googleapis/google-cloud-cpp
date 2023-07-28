@@ -136,6 +136,46 @@ class QueryResponse {
   BigQueryHttpResponse http_response;
 };
 
+struct GetQueryResults {
+  std::string kind;
+  std::string etag;
+  std::string page_token;
+
+  TableSchema schema;
+  JobReference job_reference;
+
+  std::int64_t total_bytes_processed = 0;
+  std::uint64_t total_rows = 0;
+  std::int64_t num_dml_affected_rows = 0;
+
+  bool job_complete = false;
+  bool cache_hit = false;
+
+  std::vector<Struct> rows;
+  std::vector<ErrorProto> errors;
+
+  std::string DebugString(absl::string_view name,
+                          TracingOptions const& options = {},
+                          int indent = 0) const;
+};
+void to_json(nlohmann::json& j, GetQueryResults const& q);
+void from_json(nlohmann::json const& j, GetQueryResults& q);
+
+class GetQueryResultsResponse {
+ public:
+  GetQueryResultsResponse() = default;
+  static StatusOr<GetQueryResultsResponse> BuildFromHttpResponse(
+      BigQueryHttpResponse const& http_response);
+
+  std::string DebugString(absl::string_view name,
+                          TracingOptions const& options = {},
+                          int indent = 0) const;
+
+  GetQueryResults get_query_results;
+
+  BigQueryHttpResponse http_response;
+};
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_v2_minimal_internal
 }  // namespace cloud

@@ -24,6 +24,9 @@ namespace cloud {
 namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+using ::google::cloud::bigquery_v2_minimal_testing::MakeGetQueryResults;
+using ::google::cloud::bigquery_v2_minimal_testing::
+    MakeGetQueryResultsResponsePayload;
 using ::google::cloud::bigquery_v2_minimal_testing::MakeJob;
 using ::google::cloud::bigquery_v2_minimal_testing::MakeQueryResponsePayload;
 using ::google::cloud::bigquery_v2_minimal_testing::MakeQueryResults;
@@ -2015,6 +2018,166 @@ TEST(QueryResponseTest, DebugString) {
       inserted_row_count: 10
       deleted_row_count: 10
       updated_row_count: 10
+    }
+  }
+})");
+}
+
+TEST(GetQueryResultsResponseTest, Success) {
+  BigQueryHttpResponse http_response;
+  http_response.payload = MakeGetQueryResultsResponsePayload();
+  auto const response =
+      GetQueryResultsResponse::BuildFromHttpResponse(http_response);
+  ASSERT_STATUS_OK(response);
+  EXPECT_FALSE(response->http_response.payload.empty());
+
+  auto expected_get_equery_results = MakeGetQueryResults();
+  auto actual_get_query_results = response->get_query_results;
+
+  bigquery_v2_minimal_testing::AssertEquals(expected_get_equery_results,
+                                            actual_get_query_results);
+}
+
+TEST(GetQueryResultsResponseTest, EmptyPayload) {
+  BigQueryHttpResponse http_response;
+  auto const response =
+      GetQueryResultsResponse::BuildFromHttpResponse(http_response);
+  EXPECT_THAT(response, StatusIs(StatusCode::kInternal,
+                                 HasSubstr("Empty payload in HTTP response")));
+}
+
+TEST(GetQueryResultsResponseTest, InvalidJson) {
+  BigQueryHttpResponse http_response;
+  http_response.payload = "Help! I am not json";
+  auto const response =
+      GetQueryResultsResponse::BuildFromHttpResponse(http_response);
+  EXPECT_THAT(response,
+              StatusIs(StatusCode::kInternal,
+                       HasSubstr("Error parsing Json from response payload")));
+}
+
+TEST(GetQueryResultsResponseTest, DebugString) {
+  BigQueryHttpResponse http_response;
+  http_response.payload = MakeGetQueryResultsResponsePayload();
+  auto const response =
+      GetQueryResultsResponse::BuildFromHttpResponse(http_response);
+  ASSERT_STATUS_OK(response);
+
+  EXPECT_EQ(
+      response->DebugString("GetQueryResultsResponse", TracingOptions{}),
+      R"(GetQueryResultsResponse {)"
+      R"( http_response {)"
+      R"( status_code: 200)"
+      R"( payload: REDACTED)"
+      R"( })"
+      R"( get_query_results {)"
+      R"( kind: "query-kind")"
+      R"( etag: "query-etag")"
+      R"( page_token: "np123")"
+      R"( total_rows: 1000)"
+      R"( total_bytes_processed: 1000)"
+      R"( num_dml_affected_rows: 5)"
+      R"( job_complete: true)"
+      R"( cache_hit: true)"
+      R"( rows { fields {)"
+      R"( key: "bool-key")"
+      R"( value { value_kind: true } })"
+      R"( fields { key: "double-key")"
+      R"( value { value_kind: 3.4 })"
+      R"( } fields { key: "string-key" value { value_kind: "val3" } } })"
+      R"( schema { fields {)"
+      R"( name: "fname-1" type: "" mode: "fmode" description: "")"
+      R"( collation: "" default_value_expression: "" max_length: 0)"
+      R"( precision: 0 scale: 0)"
+      R"( categories { } policy_tags { })"
+      R"( rounding_mode { value: "" } range_element_type { type: "" } } })"
+      R"( job_reference { project_id: "p123" job_id: "j123" location: "useast" } } })");
+
+  EXPECT_EQ(
+      response->DebugString(
+          "GetQueryResultsResponse",
+          TracingOptions{}.SetOptions("truncate_string_field_longer_than=7")),
+      R"(GetQueryResultsResponse { http_response {)"
+      R"( status_code: 200 payload: REDACTED })"
+      R"( get_query_results { kind: "query-k...<truncated>...")"
+      R"( etag: "query-e...<truncated>...")"
+      R"( page_token: "np123" total_rows: 1000)"
+      R"( total_bytes_processed: 1000 num_dml_affected_rows: 5)"
+      R"( job_complete: true cache_hit: true)"
+      R"( rows { fields { key: "bool-key" value { value_kind: true } })"
+      R"( fields { key: "double-key" value { value_kind: 3.4 } })"
+      R"( fields { key: "string-key" value { value_kind: "val3" } } })"
+      R"( schema { fields { name: "fname-1" type: "" mode: "fmode")"
+      R"( description: "" collation: "" default_value_expression: "")"
+      R"( max_length: 0 precision: 0 scale: 0 categories { })"
+      R"( policy_tags { })"
+      R"( rounding_mode { value: "" } range_element_type { type: "" } } })"
+      R"( job_reference { project_id: "p123" job_id: "j123" location: "useast" } } })");
+
+  EXPECT_EQ(
+      response->DebugString("GetQueryResultsResponse",
+                            TracingOptions{}.SetOptions("single_line_mode=F")),
+      R"(GetQueryResultsResponse {
+  http_response {
+    status_code: 200
+    payload: REDACTED
+  }
+  get_query_results {
+    kind: "query-kind"
+    etag: "query-etag"
+    page_token: "np123"
+    total_rows: 1000
+    total_bytes_processed: 1000
+    num_dml_affected_rows: 5
+    job_complete: true
+    cache_hit: true
+    rows {
+      fields {
+        key: "bool-key"
+        value {
+          value_kind: true
+        }
+      }
+      fields {
+        key: "double-key"
+        value {
+          value_kind: 3.4
+        }
+      }
+      fields {
+        key: "string-key"
+        value {
+          value_kind: "val3"
+        }
+      }
+    }
+    schema {
+      fields {
+        name: "fname-1"
+        type: ""
+        mode: "fmode"
+        description: ""
+        collation: ""
+        default_value_expression: ""
+        max_length: 0
+        precision: 0
+        scale: 0
+        categories {
+        }
+        policy_tags {
+        }
+        rounding_mode {
+          value: ""
+        }
+        range_element_type {
+          type: ""
+        }
+      }
+    }
+    job_reference {
+      project_id: "p123"
+      job_id: "j123"
+      location: "useast"
     }
   }
 })");

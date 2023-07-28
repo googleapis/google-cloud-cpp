@@ -42,6 +42,11 @@ bigquery_v2_minimal_internal::QueryResults MakeQueryResults();
 void AssertEquals(bigquery_v2_minimal_internal::QueryResults const& lhs,
                   bigquery_v2_minimal_internal::QueryResults const& rhs);
 
+std::string MakeGetQueryResultsResponsePayload();
+bigquery_v2_minimal_internal::GetQueryResults MakeGetQueryResults();
+void AssertEquals(bigquery_v2_minimal_internal::GetQueryResults const& lhs,
+                  bigquery_v2_minimal_internal::GetQueryResults const& rhs);
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_v2_minimal_testing
 }  // namespace cloud

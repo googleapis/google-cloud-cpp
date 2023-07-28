@@ -27,6 +27,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::bigquery_v2_minimal_internal::ConnectionProperty;
 using ::google::cloud::bigquery_v2_minimal_internal::DataFormatOptions;
+using ::google::cloud::bigquery_v2_minimal_internal::GetQueryResults;
 using ::google::cloud::bigquery_v2_minimal_internal::GetQueryResultsRequest;
 using ::google::cloud::bigquery_v2_minimal_internal::PostQueryRequest;
 using ::google::cloud::bigquery_v2_minimal_internal::QueryParameter;
@@ -167,10 +168,40 @@ QueryResults MakeQueryResults() {
   return expected;
 }
 
+GetQueryResults MakeGetQueryResults() {
+  GetQueryResults expected;
+
+  expected.cache_hit = true;
+  expected.job_complete = true;
+
+  expected.job_reference.project_id = "p123";
+  expected.job_reference.location = "useast";
+  expected.job_reference.job_id = "j123";
+
+  expected.kind = "query-kind";
+  expected.etag = "query-etag";
+  expected.num_dml_affected_rows = 5;
+  expected.page_token = "np123";
+  expected.rows.push_back(MakeSystemVariables().values);
+
+  expected.schema = MakeTable().schema;
+  expected.total_bytes_processed = 1000;
+  expected.total_rows = 1000;
+
+  return expected;
+}
+
 std::string MakeQueryResponsePayload() {
   auto query_results = MakeQueryResults();
   nlohmann::json j;
   to_json(j, query_results);
+  return j.dump();
+}
+
+std::string MakeGetQueryResultsResponsePayload() {
+  auto get_query_results = MakeGetQueryResults();
+  nlohmann::json j;
+  to_json(j, get_query_results);
   return j.dump();
 }
 
@@ -199,6 +230,32 @@ void AssertEquals(bigquery_v2_minimal_internal::QueryResults const& lhs,
 
   EXPECT_TRUE(std::equal(lhs.rows.begin(), lhs.rows.end(), rhs.rows.begin()));
 }
+
+void AssertEquals(bigquery_v2_minimal_internal::GetQueryResults const& lhs,
+                  bigquery_v2_minimal_internal::GetQueryResults const& rhs) {
+  EXPECT_EQ(lhs.cache_hit, rhs.cache_hit);
+  EXPECT_EQ(lhs.job_complete, rhs.job_complete);
+  EXPECT_EQ(lhs.job_reference.job_id, rhs.job_reference.job_id);
+  EXPECT_EQ(lhs.job_reference.project_id, rhs.job_reference.project_id);
+  EXPECT_EQ(lhs.job_reference.location, rhs.job_reference.location);
+  EXPECT_EQ(lhs.kind, rhs.kind);
+  EXPECT_EQ(lhs.etag, rhs.etag);
+  EXPECT_EQ(lhs.num_dml_affected_rows, rhs.num_dml_affected_rows);
+  EXPECT_EQ(lhs.page_token, rhs.page_token);
+
+  ASSERT_THAT(lhs.schema.fields, Not(IsEmpty()));
+  ASSERT_THAT(rhs.schema.fields, Not(IsEmpty()));
+  EXPECT_EQ(lhs.schema.fields.size(), rhs.schema.fields.size());
+
+  EXPECT_EQ(lhs.total_bytes_processed, rhs.total_bytes_processed);
+  EXPECT_EQ(lhs.total_rows, rhs.total_rows);
+
+  EXPECT_TRUE(
+      std::equal(lhs.errors.begin(), lhs.errors.end(), rhs.errors.begin()));
+
+  EXPECT_TRUE(std::equal(lhs.rows.begin(), lhs.rows.end(), rhs.rows.begin()));
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_v2_minimal_testing
 }  // namespace cloud
