@@ -27,9 +27,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * The configuration parameters for RPC/protobuf tracing.
  *
  * The default options are:
- *   single_line_mode=on
- *   use_short_repeated_primitives=on
- *   truncate_string_field_longer_than=128
+ *   - single_line_mode=on
+ *   - use_short_repeated_primitives=on
+ *   - truncate_string_field_longer_than=128
  */
 using TracingOptions = ::google::cloud::TracingOptions;
 

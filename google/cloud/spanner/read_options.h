@@ -28,7 +28,20 @@ namespace cloud {
 namespace spanner {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// Options passed to `Client::Read` or `Client::PartitionRead`.
+/**
+ * Options passed to `Client::Read` or `Client::PartitionRead`.
+ *
+ * @deprecated Use [`Options`](@ref google::cloud::Options) instead,
+ *     and set (as needed)
+ *     [`ReadIndexNameOption`](
+ *     @ref google::cloud::spanner::ReadIndexNameOption),
+ *     [`ReadRowLimitOption`](
+ *     @ref google::cloud::spanner::ReadRowLimitOption),
+ *     [`RequestPriorityOption`](
+ *     @ref google::cloud::spanner::RequestPriorityOption), or
+ *     [`RequestTagOption`](
+ *     @ref google::cloud::spanner::RequestTagOption).
+ */
 struct ReadOptions {
   /**
    * If non-empty, the name of an index on a database table. This index is

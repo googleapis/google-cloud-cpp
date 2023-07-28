@@ -29,6 +29,15 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /**
  * Set options on calls to `spanner::Client::Commit()`.
  *
+ * @deprecated Use [`Options`](@ref google::cloud::Options) instead,
+ *     and set (as needed)
+ *     [`CommitReturnStatsOption`](
+ *     @ref google::cloud::spanner::CommitReturnStatsOption),
+ *     [`RequestPriorityOption`](
+ *     @ref google::cloud::spanner::RequestPriorityOption), or
+ *     [`TransactionTagOption`](
+ *     @ref google::cloud::spanner::TransactionTagOption).
+ *
  * @par Example
  * @snippet samples.cc commit-options
  */

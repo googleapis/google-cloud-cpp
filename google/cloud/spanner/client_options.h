@@ -27,6 +27,17 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /**
  * ClientOptions allows the caller to set a variety of options when
  * constructing a `Client` instance.
+ *
+ * @deprecated Use [`Options`](@ref google::cloud::Options) instead,
+ *     and set (as needed)
+ *     [`QueryOptimizerVersionOption`](
+ *     @ref google::cloud::spanner::QueryOptimizerVersionOption),
+ *     [`QueryOptimizerStatisticsPackageOption`](
+ *     @ref google::cloud::spanner::QueryOptimizerStatisticsPackageOption),
+ *     [`RequestPriorityOption`](
+ *     @ref google::cloud::spanner::RequestPriorityOption), or
+ *     [`RequestTagOption`](
+ *     @ref google::cloud::spanner::RequestTagOption).
  */
 class ClientOptions {
  public:

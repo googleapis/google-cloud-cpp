@@ -30,6 +30,15 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /**
  * Options passed to `Client::PartitionRead` or `Client::PartitionQuery`.
  *
+ * @deprecated Use [`Options`](@ref google::cloud::Options) instead,
+ *     and set (as needed)
+ *     [`PartitionSizeOption`](
+ *     @ref google::cloud::spanner::PartitionSizeOption),
+ *     [`PartitionsMaximumOption`](
+ *     @ref google::cloud::spanner::PartitionsMaximumOption), or
+ *     [`PartitionDataBoostOption`](
+ *     @ref google::cloud::spanner::PartitionDataBoostOption).
+ *
  * See documentation in [spanner.proto][spanner-proto].
  *
  * [spanner-proto]:
