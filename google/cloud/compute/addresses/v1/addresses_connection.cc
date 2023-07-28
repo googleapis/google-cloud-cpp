@@ -72,6 +72,14 @@ AddressesConnection::ListAddresses(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+AddressesConnection::Move(
+    google::cloud::cpp::compute::addresses::v1::MoveRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 AddressesConnection::SetLabels(
     google::cloud::cpp::compute::addresses::v1::SetLabelsRequest const&) {
   return google::cloud::make_ready_future<

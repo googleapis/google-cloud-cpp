@@ -60,6 +60,12 @@ class MockDisksConnection : public compute_disks_v1::DisksConnection {
            request),
       (override));
 
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              BulkInsert,
+              (google::cloud::cpp::compute::disks::v1::BulkInsertRequest const&
+                   request),
+              (override));
+
   MOCK_METHOD(
       future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
       CreateSnapshot,
@@ -116,6 +122,24 @@ class MockDisksConnection : public compute_disks_v1::DisksConnection {
       future<StatusOr<google::cloud::cpp::compute::v1::Operation>>, SetLabels,
       (google::cloud::cpp::compute::disks::v1::SetLabelsRequest const& request),
       (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              StartAsyncReplication,
+              (google::cloud::cpp::compute::disks::v1::
+                   StartAsyncReplicationRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              StopAsyncReplication,
+              (google::cloud::cpp::compute::disks::v1::
+                   StopAsyncReplicationRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              StopGroupAsyncReplication,
+              (google::cloud::cpp::compute::disks::v1::
+                   StopGroupAsyncReplicationRequest const& request),
+              (override));
 
   MOCK_METHOD(
       StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>,

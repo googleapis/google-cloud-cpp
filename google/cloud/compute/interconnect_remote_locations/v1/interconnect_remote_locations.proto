@@ -19,54 +19,56 @@
 
 syntax = "proto3";
 
-package google.cloud.cpp.compute.interconnect_locations.v1;
+package google.cloud.cpp.compute.interconnect_remote_locations.v1;
 
 import "google/api/annotations.proto";
 import "google/api/client.proto";
 import "google/api/field_behavior.proto";
 import "google/cloud/compute/v1/internal/common.proto";
 
-// Service for the interconnectLocations resource.
-// https://cloud.google.com/compute/docs/reference/rest/v1/interconnectLocations
-service InterconnectLocations {
+// Service for the interconnectRemoteLocations resource.
+// https://cloud.google.com/compute/docs/reference/rest/v1/interconnectRemoteLocations
+service InterconnectRemoteLocations {
   option (google.api.default_host) = "compute.googleapis.com";
   option (google.api.oauth_scopes) =
       "https://www.googleapis.com/auth/cloud-platform,"
       "https://www.googleapis.com/auth/compute,"
       "https://www.googleapis.com/auth/compute.readonly";
 
-  // Returns the details for the specified interconnect location. Gets a list of
-  // available interconnect locations by making a list() request.
-  rpc GetInterconnectLocations(GetInterconnectLocationsRequest)
-      returns (google.cloud.cpp.compute.v1.InterconnectLocation) {
+  // Returns the details for the specified interconnect remote location. Gets a
+  // list of available interconnect remote locations by making a list() request.
+  rpc GetInterconnectRemoteLocations(GetInterconnectRemoteLocationsRequest)
+      returns (google.cloud.cpp.compute.v1.InterconnectRemoteLocation) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project}/global/interconnectLocations/{interconnect_location}"
+      get: "/compute/v1/projects/{project}/global/interconnectRemoteLocations/{interconnect_remote_location}"
     };
-    option (google.api.method_signature) = "project,interconnect_location";
+    option (google.api.method_signature) =
+        "project,interconnect_remote_location";
   }
 
-  // Retrieves the list of interconnect locations available to the specified
-  // project.
-  rpc ListInterconnectLocations(ListInterconnectLocationsRequest)
-      returns (google.cloud.cpp.compute.v1.InterconnectLocationList) {
+  // Retrieves the list of interconnect remote locations available to the
+  // specified project.
+  rpc ListInterconnectRemoteLocations(ListInterconnectRemoteLocationsRequest)
+      returns (google.cloud.cpp.compute.v1.InterconnectRemoteLocationList) {
     option (google.api.http) = {
-      get: "/compute/v1/projects/{project}/global/interconnectLocations"
+      get: "/compute/v1/projects/{project}/global/interconnectRemoteLocations"
     };
     option (google.api.method_signature) = "project";
   }
 }
 
-// Request message for GetInterconnectLocations.
-message GetInterconnectLocationsRequest {
-  // Name of the interconnect location to return.
-  string interconnect_location = 1 [(google.api.field_behavior) = REQUIRED];
+// Request message for GetInterconnectRemoteLocations.
+message GetInterconnectRemoteLocationsRequest {
+  // Name of the interconnect remote location to return.
+  string interconnect_remote_location = 1
+      [(google.api.field_behavior) = REQUIRED];
 
   // Project ID for this request.
   string project = 2 [(google.api.field_behavior) = REQUIRED];
 }
 
-// Request message for ListInterconnectLocations.
-message ListInterconnectLocationsRequest {
+// Request message for ListInterconnectRemoteLocations.
+message ListInterconnectRemoteLocationsRequest {
   // A filter expression that filters resources listed in the response. Most
   // Compute resources support two types of filter expressions: expressions that
   // support regular expressions and expressions that follow API improvement

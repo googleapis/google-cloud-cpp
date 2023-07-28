@@ -134,6 +134,31 @@ AddressesClient::ListAddresses(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+AddressesClient::Move(
+    std::string const& project, std::string const& region,
+    std::string const& address,
+    google::cloud::cpp::compute::v1::RegionAddressesMoveRequest const&
+        region_addresses_move_request_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::addresses::v1::MoveRequest request;
+  request.set_project(project);
+  request.set_region(region);
+  request.set_address(address);
+  *request.mutable_region_addresses_move_request_resource() =
+      region_addresses_move_request_resource;
+  return connection_->Move(request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+AddressesClient::Move(
+    google::cloud::cpp::compute::addresses::v1::MoveRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->Move(request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 AddressesClient::SetLabels(
     std::string const& project, std::string const& region,
     std::string const& resource,

@@ -84,6 +84,15 @@ AddressesTracingConnection::ListAddresses(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+AddressesTracingConnection::Move(
+    google::cloud::cpp::compute::addresses::v1::MoveRequest const& request) {
+  auto span =
+      internal::MakeSpan("compute_addresses_v1::AddressesConnection::Move");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->Move(request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 AddressesTracingConnection::SetLabels(
     google::cloud::cpp::compute::addresses::v1::SetLabelsRequest const&
         request) {

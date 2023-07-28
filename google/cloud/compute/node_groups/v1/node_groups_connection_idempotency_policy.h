@@ -83,6 +83,10 @@ class NodeGroupsConnectionIdempotencyPolicy {
       google::cloud::cpp::compute::node_groups::v1::
           SetNodeTemplateRequest const& request);
 
+  virtual google::cloud::Idempotency SimulateMaintenanceEvent(
+      google::cloud::cpp::compute::node_groups::v1::
+          SimulateMaintenanceEventRequest const& request);
+
   virtual google::cloud::Idempotency TestIamPermissions(
       google::cloud::cpp::compute::node_groups::v1::
           TestIamPermissionsRequest const& request);

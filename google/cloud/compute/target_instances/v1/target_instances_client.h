@@ -108,7 +108,7 @@ class TargetInstancesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.target_instances.v1.AggregatedListTargetInstancesRequest]: @googleapis_reference_link{google/cloud/compute/target_instances/v1/target_instances.proto#L92}
-  /// [google.cloud.cpp.compute.v1.TargetInstanceAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L27258}
+  /// [google.cloud.cpp.compute.v1.TargetInstanceAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28513}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TargetInstanceAggregatedList>
@@ -139,7 +139,7 @@ class TargetInstancesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.target_instances.v1.AggregatedListTargetInstancesRequest]: @googleapis_reference_link{google/cloud/compute/target_instances/v1/target_instances.proto#L92}
-  /// [google.cloud.cpp.compute.v1.TargetInstanceAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L27258}
+  /// [google.cloud.cpp.compute.v1.TargetInstanceAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28513}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TargetInstanceAggregatedList>
@@ -242,7 +242,7 @@ class TargetInstancesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.target_instances.v1.GetTargetInstancesRequest]: @googleapis_reference_link{google/cloud/compute/target_instances/v1/target_instances.proto#L196}
-  /// [google.cloud.cpp.compute.v1.TargetInstance]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L27204}
+  /// [google.cloud.cpp.compute.v1.TargetInstance]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28459}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TargetInstance> GetTargetInstances(
@@ -274,7 +274,7 @@ class TargetInstancesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.target_instances.v1.GetTargetInstancesRequest]: @googleapis_reference_link{google/cloud/compute/target_instances/v1/target_instances.proto#L196}
-  /// [google.cloud.cpp.compute.v1.TargetInstance]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L27204}
+  /// [google.cloud.cpp.compute.v1.TargetInstance]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28459}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TargetInstance> GetTargetInstances(
@@ -389,7 +389,7 @@ class TargetInstancesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.target_instances.v1.ListTargetInstancesRequest]: @googleapis_reference_link{google/cloud/compute/target_instances/v1/target_instances.proto#L239}
-  /// [google.cloud.cpp.compute.v1.TargetInstance]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L27204}
+  /// [google.cloud.cpp.compute.v1.TargetInstance]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28459}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::TargetInstance>
@@ -431,7 +431,7 @@ class TargetInstancesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.target_instances.v1.ListTargetInstancesRequest]: @googleapis_reference_link{google/cloud/compute/target_instances/v1/target_instances.proto#L239}
-  /// [google.cloud.cpp.compute.v1.TargetInstance]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L27204}
+  /// [google.cloud.cpp.compute.v1.TargetInstance]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28459}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::TargetInstance>

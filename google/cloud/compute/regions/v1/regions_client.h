@@ -112,7 +112,7 @@ class RegionsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.regions.v1.GetRegionsRequest]: @googleapis_reference_link{google/cloud/compute/regions/v1/regions.proto#L71}
-  /// [google.cloud.cpp.compute.v1.Region]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L19677}
+  /// [google.cloud.cpp.compute.v1.Region]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L20619}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Region> GetRegions(
@@ -149,7 +149,7 @@ class RegionsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.regions.v1.GetRegionsRequest]: @googleapis_reference_link{google/cloud/compute/regions/v1/regions.proto#L71}
-  /// [google.cloud.cpp.compute.v1.Region]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L19677}
+  /// [google.cloud.cpp.compute.v1.Region]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L20619}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Region> GetRegions(
@@ -193,7 +193,7 @@ class RegionsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.regions.v1.ListRegionsRequest]: @googleapis_reference_link{google/cloud/compute/regions/v1/regions.proto#L80}
-  /// [google.cloud.cpp.compute.v1.Region]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L19677}
+  /// [google.cloud.cpp.compute.v1.Region]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L20619}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::Region> ListRegions(
@@ -240,7 +240,7 @@ class RegionsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.regions.v1.ListRegionsRequest]: @googleapis_reference_link{google/cloud/compute/regions/v1/regions.proto#L80}
-  /// [google.cloud.cpp.compute.v1.Region]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L19677}
+  /// [google.cloud.cpp.compute.v1.Region]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L20619}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::Region> ListRegions(

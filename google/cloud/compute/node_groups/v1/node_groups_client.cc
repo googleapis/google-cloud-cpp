@@ -304,6 +304,34 @@ NodeGroupsClient::SetNodeTemplate(
   return connection_->SetNodeTemplate(request);
 }
 
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+NodeGroupsClient::SimulateMaintenanceEvent(
+    std::string const& project, std::string const& zone,
+    std::string const& node_group,
+    google::cloud::cpp::compute::v1::
+        NodeGroupsSimulateMaintenanceEventRequest const&
+            node_groups_simulate_maintenance_event_request_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::node_groups::v1::SimulateMaintenanceEventRequest
+      request;
+  request.set_project(project);
+  request.set_zone(zone);
+  request.set_node_group(node_group);
+  *request.mutable_node_groups_simulate_maintenance_event_request_resource() =
+      node_groups_simulate_maintenance_event_request_resource;
+  return connection_->SimulateMaintenanceEvent(request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+NodeGroupsClient::SimulateMaintenanceEvent(
+    google::cloud::cpp::compute::node_groups::v1::
+        SimulateMaintenanceEventRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->SimulateMaintenanceEvent(request);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
 NodeGroupsClient::TestIamPermissions(
     std::string const& project, std::string const& zone,

@@ -112,6 +112,13 @@ class NodeGroupsRestStub {
       google::cloud::cpp::compute::node_groups::v1::
           SetNodeTemplateRequest const& request) = 0;
 
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncSimulateMaintenanceEvent(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      google::cloud::cpp::compute::node_groups::v1::
+          SimulateMaintenanceEventRequest const& request) = 0;
+
   virtual StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
   TestIamPermissions(google::cloud::rest_internal::RestContext& rest_context,
                      google::cloud::cpp::compute::node_groups::v1::
@@ -210,6 +217,13 @@ class DefaultNodeGroupsRestStub : public NodeGroupsRestStub {
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::node_groups::v1::
           SetNodeTemplateRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncSimulateMaintenanceEvent(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      google::cloud::cpp::compute::node_groups::v1::
+          SimulateMaintenanceEventRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
   TestIamPermissions(google::cloud::rest_internal::RestContext& rest_context,

@@ -47,6 +47,16 @@ RegionDisksRestMetadata::AsyncAddResourcePolicies(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RegionDisksRestMetadata::AsyncBulkInsert(
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::region_disks::v1::BulkInsertRequest const&
+        request) {
+  SetMetadata(*rest_context);
+  return child_->AsyncBulkInsert(cq, std::move(rest_context), request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionDisksRestMetadata::AsyncCreateSnapshot(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
@@ -141,6 +151,39 @@ RegionDisksRestMetadata::AsyncSetLabels(
         request) {
   SetMetadata(*rest_context);
   return child_->AsyncSetLabels(cq, std::move(rest_context), request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RegionDisksRestMetadata::AsyncStartAsyncReplication(
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::region_disks::v1::
+        StartAsyncReplicationRequest const& request) {
+  SetMetadata(*rest_context);
+  return child_->AsyncStartAsyncReplication(cq, std::move(rest_context),
+                                            request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RegionDisksRestMetadata::AsyncStopAsyncReplication(
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::region_disks::v1::
+        StopAsyncReplicationRequest const& request) {
+  SetMetadata(*rest_context);
+  return child_->AsyncStopAsyncReplication(cq, std::move(rest_context),
+                                           request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RegionDisksRestMetadata::AsyncStopGroupAsyncReplication(
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::region_disks::v1::
+        StopGroupAsyncReplicationRequest const& request) {
+  SetMetadata(*rest_context);
+  return child_->AsyncStopGroupAsyncReplication(cq, std::move(rest_context),
+                                                request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>

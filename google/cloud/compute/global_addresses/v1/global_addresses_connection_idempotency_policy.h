@@ -53,6 +53,10 @@ class GlobalAddressesConnectionIdempotencyPolicy {
       google::cloud::cpp::compute::global_addresses::v1::
           ListGlobalAddressesRequest request);
 
+  virtual google::cloud::Idempotency Move(
+      google::cloud::cpp::compute::global_addresses::v1::MoveRequest const&
+          request);
+
   virtual google::cloud::Idempotency SetLabels(
       google::cloud::cpp::compute::global_addresses::v1::SetLabelsRequest const&
           request);

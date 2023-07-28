@@ -44,6 +44,16 @@ RegionDisksTracingConnection::AddResourcePolicies(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RegionDisksTracingConnection::BulkInsert(
+    google::cloud::cpp::compute::region_disks::v1::BulkInsertRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_region_disks_v1::RegionDisksConnection::BulkInsert");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->BulkInsert(request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionDisksTracingConnection::CreateSnapshot(
     google::cloud::cpp::compute::region_disks::v1::CreateSnapshotRequest const&
         request) {
@@ -144,6 +154,40 @@ RegionDisksTracingConnection::SetLabels(
       "compute_region_disks_v1::RegionDisksConnection::SetLabels");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(std::move(span), child_->SetLabels(request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RegionDisksTracingConnection::StartAsyncReplication(
+    google::cloud::cpp::compute::region_disks::v1::
+        StartAsyncReplicationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_region_disks_v1::RegionDisksConnection::StartAsyncReplication");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->StartAsyncReplication(request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RegionDisksTracingConnection::StopAsyncReplication(
+    google::cloud::cpp::compute::region_disks::v1::
+        StopAsyncReplicationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_region_disks_v1::RegionDisksConnection::StopAsyncReplication");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->StopAsyncReplication(request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RegionDisksTracingConnection::StopGroupAsyncReplication(
+    google::cloud::cpp::compute::region_disks::v1::
+        StopGroupAsyncReplicationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_region_disks_v1::RegionDisksConnection::"
+      "StopGroupAsyncReplication");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->StopGroupAsyncReplication(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>

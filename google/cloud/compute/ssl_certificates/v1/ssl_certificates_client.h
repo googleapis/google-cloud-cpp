@@ -109,7 +109,7 @@ class SslCertificatesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.ssl_certificates.v1.AggregatedListSslCertificatesRequest]: @googleapis_reference_link{google/cloud/compute/ssl_certificates/v1/ssl_certificates.proto#L92}
-  /// [google.cloud.cpp.compute.v1.SslCertificateAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L24879}
+  /// [google.cloud.cpp.compute.v1.SslCertificateAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L26055}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::SslCertificateAggregatedList>
@@ -141,7 +141,7 @@ class SslCertificatesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.ssl_certificates.v1.AggregatedListSslCertificatesRequest]: @googleapis_reference_link{google/cloud/compute/ssl_certificates/v1/ssl_certificates.proto#L92}
-  /// [google.cloud.cpp.compute.v1.SslCertificateAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L24879}
+  /// [google.cloud.cpp.compute.v1.SslCertificateAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L26055}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::SslCertificateAggregatedList>
@@ -242,7 +242,7 @@ class SslCertificatesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.ssl_certificates.v1.GetSslCertificatesRequest]: @googleapis_reference_link{google/cloud/compute/ssl_certificates/v1/ssl_certificates.proto#L190}
-  /// [google.cloud.cpp.compute.v1.SslCertificate]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L24815}
+  /// [google.cloud.cpp.compute.v1.SslCertificate]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L25991}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::SslCertificate> GetSslCertificates(
@@ -274,7 +274,7 @@ class SslCertificatesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.ssl_certificates.v1.GetSslCertificatesRequest]: @googleapis_reference_link{google/cloud/compute/ssl_certificates/v1/ssl_certificates.proto#L190}
-  /// [google.cloud.cpp.compute.v1.SslCertificate]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L24815}
+  /// [google.cloud.cpp.compute.v1.SslCertificate]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L25991}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::SslCertificate> GetSslCertificates(
@@ -387,7 +387,7 @@ class SslCertificatesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.ssl_certificates.v1.ListSslCertificatesRequest]: @googleapis_reference_link{google/cloud/compute/ssl_certificates/v1/ssl_certificates.proto#L224}
-  /// [google.cloud.cpp.compute.v1.SslCertificate]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L24815}
+  /// [google.cloud.cpp.compute.v1.SslCertificate]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L25991}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::SslCertificate>
@@ -428,7 +428,7 @@ class SslCertificatesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.ssl_certificates.v1.ListSslCertificatesRequest]: @googleapis_reference_link{google/cloud/compute/ssl_certificates/v1/ssl_certificates.proto#L224}
-  /// [google.cloud.cpp.compute.v1.SslCertificate]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L24815}
+  /// [google.cloud.cpp.compute.v1.SslCertificate]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L25991}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::SslCertificate>

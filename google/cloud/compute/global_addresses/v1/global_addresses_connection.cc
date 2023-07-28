@@ -68,6 +68,14 @@ GlobalAddressesConnection::ListGlobalAddresses(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+GlobalAddressesConnection::Move(
+    google::cloud::cpp::compute::global_addresses::v1::MoveRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 GlobalAddressesConnection::SetLabels(
     google::cloud::cpp::compute::global_addresses::v1::
         SetLabelsRequest const&) {

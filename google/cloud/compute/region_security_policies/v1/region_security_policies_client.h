@@ -27,6 +27,7 @@
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
+#include <map>
 #include <memory>
 
 namespace google {
@@ -188,7 +189,7 @@ class RegionSecurityPoliciesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.region_security_policies.v1.GetRegionSecurityPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L129}
-  /// [google.cloud.cpp.compute.v1.SecurityPolicy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L23405}
+  /// [google.cloud.cpp.compute.v1.SecurityPolicy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L24481}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::SecurityPolicy>
@@ -222,7 +223,7 @@ class RegionSecurityPoliciesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.region_security_policies.v1.GetRegionSecurityPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L129}
-  /// [google.cloud.cpp.compute.v1.SecurityPolicy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L23405}
+  /// [google.cloud.cpp.compute.v1.SecurityPolicy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L24481}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::SecurityPolicy>
@@ -340,7 +341,7 @@ class RegionSecurityPoliciesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.region_security_policies.v1.ListRegionSecurityPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L175}
-  /// [google.cloud.cpp.compute.v1.SecurityPolicy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L23405}
+  /// [google.cloud.cpp.compute.v1.SecurityPolicy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L24481}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::SecurityPolicy>
@@ -382,7 +383,7 @@ class RegionSecurityPoliciesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.region_security_policies.v1.ListRegionSecurityPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L175}
-  /// [google.cloud.cpp.compute.v1.SecurityPolicy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L23405}
+  /// [google.cloud.cpp.compute.v1.SecurityPolicy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L24481}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::SecurityPolicy>
@@ -394,7 +395,7 @@ class RegionSecurityPoliciesClient {
   // clang-format off
   ///
   /// Patches the specified policy with the data included in the request. To
-  /// clear fields in the rule, leave the fields empty and specify them in the
+  /// clear fields in the policy, leave the fields empty and specify them in the
   /// updateMask. This cannot be used to be update the rules in the policy.
   /// Please use the per rule methods like addRule, patchRule, and removeRule
   /// instead.
@@ -437,7 +438,7 @@ class RegionSecurityPoliciesClient {
   // clang-format off
   ///
   /// Patches the specified policy with the data included in the request. To
-  /// clear fields in the rule, leave the fields empty and specify them in the
+  /// clear fields in the policy, leave the fields empty and specify them in the
   /// updateMask. This cannot be used to be update the rules in the policy.
   /// Please use the per rule methods like addRule, patchRule, and removeRule
   /// instead.

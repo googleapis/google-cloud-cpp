@@ -105,7 +105,7 @@ class ZonesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.v1.Zone]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L30901}
+  /// [google.cloud.cpp.compute.v1.Zone]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L32287}
   /// [google.cloud.cpp.compute.zones.v1.GetZonesRequest]: @googleapis_reference_link{google/cloud/compute/zones/v1/zones.proto#L57}
   ///
   // clang-format on
@@ -136,7 +136,7 @@ class ZonesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.v1.Zone]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L30901}
+  /// [google.cloud.cpp.compute.v1.Zone]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L32287}
   /// [google.cloud.cpp.compute.zones.v1.GetZonesRequest]: @googleapis_reference_link{google/cloud/compute/zones/v1/zones.proto#L57}
   ///
   // clang-format on
@@ -172,7 +172,7 @@ class ZonesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.v1.Zone]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L30901}
+  /// [google.cloud.cpp.compute.v1.Zone]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L32287}
   /// [google.cloud.cpp.compute.zones.v1.ListZonesRequest]: @googleapis_reference_link{google/cloud/compute/zones/v1/zones.proto#L66}
   ///
   // clang-format on
@@ -212,7 +212,7 @@ class ZonesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.v1.Zone]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L30901}
+  /// [google.cloud.cpp.compute.v1.Zone]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L32287}
   /// [google.cloud.cpp.compute.zones.v1.ListZonesRequest]: @googleapis_reference_link{google/cloud/compute/zones/v1/zones.proto#L66}
   ///
   // clang-format on

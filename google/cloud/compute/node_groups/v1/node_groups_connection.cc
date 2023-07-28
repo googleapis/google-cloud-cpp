@@ -125,6 +125,15 @@ NodeGroupsConnection::SetNodeTemplate(google::cloud::cpp::compute::node_groups::
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+NodeGroupsConnection::SimulateMaintenanceEvent(
+    google::cloud::cpp::compute::node_groups::v1::
+        SimulateMaintenanceEventRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
 NodeGroupsConnection::TestIamPermissions(
     google::cloud::cpp::compute::node_groups::v1::

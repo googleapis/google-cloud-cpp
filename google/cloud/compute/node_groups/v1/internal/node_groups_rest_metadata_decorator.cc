@@ -150,6 +150,17 @@ NodeGroupsRestMetadata::AsyncSetNodeTemplate(
   return child_->AsyncSetNodeTemplate(cq, std::move(rest_context), request);
 }
 
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+NodeGroupsRestMetadata::AsyncSimulateMaintenanceEvent(
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::node_groups::v1::
+        SimulateMaintenanceEventRequest const& request) {
+  SetMetadata(*rest_context);
+  return child_->AsyncSimulateMaintenanceEvent(cq, std::move(rest_context),
+                                               request);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
 NodeGroupsRestMetadata::TestIamPermissions(
     rest_internal::RestContext& rest_context,

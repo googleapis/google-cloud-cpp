@@ -205,6 +205,9 @@ class AddressesConnection {
   virtual StreamRange<google::cloud::cpp::compute::v1::Address> ListAddresses(
       google::cloud::cpp::compute::addresses::v1::ListAddressesRequest request);
 
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Move(
+      google::cloud::cpp::compute::addresses::v1::MoveRequest const& request);
+
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetLabels(google::cloud::cpp::compute::addresses::v1::SetLabelsRequest const&
                 request);

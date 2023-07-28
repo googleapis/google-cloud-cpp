@@ -109,6 +109,21 @@ AddressesRestLogging::ListAddresses(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+AddressesRestLogging::AsyncMove(
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::addresses::v1::MoveRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](CompletionQueue& cq,
+             std::unique_ptr<rest_internal::RestContext> rest_context,
+             google::cloud::cpp::compute::addresses::v1::MoveRequest const&
+                 request) {
+        return child_->AsyncMove(cq, std::move(rest_context), request);
+      },
+      cq, std::move(rest_context), request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 AddressesRestLogging::AsyncSetLabels(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,

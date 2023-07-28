@@ -123,6 +123,23 @@ ResourcePoliciesRestLogging::ListResourcePolicies(
       rest_context, request, __func__, tracing_options_);
 }
 
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+ResourcePoliciesRestLogging::AsyncPatchResourcePolicies(
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::resource_policies::v1::
+        PatchResourcePoliciesRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](CompletionQueue& cq,
+             std::unique_ptr<rest_internal::RestContext> rest_context,
+             google::cloud::cpp::compute::resource_policies::v1::
+                 PatchResourcePoliciesRequest const& request) {
+        return child_->AsyncPatchResourcePolicies(cq, std::move(rest_context),
+                                                  request);
+      },
+      cq, std::move(rest_context), request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 ResourcePoliciesRestLogging::SetIamPolicy(
     rest_internal::RestContext& rest_context,

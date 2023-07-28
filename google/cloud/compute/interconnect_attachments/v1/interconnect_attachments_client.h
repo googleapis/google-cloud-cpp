@@ -112,7 +112,7 @@ class InterconnectAttachmentsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.interconnect_attachments.v1.AggregatedListInterconnectAttachmentsRequest]: @googleapis_reference_link{google/cloud/compute/interconnect_attachments/v1/interconnect_attachments.proto#L123}
-  /// [google.cloud.cpp.compute.v1.InterconnectAttachmentAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L12226}
+  /// [google.cloud.cpp.compute.v1.InterconnectAttachmentAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L12712}
   ///
   // clang-format on
   StatusOr<
@@ -145,7 +145,7 @@ class InterconnectAttachmentsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.interconnect_attachments.v1.AggregatedListInterconnectAttachmentsRequest]: @googleapis_reference_link{google/cloud/compute/interconnect_attachments/v1/interconnect_attachments.proto#L123}
-  /// [google.cloud.cpp.compute.v1.InterconnectAttachmentAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L12226}
+  /// [google.cloud.cpp.compute.v1.InterconnectAttachmentAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L12712}
   ///
   // clang-format on
   StatusOr<
@@ -252,7 +252,7 @@ class InterconnectAttachmentsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.interconnect_attachments.v1.GetInterconnectAttachmentsRequest]: @googleapis_reference_link{google/cloud/compute/interconnect_attachments/v1/interconnect_attachments.proto#L227}
-  /// [google.cloud.cpp.compute.v1.InterconnectAttachment]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L11967}
+  /// [google.cloud.cpp.compute.v1.InterconnectAttachment]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L12417}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::InterconnectAttachment>
@@ -286,7 +286,7 @@ class InterconnectAttachmentsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.interconnect_attachments.v1.GetInterconnectAttachmentsRequest]: @googleapis_reference_link{google/cloud/compute/interconnect_attachments/v1/interconnect_attachments.proto#L227}
-  /// [google.cloud.cpp.compute.v1.InterconnectAttachment]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L11967}
+  /// [google.cloud.cpp.compute.v1.InterconnectAttachment]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L12417}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::InterconnectAttachment>
@@ -404,7 +404,7 @@ class InterconnectAttachmentsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.interconnect_attachments.v1.ListInterconnectAttachmentsRequest]: @googleapis_reference_link{google/cloud/compute/interconnect_attachments/v1/interconnect_attachments.proto#L273}
-  /// [google.cloud.cpp.compute.v1.InterconnectAttachment]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L11967}
+  /// [google.cloud.cpp.compute.v1.InterconnectAttachment]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L12417}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::InterconnectAttachment>
@@ -446,7 +446,7 @@ class InterconnectAttachmentsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.interconnect_attachments.v1.ListInterconnectAttachmentsRequest]: @googleapis_reference_link{google/cloud/compute/interconnect_attachments/v1/interconnect_attachments.proto#L273}
-  /// [google.cloud.cpp.compute.v1.InterconnectAttachment]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L11967}
+  /// [google.cloud.cpp.compute.v1.InterconnectAttachment]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L12417}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::InterconnectAttachment>

@@ -190,7 +190,7 @@ class RegionNotificationEndpointsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.region_notification_endpoints.v1.GetRegionNotificationEndpointsRequest]: @googleapis_reference_link{google/cloud/compute/region_notification_endpoints/v1/region_notification_endpoints.proto#L116}
-  /// [google.cloud.cpp.compute.v1.NotificationEndpoint]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17268}
+  /// [google.cloud.cpp.compute.v1.NotificationEndpoint]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18152}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::NotificationEndpoint>
@@ -224,7 +224,7 @@ class RegionNotificationEndpointsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.region_notification_endpoints.v1.GetRegionNotificationEndpointsRequest]: @googleapis_reference_link{google/cloud/compute/region_notification_endpoints/v1/region_notification_endpoints.proto#L116}
-  /// [google.cloud.cpp.compute.v1.NotificationEndpoint]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17268}
+  /// [google.cloud.cpp.compute.v1.NotificationEndpoint]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18152}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::NotificationEndpoint>
@@ -341,7 +341,7 @@ class RegionNotificationEndpointsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.region_notification_endpoints.v1.ListRegionNotificationEndpointsRequest]: @googleapis_reference_link{google/cloud/compute/region_notification_endpoints/v1/region_notification_endpoints.proto#L159}
-  /// [google.cloud.cpp.compute.v1.NotificationEndpoint]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17268}
+  /// [google.cloud.cpp.compute.v1.NotificationEndpoint]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18152}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::NotificationEndpoint>
@@ -382,7 +382,7 @@ class RegionNotificationEndpointsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.region_notification_endpoints.v1.ListRegionNotificationEndpointsRequest]: @googleapis_reference_link{google/cloud/compute/region_notification_endpoints/v1/region_notification_endpoints.proto#L159}
-  /// [google.cloud.cpp.compute.v1.NotificationEndpoint]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17268}
+  /// [google.cloud.cpp.compute.v1.NotificationEndpoint]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18152}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::NotificationEndpoint>

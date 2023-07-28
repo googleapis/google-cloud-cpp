@@ -116,6 +116,30 @@ GlobalAddressesClient::ListGlobalAddresses(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+GlobalAddressesClient::Move(
+    std::string const& project, std::string const& address,
+    google::cloud::cpp::compute::v1::GlobalAddressesMoveRequest const&
+        global_addresses_move_request_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::global_addresses::v1::MoveRequest request;
+  request.set_project(project);
+  request.set_address(address);
+  *request.mutable_global_addresses_move_request_resource() =
+      global_addresses_move_request_resource;
+  return connection_->Move(request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+GlobalAddressesClient::Move(
+    google::cloud::cpp::compute::global_addresses::v1::MoveRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->Move(request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 GlobalAddressesClient::SetLabels(
     std::string const& project, std::string const& resource,
     google::cloud::cpp::compute::v1::GlobalSetLabelsRequest const&

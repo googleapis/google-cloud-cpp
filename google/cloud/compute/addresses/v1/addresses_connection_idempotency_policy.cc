@@ -61,6 +61,11 @@ Idempotency AddressesConnectionIdempotencyPolicy::ListAddresses(
   return Idempotency::kIdempotent;
 }
 
+Idempotency AddressesConnectionIdempotencyPolicy::Move(
+    google::cloud::cpp::compute::addresses::v1::MoveRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency AddressesConnectionIdempotencyPolicy::SetLabels(
     google::cloud::cpp::compute::addresses::v1::SetLabelsRequest const&) {
   return Idempotency::kNonIdempotent;

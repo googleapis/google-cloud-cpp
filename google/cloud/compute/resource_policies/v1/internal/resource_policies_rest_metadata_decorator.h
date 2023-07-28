@@ -74,6 +74,13 @@ class ResourcePoliciesRestMetadata : public ResourcePoliciesRestStub {
                        google::cloud::cpp::compute::resource_policies::v1::
                            ListResourcePoliciesRequest const& request) override;
 
+  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncPatchResourcePolicies(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      google::cloud::cpp::compute::resource_policies::v1::
+          PatchResourcePoliciesRequest const& request) override;
+
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
       google::cloud::cpp::compute::resource_policies::v1::
