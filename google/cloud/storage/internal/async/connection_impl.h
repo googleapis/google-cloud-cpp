@@ -16,7 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_ASYNC_CONNECTION_IMPL_H
 
 #include "google/cloud/storage/idempotency_policy.h"
-#include "google/cloud/storage/internal/async_connection.h"
+#include "google/cloud/storage/internal/async/connection.h"
 #include "google/cloud/storage/options.h"
 #include "google/cloud/storage/retry_policy.h"
 #include "google/cloud/completion_queue.h"

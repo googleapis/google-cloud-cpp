@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/storage/internal/async_connection_impl.h"
-#include "google/cloud/storage/internal/async_accumulate_read_object.h"
+#include "google/cloud/storage/internal/async/connection_impl.h"
+#include "google/cloud/storage/internal/async/accumulate_read_object.h"
 #include "google/cloud/storage/internal/grpc/channel_refresh.h"
 #include "google/cloud/storage/internal/grpc/client.h"
 #include "google/cloud/storage/internal/grpc/configure_client_context.h"
