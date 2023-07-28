@@ -120,7 +120,8 @@ if (BUILD_TESTING)
         NAME commerce_quickstart
         COMMAND
             cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
-            $<TARGET_FILE:commerce_quickstart> GOOGLE_CLOUD_CPP_COMMERCE_TEST_BILLING_ACCOUNT)
+            $<TARGET_FILE:commerce_quickstart>
+            GOOGLE_CLOUD_CPP_COMMERCE_TEST_BILLING_ACCOUNT)
     set_tests_properties(commerce_quickstart
                          PROPERTIES LABELS "integration-test;quickstart")
 endif ()
