@@ -54,34 +54,18 @@ void to_json(nlohmann::json& j, JobStatistics const& s) {
 }
 
 void from_json(nlohmann::json const& j, JobStatistics& s) {
-  if (j.contains("totalBytesProcessed")) {
-    j.at("totalBytesProcessed").get_to(s.total_bytes_processed);
-  }
-  if (j.contains("numChildJobs")) j.at("numChildJobs").get_to(s.num_child_jobs);
-  if (j.contains("parentJobId")) j.at("parentJobId").get_to(s.parent_job_id);
-  if (j.contains("sessionInfo")) j.at("sessionInfo").get_to(s.session_info);
-  if (j.contains("transactionInfo")) {
-    j.at("transactionInfo").get_to(s.transaction_info);
-  }
-  if (j.contains("reservation_id")) {
-    j.at("reservation_id").get_to(s.reservation_id);
-  }
-  if (j.contains("rowLevelSecurityStatistics")) {
-    j.at("rowLevelSecurityStatistics").get_to(s.row_level_security_statistics);
-  }
-  if (j.contains("dataMaskingStatistics")) {
-    j.at("dataMaskingStatistics").get_to(s.data_masking_statistics);
-  }
-  if (j.contains("completionRatio")) {
-    j.at("completionRatio").get_to(s.completion_ratio);
-  }
-  if (j.contains("quotaDeferments")) {
-    j.at("quotaDeferments").get_to(s.quota_deferments);
-  }
-  if (j.contains("scriptStatistics")) {
-    j.at("scriptStatistics").get_to(s.script_statistics);
-  }
-  if (j.contains("query")) j.at("query").get_to(s.job_query_stats);
+  SafeGetTo(s.total_bytes_processed, j, "totalBytesProcessed");
+  SafeGetTo(s.num_child_jobs, j, "numChildJobs");
+  SafeGetTo(s.parent_job_id, j, "parentJobId");
+  SafeGetTo(s.session_info, j, "sessionInfo");
+  SafeGetTo(s.transaction_info, j, "transactionInfo");
+  SafeGetTo(s.reservation_id, j, "reservation_id");
+  SafeGetTo(s.row_level_security_statistics, j, "rowLevelSecurityStatistics");
+  SafeGetTo(s.data_masking_statistics, j, "dataMaskingStatistics");
+  SafeGetTo(s.completion_ratio, j, "completionRatio");
+  SafeGetTo(s.quota_deferments, j, "quotaDeferments");
+  SafeGetTo(s.script_statistics, j, "scriptStatistics");
+  SafeGetTo(s.job_query_stats, j, "query");
 
   FromJson(s.start_time, j, "startTime");
   FromJson(s.end_time, j, "endTime");
@@ -166,39 +150,33 @@ void to_json(nlohmann::json& j, ScriptStackFrame const& s) {
       {"procedureId", s.procedure_id}, {"text", s.text}};
 }
 void from_json(nlohmann::json const& j, ScriptStackFrame& s) {
-  if (j.contains("startLine")) j.at("startLine").get_to(s.start_line);
-  if (j.contains("startColumn")) j.at("startColumn").get_to(s.start_column);
-  if (j.contains("endLine")) j.at("endLine").get_to(s.end_line);
-  if (j.contains("endColumn")) j.at("endColumn").get_to(s.end_column);
-  if (j.contains("procedureId")) j.at("procedureId").get_to(s.procedure_id);
-  if (j.contains("text")) j.at("text").get_to(s.text);
+  SafeGetTo(s.start_line, j, "startLine");
+  SafeGetTo(s.start_column, j, "startColumn");
+  SafeGetTo(s.end_line, j, "endLine");
+  SafeGetTo(s.end_column, j, "endColumn");
+  SafeGetTo(s.procedure_id, j, "procedureId");
+  SafeGetTo(s.text, j, "text");
 }
 
 void to_json(nlohmann::json& j, RowLevelSecurityStatistics const& r) {
   j = nlohmann::json{{"rowLevelSecurityApplied", r.row_level_security_applied}};
 }
 void from_json(nlohmann::json const& j, RowLevelSecurityStatistics& r) {
-  if (j.contains("rowLevelSecurityApplied")) {
-    j.at("rowLevelSecurityApplied").get_to(r.row_level_security_applied);
-  }
+  SafeGetTo(r.row_level_security_applied, j, "rowLevelSecurityApplied");
 }
 
 void to_json(nlohmann::json& j, DataMaskingStatistics const& d) {
   j = nlohmann::json{{"dataMaskingApplied", d.data_masking_applied}};
 }
 void from_json(nlohmann::json const& j, DataMaskingStatistics& d) {
-  if (j.contains("dataMaskingApplied")) {
-    j.at("dataMaskingApplied").get_to(d.data_masking_applied);
-  }
+  SafeGetTo(d.data_masking_applied, j, "dataMaskingApplied");
 }
 
 void to_json(nlohmann::json& j, TransactionInfo const& t) {
   j = nlohmann::json{{"transactionId", t.transaction_id}};
 }
 void from_json(nlohmann::json const& j, TransactionInfo& t) {
-  if (j.contains("transactionId")) {
-    j.at("transactionId").get_to(t.transaction_id);
-  }
+  SafeGetTo(t.transaction_id, j, "transactionId");
 }
 
 void to_json(nlohmann::json& j, ScriptStatistics const& s) {
@@ -206,10 +184,8 @@ void to_json(nlohmann::json& j, ScriptStatistics const& s) {
                      {"stackFrames", s.stack_frames}};
 }
 void from_json(nlohmann::json const& j, ScriptStatistics& s) {
-  if (j.contains("evaluationKind")) {
-    j.at("evaluationKind").get_to(s.evaluation_kind);
-  }
-  if (j.contains("stackFrames")) j.at("stackFrames").get_to(s.stack_frames);
+  SafeGetTo(s.evaluation_kind, j, "evaluationKind");
+  SafeGetTo(s.stack_frames, j, "stackFrames");
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

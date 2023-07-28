@@ -49,6 +49,15 @@ void SafeGetTo(ResponseType& value, nlohmann::json const& j,
   if (i != j.end()) i->get_to(value);
 }
 
+template <typename C, typename T, typename R>
+void SafeGetTo(nlohmann::json const& j, std::string const& key, R& (C::*f)(T) &,
+               C& obj) {
+  auto i = j.find(key);
+  if (i != j.end()) {
+    (obj.*f)(i->get<T>());
+  }
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_v2_minimal_internal
 }  // namespace cloud

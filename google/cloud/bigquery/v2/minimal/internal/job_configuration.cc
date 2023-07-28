@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigquery/v2/minimal/internal/job_configuration.h"
+#include "google/cloud/bigquery/v2/minimal/internal/json_utils.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/debug_string.h"
 
@@ -41,11 +42,11 @@ void to_json(nlohmann::json& j, JobConfiguration const& c) {
                      {"labels", c.labels}};
 }
 void from_json(nlohmann::json const& j, JobConfiguration& c) {
-  if (j.contains("jobType")) j.at("jobType").get_to(c.job_type);
-  if (j.contains("query")) j.at("query").get_to(c.query);
-  if (j.contains("dryRun")) j.at("dryRun").get_to(c.dry_run);
-  if (j.contains("jobTimeoutMs")) j.at("jobTimeoutMs").get_to(c.job_timeout_ms);
-  if (j.contains("labels")) j.at("labels").get_to(c.labels);
+  SafeGetTo(c.job_type, j, "jobType");
+  SafeGetTo(c.query, j, "query");
+  SafeGetTo(c.dry_run, j, "dryRun");
+  SafeGetTo(c.job_timeout_ms, j, "jobTimeoutMs");
+  SafeGetTo(c.labels, j, "labels");
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
