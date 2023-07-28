@@ -27,10 +27,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /**
  * The traits to configure [`ConnectionOptions<T>`] for Cloud Spanner.
  *
- * @deprecated Use the options [`Options`](@ref google::cloud::Options) class
- * and set (as needed) [`EndpointOption`](@ref google::cloud::EndpointOption),
- * [`UserAgentProductsOption`](@ref google::cloud::UserAgentProductsOption),
- * and [`GrpcNumChannelsOption`](@ref google::cloud::GrpcNumChannelsOption).
+ * @deprecated Use [`Options`](@ref google::cloud::Options) instead,
+ *     and set (as needed)
+ *     [`EndpointOption`](
+ *     @ref google::cloud::EndpointOption),
+ *     [`UserAgentProductsOption`](
+ *     @ref google::cloud::UserAgentProductsOption), or
+ *     [`GrpcNumChannelsOption`](
+ *     @ref google::cloud::GrpcNumChannelsOption).
  *
  * [`ConnectionOptions<T>`]: @ref google::cloud::ConnectionOptions
  */

@@ -31,6 +31,17 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * These QueryOptions allow users to configure features about how their SQL
  * queries executes on the server.
  *
+ * @deprecated Use [`Options`](@ref google::cloud::Options) instead,
+ *     and set (as needed)
+ *     [`QueryOptimizerVersionOption`](
+ *     @ref google::cloud::spanner::QueryOptimizerVersionOption),
+ *     [`QueryOptimizerStatisticsPackageOption`](
+ *     @ref google::cloud::spanner::QueryOptimizerStatisticsPackageOption),
+ *     [`RequestPriorityOption`](
+ *     @ref google::cloud::spanner::RequestPriorityOption), or
+ *     [`RequestTagOption`](
+ *     @ref google::cloud::spanner::RequestTagOption).
+ *
  * @see https://cloud.google.com/spanner/docs/reference/rest/v1/QueryOptions
  * @see http://cloud/spanner/docs/query-optimizer/manage-query-optimizer
  */

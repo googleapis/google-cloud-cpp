@@ -55,6 +55,23 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *     also possible to configure the client to fail a request when the session
  *     pool is exhausted.
  *
+ * @deprecated Use [`Options`](@ref google::cloud::Options) instead,
+ *     and set (as needed)
+ *     [`GrpcNumChannelsOption`](
+ *     @ref google::cloud::GrpcNumChannelsOption),
+ *     [`SessionPoolMinSessionsOption`](
+ *     @ref google::cloud::spanner::SessionPoolMinSessionsOption),
+ *     [`SessionPoolMaxSessionsPerChannelOption`](
+ *     @ref google::cloud::spanner::SessionPoolMaxSessionsPerChannelOption),
+ *     [`SessionPoolMaxIdleSessionsOption`](
+ *     @ref google::cloud::spanner::SessionPoolMaxIdleSessionsOption),
+ *     [`SessionPoolActionOnExhaustionOption`](
+ *     @ref google::cloud::spanner::SessionPoolActionOnExhaustionOption),
+ *     [`SessionPoolKeepAliveIntervalOption`](
+ *     @ref google::cloud::spanner::SessionPoolKeepAliveIntervalOption), or
+ *     [`SessionPoolLabelsOption`](
+ *     @ref google::cloud::spanner::SessionPoolLabelsOption).
+ *
  * [spanner-sessions-doc]: https://cloud.google.com/spanner/docs/sessions
  */
 class SessionPoolOptions {
