@@ -18,6 +18,7 @@
 #include "google/cloud/status_or.h"
 #include <google/protobuf/descriptor.h>
 #include <nlohmann/json.hpp>
+#include <map>
 #include <set>
 #include <string>
 

@@ -55,15 +55,18 @@ std::string FormatMessageDescription(nlohmann::json const& field,
 
   auto enum_field = field.value("enum", nlohmann::json{});
   if (!enum_field.empty()) {
-    auto const& enum_field = field["enum"];
+    auto const& enum_descriptions =
+        field.value("enumDescriptions", nlohmann::json{});
     std::vector<std::pair<std::string, std::string>> enum_comments;
-    for (unsigned int i = 0; i < enum_field.size(); ++i) {
-      std::string enum_description;
-      if (field.contains("enumDescriptions") &&
-          i < field["enumDescriptions"].size()) {
-        enum_description = std::string(field["enumDescriptions"][i]);
+    std::string enum_description;
+    for (nlohmann::json::size_type i = 0; i < enum_field.size(); ++i) {
+      if (!enum_descriptions.empty() && i < enum_descriptions.size()) {
+        enum_description = std::string(enum_descriptions[i]);
+      } else {
+        enum_description.clear();
       }
-      enum_comments.emplace_back(std::string(enum_field[i]), enum_description);
+      enum_comments.emplace_back(std::string(enum_field[i]),
+                                 std::move(enum_description));
     }
     absl::StrAppend(&description,
                     FormatCommentKeyValueList(enum_comments, indent_level),
