@@ -35,12 +35,13 @@ bazel --batch query --noshow_progress --noshow_loading_progress \
     "kind(cc_library, @com_google_googleapis//${subdir}/...)"
 ```
 
-If this fails, send a CL to add the rule. Wait until that is submitted and
-exported before proceeding any further.
+If this fails, the dependency does not exist at the pinned version of the googleapis repo.
+[Send a PR to update the googleapis SHA to the latest version](../contributor/howto-guide-update-googleapis-sha.md).
+Wait until that is submitted before proceeding any further.
 
 ### Edit the scripts and configuration
 
-Update the `external/googleapis/update_libraries.sh` script.
+Update the [external/googleapis/update_libraries.sh](../../external/googleapis/update_libraries.sh) script.
 
 <details>
 <summary>Expand for an example</summary>
@@ -71,7 +72,7 @@ index cdaa0bc9f..b0381d72d 100755
 Determine the retryable status codes by looking in the service config JSON. For
 example, [here][retryable-status-codes].
 
-Manually edit `generator/generator_config.textproto` and add the new service.
+Manually edit [generator/generator_config.textproto](../../generator/generator_config.textproto) and add the new service.
 
 Find the list of `.proto` files that will need to be included:
 
@@ -149,6 +150,12 @@ git add "google/cloud/${library}"
 ci/cloudbuild/build.sh -t checkers-pr
 ```
 
+### Verify the generated changes look right
+
+```shell
+tree google/cloud/$library
+```
+
 ### Commit all the generated files
 
 ```shell
@@ -186,13 +193,13 @@ knows about one such subdirectory. You may need to manually update the
 
 ### Update the root files
 
-Manually edit `cmake/GoogleCloudCppFeatures.cmake` to include the new target. If
+Manually edit [cmake/GoogleCloudCppFeatures.cmake](../../cmake/GoogleCloudCppFeatures.cmake) to include the new target. If
 you are generating a GA library, add it to `GOOGLE_CLOUD_CPP_GA_LIBRARIES`.
 Otherwise, if you are generating an experimental library, add it to
 `GOOGLE_CLOUD_CPP_EXPERIMENTAL_LIBRARIES` and note in a comment when the library
 was generated.
 
-Update `libraries.bzl` to include the new library. While this can be done by
+Update  [libraries.bzl](../../libraries.bzl) to include the new library. While this can be done by
 running a cmake-based build, it is fastest to edit the file manually.
 
 ### Update the quickstart
@@ -244,7 +251,7 @@ with older services we need to edit a few places:
 
 ### Edit the top-level CHANGELOG file
 
-Announce the new library in the CHANGELOG for the next release.
+Announce the new library in the [CHANGELOG.md](../CHANGELOG.md) for the next release.
 
 ### Fix formatting nits
 
@@ -287,7 +294,7 @@ index c4ce00489..1858b48dc 100755
 ### Commit these changes
 
 ```shell
-git commit -m"Manually update READMEs, quickstart, and top-level stuff" .
+git commit -m "Manually update READMEs, quickstart, and top-level stuff" .
 ```
 
 ## Expanding a library
