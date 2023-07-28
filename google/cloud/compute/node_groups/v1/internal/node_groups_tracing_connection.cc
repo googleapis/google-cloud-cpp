@@ -157,6 +157,17 @@ NodeGroupsTracingConnection::SetNodeTemplate(
   return internal::EndSpan(std::move(span), child_->SetNodeTemplate(request));
 }
 
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+NodeGroupsTracingConnection::SimulateMaintenanceEvent(
+    google::cloud::cpp::compute::node_groups::v1::
+        SimulateMaintenanceEventRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_node_groups_v1::NodeGroupsConnection::SimulateMaintenanceEvent");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->SimulateMaintenanceEvent(request));
+}
+
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
 NodeGroupsTracingConnection::TestIamPermissions(
     google::cloud::cpp::compute::node_groups::v1::

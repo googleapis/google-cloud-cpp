@@ -119,6 +119,12 @@ class MockNodeGroupsConnection
                    SetNodeTemplateRequest const& request),
               (override));
 
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              SimulateMaintenanceEvent,
+              (google::cloud::cpp::compute::node_groups::v1::
+                   SimulateMaintenanceEventRequest const& request),
+              (override));
+
   MOCK_METHOD(
       StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>,
       TestIamPermissions,

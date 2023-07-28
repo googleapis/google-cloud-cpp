@@ -61,6 +61,10 @@ class ResourcePoliciesConnectionIdempotencyPolicy {
       google::cloud::cpp::compute::resource_policies::v1::
           ListResourcePoliciesRequest request);
 
+  virtual google::cloud::Idempotency PatchResourcePolicies(
+      google::cloud::cpp::compute::resource_policies::v1::
+          PatchResourcePoliciesRequest const& request);
+
   virtual google::cloud::Idempotency SetIamPolicy(
       google::cloud::cpp::compute::resource_policies::v1::
           SetIamPolicyRequest const& request);

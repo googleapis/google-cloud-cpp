@@ -213,6 +213,10 @@ class ResourcePoliciesConnection {
   ListResourcePolicies(google::cloud::cpp::compute::resource_policies::v1::
                            ListResourcePoliciesRequest request);
 
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  PatchResourcePolicies(google::cloud::cpp::compute::resource_policies::v1::
+                            PatchResourcePoliciesRequest const& request);
+
   virtual StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
       google::cloud::cpp::compute::resource_policies::v1::
           SetIamPolicyRequest const& request);

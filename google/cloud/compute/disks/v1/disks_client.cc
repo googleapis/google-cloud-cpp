@@ -76,6 +76,28 @@ DisksClient::AggregatedListDisks(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+DisksClient::BulkInsert(
+    std::string const& project, std::string const& zone,
+    google::cloud::cpp::compute::v1::BulkInsertDiskResource const&
+        bulk_insert_disk_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::disks::v1::BulkInsertRequest request;
+  request.set_project(project);
+  request.set_zone(zone);
+  *request.mutable_bulk_insert_disk_resource() = bulk_insert_disk_resource;
+  return connection_->BulkInsert(request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+DisksClient::BulkInsert(
+    google::cloud::cpp::compute::disks::v1::BulkInsertRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->BulkInsert(request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DisksClient::CreateSnapshot(
     std::string const& project, std::string const& zone,
     std::string const& disk,
@@ -286,6 +308,79 @@ DisksClient::SetLabels(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetLabels(request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+DisksClient::StartAsyncReplication(
+    std::string const& project, std::string const& zone,
+    std::string const& disk,
+    google::cloud::cpp::compute::v1::DisksStartAsyncReplicationRequest const&
+        disks_start_async_replication_request_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::disks::v1::StartAsyncReplicationRequest request;
+  request.set_project(project);
+  request.set_zone(zone);
+  request.set_disk(disk);
+  *request.mutable_disks_start_async_replication_request_resource() =
+      disks_start_async_replication_request_resource;
+  return connection_->StartAsyncReplication(request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+DisksClient::StartAsyncReplication(
+    google::cloud::cpp::compute::disks::v1::StartAsyncReplicationRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->StartAsyncReplication(request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+DisksClient::StopAsyncReplication(std::string const& project,
+                                  std::string const& zone,
+                                  std::string const& disk, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::disks::v1::StopAsyncReplicationRequest request;
+  request.set_project(project);
+  request.set_zone(zone);
+  request.set_disk(disk);
+  return connection_->StopAsyncReplication(request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+DisksClient::StopAsyncReplication(
+    google::cloud::cpp::compute::disks::v1::StopAsyncReplicationRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->StopAsyncReplication(request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+DisksClient::StopGroupAsyncReplication(
+    std::string const& project, std::string const& zone,
+    google::cloud::cpp::compute::v1::
+        DisksStopGroupAsyncReplicationResource const&
+            disks_stop_group_async_replication_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::disks::v1::StopGroupAsyncReplicationRequest
+      request;
+  request.set_project(project);
+  request.set_zone(zone);
+  *request.mutable_disks_stop_group_async_replication_resource() =
+      disks_stop_group_async_replication_resource;
+  return connection_->StopGroupAsyncReplication(request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+DisksClient::StopGroupAsyncReplication(
+    google::cloud::cpp::compute::disks::v1::
+        StopGroupAsyncReplicationRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->StopGroupAsyncReplication(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>

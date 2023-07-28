@@ -186,7 +186,7 @@ class ExternalVpnGatewaysClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.external_vpn_gateways.v1.GetExternalVpnGatewaysRequest]: @googleapis_reference_link{google/cloud/compute/external_vpn_gateways/v1/external_vpn_gateways.proto#L132}
-  /// [google.cloud.cpp.compute.v1.ExternalVpnGateway]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L5509}
+  /// [google.cloud.cpp.compute.v1.ExternalVpnGateway]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L5762}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::ExternalVpnGateway>
@@ -220,7 +220,7 @@ class ExternalVpnGatewaysClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.external_vpn_gateways.v1.GetExternalVpnGatewaysRequest]: @googleapis_reference_link{google/cloud/compute/external_vpn_gateways/v1/external_vpn_gateways.proto#L132}
-  /// [google.cloud.cpp.compute.v1.ExternalVpnGateway]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L5509}
+  /// [google.cloud.cpp.compute.v1.ExternalVpnGateway]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L5762}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::ExternalVpnGateway>
@@ -335,7 +335,7 @@ class ExternalVpnGatewaysClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.external_vpn_gateways.v1.ListExternalVpnGatewaysRequest]: @googleapis_reference_link{google/cloud/compute/external_vpn_gateways/v1/external_vpn_gateways.proto#L166}
-  /// [google.cloud.cpp.compute.v1.ExternalVpnGateway]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L5509}
+  /// [google.cloud.cpp.compute.v1.ExternalVpnGateway]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L5762}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::ExternalVpnGateway>
@@ -376,7 +376,7 @@ class ExternalVpnGatewaysClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.external_vpn_gateways.v1.ListExternalVpnGatewaysRequest]: @googleapis_reference_link{google/cloud/compute/external_vpn_gateways/v1/external_vpn_gateways.proto#L166}
-  /// [google.cloud.cpp.compute.v1.ExternalVpnGateway]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L5509}
+  /// [google.cloud.cpp.compute.v1.ExternalVpnGateway]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L5762}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::ExternalVpnGateway>
@@ -482,7 +482,7 @@ class ExternalVpnGatewaysClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.external_vpn_gateways.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/external_vpn_gateways/v1/external_vpn_gateways.proto#L248}
-  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28944}
+  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L30256}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
@@ -517,7 +517,7 @@ class ExternalVpnGatewaysClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.external_vpn_gateways.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/external_vpn_gateways/v1/external_vpn_gateways.proto#L248}
-  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28944}
+  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L30256}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>

@@ -80,6 +80,11 @@ class MockAddressesConnection
               (override));
 
   MOCK_METHOD(
+      future<StatusOr<google::cloud::cpp::compute::v1::Operation>>, Move,
+      (google::cloud::cpp::compute::addresses::v1::MoveRequest const& request),
+      (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::cpp::compute::v1::Operation>>, SetLabels,
       (google::cloud::cpp::compute::addresses::v1::SetLabelsRequest const&
            request),

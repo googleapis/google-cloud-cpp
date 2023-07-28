@@ -217,6 +217,23 @@ NodeGroupsRestLogging::AsyncSetNodeTemplate(
       cq, std::move(rest_context), request, __func__, tracing_options_);
 }
 
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+NodeGroupsRestLogging::AsyncSimulateMaintenanceEvent(
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::node_groups::v1::
+        SimulateMaintenanceEventRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](CompletionQueue& cq,
+             std::unique_ptr<rest_internal::RestContext> rest_context,
+             google::cloud::cpp::compute::node_groups::v1::
+                 SimulateMaintenanceEventRequest const& request) {
+        return child_->AsyncSimulateMaintenanceEvent(
+            cq, std::move(rest_context), request);
+      },
+      cq, std::move(rest_context), request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
 NodeGroupsRestLogging::TestIamPermissions(
     rest_internal::RestContext& rest_context,

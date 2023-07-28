@@ -55,6 +55,9 @@ class AddressesConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency ListAddresses(
       google::cloud::cpp::compute::addresses::v1::ListAddressesRequest request);
 
+  virtual google::cloud::Idempotency Move(
+      google::cloud::cpp::compute::addresses::v1::MoveRequest const& request);
+
   virtual google::cloud::Idempotency SetLabels(
       google::cloud::cpp::compute::addresses::v1::SetLabelsRequest const&
           request);

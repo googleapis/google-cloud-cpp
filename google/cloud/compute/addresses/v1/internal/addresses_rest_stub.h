@@ -68,6 +68,13 @@ class AddressesRestStub {
           request) = 0;
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncMove(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      google::cloud::cpp::compute::addresses::v1::MoveRequest const&
+          request) = 0;
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncSetLabels(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
@@ -126,6 +133,12 @@ class DefaultAddressesRestStub : public AddressesRestStub {
       google::cloud::rest_internal::RestContext& rest_context,
       google::cloud::cpp::compute::addresses::v1::ListAddressesRequest const&
           request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncMove(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      google::cloud::cpp::compute::addresses::v1::MoveRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncSetLabels(
       google::cloud::CompletionQueue& cq,

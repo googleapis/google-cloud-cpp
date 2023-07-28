@@ -189,6 +189,11 @@ class RegionDisksConnection {
                           AddResourcePoliciesRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  BulkInsert(
+      google::cloud::cpp::compute::region_disks::v1::BulkInsertRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   CreateSnapshot(google::cloud::cpp::compute::region_disks::v1::
                      CreateSnapshotRequest const& request);
 
@@ -228,6 +233,19 @@ class RegionDisksConnection {
   SetLabels(
       google::cloud::cpp::compute::region_disks::v1::SetLabelsRequest const&
           request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  StartAsyncReplication(google::cloud::cpp::compute::region_disks::v1::
+                            StartAsyncReplicationRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  StopAsyncReplication(google::cloud::cpp::compute::region_disks::v1::
+                           StopAsyncReplicationRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  StopGroupAsyncReplication(
+      google::cloud::cpp::compute::region_disks::v1::
+          StopGroupAsyncReplicationRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
   TestIamPermissions(google::cloud::cpp::compute::region_disks::v1::

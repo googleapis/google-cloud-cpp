@@ -55,6 +55,10 @@ class RegionDisksRestConnectionImpl
   AddResourcePolicies(google::cloud::cpp::compute::region_disks::v1::
                           AddResourcePoliciesRequest const& request) override;
 
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> BulkInsert(
+      google::cloud::cpp::compute::region_disks::v1::BulkInsertRequest const&
+          request) override;
+
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> CreateSnapshot(
       google::cloud::cpp::compute::region_disks::v1::
           CreateSnapshotRequest const& request) override;
@@ -95,6 +99,20 @@ class RegionDisksRestConnectionImpl
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
       google::cloud::cpp::compute::region_disks::v1::SetLabelsRequest const&
           request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  StartAsyncReplication(
+      google::cloud::cpp::compute::region_disks::v1::
+          StartAsyncReplicationRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  StopAsyncReplication(google::cloud::cpp::compute::region_disks::v1::
+                           StopAsyncReplicationRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  StopGroupAsyncReplication(
+      google::cloud::cpp::compute::region_disks::v1::
+          StopGroupAsyncReplicationRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
   TestIamPermissions(google::cloud::cpp::compute::region_disks::v1::

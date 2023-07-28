@@ -192,6 +192,10 @@ class DisksConnection {
           request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  BulkInsert(
+      google::cloud::cpp::compute::disks::v1::BulkInsertRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   CreateSnapshot(
       google::cloud::cpp::compute::disks::v1::CreateSnapshotRequest const&
           request);
@@ -228,6 +232,20 @@ class DisksConnection {
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetLabels(
       google::cloud::cpp::compute::disks::v1::SetLabelsRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  StartAsyncReplication(google::cloud::cpp::compute::disks::v1::
+                            StartAsyncReplicationRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  StopAsyncReplication(
+      google::cloud::cpp::compute::disks::v1::StopAsyncReplicationRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  StopGroupAsyncReplication(
+      google::cloud::cpp::compute::disks::v1::
+          StopGroupAsyncReplicationRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
   TestIamPermissions(

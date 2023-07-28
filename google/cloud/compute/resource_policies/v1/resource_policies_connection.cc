@@ -81,6 +81,15 @@ ResourcePoliciesConnection::ListResourcePolicies(
       StreamRange<google::cloud::cpp::compute::v1::ResourcePolicy>>();
 }
 
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+ResourcePoliciesConnection::PatchResourcePolicies(
+    google::cloud::cpp::compute::resource_policies::v1::
+        PatchResourcePoliciesRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 ResourcePoliciesConnection::SetIamPolicy(
     google::cloud::cpp::compute::resource_policies::v1::

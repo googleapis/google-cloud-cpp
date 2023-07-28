@@ -94,6 +94,17 @@ ResourcePoliciesRestMetadata::ListResourcePolicies(
   return child_->ListResourcePolicies(rest_context, request);
 }
 
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+ResourcePoliciesRestMetadata::AsyncPatchResourcePolicies(
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::resource_policies::v1::
+        PatchResourcePoliciesRequest const& request) {
+  SetMetadata(*rest_context);
+  return child_->AsyncPatchResourcePolicies(cq, std::move(rest_context),
+                                            request);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 ResourcePoliciesRestMetadata::SetIamPolicy(
     rest_internal::RestContext& rest_context,

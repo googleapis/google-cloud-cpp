@@ -43,6 +43,11 @@ Idempotency DisksConnectionIdempotencyPolicy::AggregatedListDisks(
   return Idempotency::kIdempotent;
 }
 
+Idempotency DisksConnectionIdempotencyPolicy::BulkInsert(
+    google::cloud::cpp::compute::disks::v1::BulkInsertRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency DisksConnectionIdempotencyPolicy::CreateSnapshot(
     google::cloud::cpp::compute::disks::v1::CreateSnapshotRequest const&) {
   return Idempotency::kNonIdempotent;
@@ -91,6 +96,24 @@ Idempotency DisksConnectionIdempotencyPolicy::SetIamPolicy(
 
 Idempotency DisksConnectionIdempotencyPolicy::SetLabels(
     google::cloud::cpp::compute::disks::v1::SetLabelsRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency DisksConnectionIdempotencyPolicy::StartAsyncReplication(
+    google::cloud::cpp::compute::disks::v1::
+        StartAsyncReplicationRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency DisksConnectionIdempotencyPolicy::StopAsyncReplication(
+    google::cloud::cpp::compute::disks::v1::
+        StopAsyncReplicationRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency DisksConnectionIdempotencyPolicy::StopGroupAsyncReplication(
+    google::cloud::cpp::compute::disks::v1::
+        StopGroupAsyncReplicationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 

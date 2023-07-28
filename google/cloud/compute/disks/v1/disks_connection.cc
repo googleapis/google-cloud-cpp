@@ -49,6 +49,14 @@ DisksConnection::AggregatedListDisks(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+DisksConnection::BulkInsert(
+    google::cloud::cpp::compute::disks::v1::BulkInsertRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DisksConnection::CreateSnapshot(
     google::cloud::cpp::compute::disks::v1::CreateSnapshotRequest const&) {
   return google::cloud::make_ready_future<
@@ -114,6 +122,32 @@ StatusOr<google::cloud::cpp::compute::v1::Policy> DisksConnection::SetIamPolicy(
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DisksConnection::SetLabels(
     google::cloud::cpp::compute::disks::v1::SetLabelsRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+DisksConnection::StartAsyncReplication(
+    google::cloud::cpp::compute::disks::v1::
+        StartAsyncReplicationRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+DisksConnection::StopAsyncReplication(google::cloud::cpp::compute::disks::v1::
+                                          StopAsyncReplicationRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+DisksConnection::StopGroupAsyncReplication(
+    google::cloud::cpp::compute::disks::v1::
+        StopGroupAsyncReplicationRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

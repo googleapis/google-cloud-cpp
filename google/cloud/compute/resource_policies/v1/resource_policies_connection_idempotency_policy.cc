@@ -71,6 +71,12 @@ Idempotency ResourcePoliciesConnectionIdempotencyPolicy::ListResourcePolicies(
   return Idempotency::kIdempotent;
 }
 
+Idempotency ResourcePoliciesConnectionIdempotencyPolicy::PatchResourcePolicies(
+    google::cloud::cpp::compute::resource_policies::v1::
+        PatchResourcePoliciesRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency ResourcePoliciesConnectionIdempotencyPolicy::SetIamPolicy(
     google::cloud::cpp::compute::resource_policies::v1::
         SetIamPolicyRequest const&) {

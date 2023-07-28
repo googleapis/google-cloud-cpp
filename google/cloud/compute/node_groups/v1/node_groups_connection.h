@@ -233,6 +233,10 @@ class NodeGroupsConnection {
   SetNodeTemplate(google::cloud::cpp::compute::node_groups::v1::
                       SetNodeTemplateRequest const& request);
 
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  SimulateMaintenanceEvent(google::cloud::cpp::compute::node_groups::v1::
+                               SimulateMaintenanceEventRequest const& request);
+
   virtual StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
   TestIamPermissions(google::cloud::cpp::compute::node_groups::v1::
                          TestIamPermissionsRequest const& request);

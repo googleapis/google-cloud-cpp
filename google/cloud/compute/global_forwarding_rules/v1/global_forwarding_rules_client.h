@@ -187,7 +187,7 @@ class GlobalForwardingRulesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.global_forwarding_rules.v1.GetGlobalForwardingRulesRequest]: @googleapis_reference_link{google/cloud/compute/global_forwarding_rules/v1/global_forwarding_rules.proto#L148}
-  /// [google.cloud.cpp.compute.v1.ForwardingRule]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L6349}
+  /// [google.cloud.cpp.compute.v1.ForwardingRule]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L6647}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::ForwardingRule>
@@ -221,7 +221,7 @@ class GlobalForwardingRulesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.global_forwarding_rules.v1.GetGlobalForwardingRulesRequest]: @googleapis_reference_link{google/cloud/compute/global_forwarding_rules/v1/global_forwarding_rules.proto#L148}
-  /// [google.cloud.cpp.compute.v1.ForwardingRule]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L6349}
+  /// [google.cloud.cpp.compute.v1.ForwardingRule]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L6647}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::ForwardingRule>
@@ -337,7 +337,7 @@ class GlobalForwardingRulesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.global_forwarding_rules.v1.ListGlobalForwardingRulesRequest]: @googleapis_reference_link{google/cloud/compute/global_forwarding_rules/v1/global_forwarding_rules.proto#L182}
-  /// [google.cloud.cpp.compute.v1.ForwardingRule]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L6349}
+  /// [google.cloud.cpp.compute.v1.ForwardingRule]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L6647}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::ForwardingRule>
@@ -378,7 +378,7 @@ class GlobalForwardingRulesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.global_forwarding_rules.v1.ListGlobalForwardingRulesRequest]: @googleapis_reference_link{google/cloud/compute/global_forwarding_rules/v1/global_forwarding_rules.proto#L182}
-  /// [google.cloud.cpp.compute.v1.ForwardingRule]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L6349}
+  /// [google.cloud.cpp.compute.v1.ForwardingRule]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L6647}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::ForwardingRule>

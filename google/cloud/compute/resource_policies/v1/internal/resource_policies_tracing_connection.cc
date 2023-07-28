@@ -104,6 +104,18 @@ ResourcePoliciesTracingConnection::ListResourcePolicies(
                                                        std::move(sr));
 }
 
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+ResourcePoliciesTracingConnection::PatchResourcePolicies(
+    google::cloud::cpp::compute::resource_policies::v1::
+        PatchResourcePoliciesRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_resource_policies_v1::ResourcePoliciesConnection::"
+      "PatchResourcePolicies");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->PatchResourcePolicies(request));
+}
+
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 ResourcePoliciesTracingConnection::SetIamPolicy(
     google::cloud::cpp::compute::resource_policies::v1::

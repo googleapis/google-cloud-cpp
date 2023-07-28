@@ -100,6 +100,12 @@ Idempotency NodeGroupsConnectionIdempotencyPolicy::SetNodeTemplate(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency NodeGroupsConnectionIdempotencyPolicy::SimulateMaintenanceEvent(
+    google::cloud::cpp::compute::node_groups::v1::
+        SimulateMaintenanceEventRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency NodeGroupsConnectionIdempotencyPolicy::TestIamPermissions(
     google::cloud::cpp::compute::node_groups::v1::
         TestIamPermissionsRequest const&) {

@@ -73,6 +73,13 @@ class ResourcePoliciesRestStub {
                        google::cloud::cpp::compute::resource_policies::v1::
                            ListResourcePoliciesRequest const& request) = 0;
 
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncPatchResourcePolicies(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      google::cloud::cpp::compute::resource_policies::v1::
+          PatchResourcePoliciesRequest const& request) = 0;
+
   virtual StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
       google::cloud::cpp::compute::resource_policies::v1::
@@ -140,6 +147,13 @@ class DefaultResourcePoliciesRestStub : public ResourcePoliciesRestStub {
   ListResourcePolicies(google::cloud::rest_internal::RestContext& rest_context,
                        google::cloud::cpp::compute::resource_policies::v1::
                            ListResourcePoliciesRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncPatchResourcePolicies(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      google::cloud::cpp::compute::resource_policies::v1::
+          PatchResourcePoliciesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,

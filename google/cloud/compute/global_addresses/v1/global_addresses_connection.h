@@ -203,6 +203,10 @@ class GlobalAddressesConnection {
   ListGlobalAddresses(google::cloud::cpp::compute::global_addresses::v1::
                           ListGlobalAddressesRequest request);
 
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Move(
+      google::cloud::cpp::compute::global_addresses::v1::MoveRequest const&
+          request);
+
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetLabels(
       google::cloud::cpp::compute::global_addresses::v1::SetLabelsRequest const&

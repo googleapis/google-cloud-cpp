@@ -44,6 +44,9 @@ class DisksConnectionIdempotencyPolicy {
       google::cloud::cpp::compute::disks::v1::AggregatedListDisksRequest const&
           request);
 
+  virtual google::cloud::Idempotency BulkInsert(
+      google::cloud::cpp::compute::disks::v1::BulkInsertRequest const& request);
+
   virtual google::cloud::Idempotency CreateSnapshot(
       google::cloud::cpp::compute::disks::v1::CreateSnapshotRequest const&
           request);
@@ -79,6 +82,18 @@ class DisksConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency SetLabels(
       google::cloud::cpp::compute::disks::v1::SetLabelsRequest const& request);
+
+  virtual google::cloud::Idempotency StartAsyncReplication(
+      google::cloud::cpp::compute::disks::v1::
+          StartAsyncReplicationRequest const& request);
+
+  virtual google::cloud::Idempotency StopAsyncReplication(
+      google::cloud::cpp::compute::disks::v1::StopAsyncReplicationRequest const&
+          request);
+
+  virtual google::cloud::Idempotency StopGroupAsyncReplication(
+      google::cloud::cpp::compute::disks::v1::
+          StopGroupAsyncReplicationRequest const& request);
 
   virtual google::cloud::Idempotency TestIamPermissions(
       google::cloud::cpp::compute::disks::v1::TestIamPermissionsRequest const&

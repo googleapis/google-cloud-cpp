@@ -71,6 +71,12 @@ class MockGlobalAddressesConnection
                    ListGlobalAddressesRequest request),
               (override));
 
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::cpp::compute::v1::Operation>>, Move,
+      (google::cloud::cpp::compute::global_addresses::v1::MoveRequest const&
+           request),
+      (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               SetLabels,
               (google::cloud::cpp::compute::global_addresses::v1::
