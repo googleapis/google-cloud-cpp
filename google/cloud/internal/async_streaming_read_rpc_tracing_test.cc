@@ -16,6 +16,7 @@
 #include "google/cloud/internal/async_streaming_read_rpc_tracing.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/testing_util/mock_async_streaming_read_rpc.h"
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
@@ -27,6 +28,7 @@ namespace internal {
 namespace {
 
 using ::google::cloud::testing_util::EventNamed;
+using ::google::cloud::testing_util::MockAsyncStreamingReadRpc;
 using ::google::cloud::testing_util::OTelAttribute;
 using ::google::cloud::testing_util::SpanEventAttributesAre;
 using ::google::cloud::testing_util::SpanHasAttributes;
@@ -40,18 +42,6 @@ using ::testing::IsEmpty;
 using ::testing::Optional;
 using ::testing::Pair;
 using ::testing::Return;
-
-template <typename Response>
-class MockAsyncStreamingReadRpc : public AsyncStreamingReadRpc<Response> {
- public:
-  ~MockAsyncStreamingReadRpc() override = default;
-
-  MOCK_METHOD(void, Cancel, (), (override));
-  MOCK_METHOD(future<bool>, Start, (), (override));
-  MOCK_METHOD(future<absl::optional<Response>>, Read, (), (override));
-  MOCK_METHOD(future<Status>, Finish, (), (override));
-  MOCK_METHOD(StreamingRpcMetadata, GetRequestMetadata, (), (const, override));
-};
 
 using MockStream = MockAsyncStreamingReadRpc<int>;
 using TestedStream = AsyncStreamingReadRpcTracing<int>;

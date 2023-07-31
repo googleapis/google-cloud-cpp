@@ -14,6 +14,7 @@
 
 #include "google/cloud/internal/async_streaming_read_rpc_auth.h"
 #include "google/cloud/completion_queue.h"
+#include "google/cloud/testing_util/mock_async_streaming_read_rpc.h"
 #include "google/cloud/testing_util/mock_grpc_authentication_strategy.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
@@ -39,16 +40,9 @@ struct FakeResponse {
 };
 
 using BaseStream = AsyncStreamingReadRpc<FakeResponse>;
+using MockStream =
+    google::cloud::testing_util::MockAsyncStreamingReadRpc<FakeResponse>;
 using AuthStream = AsyncStreamingReadRpcAuth<FakeResponse>;
-
-class MockStream : public BaseStream {
- public:
-  MOCK_METHOD(void, Cancel, (), (override));
-  MOCK_METHOD(future<bool>, Start, (), (override));
-  MOCK_METHOD(future<absl::optional<FakeResponse>>, Read, (), (override));
-  MOCK_METHOD(future<Status>, Finish, (), (override));
-  MOCK_METHOD(StreamingRpcMetadata, GetRequestMetadata, (), (const, override));
-};
 
 TEST(AsyncStreamReadWriteAuth, Start) {
   auto factory = AuthStream::StreamFactory([](auto) {

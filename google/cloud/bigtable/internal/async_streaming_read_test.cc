@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/internal/async_streaming_read.h"
+#include "google/cloud/testing_util/mock_async_streaming_read_rpc.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 
@@ -30,18 +31,8 @@ struct FakeResponse {
   std::string value;
 };
 
-class MockAsyncStreamingReadRpc
-    : public internal::AsyncStreamingReadRpc<FakeResponse> {
- public:
-  ~MockAsyncStreamingReadRpc() override = default;
-
-  MOCK_METHOD(void, Cancel, (), (override));
-  MOCK_METHOD(future<bool>, Start, (), (override));
-  MOCK_METHOD(future<absl::optional<FakeResponse>>, Read, (), (override));
-  MOCK_METHOD(future<Status>, Finish, (), (override));
-  MOCK_METHOD(internal::StreamingRpcMetadata, GetRequestMetadata, (),
-              (const, override));
-};
+using MockAsyncStreamingReadRpc =
+    google::cloud::testing_util::MockAsyncStreamingReadRpc<FakeResponse>;
 
 TEST(AsyncStreamingReadTest, FullStream) {
   auto mock = std::make_unique<StrictMock<MockAsyncStreamingReadRpc>>();

@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_TESTING_MOCK_BIGTABLE_STUB_H
 
 #include "google/cloud/bigtable/internal/bigtable_stub.h"
+#include "google/cloud/testing_util/mock_async_streaming_read_rpc.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -136,45 +137,15 @@ class MockSampleRowKeysStream
               (), (const, override));
 };
 
-class MockAsyncMutateRowsStream
-    : public google::cloud::internal::AsyncStreamingReadRpc<
-          google::bigtable::v2::MutateRowsResponse> {
- public:
-  MOCK_METHOD(void, Cancel, (), (override));
-  MOCK_METHOD(future<bool>, Start, (), (override));
-  MOCK_METHOD(future<absl::optional<google::bigtable::v2::MutateRowsResponse>>,
-              Read, (), (override));
-  MOCK_METHOD(future<Status>, Finish, (), (override));
-  MOCK_METHOD(google::cloud::internal::StreamingRpcMetadata, GetRequestMetadata,
-              (), (const, override));
-};
-
-class MockAsyncReadRowsStream
-    : public google::cloud::internal::AsyncStreamingReadRpc<
-          google::bigtable::v2::ReadRowsResponse> {
- public:
-  MOCK_METHOD(void, Cancel, (), (override));
-  MOCK_METHOD(future<bool>, Start, (), (override));
-  MOCK_METHOD(future<absl::optional<google::bigtable::v2::ReadRowsResponse>>,
-              Read, (), (override));
-  MOCK_METHOD(future<Status>, Finish, (), (override));
-  MOCK_METHOD(google::cloud::internal::StreamingRpcMetadata, GetRequestMetadata,
-              (), (const, override));
-};
-
-class MockAsyncSampleRowKeysStream
-    : public google::cloud::internal::AsyncStreamingReadRpc<
-          google::bigtable::v2::SampleRowKeysResponse> {
- public:
-  MOCK_METHOD(void, Cancel, (), (override));
-  MOCK_METHOD(future<bool>, Start, (), (override));
-  MOCK_METHOD(
-      future<absl::optional<google::bigtable::v2::SampleRowKeysResponse>>, Read,
-      (), (override));
-  MOCK_METHOD(future<Status>, Finish, (), (override));
-  MOCK_METHOD(google::cloud::internal::StreamingRpcMetadata, GetRequestMetadata,
-              (), (const, override));
-};
+using MockAsyncMutateRowsStream =
+    google::cloud::testing_util::MockAsyncStreamingReadRpc<
+        google::bigtable::v2::MutateRowsResponse>;
+using MockAsyncReadRowsStream =
+    google::cloud::testing_util::MockAsyncStreamingReadRpc<
+        google::bigtable::v2::ReadRowsResponse>;
+using MockAsyncSampleRowKeysStream =
+    google::cloud::testing_util::MockAsyncStreamingReadRpc<
+        google::bigtable::v2::SampleRowKeysResponse>;
 
 }  // namespace testing
 }  // namespace bigtable
