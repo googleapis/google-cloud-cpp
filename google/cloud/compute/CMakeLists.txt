@@ -179,10 +179,6 @@ target_link_libraries(
            google-cloud-cpp::rest_internal
            google-cloud-cpp::rest_protobuf_internal
            google-cloud-cpp::compute_protos)
-# Some files are too big for the MSVC defaults.
-if (MSVC)
-    target_compile_options(google_cloud_cpp_compute PRIVATE "/bigobj")
-endif ()
 google_cloud_cpp_add_common_options(google_cloud_cpp_compute)
 set_target_properties(
     google_cloud_cpp_compute

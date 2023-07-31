@@ -95,28 +95,20 @@ set(storage_benchmarks_unit_tests
 
 foreach (fname ${storage_benchmarks_unit_tests})
     google_cloud_cpp_add_executable(target "storage_benchmarks" "${fname}")
-    if (MSVC)
-        target_compile_options(${target} PRIVATE "/bigobj")
-    endif ()
-    if (BUILD_TESTING)
-        target_link_libraries(
-            ${target}
-            PRIVATE storage_benchmarks
-                    storage_client_testing
-                    google_cloud_cpp_testing
-                    google-cloud-cpp::storage
-                    GTest::gmock_main
-                    GTest::gmock
-                    GTest::gtest
-                    CURL::libcurl
-                    absl::strings
-                    nlohmann_json)
-        google_cloud_cpp_add_common_options(${target})
-        if (MSVC)
-            target_compile_options(${target} PRIVATE "/bigobj")
-        endif ()
-        add_test(NAME ${target} COMMAND ${target})
-    endif ()
+    target_link_libraries(
+        ${target}
+        PRIVATE storage_benchmarks
+                storage_client_testing
+                google_cloud_cpp_testing
+                google-cloud-cpp::storage
+                GTest::gmock_main
+                GTest::gmock
+                GTest::gtest
+                CURL::libcurl
+                absl::strings
+                nlohmann_json)
+    google_cloud_cpp_add_common_options(${target})
+    add_test(NAME ${target} COMMAND ${target})
 endforeach ()
 # Export the list of unit tests so the Bazel BUILD file can pick it up.
 export_list_to_bazel("storage_benchmarks_unit_tests.bzl"

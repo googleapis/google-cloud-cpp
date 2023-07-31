@@ -549,9 +549,6 @@ if (BUILD_TESTING)
 
     foreach (fname ${storage_client_unit_tests})
         google_cloud_cpp_add_executable(target "storage" "${fname}")
-        if (MSVC)
-            target_compile_options(${target} PRIVATE "/bigobj")
-        endif ()
         target_link_libraries(
             ${target}
             PRIVATE absl::memory
@@ -565,9 +562,6 @@ if (BUILD_TESTING)
                     CURL::libcurl
                     nlohmann_json::nlohmann_json)
         google_cloud_cpp_add_common_options(${target})
-        if (MSVC)
-            target_compile_options(${target} PRIVATE "/bigobj")
-        endif ()
         add_test(NAME ${target} COMMAND ${target})
     endforeach ()
     # Export the list of unit tests so the Bazel BUILD file can pick it up.
