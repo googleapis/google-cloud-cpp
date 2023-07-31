@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/aiplatform/v1/internal/featurestore_online_serving_connection_impl.h"
+#include "google/cloud/aiplatform/v1/internal/prediction_connection_impl.h"
 #include "google/cloud/aiplatform/v1/internal/tensorboard_connection_impl.h"
 
 namespace google {
@@ -27,6 +28,10 @@ void FeaturestoreOnlineServingServiceStreamingReadFeatureValuesStreamingUpdater(
 void TensorboardServiceReadTensorboardBlobDataStreamingUpdater(
     google::cloud::aiplatform::v1::ReadTensorboardBlobDataResponse const&,
     google::cloud::aiplatform::v1::ReadTensorboardBlobDataRequest&) {}
+
+void PredictionServiceServerStreamingPredictStreamingUpdater(
+    google::cloud::aiplatform::v1::StreamingPredictResponse const&,
+    google::cloud::aiplatform::v1::StreamingPredictRequest&) {}
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace aiplatform_v1_internal
