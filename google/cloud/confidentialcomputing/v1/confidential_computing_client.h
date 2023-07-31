@@ -109,8 +109,8 @@ class ConfidentialComputingClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.confidentialcomputing.v1.Challenge]: @googleapis_reference_link{google/cloud/confidentialcomputing/v1/service.proto#L59}
-  /// [google.cloud.confidentialcomputing.v1.CreateChallengeRequest]: @googleapis_reference_link{google/cloud/confidentialcomputing/v1/service.proto#L86}
+  /// [google.cloud.confidentialcomputing.v1.Challenge]: @googleapis_reference_link{google/cloud/confidentialcomputing/v1/service.proto#L74}
+  /// [google.cloud.confidentialcomputing.v1.CreateChallengeRequest]: @googleapis_reference_link{google/cloud/confidentialcomputing/v1/service.proto#L101}
   ///
   // clang-format on
   StatusOr<google::cloud::confidentialcomputing::v1::Challenge> CreateChallenge(
@@ -142,8 +142,8 @@ class ConfidentialComputingClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.confidentialcomputing.v1.Challenge]: @googleapis_reference_link{google/cloud/confidentialcomputing/v1/service.proto#L59}
-  /// [google.cloud.confidentialcomputing.v1.CreateChallengeRequest]: @googleapis_reference_link{google/cloud/confidentialcomputing/v1/service.proto#L86}
+  /// [google.cloud.confidentialcomputing.v1.Challenge]: @googleapis_reference_link{google/cloud/confidentialcomputing/v1/service.proto#L74}
+  /// [google.cloud.confidentialcomputing.v1.CreateChallengeRequest]: @googleapis_reference_link{google/cloud/confidentialcomputing/v1/service.proto#L101}
   ///
   // clang-format on
   StatusOr<google::cloud::confidentialcomputing::v1::Challenge> CreateChallenge(
@@ -175,8 +175,8 @@ class ConfidentialComputingClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.confidentialcomputing.v1.VerifyAttestationRequest]: @googleapis_reference_link{google/cloud/confidentialcomputing/v1/service.proto#L103}
-  /// [google.cloud.confidentialcomputing.v1.VerifyAttestationResponse]: @googleapis_reference_link{google/cloud/confidentialcomputing/v1/service.proto#L125}
+  /// [google.cloud.confidentialcomputing.v1.VerifyAttestationRequest]: @googleapis_reference_link{google/cloud/confidentialcomputing/v1/service.proto#L118}
+  /// [google.cloud.confidentialcomputing.v1.VerifyAttestationResponse]: @googleapis_reference_link{google/cloud/confidentialcomputing/v1/service.proto#L148}
   ///
   // clang-format on
   StatusOr<google::cloud::confidentialcomputing::v1::VerifyAttestationResponse>

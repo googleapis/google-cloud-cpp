@@ -18,6 +18,7 @@
 
 #include "google/cloud/aiplatform/v1/internal/prediction_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
@@ -48,6 +49,17 @@ StatusOr<google::api::HttpBody> PredictionServiceTracingConnection::RawPredict(
   return internal::EndSpan(*span, child_->RawPredict(request));
 }
 
+StreamRange<google::cloud::aiplatform::v1::StreamingPredictResponse>
+PredictionServiceTracingConnection::ServerStreamingPredict(
+    google::cloud::aiplatform::v1::StreamingPredictRequest const& request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::PredictionServiceConnection::ServerStreamingPredict");
+  auto scope = opentelemetry::trace::Scope(span);
+  auto sr = child_->ServerStreamingPredict(request);
+  return internal::MakeTracedStreamRange<
+      google::cloud::aiplatform::v1::StreamingPredictResponse>(std::move(span),
+                                                               std::move(sr));
+}
 StatusOr<google::cloud::aiplatform::v1::ExplainResponse>
 PredictionServiceTracingConnection::Explain(
     google::cloud::aiplatform::v1::ExplainRequest const& request) {

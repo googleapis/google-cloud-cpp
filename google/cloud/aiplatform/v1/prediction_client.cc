@@ -69,6 +69,14 @@ StatusOr<google::api::HttpBody> PredictionServiceClient::RawPredict(
   return connection_->RawPredict(request);
 }
 
+StreamRange<google::cloud::aiplatform::v1::StreamingPredictResponse>
+PredictionServiceClient::ServerStreamingPredict(
+    google::cloud::aiplatform::v1::StreamingPredictRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ServerStreamingPredict(request);
+}
+
 StatusOr<google::cloud::aiplatform::v1::ExplainResponse>
 PredictionServiceClient::Explain(
     std::string const& endpoint,

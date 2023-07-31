@@ -25,6 +25,7 @@
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
+#include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
 #include <google/cloud/aiplatform/v1/prediction_service.pb.h>
 #include <memory>
@@ -188,6 +189,10 @@ class PredictionServiceConnection {
 
   virtual StatusOr<google::api::HttpBody> RawPredict(
       google::cloud::aiplatform::v1::RawPredictRequest const& request);
+
+  virtual StreamRange<google::cloud::aiplatform::v1::StreamingPredictResponse>
+  ServerStreamingPredict(
+      google::cloud::aiplatform::v1::StreamingPredictRequest const& request);
 
   virtual StatusOr<google::cloud::aiplatform::v1::ExplainResponse> Explain(
       google::cloud::aiplatform::v1::ExplainRequest const& request);

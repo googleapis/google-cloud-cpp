@@ -46,6 +46,11 @@ class PredictionServiceTracingConnection
   StatusOr<google::api::HttpBody> RawPredict(
       google::cloud::aiplatform::v1::RawPredictRequest const& request) override;
 
+  StreamRange<google::cloud::aiplatform::v1::StreamingPredictResponse>
+  ServerStreamingPredict(
+      google::cloud::aiplatform::v1::StreamingPredictRequest const& request)
+      override;
+
   StatusOr<google::cloud::aiplatform::v1::ExplainResponse> Explain(
       google::cloud::aiplatform::v1::ExplainRequest const& request) override;
 

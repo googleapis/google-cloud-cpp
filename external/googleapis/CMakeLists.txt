@@ -60,6 +60,7 @@ set(EXTERNAL_GOOGLEAPIS_PROTO_FILES
     "google/api/metric.proto"
     "google/api/monitored_resource.proto"
     "google/api/monitoring.proto"
+    "google/api/policy.proto"
     "google/api/quota.proto"
     "google/api/resource.proto"
     "google/api/routing.proto"
@@ -244,6 +245,7 @@ set(PROTO_FILES_WITH_DEPENDENCIES
     "google/api/auth.proto"
     "google/api/billing.proto"
     "google/api/client.proto"
+    "google/api/control.proto"
     "google/api/distribution.proto"
     "google/api/endpoint.proto"
     "google/api/log.proto"
@@ -278,6 +280,7 @@ external_googleapis_add_library("google/api/annotations.proto" api_http_protos)
 external_googleapis_add_library("google/api/auth.proto" api_annotations_protos)
 external_googleapis_add_library("google/api/client.proto"
                                 api_launch_stage_protos)
+external_googleapis_add_library("google/api/control.proto" api_policy_protos)
 external_googleapis_add_library("google/api/metric.proto"
                                 api_launch_stage_protos api_label_protos)
 external_googleapis_add_library("google/api/billing.proto"

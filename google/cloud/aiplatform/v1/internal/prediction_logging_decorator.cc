@@ -18,6 +18,7 @@
 
 #include "google/cloud/aiplatform/v1/internal/prediction_logging_decorator.h"
 #include "google/cloud/internal/log_wrapper.h"
+#include "google/cloud/internal/streaming_read_rpc_logging.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/aiplatform/v1/prediction_service.grpc.pb.h>
 #include <memory>
@@ -55,6 +56,31 @@ StatusOr<google::api::HttpBody> PredictionServiceLogging::RawPredict(
         return child_->RawPredict(context, request);
       },
       context, request, __func__, tracing_options_);
+}
+
+std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+    google::cloud::aiplatform::v1::StreamingPredictResponse>>
+PredictionServiceLogging::ServerStreamingPredict(
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::aiplatform::v1::StreamingPredictRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::aiplatform::v1::StreamingPredictRequest const& request)
+          -> std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+              google::cloud::aiplatform::v1::StreamingPredictResponse>> {
+        auto stream =
+            child_->ServerStreamingPredict(std::move(context), request);
+        if (stream_logging_) {
+          stream =
+              std::make_unique<google::cloud::internal::StreamingReadRpcLogging<
+                  google::cloud::aiplatform::v1::StreamingPredictResponse>>(
+                  std::move(stream), tracing_options_,
+                  google::cloud::internal::RequestIdForLogging());
+        }
+        return stream;
+      },
+      std::move(context), request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ExplainResponse>
