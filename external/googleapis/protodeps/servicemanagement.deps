@@ -17,6 +17,7 @@
 @com_google_googleapis//google/api:metric_proto
 @com_google_googleapis//google/api:monitored_resource_proto
 @com_google_googleapis//google/api:monitoring_proto
+@com_google_googleapis//google/api:policy_proto
 @com_google_googleapis//google/api:quota_proto
 @com_google_googleapis//google/api:resource_proto
 @com_google_googleapis//google/api:service_proto

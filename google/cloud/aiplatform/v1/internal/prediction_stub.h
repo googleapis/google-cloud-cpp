@@ -19,6 +19,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_AIPLATFORM_V1_INTERNAL_PREDICTION_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_AIPLATFORM_V1_INTERNAL_PREDICTION_STUB_H
 
+#include "google/cloud/internal/streaming_read_rpc.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/aiplatform/v1/prediction_service.grpc.pb.h>
@@ -41,6 +42,13 @@ class PredictionServiceStub {
       grpc::ClientContext& context,
       google::cloud::aiplatform::v1::RawPredictRequest const& request) = 0;
 
+  virtual std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+      google::cloud::aiplatform::v1::StreamingPredictResponse>>
+  ServerStreamingPredict(
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::aiplatform::v1::StreamingPredictRequest const&
+          request) = 0;
+
   virtual StatusOr<google::cloud::aiplatform::v1::ExplainResponse> Explain(
       grpc::ClientContext& context,
       google::cloud::aiplatform::v1::ExplainRequest const& request) = 0;
@@ -61,6 +69,13 @@ class DefaultPredictionServiceStub : public PredictionServiceStub {
   StatusOr<google::api::HttpBody> RawPredict(
       grpc::ClientContext& client_context,
       google::cloud::aiplatform::v1::RawPredictRequest const& request) override;
+
+  std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+      google::cloud::aiplatform::v1::StreamingPredictResponse>>
+  ServerStreamingPredict(
+      std::shared_ptr<grpc::ClientContext> client_context,
+      google::cloud::aiplatform::v1::StreamingPredictRequest const& request)
+      override;
 
   StatusOr<google::cloud::aiplatform::v1::ExplainResponse> Explain(
       grpc::ClientContext& client_context,

@@ -28,6 +28,7 @@
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
+#include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -35,6 +36,10 @@ namespace google {
 namespace cloud {
 namespace aiplatform_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+void PredictionServiceServerStreamingPredictStreamingUpdater(
+    google::cloud::aiplatform::v1::StreamingPredictResponse const& response,
+    google::cloud::aiplatform::v1::StreamingPredictRequest& request);
 
 class PredictionServiceConnectionImpl
     : public aiplatform_v1::PredictionServiceConnection {
@@ -53,6 +58,11 @@ class PredictionServiceConnectionImpl
 
   StatusOr<google::api::HttpBody> RawPredict(
       google::cloud::aiplatform::v1::RawPredictRequest const& request) override;
+
+  StreamRange<google::cloud::aiplatform::v1::StreamingPredictResponse>
+  ServerStreamingPredict(
+      google::cloud::aiplatform::v1::StreamingPredictRequest const& request)
+      override;
 
   StatusOr<google::cloud::aiplatform::v1::ExplainResponse> Explain(
       google::cloud::aiplatform::v1::ExplainRequest const& request) override;

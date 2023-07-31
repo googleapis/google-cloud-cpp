@@ -142,7 +142,7 @@ class ConsumerProcurementServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.commerce.consumer.procurement.v1.Order]: @googleapis_reference_link{google/cloud/commerce/consumer/procurement/v1/order.proto#L106}
+  /// [google.cloud.commerce.consumer.procurement.v1.Order]: @googleapis_reference_link{google/cloud/commerce/consumer/procurement/v1/order.proto#L109}
   /// [google.cloud.commerce.consumer.procurement.v1.PlaceOrderRequest]: @googleapis_reference_link{google/cloud/commerce/consumer/procurement/v1/procurement_service.proto#L92}
   ///
   // clang-format on
@@ -172,7 +172,7 @@ class ConsumerProcurementServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.commerce.consumer.procurement.v1.GetOrderRequest]: @googleapis_reference_link{google/cloud/commerce/consumer/procurement/v1/procurement_service.proto#L125}
-  /// [google.cloud.commerce.consumer.procurement.v1.Order]: @googleapis_reference_link{google/cloud/commerce/consumer/procurement/v1/order.proto#L106}
+  /// [google.cloud.commerce.consumer.procurement.v1.Order]: @googleapis_reference_link{google/cloud/commerce/consumer/procurement/v1/order.proto#L109}
   ///
   // clang-format on
   StatusOr<google::cloud::commerce::consumer::procurement::v1::Order> GetOrder(
@@ -204,7 +204,7 @@ class ConsumerProcurementServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.commerce.consumer.procurement.v1.GetOrderRequest]: @googleapis_reference_link{google/cloud/commerce/consumer/procurement/v1/procurement_service.proto#L125}
-  /// [google.cloud.commerce.consumer.procurement.v1.Order]: @googleapis_reference_link{google/cloud/commerce/consumer/procurement/v1/order.proto#L106}
+  /// [google.cloud.commerce.consumer.procurement.v1.Order]: @googleapis_reference_link{google/cloud/commerce/consumer/procurement/v1/order.proto#L109}
   ///
   // clang-format on
   StatusOr<google::cloud::commerce::consumer::procurement::v1::Order> GetOrder(
@@ -244,7 +244,7 @@ class ConsumerProcurementServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.commerce.consumer.procurement.v1.ListOrdersRequest]: @googleapis_reference_link{google/cloud/commerce/consumer/procurement/v1/procurement_service.proto#L132}
-  /// [google.cloud.commerce.consumer.procurement.v1.Order]: @googleapis_reference_link{google/cloud/commerce/consumer/procurement/v1/order.proto#L106}
+  /// [google.cloud.commerce.consumer.procurement.v1.Order]: @googleapis_reference_link{google/cloud/commerce/consumer/procurement/v1/order.proto#L109}
   ///
   // clang-format on
   StreamRange<google::cloud::commerce::consumer::procurement::v1::Order>
@@ -286,7 +286,7 @@ class ConsumerProcurementServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.commerce.consumer.procurement.v1.ListOrdersRequest]: @googleapis_reference_link{google/cloud/commerce/consumer/procurement/v1/procurement_service.proto#L132}
-  /// [google.cloud.commerce.consumer.procurement.v1.Order]: @googleapis_reference_link{google/cloud/commerce/consumer/procurement/v1/order.proto#L106}
+  /// [google.cloud.commerce.consumer.procurement.v1.Order]: @googleapis_reference_link{google/cloud/commerce/consumer/procurement/v1/order.proto#L109}
   ///
   // clang-format on
   StreamRange<google::cloud::commerce::consumer::procurement::v1::Order>

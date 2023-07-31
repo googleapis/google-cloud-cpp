@@ -46,6 +46,18 @@ StatusOr<google::api::HttpBody> PredictionServiceConnection::RawPredict(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StreamRange<google::cloud::aiplatform::v1::StreamingPredictResponse>
+PredictionServiceConnection::ServerStreamingPredict(
+    google::cloud::aiplatform::v1::StreamingPredictRequest const&) {
+  return google::cloud::internal::MakeStreamRange<
+      google::cloud::aiplatform::v1::StreamingPredictResponse>(
+      []()
+          -> absl::variant<
+              Status, google::cloud::aiplatform::v1::StreamingPredictResponse> {
+        return Status(StatusCode::kUnimplemented, "not implemented");
+      });
+}
+
 StatusOr<google::cloud::aiplatform::v1::ExplainResponse>
 PredictionServiceConnection::Explain(
     google::cloud::aiplatform::v1::ExplainRequest const&) {

@@ -18,6 +18,7 @@
 
 #include "google/cloud/aiplatform/v1/internal/prediction_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include "google/cloud/internal/streaming_read_rpc_tracing.h"
 
 namespace google {
 namespace cloud {
@@ -50,6 +51,21 @@ StatusOr<google::api::HttpBody> PredictionServiceTracingStub::RawPredict(
   internal::InjectTraceContext(context, internal::CurrentOptions());
   return internal::EndSpan(context, *span,
                            child_->RawPredict(context, request));
+}
+
+std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+    google::cloud::aiplatform::v1::StreamingPredictResponse>>
+PredictionServiceTracingStub::ServerStreamingPredict(
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::aiplatform::v1::StreamingPredictRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.aiplatform.v1.PredictionService", "ServerStreamingPredict");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(*context, internal::CurrentOptions());
+  auto stream = child_->ServerStreamingPredict(context, request);
+  return std::make_unique<internal::StreamingReadRpcTracing<
+      google::cloud::aiplatform::v1::StreamingPredictResponse>>(
+      std::move(context), std::move(stream), std::move(span));
 }
 
 StatusOr<google::cloud::aiplatform::v1::ExplainResponse>

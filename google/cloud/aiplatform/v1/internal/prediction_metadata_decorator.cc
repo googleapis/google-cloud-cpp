@@ -52,6 +52,15 @@ StatusOr<google::api::HttpBody> PredictionServiceMetadata::RawPredict(
   return child_->RawPredict(context, request);
 }
 
+std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+    google::cloud::aiplatform::v1::StreamingPredictResponse>>
+PredictionServiceMetadata::ServerStreamingPredict(
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::aiplatform::v1::StreamingPredictRequest const& request) {
+  SetMetadata(*context, absl::StrCat("endpoint=", request.endpoint()));
+  return child_->ServerStreamingPredict(std::move(context), request);
+}
+
 StatusOr<google::cloud::aiplatform::v1::ExplainResponse>
 PredictionServiceMetadata::Explain(
     grpc::ClientContext& context,

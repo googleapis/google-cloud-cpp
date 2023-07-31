@@ -21,7 +21,9 @@
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
+#include "google/cloud/internal/resumable_streaming_read_rpc.h"
 #include "google/cloud/internal/retry_loop.h"
+#include "google/cloud/internal/streaming_read_rpc_logging.h"
 #include <memory>
 
 namespace google {
@@ -62,6 +64,32 @@ StatusOr<google::api::HttpBody> PredictionServiceConnectionImpl::RawPredict(
       request, __func__);
 }
 
+StreamRange<google::cloud::aiplatform::v1::StreamingPredictResponse>
+PredictionServiceConnectionImpl::ServerStreamingPredict(
+    google::cloud::aiplatform::v1::StreamingPredictRequest const& request) {
+  auto& stub = stub_;
+  auto retry =
+      std::shared_ptr<aiplatform_v1::PredictionServiceRetryPolicy const>(
+          retry_policy());
+  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+
+  auto factory =
+      [stub](google::cloud::aiplatform::v1::StreamingPredictRequest const&
+                 request) {
+        return stub->ServerStreamingPredict(
+            std::make_shared<grpc::ClientContext>(), request);
+      };
+  auto resumable = internal::MakeResumableStreamingReadRpc<
+      google::cloud::aiplatform::v1::StreamingPredictResponse,
+      google::cloud::aiplatform::v1::StreamingPredictRequest>(
+      retry->clone(), backoff->clone(), [](std::chrono::milliseconds) {},
+      factory, PredictionServiceServerStreamingPredictStreamingUpdater,
+      request);
+  return internal::MakeStreamRange(
+      internal::StreamReader<
+          google::cloud::aiplatform::v1::StreamingPredictResponse>(
+          [resumable] { return resumable->Read(); }));
+}
 StatusOr<google::cloud::aiplatform::v1::ExplainResponse>
 PredictionServiceConnectionImpl::Explain(
     google::cloud::aiplatform::v1::ExplainRequest const& request) {

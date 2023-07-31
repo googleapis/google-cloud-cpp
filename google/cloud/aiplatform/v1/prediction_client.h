@@ -120,8 +120,8 @@ class PredictionServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.PredictRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/prediction_service.proto#L100}
-  /// [google.cloud.aiplatform.v1.PredictResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/prediction_service.proto#L133}
+  /// [google.cloud.aiplatform.v1.PredictRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/prediction_service.proto#L115}
+  /// [google.cloud.aiplatform.v1.PredictResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/prediction_service.proto#L148}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::PredictResponse> Predict(
@@ -153,8 +153,8 @@ class PredictionServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.PredictRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/prediction_service.proto#L100}
-  /// [google.cloud.aiplatform.v1.PredictResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/prediction_service.proto#L133}
+  /// [google.cloud.aiplatform.v1.PredictRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/prediction_service.proto#L115}
+  /// [google.cloud.aiplatform.v1.PredictResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/prediction_service.proto#L148}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::PredictResponse> Predict(
@@ -208,7 +208,7 @@ class PredictionServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.api.HttpBody]: @googleapis_reference_link{google/api/httpbody.proto#L71}
-  /// [google.cloud.aiplatform.v1.RawPredictRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/prediction_service.proto#L165}
+  /// [google.cloud.aiplatform.v1.RawPredictRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/prediction_service.proto#L185}
   ///
   // clang-format on
   StatusOr<google::api::HttpBody> RawPredict(
@@ -250,11 +250,45 @@ class PredictionServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.api.HttpBody]: @googleapis_reference_link{google/api/httpbody.proto#L71}
-  /// [google.cloud.aiplatform.v1.RawPredictRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/prediction_service.proto#L165}
+  /// [google.cloud.aiplatform.v1.RawPredictRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/prediction_service.proto#L185}
   ///
   // clang-format on
   StatusOr<google::api::HttpBody> RawPredict(
       google::cloud::aiplatform::v1::RawPredictRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Perform a server-side streaming online prediction request for Vertex
+  /// LLM streaming.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.aiplatform.v1.StreamingPredictRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.aiplatform.v1.StreamingPredictResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.aiplatform.v1.StreamingPredictRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/prediction_service.proto#L220}
+  /// [google.cloud.aiplatform.v1.StreamingPredictResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/prediction_service.proto#L240}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::aiplatform::v1::StreamingPredictResponse>
+  ServerStreamingPredict(
+      google::cloud::aiplatform::v1::StreamingPredictRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -305,9 +339,9 @@ class PredictionServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.ExplainRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/prediction_service.proto#L196}
-  /// [google.cloud.aiplatform.v1.ExplainRequest.deployed_model_id]: @googleapis_reference_link{google/cloud/aiplatform/v1/prediction_service.proto#L239}
-  /// [google.cloud.aiplatform.v1.ExplainResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/prediction_service.proto#L244}
+  /// [google.cloud.aiplatform.v1.ExplainRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/prediction_service.proto#L250}
+  /// [google.cloud.aiplatform.v1.ExplainRequest.deployed_model_id]: @googleapis_reference_link{google/cloud/aiplatform/v1/prediction_service.proto#L293}
+  /// [google.cloud.aiplatform.v1.ExplainResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/prediction_service.proto#L298}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::ExplainResponse> Explain(
@@ -350,9 +384,9 @@ class PredictionServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.ExplainRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/prediction_service.proto#L196}
-  /// [google.cloud.aiplatform.v1.ExplainRequest.deployed_model_id]: @googleapis_reference_link{google/cloud/aiplatform/v1/prediction_service.proto#L239}
-  /// [google.cloud.aiplatform.v1.ExplainResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/prediction_service.proto#L244}
+  /// [google.cloud.aiplatform.v1.ExplainRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/prediction_service.proto#L250}
+  /// [google.cloud.aiplatform.v1.ExplainRequest.deployed_model_id]: @googleapis_reference_link{google/cloud/aiplatform/v1/prediction_service.proto#L293}
+  /// [google.cloud.aiplatform.v1.ExplainResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/prediction_service.proto#L298}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::ExplainResponse> Explain(

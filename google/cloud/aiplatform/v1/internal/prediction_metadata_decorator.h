@@ -45,6 +45,13 @@ class PredictionServiceMetadata : public PredictionServiceStub {
       grpc::ClientContext& context,
       google::cloud::aiplatform::v1::RawPredictRequest const& request) override;
 
+  std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+      google::cloud::aiplatform::v1::StreamingPredictResponse>>
+  ServerStreamingPredict(
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::aiplatform::v1::StreamingPredictRequest const& request)
+      override;
+
   StatusOr<google::cloud::aiplatform::v1::ExplainResponse> Explain(
       grpc::ClientContext& context,
       google::cloud::aiplatform::v1::ExplainRequest const& request) override;
