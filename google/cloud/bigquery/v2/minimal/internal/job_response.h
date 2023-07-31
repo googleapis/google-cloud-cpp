@@ -96,7 +96,7 @@ class CancelJobResponse {
   BigQueryHttpResponse http_response;
 };
 
-struct QueryResults {
+struct PostQueryResults {
   std::string DebugString(absl::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
@@ -118,8 +118,8 @@ struct QueryResults {
   SessionInfo session_info;
   DmlStats dml_stats;
 };
-void to_json(nlohmann::json& j, QueryResults const& q);
-void from_json(nlohmann::json const& j, QueryResults& q);
+void to_json(nlohmann::json& j, PostQueryResults const& q);
+void from_json(nlohmann::json const& j, PostQueryResults& q);
 
 class QueryResponse {
  public:
@@ -131,7 +131,7 @@ class QueryResponse {
                           TracingOptions const& options = {},
                           int indent = 0) const;
 
-  QueryResults query_results;
+  PostQueryResults post_query_results;
 
   BigQueryHttpResponse http_response;
 };

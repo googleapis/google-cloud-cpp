@@ -102,8 +102,8 @@ class JobClient {
    * For more details on query reqsponse fields, please see:
    * https://cloud.google.com/bigquery/docs/reference/rest/v2/jobs/query#response-body
    */
-  StatusOr<QueryResults> Query(PostQueryRequest const& request,
-                               Options opts = {});
+  StatusOr<PostQueryResults> Query(PostQueryRequest const& request,
+                                   Options opts = {});
 
  private:
   std::shared_ptr<BigQueryJobConnection> connection_;

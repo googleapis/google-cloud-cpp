@@ -30,9 +30,9 @@ using ::google::cloud::bigquery_v2_minimal_internal::DataFormatOptions;
 using ::google::cloud::bigquery_v2_minimal_internal::GetQueryResults;
 using ::google::cloud::bigquery_v2_minimal_internal::GetQueryResultsRequest;
 using ::google::cloud::bigquery_v2_minimal_internal::PostQueryRequest;
+using ::google::cloud::bigquery_v2_minimal_internal::PostQueryResults;
 using ::google::cloud::bigquery_v2_minimal_internal::QueryParameter;
 using ::google::cloud::bigquery_v2_minimal_internal::QueryRequest;
-using ::google::cloud::bigquery_v2_minimal_internal::QueryResults;
 
 using ::google::cloud::bigquery_v2_minimal_testing::MakeConnectionProperty;
 using ::google::cloud::bigquery_v2_minimal_testing::MakeDatasetReference;
@@ -142,8 +142,8 @@ void AssertEquals(bigquery_v2_minimal_internal::PostQueryRequest const& lhs,
   AssertEquals(lhs.query_request(), rhs.query_request());
 }
 
-QueryResults MakeQueryResults() {
-  QueryResults expected;
+PostQueryResults MakePostQueryResults() {
+  PostQueryResults expected;
 
   expected.cache_hit = true;
   expected.dml_stats.deleted_row_count = 10;
@@ -192,7 +192,7 @@ GetQueryResults MakeGetQueryResults() {
 }
 
 std::string MakeQueryResponsePayload() {
-  auto query_results = MakeQueryResults();
+  auto query_results = MakePostQueryResults();
   nlohmann::json j;
   to_json(j, query_results);
   return j.dump();
@@ -205,8 +205,8 @@ std::string MakeGetQueryResultsResponsePayload() {
   return j.dump();
 }
 
-void AssertEquals(bigquery_v2_minimal_internal::QueryResults const& lhs,
-                  bigquery_v2_minimal_internal::QueryResults const& rhs) {
+void AssertEquals(bigquery_v2_minimal_internal::PostQueryResults const& lhs,
+                  bigquery_v2_minimal_internal::PostQueryResults const& rhs) {
   EXPECT_EQ(lhs.cache_hit, rhs.cache_hit);
   EXPECT_EQ(lhs.dml_stats, rhs.dml_stats);
   EXPECT_EQ(lhs.job_complete, rhs.job_complete);

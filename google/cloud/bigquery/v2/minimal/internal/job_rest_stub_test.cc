@@ -38,9 +38,9 @@ using ::google::cloud::bigquery_v2_minimal_testing::MakeGetQueryResults;
 using ::google::cloud::bigquery_v2_minimal_testing::
     MakeGetQueryResultsResponsePayload;
 using ::google::cloud::bigquery_v2_minimal_testing::MakePartialJob;
+using ::google::cloud::bigquery_v2_minimal_testing::MakePostQueryResults;
 using ::google::cloud::bigquery_v2_minimal_testing::MakeQueryRequest;
 using ::google::cloud::bigquery_v2_minimal_testing::MakeQueryResponsePayload;
-using ::google::cloud::bigquery_v2_minimal_testing::MakeQueryResults;
 using ::google::cloud::rest_internal::HttpStatusCode;
 using ::google::cloud::testing_util::MakeMockHttpPayloadSuccess;
 using ::google::cloud::testing_util::MockHttpPayload;
@@ -447,10 +447,10 @@ TEST(BigQueryJobStubTest, QuerySuccess) {
   EXPECT_THAT(result->http_response.http_status_code, Eq(HttpStatusCode::kOk));
   EXPECT_THAT(result->http_response.payload, Eq(job_response_payload));
 
-  auto expected_query_results = MakeQueryResults();
+  auto expected_query_results = MakePostQueryResults();
 
   bigquery_v2_minimal_testing::AssertEquals(expected_query_results,
-                                            result->query_results);
+                                            result->post_query_results);
 }
 
 TEST(BigQueryJobStubTest, QueryRestClientError) {

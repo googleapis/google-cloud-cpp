@@ -30,8 +30,8 @@ namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::bigquery_v2_minimal_testing::MakePartialJob;
+using ::google::cloud::bigquery_v2_minimal_testing::MakePostQueryResults;
 using ::google::cloud::bigquery_v2_minimal_testing::MakeQueryRequest;
-using ::google::cloud::bigquery_v2_minimal_testing::MakeQueryResults;
 using ::google::cloud::rest_internal::HttpStatusCode;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::HasSubstr;
@@ -167,7 +167,7 @@ TEST(JobClientTest, CancelJobFailure) {
 }
 
 TEST(JobClientTest, QuerySuccess) {
-  auto query_results = MakeQueryResults();
+  auto query_results = MakePostQueryResults();
   auto mock_job_connection = std::make_shared<MockBigQueryJobConnection>();
 
   EXPECT_CALL(*mock_job_connection, Query)

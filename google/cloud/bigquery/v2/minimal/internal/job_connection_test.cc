@@ -31,9 +31,9 @@ namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::bigquery_v2_minimal_testing::MakePartialJob;
+using ::google::cloud::bigquery_v2_minimal_testing::MakePostQueryResults;
 using ::google::cloud::bigquery_v2_minimal_testing::MakeQueryRequest;
 using ::google::cloud::bigquery_v2_minimal_testing::MakeQueryResponsePayload;
-using ::google::cloud::bigquery_v2_minimal_testing::MakeQueryResults;
 using ::google::cloud::bigquery_v2_minimal_testing::MockBigQueryJobRestStub;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::AtLeast;
@@ -251,7 +251,7 @@ TEST(JobConnectionTest, QuerySuccess) {
   auto job_result = conn->Query(job_request);
   ASSERT_STATUS_OK(job_result);
 
-  auto expected_query_results = MakeQueryResults();
+  auto expected_query_results = MakePostQueryResults();
 
   bigquery_v2_minimal_testing::AssertEquals(expected_query_results,
                                             *job_result);

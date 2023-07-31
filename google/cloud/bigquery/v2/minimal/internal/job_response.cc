@@ -186,9 +186,9 @@ std::string CancelJobResponse::DebugString(absl::string_view name,
       .Build();
 }
 
-std::string QueryResults::DebugString(absl::string_view name,
-                                      TracingOptions const& options,
-                                      int indent) const {
+std::string PostQueryResults::DebugString(absl::string_view name,
+                                          TracingOptions const& options,
+                                          int indent) const {
   return internal::DebugFormatter(name, options, indent)
       .StringField("kind", kind)
       .StringField("page_token", page_token)
@@ -211,7 +211,7 @@ std::string QueryResponse::DebugString(absl::string_view name,
                                        int indent) const {
   return internal::DebugFormatter(name, options, indent)
       .SubMessage("http_response", http_response)
-      .SubMessage("query_results", query_results)
+      .SubMessage("query_results", post_query_results)
       .Build();
 }
 
@@ -220,7 +220,7 @@ StatusOr<QueryResponse> QueryResponse::BuildFromHttpResponse(
   auto json = parse_json(http_response.payload);
   if (!json) return std::move(json).status();
 
-  QueryResults query_results;
+  PostQueryResults query_results;
   query_results.kind = json->value("kind", "");
   query_results.page_token = json->value("pageToken", "");
   query_results.total_rows = json->at("totalRows").get<std::uint64_t>();
@@ -252,7 +252,7 @@ StatusOr<QueryResponse> QueryResponse::BuildFromHttpResponse(
 
   QueryResponse response;
   response.http_response = http_response;
-  response.query_results = query_results;
+  response.post_query_results = query_results;
 
   return response;
 }
@@ -272,7 +272,7 @@ void from_json(nlohmann::json const& j, SessionInfo& s) {
   SafeGetTo(s.session_id, j, "sessionId");
 }
 
-void to_json(nlohmann::json& j, QueryResults const& q) {
+void to_json(nlohmann::json& j, PostQueryResults const& q) {
   j = nlohmann::json{{"kind", q.kind},
                      {"pageToken", q.page_token},
                      {"totalRows", q.total_rows},
@@ -288,7 +288,7 @@ void to_json(nlohmann::json& j, QueryResults const& q) {
                      {"dmlStats", q.dml_stats}};
 }
 
-void from_json(nlohmann::json const& j, QueryResults& q) {
+void from_json(nlohmann::json const& j, PostQueryResults& q) {
   SafeGetTo(q.kind, j, "kind");
   SafeGetTo(q.page_token, j, "pageToken");
   SafeGetTo(q.total_rows, j, "totalRows");

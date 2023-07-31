@@ -50,8 +50,8 @@ StatusOr<Job> JobClient::CancelJob(CancelJobRequest const& request,
   return connection_->CancelJob(request);
 }
 
-StatusOr<QueryResults> JobClient::Query(PostQueryRequest const& request,
-                                        Options opts) {
+StatusOr<PostQueryResults> JobClient::Query(PostQueryRequest const& request,
+                                            Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->Query(request);
 }

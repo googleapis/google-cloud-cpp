@@ -28,8 +28,8 @@ using ::google::cloud::bigquery_v2_minimal_testing::MakeGetQueryResults;
 using ::google::cloud::bigquery_v2_minimal_testing::
     MakeGetQueryResultsResponsePayload;
 using ::google::cloud::bigquery_v2_minimal_testing::MakeJob;
+using ::google::cloud::bigquery_v2_minimal_testing::MakePostQueryResults;
 using ::google::cloud::bigquery_v2_minimal_testing::MakeQueryResponsePayload;
-using ::google::cloud::bigquery_v2_minimal_testing::MakeQueryResults;
 
 using ::google::cloud::rest_internal::HttpStatusCode;
 using ::google::cloud::testing_util::StatusIs;
@@ -1866,8 +1866,8 @@ TEST(QueryResponseTest, Success) {
   ASSERT_STATUS_OK(response);
   EXPECT_FALSE(response->http_response.payload.empty());
 
-  auto expected_equery_results = MakeQueryResults();
-  auto actual_query_results = response->query_results;
+  auto expected_equery_results = MakePostQueryResults();
+  auto actual_query_results = response->post_query_results;
 
   bigquery_v2_minimal_testing::AssertEquals(expected_equery_results,
                                             actual_query_results);
