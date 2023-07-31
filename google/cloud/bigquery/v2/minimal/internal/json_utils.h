@@ -42,12 +42,30 @@ void FromJson(std::chrono::hours& field, nlohmann::json const& j,
 void ToJson(std::chrono::hours const& field, nlohmann::json& j,
             char const* name);
 
+// Suppress recursive clang-tidy warnings
+//
 // NOLINTBEGIN(misc-no-recursion)
 template <typename ResponseType>
-void SafeGetTo(ResponseType& value, nlohmann::json const& j,
+bool SafeGetTo(ResponseType& value, nlohmann::json const& j,
                std::string const& key) {
   auto i = j.find(key);
-  if (i != j.end()) i->get_to(value);
+  if (i != j.end()) {
+    i->get_to(value);
+    return true;
+  }
+  return false;
+}
+
+template <typename T>
+bool SafeGetTo(std::shared_ptr<T>& value, nlohmann::json const& j,
+               std::string const& key) {
+  auto i = j.find(key);
+  if (i == j.end()) return false;
+  if (value == nullptr) {
+    value = std::make_shared<T>();
+  }
+  i->get_to(*value);
+  return true;
 }
 
 template <typename C, typename T, typename R>
