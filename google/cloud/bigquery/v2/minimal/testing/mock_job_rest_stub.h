@@ -49,6 +49,12 @@ class MockBigQueryJobRestStub
               (rest_internal::RestContext & rest_context,
                bigquery_v2_minimal_internal::PostQueryRequest const& request),
               (override));
+  MOCK_METHOD(
+      StatusOr<bigquery_v2_minimal_internal::GetQueryResultsResponse>,
+      GetQueryResults,
+      (rest_internal::RestContext & rest_context,
+       bigquery_v2_minimal_internal::GetQueryResultsRequest const& request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

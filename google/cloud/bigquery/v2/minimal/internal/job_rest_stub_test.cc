@@ -32,6 +32,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 namespace rest = ::google::cloud::rest_internal;
 
+using ::google::cloud::bigquery_v2_minimal_testing::
+    MakeFullGetQueryResultsRequest;
+using ::google::cloud::bigquery_v2_minimal_testing::MakeGetQueryResults;
+using ::google::cloud::bigquery_v2_minimal_testing::
+    MakeGetQueryResultsResponsePayload;
 using ::google::cloud::bigquery_v2_minimal_testing::MakePartialJob;
 using ::google::cloud::bigquery_v2_minimal_testing::MakeQueryRequest;
 using ::google::cloud::bigquery_v2_minimal_testing::MakeQueryResponsePayload;
@@ -493,6 +498,78 @@ TEST(BigQueryJobStubTest, QueryRestResponseError) {
   auto status = rest_stub.Query(context, std::move(job_request));
 
   EXPECT_THAT(status, StatusIs(InvalidArgumentError().code()));
+}
+
+TEST(BigQueryJobStubTest, GetQueryResultsSuccess) {
+  std::string response_payload = MakeGetQueryResultsResponsePayload();
+  auto mock_response = std::make_unique<MockRestResponse>();
+
+  EXPECT_CALL(*mock_response, StatusCode)
+      .WillRepeatedly(Return(HttpStatusCode::kOk));
+  EXPECT_CALL(*mock_response, Headers)
+      .WillRepeatedly(Return(std::multimap<std::string, std::string>()));
+  EXPECT_CALL(std::move(*mock_response), ExtractPayload)
+      .WillOnce(Return(ByMove(MakeMockHttpPayloadSuccess(response_payload))));
+
+  auto mock_rest_client = std::make_unique<MockRestClient>();
+  EXPECT_CALL(*mock_rest_client, Get(_, An<rest::RestRequest const&>()))
+      .WillOnce(Return(ByMove(
+          std::unique_ptr<rest::RestResponse>(std::move(mock_response)))));
+
+  GetQueryResultsRequest request = MakeFullGetQueryResultsRequest();
+
+  rest_internal::RestContext context;
+  DefaultBigQueryJobRestStub rest_stub(std::move(mock_rest_client));
+
+  auto expected = MakeGetQueryResults();
+
+  auto actual_result = rest_stub.GetQueryResults(context, std::move(request));
+  ASSERT_STATUS_OK(actual_result);
+  EXPECT_THAT(actual_result->http_response.http_status_code,
+              Eq(HttpStatusCode::kOk));
+  EXPECT_THAT(actual_result->http_response.payload, Eq(response_payload));
+  bigquery_v2_minimal_testing::AssertEquals(expected,
+                                            actual_result->get_query_results);
+}
+
+TEST(BigQueryJobStubTest, GetQueryResultsRestClientError) {
+  // Get() fails.
+  auto mock_rest_client = std::make_unique<MockRestClient>();
+  EXPECT_CALL(*mock_rest_client, Get(_, An<rest::RestRequest const&>()))
+      .WillOnce(
+          Return(rest::AsStatus(HttpStatusCode::kInternalServerError, "")));
+
+  rest_internal::RestContext context;
+  DefaultBigQueryJobRestStub rest_stub(std::move(mock_rest_client));
+
+  GetQueryResultsRequest request = MakeFullGetQueryResultsRequest();
+
+  auto response = rest_stub.GetQueryResults(context, request);
+  EXPECT_THAT(response, StatusIs(StatusCode::kUnavailable));
+}
+
+TEST(BigQueryJobStubTest, GetQueryResultsRestResponseError) {
+  // Invalid Rest response.
+  auto mock_payload = std::make_unique<MockHttpPayload>();
+  auto mock_response = std::make_unique<MockRestResponse>();
+  EXPECT_CALL(*mock_response, StatusCode)
+      .WillRepeatedly(Return(HttpStatusCode::kBadRequest));
+  EXPECT_CALL(std::move(*mock_response), ExtractPayload)
+      .WillOnce(Return(std::move(mock_payload)));
+
+  // Get() is successful.
+  auto mock_rest_client = std::make_unique<MockRestClient>();
+  EXPECT_CALL(*mock_rest_client, Get(_, An<rest::RestRequest const&>()))
+      .WillOnce(Return(ByMove(
+          std::unique_ptr<rest::RestResponse>(std::move(mock_response)))));
+
+  rest_internal::RestContext context;
+  DefaultBigQueryJobRestStub rest_stub(std::move(mock_rest_client));
+
+  GetQueryResultsRequest request = MakeFullGetQueryResultsRequest();
+
+  auto response = rest_stub.GetQueryResults(context, std::move(request));
+  EXPECT_THAT(response, StatusIs(StatusCode::kInvalidArgument));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

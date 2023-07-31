@@ -46,6 +46,10 @@ class BigQueryJobMetadata : public BigQueryJobRestStub {
   StatusOr<QueryResponse> Query(rest_internal::RestContext& rest_context,
                                 PostQueryRequest const& request) override;
 
+  StatusOr<GetQueryResultsResponse> GetQueryResults(
+      rest_internal::RestContext& rest_context,
+      GetQueryResultsRequest const& request) override;
+
  private:
   void SetMetadata(rest_internal::RestContext& context,
                    std::vector<std::string> const& params = {});
