@@ -62,10 +62,8 @@ void to_json(nlohmann::json& j, TableConstraints const& t) {
                      {"foreignKeys", t.foreign_keys}};
 }
 void from_json(nlohmann::json const& j, TableConstraints& t) {
-  // TODO(#12188): Implement SafeGetTo(...) for potential performance
-  // improvement.
-  if (j.contains("primaryKey")) j.at("primaryKey").get_to(t.primary_key);
-  if (j.contains("foreignKeys")) j.at("foreignKeys").get_to(t.foreign_keys);
+  SafeGetTo(t.primary_key, j, "primaryKey");
+  SafeGetTo(t.foreign_keys, j, "foreignKeys");
 }
 
 void to_json(nlohmann::json& j, ForeignKey const& f) {
@@ -74,15 +72,9 @@ void to_json(nlohmann::json& j, ForeignKey const& f) {
                      {"columnReferences", f.column_references}};
 }
 void from_json(nlohmann::json const& j, ForeignKey& f) {
-  // TODO(#12188): Implement SafeGetTo(...) for potential performance
-  // improvement.
-  if (j.contains("keyName")) j.at("keyName").get_to(f.key_name);
-  if (j.contains("referencedTable")) {
-    j.at("referencedTable").get_to(f.referenced_table);
-  }
-  if (j.contains("columnReferences")) {
-    j.at("columnReferences").get_to(f.column_references);
-  }
+  SafeGetTo(f.key_name, j, "keyName");
+  SafeGetTo(f.referenced_table, j, "referencedTable");
+  SafeGetTo(f.column_references, j, "columnReferences");
 }
 
 void to_json(nlohmann::json& j, ColumnReference const& c) {
@@ -90,14 +82,8 @@ void to_json(nlohmann::json& j, ColumnReference const& c) {
                      {"referencedColumn", c.referenced_column}};
 }
 void from_json(nlohmann::json const& j, ColumnReference& c) {
-  // TODO(#12188): Implement SafeGetTo(...) for potential performance
-  // improvement.
-  if (j.contains("referencingColumn")) {
-    j.at("referencingColumn").get_to(c.referencing_column);
-  }
-  if (j.contains("referencedColumn")) {
-    j.at("referencedColumn").get_to(c.referenced_column);
-  }
+  SafeGetTo(c.referencing_column, j, "referencingColumn");
+  SafeGetTo(c.referenced_column, j, "referencedColumn");
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

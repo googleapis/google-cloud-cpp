@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigquery/v2/minimal/internal/table_partition.h"
+#include "google/cloud/bigquery/v2/minimal/internal/json_utils.h"
 #include "google/cloud/internal/debug_string.h"
 #include "google/cloud/internal/format_time_point.h"
 
@@ -64,8 +65,8 @@ void to_json(nlohmann::json& j, TimePartitioning const& t) {
   ToJson(t.expiration_time, j, "expirationTime");
 }
 void from_json(nlohmann::json const& j, TimePartitioning& t) {
-  if (j.contains("type")) j.at("type").get_to(t.type);
-  if (j.contains("field")) j.at("field").get_to(t.field);
+  SafeGetTo(t.type, j, "type");
+  SafeGetTo(t.field, j, "field");
 
   FromJson(t.expiration_time, j, "expirationTime");
 }

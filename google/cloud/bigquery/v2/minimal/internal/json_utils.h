@@ -42,6 +42,7 @@ void FromJson(std::chrono::hours& field, nlohmann::json const& j,
 void ToJson(std::chrono::hours const& field, nlohmann::json& j,
             char const* name);
 
+// NOLINTBEGIN(misc-no-recursion)
 template <typename ResponseType>
 void SafeGetTo(ResponseType& value, nlohmann::json const& j,
                std::string const& key) {
@@ -57,6 +58,7 @@ void SafeGetTo(nlohmann::json const& j, std::string const& key, R& (C::*f)(T) &,
     (obj.*f)(i->get<T>());
   }
 }
+// NOLINTEND(misc-no-recursion)
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_v2_minimal_internal
