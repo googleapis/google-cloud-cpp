@@ -22,7 +22,6 @@
 #include "google/cloud/datacatalog/lineage/v1/internal/lineage_retry_traits.h"
 #include "google/cloud/datacatalog/lineage/v1/lineage_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
@@ -274,8 +273,7 @@ class LineageConnection {
  * @param options (optional) Configure the `LineageConnection` created by
  * this function.
  */
-std::shared_ptr<LineageConnection> MakeLineageConnection(ExperimentalTag,
-                                                         Options options = {});
+std::shared_ptr<LineageConnection> MakeLineageConnection(Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace datacatalog_lineage_v1

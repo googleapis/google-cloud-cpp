@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATACATALOG_LINEAGE_V1_LINEAGE_CLIENT_H
 
 #include "google/cloud/datacatalog/lineage/v1/lineage_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -69,8 +68,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class LineageClient {
  public:
-  explicit LineageClient(ExperimentalTag,
-                         std::shared_ptr<LineageConnection> connection,
+  explicit LineageClient(std::shared_ptr<LineageConnection> connection,
                          Options opts = {});
   ~LineageClient();
 

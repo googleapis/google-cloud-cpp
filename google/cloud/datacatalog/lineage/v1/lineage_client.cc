@@ -24,8 +24,7 @@ namespace cloud {
 namespace datacatalog_lineage_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-LineageClient::LineageClient(ExperimentalTag,
-                             std::shared_ptr<LineageConnection> connection,
+LineageClient::LineageClient(std::shared_ptr<LineageConnection> connection,
                              Options opts)
     : connection_(std::move(connection)),
       options_(
