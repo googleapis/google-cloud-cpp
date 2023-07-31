@@ -50,6 +50,7 @@ add_library(
     internal/async_streaming_read_rpc_auth.h
     internal/async_streaming_read_rpc_impl.h
     internal/async_streaming_read_rpc_logging.h
+    internal/async_streaming_read_rpc_timeout.h
     internal/async_streaming_read_rpc_tracing.h
     internal/async_streaming_write_rpc.h
     internal/async_streaming_write_rpc_auth.h
@@ -244,6 +245,7 @@ if (BUILD_TESTING)
         internal/async_streaming_read_rpc_auth_test.cc
         internal/async_streaming_read_rpc_impl_test.cc
         internal/async_streaming_read_rpc_logging_test.cc
+        internal/async_streaming_read_rpc_timeout_test.cc
         internal/async_streaming_read_rpc_tracing_test.cc
         internal/async_streaming_write_rpc_auth_test.cc
         internal/async_streaming_write_rpc_impl_test.cc
