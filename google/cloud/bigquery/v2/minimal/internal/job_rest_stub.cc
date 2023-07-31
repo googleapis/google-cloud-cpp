@@ -111,6 +111,19 @@ StatusOr<QueryResponse> DefaultBigQueryJobRestStub::Query(
                        {absl::MakeConstSpan(json_payload.dump())}));
 }
 
+StatusOr<GetQueryResultsResponse> DefaultBigQueryJobRestStub::GetQueryResults(
+    rest_internal::RestContext& rest_context,
+    GetQueryResultsRequest const& request) {
+  // Prepare the RestRequest from GetQueryResultsRequest.
+  auto rest_request =
+      PrepareRestRequest<GetQueryResultsRequest>(rest_context, request);
+
+  // Call the rest stub and parse the RestResponse.
+  rest_internal::RestContext context;
+  return ParseFromRestResponse<GetQueryResultsResponse>(
+      rest_stub_->Get(context, std::move(*rest_request)));
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_v2_minimal_internal
 }  // namespace cloud

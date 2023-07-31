@@ -63,6 +63,13 @@ StatusOr<QueryResponse> BigQueryJobMetadata::Query(
   return child_->Query(context, request);
 }
 
+StatusOr<GetQueryResultsResponse> BigQueryJobMetadata::GetQueryResults(
+    rest_internal::RestContext& context,
+    GetQueryResultsRequest const& request) {
+  SetMetadata(context);
+  return child_->GetQueryResults(context, request);
+}
+
 void BigQueryJobMetadata::SetMetadata(rest_internal::RestContext& rest_context,
                                       std::vector<std::string> const& params) {
   rest_context.AddHeader("x-goog-api-client", api_client_header_);

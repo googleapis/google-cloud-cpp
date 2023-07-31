@@ -29,6 +29,8 @@ namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::bigquery_v2_minimal_testing::GetMetadataOptions;
+using ::google::cloud::bigquery_v2_minimal_testing::
+    MakeGetQueryResultsResponsePayload;
 using ::google::cloud::bigquery_v2_minimal_testing::MakePartialJob;
 using ::google::cloud::bigquery_v2_minimal_testing::MakeQueryRequest;
 using ::google::cloud::bigquery_v2_minimal_testing::MakeQueryResponsePayload;
@@ -228,6 +230,35 @@ TEST(JobMetadataTest, Query) {
   internal::OptionsSpan span(GetMetadataOptions());
 
   auto result = metadata->Query(context, job_request);
+  ASSERT_STATUS_OK(result);
+  VerifyMetadataContext(context, "bigquery_v2_job");
+}
+
+TEST(JobMetadataTest, GetQueryResults) {
+  auto mock_stub = std::make_shared<MockBigQueryJobRestStub>();
+  auto expected_payload = MakeGetQueryResultsResponsePayload();
+
+  EXPECT_CALL(*mock_stub, GetQueryResults)
+      .WillOnce([&](rest_internal::RestContext&,
+                    GetQueryResultsRequest const& request)
+                    -> StatusOr<GetQueryResultsResponse> {
+        EXPECT_THAT(request.project_id(), Not(IsEmpty()));
+        EXPECT_THAT(request.job_id(), Not(IsEmpty()));
+        BigQueryHttpResponse http_response;
+        http_response.payload = expected_payload;
+        return GetQueryResultsResponse::BuildFromHttpResponse(
+            std::move(http_response));
+      });
+
+  auto metadata = CreateMockJobMetadata(std::move(mock_stub));
+  GetQueryResultsRequest request;
+  rest_internal::RestContext context;
+  request.set_project_id("test-project-id");
+  request.set_job_id("test-job-id");
+
+  internal::OptionsSpan span(GetMetadataOptions());
+
+  auto result = metadata->GetQueryResults(context, request);
   ASSERT_STATUS_OK(result);
   VerifyMetadataContext(context, "bigquery_v2_job");
 }
