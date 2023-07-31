@@ -45,6 +45,7 @@ function (google_cloud_cpp_add_common_options target)
     # higher.
     target_compile_features(${target} PUBLIC cxx_std_14)
     if (MSVC)
+        target_compile_options(${target} PRIVATE "/bigobj")
         target_compile_options(${target} PRIVATE "/W3")
         if (GOOGLE_CLOUD_CPP_ENABLE_WERROR)
             target_compile_options(${target} PRIVATE "/WX")
