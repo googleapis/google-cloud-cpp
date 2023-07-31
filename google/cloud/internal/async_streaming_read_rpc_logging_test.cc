@@ -14,6 +14,7 @@
 
 #include "google/cloud/internal/async_streaming_read_rpc_logging.h"
 #include "google/cloud/status.h"
+#include "google/cloud/testing_util/mock_async_streaming_read_rpc.h"
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/tracing_options.h"
@@ -26,27 +27,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 namespace {
 
+using ::google::cloud::testing_util::MockAsyncStreamingReadRpc;
 using ::google::cloud::testing_util::ScopedLog;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::Contains;
 using ::testing::HasSubstr;
 using ::testing::Pair;
-
-template <typename Response>
-class MockAsyncStreamingReadRpc : public AsyncStreamingReadRpc<Response> {
- public:
-  ~MockAsyncStreamingReadRpc() override = default;
-
-  MOCK_METHOD(void, Cancel, (), (override));
-  MOCK_METHOD(future<bool>, Start, (), (override));
-  MOCK_METHOD(future<absl::optional<Response>>, Read, (), (override));
-  MOCK_METHOD(future<Status>, Finish, (), (override));
-  MOCK_METHOD(StreamingRpcMetadata, GetRequestMetadata, (), (const, override));
-};
-
-class StreamingReadRpcLoggingTest : public ::testing::Test {
- protected:
-};
 
 using MockStream = MockAsyncStreamingReadRpc<google::protobuf::Duration>;
 using TestedStream = AsyncStreamingReadRpcLogging<google::protobuf::Duration>;

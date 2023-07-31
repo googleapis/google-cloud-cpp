@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_TESTING_MOCK_STORAGE_STUB_H
 
 #include "google/cloud/storage/internal/storage_stub.h"
+#include "google/cloud/testing_util/mock_async_streaming_read_rpc.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -236,18 +237,9 @@ class MockAsyncInsertStream
               (), (const, override));
 };
 
-class MockAsyncObjectMediaStream
-    : public google::cloud::internal::AsyncStreamingReadRpc<
-          google::storage::v2::ReadObjectResponse> {
- public:
-  MOCK_METHOD(void, Cancel, (), (override));
-  MOCK_METHOD(future<bool>, Start, (), (override));
-  MOCK_METHOD(future<absl::optional<google::storage::v2::ReadObjectResponse>>,
-              Read, (), (override));
-  MOCK_METHOD(future<Status>, Finish, (), (override));
-  MOCK_METHOD(google::cloud::internal::StreamingRpcMetadata, GetRequestMetadata,
-              (), (const, override));
-};
+using MockAsyncObjectMediaStream =
+    google::cloud::testing_util::MockAsyncStreamingReadRpc<
+        google::storage::v2::ReadObjectResponse>;
 
 }  // namespace testing
 }  // namespace storage

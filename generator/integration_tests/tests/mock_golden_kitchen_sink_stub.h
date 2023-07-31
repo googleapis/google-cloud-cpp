@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GENERATOR_INTEGRATION_TESTS_TESTS_MOCK_GOLDEN_KITCHEN_SINK_STUB_H
 
 #include "generator/integration_tests/golden/v1/internal/golden_kitchen_sink_stub.h"
+#include "google/cloud/testing_util/mock_async_streaming_read_rpc.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -164,19 +165,9 @@ class MockAsyncStreamingReadWriteRpc
   MOCK_METHOD(future<Status>, Finish, (), (override));
 };
 
-class MockAsyncStreamingReadRpc
-    : public google::cloud::internal::AsyncStreamingReadRpc<
-          ::google::test::admin::database::v1::Response> {
- public:
-  MOCK_METHOD(void, Cancel, (), (override));
-  MOCK_METHOD(future<bool>, Start, (), (override));
-  MOCK_METHOD(
-      future<absl::optional<::google::test::admin::database::v1::Response>>,
-      Read, (), (override));
-  MOCK_METHOD(future<Status>, Finish, (), (override));
-  MOCK_METHOD(internal::StreamingRpcMetadata, GetRequestMetadata, (),
-              (const, override));
-};
+using MockAsyncStreamingReadRpc =
+    google::cloud::testing_util::MockAsyncStreamingReadRpc<
+        google::test::admin::database::v1::Response>;
 
 class MockAsyncStreamingWriteRpc
     : public internal::AsyncStreamingWriteRpc<
