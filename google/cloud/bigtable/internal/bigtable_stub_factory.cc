@@ -49,6 +49,7 @@ std::string FeaturesMetadata() {
   static auto const* const kFeatures = new auto([] {
     google::bigtable::v2::FeatureFlags proto;
     proto.set_reverse_scans(true);
+    proto.set_last_scanned_row_responses(true);
     return internal::UrlsafeBase64Encode(proto.SerializeAsString());
   }());
   return *kFeatures;

@@ -49,7 +49,7 @@ using ::testing::Pair;
 using ::testing::Return;
 
 MATCHER(IsWebSafeBase64, "") {
-  std::regex regex(R"re([A-Z0-9_-]*)re");
+  std::regex regex(R"re([A-Za-z0-9_-]*)re");
   return std::regex_match(arg, regex);
 }
 
