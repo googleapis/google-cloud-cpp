@@ -56,6 +56,3 @@ target_link_libraries(
             gRPC::grpc
             protobuf::libprotobuf)
 google_cloud_cpp_add_common_options(${target})
-if (MSVC)
-    target_compile_options(${target} PRIVATE "/bigobj")
-endif ()

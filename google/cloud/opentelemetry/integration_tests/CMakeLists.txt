@@ -41,13 +41,6 @@ foreach (fname ${opentelemetry_integration_tests})
                 google_cloud_cpp_testing_grpc google_cloud_cpp_testing
                 GTest::gmock_main GTest::gmock GTest::gtest)
     google_cloud_cpp_add_common_options(${target})
-
-    # With googletest it is relatively easy to exceed the default number of
-    # sections (~65,000) in a single .obj file. Add the /bigobj option to all
-    # the tests, even if it is not needed.
-    if (MSVC)
-        target_compile_options(${target} PRIVATE "/bigobj")
-    endif ()
     add_test(NAME ${target} COMMAND ${target})
     set_tests_properties(${target} PROPERTIES LABELS "integration-test")
     add_dependencies(opentelemetry-integration-tests ${target})

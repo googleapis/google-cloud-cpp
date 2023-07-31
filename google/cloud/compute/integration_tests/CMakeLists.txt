@@ -34,13 +34,6 @@ foreach (fname ${compute_client_integration_tests})
         PRIVATE google-cloud-cpp::experimental-compute google_cloud_cpp_testing
                 GTest::gmock_main GTest::gmock GTest::gtest)
     google_cloud_cpp_add_common_options(${target})
-
-    # With googletest it is relatively easy to exceed the default number of
-    # sections (~65,000) in a single .obj file. Add the /bigobj option to all
-    # the tests, even if it is not needed.
-    if (MSVC)
-        target_compile_options(${target} PRIVATE "/bigobj")
-    endif ()
     add_test(NAME ${target} COMMAND ${target})
     set_tests_properties(${target}
                          PROPERTIES LABELS "integration-test;integration-test")

@@ -57,8 +57,5 @@ foreach (fname ${google_cloud_cpp_testing_grpc_unit_tests})
                 GTest::gmock
                 GTest::gtest)
     google_cloud_cpp_add_common_options(${target})
-    if (MSVC)
-        target_compile_options(${target} PRIVATE "/bigobj")
-    endif ()
     add_test(NAME ${target} COMMAND ${target})
 endforeach ()
