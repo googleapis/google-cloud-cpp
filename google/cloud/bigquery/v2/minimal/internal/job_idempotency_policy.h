@@ -42,6 +42,9 @@ class BigQueryJobIdempotencyPolicy {
   virtual google::cloud::Idempotency CancelJob(CancelJobRequest const& request);
 
   virtual google::cloud::Idempotency Query(PostQueryRequest const& request);
+
+  virtual google::cloud::Idempotency GetQueryResults(
+      GetQueryResultsRequest const& request);
 };
 
 std::unique_ptr<BigQueryJobIdempotencyPolicy>
