@@ -55,12 +55,14 @@ TEST_F(AsyncClientIntegrationTest, ObjectCRUD) {
 
   auto object_name = MakeRandomObjectName();
 
-  auto insert = client->InsertObject(bucket_name(), object_name, LoremIpsum(),
-                                     gcs::IfGenerationMatch(0));
+  auto async = MakeAsyncClient();
+  auto insert = async
+                    .InsertObject(bucket_name(), object_name, LoremIpsum(),
+                                  gcs::IfGenerationMatch(0))
+                    .get();
   ASSERT_STATUS_OK(insert);
   ScheduleForDelete(*insert);
 
-  auto async = MakeAsyncClient();
   auto pending0 =
       async.ReadObject(bucket_name(), object_name, 0, LoremIpsum().size());
   auto pending1 =
