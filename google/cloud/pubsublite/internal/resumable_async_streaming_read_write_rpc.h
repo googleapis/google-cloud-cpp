@@ -278,8 +278,8 @@ class ResumableAsyncStreamingReadWriteRpcImpl
     return root_future;
   }
 
-  using UnderlyingStream =
-      std::unique_ptr<AsyncStreamingReadWriteRpc<RequestType, ResponseType>>;
+  using StreamType = AsyncStreamingReadWriteRpc<RequestType, ResponseType>;
+  using UnderlyingStream = std::unique_ptr<StreamType>;
 
  private:
   enum class State { kRetrying, kInitialized, kShutdown };
@@ -495,7 +495,10 @@ class ResumableAsyncStreamingReadWriteRpcImpl
     auto stream = std::move(*start_initialize_response);
     std::unique_lock<std::mutex> lk{mu_};
     if (stream_state_ == State::kShutdown) {
-      stream->Finish().then([](future<Status>) {});
+      // We need to call `Finish()` to satisfy the gRPC requirements. We also
+      // need to extend the lifetime to `stream` until `Finish()` returns.
+      auto extended = std::shared_ptr<StreamType>(std::move(stream));
+      extended->Finish().then([extended](auto) {});
     } else {
       stream_ = std::move(stream);
       stream_state_ = State::kInitialized;
