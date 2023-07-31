@@ -145,8 +145,7 @@ LineageConnection::BatchSearchLinkProcesses(
       StreamRange<google::cloud::datacatalog::lineage::v1::ProcessLinks>>();
 }
 
-std::shared_ptr<LineageConnection> MakeLineageConnection(ExperimentalTag,
-                                                         Options options) {
+std::shared_ptr<LineageConnection> MakeLineageConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
                                  UnifiedCredentialsOptionList,
                                  LineagePolicyOptionList>(options, __func__);

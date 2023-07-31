@@ -1626,8 +1626,6 @@ service {
   product_path: "google/cloud/datacatalog/lineage/v1"
   initial_copyright_year: "2023"
   retryable_status_codes: ["kUnavailable"]
-  # TODO(#10976): Remove experimental when service goes GA.
-  experimental: true
 }
 
 # Database Migration
