@@ -30,6 +30,11 @@ namespace cloud {
 namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+using ::google::cloud::bigquery_v2_minimal_testing::
+    MakeFullGetQueryResultsRequest;
+using ::google::cloud::bigquery_v2_minimal_testing::MakeGetQueryResults;
+using ::google::cloud::bigquery_v2_minimal_testing::
+    MakeGetQueryResultsResponsePayload;
 using ::google::cloud::bigquery_v2_minimal_testing::MakePartialJob;
 using ::google::cloud::bigquery_v2_minimal_testing::MakePostQueryResults;
 using ::google::cloud::bigquery_v2_minimal_testing::MakeQueryRequest;
@@ -39,6 +44,8 @@ using ::google::cloud::testing_util::StatusIs;
 using ::testing::AtLeast;
 using ::testing::ElementsAre;
 using ::testing::HasSubstr;
+using ::testing::IsEmpty;
+using ::testing::Not;
 using ::testing::Return;
 
 std::shared_ptr<BigQueryJobConnection> CreateTestingConnection(
@@ -257,6 +264,36 @@ TEST(JobConnectionTest, QuerySuccess) {
                                             *job_result);
 }
 
+TEST(JobConnectionTest, QueryResultsSuccess) {
+  auto mock = std::make_shared<MockBigQueryJobRestStub>();
+
+  auto expected_payload = MakeGetQueryResultsResponsePayload();
+
+  EXPECT_CALL(*mock, GetQueryResults)
+      .WillOnce([&](rest_internal::RestContext&,
+                    GetQueryResultsRequest const& request)
+                    -> StatusOr<GetQueryResultsResponse> {
+        EXPECT_THAT(request.project_id(), Not(IsEmpty()));
+        EXPECT_THAT(request.job_id(), Not(IsEmpty()));
+        BigQueryHttpResponse http_response;
+        http_response.payload = expected_payload;
+        return GetQueryResultsResponse::BuildFromHttpResponse(
+            std::move(http_response));
+      });
+
+  auto conn = CreateTestingConnection(std::move(mock));
+
+  GetQueryResultsRequest job_request = MakeFullGetQueryResultsRequest();
+
+  auto job_result = conn->QueryResults(job_request);
+  ASSERT_STATUS_OK(job_result);
+
+  auto expected_query_results = MakeGetQueryResults();
+
+  bigquery_v2_minimal_testing::AssertEquals(expected_query_results,
+                                            *job_result);
+}
+
 // Verify that permanent errors are reported immediately.
 TEST(JobConnectionTest, GetJobPermanentError) {
   auto mock = std::make_shared<MockBigQueryJobRestStub>();
@@ -320,6 +357,19 @@ TEST(JobConnectionTest, QueryPermanentError) {
 
   PostQueryRequest request;
   auto result = conn->Query(request);
+  EXPECT_THAT(result, StatusIs(StatusCode::kPermissionDenied,
+                               HasSubstr("permission-denied")));
+}
+
+TEST(JobConnectionTest, QueryResultsPermanentError) {
+  auto mock = std::make_shared<MockBigQueryJobRestStub>();
+  EXPECT_CALL(*mock, GetQueryResults)
+      .WillOnce(
+          Return(Status(StatusCode::kPermissionDenied, "permission-denied")));
+  auto conn = CreateTestingConnection(std::move(mock));
+
+  GetQueryResultsRequest request;
+  auto result = conn->QueryResults(request);
   EXPECT_THAT(result, StatusIs(StatusCode::kPermissionDenied,
                                HasSubstr("permission-denied")));
 }
@@ -405,6 +455,21 @@ TEST(JobConnectionTest, QueryWithRequestIdIdempotentTooManyTransients) {
   request.set_query_request(query_request);
 
   auto result = conn->Query(request);
+  EXPECT_THAT(result,
+              StatusIs(StatusCode::kDeadlineExceeded, HasSubstr("try-again")));
+}
+
+TEST(JobConnectionTest, QueryResultsTooManyTransients) {
+  auto mock = std::make_shared<MockBigQueryJobRestStub>();
+  EXPECT_CALL(*mock, GetQueryResults)
+      .Times(AtLeast(2))
+      .WillRepeatedly(
+          Return(Status(StatusCode::kDeadlineExceeded, "try-again")));
+  auto conn = CreateTestingConnection(std::move(mock));
+
+  GetQueryResultsRequest request;
+
+  auto result = conn->QueryResults(request);
   EXPECT_THAT(result,
               StatusIs(StatusCode::kDeadlineExceeded, HasSubstr("try-again")));
 }
