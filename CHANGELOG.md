@@ -133,13 +133,13 @@ The library has been expanded to include the Reporting API.
 - feat(cloudbuild): promote 2nd gen (repositories) API to GA
   ([#12236](https://github.com/googleapis/google-cloud-cpp/pull/12236))
 
-### [Cloud Monitoring](/google/cloud/monitoring/README.md)
-
-The library has been expanded to include the [Snooze][monitoring-snooze] API.
-
 ### [Cloud Functions](/google/cloud/functions/README.md)
 
 The library has been expanded to include the [2nd gen][functions-v2] API.
+
+### [Cloud Monitoring](/google/cloud/monitoring/README.md)
+
+The library has been expanded to include the [Snooze][monitoring-snooze] API.
 
 ### [Cloud Run](/google/cloud/run/README.md)
 
@@ -150,7 +150,7 @@ API.
 
 The library has been expanded to include the Zonal OS Config API.
 
-### [Datacatalog](/google/cloud/datcatalog/README.md)
+### [Data Catalog](/google/cloud/datcatalog/README.md)
 
 - feat(datacatalog): promote `datalineage` to GA
   ([#12271](https://github.com/googleapis/google-cloud-cpp/pull/12271))
@@ -165,16 +165,6 @@ API.
 The library has been expanded to include the
 [Log-based Metrics][logging-metrics] API and the [Log Router][logging-config]
 API.
-
-### [Monitoring](/google/cloud/monitoring/README.md)
-
-- feat(monitoring): add snooze client
-  ([#12176](https://github.com/googleapis/google-cloud-cpp/pull/12176))
-
-### [OSConfig](/google/cloud/osconfig/README.md)
-
-- feat(osconfig): add Zonal OS Config API
-  ([#12169](https://github.com/googleapis/google-cloud-cpp/pull/12169))
 
 ### [Pub/Sub](/google/cloud/pubsub/README.md)
 
