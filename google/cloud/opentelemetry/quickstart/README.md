@@ -5,13 +5,13 @@ tracing for a Google Cloud Storage (GCS) client. The traces are collected and
 sent to Cloud Trace.
 
 This quickstart assumes the reader is familiar with how to build and use the GCS
-client. If not, see the [GCS quickstart](/google/cloud/storage/quickstart).
+client. If not, see the [GCS quickstart][quickstart-storage].
 
 The quickstart also assumes the reader is familiar with how to build the Cloud
 Trace C++ client library. If not, see the
-[Cloud Trace quickstart](/google/cloud/trace/quickstart). Note, for example,
-that the Cloud Trace Exporter requires dependencies on gRPC and Protobuf, which
-the GCS client does not.
+[Cloud Trace quickstart][quickstart-trace]. Note, for example, that the Cloud
+Trace Exporter requires dependencies on gRPC and Protobuf, which the GCS client
+does not.
 
 ## The Quickstart
 
@@ -204,4 +204,6 @@ set GRPC_DEFAULT_SSL_ROOTS_FILE_PATH=%cd%\roots.pem
 [opentelemetry-cpp-install]: https://github.com/open-telemetry/opentelemetry-cpp/INSTALL.md
 [opentelemetry-cpp-v1-9-0]: https://github.com/open-telemetry/opentelemetry-cpp/releases/tag/v1.9.0
 [packaging guide]: https://github.com/googleapis/google-cloud-cpp/blob/main/doc/packaging.md
+[quickstart-storage]: https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/storage/quickstart
+[quickstart-trace]: https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/trace/quickstart
 [view traces overview]: https://cloud.google.com/trace/docs/trace-overview
