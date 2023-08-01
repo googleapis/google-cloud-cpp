@@ -34,6 +34,7 @@ void AssertEquals(bigquery_v2_minimal_internal::ListFormatTable const& lhs,
 std::string MakeTableJsonText();
 std::string MakeListFormatTableJsonText();
 std::string MakeListTablesResponseJsonText();
+std::string MakeListTablesResponseNoPageTokenJsonText();
 
 bigquery_v2_minimal_internal::GetTableRequest MakeGetTableRequest();
 bigquery_v2_minimal_internal::ListTablesRequest MakeListTablesRequest();

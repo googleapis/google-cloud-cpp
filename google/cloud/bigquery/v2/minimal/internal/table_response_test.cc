@@ -26,6 +26,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 using ::google::cloud::rest_internal::HttpStatusCode;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::HasSubstr;
+using ::testing::IsEmpty;
 
 TEST(GetTableResponseTest, Success) {
   BigQueryHttpResponse http_response;
@@ -63,7 +64,7 @@ TEST(GetTableResponseTest, InvalidTable) {
                                  HasSubstr("Not a valid Json Table object")));
 }
 
-TEST(ListTablesResponseTest, Success) {
+TEST(ListTablesResponseTest, SuccessMultiplePages) {
   BigQueryHttpResponse http_response;
   auto tables_json_txt =
       bigquery_v2_minimal_testing::MakeListFormatTableJsonText();
@@ -79,8 +80,33 @@ TEST(ListTablesResponseTest, Success) {
   EXPECT_FALSE(list_tables_response->http_response.payload.empty());
   EXPECT_EQ(list_tables_response->kind, "kind-1");
   EXPECT_EQ(list_tables_response->etag, "tag-1");
-  EXPECT_EQ(list_tables_response->next_page_token, "npt-123");
   EXPECT_EQ(list_tables_response->total_items, 1);
+  EXPECT_THAT(list_tables_response->next_page_token, "npt-123");
+
+  auto const tables = list_tables_response->tables;
+  ASSERT_EQ(tables.size(), 1);
+
+  bigquery_v2_minimal_testing::AssertEquals(expected, tables[0]);
+}
+
+TEST(ListTablesResponseTest, SuccessSinglePage) {
+  BigQueryHttpResponse http_response;
+  auto tables_json_txt =
+      bigquery_v2_minimal_testing::MakeListFormatTableJsonText();
+  http_response.payload =
+      bigquery_v2_minimal_testing::MakeListTablesResponseNoPageTokenJsonText();
+
+  auto const list_tables_response =
+      ListTablesResponse::BuildFromHttpResponse(http_response);
+  ASSERT_STATUS_OK(list_tables_response);
+
+  auto expected = bigquery_v2_minimal_testing::MakeListFormatTable();
+
+  EXPECT_FALSE(list_tables_response->http_response.payload.empty());
+  EXPECT_EQ(list_tables_response->kind, "kind-1");
+  EXPECT_EQ(list_tables_response->etag, "tag-1");
+  EXPECT_EQ(list_tables_response->total_items, 1);
+  EXPECT_THAT(list_tables_response->next_page_token, IsEmpty());
 
   auto const tables = list_tables_response->tables;
   ASSERT_EQ(tables.size(), 1);

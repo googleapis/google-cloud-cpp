@@ -29,6 +29,7 @@ void AssertEquals(bigquery_v2_minimal_internal::Project const& lhs,
                   bigquery_v2_minimal_internal::Project const& rhs);
 std::string MakeProjectJsonText();
 std::string MakeListProjectsResponseJsonText();
+std::string MakeListProjectsResponseNoPageTokenJsonText();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_v2_minimal_testing

@@ -36,8 +36,7 @@ bool valid_list_format_table(nlohmann::json const& j) {
 }
 
 bool valid_tables_list(nlohmann::json const& j) {
-  return (j.contains("kind") && j.contains("etag") &&
-          j.contains("nextPageToken") && j.contains("tables"));
+  return (j.contains("kind") && j.contains("etag") && j.contains("tables"));
 }
 
 StatusOr<nlohmann::json> parse_json(std::string const& payload) {

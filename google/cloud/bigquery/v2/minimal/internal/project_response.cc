@@ -31,8 +31,7 @@ bool valid_project(nlohmann::json const& j) {
 }
 
 bool valid_projects_list(nlohmann::json const& j) {
-  return (j.contains("kind") && j.contains("etag") &&
-          j.contains("nextPageToken") && j.contains("projects"));
+  return (j.contains("kind") && j.contains("etag") && j.contains("projects"));
 }
 
 StatusOr<nlohmann::json> parse_json(std::string const& payload) {

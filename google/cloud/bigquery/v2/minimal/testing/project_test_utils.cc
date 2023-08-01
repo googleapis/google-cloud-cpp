@@ -62,6 +62,15 @@ std::string MakeListProjectsResponseJsonText() {
          projects_json_txt + R"(]})";
 }
 
+std::string MakeListProjectsResponseNoPageTokenJsonText() {
+  auto projects_json_txt = MakeProjectJsonText();
+  return R"({"etag": "tag-1",
+          "kind": "kind-1",
+          "totalItems": "1",
+          "projects": [)" +
+         projects_json_txt + R"(]})";
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_v2_minimal_testing
 }  // namespace cloud

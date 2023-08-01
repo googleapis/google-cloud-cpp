@@ -37,8 +37,7 @@ bool valid_list_format_job(nlohmann::json const& j) {
 }
 
 bool valid_jobs_list(nlohmann::json const& j) {
-  return (j.contains("kind") && j.contains("etag") &&
-          j.contains("nextPageToken") && j.contains("jobs"));
+  return (j.contains("kind") && j.contains("etag") && j.contains("jobs"));
 }
 
 StatusOr<nlohmann::json> parse_json(std::string const& payload) {

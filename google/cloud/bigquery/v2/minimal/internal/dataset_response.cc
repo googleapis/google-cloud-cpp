@@ -35,8 +35,7 @@ bool valid_list_format_dataset(nlohmann::json const& j) {
 }
 
 bool valid_datasets_list(nlohmann::json const& j) {
-  return (j.contains("kind") && j.contains("etag") &&
-          j.contains("nextPageToken") && j.contains("datasets"));
+  return (j.contains("kind") && j.contains("etag") && j.contains("datasets"));
 }
 
 StatusOr<nlohmann::json> parse_json(std::string const& payload) {
