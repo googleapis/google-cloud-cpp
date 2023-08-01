@@ -26,8 +26,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 using ::google::cloud::rest_internal::HttpStatusCode;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::HasSubstr;
+using ::testing::IsEmpty;
 
-TEST(ListProjectsResponseTest, Success) {
+TEST(ListProjectsResponseTest, SuccessMultiplePages) {
   BigQueryHttpResponse http_response;
   auto projects_json_txt = bigquery_v2_minimal_testing::MakeProjectJsonText();
   http_response.payload =
@@ -43,6 +44,30 @@ TEST(ListProjectsResponseTest, Success) {
   EXPECT_EQ(list_projects_response->kind, "kind-1");
   EXPECT_EQ(list_projects_response->etag, "tag-1");
   EXPECT_EQ(list_projects_response->next_page_token, "npt-123");
+  EXPECT_EQ(list_projects_response->total_items, 1);
+
+  auto const projects = list_projects_response->projects;
+  ASSERT_EQ(projects.size(), 1);
+
+  bigquery_v2_minimal_testing::AssertEquals(expected, projects[0]);
+}
+
+TEST(ListProjectsResponseTest, SuccessSinglePage) {
+  BigQueryHttpResponse http_response;
+  auto projects_json_txt = bigquery_v2_minimal_testing::MakeProjectJsonText();
+  http_response.payload = bigquery_v2_minimal_testing::
+      MakeListProjectsResponseNoPageTokenJsonText();
+
+  auto const list_projects_response =
+      ListProjectsResponse::BuildFromHttpResponse(http_response);
+  ASSERT_STATUS_OK(list_projects_response);
+
+  auto expected = bigquery_v2_minimal_testing::MakeProject();
+
+  EXPECT_FALSE(list_projects_response->http_response.payload.empty());
+  EXPECT_EQ(list_projects_response->kind, "kind-1");
+  EXPECT_EQ(list_projects_response->etag, "tag-1");
+  EXPECT_THAT(list_projects_response->next_page_token, IsEmpty());
   EXPECT_EQ(list_projects_response->total_items, 1);
 
   auto const projects = list_projects_response->projects;

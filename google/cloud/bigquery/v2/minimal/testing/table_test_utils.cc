@@ -326,6 +326,16 @@ std::string MakeListTablesResponseJsonText() {
          tables_json_txt + R"(]})";
 }
 
+std::string MakeListTablesResponseNoPageTokenJsonText() {
+  auto tables_json_txt =
+      bigquery_v2_minimal_testing::MakeListFormatTableJsonText();
+  return R"({"etag": "tag-1",
+          "kind": "kind-1",
+          "totalItems": "1",
+          "tables": [)" +
+         tables_json_txt + R"(]})";
+}
+
 bigquery_v2_minimal_internal::GetTableRequest MakeGetTableRequest() {
   std::vector<std::string> fields;
   fields.emplace_back("f1");

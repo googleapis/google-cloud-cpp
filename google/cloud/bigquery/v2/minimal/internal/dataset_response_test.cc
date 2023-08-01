@@ -25,6 +25,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 using ::google::cloud::rest_internal::HttpStatusCode;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::HasSubstr;
+using ::testing::IsEmpty;
 
 TEST(GetDatasetResponseTest, Success) {
   BigQueryHttpResponse http_response;
@@ -81,7 +82,7 @@ TEST(GetDatasetResponseTest, InvalidDataset) {
                                  HasSubstr("Not a valid Json Dataset object")));
 }
 
-TEST(ListDatasetsResponseTest, Success) {
+TEST(ListDatasetsResponseTest, SuccessMultiplePages) {
   BigQueryHttpResponse http_response;
   http_response.payload =
       R"({"etag": "tag-1",
@@ -104,6 +105,40 @@ TEST(ListDatasetsResponseTest, Success) {
   EXPECT_EQ(list_datasets_response->kind, "kind-1");
   EXPECT_EQ(list_datasets_response->etag, "tag-1");
   EXPECT_EQ(list_datasets_response->next_page_token, "npt-123");
+
+  auto const datasets = list_datasets_response->datasets;
+  ASSERT_EQ(datasets.size(), 1);
+  EXPECT_EQ(datasets[0].id, "1");
+  EXPECT_EQ(datasets[0].kind, "kind-2");
+  EXPECT_EQ(datasets[0].friendly_name, "friendly-name");
+  EXPECT_EQ(datasets[0].dataset_reference.project_id, "p123");
+  EXPECT_EQ(datasets[0].dataset_reference.dataset_id, "d123");
+  EXPECT_EQ(datasets[0].location, "location");
+  EXPECT_EQ(datasets[0].type, "DEFAULT");
+}
+
+TEST(ListDatasetsResponseTest, SuccessSinglePage) {
+  BigQueryHttpResponse http_response;
+  http_response.payload =
+      R"({"etag": "tag-1",
+          "kind": "kind-1",
+          "datasets": [
+              {
+                "id": "1",
+                "kind": "kind-2",
+                "datasetReference": {"projectId": "p123", "datasetId": "d123"},
+                "friendlyName": "friendly-name",
+                "location": "location",
+                "type": "DEFAULT"
+              }
+  ]})";
+  auto const list_datasets_response =
+      ListDatasetsResponse::BuildFromHttpResponse(http_response);
+  ASSERT_STATUS_OK(list_datasets_response);
+  EXPECT_FALSE(list_datasets_response->http_response.payload.empty());
+  EXPECT_EQ(list_datasets_response->kind, "kind-1");
+  EXPECT_EQ(list_datasets_response->etag, "tag-1");
+  EXPECT_THAT(list_datasets_response->next_page_token, IsEmpty());
 
   auto const datasets = list_datasets_response->datasets;
   ASSERT_EQ(datasets.size(), 1);
