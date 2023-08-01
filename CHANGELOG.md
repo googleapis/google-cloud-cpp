@@ -108,7 +108,7 @@ info, see [#7463] and [#5976].
 
 </details>
 
-## v2.14.0 - TBD
+## v2.14.0 - 2023-08
 
 ### New Libraries
 
@@ -117,9 +117,21 @@ the APIs in these libraries are stable, and are ready for production use.
 
 - [Commerce](/google/cloud/commerce/README.md)
 
+### [Bigtable](/google/cloud/bigtable/README.md)
+
+- docs(bigtable): document `DataRetryPolicy`
+  ([#12040](https://github.com/googleapis/google-cloud-cpp/pull/12040))
+- feat(bigtable): reverse scans
+  ([#12022](https://github.com/googleapis/google-cloud-cpp/pull/12022))
+
 ### [Channel Services](/google/cloud/channel/README.md)
 
 The library has been expanded to include the Reporting API.
+
+### [Cloud Build](/google/cloud/cloudbuild/README.md)
+
+- feat(cloudbuild): promote 2nd gen (repositories) API to GA
+  ([#12236](https://github.com/googleapis/google-cloud-cpp/pull/12236))
 
 ### [Cloud Monitoring](/google/cloud/monitoring/README.md)
 
@@ -138,6 +150,11 @@ API.
 
 The library has been expanded to include the Zonal OS Config API.
 
+### [Datacatalog](/google/cloud/datcatalog/README.md)
+
+- feat(datacatalog): promote `datalineage` to GA
+  ([#12271](https://github.com/googleapis/google-cloud-cpp/pull/12271))
+
 ### [Dataproc](/google/cloud/dataproc/README.md)
 
 The library has been expanded to include the [Node Groups][dataproc-node-groups]
@@ -149,6 +166,27 @@ The library has been expanded to include the
 [Log-based Metrics][logging-metrics] API and the [Log Router][logging-config]
 API.
 
+### [Monitoring](/google/cloud/monitoring/README.md)
+
+- feat(monitoring): add snooze client
+  ([#12176](https://github.com/googleapis/google-cloud-cpp/pull/12176))
+
+### [OSConfig](/google/cloud/osconfig/README.md)
+
+- feat(osconfig): add Zonal OS Config API
+  ([#12169](https://github.com/googleapis/google-cloud-cpp/pull/12169))
+
+### [Pub/Sub](/google/cloud/pubsub/README.md)
+
+- docs(pubsub): add cloud storage subscription sample
+  ([#12088](https://github.com/googleapis/google-cloud-cpp/pull/12088))
+- docs(pubsub): add unwrapped subscription sample
+  ([#12090](https://github.com/googleapis/google-cloud-cpp/pull/12090))
+- docs(pubsub): add a subscriber quickstart
+  ([#12053](https://github.com/googleapis/google-cloud-cpp/pull/12053))
+- docs(pubsub): document `RetryPolicy` interface
+  ([#12030](https://github.com/googleapis/google-cloud-cpp/pull/12030))
+
 ### [Retail](/google/cloud/retail/README.md)
 
 The library has been expanded to include new services.
@@ -157,10 +195,41 @@ The library has been expanded to include new services.
 
 The library has been expanded to include the [Tags][resource-manager-tags] API.
 
+### [Spanner](/google/cloud/spanner/README.md)
+
+- feat(spanner): samples for bit-reversed sequence
+  ([#12280](https://github.com/googleapis/google-cloud-cpp/pull/12280))
+- doc(spanner): mark obsolete Spanner options classes as deprecated
+  ([#12256](https://github.com/googleapis/google-cloud-cpp/pull/12256))
+- doc(spanner): Improve documentation for ActionOnExhaustion
+  ([#12238](https://github.com/googleapis/google-cloud-cpp/pull/12238))
+- doc(spanner): add documentation/sample for TransactionRerunPolicy
+  ([#12140](https://github.com/googleapis/google-cloud-cpp/pull/12140))
+- feat(spanner): tests and samples for foreign-key delete cascade
+  ([#12122](https://github.com/googleapis/google-cloud-cpp/pull/12122))
+- docs(spanner): document `RetryPolicy` interface
+  ([#12037](https://github.com/googleapis/google-cloud-cpp/pull/12037))
+
 ### [Speech](/google/cloud/speech/README.md)
 
 The library has been expanded to include the
 [Model Adaptation][speech-model-adaptation] API.
+
+### [Storage](/google/cloud/storage/README.md)
+
+- docs(storage): document `RetryPolicy` interface
+  ([#12031](https://github.com/googleapis/google-cloud-cpp/pull/12031))
+
+### [Common Libraries](/google/cloud/README.md)
+
+- fix(common): add missing library on Windows
+  ([#12103](https://github.com/googleapis/google-cloud-cpp/pull/12103))
+- fix(common): avoid run-time conflicts on Windows
+  ([#12105](https://github.com/googleapis/google-cloud-cpp/pull/12105))
+- feat(oauth2): new library to create oauth2 tokens
+  ([#12064](https://github.com/googleapis/google-cloud-cpp/pull/12064))
+- feat: support split packages
+  ([#12049](https://github.com/googleapis/google-cloud-cpp/pull/12049))
 
 ## v2.13.0 - 2023-07
 
