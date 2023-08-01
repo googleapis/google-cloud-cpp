@@ -116,6 +116,20 @@ StatusOr<PostQueryResults> BigQueryJobRestConnectionImpl::Query(
   return result->post_query_results;
 }
 
+StatusOr<GetQueryResults> BigQueryJobRestConnectionImpl::QueryResults(
+    GetQueryResultsRequest const& request) {
+  auto result = rest_internal::RestRetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->GetQueryResults(request),
+      [this](rest_internal::RestContext& rest_context,
+             GetQueryResultsRequest const& request) {
+        return stub_->GetQueryResults(rest_context, request);
+      },
+      request, __func__);
+  if (!result) return std::move(result).status();
+  return result->get_query_results;
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_v2_minimal_internal
 }  // namespace cloud

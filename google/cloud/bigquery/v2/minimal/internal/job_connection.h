@@ -40,6 +40,8 @@ class BigQueryJobConnection {
   virtual StatusOr<Job> InsertJob(InsertJobRequest const& request);
   virtual StatusOr<Job> CancelJob(CancelJobRequest const& request);
   virtual StatusOr<PostQueryResults> Query(PostQueryRequest const& request);
+  virtual StatusOr<GetQueryResults> QueryResults(
+      GetQueryResultsRequest const& request);
 };
 
 std::shared_ptr<BigQueryJobConnection> MakeBigQueryJobConnection(

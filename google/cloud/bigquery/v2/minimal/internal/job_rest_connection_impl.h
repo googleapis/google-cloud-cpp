@@ -46,6 +46,8 @@ class BigQueryJobRestConnectionImpl : public BigQueryJobConnection {
   StatusOr<Job> InsertJob(InsertJobRequest const& request) override;
   StatusOr<Job> CancelJob(CancelJobRequest const& request) override;
   StatusOr<PostQueryResults> Query(PostQueryRequest const& request) override;
+  StatusOr<GetQueryResults> QueryResults(
+      GetQueryResultsRequest const& request) override;
 
  private:
   std::unique_ptr<BigQueryJobRetryPolicy> retry_policy() {
