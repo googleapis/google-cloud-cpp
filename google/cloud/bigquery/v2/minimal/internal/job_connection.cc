@@ -46,7 +46,8 @@ StatusOr<Job> BigQueryJobConnection::CancelJob(CancelJobRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<QueryResults> BigQueryJobConnection::Query(PostQueryRequest const&) {
+StatusOr<PostQueryResults> BigQueryJobConnection::Query(
+    PostQueryRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 

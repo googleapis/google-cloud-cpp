@@ -37,10 +37,10 @@ void AssertEquals(bigquery_v2_minimal_internal::PostQueryRequest const& lhs,
                   bigquery_v2_minimal_internal::PostQueryRequest const& rhs);
 
 std::string MakeQueryResponsePayload();
-bigquery_v2_minimal_internal::QueryResults MakeQueryResults();
+bigquery_v2_minimal_internal::PostQueryResults MakePostQueryResults();
 
-void AssertEquals(bigquery_v2_minimal_internal::QueryResults const& lhs,
-                  bigquery_v2_minimal_internal::QueryResults const& rhs);
+void AssertEquals(bigquery_v2_minimal_internal::PostQueryResults const& lhs,
+                  bigquery_v2_minimal_internal::PostQueryResults const& rhs);
 
 std::string MakeGetQueryResultsResponsePayload();
 bigquery_v2_minimal_internal::GetQueryResults MakeGetQueryResults();

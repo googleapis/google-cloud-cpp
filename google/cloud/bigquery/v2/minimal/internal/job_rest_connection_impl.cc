@@ -103,7 +103,7 @@ StatusOr<Job> BigQueryJobRestConnectionImpl::CancelJob(
   return std::move(result->job);
 }
 
-StatusOr<QueryResults> BigQueryJobRestConnectionImpl::Query(
+StatusOr<PostQueryResults> BigQueryJobRestConnectionImpl::Query(
     PostQueryRequest const& request) {
   auto result = rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(), idempotency_policy()->Query(request),
@@ -113,7 +113,7 @@ StatusOr<QueryResults> BigQueryJobRestConnectionImpl::Query(
       },
       request, __func__);
   if (!result) return std::move(result).status();
-  return result->query_results;
+  return result->post_query_results;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
