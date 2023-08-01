@@ -28,19 +28,19 @@ void FromJson(std::chrono::milliseconds& field, nlohmann::json const& j,
               char const* name);
 
 void ToJson(std::chrono::milliseconds const& field, nlohmann::json& j,
-            char const* name);
+            char const* name, bool is_number = true);
 
 void FromJson(std::chrono::system_clock::time_point& field,
               nlohmann::json const& j, char const* name);
 
 void ToJson(std::chrono::system_clock::time_point const& field,
-            nlohmann::json& j, char const* name);
+            nlohmann::json& j, char const* name, bool is_number = true);
 
 void FromJson(std::chrono::hours& field, nlohmann::json const& j,
               char const* name);
 
 void ToJson(std::chrono::hours const& field, nlohmann::json& j,
-            char const* name);
+            char const* name, bool is_number = true);
 
 // Suppress recursive clang-tidy warnings
 //
