@@ -15,8 +15,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_TESTING_MOCK_HTTP_REQUEST_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_TESTING_MOCK_HTTP_REQUEST_H
 
-#include "google/cloud/storage/internal/curl_handle_factory.h"
-#include "google/cloud/storage/internal/curl_request.h"
+#include "google/cloud/storage/internal/curl/handle_factory.h"
+#include "google/cloud/storage/internal/curl/request.h"
 #include <gmock/gmock.h>
 #include <nlohmann/json.hpp>
 #include <string>

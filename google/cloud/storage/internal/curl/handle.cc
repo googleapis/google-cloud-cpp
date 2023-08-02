@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/storage/internal/curl_handle.h"
+#include "google/cloud/storage/internal/curl/handle.h"
 #include "google/cloud/storage/internal/binary_data_as_debug_string.h"
-#include "google/cloud/storage/internal/curl_handle_factory.h"
+#include "google/cloud/storage/internal/curl/handle_factory.h"
 #include "google/cloud/internal/strerror.h"
 #include "google/cloud/log.h"
 #ifdef _WIN32

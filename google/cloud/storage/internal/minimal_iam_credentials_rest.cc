@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/minimal_iam_credentials_rest.h"
-#include "google/cloud/storage/internal/curl_handle_factory.h"
-#include "google/cloud/storage/internal/curl_request_builder.h"
+#include "google/cloud/storage/internal/curl/handle_factory.h"
+#include "google/cloud/storage/internal/curl/request_builder.h"
 #include "google/cloud/storage/oauth2/credentials.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"

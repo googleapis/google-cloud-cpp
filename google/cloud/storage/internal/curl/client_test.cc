@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/storage/internal/curl_client.h"
+#include "google/cloud/storage/internal/curl/client.h"
 #include "google/cloud/storage/iam_policy.h"
-#include "google/cloud/storage/internal/curl_request_builder.h"
+#include "google/cloud/storage/internal/curl/request_builder.h"
 #include "google/cloud/storage/oauth2/credentials.h"
 #include "google/cloud/storage/oauth2/google_credentials.h"
 #include "google/cloud/testing_util/scoped_environment.h"

@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/storage/internal/curl_download_request.h"
+#include "google/cloud/storage/internal/curl/download_request.h"
 #include <gmock/gmock.h>
 
 namespace google {
