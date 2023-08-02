@@ -19,6 +19,7 @@
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/idempotency.h"
 #include "google/cloud/internal/invoke_result.h"
+#include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/internal/retry_loop_helpers.h"
 #include "google/cloud/retry_policy.h"
@@ -68,7 +69,8 @@ auto RetryLoopImpl(std::unique_ptr<RetryPolicy> retry_policy,
                    Sleeper sleeper)
     -> google::cloud::internal::invoke_result_t<Functor, grpc::ClientContext&,
                                                 Request const&> {
-  Status last_status;
+  auto last_status = internal::DeadlineExceededError(
+      "Retry policy exhausted before first request attempt", GCP_ERROR_INFO());
   while (!retry_policy->IsExhausted()) {
     // Need to create a new context for each retry.
     grpc::ClientContext context;
@@ -81,20 +83,18 @@ auto RetryLoopImpl(std::unique_ptr<RetryPolicy> retry_policy,
       return RetryLoopError("Error in non-idempotent operation", location,
                             last_status);
     }
-    if (!retry_policy->OnFailure(last_status)) {
-      // The retry policy is exhausted or the error is not retryable, either
-      // way, exit the loop.
-      break;
-    }
+    // The retry policy is exhausted or the error is not retryable. Either
+    // way, exit the loop.
+    if (!retry_policy->OnFailure(last_status)) break;
     sleeper(backoff_policy->OnCompletion());
   }
-  if (!retry_policy->IsExhausted()) {
-    // The last error cannot be retried, but it is not because the retry
-    // policy is exhausted, we call these "permanent errors", and they
-    // get a special message.
-    return RetryLoopError("Permanent error in", location, last_status);
-  }
-  return RetryLoopError("Retry policy exhausted in", location, last_status);
+  // The last error cannot be retried, but it is not because the retry
+  // policy is exhausted. We call these "permanent errors", and they
+  // get a special message.
+  char const* prefix = !retry_policy->IsExhausted()
+                           ? "Permanent error in"
+                           : "Retry policy exhausted in";
+  return internal::RetryLoopError(prefix, location, last_status);
 }
 
 /// @copydoc RetryLoopImpl
