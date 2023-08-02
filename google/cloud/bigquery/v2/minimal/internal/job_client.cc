@@ -56,6 +56,12 @@ StatusOr<PostQueryResults> JobClient::Query(PostQueryRequest const& request,
   return connection_->Query(request);
 }
 
+StatusOr<GetQueryResults> JobClient::QueryResults(
+    GetQueryResultsRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->QueryResults(request);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_v2_minimal_internal
 }  // namespace cloud
