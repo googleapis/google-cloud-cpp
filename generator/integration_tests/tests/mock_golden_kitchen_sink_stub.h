@@ -17,6 +17,7 @@
 
 #include "generator/integration_tests/golden/v1/internal/golden_kitchen_sink_stub.h"
 #include "google/cloud/testing_util/mock_async_streaming_read_rpc.h"
+#include "google/cloud/testing_util/mock_async_streaming_write_rpc.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -169,23 +170,10 @@ using MockAsyncStreamingReadRpc =
     google::cloud::testing_util::MockAsyncStreamingReadRpc<
         google::test::admin::database::v1::Response>;
 
-class MockAsyncStreamingWriteRpc
-    : public internal::AsyncStreamingWriteRpc<
-          ::google::test::admin::database::v1::Request,
-          ::google::test::admin::database::v1::Response> {
- public:
-  MOCK_METHOD(void, Cancel, (), (override));
-  MOCK_METHOD(future<bool>, Start, (), (override));
-  MOCK_METHOD(future<bool>, Write,
-              (::google::test::admin::database::v1::Request const&,
-               grpc::WriteOptions),
-              (override));
-  MOCK_METHOD(future<bool>, WritesDone, (), (override));
-  MOCK_METHOD(future<StatusOr<::google::test::admin::database::v1::Response>>,
-              Finish, (), (override));
-  MOCK_METHOD(internal::StreamingRpcMetadata, GetRequestMetadata, (),
-              (const, override));
-};
+using MockAsyncStreamingWriteRpc =
+    google::cloud::testing_util::MockAsyncStreamingWriteRpc<
+        google::test::admin::database::v1::Request,
+        google::test::admin::database::v1::Response>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace golden_v1_internal

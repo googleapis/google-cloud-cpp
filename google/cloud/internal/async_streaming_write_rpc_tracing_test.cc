@@ -16,6 +16,7 @@
 #include "google/cloud/internal/async_streaming_write_rpc_tracing.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/testing_util/mock_async_streaming_write_rpc.h"
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
@@ -40,22 +41,8 @@ using ::testing::IsEmpty;
 using ::testing::Pair;
 using ::testing::Return;
 
-template <typename Request, typename Response>
-class MockAsyncStreamingWriteRpc
-    : public AsyncStreamingWriteRpc<Request, Response> {
- public:
-  ~MockAsyncStreamingWriteRpc() override = default;
-
-  MOCK_METHOD(void, Cancel, (), (override));
-  MOCK_METHOD(future<bool>, Start, (), (override));
-  MOCK_METHOD(future<bool>, Write, (Request const&, grpc::WriteOptions),
-              (override));
-  MOCK_METHOD(future<bool>, WritesDone, (), (override));
-  MOCK_METHOD(future<StatusOr<Response>>, Finish, (), (override));
-  MOCK_METHOD(StreamingRpcMetadata, GetRequestMetadata, (), (const, override));
-};
-
-using MockStream = MockAsyncStreamingWriteRpc<int, int>;
+using MockStream =
+    google::cloud::testing_util::MockAsyncStreamingWriteRpc<int, int>;
 using TestedStream = AsyncStreamingWriteRpcTracing<int, int>;
 
 TEST(AsyncStreamingWriteRpcTracing, Cancel) {

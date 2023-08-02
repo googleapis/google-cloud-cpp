@@ -14,6 +14,7 @@
 
 #include "google/cloud/internal/async_streaming_write_rpc_logging.h"
 #include "google/cloud/status.h"
+#include "google/cloud/testing_util/mock_async_streaming_write_rpc.h"
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/tracing_options.h"
@@ -29,24 +30,10 @@ namespace {
 
 using ::google::cloud::testing_util::ScopedLog;
 using ::google::cloud::testing_util::StatusIs;
+using ::google::cloud::testing_util::MockAsyncStreamingWriteRpc;
 using ::testing::Contains;
 using ::testing::HasSubstr;
 using ::testing::Pair;
-
-template <typename Request, typename Response>
-class MockAsyncStreamingWriteRpc
-    : public AsyncStreamingWriteRpc<Request, Response> {
- public:
-  ~MockAsyncStreamingWriteRpc() override = default;
-
-  MOCK_METHOD(void, Cancel, (), (override));
-  MOCK_METHOD(future<bool>, Start, (), (override));
-  MOCK_METHOD(future<bool>, Write, (Request const&, grpc::WriteOptions),
-              (override));
-  MOCK_METHOD(future<bool>, WritesDone, (), (override));
-  MOCK_METHOD(future<StatusOr<Response>>, Finish, (), (override));
-  MOCK_METHOD(StreamingRpcMetadata, GetRequestMetadata, (), (const, override));
-};
 
 class StreamingReadRpcLoggingTest : public ::testing::Test {
  protected:

@@ -27,6 +27,7 @@ google_cloud_cpp_testing_hdrs = [
     "expect_future_error.h",
     "integration_test.h",
     "mock_async_streaming_read_rpc.h",
+    "mock_async_streaming_write_rpc.h",
     "mock_backoff_policy.h",
     "mock_fake_clock.h",
     "opentelemetry_matchers.h",
