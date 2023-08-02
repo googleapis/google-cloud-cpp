@@ -39,8 +39,7 @@ class StorageStub;
  */
 Options DefaultOptionsGrpc(Options = {});
 
-class GrpcClient : public storage::internal::RawClient,
-                   public std::enable_shared_from_this<GrpcClient> {
+class GrpcClient : public storage::internal::RawClient {
  public:
   // Creates a new instance, assumes the options have all default values set.
   static std::shared_ptr<GrpcClient> Create(Options opts);
