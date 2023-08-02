@@ -283,7 +283,7 @@ DownloadDetail DownloadOneObject(
   }
   stream.Close();
   // Flush the logs, if any.
-  if (!stream.status().ok()) google::cloud::LogSink::Instance().Flush();
+  if (stream.bad()) google::cloud::LogSink::Instance().Flush();
   auto const object_elapsed =
       duration_cast<microseconds>(clock::now() - object_start);
   auto p = stream.headers().find(":grpc-context-peer");

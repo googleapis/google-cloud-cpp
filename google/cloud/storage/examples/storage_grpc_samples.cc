@@ -43,6 +43,7 @@ void GrpcReadWrite(std::string const& bucket_name) {
   auto input = client.ReadObject(bucket_name, "lorem.txt",
                                  gcs::Generation(object->generation()));
   std::string const actual(std::istreambuf_iterator<char>{input}, {});
+  if (input.bad()) throw google::cloud::Status(input.status());
   std::cout << "The contents read back are:\n"
             << actual
             << "\nThe received checksums are: " << input.received_hash()

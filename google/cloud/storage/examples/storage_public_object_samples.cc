@@ -61,6 +61,7 @@ void ReadObjectUnauthenticated(std::vector<std::string> const& argv) {
     while (std::getline(stream, line, '\n')) {
       ++count;
     }
+    if (stream.bad()) throw google::cloud::Status(stream.status());
     std::cout << "The object has " << count << " lines\n";
   }
   //! [download_public_file] [END storage_download_public_file]

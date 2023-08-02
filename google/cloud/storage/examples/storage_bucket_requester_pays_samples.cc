@@ -148,6 +148,7 @@ void ReadObjectRequesterPays(google::cloud::storage::Client client,
     while (std::getline(stream, line, '\n')) {
       std::cout << line << "\n";
     }
+    if (stream.bad()) throw google::cloud::Status(stream.status());
   }
   // [END storage_download_file_requester_pays]
   //! [read object requester pays]

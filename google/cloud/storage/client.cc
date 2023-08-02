@@ -315,7 +315,7 @@ Status Client::DownloadFileImpl(internal::ReadObjectRangeRequest const& request,
   };
 
   auto stream = ReadObjectImpl(request);
-  if (!stream.status().ok()) {
+  if (stream.bad()) {
     return report_error(__func__, "cannot open download source object",
                         stream.status());
   }
@@ -340,7 +340,7 @@ Status Client::DownloadFileImpl(internal::ReadObjectRangeRequest const& request,
     return report_error(__func__, "cannot close download destination file",
                         Status(StatusCode::kUnknown, "ofstream::close()"));
   }
-  if (!stream.status().ok()) {
+  if (stream.bad()) {
     return report_error(__func__, "error reading download source object",
                         stream.status());
   }

@@ -56,7 +56,7 @@ void ReadObjectIfGenerationMatch(google::cloud::storage::Client client,
     while (std::getline(is, line)) {
       std::cout << line << "\n";
     }
-    if (!is.status().ok()) throw google::cloud::Status(is.status());
+    if (is.bad()) throw google::cloud::Status(is.status());
   }
   //! [read-object-if-generation-match]
   (std::move(client), argv.at(0), argv.at(1), std::stoll(argv.at(2)));
@@ -75,7 +75,7 @@ void ReadObjectIfMetagenerationMatch(google::cloud::storage::Client client,
     while (std::getline(is, line)) {
       std::cout << line << "\n";
     }
-    if (!is.status().ok()) throw google::cloud::Status(is.status());
+    if (is.bad()) throw google::cloud::Status(is.status());
   }
   //! [read-object-if-metageneration-match]
   (std::move(client), argv.at(0), argv.at(1), std::stoll(argv.at(2)));
@@ -94,7 +94,7 @@ void ReadObjectIfGenerationNotMatch(google::cloud::storage::Client client,
     while (std::getline(is, line)) {
       std::cout << line << "\n";
     }
-    if (!is.status().ok()) throw google::cloud::Status(is.status());
+    if (is.bad()) throw google::cloud::Status(is.status());
   }
   //! [read-object-if-generation-not-match]
   (std::move(client), argv.at(0), argv.at(1), std::stoll(argv.at(2)));
@@ -113,7 +113,7 @@ void ReadObjectIfMetagenerationNotMatch(google::cloud::storage::Client client,
     while (std::getline(is, line)) {
       std::cout << line << "\n";
     }
-    if (!is.status().ok()) throw google::cloud::Status(is.status());
+    if (is.bad()) throw google::cloud::Status(is.status());
   }
   //! [read-object-if-metageneration-not-match]
   (std::move(client), argv.at(0), argv.at(1), std::stoll(argv.at(2)));
