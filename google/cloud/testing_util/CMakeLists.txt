@@ -34,6 +34,7 @@ add_library(
     integration_test.cc
     integration_test.h
     mock_async_streaming_read_rpc.h
+    mock_async_streaming_write_rpc.h
     mock_backoff_policy.h
     mock_fake_clock.cc
     mock_fake_clock.h
