@@ -104,6 +104,7 @@ void ReadEncryptedObject(google::cloud::storage::Client client,
                           gcs::EncryptionKey::FromBase64Key(base64_aes256_key));
 
     std::string data(std::istreambuf_iterator<char>{stream}, {});
+    if (stream.bad()) throw google::cloud::Status(stream.status());
     std::cout << "The object contents are: " << data << "\n";
   }
   //! [read encrypted object] [END storage_download_encrypted_file]

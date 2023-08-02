@@ -88,7 +88,7 @@ TEST_F(SlowReaderChunkIntegrationTest, LongPauses) {
               << std::flush;
     std::this_thread::sleep_for(slow_reader_period);
     stream.read(buffer.data(), size);
-    if (!stream.status().ok()) {
+    if (stream.bad()) {
       std::cout << " restart after (" << stream.status() << ")" << std::flush;
       stream = make_reader(offset);
       continue;
