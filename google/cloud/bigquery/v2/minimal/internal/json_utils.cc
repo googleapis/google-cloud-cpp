@@ -19,11 +19,12 @@ namespace cloud {
 namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-void FromJson(std::chrono::milliseconds& field, nlohmann::json const& j,
-              char const* name) {
+namespace {
+
+std::int64_t GetNumberFromJson(nlohmann::json const& j, char const* name) {
+  std::int64_t m = -1;
   auto const l = j.find(name);
-  if (l == j.end()) return;
-  std::int64_t m;
+  if (l == j.end()) return m;
   if (l->is_string()) {
     std::string s;
     l->get_to(s);
@@ -32,64 +33,46 @@ void FromJson(std::chrono::milliseconds& field, nlohmann::json const& j,
   } else {
     l->get_to(m);
   }
+  return m;
+}
+
+}  // namespace
+
+void FromJson(std::chrono::milliseconds& field, nlohmann::json const& j,
+              char const* name) {
+  auto const m = GetNumberFromJson(j, name);
   if (m >= 0) {
     field = std::chrono::milliseconds(m);
   }
 }
 
 void ToJson(std::chrono::milliseconds const& field, nlohmann::json& j,
-            char const* name, bool is_number) {
+            char const* name) {
   auto m = static_cast<std::int64_t>(
       std::chrono::duration_cast<std::chrono::milliseconds>(field).count());
-  if (is_number) {
-    j[name] = m;
-  } else {
-    j[name] = std::to_string(m);
-  }
+
+  j[name] = std::to_string(m);
 }
 
 void FromJson(std::chrono::hours& field, nlohmann::json const& j,
               char const* name) {
-  auto const l = j.find(name);
-  if (l == j.end()) return;
-  std::int64_t m;
-  if (l->is_string()) {
-    std::string s;
-    l->get_to(s);
-    char* end;
-    m = std::strtoll(s.c_str(), &end, 10);
-  } else {
-    l->get_to(m);
-  }
+  auto const m = GetNumberFromJson(j, name);
   if (m >= 0) {
     field = std::chrono::hours(m);
   }
 }
 
 void ToJson(std::chrono::hours const& field, nlohmann::json& j,
-            char const* name, bool is_number) {
+            char const* name) {
   auto m = static_cast<std::int64_t>(
       std::chrono::duration_cast<std::chrono::hours>(field).count());
-  if (is_number) {
-    j[name] = m;
-  } else {
-    j[name] = std::to_string(m);
-  }
+
+  j[name] = std::to_string(m);
 }
 
 void FromJson(std::chrono::system_clock::time_point& field,
               nlohmann::json const& j, char const* name) {
-  auto const l = j.find(name);
-  if (l == j.end()) return;
-  std::int64_t m;
-  if (l->is_string()) {
-    std::string s;
-    l->get_to(s);
-    char* end;
-    m = std::strtoll(s.c_str(), &end, 10);
-  } else {
-    l->get_to(m);
-  }
+  auto const m = GetNumberFromJson(j, name);
   if (m >= 0) {
     field = std::chrono::system_clock::from_time_t(0) +
             std::chrono::milliseconds(m);
@@ -97,16 +80,13 @@ void FromJson(std::chrono::system_clock::time_point& field,
 }
 
 void ToJson(std::chrono::system_clock::time_point const& field,
-            nlohmann::json& j, char const* name, bool is_number) {
+            nlohmann::json& j, char const* name) {
   auto m = static_cast<std::int64_t>(
       std::chrono::duration_cast<std::chrono::milliseconds>(
           field - std::chrono::system_clock::from_time_t(0))
           .count());
-  if (is_number) {
-    j[name] = m;
-  } else {
-    j[name] = std::to_string(m);
-  }
+
+  j[name] = std::to_string(m);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -228,7 +228,7 @@ ScriptStatistics MakeScriptStatistics() {
 ScriptOptions MakeScriptOptions() {
   ScriptOptions s;
   s.statement_byte_budget = 10;
-  s.statement_timeout_ms = 10;
+  s.statement_timeout = kDefaultTestTime;
   s.key_result_statement = KeyResultStatementKind::FirstSelect();
 
   return s;
@@ -379,7 +379,7 @@ JobConfiguration MakeJobConfiguration() {
   JobConfiguration jc;
 
   jc.dry_run = true;
-  jc.job_timeout_ms = 10;
+  jc.job_timeout = kDefaultTestTime;
   jc.job_type = "QUERY";
   jc.labels.insert({"label-key1", "label-val1"});
   jc.query = MakeJobConfigurationQuery();
