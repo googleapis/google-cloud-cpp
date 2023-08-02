@@ -28,9 +28,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 namespace {
 
+using ::google::cloud::testing_util::MockAsyncStreamingWriteRpc;
 using ::google::cloud::testing_util::ScopedLog;
 using ::google::cloud::testing_util::StatusIs;
-using ::google::cloud::testing_util::MockAsyncStreamingWriteRpc;
 using ::testing::Contains;
 using ::testing::HasSubstr;
 using ::testing::Pair;
