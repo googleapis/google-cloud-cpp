@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/storage/internal/rest_client.h"
+#include "google/cloud/storage/internal/rest/client.h"
 #include "google/cloud/storage/internal/bucket_access_control_parser.h"
 #include "google/cloud/storage/internal/bucket_metadata_parser.h"
 #include "google/cloud/storage/internal/bucket_requests.h"
@@ -24,8 +24,8 @@
 #include "google/cloud/storage/internal/object_access_control_parser.h"
 #include "google/cloud/storage/internal/object_metadata_parser.h"
 #include "google/cloud/storage/internal/object_read_streambuf.h"
-#include "google/cloud/storage/internal/rest_object_read_source.h"
-#include "google/cloud/storage/internal/rest_request_builder.h"
+#include "google/cloud/storage/internal/rest/object_read_source.h"
+#include "google/cloud/storage/internal/rest/request_builder.h"
 #include "google/cloud/storage/internal/service_account_parser.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
