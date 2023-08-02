@@ -19,6 +19,7 @@
 #include "google/cloud/internal/async_streaming_read_rpc.h"
 #include "google/cloud/version.h"
 #include <chrono>
+#include <memory>
 
 namespace google {
 namespace cloud {
@@ -34,14 +35,15 @@ namespace internal {
  *
  * An absolute timeout for these requests is very hard to get right. Set the
  * timeout too small, and large responses timeout when they shouldn't. Set the
- * timeout too large, and the response may stall and this goes undetected.
+ * timeout too large, and the response may stall and this goes undetected for
+ * too long.
  *
  * Because the size of the response is unknown when the request is made, and
  * gRPC only allows setting timeouts when the request is configured we need
  * a different mechanism to detect stalled streaming RPCS.
  *
  * We prefer to estimate a "per read timeout". This is still an estimation, but
- * we can set a conservative limit, something that implies a minimum
+ * we can set a conservative limit; something that implies a minimum
  * "bytes per second" or "rows per second" rate. For example, setting the
  * limit to 10s in Google Cloud Storage implies a minimum rate of 200 KiB/s,
  * which is 3 orders of magnitude smaller than the observed download rate.
