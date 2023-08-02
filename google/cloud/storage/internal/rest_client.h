@@ -35,8 +35,7 @@ namespace internal {
  *
  * Over time, this will migrate from 100% libcurl wrappers to 100% REST library.
  */
-class RestClient : public RawClient,
-                   public std::enable_shared_from_this<RestClient> {
+class RestClient : public RawClient {
  public:
   static std::shared_ptr<RestClient> Create(Options options);
   static std::shared_ptr<RestClient> Create(

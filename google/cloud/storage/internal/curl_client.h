@@ -47,8 +47,7 @@ std::string HostHeader(Options const& options, char const* service);
 /**
  * Implements the low-level RPCs to Google Cloud Storage using libcurl.
  */
-class CurlClient : public RawClient,
-                   public std::enable_shared_from_this<CurlClient> {
+class CurlClient : public RawClient {
  public:
   static std::shared_ptr<CurlClient> Create(Options options) {
     // Cannot use std::make_shared because the constructor is private.
