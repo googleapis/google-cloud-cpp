@@ -32,7 +32,7 @@ TEST(JobTest, JobDebugString) {
   EXPECT_EQ(
       job.DebugString("Job", TracingOptions{}),
       R"(Job { etag: "etag" kind: "Job" self_link: "self-link" id: "1")"
-      R"( configuration { job_type: "QUERY" dry_run: true job_timeout_ms: 10)"
+      R"( configuration { job_type: "QUERY" dry_run: true job_timeout_ms { "10ms" })"
       R"( labels { key: "label-key1" value: "label-val1" })"
       R"( query_config { query: "select 1;")"
       R"( create_disposition: "job-create-disposition")"
@@ -55,7 +55,7 @@ TEST(JobTest, JobDebugString) {
       R"( interval: "range-interval" } } clustering { fields: "clustering-field-1")"
       R"( fields: "clustering-field-2" } destination_encryption_configuration {)"
       R"( kms_key_name: "encryption-key-name" } script_options {)"
-      R"( statement_timeout_ms: 10 statement_byte_budget: 10)"
+      R"( statement_timeout_ms { "10ms" } statement_byte_budget: 10)"
       R"( key_result_statement { value: "FIRST_SELECT" } })"
       R"( system_variables { types { key: "sql-struct-type-key-1")"
       R"( value { type_kind { value: "INT64" } } } types {)"
@@ -139,7 +139,7 @@ TEST(JobTest, JobDebugString) {
       job.DebugString("Job", TracingOptions{}.SetOptions(
                                  "truncate_string_field_longer_than=1024")),
       R"(Job { etag: "etag" kind: "Job" self_link: "self-link" id: "1")"
-      R"( configuration { job_type: "QUERY" dry_run: true job_timeout_ms: 10)"
+      R"( configuration { job_type: "QUERY" dry_run: true job_timeout_ms { "10ms" })"
       R"( labels { key: "label-key1" value: "label-val1" })"
       R"( query_config { query: "select 1;")"
       R"( create_disposition: "job-create-disposition")"
@@ -162,7 +162,7 @@ TEST(JobTest, JobDebugString) {
       R"( interval: "range-interval" } } clustering { fields: "clustering-field-1")"
       R"( fields: "clustering-field-2" } destination_encryption_configuration {)"
       R"( kms_key_name: "encryption-key-name" } script_options {)"
-      R"( statement_timeout_ms: 10 statement_byte_budget: 10)"
+      R"( statement_timeout_ms { "10ms" } statement_byte_budget: 10)"
       R"( key_result_statement { value: "FIRST_SELECT" } })"
       R"( system_variables { types { key: "sql-struct-type-key-1")"
       R"( value { type_kind { value: "INT64" } } } types {)"
@@ -252,7 +252,9 @@ TEST(JobTest, JobDebugString) {
   configuration {
     job_type: "QUERY"
     dry_run: true
-    job_timeout_ms: 10
+    job_timeout_ms {
+      "10ms"
+    }
     labels {
       key: "label-key1"
       value: "label-val1"
@@ -320,7 +322,9 @@ TEST(JobTest, JobDebugString) {
         kms_key_name: "encryption-key-name"
       }
       script_options {
-        statement_timeout_ms: 10
+        statement_timeout_ms {
+          "10ms"
+        }
         statement_byte_budget: 10
         key_result_statement {
           value: "FIRST_SELECT"
@@ -656,7 +660,7 @@ TEST(JobTest, ListFormatJobDebugString) {
       job.DebugString("ListFormatJob", TracingOptions{}),
       R"(ListFormatJob { id: "1" kind: "Job" state: "DONE")"
       R"( configuration { job_type: "QUERY" dry_run: true)"
-      R"( job_timeout_ms: 10 labels { key: "label-key1")"
+      R"( job_timeout_ms { "10ms" } labels { key: "label-key1")"
       R"( value: "label-val1" } query_config { query: "select 1;")"
       R"( create_disposition: "job-create-disposition")"
       R"( write_disposition: "job-write-disposition")"
@@ -681,7 +685,7 @@ TEST(JobTest, ListFormatJobDebugString) {
       R"( clustering { fields: "clustering-field-1")"
       R"( fields: "clustering-field-2" } destination_encryption_configuration {)"
       R"( kms_key_name: "encryption-key-name" } script_options {)"
-      R"( statement_timeout_ms: 10 statement_byte_budget: 10)"
+      R"( statement_timeout_ms { "10ms" } statement_byte_budget: 10)"
       R"( key_result_statement { value: "FIRST_SELECT" } })"
       R"( system_variables { types { key: "sql-struct-type-key-1")"
       R"( value { type_kind { value: "INT64" } } } types {)"
@@ -769,7 +773,7 @@ TEST(JobTest, ListFormatJobDebugString) {
                           "truncate_string_field_longer_than=1024")),
       R"(ListFormatJob { id: "1" kind: "Job" state: "DONE")"
       R"( configuration { job_type: "QUERY" dry_run: true)"
-      R"( job_timeout_ms: 10 labels { key: "label-key1")"
+      R"( job_timeout_ms { "10ms" } labels { key: "label-key1")"
       R"( value: "label-val1" } query_config { query: "select 1;")"
       R"( create_disposition: "job-create-disposition")"
       R"( write_disposition: "job-write-disposition")"
@@ -794,7 +798,7 @@ TEST(JobTest, ListFormatJobDebugString) {
       R"( clustering { fields: "clustering-field-1")"
       R"( fields: "clustering-field-2" } destination_encryption_configuration {)"
       R"( kms_key_name: "encryption-key-name" } script_options {)"
-      R"( statement_timeout_ms: 10 statement_byte_budget: 10)"
+      R"( statement_timeout_ms { "10ms" } statement_byte_budget: 10)"
       R"( key_result_statement { value: "FIRST_SELECT" } })"
       R"( system_variables { types { key: "sql-struct-type-key-1")"
       R"( value { type_kind { value: "INT64" } } } types {)"
@@ -885,7 +889,9 @@ TEST(JobTest, ListFormatJobDebugString) {
   configuration {
     job_type: "QUERY"
     dry_run: true
-    job_timeout_ms: 10
+    job_timeout_ms {
+      "10ms"
+    }
     labels {
       key: "label-key1"
       value: "label-val1"
@@ -953,7 +959,9 @@ TEST(JobTest, ListFormatJobDebugString) {
         kms_key_name: "encryption-key-name"
       }
       script_options {
-        statement_timeout_ms: 10
+        statement_timeout_ms {
+          "10ms"
+        }
         statement_byte_budget: 10
         key_result_statement {
           value: "FIRST_SELECT"
@@ -1289,7 +1297,7 @@ TEST(JobTest, ListFormatJobDebugString) {
 
 TEST(JobTest, JobToFromJson) {
   auto const* const expected_text =
-      R"({"configuration":{"dryRun":true,"jobTimeoutMs":10,"jobType":"QUERY")"
+      R"({"configuration":{"dryRun":true,"jobTimeoutMs":"10","jobType":"QUERY")"
       R"(,"labels":{"label-key1":"label-val1"},"query":{"allowLargeResults":true)"
       R"(,"clustering":{"fields":["clustering-field-1","clustering-field-2"]})"
       R"(,"connectionProperties":[{"key":"conn-prop-key","value":"conn-prop-val"}])"
@@ -1315,7 +1323,7 @@ TEST(JobTest, JobToFromJson) {
       R"(,"interval":"range-interval","start":"range-start"}})"
       R"(,"schemaUpdateOptions":["job-update-options"])"
       R"(,"scriptOptions":{"keyResultStatement":{"value":"FIRST_SELECT"})"
-      R"(,"statementByteBudget":10,"statementTimeoutMs":10})"
+      R"(,"statementByteBudget":10,"statementTimeoutMs":"10"})"
       R"(,"systemVariables":{"types":{"sql-struct-type-key-1":{)"
       R"("structType":{"fields":[{"name":"f1-sql-struct-type-int64"}]})"
       R"(,"sub_type_index":2,"typeKind":{"value":"INT64"}})"
@@ -1326,12 +1334,12 @@ TEST(JobTest, JobToFromJson) {
       R"(,"typeKind":{"value":"STRING"}},"sub_type_index":1,"typeKind":{"value":"STRING"}}})"
       R"(,"values":{"fields":{"bool-key":{"kind_index":3,"valueKind":true})"
       R"(,"double-key":{"kind_index":1,"valueKind":3.4},"string-key":{"kind_index":2,"valueKind":"val3"}}}})"
-      R"(,"timePartitioning":{"expirationTime":0,"field":"tp-field-1","type":"tp-field-type"})"
+      R"(,"timePartitioning":{"expirationTime":"0","field":"tp-field-1","type":"tp-field-type"})"
       R"(,"useLegacySql":true,"useQueryCache":true,"writeDisposition":"job-write-disposition"}})"
       R"(,"etag":"etag","id":"1","jobReference":{"jobId":"2","location":"us-east","projectId":"1"})"
       R"(,"kind":"Job","selfLink":"self-link","statistics":{"completionRatio":1234.1234)"
-      R"(,"creationTime":10,"dataMaskingStatistics":{"dataMaskingApplied":true},"endTime":10)"
-      R"(,"finalExecutionDurationMs":10,"numChildJobs":1234,"parentJobId":"parent-job-123")"
+      R"(,"creationTime":"10","dataMaskingStatistics":{"dataMaskingApplied":true},"endTime":"10")"
+      R"(,"finalExecutionDurationMs":"10","numChildJobs":1234,"parentJobId":"parent-job-123")"
       R"(,"query":{"billingTier":1234,"cacheHit":true,"dclTargetDataset":{"datasetId":"1","projectId":"2"})"
       R"(,"dclTargetTable":{"datasetId":"1","projectId":"2","tableId":"3"})"
       R"(,"dclTargetView":{"datasetId":"1","projectId":"2","tableId":"3"})"
@@ -1347,19 +1355,19 @@ TEST(JobTest, JobToFromJson) {
       R"(,"metadataCacheStatistics":{"tableMetadataCacheUsage":[{"explanation":"test-table-metadata")"
       R"(,"tableReference":{"datasetId":"1","projectId":"2","tableId":"3"})"
       R"(,"unusedReason":{"value":"EXCEEDED_MAX_STALENESS"}}]})"
-      R"(,"numDmlAffectedRows":1234,"performanceInsights":{"avgPreviousExecutionMs":10)"
+      R"(,"numDmlAffectedRows":1234,"performanceInsights":{"avgPreviousExecutionMs":"10")"
       R"(,"stagePerformanceChangeInsights":{"inputDataChange":{"recordsReadDiffPercentage":12.119999885559082})"
       R"(,"stageId":1234},"stagePerformanceStandaloneInsights":{"insufficientShuffleQuota":true)"
       R"(,"slotContention":true,"stageId":1234}},"queryPlan":[{"completedParallelInputs":1234)"
-      R"(,"computeMode":{"value":"BIGQUERY"},"computeMsAvg":10,"computeMsMax":10)"
-      R"(,"computeRatioAvg":1234.1234,"computeRatioMax":1234.1234,"endMs":10)"
+      R"(,"computeMode":{"value":"BIGQUERY"},"computeMsAvg":"10","computeMsMax":"10")"
+      R"(,"computeRatioAvg":1234.1234,"computeRatioMax":1234.1234,"endMs":"10")"
       R"(,"id":1234,"inputStages":[1234],"name":"test-explain","parallelInputs":1234)"
-      R"(,"readMsAvg":10,"readMsMax":10,"readRatioAvg":1234.1234,"readRatioMax":1234.1234)"
+      R"(,"readMsAvg":"10","readMsMax":"10","readRatioAvg":1234.1234,"readRatioMax":1234.1234)"
       R"(,"recordsRead":1234,"recordsWritten":1234,"shuffleOutputBytes":1234)"
-      R"(,"shuffleOutputBytesSpilled":1234,"slotMs":10,"startMs":10,"status":"explain-status")"
+      R"(,"shuffleOutputBytesSpilled":1234,"slotMs":"10","startMs":"10","status":"explain-status")"
       R"(,"steps":[{"kind":"sub-step-kind","substeps":["sub-step-1"]}])"
-      R"(,"waitMsAvg":10,"waitMsMax":10,"waitRatioAvg":1234.1234)"
-      R"(,"waitRatioMax":1234.1234,"writeMsAvg":10,"writeMsMax":10)"
+      R"(,"waitMsAvg":"10","waitMsMax":"10","waitRatioAvg":1234.1234)"
+      R"(,"waitRatioMax":1234.1234,"writeMsAvg":"10","writeMsMax":"10")"
       R"(,"writeRatioAvg":1234.1234,"writeRatioMax":1234.1234}])"
       R"(,"referencedRoutines":[{"datasetId":"1","projectId":"2","routineId":"3"}])"
       R"(,"referencedTables":[{"datasetId":"1","projectId":"2","tableId":"3"}])"
@@ -1371,11 +1379,11 @@ TEST(JobTest, JobToFromJson) {
       R"("baseTable":{"datasetId":"1","projectId":"2","tableId":"3"})"
       R"(,"code":{"value":"BASE_TABLE_TOO_SMALL"},"indexName":"test-index","message":""}])"
       R"(,"indexUsageMode":{"value":"PARTIALLY_USED"}},"statementType":"statement_type")"
-      R"(,"timeline":[{"activeUnits":1234,"completedUnits":1234,"elapsedMs":10)"
-      R"(,"estimatedRunnableUnits":1234,"pendingUnits":1234,"totalSlotMs":10}])"
+      R"(,"timeline":[{"activeUnits":1234,"completedUnits":1234,"elapsedMs":"10")"
+      R"(,"estimatedRunnableUnits":1234,"pendingUnits":1234,"totalSlotMs":"10"}])"
       R"(,"totalBytesBilled":1234,"totalBytesProcessed":1234,)"
       R"("totalBytesProcessedAccuracy":"total_bytes_processed_accuracy","totalPartitionsProcessed":1234)"
-      R"(,"totalSlotMs":10,"transferredBytes":1234)"
+      R"(,"totalSlotMs":"10","transferredBytes":1234)"
       R"(,"undeclaredQueryParameters":[{"name":"query-parameter-name")"
       R"(,"parameterType":{"arrayType":{"structTypes":[{"description":"array-struct-description")"
       R"(,"name":"array-struct-name","type":{"structTypes":[],"type":"array-struct-type"}}])"
@@ -1391,8 +1399,8 @@ TEST(JobTest, JobToFromJson) {
       R"(,"scriptStatistics":{"evaluationKind":{"value":"STATEMENT"})"
       R"(,"stackFrames":[{"endColumn":1234,"endLine":1234,"procedureId":"proc-id")"
       R"(,"startColumn":1234,"startLine":1234,"text":"stack-frame-text"}]})"
-      R"(,"sessionInfo":{"sessionId":"session-id-123"},"startTime":10)"
-      R"(,"totalBytesProcessed":1234,"totalSlotMs":10,"transactionInfo":{"transactionId":"transaction-id-123"}})"
+      R"(,"sessionInfo":{"sessionId":"session-id-123"},"startTime":"10")"
+      R"(,"totalBytesProcessed":1234,"totalSlotMs":"10","transactionInfo":{"transactionId":"transaction-id-123"}})"
       R"(,"status":{"errorResult":{"location":"","message":"","reason":""})"
       R"(,"errors":[],"state":"DONE"},"user_email":"a@b.com"})";
 
@@ -1414,7 +1422,7 @@ TEST(JobTest, JobToFromJson) {
 
 TEST(JobTest, ListFormatJobToFromJson) {
   auto const* const expected_text =
-      R"({"configuration":{"dryRun":true,"jobTimeoutMs":10,"jobType":"QUERY")"
+      R"({"configuration":{"dryRun":true,"jobTimeoutMs":"10","jobType":"QUERY")"
       R"(,"labels":{"label-key1":"label-val1"},"query":{"allowLargeResults":true)"
       R"(,"clustering":{"fields":["clustering-field-1","clustering-field-2"]})"
       R"(,"connectionProperties":[{"key":"conn-prop-key","value":"conn-prop-val"}])"
@@ -1438,7 +1446,7 @@ TEST(JobTest, ListFormatJobToFromJson) {
       R"(,"interval":"range-interval","start":"range-start"}})"
       R"(,"schemaUpdateOptions":["job-update-options"])"
       R"(,"scriptOptions":{"keyResultStatement":{"value":"FIRST_SELECT"},"statementByteBudget":10)"
-      R"(,"statementTimeoutMs":10},"systemVariables":{"types":{"sql-struct-type-key-1":{)"
+      R"(,"statementTimeoutMs":"10"},"systemVariables":{"types":{"sql-struct-type-key-1":{)"
       R"("structType":{"fields":[{"name":"f1-sql-struct-type-int64"}]})"
       R"(,"sub_type_index":2,"typeKind":{"value":"INT64"}})"
       R"(,"sql-struct-type-key-2":{"structType":{"fields":[{"name":"f2-sql-struct-type-string"}]})"
@@ -1448,13 +1456,13 @@ TEST(JobTest, ListFormatJobToFromJson) {
       R"(,"typeKind":{"value":"STRING"}},"sub_type_index":1,"typeKind":{"value":"STRING"}}})"
       R"(,"values":{"fields":{"bool-key":{"kind_index":3,"valueKind":true})"
       R"(,"double-key":{"kind_index":1,"valueKind":3.4},"string-key":{"kind_index":2,"valueKind":"val3"}}}})"
-      R"(,"timePartitioning":{"expirationTime":0,"field":"tp-field-1","type":"tp-field-type"})"
+      R"(,"timePartitioning":{"expirationTime":"0","field":"tp-field-1","type":"tp-field-type"})"
       R"(,"useLegacySql":true,"useQueryCache":true,"writeDisposition":"job-write-disposition"}})"
       R"(,"errorResult":{"location":"","message":"","reason":""},"id":"1")"
       R"(,"jobReference":{"jobId":"2","location":"us-east","projectId":"1"},"kind":"Job")"
       R"(,"principal_subject":"principal-sub","state":"DONE","statistics":{"completionRatio":1234.1234)"
-      R"(,"creationTime":10,"dataMaskingStatistics":{"dataMaskingApplied":true},"endTime":10)"
-      R"(,"finalExecutionDurationMs":10,"numChildJobs":1234,"parentJobId":"parent-job-123")"
+      R"(,"creationTime":"10","dataMaskingStatistics":{"dataMaskingApplied":true},"endTime":"10")"
+      R"(,"finalExecutionDurationMs":"10","numChildJobs":1234,"parentJobId":"parent-job-123")"
       R"(,"query":{"billingTier":1234,"cacheHit":true,"dclTargetDataset":{"datasetId":"1")"
       R"(,"projectId":"2"},"dclTargetTable":{"datasetId":"1","projectId":"2","tableId":"3"})"
       R"(,"dclTargetView":{"datasetId":"1","projectId":"2","tableId":"3"})"
@@ -1470,21 +1478,21 @@ TEST(JobTest, ListFormatJobToFromJson) {
       R"(,"metadataCacheStatistics":{"tableMetadataCacheUsage":[{"explanation":"test-table-metadata")"
       R"(,"tableReference":{"datasetId":"1","projectId":"2","tableId":"3"})"
       R"(,"unusedReason":{"value":"EXCEEDED_MAX_STALENESS"}}]},"numDmlAffectedRows":1234)"
-      R"(,"performanceInsights":{"avgPreviousExecutionMs":10)"
+      R"(,"performanceInsights":{"avgPreviousExecutionMs":"10")"
       R"(,"stagePerformanceChangeInsights":{"inputDataChange":{)"
       R"("recordsReadDiffPercentage":12.119999885559082})"
       R"(,"stageId":1234},"stagePerformanceStandaloneInsights":{)"
       R"("insufficientShuffleQuota":true,"slotContention":true)"
       R"(,"stageId":1234}},"queryPlan":[{"completedParallelInputs":1234)"
-      R"(,"computeMode":{"value":"BIGQUERY"},"computeMsAvg":10,"computeMsMax":10)"
-      R"(,"computeRatioAvg":1234.1234,"computeRatioMax":1234.1234,"endMs":10)"
+      R"(,"computeMode":{"value":"BIGQUERY"},"computeMsAvg":"10","computeMsMax":"10")"
+      R"(,"computeRatioAvg":1234.1234,"computeRatioMax":1234.1234,"endMs":"10")"
       R"(,"id":1234,"inputStages":[1234],"name":"test-explain")"
-      R"(,"parallelInputs":1234,"readMsAvg":10,"readMsMax":10,"readRatioAvg":1234.1234)"
+      R"(,"parallelInputs":1234,"readMsAvg":"10","readMsMax":"10","readRatioAvg":1234.1234)"
       R"(,"readRatioMax":1234.1234,"recordsRead":1234,"recordsWritten":1234)"
-      R"(,"shuffleOutputBytes":1234,"shuffleOutputBytesSpilled":1234,"slotMs":10)"
-      R"(,"startMs":10,"status":"explain-status","steps":[{"kind":"sub-step-kind")"
-      R"(,"substeps":["sub-step-1"]}],"waitMsAvg":10,"waitMsMax":10,"waitRatioAvg":1234.1234)"
-      R"(,"waitRatioMax":1234.1234,"writeMsAvg":10,"writeMsMax":10,"writeRatioAvg":1234.1234)"
+      R"(,"shuffleOutputBytes":1234,"shuffleOutputBytesSpilled":1234,"slotMs":"10")"
+      R"(,"startMs":"10","status":"explain-status","steps":[{"kind":"sub-step-kind")"
+      R"(,"substeps":["sub-step-1"]}],"waitMsAvg":"10","waitMsMax":"10","waitRatioAvg":1234.1234)"
+      R"(,"waitRatioMax":1234.1234,"writeMsAvg":"10","writeMsMax":"10","writeRatioAvg":1234.1234)"
       R"(,"writeRatioMax":1234.1234}],"referencedRoutines":[{"datasetId":"1")"
       R"(,"projectId":"2","routineId":"3"}],"referencedTables":[{"datasetId":"1")"
       R"(,"projectId":"2","tableId":"3"}],"schema":{"fields":[{"categories":{"names":[]})"
@@ -1495,10 +1503,10 @@ TEST(JobTest, ListFormatJobToFromJson) {
       R"(,"projectId":"2","tableId":"3"},"code":{"value":"BASE_TABLE_TOO_SMALL"})"
       R"(,"indexName":"test-index","message":""}],"indexUsageMode":{"value":"PARTIALLY_USED"}})"
       R"(,"statementType":"statement_type","timeline":[{"activeUnits":1234,"completedUnits":1234)"
-      R"(,"elapsedMs":10,"estimatedRunnableUnits":1234,"pendingUnits":1234,"totalSlotMs":10}])"
+      R"(,"elapsedMs":"10","estimatedRunnableUnits":1234,"pendingUnits":1234,"totalSlotMs":"10"}])"
       R"(,"totalBytesBilled":1234,"totalBytesProcessed":1234)"
       R"(,"totalBytesProcessedAccuracy":"total_bytes_processed_accuracy")"
-      R"(,"totalPartitionsProcessed":1234,"totalSlotMs":10,"transferredBytes":1234)"
+      R"(,"totalPartitionsProcessed":1234,"totalSlotMs":"10","transferredBytes":1234)"
       R"(,"undeclaredQueryParameters":[{"name":"query-parameter-name")"
       R"(,"parameterType":{"arrayType":{"structTypes":[{"description":"array-struct-description")"
       R"(,"name":"array-struct-name","type":{"structTypes":[],"type":"array-struct-type"}}])"
@@ -1515,7 +1523,7 @@ TEST(JobTest, ListFormatJobToFromJson) {
       R"(,"stackFrames":[{"endColumn":1234,"endLine":1234)"
       R"(,"procedureId":"proc-id","startColumn":1234,"startLine":1234,"text":"stack-frame-text"}]})"
       R"(,"sessionInfo":{"sessionId":"session-id-123"})"
-      R"(,"startTime":10,"totalBytesProcessed":1234,"totalSlotMs":10)"
+      R"(,"startTime":"10","totalBytesProcessed":1234,"totalSlotMs":"10")"
       R"(,"transactionInfo":{"transactionId":"transaction-id-123"}})"
       R"(,"status":{"errorResult":{"location":"","message":"","reason":""},"errors":[],"state":"DONE"})"
       R"(,"user_email":"a@b.com"})";

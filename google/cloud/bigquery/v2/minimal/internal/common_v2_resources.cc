@@ -413,7 +413,7 @@ std::string ScriptOptions::DebugString(absl::string_view name,
                                        TracingOptions const& options,
                                        int indent) const {
   return internal::DebugFormatter(name, options, indent)
-      .Field("statement_timeout_ms", statement_timeout_ms)
+      .Field("statement_timeout_ms", statement_timeout)
       .Field("statement_byte_budget", statement_byte_budget)
       .SubMessage("key_result_statement", key_result_statement)
       .Build();
@@ -590,14 +590,16 @@ void from_json(nlohmann::json const& j, EncryptionConfiguration& ec) {
 }
 
 void to_json(nlohmann::json& j, ScriptOptions const& s) {
-  j = nlohmann::json{{"statementTimeoutMs", s.statement_timeout_ms},
-                     {"statementByteBudget", s.statement_byte_budget},
+  j = nlohmann::json{{"statementByteBudget", s.statement_byte_budget},
                      {"keyResultStatement", s.key_result_statement}};
+
+  ToJson(s.statement_timeout, j, "statementTimeoutMs");
 }
 void from_json(nlohmann::json const& j, ScriptOptions& s) {
-  SafeGetTo(s.statement_timeout_ms, j, "statementTimeoutMs");
   SafeGetTo(s.statement_byte_budget, j, "statementByteBudget");
   SafeGetTo(s.key_result_statement, j, "keyResultStatement");
+
+  FromJson(s.statement_timeout, j, "statementTimeoutMs");
 }
 
 void to_json(nlohmann::json& j, QueryParameter const& q) {

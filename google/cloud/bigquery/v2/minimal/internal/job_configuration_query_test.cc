@@ -54,7 +54,7 @@ TEST(JobConfigurationQueryTest, DebugString) {
       R"( fields: "clustering-field-2" })"
       R"( destination_encryption_configuration {)"
       R"( kms_key_name: "encryption-key-name" })"
-      R"( script_options { statement_timeout_ms: 10)"
+      R"( script_options { statement_timeout_ms { "10ms" })"
       R"( statement_byte_budget: 10 key_result_statement {)"
       R"( value: "FIRST_SELECT" } } system_variables {)"
       R"( types { key: "sql-struct-type-key-1" value {)"
@@ -98,7 +98,7 @@ TEST(JobConfigurationQueryTest, DebugString) {
       R"( fields: "clustering...<truncated>..." })"
       R"( destination_encryption_configuration {)"
       R"( kms_key_name: "encryption...<truncated>..." })"
-      R"( script_options { statement_timeout_ms: 10)"
+      R"( script_options { statement_timeout_ms { "10ms" })"
       R"( statement_byte_budget: 10 key_result_statement {)"
       R"( value: "FIRST_SELE...<truncated>..." } })"
       R"( system_variables { types { key: "sql-struct-type-key-1")"
@@ -178,7 +178,9 @@ TEST(JobConfigurationQueryTest, DebugString) {
     kms_key_name: "encryption-key-name"
   }
   script_options {
-    statement_timeout_ms: 10
+    statement_timeout_ms {
+      "10ms"
+    }
     statement_byte_budget: 10
     key_result_statement {
       value: "FIRST_SELECT"

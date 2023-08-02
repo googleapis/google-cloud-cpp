@@ -278,14 +278,14 @@ void AssertEquals(bigquery_v2_minimal_internal::ListFormatTable const& lhs,
 
 std::string MakeTableJsonText() {
   return R"({"cloneDefinition":{"baseTableReference":{"datasetId":"t-123","projectId":"t-123")"
-         R"(,"tableId":"t-123"},"cloneTime":0},"clustering":{"fields":["c-field-1"]})"
-         R"(,"creationTime":1,"defaultCollation":"t-defaultcollation")"
+         R"(,"tableId":"t-123"},"cloneTime":"0"},"clustering":{"fields":["c-field-1"]})"
+         R"(,"creationTime":"1","defaultCollation":"t-defaultcollation")"
          R"(,"defaultRoundingMode":{"value":"ROUND_HALF_EVEN"},"description":"t-description","etag":"t-etag")"
-         R"(,"expirationTime":1,"friendlyName":"t-friendlyname","id":"t-id","kind":"t-kind")"
-         R"(,"labels":{"l1":"v1","l2":"v2"},"lastModifiedTime":1,"location":"t-location")"
-         R"(,"materializedView":{"enableRefresh":true,"lastRefreshTime":0,"query":"select 1;")"
-         R"(,"refreshIntervalMs":0},"materializedViewStatus":{"lastRefreshStatus":{"location":"","message":"")"
-         R"(,"reason":""},"refreshWatermark":123},"maxStaleness":"stale","numActiveLogicalBytes":1)"
+         R"(,"expirationTime":"1","friendlyName":"t-friendlyname","id":"t-id","kind":"t-kind")"
+         R"(,"labels":{"l1":"v1","l2":"v2"},"lastModifiedTime":"1","location":"t-location")"
+         R"(,"materializedView":{"enableRefresh":true,"lastRefreshTime":"0","query":"select 1;")"
+         R"(,"refreshIntervalMs":"0"},"materializedViewStatus":{"lastRefreshStatus":{"location":"","message":"")"
+         R"(,"reason":""},"refreshWatermark":"123"},"maxStaleness":"stale","numActiveLogicalBytes":1)"
          R"(,"numActivePhysicalBytes":1,"numBytes":1,"numLongTermBytes":1,"numLongTermLogicalBytes":1)"
          R"(,"numLongTermPhysicalBytes":1,"numPartitions":1,"numPhysicalBytes":1,"numRows":1)"
          R"(,"numTimeTravelPhysicalBytes":1,"numTotalLogicalBytes":1,"numTotalPhysicalBytes":1)"
@@ -297,21 +297,21 @@ std::string MakeTableJsonText() {
          R"(,"selfLink":"t-selflink","tableConstraints":{"foreignKeys":[{"columnReferences":[])"
          R"(,"keyName":"fkey-1","referencedTable":{"datasetId":"","projectId":"","tableId":""}}])"
          R"(,"primaryKey":{"columns":["pcol-1"]}},"tableReference":{"datasetId":"t-123")"
-         R"(,"projectId":"t-123","tableId":"t-123"},"timePartitioning":{"expirationTime":123)"
+         R"(,"projectId":"t-123","tableId":"t-123"},"timePartitioning":{"expirationTime":"123")"
          R"(,"field":"time-partition-field","type":""},"type":"t-type","view":{"query":"select 1;")"
          R"(,"useLegacySql":false,"userDefinedFunctionResources":[]}})";
 }
 
 std::string MakeListFormatTableJsonText() {
-  return R"({"clustering":{"fields":["c-field-1"]},"creationTime":1)"
-         R"(,"expirationTime":1,"friendlyName":"t-friendlyname")"
+  return R"({"clustering":{"fields":["c-field-1"]},"creationTime":"1")"
+         R"(,"expirationTime":"1","friendlyName":"t-friendlyname")"
          R"(,"hivePartitioningOptions":{"fields":["h-field-1"],"mode":"h-mode")"
          R"(,"requirePartitionFilter":true,"sourceUriPrefix":""})"
          R"(,"id":"t-id","kind":"t-kind","labels":{"l1":"v1","l2":"v2"})"
          R"(,"rangePartitioning":{"field":"range-partition-field")"
          R"(,"range":{"end":"","interval":"","start":""}},"tableReference":{)"
          R"("datasetId":"t-123","projectId":"t-123","tableId":"t-123"})"
-         R"(,"timePartitioning":{"expirationTime":123,"field":"time-partition-field")"
+         R"(,"timePartitioning":{"expirationTime":"123","field":"time-partition-field")"
          R"(,"type":""},"type":"t-type","view":{"useLegacySql":true}})";
 }
 

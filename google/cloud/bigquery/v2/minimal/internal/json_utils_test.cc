@@ -37,19 +37,6 @@ TEST(JsonUtilsTest, FromJsonMillisecondsNumber) {
   EXPECT_EQ(field, std::chrono::milliseconds(10));
 }
 
-TEST(JsonUtilsTest, ToJsonMillisecondsNumber) {
-  auto const* const name = "start_time";
-  auto const* json_text = R"({"start_time":10})";
-  auto expected_json = nlohmann::json::parse(json_text, nullptr, false);
-  EXPECT_TRUE(expected_json.is_object());
-
-  auto field = std::chrono::milliseconds{10};
-  nlohmann::json actual_json;
-  ToJson(field, actual_json, name);
-
-  EXPECT_EQ(expected_json, actual_json);
-}
-
 TEST(JsonUtilsTest, FromJsonMillisecondsString) {
   auto const* const name = "start_time";
   auto const* json_text = R"({"start_time":"10"})";
@@ -70,7 +57,7 @@ TEST(JsonUtilsTest, ToJsonMillisecondsString) {
 
   auto field = std::chrono::milliseconds{10};
   nlohmann::json actual_json;
-  ToJson(field, actual_json, name, false);
+  ToJson(field, actual_json, name);
 
   EXPECT_EQ(expected_json, actual_json);
 }
@@ -85,19 +72,6 @@ TEST(JsonUtilsTest, FromJsonHoursNumber) {
   FromJson(field, json, name);
 
   EXPECT_EQ(field, std::chrono::hours(10));
-}
-
-TEST(JsonUtilsTest, ToJsonHoursNumber) {
-  auto const* const name = "start_time";
-  auto const* json_text = R"({"start_time":10})";
-  auto expected_json = nlohmann::json::parse(json_text, nullptr, false);
-  EXPECT_TRUE(expected_json.is_object());
-
-  auto field = std::chrono::hours{10};
-  nlohmann::json actual_json;
-  ToJson(field, actual_json, name);
-
-  EXPECT_EQ(expected_json, actual_json);
 }
 
 TEST(JsonUtilsTest, FromJsonHoursString) {
@@ -120,7 +94,7 @@ TEST(JsonUtilsTest, ToJsonHoursString) {
 
   auto field = std::chrono::hours{10};
   nlohmann::json actual_json;
-  ToJson(field, actual_json, name, false);
+  ToJson(field, actual_json, name);
 
   EXPECT_EQ(expected_json, actual_json);
 }
@@ -136,20 +110,6 @@ TEST(JsonUtilsTest, FromJsonTimepointNumber) {
 
   EXPECT_EQ(field, std::chrono::system_clock::time_point{
                        std::chrono::milliseconds(10)});
-}
-
-TEST(JsonUtilsTest, ToJsonTimepointNumber) {
-  auto const* const name = "start_time";
-  auto const* json_text = R"({"start_time":10})";
-  auto expected_json = nlohmann::json::parse(json_text, nullptr, false);
-  EXPECT_TRUE(expected_json.is_object());
-
-  auto field =
-      std::chrono::system_clock::time_point{std::chrono::milliseconds(10)};
-  nlohmann::json actual_json;
-  ToJson(field, actual_json, name);
-
-  EXPECT_EQ(expected_json, actual_json);
 }
 
 TEST(JsonUtilsTest, FromJsonTimepointString) {
@@ -174,7 +134,7 @@ TEST(JsonUtilsTest, ToJsonTimepointString) {
   auto field =
       std::chrono::system_clock::time_point{std::chrono::milliseconds(10)};
   nlohmann::json actual_json;
-  ToJson(field, actual_json, name, false);
+  ToJson(field, actual_json, name);
 
   EXPECT_EQ(expected_json, actual_json);
 }

@@ -21,6 +21,7 @@
 #include "google/cloud/version.h"
 #include "absl/strings/string_view.h"
 #include <nlohmann/json.hpp>
+#include <chrono>
 #include <string>
 
 namespace google {
@@ -31,7 +32,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 struct JobConfiguration {
   std::string job_type;
   bool dry_run = false;
-  std::int64_t job_timeout_ms = 0;
+  std::chrono::milliseconds job_timeout = std::chrono::milliseconds(0);
   std::map<std::string, std::string> labels;
 
   JobConfigurationQuery query;

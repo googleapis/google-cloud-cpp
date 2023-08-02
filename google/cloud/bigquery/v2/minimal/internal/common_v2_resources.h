@@ -20,6 +20,7 @@
 #include "absl/strings/string_view.h"
 #include "absl/types/variant.h"
 #include <nlohmann/json.hpp>
+#include <chrono>
 #include <string>
 
 namespace google {
@@ -151,7 +152,7 @@ NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(KeyResultStatementKind, value);
 // For more details, please see:
 // https://cloud.google.com/bigquery/docs/reference/rest/v2/Job#ScriptOptions
 struct ScriptOptions {
-  std::int64_t statement_timeout_ms = 0;
+  std::chrono::milliseconds statement_timeout = std::chrono::milliseconds(0);
   std::int64_t statement_byte_budget = 0;
 
   KeyResultStatementKind key_result_statement;
