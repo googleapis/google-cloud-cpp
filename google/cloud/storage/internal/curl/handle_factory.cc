@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/storage/internal/curl_handle_factory.h"
+#include "google/cloud/storage/internal/curl/handle_factory.h"
 #include "google/cloud/storage/options.h"
 
 namespace google {

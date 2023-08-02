@@ -15,7 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_CURL_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_CURL_CLIENT_H
 
-#include "google/cloud/storage/internal/curl_handle_factory.h"
+#include "google/cloud/storage/internal/curl/handle_factory.h"
 #include "google/cloud/storage/internal/raw_client.h"
 #include "google/cloud/storage/oauth2/credentials.h"
 #include "google/cloud/storage/version.h"

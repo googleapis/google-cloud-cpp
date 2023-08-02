@@ -16,7 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_CURL_HANDLE_H
 
 #include "google/cloud/storage/client_options.h"
-#include "google/cloud/storage/internal/curl_handle_factory.h"
+#include "google/cloud/storage/internal/curl/handle_factory.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/internal/curl_wrappers.h"
 #include "google/cloud/status_or.h"

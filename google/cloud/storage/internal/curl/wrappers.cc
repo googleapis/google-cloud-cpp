@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/storage/internal/curl_wrappers.h"
+#include "google/cloud/storage/internal/curl/wrappers.h"
 #include "google/cloud/storage/options.h"
 #include "google/cloud/internal/curl_options.h"
 #include "google/cloud/internal/curl_wrappers.h"

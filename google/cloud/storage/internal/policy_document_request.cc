@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/policy_document_request.h"
-#include "google/cloud/storage/internal/curl_handle.h"
+#include "google/cloud/storage/internal/curl/handle.h"
 #include "google/cloud/storage/internal/openssl_util.h"
 #include "google/cloud/internal/format_time_point.h"
 #include <nlohmann/json.hpp>

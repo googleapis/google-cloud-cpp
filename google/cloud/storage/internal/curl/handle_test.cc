@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/storage/internal/curl_handle.h"
+#include "google/cloud/storage/internal/curl/handle.h"
 #include "google/cloud/log.h"
 #include <gmock/gmock.h>
 

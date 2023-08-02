@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/storage/client.h"
-#include "google/cloud/storage/internal/curl_client.h"
-#include "google/cloud/storage/internal/curl_handle.h"
+#include "google/cloud/storage/internal/curl/client.h"
+#include "google/cloud/storage/internal/curl/handle.h"
 #include "google/cloud/storage/internal/openssl_util.h"
 #include "google/cloud/storage/internal/rest_client.h"
 #include "google/cloud/storage/internal/tracing_client.h"

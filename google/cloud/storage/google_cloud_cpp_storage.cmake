@@ -83,20 +83,20 @@ add_library(
     internal/const_buffer.h
     internal/crc32c.cc
     internal/crc32c.h
-    internal/curl_client.cc
-    internal/curl_client.h
-    internal/curl_download_request.cc
-    internal/curl_download_request.h
-    internal/curl_handle.cc
-    internal/curl_handle.h
-    internal/curl_handle_factory.cc
-    internal/curl_handle_factory.h
-    internal/curl_request.cc
-    internal/curl_request.h
-    internal/curl_request_builder.cc
-    internal/curl_request_builder.h
-    internal/curl_wrappers.cc
-    internal/curl_wrappers.h
+    internal/curl/client.cc
+    internal/curl/client.h
+    internal/curl/download_request.cc
+    internal/curl/download_request.h
+    internal/curl/handle.cc
+    internal/curl/handle.h
+    internal/curl/handle_factory.cc
+    internal/curl/handle_factory.h
+    internal/curl/request.cc
+    internal/curl/request.h
+    internal/curl/request_builder.cc
+    internal/curl/request_builder.h
+    internal/curl/wrappers.cc
+    internal/curl/wrappers.h
     internal/default_object_acl_requests.cc
     internal/default_object_acl_requests.h
     internal/empty_response.cc
@@ -481,9 +481,9 @@ if (BUILD_TESTING)
         internal/compute_engine_util_test.cc
         internal/const_buffer_test.cc
         internal/crc32c_test.cc
-        internal/curl_client_test.cc
-        internal/curl_download_request_test.cc
-        internal/curl_handle_test.cc
+        internal/curl/client_test.cc
+        internal/curl/download_request_test.cc
+        internal/curl/handle_test.cc
         internal/default_object_acl_requests_test.cc
         internal/generate_message_boundary_test.cc
         internal/generic_request_test.cc
