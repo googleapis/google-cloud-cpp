@@ -156,7 +156,6 @@ add_library(
     internal/object_write_streambuf.h
     internal/openssl_util.cc
     internal/openssl_util.h
-    internal/parameter_pack_validation.h
     internal/patch_builder.cc
     internal/patch_builder.h
     internal/patch_builder_details.cc
@@ -504,7 +503,6 @@ if (BUILD_TESTING)
         internal/object_requests_test.cc
         internal/object_write_streambuf_test.cc
         internal/openssl_util_test.cc
-        internal/parameter_pack_validation_test.cc
         internal/patch_builder_test.cc
         internal/policy_document_request_test.cc
         internal/request_project_id_test.cc
