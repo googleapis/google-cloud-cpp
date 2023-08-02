@@ -17,7 +17,6 @@
 
 #include "google/cloud/storage/hmac_key_metadata.h"
 #include "google/cloud/storage/internal/logging_client.h"
-#include "google/cloud/storage/internal/parameter_pack_validation.h"
 #include "google/cloud/storage/internal/policy_document_request.h"
 #include "google/cloud/storage/internal/request_project_id.h"
 #include "google/cloud/storage/internal/retry_client.h"
