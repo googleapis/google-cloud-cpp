@@ -75,7 +75,7 @@ export_list_to_bazel("pubsub_client_unit_samples.bzl"
 
 google_cloud_cpp_proto_library(
     pubsub_samples_protos "testdata/schema.proto" PROTO_PATH_DIRECTORIES
-    "${CMAKE_CURRENT_SOURCE_DIR}/testdata" LOCAL_INCLUDE)
+    "${CMAKE_CURRENT_SOURCE_DIR}")
 
 # Generate a target for each integration test.
 foreach (fname ${pubsub_client_integration_samples})

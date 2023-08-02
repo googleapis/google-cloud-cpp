@@ -83,7 +83,7 @@ if (GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
     google_cloud_cpp_proto_library(
         google_cloud_cpp_storage_tests_conformance_protos
         conformance_tests.proto PROTO_PATH_DIRECTORIES
-        ${CMAKE_CURRENT_SOURCE_DIR} LOCAL_INCLUDE)
+        ${CMAKE_CURRENT_SOURCE_DIR})
 endif ()
 
 foreach (fname ${storage_client_integration_tests})
