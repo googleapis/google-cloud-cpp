@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/storage/internal/rest_request_builder.h"
+#include "google/cloud/storage/internal/rest/request_builder.h"
 #include "google/cloud/storage/internal/generic_request.h"
 #include "google/cloud/storage/well_known_headers.h"
 #include "google/cloud/storage/well_known_parameters.h"

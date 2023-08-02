@@ -116,6 +116,7 @@ expected_dirs+=(
   ./include/google/cloud/storage/internal/async
   ./include/google/cloud/storage/internal/curl
   ./include/google/cloud/storage/internal/grpc
+  ./include/google/cloud/storage/internal/rest
   ./include/google/cloud/storage/oauth2
   ./include/google/cloud/storage/testing
   # no gRPC services in google/cloud/workflows/type.

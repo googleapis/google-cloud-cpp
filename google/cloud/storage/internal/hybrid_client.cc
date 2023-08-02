@@ -14,7 +14,7 @@
 
 #include "google/cloud/storage/internal/hybrid_client.h"
 #include "google/cloud/storage/internal/grpc/client.h"
-#include "google/cloud/storage/internal/rest_client.h"
+#include "google/cloud/storage/internal/rest/client.h"
 #include "absl/strings/match.h"
 
 namespace google {
