@@ -29,12 +29,17 @@ namespace cloud {
 namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+using ::google::cloud::bigquery_v2_minimal_testing::
+    MakeFullGetQueryResultsRequest;
+using ::google::cloud::bigquery_v2_minimal_testing::MakeGetQueryResults;
 using ::google::cloud::bigquery_v2_minimal_testing::MakePartialJob;
 using ::google::cloud::bigquery_v2_minimal_testing::MakePostQueryResults;
 using ::google::cloud::bigquery_v2_minimal_testing::MakeQueryRequest;
 using ::google::cloud::rest_internal::HttpStatusCode;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::HasSubstr;
+using ::testing::IsEmpty;
+using ::testing::Not;
 using ::testing::Return;
 
 TEST(JobClientTest, GetJobSuccess) {
@@ -199,6 +204,41 @@ TEST(JobClientTest, QueryFailure) {
   JobClient job_client(mock_job_connection);
 
   auto result = job_client.Query(PostQueryRequest());
+  EXPECT_THAT(result, StatusIs(StatusCode::kInvalidArgument,
+                               HasSubstr("bad-request-error")));
+}
+
+TEST(JobClientTest, QueryResultsSuccess) {
+  auto get_query_results = MakeGetQueryResults();
+  auto mock_job_connection = std::make_shared<MockBigQueryJobConnection>();
+
+  EXPECT_CALL(*mock_job_connection, QueryResults)
+      .WillOnce([&](GetQueryResultsRequest const& request) {
+        EXPECT_THAT(request.project_id(), Not(IsEmpty()));
+        return make_status_or(get_query_results);
+      });
+
+  JobClient job_client(mock_job_connection);
+
+  GetQueryResultsRequest job_request = MakeFullGetQueryResultsRequest();
+
+  auto actual_query_results = job_client.QueryResults(job_request);
+
+  ASSERT_STATUS_OK(actual_query_results);
+  bigquery_v2_minimal_testing::AssertEquals(get_query_results,
+                                            *actual_query_results);
+}
+
+TEST(JobClientTest, QueryResultsFailure) {
+  auto mock_job_connection = std::make_shared<MockBigQueryJobConnection>();
+
+  EXPECT_CALL(*mock_job_connection, QueryResults)
+      .WillOnce(Return(rest_internal::AsStatus(HttpStatusCode::kBadRequest,
+                                               "bad-request-error")));
+
+  JobClient job_client(mock_job_connection);
+
+  auto result = job_client.QueryResults(GetQueryResultsRequest());
   EXPECT_THAT(result, StatusIs(StatusCode::kInvalidArgument,
                                HasSubstr("bad-request-error")));
 }

@@ -105,6 +105,18 @@ class JobClient {
   StatusOr<PostQueryResults> Query(PostQueryRequest const& request,
                                    Options opts = {});
 
+  /**
+   * Gets the result of a Query job.
+   *
+   * For more details on request fields, please see:
+   * https://cloud.google.com/bigquery/docs/reference/rest/v2/jobs/getQueryResults#http-request
+   *
+   * For more details on reqsponse body, please see:
+   * https://cloud.google.com/bigquery/docs/reference/rest/v2/jobs/getQueryResults#response-body
+   */
+  StatusOr<GetQueryResults> QueryResults(GetQueryResultsRequest const& request,
+                                         Options opts = {});
+
  private:
   std::shared_ptr<BigQueryJobConnection> connection_;
   Options options_;
