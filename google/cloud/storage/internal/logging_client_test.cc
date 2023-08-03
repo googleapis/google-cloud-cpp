@@ -16,7 +16,7 @@
 #include "google/cloud/storage/internal/bucket_metadata_parser.h"
 #include "google/cloud/storage/internal/object_metadata_parser.h"
 #include "google/cloud/storage/testing/canonical_errors.h"
-#include "google/cloud/storage/testing/mock_client.h"
+#include "google/cloud/storage/testing/mock_generic_stub.h"
 #include "google/cloud/log.h"
 #include <gmock/gmock.h>
 
@@ -27,6 +27,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 namespace {
 
+using ::google::cloud::storage::testing::MockGenericStub;
 using ::google::cloud::storage::testing::canonical_errors::TransientError;
 using ::testing::HasSubstr;
 using ::testing::Return;
@@ -65,7 +66,7 @@ TEST_F(LoggingClientTest, GetBucketMetadata) {
       "name": "my-bucket"
 })""";
 
-  auto mock = std::make_shared<testing::MockClient>();
+  auto mock = std::make_unique<MockGenericStub>();
   EXPECT_CALL(*mock, GetBucketMetadata)
       .WillOnce(
           Return(internal::BucketMetadataParser::FromString(text).value()));
@@ -85,12 +86,14 @@ TEST_F(LoggingClientTest, GetBucketMetadata) {
         EXPECT_THAT(lr.message, HasSubstr("my-bucket"));
       });
 
-  LoggingClient client(mock);
-  client.GetBucketMetadata(GetBucketMetadataRequest("my-bucket"));
+  LoggingClient client(std::move(mock));
+  rest_internal::RestContext context;
+  client.GetBucketMetadata(context, Options{},
+                           GetBucketMetadataRequest("my-bucket"));
 }
 
 TEST_F(LoggingClientTest, GetBucketMetadataWithError) {
-  auto mock = std::make_shared<testing::MockClient>();
+  auto mock = std::make_unique<MockGenericStub>();
   EXPECT_CALL(*mock, GetBucketMetadata)
       .WillOnce(Return(StatusOr<BucketMetadata>(TransientError())));
 
@@ -107,8 +110,10 @@ TEST_F(LoggingClientTest, GetBucketMetadataWithError) {
         EXPECT_THAT(lr.message, HasSubstr("status={"));
       });
 
-  LoggingClient client(mock);
-  client.GetBucketMetadata(GetBucketMetadataRequest("my-bucket"));
+  LoggingClient client(std::move(mock));
+  rest_internal::RestContext context;
+  client.GetBucketMetadata(context, Options{},
+                           GetBucketMetadataRequest("my-bucket"));
 }
 
 TEST_F(LoggingClientTest, InsertObjectMedia) {
@@ -118,7 +123,7 @@ TEST_F(LoggingClientTest, InsertObjectMedia) {
       "name": "baz"
 })""";
 
-  auto mock = std::make_shared<testing::MockClient>();
+  auto mock = std::make_unique<MockGenericStub>();
   EXPECT_CALL(*mock, InsertObjectMedia)
       .WillOnce(
           Return(internal::ObjectMetadataParser::FromString(text).value()));
@@ -140,8 +145,10 @@ TEST_F(LoggingClientTest, InsertObjectMedia) {
         EXPECT_THAT(lr.message, HasSubstr("baz"));
       });
 
-  LoggingClient client(mock);
+  LoggingClient client(std::move(mock));
+  rest_internal::RestContext context;
   client.InsertObjectMedia(
+      context, Options{},
       InsertObjectMediaRequest("foo-bar", "baz", "the contents"));
 }
 
@@ -164,7 +171,7 @@ TEST_F(LoggingClientTest, ListBuckets) {
 })""")
           .value(),
   };
-  auto mock = std::make_shared<testing::MockClient>();
+  auto mock = std::make_unique<MockGenericStub>();
   EXPECT_CALL(*mock, ListBuckets)
       .WillOnce(Return(make_status_or(ListBucketsResponse{"a-token", items})));
 
@@ -188,8 +195,9 @@ TEST_F(LoggingClientTest, ListBuckets) {
         EXPECT_THAT(lr.message, HasSubstr("CN"));
       });
 
-  LoggingClient client(mock);
-  client.ListBuckets(ListBucketsRequest("my-bucket"));
+  LoggingClient client(std::move(mock));
+  rest_internal::RestContext context;
+  client.ListBuckets(context, Options{}, ListBucketsRequest("my-bucket"));
 }
 
 TEST_F(LoggingClientTest, ListObjects) {
@@ -201,7 +209,7 @@ TEST_F(LoggingClientTest, ListObjects) {
           R""({"name": "response-object-o2"})"")
           .value(),
   };
-  auto mock = std::make_shared<testing::MockClient>();
+  auto mock = std::make_unique<MockGenericStub>();
   EXPECT_CALL(*mock, ListObjects)
       .WillOnce(
           Return(make_status_or(ListObjectsResponse{"a-token", items, {}})));
@@ -223,8 +231,9 @@ TEST_F(LoggingClientTest, ListObjects) {
         EXPECT_THAT(lr.message, HasSubstr("response-object-o2"));
       });
 
-  LoggingClient client(mock);
-  client.ListObjects(ListObjectsRequest("my-bucket"));
+  LoggingClient client(std::move(mock));
+  rest_internal::RestContext context;
+  client.ListObjects(context, Options{}, ListObjectsRequest("my-bucket"));
 }
 
 }  // namespace
