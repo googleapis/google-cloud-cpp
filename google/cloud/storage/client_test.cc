@@ -18,6 +18,7 @@
 #include "google/cloud/storage/testing/canonical_errors.h"
 #include "google/cloud/storage/testing/mock_client.h"
 #include "google/cloud/internal/getenv.h"
+#include "google/cloud/opentelemetry_options.h"
 #include "google/cloud/testing_util/mock_backoff_policy.h"
 #include "google/cloud/testing_util/scoped_environment.h"
 #include <gmock/gmock.h>
@@ -153,9 +154,8 @@ TEST_F(ClientTest, OverrideBothPolicies) {
 
 /// @test Verify the constructor creates the right set of RawClient decorations.
 TEST_F(ClientTest, DefaultDecoratorsCurlClient) {
-  ScopedEnvironment disable_grpc("CLOUD_STORAGE_ENABLE_TRACING", absl::nullopt);
-  ScopedEnvironment disable_rest("GOOGLE_CLOUD_CPP_STORAGE_USE_LEGACY_HTTP",
-                                 "yes");
+  ScopedEnvironment logging("CLOUD_STORAGE_ENABLE_TRACING", absl::nullopt);
+  ScopedEnvironment curl("GOOGLE_CLOUD_CPP_STORAGE_USE_LEGACY_HTTP", "yes");
 
   // Create a client, use the anonymous credentials because on the CI
   // environment there may not be other credentials configured.
@@ -219,6 +219,34 @@ TEST_F(ClientTest, LoggingDecoratorsRestClient) {
   EXPECT_THAT(impl->InspectStackStructure(),
               ElementsAre("RestClient", "LoggingClient", "GenericStubAdapter",
                           "RetryClient"));
+}
+
+/// @test Verify the constructor creates the right set of RawClient decorations.
+TEST_F(ClientTest, FullStack) {
+  ScopedEnvironment logging("CLOUD_STORAGE_ENABLE_TRACING", absl::nullopt);
+  ScopedEnvironment legacy("GOOGLE_CLOUD_CPP_STORAGE_USE_LEGACY_HTTP",
+                           absl::nullopt);
+
+  // Create a client, use the anonymous credentials because on the CI
+  // environment there may not be other credentials configured.
+  auto tested =
+      Client(Options{}
+                 .set<UnifiedCredentialsOption>(MakeInsecureCredentials())
+                 .set<internal::UseRestClientOption>(true)
+                 .set<TracingComponentsOption>({"raw-client"})
+                 .set<experimental::OpenTelemetryTracingOption>(true));
+
+  auto const impl = ClientImplDetails::GetRawClient(tested);
+  ASSERT_THAT(impl, NotNull());
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  EXPECT_THAT(impl->InspectStackStructure(),
+              ElementsAre("RestClient", "LoggingClient", "GenericStubAdapter",
+                          "RetryClient", "TracingClient"));
+#else
+  EXPECT_THAT(impl->InspectStackStructure(),
+              ElementsAre("RestClient", "LoggingClient", "GenericStubAdapter",
+                          "RetryClient"));
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 }
 
 #include "google/cloud/internal/disable_deprecation_warnings.inc"
