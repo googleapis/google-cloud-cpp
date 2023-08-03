@@ -21,6 +21,7 @@ storage_client_testing_hdrs = [
     "testing/client_unit_test.h",
     "testing/constants.h",
     "testing/mock_client.h",
+    "testing/mock_generic_stub.h",
     "testing/mock_http_request.h",
     "testing/mock_storage_stub.h",
     "testing/object_integration_test.h",
