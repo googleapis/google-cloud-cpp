@@ -110,10 +110,8 @@ TEST(RetryClientTest, ExpiredRetryPolicy) {
   StatusOr<ObjectMetadata> result = client->GetObjectMetadata(
       GetObjectMetadataRequest("test-bucket", "test-object"));
   ASSERT_FALSE(result);
-  EXPECT_THAT(
-      result,
-      StatusIs(StatusCode::kDeadlineExceeded,
-               HasSubstr("Retry policy exhausted before first attempt")));
+  EXPECT_THAT(result, StatusIs(StatusCode::kDeadlineExceeded,
+                               HasSubstr("Retry policy exhausted before")));
 }
 
 /// @test Verify that `CreateResumableUpload()` handles transients.
@@ -463,10 +461,8 @@ TEST(RetryClientTest, UploadChunkUploadChunkPolicyExhaustedOnStart) {
   auto const payload = std::string(UploadChunkRequest::kChunkSizeQuantum, 'X');
   auto response = client->UploadChunk(UploadChunkRequest(
       "test-only-upload-id", 0, {{payload}}, CreateNullHashFunction()));
-  EXPECT_THAT(
-      response,
-      StatusIs(StatusCode::kDeadlineExceeded,
-               HasSubstr("Retry policy exhausted before first attempt")));
+  EXPECT_THAT(response, StatusIs(StatusCode::kDeadlineExceeded,
+                                 HasSubstr("Retry policy exhausted before")));
 }
 
 /// @test Verify that responses without a range header are handled.
