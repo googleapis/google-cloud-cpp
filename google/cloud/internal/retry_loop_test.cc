@@ -29,6 +29,7 @@ namespace internal {
 namespace {
 
 using ::google::cloud::testing_util::MockBackoffPolicy;
+using ::google::cloud::testing_util::StatusIs;
 using ::testing::ElementsAre;
 using ::testing::HasSubstr;
 using ::testing::Return;
@@ -122,8 +123,9 @@ TEST(RetryLoopTest, UsesBackoffPolicy) {
   int counter = 0;
   std::vector<ms> sleep_for;
   OptionsSpan span(Options{}.set<StringOption>("UsesBackoffPolicy"));
+  auto retry_policy = TestRetryPolicy();
   StatusOr<int> actual = RetryLoopImpl(
-      TestRetryPolicy(), std::move(mock), Idempotency::kIdempotent,
+      *retry_policy, *mock, Idempotency::kIdempotent,
       [&counter](grpc::ClientContext&, int request) {
         EXPECT_EQ(CurrentOptions().get<StringOption>(), "UsesBackoffPolicy");
         if (++counter <= 3) {
@@ -191,6 +193,24 @@ TEST(RetryLoopTest, TooManyTransientFailuresIdempotent) {
   EXPECT_THAT(actual.status().message(), HasSubstr("try again"));
   EXPECT_THAT(actual.status().message(), HasSubstr("the answer to everything"));
   EXPECT_THAT(actual.status().message(), HasSubstr("Retry policy exhausted"));
+}
+
+TEST(RetryLoopTest, ExhaustedOnStart) {
+  internal::OptionsSpan span(Options{}.set<StringOption>("ExhaustedOnStart"));
+  auto retry_policy = internal::LimitedTimeRetryPolicy<TestRetryablePolicy>(
+      std::chrono::seconds(0));
+  ASSERT_TRUE(retry_policy.IsExhausted());
+  StatusOr<int> actual = RetryLoop(
+      retry_policy.clone(), TestBackoffPolicy(), Idempotency::kIdempotent,
+      [](grpc::ClientContext&, int) {
+        EXPECT_EQ(internal::CurrentOptions().get<StringOption>(),
+                  "ExhaustedOnStart");
+        return StatusOr<int>(Status(StatusCode::kUnavailable, "try again"));
+      },
+      42, "the answer to everything");
+  internal::OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
+  EXPECT_THAT(actual, StatusIs(StatusCode::kDeadlineExceeded,
+                               HasSubstr("Retry policy exhausted before")));
 }
 
 TEST(RetryLoopTest, ConfigureContext) {

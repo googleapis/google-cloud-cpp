@@ -18,6 +18,7 @@
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/idempotency.h"
 #include "google/cloud/internal/invoke_result.h"
+#include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/internal/rest_request.h"
 #include "google/cloud/internal/retry_loop_helpers.h"
@@ -61,41 +62,34 @@ template <
     typename std::enable_if<google::cloud::internal::is_invocable<
                                 Functor, RestContext&, Request const&>::value,
                             int>::type = 0>
-auto RestRetryLoopImpl(std::unique_ptr<RetryPolicy> retry_policy,
-                       std::unique_ptr<BackoffPolicy> backoff_policy,
+auto RestRetryLoopImpl(RetryPolicy& retry_policy, BackoffPolicy& backoff_policy,
                        Idempotency idempotency, Functor&& functor,
                        Request const& request, char const* location,
                        Sleeper sleeper)
     -> google::cloud::internal::invoke_result_t<Functor, RestContext&,
                                                 Request const&> {
-  Status last_status;
-  while (!retry_policy->IsExhausted()) {
+  auto last_status = internal::DeadlineExceededError(
+      "Retry policy exhausted before first request attempt", GCP_ERROR_INFO());
+  while (!retry_policy.IsExhausted()) {
     RestContext rest_context;
     auto result = functor(rest_context, request);
-    if (result.ok()) {
-      return result;
-    }
+    if (result.ok()) return result;
     last_status = internal::GetResultStatus(std::move(result));
     if (idempotency == Idempotency::kNonIdempotent) {
       return internal::RetryLoopError("Error in non-idempotent operation",
                                       location, last_status);
     }
-    if (!retry_policy->OnFailure(last_status)) {
-      // The retry policy is exhausted or the error is not retryable, either
-      // way, exit the loop.
-      break;
-    }
-    sleeper(backoff_policy->OnCompletion());
+    // The retry policy is exhausted or the error is not retryable. Either
+    // way, exit the loop.
+    if (!retry_policy.OnFailure(last_status)) break;
+    sleeper(backoff_policy.OnCompletion());
   }
-  if (!retry_policy->IsExhausted()) {
-    // The last error cannot be retried, but it is not because the retry
-    // policy is exhausted, we call these "permanent errors", and they
-    // get a special message.
-    return internal::RetryLoopError("Permanent error in", location,
-                                    last_status);
-  }
-  return internal::RetryLoopError("Retry policy exhausted in", location,
-                                  last_status);
+  // The last error cannot be retried, but it is not because the retry
+  // policy is exhausted. We call these "permanent errors", and they
+  // get a special message.
+  auto const* prefix = retry_policy.IsExhausted() ? "Retry policy exhausted in"
+                                                  : "Permanent error in";
+  return internal::RetryLoopError(prefix, location, last_status);
 }
 
 /// @copydoc RestRetryLoopImpl
@@ -113,9 +107,28 @@ auto RestRetryLoop(std::unique_ptr<RetryPolicy> retry_policy,
   std::function<void(std::chrono::milliseconds)> sleeper =
       [](std::chrono::milliseconds p) { std::this_thread::sleep_for(p); };
   sleeper = internal::MakeTracedSleeper(std::move(sleeper));
-  return RestRetryLoopImpl(std::move(retry_policy), std::move(backoff_policy),
-                           idempotency, std::forward<Functor>(functor), request,
-                           location, std::move(sleeper));
+  return RestRetryLoopImpl(*retry_policy, *backoff_policy, idempotency,
+                           std::forward<Functor>(functor), request, location,
+                           std::move(sleeper));
+}
+
+/// @copydoc RestRetryLoopImpl
+template <
+    typename Functor, typename Request,
+    typename std::enable_if<google::cloud::internal::is_invocable<
+                                Functor, RestContext&, Request const&>::value,
+                            int>::type = 0>
+auto RestRetryLoop(RetryPolicy& retry_policy, BackoffPolicy& backoff_policy,
+                   Idempotency idempotency, Functor&& functor,
+                   Request const& request, char const* location)
+    -> google::cloud::internal::invoke_result_t<Functor, RestContext&,
+                                                Request const&> {
+  std::function<void(std::chrono::milliseconds)> sleeper =
+      [](std::chrono::milliseconds p) { std::this_thread::sleep_for(p); };
+  sleeper = internal::MakeTracedSleeper(std::move(sleeper));
+  return RestRetryLoopImpl(retry_policy, backoff_policy, idempotency,
+                           std::forward<Functor>(functor), request, location,
+                           std::move(sleeper));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
