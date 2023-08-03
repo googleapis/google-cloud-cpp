@@ -13,10 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/storage/grpc_plugin.h"
-#include "google/cloud/storage/internal/grpc/client.h"
-#include "google/cloud/storage/internal/hybrid_client.h"
-#include "google/cloud/storage/internal/rest/client.h"
-#include "google/cloud/storage/internal/retry_client.h"
 #include "google/cloud/storage/options.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -30,12 +26,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::storage::internal::ClientImplDetails;
-using ::google::cloud::storage::internal::RestClient;
-using ::google::cloud::storage::internal::RetryClient;
-using ::google::cloud::storage_internal::GrpcClient;
-using ::google::cloud::storage_internal::HybridClient;
 using ::google::cloud::testing_util::ScopedEnvironment;
-using ::testing::IsNull;
+using ::testing::ElementsAre;
 using ::testing::NotNull;
 
 Options TestOptions() {
@@ -53,12 +45,10 @@ TEST(GrpcPluginTest, MetadataConfigCreatesGrpc) {
       ScopedEnvironment("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG", absl::nullopt);
   auto client =
       DefaultGrpcClient(TestOptions().set<GrpcPluginOption>("metadata"));
-  auto const* const retry =
-      dynamic_cast<RetryClient*>(ClientImplDetails::GetRawClient(client).get());
-  ASSERT_THAT(retry, NotNull());
-  auto const* const grpc =
-      dynamic_cast<GrpcClient const*>(retry->client().get());
-  ASSERT_THAT(grpc, NotNull());
+  auto impl = ClientImplDetails::GetRawClient(client);
+  ASSERT_THAT(impl, NotNull());
+  EXPECT_THAT(impl->InspectStackStructure(),
+              ElementsAre("GrpcClient", "RetryClient"));
 }
 
 TEST(GrpcPluginTest, EnvironmentOverrides) {
@@ -69,11 +59,10 @@ TEST(GrpcPluginTest, EnvironmentOverrides) {
       ScopedEnvironment("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG", "none");
   auto client =
       DefaultGrpcClient(TestOptions().set<GrpcPluginOption>("metadata"));
-  auto const* const retry =
-      dynamic_cast<RetryClient*>(ClientImplDetails::GetRawClient(client).get());
-  ASSERT_THAT(retry, NotNull());
-  auto const* const grpc = dynamic_cast<GrpcClient*>(retry->client().get());
-  ASSERT_THAT(grpc, IsNull());
+  auto impl = ClientImplDetails::GetRawClient(client);
+  ASSERT_THAT(impl, NotNull());
+  EXPECT_THAT(impl->InspectStackStructure(),
+              ElementsAre("RestClient", "RetryClient"));
 }
 
 TEST(GrpcPluginTest, UnsetConfigCreatesMetadata) {
@@ -83,11 +72,10 @@ TEST(GrpcPluginTest, UnsetConfigCreatesMetadata) {
   auto config =
       ScopedEnvironment("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG", absl::nullopt);
   auto client = DefaultGrpcClient(TestOptions());
-  auto const* const retry =
-      dynamic_cast<RetryClient*>(ClientImplDetails::GetRawClient(client).get());
-  ASSERT_THAT(retry, NotNull());
-  auto const* const grpc = dynamic_cast<GrpcClient*>(retry->client().get());
-  ASSERT_THAT(grpc, NotNull());
+  auto impl = ClientImplDetails::GetRawClient(client);
+  ASSERT_THAT(impl, NotNull());
+  EXPECT_THAT(impl->InspectStackStructure(),
+              ElementsAre("GrpcClient", "RetryClient"));
 }
 
 TEST(GrpcPluginTest, NoneConfigCreatesCurl) {
@@ -97,11 +85,10 @@ TEST(GrpcPluginTest, NoneConfigCreatesCurl) {
   auto config =
       ScopedEnvironment("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG", absl::nullopt);
   auto client = DefaultGrpcClient(TestOptions().set<GrpcPluginOption>("none"));
-  auto const* const retry =
-      dynamic_cast<RetryClient*>(ClientImplDetails::GetRawClient(client).get());
-  ASSERT_THAT(retry, NotNull());
-  auto const* const rest = dynamic_cast<RestClient*>(retry->client().get());
-  ASSERT_THAT(rest, NotNull());
+  auto impl = ClientImplDetails::GetRawClient(client);
+  ASSERT_THAT(impl, NotNull());
+  EXPECT_THAT(impl->InspectStackStructure(),
+              ElementsAre("RestClient", "RetryClient"));
 }
 
 TEST(GrpcPluginTest, MediaConfigCreatesHybrid) {
@@ -111,11 +98,11 @@ TEST(GrpcPluginTest, MediaConfigCreatesHybrid) {
   auto config =
       ScopedEnvironment("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG", absl::nullopt);
   auto client = DefaultGrpcClient(TestOptions().set<GrpcPluginOption>("media"));
-  auto const* const retry =
-      dynamic_cast<RetryClient*>(ClientImplDetails::GetRawClient(client).get());
-  ASSERT_THAT(retry, NotNull());
-  auto const* const hybrid = dynamic_cast<HybridClient*>(retry->client().get());
-  ASSERT_THAT(hybrid, NotNull());
+  auto impl = ClientImplDetails::GetRawClient(client);
+  ASSERT_THAT(impl, NotNull());
+  EXPECT_THAT(
+      impl->InspectStackStructure(),
+      ElementsAre("GrpcClient", "RestClient", "HybridClient", "RetryClient"));
 }
 
 #include "google/cloud/internal/disable_deprecation_warnings.inc"

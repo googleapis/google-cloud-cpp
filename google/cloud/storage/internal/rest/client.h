@@ -165,6 +165,8 @@ class RestClient : public RawClient {
   StatusOr<EmptyResponse> DeleteNotification(
       DeleteNotificationRequest const&) override;
 
+  std::vector<std::string> InspectStackStructure() const override;
+
  protected:
   explicit RestClient(
       std::shared_ptr<google::cloud::rest_internal::RestClient>

@@ -1092,6 +1092,10 @@ StatusOr<EmptyResponse> CurlClient::DeleteNotification(
       std::move(builder).BuildRequest().MakeRequest(std::string{}));
 }
 
+std::vector<std::string> CurlClient::InspectStackStructure() const {
+  return {"CurlClient"};
+}
+
 StatusOr<ObjectMetadata> CurlClient::InsertObjectMediaMultipart(
     InsertObjectMediaRequest const& request) {
   // To perform a multipart upload we need to separate the parts as described

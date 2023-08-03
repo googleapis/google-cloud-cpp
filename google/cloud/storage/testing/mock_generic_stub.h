@@ -260,6 +260,9 @@ class MockGenericStub : public storage_internal::GenericStub {
               (rest_internal::RestContext&, Options const&,
                storage::internal::DeleteNotificationRequest const&),
               (override));
+
+  MOCK_METHOD(std::vector<std::string>, InspectStackStructure, (),
+              (const, override));
 };
 
 }  // namespace testing

@@ -1116,6 +1116,10 @@ StatusOr<storage::internal::EmptyResponse> GrpcClient::DeleteNotification(
   return storage::internal::EmptyResponse{};
 }
 
+std::vector<std::string> GrpcClient::InspectStackStructure() const {
+  return {"GrpcClient"};
+}
+
 StatusOr<google::storage::v2::Bucket> GrpcClient::GetBucketMetadataImpl(
     storage::internal::GetBucketMetadataRequest const& request) {
   auto proto = ToProto(request);

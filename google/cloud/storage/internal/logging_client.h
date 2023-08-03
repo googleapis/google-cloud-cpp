@@ -142,7 +142,7 @@ class LoggingClient : public RawClient {
   StatusOr<EmptyResponse> DeleteNotification(
       DeleteNotificationRequest const&) override;
 
-  std::shared_ptr<RawClient> client() const { return client_; }
+  std::vector<std::string> InspectStackStructure() const override;
 
  private:
   std::shared_ptr<RawClient> client_;

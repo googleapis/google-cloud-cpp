@@ -152,7 +152,7 @@ class RetryClient : public RawClient,
   StatusOr<EmptyResponse> DeleteNotification(
       DeleteNotificationRequest const&) override;
 
-  std::shared_ptr<RawClient> client() const { return client_; }
+  std::vector<std::string> InspectStackStructure() const override;
 
  private:
   explicit RetryClient(std::shared_ptr<RawClient> client, Options options);

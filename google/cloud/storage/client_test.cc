@@ -13,8 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/storage/client.h"
-#include "google/cloud/storage/internal/curl/client.h"
-#include "google/cloud/storage/internal/rest/client.h"
 #include "google/cloud/storage/oauth2/google_credentials.h"
 #include "google/cloud/storage/retry_policy.h"
 #include "google/cloud/storage/testing/canonical_errors.h"
@@ -35,6 +33,8 @@ using ::google::cloud::storage::internal::ClientImplDetails;
 using ::google::cloud::storage::testing::canonical_errors::TransientError;
 using ::google::cloud::testing_util::MockBackoffPolicy;
 using ::google::cloud::testing_util::ScopedEnvironment;
+using ::testing::ElementsAre;
+using ::testing::NotNull;
 using ::testing::Return;
 
 class ObservableRetryPolicy : public LimitedErrorCountRetryPolicy {
@@ -164,13 +164,10 @@ TEST_F(ClientTest, DefaultDecoratorsCurlClient) {
                  .set<UnifiedCredentialsOption>(MakeInsecureCredentials())
                  .set<TracingComponentsOption>({}));
 
-  EXPECT_TRUE(ClientImplDetails::GetRawClient(tested) != nullptr);
-  auto* retry = dynamic_cast<internal::RetryClient*>(
-      ClientImplDetails::GetRawClient(tested).get());
-  ASSERT_TRUE(retry != nullptr);
-
-  auto* curl = dynamic_cast<internal::CurlClient*>(retry->client().get());
-  ASSERT_TRUE(curl != nullptr);
+  auto const impl = ClientImplDetails::GetRawClient(tested);
+  ASSERT_THAT(impl, NotNull());
+  EXPECT_THAT(impl->InspectStackStructure(),
+              ElementsAre("CurlClient", "RetryClient"));
 }
 
 /// @test Verify the constructor creates the right set of RawClient decorations.
@@ -184,16 +181,10 @@ TEST_F(ClientTest, LoggingDecoratorsCurlClient) {
                  .set<UnifiedCredentialsOption>(MakeInsecureCredentials())
                  .set<TracingComponentsOption>({"raw-client"}));
 
-  EXPECT_TRUE(ClientImplDetails::GetRawClient(tested) != nullptr);
-  auto* retry = dynamic_cast<internal::RetryClient*>(
-      ClientImplDetails::GetRawClient(tested).get());
-  ASSERT_TRUE(retry != nullptr);
-
-  auto* logging = dynamic_cast<internal::LoggingClient*>(retry->client().get());
-  ASSERT_TRUE(logging != nullptr);
-
-  auto* curl = dynamic_cast<internal::CurlClient*>(logging->client().get());
-  ASSERT_TRUE(curl != nullptr);
+  auto const impl = ClientImplDetails::GetRawClient(tested);
+  ASSERT_THAT(impl, NotNull());
+  EXPECT_THAT(impl->InspectStackStructure(),
+              ElementsAre("CurlClient", "LoggingClient", "RetryClient"));
 }
 
 /// @test Verify the constructor creates the right set of RawClient decorations.
@@ -207,13 +198,10 @@ TEST_F(ClientTest, DefaultDecoratorsRestClient) {
                  .set<UnifiedCredentialsOption>(MakeInsecureCredentials())
                  .set<TracingComponentsOption>({}));
 
-  EXPECT_TRUE(ClientImplDetails::GetRawClient(tested) != nullptr);
-  auto* retry = dynamic_cast<internal::RetryClient*>(
-      ClientImplDetails::GetRawClient(tested).get());
-  ASSERT_TRUE(retry != nullptr);
-
-  auto* rest = dynamic_cast<internal::RestClient*>(retry->client().get());
-  ASSERT_TRUE(rest != nullptr);
+  auto const impl = ClientImplDetails::GetRawClient(tested);
+  ASSERT_THAT(impl, NotNull());
+  EXPECT_THAT(impl->InspectStackStructure(),
+              ElementsAre("RestClient", "RetryClient"));
 }
 
 /// @test Verify the constructor creates the right set of RawClient decorations.
@@ -225,16 +213,10 @@ TEST_F(ClientTest, LoggingDecoratorsRestClient) {
                  .set<UnifiedCredentialsOption>(MakeInsecureCredentials())
                  .set<TracingComponentsOption>({"raw-client"}));
 
-  EXPECT_TRUE(ClientImplDetails::GetRawClient(tested) != nullptr);
-  auto* retry = dynamic_cast<internal::RetryClient*>(
-      ClientImplDetails::GetRawClient(tested).get());
-  ASSERT_TRUE(retry != nullptr);
-
-  auto* logging = dynamic_cast<internal::LoggingClient*>(retry->client().get());
-  ASSERT_TRUE(logging != nullptr);
-
-  auto* rest = dynamic_cast<internal::RestClient*>(logging->client().get());
-  ASSERT_TRUE(rest != nullptr);
+  auto const impl = ClientImplDetails::GetRawClient(tested);
+  ASSERT_THAT(impl, NotNull());
+  EXPECT_THAT(impl->InspectStackStructure(),
+              ElementsAre("RestClient", "LoggingClient", "RetryClient"));
 }
 
 #include "google/cloud/internal/disable_deprecation_warnings.inc"

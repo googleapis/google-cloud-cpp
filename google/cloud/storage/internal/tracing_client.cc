@@ -422,6 +422,12 @@ StatusOr<storage::internal::EmptyResponse> TracingClient::DeleteNotification(
   return internal::EndSpan(*span, impl_->DeleteNotification(request));
 }
 
+std::vector<std::string> TracingClient::InspectStackStructure() const {
+  auto stack = impl_->InspectStackStructure();
+  stack.emplace_back("TracingClient");
+  return stack;
+}
+
 std::shared_ptr<storage::internal::RawClient> MakeTracingClient(
     std::shared_ptr<storage::internal::RawClient> impl) {
   return std::make_shared<TracingClient>(std::move(impl));

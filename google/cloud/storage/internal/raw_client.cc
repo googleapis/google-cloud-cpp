@@ -20,6 +20,8 @@ namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
+std::vector<std::string> RawClient::InspectStackStructure() const { return {}; }
+
 StatusOr<CreateOrResumeResponse> CreateOrResume(
     RawClient& client, ResumableUploadRequest const& request) {
   auto session_id = request.GetOption<UseResumableUploadSession>().value_or("");

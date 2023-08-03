@@ -317,6 +317,12 @@ class GenericStubAdapter : public GenericStub {
     return impl_->DeleteNotification(request);
   }
 
+  std::vector<std::string> InspectStackStructure() const override {
+    auto stack = impl_->InspectStackStructure();
+    stack.emplace_back("GenericStubAdapter");
+    return stack;
+  }
+
  private:
   std::shared_ptr<storage::internal::RawClient> impl_;
 };

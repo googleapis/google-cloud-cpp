@@ -1246,6 +1246,10 @@ StatusOr<EmptyResponse> RestClient::DeleteNotification(
       storage_rest_client_->Delete(context, std::move(builder).BuildRequest()));
 }
 
+std::vector<std::string> RestClient::InspectStackStructure() const {
+  return {"RestClient"};
+}
+
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage

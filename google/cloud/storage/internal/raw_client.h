@@ -37,6 +37,7 @@
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
 #include <string>
+#include <vector>
 
 namespace google {
 namespace cloud {
@@ -180,6 +181,9 @@ class RawClient {
   virtual StatusOr<EmptyResponse> DeleteNotification(
       DeleteNotificationRequest const&) = 0;
   ///@}
+
+  // Test-only. Returns the names of the decorator stack elements.
+  virtual std::vector<std::string> InspectStackStructure() const;
 };
 
 struct CreateOrResumeResponse {
