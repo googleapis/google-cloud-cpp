@@ -13,24 +13,38 @@
 // limitations under the License.
 
 //! [all]
-#include "google/cloud/policysimulator/ EDIT HERE .h"
-#include "google/cloud/project.h"
+#include "google/cloud/policysimulator/v1/simulator_client.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
-  if (argc != 2) {
-    std::cerr << "Usage: " << argv[0] << " project-id\n";
+  if (argc != 3) {
+    std::cerr
+        << "Usage: " << argv[0] << " project-id resource-name\n"
+        << "See https://cloud.google.com/iam/docs/full-resource-names for "
+           "examples of fully qualified resource names.\n";
     return 1;
   }
 
-  namespace policysimulator = ::google::cloud::policysimulator;
-  auto client = policysimulator::Client(policysimulator::MakeConnection());
+  namespace policysimulator = ::google::cloud::policysimulator_v1;
+  auto client = policysimulator::SimulatorClient(
+      policysimulator::MakeSimulatorConnection());
 
-  auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
-    if (!r) throw std::move(r).status();
-    std::cout << r->DebugString() << "\n";
-  }
+  auto const parent = std::string{"projects/"} + argv[1] + "/locations/global";
+  auto const resource_name = std::string{argv[2]};
+
+  google::cloud::policysimulator::v1::Replay r;
+  auto& overlay = *r.mutable_config()->mutable_policy_overlay();
+  overlay[resource_name] = [] {
+    google::iam::v1::Policy p;
+    auto& binding = *p.add_bindings();
+    binding.set_role("storage.buckets.get");
+    binding.add_members("user@example.com");
+    return p;
+  }();
+
+  auto replay = client.CreateReplay(parent, r).get();
+  if (!replay) throw std::move(replay).status();
+  std::cout << replay->DebugString() << "\n";
 
   return 0;
 } catch (google::cloud::Status const& status) {

@@ -2,8 +2,16 @@
 
 @mainpage Policy Simulator API C++ Client Library
 
-An idiomatic C++ client library for the [Policy Simulator API][cloud-service-docs], a service
-to Policy Simulator is a collection of endpoints for creating, running, and viewing a [Replay][google.cloud.policysimulator.v1.Replay]. A `Replay` is a type of simulation that lets you see how your members' access to resources might change if you changed your IAM policy.  During a `Replay`, Policy Simulator re-evaluates, or replays, past access attempts under both the current policy and your proposed policy, and compares those results to determine how your members' access might change under the proposed policy.
+An idiomatic C++ client library for the [Policy Simulator API][cloud-service-docs]
+
+Policy Simulator is a collection of endpoints for creating, running, and viewing
+a `Replay`. A `Replay` is a type of simulation that lets you see how your
+members' access to resources might change if you changed your IAM policy.
+
+During a `Replay`, Policy Simulator re-evaluates, or replays, past access
+attempts under both the current policy and your proposed policy, and compares
+those results to determine how your members' access might change under the
+proposed policy.
 
 While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
 [Semantic Versioning](https://semver.org/).
@@ -41,6 +49,6 @@ application.
 - @ref policysimulator-env - describes environment variables that can configure the
   behavior of the library.
 
-[cloud-service-docs]: https://cloud.google.com/policysimulator
+[cloud-service-docs]: https://cloud.google.com/policy-intelligence/docs/iam-simulator-overview
 
 */

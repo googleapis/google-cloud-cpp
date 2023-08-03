@@ -123,8 +123,7 @@ if (BUILD_TESTING)
         COMMAND
             cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
             $<TARGET_FILE:policysimulator_quickstart> GOOGLE_CLOUD_PROJECT
-            # EDIT HERE
-    )
+            GOOGLE_CLOUD_CPP_POLICYSIMULATOR_RESOURCE)
     set_tests_properties(policysimulator_quickstart
                          PROPERTIES LABELS "integration-test;quickstart")
 endif ()
