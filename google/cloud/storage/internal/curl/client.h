@@ -176,6 +176,8 @@ class CurlClient : public RawClient {
   StatusOr<EmptyResponse> DeleteNotification(
       DeleteNotificationRequest const&) override;
 
+  std::vector<std::string> InspectStackStructure() const override;
+
  protected:
   // The constructor is private because the class must always be created
   // as a shared_ptr<>.

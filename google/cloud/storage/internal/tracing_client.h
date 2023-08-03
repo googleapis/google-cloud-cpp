@@ -158,6 +158,8 @@ class TracingClient : public storage::internal::RawClient {
   StatusOr<storage::internal::EmptyResponse> DeleteNotification(
       storage::internal::DeleteNotificationRequest const& request) override;
 
+  std::vector<std::string> InspectStackStructure() const override;
+
  private:
   std::shared_ptr<RawClient> impl_;
 };

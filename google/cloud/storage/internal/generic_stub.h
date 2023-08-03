@@ -250,6 +250,9 @@ class GenericStub {
       rest_internal::RestContext&, Options const&,
       storage::internal::DeleteNotificationRequest const&) = 0;
   ///@}
+
+  // Test-only. Returns the names of the decorator stack elements.
+  virtual std::vector<std::string> InspectStackStructure() const = 0;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

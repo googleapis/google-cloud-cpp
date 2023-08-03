@@ -363,6 +363,12 @@ StatusOr<EmptyResponse> LoggingClient::DeleteNotification(
   return MakeCall(*client_, &RawClient::DeleteNotification, request, __func__);
 }
 
+std::vector<std::string> LoggingClient::InspectStackStructure() const {
+  auto stack = client_->InspectStackStructure();
+  stack.emplace_back("LoggingClient");
+  return stack;
+}
+
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage

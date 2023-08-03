@@ -16,6 +16,7 @@
 #include "google/cloud/storage/internal/grpc/client.h"
 #include "google/cloud/storage/internal/rest/client.h"
 #include "absl/strings/match.h"
+#include <iterator>
 
 namespace google {
 namespace cloud {
@@ -311,6 +312,15 @@ StatusOr<storage::NotificationMetadata> HybridClient::GetNotification(
 StatusOr<storage::internal::EmptyResponse> HybridClient::DeleteNotification(
     storage::internal::DeleteNotificationRequest const& request) {
   return rest_->DeleteNotification(request);
+}
+
+std::vector<std::string> HybridClient::InspectStackStructure() const {
+  auto grpc = grpc_->InspectStackStructure();
+  auto rest = rest_->InspectStackStructure();
+  grpc.insert(grpc.end(), std::make_move_iterator(rest.begin()),
+              std::make_move_iterator(rest.end()));
+  grpc.emplace_back("HybridClient");
+  return grpc;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

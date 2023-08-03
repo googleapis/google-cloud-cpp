@@ -997,6 +997,12 @@ StatusOr<EmptyResponse> RetryClient::DeleteNotification(
       request, __func__);
 }
 
+std::vector<std::string> RetryClient::InspectStackStructure() const {
+  auto stack = client_->InspectStackStructure();
+  stack.emplace_back("RetryClient");
+  return stack;
+}
+
 std::unique_ptr<RetryPolicy> RetryClient::current_retry_policy() {
   return google::cloud::internal::CurrentOptions()
       .get<RetryPolicyOption>()

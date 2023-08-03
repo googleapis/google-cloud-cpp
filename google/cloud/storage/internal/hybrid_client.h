@@ -155,6 +155,8 @@ class HybridClient : public storage::internal::RawClient {
   StatusOr<storage::internal::EmptyResponse> DeleteNotification(
       storage::internal::DeleteNotificationRequest const&) override;
 
+  std::vector<std::string> InspectStackStructure() const override;
+
  private:
   explicit HybridClient(Options const& options);
 
