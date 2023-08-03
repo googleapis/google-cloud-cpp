@@ -32,7 +32,7 @@ TEST(JobTest, JobDebugString) {
   EXPECT_EQ(
       job.DebugString("Job", TracingOptions{}),
       R"(Job { etag: "etag" kind: "Job" self_link: "self-link" id: "1")"
-      R"( configuration { job_type: "QUERY" dry_run: true job_timeout_ms { "10ms" })"
+      R"( configuration { job_type: "QUERY" dry_run: true job_timeout { "10ms" })"
       R"( labels { key: "label-key1" value: "label-val1" })"
       R"( query_config { query: "select 1;")"
       R"( create_disposition: "job-create-disposition")"
@@ -55,7 +55,7 @@ TEST(JobTest, JobDebugString) {
       R"( interval: "range-interval" } } clustering { fields: "clustering-field-1")"
       R"( fields: "clustering-field-2" } destination_encryption_configuration {)"
       R"( kms_key_name: "encryption-key-name" } script_options {)"
-      R"( statement_timeout_ms { "10ms" } statement_byte_budget: 10)"
+      R"( statement_timeout { "10ms" } statement_byte_budget: 10)"
       R"( key_result_statement { value: "FIRST_SELECT" } })"
       R"( system_variables { types { key: "sql-struct-type-key-1")"
       R"( value { type_kind { value: "INT64" } } } types {)"
@@ -139,7 +139,7 @@ TEST(JobTest, JobDebugString) {
       job.DebugString("Job", TracingOptions{}.SetOptions(
                                  "truncate_string_field_longer_than=1024")),
       R"(Job { etag: "etag" kind: "Job" self_link: "self-link" id: "1")"
-      R"( configuration { job_type: "QUERY" dry_run: true job_timeout_ms { "10ms" })"
+      R"( configuration { job_type: "QUERY" dry_run: true job_timeout { "10ms" })"
       R"( labels { key: "label-key1" value: "label-val1" })"
       R"( query_config { query: "select 1;")"
       R"( create_disposition: "job-create-disposition")"
@@ -162,7 +162,7 @@ TEST(JobTest, JobDebugString) {
       R"( interval: "range-interval" } } clustering { fields: "clustering-field-1")"
       R"( fields: "clustering-field-2" } destination_encryption_configuration {)"
       R"( kms_key_name: "encryption-key-name" } script_options {)"
-      R"( statement_timeout_ms { "10ms" } statement_byte_budget: 10)"
+      R"( statement_timeout { "10ms" } statement_byte_budget: 10)"
       R"( key_result_statement { value: "FIRST_SELECT" } })"
       R"( system_variables { types { key: "sql-struct-type-key-1")"
       R"( value { type_kind { value: "INT64" } } } types {)"
@@ -252,7 +252,7 @@ TEST(JobTest, JobDebugString) {
   configuration {
     job_type: "QUERY"
     dry_run: true
-    job_timeout_ms {
+    job_timeout {
       "10ms"
     }
     labels {
@@ -322,7 +322,7 @@ TEST(JobTest, JobDebugString) {
         kms_key_name: "encryption-key-name"
       }
       script_options {
-        statement_timeout_ms {
+        statement_timeout {
           "10ms"
         }
         statement_byte_budget: 10
@@ -660,7 +660,7 @@ TEST(JobTest, ListFormatJobDebugString) {
       job.DebugString("ListFormatJob", TracingOptions{}),
       R"(ListFormatJob { id: "1" kind: "Job" state: "DONE")"
       R"( configuration { job_type: "QUERY" dry_run: true)"
-      R"( job_timeout_ms { "10ms" } labels { key: "label-key1")"
+      R"( job_timeout { "10ms" } labels { key: "label-key1")"
       R"( value: "label-val1" } query_config { query: "select 1;")"
       R"( create_disposition: "job-create-disposition")"
       R"( write_disposition: "job-write-disposition")"
@@ -685,7 +685,7 @@ TEST(JobTest, ListFormatJobDebugString) {
       R"( clustering { fields: "clustering-field-1")"
       R"( fields: "clustering-field-2" } destination_encryption_configuration {)"
       R"( kms_key_name: "encryption-key-name" } script_options {)"
-      R"( statement_timeout_ms { "10ms" } statement_byte_budget: 10)"
+      R"( statement_timeout { "10ms" } statement_byte_budget: 10)"
       R"( key_result_statement { value: "FIRST_SELECT" } })"
       R"( system_variables { types { key: "sql-struct-type-key-1")"
       R"( value { type_kind { value: "INT64" } } } types {)"
@@ -773,7 +773,7 @@ TEST(JobTest, ListFormatJobDebugString) {
                           "truncate_string_field_longer_than=1024")),
       R"(ListFormatJob { id: "1" kind: "Job" state: "DONE")"
       R"( configuration { job_type: "QUERY" dry_run: true)"
-      R"( job_timeout_ms { "10ms" } labels { key: "label-key1")"
+      R"( job_timeout { "10ms" } labels { key: "label-key1")"
       R"( value: "label-val1" } query_config { query: "select 1;")"
       R"( create_disposition: "job-create-disposition")"
       R"( write_disposition: "job-write-disposition")"
@@ -798,7 +798,7 @@ TEST(JobTest, ListFormatJobDebugString) {
       R"( clustering { fields: "clustering-field-1")"
       R"( fields: "clustering-field-2" } destination_encryption_configuration {)"
       R"( kms_key_name: "encryption-key-name" } script_options {)"
-      R"( statement_timeout_ms { "10ms" } statement_byte_budget: 10)"
+      R"( statement_timeout { "10ms" } statement_byte_budget: 10)"
       R"( key_result_statement { value: "FIRST_SELECT" } })"
       R"( system_variables { types { key: "sql-struct-type-key-1")"
       R"( value { type_kind { value: "INT64" } } } types {)"
@@ -889,7 +889,7 @@ TEST(JobTest, ListFormatJobDebugString) {
   configuration {
     job_type: "QUERY"
     dry_run: true
-    job_timeout_ms {
+    job_timeout {
       "10ms"
     }
     labels {
@@ -959,7 +959,7 @@ TEST(JobTest, ListFormatJobDebugString) {
         kms_key_name: "encryption-key-name"
       }
       script_options {
-        statement_timeout_ms {
+        statement_timeout {
           "10ms"
         }
         statement_byte_budget: 10

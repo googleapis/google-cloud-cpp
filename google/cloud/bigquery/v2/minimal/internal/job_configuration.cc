@@ -28,7 +28,7 @@ std::string JobConfiguration::DebugString(absl::string_view name,
   return internal::DebugFormatter(name, options, indent)
       .StringField("job_type", job_type)
       .Field("dry_run", dry_run)
-      .Field("job_timeout_ms", job_timeout)
+      .Field("job_timeout", job_timeout)
       .Field("labels", labels)
       .SubMessage("query_config", query)
       .Build();
