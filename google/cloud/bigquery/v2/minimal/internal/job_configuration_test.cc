@@ -31,7 +31,7 @@ TEST(JobConfigurationTest, DebugString) {
   EXPECT_EQ(
       job_config.DebugString("JobConfiguration", TracingOptions{}),
       R"(JobConfiguration { job_type: "QUERY" dry_run: true)"
-      R"( job_timeout_ms { "10ms" } labels { key: "label-key1")"
+      R"( job_timeout { "10ms" } labels { key: "label-key1")"
       R"( value: "label-val1" } query_config { query: "select 1;")"
       R"( create_disposition: "job-create-disposition")"
       R"( write_disposition: "job-write-disposition")"
@@ -58,7 +58,7 @@ TEST(JobConfigurationTest, DebugString) {
       R"( fields: "clustering-field-2" })"
       R"( destination_encryption_configuration {)"
       R"( kms_key_name: "encryption-key-name" })"
-      R"( script_options { statement_timeout_ms { "10ms" })"
+      R"( script_options { statement_timeout { "10ms" })"
       R"( statement_byte_budget: 10 key_result_statement {)"
       R"( value: "FIRST_SELECT" } } system_variables { types {)"
       R"( key: "sql-struct-type-key-1" value { type_kind {)"
@@ -75,7 +75,7 @@ TEST(JobConfigurationTest, DebugString) {
           "JobConfiguration",
           TracingOptions{}.SetOptions("truncate_string_field_longer_than=10")),
       R"(JobConfiguration { job_type: "QUERY" dry_run: true)"
-      R"( job_timeout_ms { "10ms" } labels { key: "label-key1" value: "label-val1" })"
+      R"( job_timeout { "10ms" } labels { key: "label-key1" value: "label-val1" })"
       R"( query_config { query: "select 1;")"
       R"( create_disposition: "job-create...<truncated>...")"
       R"( write_disposition: "job-write-...<truncated>...")"
@@ -103,7 +103,7 @@ TEST(JobConfigurationTest, DebugString) {
       R"( fields: "clustering...<truncated>..." })"
       R"( destination_encryption_configuration {)"
       R"( kms_key_name: "encryption...<truncated>..." })"
-      R"( script_options { statement_timeout_ms { "10ms" } statement_byte_budget: 10)"
+      R"( script_options { statement_timeout { "10ms" } statement_byte_budget: 10)"
       R"( key_result_statement { value: "FIRST_SELE...<truncated>..." } })"
       R"( system_variables { types { key: "sql-struct-type-key-1" value {)"
       R"( type_kind { value: "INT64" } } } types {)"
@@ -120,7 +120,7 @@ TEST(JobConfigurationTest, DebugString) {
       R"(JobConfiguration {
   job_type: "QUERY"
   dry_run: true
-  job_timeout_ms {
+  job_timeout {
     "10ms"
   }
   labels {
@@ -190,7 +190,7 @@ TEST(JobConfigurationTest, DebugString) {
       kms_key_name: "encryption-key-name"
     }
     script_options {
-      statement_timeout_ms {
+      statement_timeout {
         "10ms"
       }
       statement_byte_budget: 10

@@ -278,7 +278,7 @@ TEST(GetJobResponseTest, DebugString) {
       R"( key: "header1" value: "value1" } payload: REDACTED } job {)"
       R"( etag: "jtag" kind: "jkind" self_link: "jselfLink" id: "j123")"
       R"( configuration { job_type: "QUERY" dry_run: false)"
-      R"( job_timeout_ms { "0" } query_config { query: "select 1;")"
+      R"( job_timeout { "0" } query_config { query: "select 1;")"
       R"( create_disposition: "" write_disposition: "" priority: "")"
       R"( parameter_mode: "" preserve_nulls: false allow_large_results: false)"
       R"( use_query_cache: false flatten_results: false use_legacy_sql: false)"
@@ -288,7 +288,7 @@ TEST(GetJobResponseTest, DebugString) {
       R"( type: "" expiration_time { "0" } field: "" } range_partitioning {)"
       R"( field: "" range { start: "" end: "" interval: "" } } clustering { })"
       R"( destination_encryption_configuration { kms_key_name: "" })"
-      R"( script_options { statement_timeout_ms { "0" } statement_byte_budget: 0)"
+      R"( script_options { statement_timeout { "0" } statement_byte_budget: 0)"
       R"( key_result_statement { value: "" } } system_variables {)"
       R"( values { } } } } reference { project_id: "p123" job_id: "j123")"
       R"( location: "" } status { state: "DONE" error_result { reason: "")"
@@ -331,7 +331,7 @@ TEST(GetJobResponseTest, DebugString) {
       R"( key: "header1" value: "value1" } payload: REDACTED } job {)"
       R"( etag: "jtag" kind: "jkind" self_link: "jselfLi...<truncated>...")"
       R"( id: "j123" configuration { job_type: "QUERY" dry_run: false)"
-      R"( job_timeout_ms { "0" } query_config { query: "select ...<truncated>...")"
+      R"( job_timeout { "0" } query_config { query: "select ...<truncated>...")"
       R"( create_disposition: "" write_disposition: "" priority: "")"
       R"( parameter_mode: "" preserve_nulls: false allow_large_results: false)"
       R"( use_query_cache: false flatten_results: false use_legacy_sql: false)"
@@ -341,7 +341,7 @@ TEST(GetJobResponseTest, DebugString) {
       R"( expiration_time { "0" } field: "" } range_partitioning { field: "" range {)"
       R"( start: "" end: "" interval: "" } } clustering { })"
       R"( destination_encryption_configuration { kms_key_name: "" })"
-      R"( script_options { statement_timeout_ms { "0" } statement_byte_budget: 0)"
+      R"( script_options { statement_timeout { "0" } statement_byte_budget: 0)"
       R"( key_result_statement { value: "" } } system_variables { values { } } } })"
       R"( reference { project_id: "p123" job_id: "j123" location: "" } status {)"
       R"( state: "DONE" error_result { reason: "" location: "" message: "" } })"
@@ -393,7 +393,7 @@ TEST(GetJobResponseTest, DebugString) {
     configuration {
       job_type: "QUERY"
       dry_run: false
-      job_timeout_ms {
+      job_timeout {
         "0"
       }
       query_config {
@@ -439,7 +439,7 @@ TEST(GetJobResponseTest, DebugString) {
           kms_key_name: ""
         }
         script_options {
-          statement_timeout_ms {
+          statement_timeout {
             "0"
           }
           statement_byte_budget: 0
@@ -612,7 +612,7 @@ TEST(ListJobsResponseTest, DebugString) {
   EXPECT_EQ(
       response->DebugString("ListJobsResponse", TracingOptions{}),
       R"(ListJobsResponse { jobs { id: "1" kind: "kind-2" state: "DONE")"
-      R"( configuration { job_type: "QUERY" dry_run: false job_timeout_ms { "0" })"
+      R"( configuration { job_type: "QUERY" dry_run: false job_timeout { "0" })"
       R"( query_config { query: "select 1;" create_disposition: "")"
       R"( write_disposition: "" priority: "" parameter_mode: "")"
       R"( preserve_nulls: false allow_large_results: false)"
@@ -624,7 +624,7 @@ TEST(ListJobsResponseTest, DebugString) {
       R"( expiration_time { "0" } field: "" } range_partitioning {)"
       R"( field: "" range { start: "" end: "" interval: "" } })"
       R"( clustering { } destination_encryption_configuration {)"
-      R"( kms_key_name: "" } script_options { statement_timeout_ms { "0" })"
+      R"( kms_key_name: "" } script_options { statement_timeout { "0" })"
       R"( statement_byte_budget: 0 key_result_statement { value: "" } })"
       R"( system_variables { values { } } } } reference {)"
       R"( project_id: "p123" job_id: "j123" location: "" } status {)"
@@ -667,7 +667,7 @@ TEST(ListJobsResponseTest, DebugString) {
           "ListJobsResponse",
           TracingOptions{}.SetOptions("truncate_string_field_longer_than=7")),
       R"(ListJobsResponse { jobs { id: "1" kind: "kind-2" state: "DONE")"
-      R"( configuration { job_type: "QUERY" dry_run: false job_timeout_ms { "0" })"
+      R"( configuration { job_type: "QUERY" dry_run: false job_timeout { "0" })"
       R"( query_config { query: "select ...<truncated>..." create_disposition: "")"
       R"( write_disposition: "" priority: "" parameter_mode: "")"
       R"( preserve_nulls: false allow_large_results: false)"
@@ -678,7 +678,7 @@ TEST(ListJobsResponseTest, DebugString) {
       R"( expiration_time { "0" } field: "" } range_partitioning { field: "" range {)"
       R"( start: "" end: "" interval: "" } } clustering { })"
       R"( destination_encryption_configuration { kms_key_name: "" })"
-      R"( script_options { statement_timeout_ms { "0" } statement_byte_budget: 0)"
+      R"( script_options { statement_timeout { "0" } statement_byte_budget: 0)"
       R"( key_result_statement { value: "" } } system_variables { values { } } } })"
       R"( reference { project_id: "p123" job_id: "j123" location: "" } status {)"
       R"( state: "DONE" error_result { reason: "" location: "" message: "" } })"
@@ -725,7 +725,7 @@ TEST(ListJobsResponseTest, DebugString) {
     configuration {
       job_type: "QUERY"
       dry_run: false
-      job_timeout_ms {
+      job_timeout {
         "0"
       }
       query_config {
@@ -771,7 +771,7 @@ TEST(ListJobsResponseTest, DebugString) {
           kms_key_name: ""
         }
         script_options {
-          statement_timeout_ms {
+          statement_timeout {
             "0"
           }
           statement_byte_budget: 0
@@ -1106,7 +1106,7 @@ TEST(InsertJobResponseTest, DebugString) {
       R"( key: "header1" value: "value1" } payload: REDACTED } job {)"
       R"( etag: "jtag" kind: "jkind" self_link: "jselfLink" id: "j123")"
       R"( configuration { job_type: "QUERY" dry_run: false)"
-      R"( job_timeout_ms { "0" } query_config { query: "select 1;")"
+      R"( job_timeout { "0" } query_config { query: "select 1;")"
       R"( create_disposition: "" write_disposition: "" priority: "")"
       R"( parameter_mode: "" preserve_nulls: false allow_large_results: false)"
       R"( use_query_cache: false flatten_results: false use_legacy_sql: false)"
@@ -1116,7 +1116,7 @@ TEST(InsertJobResponseTest, DebugString) {
       R"( type: "" expiration_time { "0" } field: "" } range_partitioning {)"
       R"( field: "" range { start: "" end: "" interval: "" } } clustering { })"
       R"( destination_encryption_configuration { kms_key_name: "" })"
-      R"( script_options { statement_timeout_ms { "0" } statement_byte_budget: 0)"
+      R"( script_options { statement_timeout { "0" } statement_byte_budget: 0)"
       R"( key_result_statement { value: "" } } system_variables {)"
       R"( values { } } } } reference { project_id: "p123" job_id: "j123")"
       R"( location: "" } status { state: "DONE" error_result { reason: "")"
@@ -1159,7 +1159,7 @@ TEST(InsertJobResponseTest, DebugString) {
       R"( key: "header1" value: "value1" } payload: REDACTED } job {)"
       R"( etag: "jtag" kind: "jkind" self_link: "jselfLi...<truncated>...")"
       R"( id: "j123" configuration { job_type: "QUERY" dry_run: false)"
-      R"( job_timeout_ms { "0" } query_config { query: "select ...<truncated>...")"
+      R"( job_timeout { "0" } query_config { query: "select ...<truncated>...")"
       R"( create_disposition: "" write_disposition: "" priority: "")"
       R"( parameter_mode: "" preserve_nulls: false allow_large_results: false)"
       R"( use_query_cache: false flatten_results: false use_legacy_sql: false)"
@@ -1169,7 +1169,7 @@ TEST(InsertJobResponseTest, DebugString) {
       R"( expiration_time { "0" } field: "" } range_partitioning { field: "" range {)"
       R"( start: "" end: "" interval: "" } } clustering { })"
       R"( destination_encryption_configuration { kms_key_name: "" })"
-      R"( script_options { statement_timeout_ms { "0" } statement_byte_budget: 0)"
+      R"( script_options { statement_timeout { "0" } statement_byte_budget: 0)"
       R"( key_result_statement { value: "" } } system_variables { values { } } } })"
       R"( reference { project_id: "p123" job_id: "j123" location: "" } status {)"
       R"( state: "DONE" error_result { reason: "" location: "" message: "" } })"
@@ -1222,7 +1222,7 @@ TEST(InsertJobResponseTest, DebugString) {
     configuration {
       job_type: "QUERY"
       dry_run: false
-      job_timeout_ms {
+      job_timeout {
         "0"
       }
       query_config {
@@ -1268,7 +1268,7 @@ TEST(InsertJobResponseTest, DebugString) {
           kms_key_name: ""
         }
         script_options {
-          statement_timeout_ms {
+          statement_timeout {
             "0"
           }
           statement_byte_budget: 0
@@ -1607,7 +1607,7 @@ TEST(CancelJobResponseTest, DebugString) {
       R"( key: "header1" value: "value1" } payload: REDACTED } job {)"
       R"( etag: "jtag" kind: "jkind" self_link: "jselfLink" id: "j123")"
       R"( configuration { job_type: "QUERY" dry_run: false)"
-      R"( job_timeout_ms { "0" } query_config { query: "select 1;")"
+      R"( job_timeout { "0" } query_config { query: "select 1;")"
       R"( create_disposition: "" write_disposition: "" priority: "")"
       R"( parameter_mode: "" preserve_nulls: false allow_large_results: false)"
       R"( use_query_cache: false flatten_results: false use_legacy_sql: false)"
@@ -1617,7 +1617,7 @@ TEST(CancelJobResponseTest, DebugString) {
       R"( type: "" expiration_time { "0" } field: "" } range_partitioning {)"
       R"( field: "" range { start: "" end: "" interval: "" } } clustering { })"
       R"( destination_encryption_configuration { kms_key_name: "" })"
-      R"( script_options { statement_timeout_ms { "0" } statement_byte_budget: 0)"
+      R"( script_options { statement_timeout { "0" } statement_byte_budget: 0)"
       R"( key_result_statement { value: "" } } system_variables {)"
       R"( values { } } } } reference { project_id: "p123" job_id: "j123")"
       R"( location: "" } status { state: "DONE" error_result { reason: "")"
@@ -1662,7 +1662,7 @@ TEST(CancelJobResponseTest, DebugString) {
       R"( key: "header1" value: "value1" } payload: REDACTED } job {)"
       R"( etag: "jtag" kind: "jkind" self_link: "jselfLi...<truncated>...")"
       R"( id: "j123" configuration { job_type: "QUERY" dry_run: false)"
-      R"( job_timeout_ms { "0" } query_config { query: "select ...<truncated>...")"
+      R"( job_timeout { "0" } query_config { query: "select ...<truncated>...")"
       R"( create_disposition: "" write_disposition: "" priority: "")"
       R"( parameter_mode: "" preserve_nulls: false allow_large_results: false)"
       R"( use_query_cache: false flatten_results: false use_legacy_sql: false)"
@@ -1672,7 +1672,7 @@ TEST(CancelJobResponseTest, DebugString) {
       R"( expiration_time { "0" } field: "" } range_partitioning { field: "" range {)"
       R"( start: "" end: "" interval: "" } } clustering { })"
       R"( destination_encryption_configuration { kms_key_name: "" })"
-      R"( script_options { statement_timeout_ms { "0" } statement_byte_budget: 0)"
+      R"( script_options { statement_timeout { "0" } statement_byte_budget: 0)"
       R"( key_result_statement { value: "" } } system_variables { values { } } } })"
       R"( reference { project_id: "p123" job_id: "j123" location: "" } status {)"
       R"( state: "DONE" error_result { reason: "" location: "" message: "" } })"
@@ -1726,7 +1726,7 @@ TEST(CancelJobResponseTest, DebugString) {
     configuration {
       job_type: "QUERY"
       dry_run: false
-      job_timeout_ms {
+      job_timeout {
         "0"
       }
       query_config {
@@ -1772,7 +1772,7 @@ TEST(CancelJobResponseTest, DebugString) {
           kms_key_name: ""
         }
         script_options {
-          statement_timeout_ms {
+          statement_timeout {
             "0"
           }
           statement_byte_budget: 0

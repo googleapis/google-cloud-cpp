@@ -413,7 +413,7 @@ std::string ScriptOptions::DebugString(absl::string_view name,
                                        TracingOptions const& options,
                                        int indent) const {
   return internal::DebugFormatter(name, options, indent)
-      .Field("statement_timeout_ms", statement_timeout)
+      .Field("statement_timeout", statement_timeout)
       .Field("statement_byte_budget", statement_byte_budget)
       .SubMessage("key_result_statement", key_result_statement)
       .Build();
