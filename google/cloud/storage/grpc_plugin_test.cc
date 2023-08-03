@@ -48,7 +48,7 @@ TEST(GrpcPluginTest, MetadataConfigCreatesGrpc) {
   auto impl = ClientImplDetails::GetRawClient(client);
   ASSERT_THAT(impl, NotNull());
   EXPECT_THAT(impl->InspectStackStructure(),
-              ElementsAre("GrpcClient", "RetryClient"));
+              ElementsAre("GrpcClient", "GenericStubAdapter", "RetryClient"));
 }
 
 TEST(GrpcPluginTest, EnvironmentOverrides) {
@@ -62,7 +62,7 @@ TEST(GrpcPluginTest, EnvironmentOverrides) {
   auto impl = ClientImplDetails::GetRawClient(client);
   ASSERT_THAT(impl, NotNull());
   EXPECT_THAT(impl->InspectStackStructure(),
-              ElementsAre("RestClient", "RetryClient"));
+              ElementsAre("RestClient", "GenericStubAdapter", "RetryClient"));
 }
 
 TEST(GrpcPluginTest, UnsetConfigCreatesMetadata) {
@@ -75,7 +75,7 @@ TEST(GrpcPluginTest, UnsetConfigCreatesMetadata) {
   auto impl = ClientImplDetails::GetRawClient(client);
   ASSERT_THAT(impl, NotNull());
   EXPECT_THAT(impl->InspectStackStructure(),
-              ElementsAre("GrpcClient", "RetryClient"));
+              ElementsAre("GrpcClient", "GenericStubAdapter", "RetryClient"));
 }
 
 TEST(GrpcPluginTest, NoneConfigCreatesCurl) {
@@ -88,7 +88,7 @@ TEST(GrpcPluginTest, NoneConfigCreatesCurl) {
   auto impl = ClientImplDetails::GetRawClient(client);
   ASSERT_THAT(impl, NotNull());
   EXPECT_THAT(impl->InspectStackStructure(),
-              ElementsAre("RestClient", "RetryClient"));
+              ElementsAre("RestClient", "GenericStubAdapter", "RetryClient"));
 }
 
 TEST(GrpcPluginTest, MediaConfigCreatesHybrid) {
@@ -100,9 +100,9 @@ TEST(GrpcPluginTest, MediaConfigCreatesHybrid) {
   auto client = DefaultGrpcClient(TestOptions().set<GrpcPluginOption>("media"));
   auto impl = ClientImplDetails::GetRawClient(client);
   ASSERT_THAT(impl, NotNull());
-  EXPECT_THAT(
-      impl->InspectStackStructure(),
-      ElementsAre("GrpcClient", "RestClient", "HybridClient", "RetryClient"));
+  EXPECT_THAT(impl->InspectStackStructure(),
+              ElementsAre("GrpcClient", "RestClient", "HybridClient",
+                          "GenericStubAdapter", "RetryClient"));
 }
 
 #include "google/cloud/internal/disable_deprecation_warnings.inc"

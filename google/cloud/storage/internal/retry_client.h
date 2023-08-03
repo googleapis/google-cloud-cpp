@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_RETRY_CLIENT_H
 
 #include "google/cloud/storage/idempotency_policy.h"
+#include "google/cloud/storage/internal/generic_stub.h"
 #include "google/cloud/storage/internal/raw_client.h"
 #include "google/cloud/storage/retry_policy.h"
 #include "google/cloud/storage/version.h"
@@ -32,8 +33,9 @@ namespace internal {
 class RetryClient : public RawClient,
                     public std::enable_shared_from_this<RetryClient> {
  public:
-  static std::shared_ptr<RetryClient> Create(std::shared_ptr<RawClient> client,
-                                             Options options = {});
+  static std::shared_ptr<RetryClient> Create(
+      std::unique_ptr<storage_internal::GenericStub> stub,
+      Options options = {});
 
   ~RetryClient() override = default;
 
@@ -155,14 +157,16 @@ class RetryClient : public RawClient,
   std::vector<std::string> InspectStackStructure() const override;
 
  private:
-  explicit RetryClient(std::shared_ptr<RawClient> client, Options options);
+  explicit RetryClient(std::unique_ptr<storage_internal::GenericStub> stub,
+                       Options options);
 
   static std::unique_ptr<RetryPolicy> current_retry_policy();
   static std::unique_ptr<BackoffPolicy> current_backoff_policy();
   static IdempotencyPolicy& current_idempotency_policy();
 
-  std::shared_ptr<RawClient> client_;
+  std::unique_ptr<storage_internal::GenericStub> stub_;
   Options options_;
+  ClientOptions client_options_;  // For backwards compatibility
 };
 
 }  // namespace internal

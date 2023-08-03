@@ -167,7 +167,7 @@ TEST_F(ClientTest, DefaultDecoratorsCurlClient) {
   auto const impl = ClientImplDetails::GetRawClient(tested);
   ASSERT_THAT(impl, NotNull());
   EXPECT_THAT(impl->InspectStackStructure(),
-              ElementsAre("CurlClient", "RetryClient"));
+              ElementsAre("CurlClient", "GenericStubAdapter", "RetryClient"));
 }
 
 /// @test Verify the constructor creates the right set of RawClient decorations.
@@ -184,7 +184,8 @@ TEST_F(ClientTest, LoggingDecoratorsCurlClient) {
   auto const impl = ClientImplDetails::GetRawClient(tested);
   ASSERT_THAT(impl, NotNull());
   EXPECT_THAT(impl->InspectStackStructure(),
-              ElementsAre("CurlClient", "LoggingClient", "RetryClient"));
+              ElementsAre("CurlClient", "LoggingClient", "GenericStubAdapter",
+                          "RetryClient"));
 }
 
 /// @test Verify the constructor creates the right set of RawClient decorations.
@@ -201,7 +202,7 @@ TEST_F(ClientTest, DefaultDecoratorsRestClient) {
   auto const impl = ClientImplDetails::GetRawClient(tested);
   ASSERT_THAT(impl, NotNull());
   EXPECT_THAT(impl->InspectStackStructure(),
-              ElementsAre("RestClient", "RetryClient"));
+              ElementsAre("RestClient", "GenericStubAdapter", "RetryClient"));
 }
 
 /// @test Verify the constructor creates the right set of RawClient decorations.
@@ -216,7 +217,8 @@ TEST_F(ClientTest, LoggingDecoratorsRestClient) {
   auto const impl = ClientImplDetails::GetRawClient(tested);
   ASSERT_THAT(impl, NotNull());
   EXPECT_THAT(impl->InspectStackStructure(),
-              ElementsAre("RestClient", "LoggingClient", "RetryClient"));
+              ElementsAre("RestClient", "LoggingClient", "GenericStubAdapter",
+                          "RetryClient"));
 }
 
 #include "google/cloud/internal/disable_deprecation_warnings.inc"
