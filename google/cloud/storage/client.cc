@@ -53,11 +53,12 @@ std::shared_ptr<internal::RawClient> Client::CreateDefaultInternalClient(
   if (enable_logging) {
     client = std::make_shared<internal::LoggingClient>(std::move(client));
   }
+  client = internal::RetryClient::Create(
+      storage_internal::MakeGenericStubAdapter(std::move(client)), opts);
   if (google::cloud::internal::TracingEnabled(opts)) {
     client = storage_internal::MakeTracingClient(std::move(client));
   }
-  return internal::RetryClient::Create(
-      storage_internal::MakeGenericStubAdapter(std::move(client)), opts);
+  return client;
 }
 
 std::shared_ptr<internal::RawClient> Client::CreateDefaultInternalClient(
