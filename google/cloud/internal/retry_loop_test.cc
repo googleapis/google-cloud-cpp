@@ -123,8 +123,9 @@ TEST(RetryLoopTest, UsesBackoffPolicy) {
   int counter = 0;
   std::vector<ms> sleep_for;
   OptionsSpan span(Options{}.set<StringOption>("UsesBackoffPolicy"));
+  auto retry_policy = TestRetryPolicy();
   StatusOr<int> actual = RetryLoopImpl(
-      TestRetryPolicy(), std::move(mock), Idempotency::kIdempotent,
+      *retry_policy, *mock, Idempotency::kIdempotent,
       [&counter](grpc::ClientContext&, int request) {
         EXPECT_EQ(CurrentOptions().get<StringOption>(), "UsesBackoffPolicy");
         if (++counter <= 3) {

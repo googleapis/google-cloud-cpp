@@ -87,9 +87,8 @@ auto RestRetryLoopImpl(RetryPolicy& retry_policy, BackoffPolicy& backoff_policy,
   // The last error cannot be retried, but it is not because the retry
   // policy is exhausted. We call these "permanent errors", and they
   // get a special message.
-  char const* prefix = !retry_policy.IsExhausted()
-                           ? "Permanent error in"
-                           : "Retry policy exhausted in";
+  auto const* prefix = retry_policy.IsExhausted() ? "Retry policy exhausted in"
+                                                  : "Permanent error in";
   return internal::RetryLoopError(prefix, location, last_status);
 }
 
