@@ -107,6 +107,9 @@ add_library(
     internal/generate_message_boundary.h
     internal/generic_object_request.h
     internal/generic_request.h
+    internal/generic_stub.h
+    internal/generic_stub_adapter.cc
+    internal/generic_stub_adapter.h
     internal/hash_function.cc
     internal/hash_function.h
     internal/hash_function_impl.cc
