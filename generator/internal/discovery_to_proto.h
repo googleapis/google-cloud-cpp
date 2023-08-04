@@ -93,6 +93,11 @@ Status GenerateProtosFromDiscoveryDoc(
 // containing any of the aforementioned field types.
 std::set<std::string> FindAllRefValues(nlohmann::json const& json);
 
+// Iterates through all types establishing edges based on their dependencies via
+// DiscoveryTypeVertex::AddNeedsType and DiscoveryTypeVertex::AddNeededByType.
+Status EstablishTypeDependencies(
+    std::map<std::string, DiscoveryTypeVertex>& types);
+
 }  // namespace generator_internal
 }  // namespace cloud
 }  // namespace google

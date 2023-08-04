@@ -33,6 +33,9 @@ using ::testing::HasSubstr;
 using ::testing::IsEmpty;
 using ::testing::IsNull;
 using ::testing::Key;
+using ::testing::Pair;
+using ::testing::Pointee;
+using ::testing::Property;
 using ::testing::SizeIs;
 using ::testing::UnorderedElementsAre;
 
@@ -1275,8 +1278,7 @@ TEST(FindAllRefValuesTest, SingleNestedNestedRefField) {
   EXPECT_THAT(result, UnorderedElementsAre("Foo", "Bar"));
 }
 
-TEST(FindAllRefValuesTest, ComplexJsonWithRefTypes) {
-  auto constexpr kOperationJson = R"""({
+auto constexpr kOperationJson = R"""({
       "type": "object",
       "properties": {
         "operationGroupId": {
@@ -1376,6 +1378,7 @@ TEST(FindAllRefValuesTest, ComplexJsonWithRefTypes) {
       "id": "Operation"
 })""";
 
+TEST(FindAllRefValuesTest, ComplexJsonWithRefTypes) {
   auto const parsed_json =
       nlohmann::json::parse(kOperationJson, nullptr, false);
   ASSERT_TRUE(parsed_json.is_object());
@@ -1383,6 +1386,112 @@ TEST(FindAllRefValuesTest, ComplexJsonWithRefTypes) {
   EXPECT_THAT(result, UnorderedElementsAre(
                           "LocalizedMessage", "QuotaExceededInfo", "ErrorInfo",
                           "Help", "Timestamp", "Label", "Label2"));
+}
+
+class EstablishTypeDependenciesTest
+    : public generator_testing::DescriptorPoolFixture {};
+
+TEST_F(EstablishTypeDependenciesTest, DependedTypeNotFound) {
+  std::map<std::string, DiscoveryTypeVertex> types;
+  auto constexpr kTypeJson = R"""({
+  "properties": {
+    "field_name_1": {
+      "$ref": "Foo"
+    }
+  }
+})""";
+
+  auto const parsed_json = nlohmann::json::parse(kTypeJson, nullptr, false);
+  ASSERT_TRUE(parsed_json.is_object());
+  auto iter = types.emplace(
+      "Bar", DiscoveryTypeVertex{"Bar", "package_name", parsed_json, &pool()});
+  ASSERT_TRUE(iter.second);
+  auto result = EstablishTypeDependencies(types);
+
+  EXPECT_THAT(result, StatusIs(StatusCode::kInternal,
+                               HasSubstr("Unknown depended upon type")));
+  EXPECT_THAT(
+      result.error_info().metadata(),
+      Contains(AllOf(
+          (Pair(std::string("dependent type"), std::string("Bar")),
+           Pair(std::string("depended upon type"), std::string("Foo"))))));
+}
+
+TEST_F(EstablishTypeDependenciesTest, AllTypesLinked) {
+  std::map<std::string, DiscoveryTypeVertex> types;
+
+  auto add_to_types = [&](DiscoveryTypeVertex t,
+                          DiscoveryTypeVertex*& return_val) {
+    auto iter = types.emplace(t.name(), std::move(t));
+    ASSERT_TRUE(iter.second);
+    return_val = &(iter.first->second);
+  };
+
+  DiscoveryTypeVertex* localized_message;
+  add_to_types(
+      DiscoveryTypeVertex{"LocalizedMessage", "package_name", {}, &pool()},
+      localized_message);
+  DiscoveryTypeVertex* quota_exceeded_info;
+  add_to_types(
+      DiscoveryTypeVertex{"QuotaExceededInfo", "package_name", {}, &pool()},
+      quota_exceeded_info);
+  DiscoveryTypeVertex* error_info;
+  add_to_types(DiscoveryTypeVertex{"ErrorInfo", "package_name", {}, &pool()},
+               error_info);
+  DiscoveryTypeVertex* help;
+  add_to_types(DiscoveryTypeVertex{"Help", "package_name", {}, &pool()}, help);
+  DiscoveryTypeVertex* timestamp;
+  add_to_types(DiscoveryTypeVertex{"Timestamp", "package_name", {}, &pool()},
+               timestamp);
+  DiscoveryTypeVertex* label;
+  add_to_types(DiscoveryTypeVertex{"Label", "package_name", {}, &pool()},
+               label);
+  DiscoveryTypeVertex* label2;
+  add_to_types(DiscoveryTypeVertex{"Label2", "package_name", {}, &pool()},
+               label2);
+
+  auto const operation_json =
+      nlohmann::json::parse(kOperationJson, nullptr, false);
+  ASSERT_TRUE(operation_json.is_object());
+  auto operation_iter = types.emplace(
+      "Operation", DiscoveryTypeVertex{"Operation", "package_name",
+                                       operation_json, &pool()});
+  ASSERT_TRUE(operation_iter.second);
+  DiscoveryTypeVertex* operation = &operation_iter.first->second;
+  auto result = EstablishTypeDependencies(types);
+  ASSERT_STATUS_OK(result);
+
+  auto named = [](std::string const& name) {
+    return Pointee(Property(&DiscoveryTypeVertex::name, Eq(name)));
+  };
+
+  EXPECT_THAT(operation->needs_type(),
+              UnorderedElementsAre(
+                  named("LocalizedMessage"), named("QuotaExceededInfo"),
+                  named("ErrorInfo"), named("Help"), named("Timestamp"),
+                  named("Label"), named("Label2")));
+  EXPECT_THAT(operation->needed_by_type(), IsEmpty());
+
+  EXPECT_THAT(localized_message->needs_type(), IsEmpty());
+  EXPECT_THAT(localized_message->needed_by_type(),
+              UnorderedElementsAre(named("Operation")));
+  EXPECT_THAT(quota_exceeded_info->needs_type(), IsEmpty());
+  EXPECT_THAT(quota_exceeded_info->needed_by_type(),
+              UnorderedElementsAre(named("Operation")));
+  EXPECT_THAT(error_info->needs_type(), IsEmpty());
+  EXPECT_THAT(error_info->needed_by_type(),
+              UnorderedElementsAre(named("Operation")));
+  EXPECT_THAT(help->needs_type(), IsEmpty());
+  EXPECT_THAT(help->needed_by_type(), UnorderedElementsAre(named("Operation")));
+  EXPECT_THAT(timestamp->needs_type(), IsEmpty());
+  EXPECT_THAT(timestamp->needed_by_type(),
+              UnorderedElementsAre(named("Operation")));
+  EXPECT_THAT(label->needs_type(), IsEmpty());
+  EXPECT_THAT(label->needed_by_type(),
+              UnorderedElementsAre(named("Operation")));
+  EXPECT_THAT(label2->needs_type(), IsEmpty());
+  EXPECT_THAT(label2->needed_by_type(),
+              UnorderedElementsAre(named("Operation")));
 }
 
 }  // namespace

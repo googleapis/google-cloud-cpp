@@ -88,12 +88,11 @@ bool DiscoveryTypeVertex::IsSynthesizedRequestType() const {
   return json_.value("synthesized_request", false);
 }
 
-void DiscoveryTypeVertex::AddNeedsTypeName(std::string type_name) {
-  needs_.insert(std::move(type_name));
+void DiscoveryTypeVertex::AddNeedsType(DiscoveryTypeVertex* type) {
+  needs_type_.insert(type);
 }
-
-void DiscoveryTypeVertex::AddNeededByTypeName(std::string type_name) {
-  needed_by_.insert(std::move(type_name));
+void DiscoveryTypeVertex::AddNeededByType(DiscoveryTypeVertex* type) {
+  needed_by_type_.insert(type);
 }
 
 std::string DiscoveryTypeVertex::DetermineIntroducer(
@@ -465,9 +464,13 @@ StatusOr<std::string> DiscoveryTypeVertex::JsonToProtobufMessage(
 }
 
 std::string DiscoveryTypeVertex::DebugString() const {
-  return absl::StrFormat("name: %s; needs: %s; needed_by: %s", name_,
-                         absl::StrJoin(needs_, ","),
-                         absl::StrJoin(needed_by_, ","));
+  auto formatter = [](std::string* out, DiscoveryTypeVertex* t) {
+    out->append(t->name());
+  };
+  return absl::StrFormat(
+      "name: %s; needs_type_name: %s; needed_by_type_name: %s", name_,
+      absl::StrJoin(needs_type_, ",", formatter),
+      absl::StrJoin(needed_by_type_, ",", formatter));
 }
 
 }  // namespace generator_internal
