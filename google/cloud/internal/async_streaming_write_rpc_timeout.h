@@ -98,17 +98,18 @@ class AsyncStreamingWriteRpcTimeout
       auto watchdog = CreateWatchdog(start_timeout);
       return child->Start().then(
           [watchdog = std::move(watchdog), w = WeakFromThis()](auto f) mutable {
-            if (auto self = w.lock())
+            if (auto self = w.lock()) {
               return self->OnStart(std::move(watchdog), f.get());
+            }
             return make_ready_future(false);
           });
     }
 
-    future<bool> OnStart(future<bool> watchdog, bool ok) {
+    future<bool> OnStart(future<bool> watchdog, bool start) {
       watchdog.cancel();
-      return watchdog.then([w = WeakFromThis(), ok](auto f) {
+      return watchdog.then([w = WeakFromThis(), start](auto f) {
         auto expired = f.get();
-        return ok && !expired;
+        return !expired && start;
       });
     }
 

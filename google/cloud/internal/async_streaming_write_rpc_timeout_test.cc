@@ -43,12 +43,18 @@ StatusOr<std::chrono::system_clock::time_point> CancelledTimer() {
   return internal::CancelledError("test-only", GCP_ERROR_INFO());
 }
 
+StatusOr<std::chrono::system_clock::time_point> MakeTimerStatus(
+    future<bool> f) {
+  if (!f.get()) return CancelledTimer();
+  return make_status_or(std::chrono::system_clock::now());
+}
+
 TEST(AsyncStreamingWriteRpcTimeout, Cancel) {
   AsyncSequencer<bool> sequencer;
   auto mock = std::make_unique<MockStream>();
   EXPECT_CALL(*mock, Cancel).Times(1);
 
-  auto constexpr kStartTimeout = std::chrono::milliseconds(2345);
+  auto constexpr kStartTimeout = std::chrono::milliseconds(1234);
   auto constexpr kWriteTimeout = std::chrono::milliseconds(2345);
 
   auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
@@ -68,19 +74,14 @@ TEST(AsyncStreamingWriteRpcTimeout, StartSuccess) {
   });
   EXPECT_CALL(*mock, Cancel).Times(0);
 
-  auto constexpr kStartTimeout = std::chrono::milliseconds(2345);
+  auto constexpr kStartTimeout = std::chrono::milliseconds(1234);
   auto constexpr kWriteTimeout = std::chrono::milliseconds(2345);
 
   auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
   EXPECT_CALL(*mock_cq,
               MakeRelativeTimer(std::chrono::nanoseconds(kStartTimeout)))
       .WillOnce([&](auto) {
-        return sequencer.PushBack("MakeRelativeTimer")
-            .then(
-                [](auto f) -> StatusOr<std::chrono::system_clock::time_point> {
-                  if (!f.get()) return CancelledTimer();
-                  return make_status_or(std::chrono::system_clock::now());
-                });
+        return sequencer.PushBack("MakeRelativeTimer").then(MakeTimerStatus);
       });
 
   CompletionQueue cq(mock_cq);
@@ -104,19 +105,14 @@ TEST(AsyncStreamingWriteRpcTimeout, StartTimeout) {
   });
   EXPECT_CALL(*mock, Cancel).Times(1);
 
-  auto constexpr kStartTimeout = std::chrono::milliseconds(2345);
+  auto constexpr kStartTimeout = std::chrono::milliseconds(1234);
   auto constexpr kWriteTimeout = std::chrono::milliseconds(2345);
 
   auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
   EXPECT_CALL(*mock_cq,
               MakeRelativeTimer(std::chrono::nanoseconds(kStartTimeout)))
       .WillOnce([&](auto) {
-        return sequencer.PushBack("MakeRelativeTimer")
-            .then(
-                [](auto f) -> StatusOr<std::chrono::system_clock::time_point> {
-                  if (!f.get()) return CancelledTimer();
-                  return make_status_or(std::chrono::system_clock::now());
-                });
+        return sequencer.PushBack("MakeRelativeTimer").then(MakeTimerStatus);
       });
 
   CompletionQueue cq(mock_cq);
@@ -140,19 +136,14 @@ TEST(AsyncStreamingWriteRpcTimeout, WriteSuccess) {
   });
   EXPECT_CALL(*mock, Cancel).Times(0);
 
-  auto constexpr kStartTimeout = std::chrono::milliseconds(2345);
+  auto constexpr kStartTimeout = std::chrono::milliseconds(1234);
   auto constexpr kWriteTimeout = std::chrono::milliseconds(2345);
 
   auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
   EXPECT_CALL(*mock_cq,
-              MakeRelativeTimer(std::chrono::nanoseconds(kStartTimeout)))
+              MakeRelativeTimer(std::chrono::nanoseconds(kWriteTimeout)))
       .WillOnce([&](auto) {
-        return sequencer.PushBack("MakeRelativeTimer")
-            .then(
-                [](auto f) -> StatusOr<std::chrono::system_clock::time_point> {
-                  if (!f.get()) return CancelledTimer();
-                  return make_status_or(std::chrono::system_clock::now());
-                });
+        return sequencer.PushBack("MakeRelativeTimer").then(MakeTimerStatus);
       });
 
   CompletionQueue cq(mock_cq);
@@ -176,19 +167,14 @@ TEST(AsyncStreamingWriteRpcTimeout, WriteTimeout) {
   });
   EXPECT_CALL(*mock, Cancel).Times(1);
 
-  auto constexpr kStartTimeout = std::chrono::milliseconds(2345);
+  auto constexpr kStartTimeout = std::chrono::milliseconds(1345);
   auto constexpr kWriteTimeout = std::chrono::milliseconds(2345);
 
   auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
   EXPECT_CALL(*mock_cq,
-              MakeRelativeTimer(std::chrono::nanoseconds(kStartTimeout)))
+              MakeRelativeTimer(std::chrono::nanoseconds(kWriteTimeout)))
       .WillOnce([&](auto) {
-        return sequencer.PushBack("MakeRelativeTimer")
-            .then(
-                [](auto f) -> StatusOr<std::chrono::system_clock::time_point> {
-                  if (!f.get()) return CancelledTimer();
-                  return make_status_or(std::chrono::system_clock::now());
-                });
+        return sequencer.PushBack("MakeRelativeTimer").then(MakeTimerStatus);
       });
 
   CompletionQueue cq(mock_cq);
@@ -212,19 +198,14 @@ TEST(AsyncStreamingWriteRpcTimeout, WritesDoneSuccess) {
   });
   EXPECT_CALL(*mock, Cancel).Times(0);
 
-  auto constexpr kStartTimeout = std::chrono::milliseconds(2345);
+  auto constexpr kStartTimeout = std::chrono::milliseconds(1234);
   auto constexpr kWriteTimeout = std::chrono::milliseconds(2345);
 
   auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
   EXPECT_CALL(*mock_cq,
-              MakeRelativeTimer(std::chrono::nanoseconds(kStartTimeout)))
+              MakeRelativeTimer(std::chrono::nanoseconds(kWriteTimeout)))
       .WillOnce([&](auto) {
-        return sequencer.PushBack("MakeRelativeTimer")
-            .then(
-                [](auto f) -> StatusOr<std::chrono::system_clock::time_point> {
-                  if (!f.get()) return CancelledTimer();
-                  return make_status_or(std::chrono::system_clock::now());
-                });
+        return sequencer.PushBack("MakeRelativeTimer").then(MakeTimerStatus);
       });
 
   CompletionQueue cq(mock_cq);
@@ -248,19 +229,14 @@ TEST(AsyncStreamingWriteRpcTimeout, WritesDoneTimeout) {
   });
   EXPECT_CALL(*mock, Cancel).Times(1);
 
-  auto constexpr kStartTimeout = std::chrono::milliseconds(2345);
+  auto constexpr kStartTimeout = std::chrono::milliseconds(1234);
   auto constexpr kWriteTimeout = std::chrono::milliseconds(2345);
 
   auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
   EXPECT_CALL(*mock_cq,
-              MakeRelativeTimer(std::chrono::nanoseconds(kStartTimeout)))
+              MakeRelativeTimer(std::chrono::nanoseconds(kWriteTimeout)))
       .WillOnce([&](auto) {
-        return sequencer.PushBack("MakeRelativeTimer")
-            .then(
-                [](auto f) -> StatusOr<std::chrono::system_clock::time_point> {
-                  if (!f.get()) return CancelledTimer();
-                  return make_status_or(std::chrono::system_clock::now());
-                });
+        return sequencer.PushBack("MakeRelativeTimer").then(MakeTimerStatus);
       });
 
   CompletionQueue cq(mock_cq);
@@ -289,15 +265,15 @@ TEST(AsyncStreamingWriteRpcTimeout, Finish) {
   });
   EXPECT_CALL(*mock, Cancel).Times(0);
 
-  auto constexpr kStartTimeout = std::chrono::milliseconds(2345);
-  auto constexpr kReadTimeout = std::chrono::milliseconds(2345);
+  auto constexpr kStartTimeout = std::chrono::milliseconds(1234);
+  auto constexpr kWriteTimeout = std::chrono::milliseconds(2345);
 
   auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
   EXPECT_CALL(*mock_cq, MakeRelativeTimer).Times(0);
 
   CompletionQueue cq(mock_cq);
 
-  TestedStream uut(cq, kStartTimeout, kReadTimeout, std::move(mock));
+  TestedStream uut(cq, kStartTimeout, kWriteTimeout, std::move(mock));
   auto result = uut.Finish();
   auto finish = sequencer.PopFrontWithName();
   ASSERT_THAT(finish.second, "Finish");
@@ -311,15 +287,15 @@ TEST(AsyncStreamingWriteRpcTimeout, GetRequestMetadata) {
   auto mock = std::make_unique<MockStream>();
   EXPECT_CALL(*mock, GetRequestMetadata).WillOnce(Return(expected));
 
-  auto constexpr kStartTimeout = std::chrono::milliseconds(2345);
-  auto constexpr kReadTimeout = std::chrono::milliseconds(2345);
+  auto constexpr kStartTimeout = std::chrono::milliseconds(1234);
+  auto constexpr kWriteTimeout = std::chrono::milliseconds(2345);
 
   auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
   EXPECT_CALL(*mock_cq, MakeRelativeTimer).Times(0);
 
   CompletionQueue cq(mock_cq);
 
-  TestedStream uut(cq, kStartTimeout, kReadTimeout, std::move(mock));
+  TestedStream uut(cq, kStartTimeout, kWriteTimeout, std::move(mock));
   auto const actual = uut.GetRequestMetadata();
   EXPECT_THAT(actual, ElementsAreArray(expected));
 }
