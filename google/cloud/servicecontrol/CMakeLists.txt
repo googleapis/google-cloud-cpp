@@ -127,7 +127,7 @@ if (BUILD_TESTING)
     set_tests_properties(
         servicecontrol_quickstart
         PROPERTIES LABELS "integration-test;quickstart" PASS_REGULAR_EXPRESSION
-                   "Error in non-idempotent.*operation Check:")
+                   "Error in non-idempotent.*gcloud-cpp.retry.function=Check")
 endif ()
 
 # Get the destination directories based on the GNU recommendations.
