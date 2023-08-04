@@ -33,7 +33,7 @@ int main(int argc, char* argv[]) try {
     std::cerr
         << "Usage: " << argv[0] << " project-id resource-name\n"
         << "See https://cloud.google.com/iam/docs/full-resource-names for "
-           "examples of fully qualified resource names.";
+           "examples of fully qualified resource names.\n";
     return 1;
   }
 
