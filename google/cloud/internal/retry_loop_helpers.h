@@ -37,13 +37,14 @@ Status RetryLoopNonIdempotentError(Status status, char const* location);
 
 /// Use this if the retry loop finished with an error.
 ///
-/// Set @p exhausted to true if the retry policy has been exhausted
+/// Set @p exhausted to true if the retry policy has been exhausted.
 Status RetryLoopError(Status const& s, char const* location, bool exhausted);
 
 /// Use this if the retry loop detects any permanent errors.
 Status RetryLoopPermanentError(Status const& status, char const* location);
 
-/// Use this if the retry loop exits as the retry policy has been exhausted.
+/// Use this if the retry loop exits because the retry policy has been
+/// exhausted.
 Status RetryLoopPolicyExhaustedError(Status const& status,
                                      char const* location);
 

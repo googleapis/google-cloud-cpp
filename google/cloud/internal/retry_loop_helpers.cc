@@ -60,7 +60,7 @@ Status RetryLoopError(Status const& status, char const* location,
 Status RetryLoopPermanentError(Status const& status, char const* location) {
   if (status.ok()) {
     return UnknownError(
-        absl::StrCat("Retry policy treats kOkay as permanent error"),
+        absl::StrCat("Retry policy treats kOk as permanent error"),
         AddErrorMetadata(GCP_ERROR_INFO(), location, "permanent-error"));
   }
   auto ei = status.error_info();
