@@ -58,6 +58,7 @@ GOOGLE_CLOUD_CPP_GA_LIBRARIES = [
     "containeranalysis",
     "contentwarehouse",
     "datacatalog",
+    "datastore",
     "datafusion",
     "datamigration",
     "dataplex",

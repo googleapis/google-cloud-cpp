@@ -23,7 +23,7 @@ set(DOXYGEN_EXAMPLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/quickstart)
 
 unset(mocks_globs)
 unset(source_globs)
-set(service_dirs "v1/")
+set(service_dirs "admin/v1/" "v1/")
 foreach (dir IN LISTS service_dirs)
     string(REPLACE "/" "_" ns "${dir}")
     list(APPEND source_globs "${dir}*.h" "${dir}*.cc" "${dir}internal/*")
@@ -117,11 +117,8 @@ if (BUILD_TESTING)
     google_cloud_cpp_add_common_options(datastore_quickstart)
     add_test(
         NAME datastore_quickstart
-        COMMAND
-            cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
-            $<TARGET_FILE:datastore_quickstart> GOOGLE_CLOUD_PROJECT
-            # EDIT HERE
-    )
+        COMMAND cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
+                $<TARGET_FILE:datastore_quickstart> GOOGLE_CLOUD_PROJECT)
     set_tests_properties(datastore_quickstart
                          PROPERTIES LABELS "integration-test;quickstart")
 endif ()

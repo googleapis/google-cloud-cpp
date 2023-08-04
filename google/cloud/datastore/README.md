@@ -1,7 +1,7 @@
 # Cloud Datastore API C++ Client Library
 
 This directory contains an idiomatic C++ client library for the
-[Cloud Datastore API][cloud-service-docs], a service to Accesses the schemaless
+[Cloud Datastore API][cloud-service-docs]. This API accesses the schemaless
 NoSQL database to provide fully managed, robust, scalable storage for your
 application.
 
@@ -18,8 +18,7 @@ this library.
 <!-- inject-quickstart-start -->
 
 ```cc
-#include "google/cloud/datastore/ EDIT HERE .h"
-#include "google/cloud/project.h"
+#include "google/cloud/datastore/v1/datastore_client.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
@@ -28,14 +27,32 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
-  namespace datastore = ::google::cloud::datastore;
-  auto client = datastore::Client(datastore::MakeConnection());
+  namespace datastore = ::google::cloud::datastore_v1;
+  auto client =
+      datastore::DatastoreClient(datastore::MakeDatastoreConnection());
 
-  auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
-    if (!r) throw std::move(r).status();
-    std::cout << r->DebugString() << "\n";
-  }
+  auto const* project_id = argv[1];
+
+  google::datastore::v1::Key key;
+  key.mutable_partition_id()->set_project_id(project_id);
+  auto& path = *key.add_path();
+  path.set_kind("Task");
+  path.set_name("sampletask1");
+
+  google::datastore::v1::Mutation mutation;
+  auto& upsert = *mutation.mutable_upsert();
+  *upsert.mutable_key() = key;
+  google::datastore::v1::Value value;
+  value.set_string_value("Buy milk");
+  upsert.mutable_properties()->insert({"description", std::move(value)});
+
+  auto put = client.Commit(
+      project_id, google::datastore::v1::CommitRequest::NON_TRANSACTIONAL,
+      {mutation});
+  if (!put) throw std::move(put).status();
+
+  std::cout << "Saved " << key.DebugString() << " " << put->DebugString()
+            << "\n";
 
   return 0;
 } catch (google::cloud::Status const& status) {
