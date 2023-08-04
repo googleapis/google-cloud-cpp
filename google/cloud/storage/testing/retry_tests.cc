@@ -1,0 +1,87 @@
+// Copyright 2023 Google LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     https://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+#include "google/cloud/storage/testing/retry_tests.h"
+#include "google/cloud/storage/options.h"
+#include "google/cloud/storage/retry_policy.h"
+#include "google/cloud/storage/testing/canonical_errors.h"
+#include "google/cloud/testing_util/status_matchers.h"
+#include <chrono>
+
+namespace google {
+namespace cloud {
+namespace storage {
+namespace testing {
+
+using ::google::cloud::storage::testing::canonical_errors::PermanentError;
+using ::google::cloud::storage::testing::canonical_errors::TransientError;
+using ::google::cloud::testing_util::StatusIs;
+using ::testing::Contains;
+using ::testing::HasSubstr;
+using ::testing::Pair;
+using ::testing::ResultOf;
+
+auto constexpr kTooManyFailuresCount = 2;
+
+Options RetryClientTestOptions() {
+  return Options{}
+      .set<RetryPolicyOption>(
+          LimitedErrorCountRetryPolicy(kTooManyFailuresCount).clone())
+      .set<BackoffPolicyOption>(
+          ExponentialBackoffPolicy(std::chrono::microseconds(1),
+                                   std::chrono::microseconds(1), 2.0)
+              .clone())
+      .set<IdempotencyPolicyOption>(AlwaysRetryIdempotencyPolicy().clone());
+}
+
+::testing::Matcher<Status> StoppedOnTooManyTransients(char const* api_name) {
+  auto matches_api_name = [=](std::string const& name) {
+    return ResultOf(
+        "status metadata matches function name <" + name + ">",
+        [](Status const& s) { return s.error_info().metadata(); },
+        Contains(Pair("gcloud-cpp.retry.function", name)));
+  };
+  auto matches_exhausted = [=]() {
+    return ResultOf(
+        "status metadata matches exhausted retry policy reason",
+        [](Status const& s) { return s.error_info().metadata(); },
+        Contains(Pair("gcloud-cpp.retry.reason", "retry-policy-exhausted")));
+  };
+  return AllOf(
+      StatusIs(TransientError().code(), HasSubstr(TransientError().message())),
+      matches_api_name(api_name), matches_exhausted());
+}
+
+::testing::Matcher<Status> StoppedOnPermanentError(char const* api_name) {
+  auto matches_api_name = [](std::string const& name) {
+    return ResultOf(
+        "status metadata matches function name <" + name + ">",
+        [](Status const& s) { return s.error_info().metadata(); },
+        Contains(Pair("gcloud-cpp.retry.function", name)));
+  };
+  auto matches_exhausted = []() {
+    return ResultOf(
+        "status metadata matches exhausted retry policy reason",
+        [](Status const& s) { return s.error_info().metadata(); },
+        Contains(Pair("gcloud-cpp.retry.reason", "permanent-error")));
+  };
+  return AllOf(
+      StatusIs(PermanentError().code(), HasSubstr(PermanentError().message())),
+      matches_api_name(api_name), matches_exhausted());
+}
+
+}  // namespace testing
+}  // namespace storage
+}  // namespace cloud
+}  // namespace google

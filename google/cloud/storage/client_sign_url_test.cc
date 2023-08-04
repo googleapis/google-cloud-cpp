@@ -17,7 +17,6 @@
 #include "google/cloud/storage/oauth2/google_credentials.h"
 #include "google/cloud/storage/testing/canonical_errors.h"
 #include "google/cloud/storage/testing/client_unit_test.h"
-#include "google/cloud/storage/testing/retry_tests.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 
@@ -106,33 +105,6 @@ TEST_F(CreateSignedUrlTest, V2SignRemote) {
                                Options{}.set<UserProjectOption>("u-p-test"));
   ASSERT_STATUS_OK(actual);
   EXPECT_THAT(*actual, HasSubstr(expected_signed_blob_safe));
-}
-
-/// @test Verify that CreateV2SignedUrl() + SignBlob() respects retry policies.
-TEST_F(CreateSignedUrlTest, V2SignTooManyFailures) {
-  testing::TooManyFailuresStatusTest<internal::SignBlobResponse>(
-      mock_, EXPECT_CALL(*mock_, SignBlob),
-      [](Client& client) {
-        return client
-            .CreateV2SignedUrl("GET", "test-bucket", "test-object",
-                               SigningAccount("test-only-invalid@example.com"))
-            .status();
-      },
-      "SignBlob");
-}
-
-/// @test Verify that CreateV2SignedUrl() + SignBlob() respects retry policies.
-TEST_F(CreateSignedUrlTest, V2SignPermanentFailure) {
-  auto client = ClientForMock();
-  testing::PermanentFailureStatusTest<internal::SignBlobResponse>(
-      client, EXPECT_CALL(*mock_, SignBlob),
-      [](Client& client) {
-        return client
-            .CreateV2SignedUrl("GET", "test-bucket", "test-object",
-                               SigningAccount("test-only-invalid@example.com"))
-            .status();
-      },
-      "SignBlob");
 }
 
 // This is a placeholder service account JSON file that is inactive. It's fine
@@ -266,33 +238,6 @@ TEST_F(CreateSignedUrlTest, V4SignRemoteNoSigningEmail) {
       "GET", "test-bucket", "test-object", SigningAccount(""));
   EXPECT_THAT(actual, StatusIs(StatusCode::kInvalidArgument,
                                HasSubstr("signing account cannot be empty")));
-}
-
-/// @test Verify that CreateV4SignedUrl() + SignBlob() respects retry policies.
-TEST_F(CreateSignedUrlTest, V4SignTooManyFailures) {
-  testing::TooManyFailuresStatusTest<internal::SignBlobResponse>(
-      mock_, EXPECT_CALL(*mock_, SignBlob),
-      [](Client& client) {
-        return client
-            .CreateV4SignedUrl("GET", "test-bucket", "test-object",
-                               SigningAccount("test-only-invalid@example.com"))
-            .status();
-      },
-      "SignBlob");
-}
-
-/// @test Verify that CreateV4SignedUrl() + SignBlob() respects retry policies.
-TEST_F(CreateSignedUrlTest, V4SignPermanentFailure) {
-  auto client = ClientForMock();
-  testing::PermanentFailureStatusTest<internal::SignBlobResponse>(
-      client, EXPECT_CALL(*mock_, SignBlob),
-      [](Client& client) {
-        return client
-            .CreateV4SignedUrl("GET", "test-bucket", "test-object",
-                               SigningAccount("test-only-invalid@example.com"))
-            .status();
-      },
-      "SignBlob");
 }
 
 }  // namespace

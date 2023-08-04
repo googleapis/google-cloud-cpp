@@ -426,6 +426,7 @@ if (BUILD_TESTING)
         testing/remove_stale_buckets.h
         testing/retry_http_request.cc
         testing/retry_http_request.h
+        testing/retry_tests.cc
         testing/retry_tests.h
         testing/storage_integration_test.cc
         testing/storage_integration_test.h
@@ -513,6 +514,15 @@ if (BUILD_TESTING)
         internal/rest/client_test.cc
         internal/rest/object_read_source_test.cc
         internal/rest/request_builder_test.cc
+        internal/retry_client_bucket_acl_test.cc
+        internal/retry_client_bucket_test.cc
+        internal/retry_client_default_object_acl_test.cc
+        internal/retry_client_notifications_test.cc
+        internal/retry_client_object_acl_test.cc
+        internal/retry_client_object_copy_test.cc
+        internal/retry_client_object_test.cc
+        internal/retry_client_service_account_test.cc
+        internal/retry_client_sign_blob_test.cc
         internal/retry_client_test.cc
         internal/retry_object_read_source_test.cc
         internal/service_account_requests_test.cc

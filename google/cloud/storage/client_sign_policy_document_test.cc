@@ -16,9 +16,9 @@
 #include "google/cloud/storage/internal/openssl_util.h"
 #include "google/cloud/storage/oauth2/google_application_default_credentials_file.h"
 #include "google/cloud/storage/oauth2/google_credentials.h"
+#include "google/cloud/storage/testing/canonical_errors.h"
 #include "google/cloud/storage/testing/client_unit_test.h"
 #include "google/cloud/storage/testing/mock_client.h"
-#include "google/cloud/storage/testing/retry_tests.h"
 #include "google/cloud/internal/format_time_point.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
@@ -141,37 +141,6 @@ TEST_F(CreateSignedPolicyDocRPCTest, SignRemote) {
       Options{}.set<UserProjectOption>("u-p-test"));
   ASSERT_STATUS_OK(actual);
   EXPECT_THAT(actual->signature, expected_signed_blob);
-}
-
-/// @test Verify that CreateSignedPolicyDocument() + SignBlob() respects retry
-/// policies.
-TEST_F(CreateSignedPolicyDocRPCTest, SignPolicyTooManyFailures) {
-  testing::TooManyFailuresStatusTest<internal::SignBlobResponse>(
-      mock_, EXPECT_CALL(*mock_, SignBlob),
-      [](Client& client) {
-        return client
-            .CreateSignedPolicyDocument(
-                CreatePolicyDocumentForTest(),
-                SigningAccount("test-only-invalid@example.com"))
-            .status();
-      },
-      "SignBlob");
-}
-
-/// @test Verify that CreateSignedPolicyDocument() + SignBlob() respects retry
-/// policies.
-TEST_F(CreateSignedPolicyDocRPCTest, SignPolicyPermanentFailure) {
-  auto client = ClientForMock();
-  testing::PermanentFailureStatusTest<internal::SignBlobResponse>(
-      client, EXPECT_CALL(*mock_, SignBlob),
-      [](Client& client) {
-        return client
-            .CreateSignedPolicyDocument(
-                CreatePolicyDocumentForTest(),
-                SigningAccount("test-only-invalid@example.com"))
-            .status();
-      },
-      "SignBlob");
 }
 
 PolicyDocumentV4 CreatePolicyDocumentV4ForTest() {

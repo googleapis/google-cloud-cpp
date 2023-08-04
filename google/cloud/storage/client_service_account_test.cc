@@ -19,7 +19,6 @@
 #include "google/cloud/storage/retry_policy.h"
 #include "google/cloud/storage/testing/canonical_errors.h"
 #include "google/cloud/storage/testing/client_unit_test.h"
-#include "google/cloud/storage/testing/retry_tests.h"
 #include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
@@ -159,25 +158,6 @@ TEST_F(ServiceAccountTest, GetProjectServiceAccountProjectFromOverride) {
   auto actual = client.GetServiceAccount(
       OverrideDefaultProject("override-project-id"),
       Options{}.set<ProjectIdOption>("call-project-id"));
-}
-
-TEST_F(ServiceAccountTest, GetProjectServiceAccountTooManyFailures) {
-  testing::TooManyFailuresStatusTest<ServiceAccount>(
-      mock_, EXPECT_CALL(*mock_, GetServiceAccount),
-      [](Client& client) {
-        return client.GetServiceAccountForProject("test-project").status();
-      },
-      "GetServiceAccount");
-}
-
-TEST_F(ServiceAccountTest, GetProjectServiceAccountPermanentFailure) {
-  auto client = ClientForMock();
-  testing::PermanentFailureStatusTest<ServiceAccount>(
-      client, EXPECT_CALL(*mock_, GetServiceAccount),
-      [](Client& client) {
-        return client.GetServiceAccountForProject("test-project").status();
-      },
-      "GetServiceAccount");
 }
 
 TEST_F(ServiceAccountTest, ListHmacKeysNoProject) {
@@ -385,31 +365,6 @@ TEST_F(ServiceAccountTest, CreateHmacKey) {
   EXPECT_EQ(expected.secret, actual->second);
 }
 
-TEST_F(ServiceAccountTest, CreateHmacKeyTooManyFailures) {
-  testing::TooManyFailuresStatusTest<internal::CreateHmacKeyResponse>(
-      mock_, EXPECT_CALL(*mock_, CreateHmacKey),
-      [](Client& client) {
-        return client
-            .CreateHmacKey("test-service-account",
-                           OverrideDefaultProject("unused"))
-            .status();
-      },
-      "CreateHmacKey");
-}
-
-TEST_F(ServiceAccountTest, CreateHmacKeyPermanentFailure) {
-  auto client = ClientForMock();
-  testing::PermanentFailureStatusTest<internal::CreateHmacKeyResponse>(
-      client, EXPECT_CALL(*mock_, CreateHmacKey),
-      [](Client& client) {
-        return client
-            .CreateHmacKey("test-service-account",
-                           OverrideDefaultProject("unused"))
-            .status();
-      },
-      "CreateHmacKey");
-}
-
 TEST_F(ServiceAccountTest, DeleteHmacKeyNoProject) {
   auto env = ScopedEnvironment("GOOGLE_CLOUD_PROJECT", absl::nullopt);
   auto mock = std::make_shared<testing::MockClient>();
@@ -510,27 +465,6 @@ TEST_F(ServiceAccountTest, DeleteHmacKey) {
       "test-access-id-1", OverrideDefaultProject("test-project"),
       Options{}.set<UserProjectOption>("u-p-test"));
   ASSERT_STATUS_OK(actual);
-}
-
-TEST_F(ServiceAccountTest, DeleteHmacKeyTooManyFailures) {
-  testing::TooManyFailuresStatusTest<internal::EmptyResponse>(
-      mock_, EXPECT_CALL(*mock_, DeleteHmacKey),
-      [](Client& client) {
-        return client.DeleteHmacKey("test-access-id",
-                                    OverrideDefaultProject("unused"));
-      },
-      "DeleteHmacKey");
-}
-
-TEST_F(ServiceAccountTest, DeleteHmacKeyPermanentFailure) {
-  auto client = ClientForMock();
-  testing::PermanentFailureStatusTest<internal::EmptyResponse>(
-      client, EXPECT_CALL(*mock_, DeleteHmacKey),
-      [](Client& client) {
-        return client.DeleteHmacKey("test-access-id",
-                                    OverrideDefaultProject("unused"));
-      },
-      "DeleteHmacKey");
 }
 
 TEST_F(ServiceAccountTest, GetHmacKeyNoProject) {
@@ -639,29 +573,6 @@ TEST_F(ServiceAccountTest, GetHmacKey) {
   ASSERT_STATUS_OK(actual);
   EXPECT_EQ(expected.access_id(), actual->access_id());
   EXPECT_EQ(expected.state(), actual->state());
-}
-
-TEST_F(ServiceAccountTest, GetHmacKeyTooManyFailures) {
-  testing::TooManyFailuresStatusTest<HmacKeyMetadata>(
-      mock_, EXPECT_CALL(*mock_, GetHmacKey),
-      [](Client& client) {
-        return client
-            .GetHmacKey("test-access-id", OverrideDefaultProject("unused"))
-            .status();
-      },
-      "GetHmacKey");
-}
-
-TEST_F(ServiceAccountTest, GetHmacKeyPermanentFailure) {
-  auto client = ClientForMock();
-  testing::PermanentFailureStatusTest<HmacKeyMetadata>(
-      client, EXPECT_CALL(*mock_, GetHmacKey),
-      [](Client& client) {
-        return client
-            .GetHmacKey("test-access-id", OverrideDefaultProject("unused"))
-            .status();
-      },
-      "GetHmacKey");
 }
 
 TEST_F(ServiceAccountTest, UpdateHmacKeyNoProject) {
@@ -777,31 +688,6 @@ TEST_F(ServiceAccountTest, UpdateHmacKey) {
   ASSERT_STATUS_OK(actual);
   EXPECT_EQ(expected.access_id(), actual->access_id());
   EXPECT_EQ(expected.state(), actual->state());
-}
-
-TEST_F(ServiceAccountTest, UpdateHmacKeyTooManyFailures) {
-  testing::TooManyFailuresStatusTest<HmacKeyMetadata>(
-      mock_, EXPECT_CALL(*mock_, UpdateHmacKey),
-      [](Client& client) {
-        return client
-            .UpdateHmacKey("test-access-id", HmacKeyMetadata(),
-                           OverrideDefaultProject("unused"))
-            .status();
-      },
-      "UpdateHmacKey");
-}
-
-TEST_F(ServiceAccountTest, UpdateHmacKeyPermanentFailure) {
-  auto client = ClientForMock();
-  testing::PermanentFailureStatusTest<HmacKeyMetadata>(
-      client, EXPECT_CALL(*mock_, UpdateHmacKey),
-      [](Client& client) {
-        return client
-            .UpdateHmacKey("test-access-id", HmacKeyMetadata(),
-                           OverrideDefaultProject("unused"))
-            .status();
-      },
-      "UpdateHmacKey");
 }
 
 TEST(DefaultCtorsWork, Trivial) {

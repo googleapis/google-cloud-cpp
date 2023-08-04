@@ -15,8 +15,8 @@
 #include "google/cloud/storage/client.h"
 #include "google/cloud/storage/retry_policy.h"
 #include "google/cloud/storage/testing/canonical_errors.h"
+#include "google/cloud/storage/testing/mock_client.h"
 #include "google/cloud/storage/testing/mock_generic_stub.h"
-#include "google/cloud/storage/testing/retry_tests.h"
 #include "google/cloud/testing_util/chrono_literals.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>

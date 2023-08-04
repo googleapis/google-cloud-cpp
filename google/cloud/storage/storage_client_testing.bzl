@@ -41,6 +41,7 @@ storage_client_testing_srcs = [
     "testing/random_names.cc",
     "testing/remove_stale_buckets.cc",
     "testing/retry_http_request.cc",
+    "testing/retry_tests.cc",
     "testing/storage_integration_test.cc",
     "testing/temp_file.cc",
     "testing/write_base64.cc",
