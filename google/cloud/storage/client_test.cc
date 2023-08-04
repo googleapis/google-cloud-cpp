@@ -185,7 +185,7 @@ TEST_F(ClientTest, LoggingDecoratorsCurlClient) {
   auto const impl = ClientImplDetails::GetRawClient(tested);
   ASSERT_THAT(impl, NotNull());
   EXPECT_THAT(impl->InspectStackStructure(),
-              ElementsAre("CurlClient", "LoggingClient", "GenericStubAdapter",
+              ElementsAre("CurlClient", "GenericStubAdapter", "LoggingClient",
                           "RetryClient"));
 }
 
@@ -198,6 +198,7 @@ TEST_F(ClientTest, DefaultDecoratorsRestClient) {
   auto tested =
       Client(Options{}
                  .set<UnifiedCredentialsOption>(MakeInsecureCredentials())
+                 .set<internal::UseRestClientOption>(true)
                  .set<TracingComponentsOption>({}));
 
   auto const impl = ClientImplDetails::GetRawClient(tested);
@@ -208,17 +209,22 @@ TEST_F(ClientTest, DefaultDecoratorsRestClient) {
 
 /// @test Verify the constructor creates the right set of RawClient decorations.
 TEST_F(ClientTest, LoggingDecoratorsRestClient) {
+  ScopedEnvironment logging("CLOUD_STORAGE_ENABLE_TRACING", absl::nullopt);
+  ScopedEnvironment legacy("GOOGLE_CLOUD_CPP_STORAGE_USE_LEGACY_HTTP",
+                           absl::nullopt);
+
   // Create a client, use the anonymous credentials because on the CI
   // environment there may not be other credentials configured.
   auto tested =
       Client(Options{}
                  .set<UnifiedCredentialsOption>(MakeInsecureCredentials())
+                 .set<internal::UseRestClientOption>(true)
                  .set<TracingComponentsOption>({"raw-client"}));
 
   auto const impl = ClientImplDetails::GetRawClient(tested);
   ASSERT_THAT(impl, NotNull());
   EXPECT_THAT(impl->InspectStackStructure(),
-              ElementsAre("RestClient", "LoggingClient", "GenericStubAdapter",
+              ElementsAre("RestClient", "GenericStubAdapter", "LoggingClient",
                           "RetryClient"));
 }
 
@@ -243,7 +249,7 @@ TEST_F(ClientTest, OTelEnableTracing) {
   ASSERT_THAT(impl, NotNull());
 
   EXPECT_THAT(impl->InspectStackStructure(),
-              ElementsAre("RestClient", "LoggingClient", "GenericStubAdapter",
+              ElementsAre("RestClient", "GenericStubAdapter", "LoggingClient",
                           "RetryClient", "TracingClient"));
 }
 
@@ -264,7 +270,7 @@ TEST_F(ClientTest, OTelDisableTracing) {
   ASSERT_THAT(impl, NotNull());
 
   EXPECT_THAT(impl->InspectStackStructure(),
-              ElementsAre("RestClient", "LoggingClient", "GenericStubAdapter",
+              ElementsAre("RestClient", "GenericStubAdapter", "LoggingClient",
                           "RetryClient"));
 }
 
