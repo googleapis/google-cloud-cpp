@@ -309,6 +309,10 @@
 ./include/google/cloud/compute/interconnect_locations/v1
 ./include/google/cloud/compute/interconnect_locations/v1/internal
 ./include/google/cloud/compute/interconnect_locations/v1/mocks
+./include/google/cloud/compute/interconnect_remote_locations
+./include/google/cloud/compute/interconnect_remote_locations/v1
+./include/google/cloud/compute/interconnect_remote_locations/v1/internal
+./include/google/cloud/compute/interconnect_remote_locations/v1/mocks
 ./include/google/cloud/compute/interconnects
 ./include/google/cloud/compute/interconnects/v1
 ./include/google/cloud/compute/interconnects/v1/internal

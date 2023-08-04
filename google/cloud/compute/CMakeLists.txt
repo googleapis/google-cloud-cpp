@@ -53,6 +53,7 @@ set(service_dirs
     "instance_templates/v1/"
     "interconnect_attachments/v1/"
     "interconnect_locations/v1/"
+    "interconnect_remote_locations/v1/"
     "interconnects/v1/"
     "license_codes/v1/"
     "licenses/v1/"
