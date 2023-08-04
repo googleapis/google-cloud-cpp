@@ -35,9 +35,12 @@ using ::google::cloud::storage::testing::TempFile;
 using ::google::cloud::storage::testing::canonical_errors::PermanentError;
 using ::google::cloud::storage::testing::canonical_errors::TransientError;
 using ::google::cloud::testing_util::StatusIs;
+using ::testing::_;
 using ::testing::ByMove;
+using ::testing::Contains;
 using ::testing::ElementsAre;
 using ::testing::HasSubstr;
+using ::testing::Pair;
 using ::testing::Return;
 using ms = std::chrono::milliseconds;
 
@@ -275,9 +278,12 @@ TEST_F(ObjectTest, ReadObjectTooManyFailures) {
   auto client = ClientForMock();
   Status status =
       client.ReadObject("test-bucket-name", "test-object-name").status();
-  EXPECT_EQ(TransientError().code(), status.code());
-  EXPECT_THAT(status.message(), HasSubstr("Retry policy exhausted"));
-  EXPECT_THAT(status.message(), HasSubstr("ReadObject"));
+  EXPECT_THAT(status, StatusIs(TransientError().code(),
+                               HasSubstr(TransientError().message())));
+  auto const& metadata = status.error_info().metadata();
+  EXPECT_THAT(metadata, Contains(Pair("gcloud-cpp.retry.function", _)));
+  EXPECT_THAT(metadata, Contains(Pair("gcloud-cpp.retry.reason",
+                                      "retry-policy-exhausted")));
 }
 
 TEST_F(ObjectTest, ReadObjectPermanentFailure) {
@@ -294,9 +300,12 @@ TEST_F(ObjectTest, ReadObjectPermanentFailure) {
   auto client = ClientForMock();
   Status status =
       client.ReadObject("test-bucket-name", "test-object-name").status();
-  EXPECT_EQ(PermanentError().code(), status.code());
-  EXPECT_THAT(status.message(), HasSubstr("Permanent error"));
-  EXPECT_THAT(status.message(), HasSubstr("ReadObject"));
+  EXPECT_THAT(status, StatusIs(PermanentError().code(),
+                               HasSubstr(PermanentError().message())));
+  auto const& metadata = status.error_info().metadata();
+  EXPECT_THAT(metadata, Contains(Pair("gcloud-cpp.retry.function", _)));
+  EXPECT_THAT(metadata,
+              Contains(Pair("gcloud-cpp.retry.reason", "permanent-error")));
 }
 
 TEST_F(ObjectTest, WriteObject) {

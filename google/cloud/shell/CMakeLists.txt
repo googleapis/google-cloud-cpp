@@ -122,7 +122,7 @@ if (BUILD_TESTING)
     set_tests_properties(
         shell_quickstart
         PROPERTIES LABELS "integration-test;quickstart" PASS_REGULAR_EXPRESSION
-                   "Permanent error in GetEnvironment:")
+                   "Permanent error.*gcloud-cpp.retry.function=GetEnvironment")
 endif ()
 
 # Get the destination directories based on the GNU recommendations.

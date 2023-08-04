@@ -37,7 +37,9 @@ using ::google::cloud::testing_util::AsyncSequencer;
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::MockBackoffPolicy;
 using ::google::cloud::testing_util::StatusIs;
+using ::testing::Contains;
 using ::testing::HasSubstr;
+using ::testing::Pair;
 using ::testing::Return;
 
 struct TestOption {
@@ -257,9 +259,12 @@ TEST(AsyncRestRetryLoopTest, TransientFailureNonIdempotent) {
   internal::OptionsSpan overlay(Options{}.set<TestOption>("uh-oh"));
   StatusOr<int> actual = pending.get();
   EXPECT_THAT(actual, StatusIs(StatusCode::kUnavailable,
-                               AllOf(HasSubstr("test-message-try-again"),
-                                     HasSubstr("Error in non-idempotent"),
-                                     HasSubstr("test-location"))));
+                               HasSubstr("test-message-try-again")));
+  auto const& metadata = actual.status().error_info().metadata();
+  EXPECT_THAT(metadata,
+              Contains(Pair("gcloud-cpp.retry.reason", "non-idempotent")));
+  EXPECT_THAT(metadata,
+              Contains(Pair("gcloud-cpp.retry.function", "test-location")));
 }
 
 TEST(AsyncRestRetryLoopTest, PermanentFailureIdempotent) {
@@ -282,9 +287,12 @@ TEST(AsyncRestRetryLoopTest, PermanentFailureIdempotent) {
   internal::OptionsSpan overlay(Options{}.set<TestOption>("uh-oh"));
   StatusOr<int> actual = pending.get();
   EXPECT_THAT(actual, StatusIs(StatusCode::kPermissionDenied,
-                               AllOf(HasSubstr("test-message-uh-oh"),
-                                     HasSubstr("Permanent error in"),
-                                     HasSubstr("test-location"))));
+                               HasSubstr("test-message-uh-oh")));
+  auto const& metadata = actual.status().error_info().metadata();
+  EXPECT_THAT(metadata,
+              Contains(Pair("gcloud-cpp.retry.reason", "permanent-error")));
+  EXPECT_THAT(metadata,
+              Contains(Pair("gcloud-cpp.retry.function", "test-location")));
 }
 
 TEST(AsyncRestRetryLoopTest, TooManyTransientFailuresIdempotent) {
@@ -307,9 +315,13 @@ TEST(AsyncRestRetryLoopTest, TooManyTransientFailuresIdempotent) {
   internal::OptionsSpan overlay(Options{}.set<TestOption>("uh-oh"));
   StatusOr<int> actual = pending.get();
   EXPECT_THAT(actual, StatusIs(StatusCode::kUnavailable,
-                               AllOf(HasSubstr("test-message-try-again"),
-                                     HasSubstr("Retry policy exhausted"),
-                                     HasSubstr("test-location"))));
+                               HasSubstr("test-message-try-again")));
+  auto const& metadata = actual.status().error_info().metadata();
+  EXPECT_THAT(metadata, Contains(Pair("gcloud-cpp.retry.reason",
+                                      "retry-policy-exhausted")));
+  EXPECT_THAT(metadata, Contains(Pair("gcloud-cpp.retry.on-entry", "false")));
+  EXPECT_THAT(metadata,
+              Contains(Pair("gcloud-cpp.retry.function", "test-location")));
 }
 
 TEST(AsyncRestRetryLoopTest, ExhaustedDuringBackoff) {
@@ -334,17 +346,19 @@ TEST(AsyncRestRetryLoopTest, ExhaustedDuringBackoff) {
   internal::OptionsSpan overlay(Options{}.set<TestOption>("uh-oh"));
   StatusOr<int> actual = pending.get();
   EXPECT_THAT(actual, StatusIs(StatusCode::kUnavailable,
-                               AllOf(HasSubstr("test-message-try-again"),
-                                     HasSubstr("Retry policy exhausted"),
-                                     HasSubstr("test-location"))));
+                               HasSubstr("test-message-try-again")));
+  auto const& metadata = actual.status().error_info().metadata();
+  EXPECT_THAT(metadata, Contains(Pair("gcloud-cpp.retry.reason",
+                                      "retry-policy-exhausted")));
+  EXPECT_THAT(metadata, Contains(Pair("gcloud-cpp.retry.on-entry", "false")));
+  EXPECT_THAT(metadata,
+              Contains(Pair("gcloud-cpp.retry.function", "test-location")));
 }
 
 TEST(AsyncRestRetryLoopTest, ExhaustedBeforeStart) {
   auto mock = std::make_unique<MockRetryPolicy>();
-  EXPECT_CALL(*mock, IsExhausted)
-      .WillOnce(Return(false))
-      .WillRepeatedly(Return(true));
-  EXPECT_CALL(*mock, OnFailure).WillOnce(Return(true));
+  EXPECT_CALL(*mock, IsExhausted).WillRepeatedly(Return(true));
+  EXPECT_CALL(*mock, OnFailure).Times(0);
   EXPECT_CALL(*mock, IsPermanentFailure).WillRepeatedly(Return(false));
 
   AutomaticallyCreatedRestBackgroundThreads background;
@@ -358,10 +372,13 @@ TEST(AsyncRestRetryLoopTest, ExhaustedBeforeStart) {
           },
           42, "test-location")
           .get();
-  EXPECT_THAT(actual, StatusIs(StatusCode::kUnavailable,
-                               AllOf(HasSubstr("test-message-try-again"),
-                                     HasSubstr("Retry policy exhausted"),
-                                     HasSubstr("test-location"))));
+  EXPECT_THAT(actual, StatusIs(StatusCode::kDeadlineExceeded));
+  auto const& metadata = actual.status().error_info().metadata();
+  EXPECT_THAT(metadata, Contains(Pair("gcloud-cpp.retry.reason",
+                                      "retry-policy-exhausted")));
+  EXPECT_THAT(metadata, Contains(Pair("gcloud-cpp.retry.on-entry", "true")));
+  EXPECT_THAT(metadata,
+              Contains(Pair("gcloud-cpp.retry.function", "test-location")));
 }
 
 TEST(AsyncRestRetryLoopTest, SetsTimeout) {
@@ -474,10 +491,12 @@ TEST_F(AsyncRestRetryLoopCancelTest, CancelWithFailure) {
   EXPECT_EQ(0, TimerCancelCount());
   p.set_value(transient);
   auto value = actual.get();
-  EXPECT_THAT(value, StatusIs(StatusCode::kUnavailable,
-                              AllOf(HasSubstr("try-again"),
-                                    HasSubstr("Retry loop cancelled"),
-                                    HasSubstr("test-location"))));
+  EXPECT_THAT(value,
+              StatusIs(StatusCode::kUnavailable, HasSubstr("try-again")));
+  auto const& metadata = value.status().error_info().metadata();
+  EXPECT_THAT(metadata, Contains(Pair("gcloud-cpp.retry.reason", "cancelled")));
+  EXPECT_THAT(metadata,
+              Contains(Pair("gcloud-cpp.retry.function", "test-location")));
 }
 
 TEST_F(AsyncRestRetryLoopCancelTest, CancelDuringTimer) {
@@ -509,10 +528,12 @@ TEST_F(AsyncRestRetryLoopCancelTest, CancelDuringTimer) {
   // the retry loop should *not* create any more calls, the value should be
   // available immediately.
   auto value = actual.get();
-  EXPECT_THAT(value, StatusIs(StatusCode::kUnavailable,
-                              AllOf(HasSubstr("try-again"),
-                                    HasSubstr("Retry loop cancelled"),
-                                    HasSubstr("test-location"))));
+  EXPECT_THAT(value,
+              StatusIs(StatusCode::kUnavailable, HasSubstr("try-again")));
+  auto const& metadata = value.status().error_info().metadata();
+  EXPECT_THAT(metadata, Contains(Pair("gcloud-cpp.retry.reason", "cancelled")));
+  EXPECT_THAT(metadata,
+              Contains(Pair("gcloud-cpp.retry.function", "test-location")));
 }
 
 TEST_F(AsyncRestRetryLoopCancelTest, ShutdownDuringTimer) {
@@ -544,9 +565,11 @@ TEST_F(AsyncRestRetryLoopCancelTest, ShutdownDuringTimer) {
 
   // the retry loop should exit
   auto value = actual.get();
-  EXPECT_THAT(value, StatusIs(StatusCode::kCancelled,
-                              AllOf(HasSubstr("Timer failure in"),
-                                    HasSubstr("test-location"))));
+  EXPECT_THAT(value, StatusIs(StatusCode::kCancelled));
+  auto const& metadata = value.status().error_info().metadata();
+  EXPECT_THAT(metadata, Contains(Pair("gcloud-cpp.retry.reason", "cancelled")));
+  EXPECT_THAT(metadata,
+              Contains(Pair("gcloud-cpp.retry.function", "test-location")));
 }
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

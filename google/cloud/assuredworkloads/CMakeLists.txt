@@ -130,9 +130,12 @@ if (BUILD_TESTING)
     set_tests_properties(
         assuredworkloads_quickstart
         PROPERTIES
-            LABELS "integration-test;quickstart" ENVIRONMENT
+            LABELS
+            "integration-test;quickstart"
+            ENVIRONMENT
             GOOGLE_CLOUD_CPP_USER_PROJECT=$ENV{GOOGLE_CLOUD_CPP_USER_PROJECT}
-            PASS_REGULAR_EXPRESSION "Permanent error in.*ListWorkloads:")
+            PASS_REGULAR_EXPRESSION
+            "Permanent error.*gcloud-cpp.retry.function=ListWorkloads")
 endif ()
 
 # Get the destination directories based on the GNU recommendations.

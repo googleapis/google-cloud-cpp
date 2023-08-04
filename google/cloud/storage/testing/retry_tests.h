@@ -19,6 +19,7 @@
 #include "google/cloud/storage/internal/raw_client.h"
 #include "google/cloud/storage/testing/canonical_errors.h"
 #include "google/cloud/storage/testing/mock_client.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <chrono>
 
@@ -55,7 +56,10 @@ void TooManyFailuresStatusTest(
     std::function<Status(Client& client)> const& tested_operation,
     char const* api_name) {
   using ::google::cloud::storage::testing::canonical_errors::TransientError;
+  using ::google::cloud::testing_util::StatusIs;
+  using ::testing::Contains;
   using ::testing::HasSubstr;
+  using ::testing::Pair;
   using ::testing::Return;
   // A storage::Client with a simple to test policy.
   auto client = internal::ClientImplDetails::CreateClient(
@@ -71,9 +75,12 @@ void TooManyFailuresStatusTest(
       .WillOnce(Return(StatusOr<ReturnType>(TransientError())));
 
   Status status = tested_operation(client);
-  EXPECT_EQ(TransientError().code(), status.code());
-  EXPECT_THAT(status.message(), HasSubstr("Retry policy exhausted"));
-  EXPECT_THAT(status.message(), HasSubstr(api_name));
+  EXPECT_THAT(status, StatusIs(TransientError().code(),
+                               HasSubstr(TransientError().message())));
+  auto const& metadata = status.error_info().metadata();
+  EXPECT_THAT(metadata, Contains(Pair("gcloud-cpp.retry.function", api_name)));
+  EXPECT_THAT(metadata, Contains(Pair("gcloud-cpp.retry.reason",
+                                      "retry-policy-exhausted")));
 }
 
 /**
@@ -106,7 +113,10 @@ void NonIdempotentFailuresStatusTest(
     std::function<Status(Client& client)> const& tested_operation,
     char const* api_name) {
   using ::google::cloud::storage::testing::canonical_errors::TransientError;
+  using ::google::cloud::testing_util::StatusIs;
+  using ::testing::Contains;
   using ::testing::HasSubstr;
+  using ::testing::Pair;
   using ::testing::Return;
   // A storage::Client with the strict idempotency policy, but with a generous
   // retry policy.
@@ -122,9 +132,12 @@ void NonIdempotentFailuresStatusTest(
   // Verify the right error status, with the right content, is returned when
   // calling the operation.
   Status status = tested_operation(client);
-  EXPECT_EQ(status.code(), TransientError().code());
-  EXPECT_THAT(status.message(), HasSubstr("Error in non-idempotent"));
-  EXPECT_THAT(status.message(), HasSubstr(api_name));
+  EXPECT_THAT(status, StatusIs(TransientError().code(),
+                               HasSubstr(TransientError().message())));
+  auto const& metadata = status.error_info().metadata();
+  EXPECT_THAT(metadata, Contains(Pair("gcloud-cpp.retry.function", api_name)));
+  EXPECT_THAT(metadata,
+              Contains(Pair("gcloud-cpp.retry.reason", "non-idempotent")));
 }
 
 /**
@@ -156,7 +169,10 @@ void IdempotentFailuresStatusTest(
     std::function<Status(Client& client)> const& tested_operation,
     char const* api_name) {
   using ::google::cloud::storage::testing::canonical_errors::TransientError;
+  using ::google::cloud::testing_util::StatusIs;
+  using ::testing::Contains;
   using ::testing::HasSubstr;
+  using ::testing::Pair;
   using ::testing::Return;
   // A storage::Client with the strict idempotency policy, and with an
   // easy-to-test retry policy.
@@ -174,9 +190,12 @@ void IdempotentFailuresStatusTest(
   // Verify the right error status, with the right content, is returned when
   // calling the operation.
   Status status = tested_operation(client);
-  EXPECT_EQ(TransientError().code(), status.code());
-  EXPECT_THAT(status.message(), HasSubstr("Retry policy exhausted"));
-  EXPECT_THAT(status.message(), HasSubstr(api_name));
+  EXPECT_THAT(status, StatusIs(TransientError().code(),
+                               HasSubstr(TransientError().message())));
+  auto const& metadata = status.error_info().metadata();
+  EXPECT_THAT(metadata, Contains(Pair("gcloud-cpp.retry.function", api_name)));
+  EXPECT_THAT(metadata, Contains(Pair("gcloud-cpp.retry.reason",
+                                      "retry-policy-exhausted")));
 }
 
 /**
@@ -244,7 +263,10 @@ void PermanentFailureStatusTest(
     std::function<Status(Client& client)> const& tested_operation,
     char const* api_name) {
   using ::google::cloud::storage::testing::canonical_errors::PermanentError;
+  using ::google::cloud::testing_util::StatusIs;
+  using ::testing::Contains;
   using ::testing::HasSubstr;
+  using ::testing::Pair;
   using ::testing::Return;
 
   // Expect exactly one call before the retry policy is exhausted and an error
@@ -255,8 +277,12 @@ void PermanentFailureStatusTest(
   // calling the operation.
   Status status = tested_operation(client);
   EXPECT_EQ(PermanentError().code(), status.code());
-  EXPECT_THAT(status.message(), HasSubstr("Permanent error"));
-  EXPECT_THAT(status.message(), HasSubstr(api_name));
+  EXPECT_THAT(status, StatusIs(PermanentError().code(),
+                               HasSubstr(PermanentError().message())));
+  auto const& metadata = status.error_info().metadata();
+  EXPECT_THAT(metadata, Contains(Pair("gcloud-cpp.retry.function", api_name)));
+  EXPECT_THAT(metadata,
+              Contains(Pair("gcloud-cpp.retry.reason", "permanent-error")));
 }
 
 }  // namespace testing

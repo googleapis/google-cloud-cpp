@@ -99,9 +99,8 @@ bool UploadChunkOnFailure(RetryPolicy& retry_policy, Status const& status) {
 
 Status RetryError(Status const& status, RetryPolicy const& retry_policy,
                   char const* function_name) {
-  auto const* msg =
-      retry_policy.IsExhausted() ? "Retry policy exhausted" : "Permanent error";
-  return google::cloud::internal::RetryLoopError(msg, function_name, status);
+  return google::cloud::internal::RetryLoopError(status, function_name,
+                                                 retry_policy.IsExhausted());
 }
 
 Status MissingCommittedSize(int error_count, int upload_count, int reset_count,

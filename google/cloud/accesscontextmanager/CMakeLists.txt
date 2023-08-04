@@ -131,7 +131,8 @@ if (BUILD_TESTING)
     set_tests_properties(
         accesscontextmanager_quickstart
         PROPERTIES LABELS "integration-test;quickstart" PASS_REGULAR_EXPRESSION
-                   "Permanent error in.*ListAccessLevels:")
+                   "Permanent error.*gcloud-cpp.retry.function=ListAccessLevels"
+    )
 endif ()
 
 # Get the destination directories based on the GNU recommendations.

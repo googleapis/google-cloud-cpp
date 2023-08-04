@@ -129,7 +129,7 @@ if (BUILD_TESTING)
     set_tests_properties(
         apigeeconnect_quickstart
         PROPERTIES LABELS "integration-test;quickstart" PASS_REGULAR_EXPRESSION
-                   "Permanent error in.*ListConnections:")
+                   "Permanent error.*gcloud-cpp.retry.function=ListConnections")
 endif ()
 
 # Get the destination directories based on the GNU recommendations.
