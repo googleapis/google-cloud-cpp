@@ -859,6 +859,16 @@ discovery_products {
   }
 
   rest_services {
+    service_proto_path: "google/cloud/compute/interconnect_remote_locations/v1/interconnect_remote_locations.proto"
+    product_path: "google/cloud/compute/interconnect_remote_locations/v1"
+    initial_copyright_year: "2023"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    experimental: true
+    generate_grpc_transport: false
+  }
+
+  rest_services {
     service_proto_path: "google/cloud/compute/interconnects/v1/interconnects.proto"
     product_path: "google/cloud/compute/interconnects/v1"
     initial_copyright_year: "2023"
