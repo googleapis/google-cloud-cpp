@@ -223,13 +223,13 @@ TEST_F(ClientTest, LoggingDecoratorsRestClient) {
 
 /// @test Verify the constructor creates the right set of RawClient decorations.
 TEST_F(ClientTest, FullStack) {
-  // Reset environment variables, we want the `Options` parameter to control the
+  // Reset environment variables. We want the `Options` parameter to control the
   // structure of the stack.
   ScopedEnvironment logging("CLOUD_STORAGE_ENABLE_TRACING", absl::nullopt);
   ScopedEnvironment legacy("GOOGLE_CLOUD_CPP_STORAGE_USE_LEGACY_HTTP",
                            absl::nullopt);
 
-  // Create a client, use the anonymous credentials because on the CI
+  // Create a client. Use the anonymous credentials because on the CI
   // environment there may not be other credentials configured.
   auto options = Options{}
                      .set<UnifiedCredentialsOption>(MakeInsecureCredentials())
