@@ -1108,7 +1108,7 @@ TEST(GenerateProtosFromDiscoveryDocTest, ProcessRequestResponseFailure) {
                        HasSubstr("Response name=baz not found in types")));
 }
 
-TEST(FindAllRefValues, NonRefField) {
+TEST(FindAllRefValuesTest, NonRefField) {
   auto constexpr kTypeJson = R"""({
   "properties": {
     "field_name_1": {
@@ -1123,7 +1123,7 @@ TEST(FindAllRefValues, NonRefField) {
   EXPECT_THAT(result, IsEmpty());
 }
 
-TEST(FindAllRefValues, SimpleRefField) {
+TEST(FindAllRefValuesTest, SimpleRefField) {
   auto constexpr kTypeJson = R"""({
   "properties": {
     "field_name_1": {
@@ -1138,7 +1138,7 @@ TEST(FindAllRefValues, SimpleRefField) {
   EXPECT_THAT(result, UnorderedElementsAre("Foo"));
 }
 
-TEST(FindAllRefValues, MultipleSimpleRefFields) {
+TEST(FindAllRefValuesTest, MultipleSimpleRefFields) {
   auto constexpr kTypeJson = R"""({
   "properties": {
     "field_name_1": {
@@ -1156,7 +1156,7 @@ TEST(FindAllRefValues, MultipleSimpleRefFields) {
   EXPECT_THAT(result, UnorderedElementsAre("Foo", "Bar"));
 }
 
-TEST(FindAllRefValues, ArrayRefFields) {
+TEST(FindAllRefValuesTest, ArrayRefFields) {
   auto constexpr kTypeJson = R"""({
   "properties": {
     "array_field_name_1": {
@@ -1180,7 +1180,7 @@ TEST(FindAllRefValues, ArrayRefFields) {
   EXPECT_THAT(result, UnorderedElementsAre("Foo", "Bar"));
 }
 
-TEST(FindAllRefValues, MapRefFields) {
+TEST(FindAllRefValuesTest, MapRefFields) {
   auto constexpr kTypeJson = R"""({
   "properties": {
     "map_field_name_1": {
@@ -1204,7 +1204,7 @@ TEST(FindAllRefValues, MapRefFields) {
   EXPECT_THAT(result, UnorderedElementsAre("Foo", "Bar"));
 }
 
-TEST(FindAllRefValues, SingleNestedRefField) {
+TEST(FindAllRefValuesTest, SingleNestedRefField) {
   auto constexpr kTypeJson = R"""({
   "properties": {
     "field_name_1": {
@@ -1224,7 +1224,7 @@ TEST(FindAllRefValues, SingleNestedRefField) {
   EXPECT_THAT(result, UnorderedElementsAre("Foo"));
 }
 
-TEST(FindAllRefValues, MultipleNestedRefFields) {
+TEST(FindAllRefValuesTest, MultipleNestedRefFields) {
   auto constexpr kTypeJson = R"""({
   "properties": {
     "field_name_1": {
@@ -1247,7 +1247,7 @@ TEST(FindAllRefValues, MultipleNestedRefFields) {
   EXPECT_THAT(result, UnorderedElementsAre("Foo", "Bar"));
 }
 
-TEST(FindAllRefValues, SingleNestedNestedRefField) {
+TEST(FindAllRefValuesTest, SingleNestedNestedRefField) {
   auto constexpr kTypeJson = R"""({
   "properties": {
     "field_name_1": {
@@ -1275,7 +1275,7 @@ TEST(FindAllRefValues, SingleNestedNestedRefField) {
   EXPECT_THAT(result, UnorderedElementsAre("Foo", "Bar"));
 }
 
-TEST(FindAllRefValues, ComplexJsonWithRefTypes) {
+TEST(FindAllRefValuesTest, ComplexJsonWithRefTypes) {
   auto constexpr kOperationJson = R"""({
       "type": "object",
       "properties": {
@@ -1384,6 +1384,7 @@ TEST(FindAllRefValues, ComplexJsonWithRefTypes) {
                           "LocalizedMessage", "QuotaExceededInfo", "ErrorInfo",
                           "Help", "Timestamp", "Label", "Label2"));
 }
+
 }  // namespace
 }  // namespace generator_internal
 }  // namespace cloud

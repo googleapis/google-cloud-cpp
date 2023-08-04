@@ -75,12 +75,6 @@ bool IsDiscoveryNestedType(nlohmann::json const& json) {
          json.contains("properties");
 }
 
-// std::set::merge isn't available until C++17.
-template <typename T>
-void SetMerge(std::set<T>& lhs, std::set<T> const& rhs) {
-  lhs.insert(rhs.begin(), rhs.end());
-}
-
 }  // namespace
 
 StatusOr<std::map<std::string, DiscoveryTypeVertex>> ExtractTypesFromSchema(
@@ -312,7 +306,8 @@ std::set<std::string> FindAllRefValues(nlohmann::json const& json) {
       ref_values.insert(f["$ref"]);
     } else if (IsDiscoveryArrayType(f) || IsDiscoveryMapType(f) ||
                IsDiscoveryNestedType(f)) {
-      SetMerge(ref_values, FindAllRefValues(f));
+      auto new_ref_values = FindAllRefValues(f);
+      ref_values.insert(new_ref_values.begin(), new_ref_values.end());
     }
   }
 
