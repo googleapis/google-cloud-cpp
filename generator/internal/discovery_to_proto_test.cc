@@ -1108,6 +1108,283 @@ TEST(GenerateProtosFromDiscoveryDocTest, ProcessRequestResponseFailure) {
                        HasSubstr("Response name=baz not found in types")));
 }
 
+TEST(FindAllRefValuesTest, NonRefField) {
+  auto constexpr kTypeJson = R"""({
+  "properties": {
+    "field_name_1": {
+      "type": "string"
+    }
+  }
+})""";
+
+  auto const parsed_json = nlohmann::json::parse(kTypeJson, nullptr, false);
+  ASSERT_TRUE(parsed_json.is_object());
+  auto result = FindAllRefValues(parsed_json);
+  EXPECT_THAT(result, IsEmpty());
+}
+
+TEST(FindAllRefValuesTest, SimpleRefField) {
+  auto constexpr kTypeJson = R"""({
+  "properties": {
+    "field_name_1": {
+      "$ref": "Foo"
+    }
+  }
+})""";
+
+  auto const parsed_json = nlohmann::json::parse(kTypeJson, nullptr, false);
+  ASSERT_TRUE(parsed_json.is_object());
+  auto result = FindAllRefValues(parsed_json);
+  EXPECT_THAT(result, UnorderedElementsAre("Foo"));
+}
+
+TEST(FindAllRefValuesTest, MultipleSimpleRefFields) {
+  auto constexpr kTypeJson = R"""({
+  "properties": {
+    "field_name_1": {
+      "$ref": "Foo"
+    },
+    "field_name_2": {
+      "$ref": "Bar"
+    }
+  }
+})""";
+
+  auto const parsed_json = nlohmann::json::parse(kTypeJson, nullptr, false);
+  ASSERT_TRUE(parsed_json.is_object());
+  auto result = FindAllRefValues(parsed_json);
+  EXPECT_THAT(result, UnorderedElementsAre("Foo", "Bar"));
+}
+
+TEST(FindAllRefValuesTest, ArrayRefFields) {
+  auto constexpr kTypeJson = R"""({
+  "properties": {
+    "array_field_name_1": {
+      "type": "array",
+      "items": {
+        "$ref": "Foo"
+      }
+    },
+    "array_field_name_2": {
+      "type": "array",
+      "items": {
+        "$ref": "Bar"
+      }
+    }
+  }
+})""";
+
+  auto const parsed_json = nlohmann::json::parse(kTypeJson, nullptr, false);
+  ASSERT_TRUE(parsed_json.is_object());
+  auto result = FindAllRefValues(parsed_json);
+  EXPECT_THAT(result, UnorderedElementsAre("Foo", "Bar"));
+}
+
+TEST(FindAllRefValuesTest, MapRefFields) {
+  auto constexpr kTypeJson = R"""({
+  "properties": {
+    "map_field_name_1": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "Foo"
+      }
+    },
+    "map_field_name_2": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "Bar"
+      }
+    }
+  }
+})""";
+
+  auto const parsed_json = nlohmann::json::parse(kTypeJson, nullptr, false);
+  ASSERT_TRUE(parsed_json.is_object());
+  auto result = FindAllRefValues(parsed_json);
+  EXPECT_THAT(result, UnorderedElementsAre("Foo", "Bar"));
+}
+
+TEST(FindAllRefValuesTest, SingleNestedRefField) {
+  auto constexpr kTypeJson = R"""({
+  "properties": {
+    "field_name_1": {
+      "type": "object",
+      "properties": {
+        "nested_field_1": {
+          "$ref": "Foo"
+        }
+      }
+    }
+  }
+})""";
+
+  auto const parsed_json = nlohmann::json::parse(kTypeJson, nullptr, false);
+  ASSERT_TRUE(parsed_json.is_object());
+  auto result = FindAllRefValues(parsed_json);
+  EXPECT_THAT(result, UnorderedElementsAre("Foo"));
+}
+
+TEST(FindAllRefValuesTest, MultipleNestedRefFields) {
+  auto constexpr kTypeJson = R"""({
+  "properties": {
+    "field_name_1": {
+      "type": "object",
+      "properties": {
+        "nested_field_1": {
+          "$ref": "Foo"
+        },
+        "nested_field_2": {
+          "$ref": "Bar"
+        }
+      }
+    }
+  }
+})""";
+
+  auto const parsed_json = nlohmann::json::parse(kTypeJson, nullptr, false);
+  ASSERT_TRUE(parsed_json.is_object());
+  auto result = FindAllRefValues(parsed_json);
+  EXPECT_THAT(result, UnorderedElementsAre("Foo", "Bar"));
+}
+
+TEST(FindAllRefValuesTest, SingleNestedNestedRefField) {
+  auto constexpr kTypeJson = R"""({
+  "properties": {
+    "field_name_1": {
+      "type": "object",
+      "properties": {
+        "nested_field_1": {
+          "$ref": "Foo"
+        },
+        "nested_field_2": {
+          "type": "object",
+          "properties": {
+            "nested_nested_field_1": {
+              "$ref": "Bar"
+            }
+          }
+        }
+      }
+    }
+  }
+})""";
+
+  auto const parsed_json = nlohmann::json::parse(kTypeJson, nullptr, false);
+  ASSERT_TRUE(parsed_json.is_object());
+  auto result = FindAllRefValues(parsed_json);
+  EXPECT_THAT(result, UnorderedElementsAre("Foo", "Bar"));
+}
+
+TEST(FindAllRefValuesTest, ComplexJsonWithRefTypes) {
+  auto constexpr kOperationJson = R"""({
+      "type": "object",
+      "properties": {
+        "operationGroupId": {
+          "type": "string"
+        },
+        "error": {
+          "type": "object",
+          "properties": {
+            "errors": {
+              "items": {
+                "type": "object",
+                "properties": {
+                  "message": {
+                    "type": "string"
+                  },
+                  "code": {
+                    "type": "string"
+                  },
+                  "location": {
+                    "type": "string"
+                  },
+                  "errorDetails": {
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "localizedMessage": {
+                          "$ref": "LocalizedMessage"
+                        },
+                        "quotaInfo": {
+                          "$ref": "QuotaExceededInfo"
+                        },
+                        "errorInfo": {
+                          "$ref": "ErrorInfo"
+                        },
+                        "help": {
+                          "$ref": "Help"
+                        },
+                        "labels": {
+                          "type": "object",
+                          "additionalProperties": {
+                            "$ref": "Label2"
+                          }
+                        }
+                      }
+                    },
+                    "type": "array"
+                  }
+                }
+              },
+              "type": "array"
+            }
+          }
+        },
+        "clientOperationId": {
+          "type": "string"
+        },
+        "httpErrorStatusCode": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "DONE",
+            "PENDING",
+            "RUNNING"
+          ],
+          "enumDescriptions": [
+            "",
+            "",
+            ""
+          ]
+        },
+        "progress": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "creationTimestamp": {
+          "$ref": "Timestamp"
+        },
+        "insertTime": {
+          "$ref": "Timestamp"
+        },
+        "endTime": {
+          "$ref": "Timestamp"
+        },
+        "zone": {
+          "type": "string"
+        },
+        "labels": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "Label"
+          }
+        }
+      },
+      "id": "Operation"
+})""";
+
+  auto const parsed_json =
+      nlohmann::json::parse(kOperationJson, nullptr, false);
+  ASSERT_TRUE(parsed_json.is_object());
+  auto result = FindAllRefValues(parsed_json);
+  EXPECT_THAT(result, UnorderedElementsAre(
+                          "LocalizedMessage", "QuotaExceededInfo", "ErrorInfo",
+                          "Help", "Timestamp", "Label", "Label2"));
+}
+
 }  // namespace
 }  // namespace generator_internal
 }  // namespace cloud

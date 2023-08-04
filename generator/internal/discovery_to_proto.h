@@ -88,6 +88,11 @@ Status GenerateProtosFromDiscoveryDoc(
     std::string const& googleapis_proto_path, std::string const& output_path,
     std::set<std::string> operation_services = {});
 
+// Recurses through the json accumulating the values of any $ref fields
+// whether they exist in simple fields, arrays, maps, or nested messages
+// containing any of the aforementioned field types.
+std::set<std::string> FindAllRefValues(nlohmann::json const& json);
+
 }  // namespace generator_internal
 }  // namespace cloud
 }  // namespace google

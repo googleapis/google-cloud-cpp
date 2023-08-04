@@ -60,6 +60,21 @@ google::cloud::StatusOr<std::string> GetPage(std::string const& url) {
   return rest::ReadAll(std::move(payload));
 }
 
+bool IsDiscoveryArrayType(nlohmann::json const& json) {
+  return json.contains("type") && json["type"] == "array" &&
+         json.contains("items");
+}
+
+bool IsDiscoveryMapType(nlohmann::json const& json) {
+  return json.contains("type") && json["type"] == "object" &&
+         json.contains("additionalProperties");
+}
+
+bool IsDiscoveryNestedType(nlohmann::json const& json) {
+  return json.contains("type") && json["type"] == "object" &&
+         json.contains("properties");
+}
+
 }  // namespace
 
 StatusOr<std::map<std::string, DiscoveryTypeVertex>> ExtractTypesFromSchema(
@@ -272,6 +287,31 @@ Status ProcessMethodRequestsAndResponses(
   }
 
   return {};
+}
+
+// NOLINTNEXTLINE(misc-no-recursion)
+std::set<std::string> FindAllRefValues(nlohmann::json const& json) {
+  std::set<std::string> ref_values;
+  nlohmann::json fields;
+  if (json.contains("properties")) {
+    fields = json["properties"];
+  } else if (json.contains("additionalProperties") || json.contains("items")) {
+    fields = json;
+  } else {
+    return {};
+  }
+
+  for (auto const& f : fields) {
+    if (f.contains("$ref")) {
+      ref_values.insert(f["$ref"]);
+    } else if (IsDiscoveryArrayType(f) || IsDiscoveryMapType(f) ||
+               IsDiscoveryNestedType(f)) {
+      auto new_ref_values = FindAllRefValues(f);
+      ref_values.insert(new_ref_values.begin(), new_ref_values.end());
+    }
+  }
+
+  return ref_values;
 }
 
 std::vector<DiscoveryFile> CreateFilesFromResources(
