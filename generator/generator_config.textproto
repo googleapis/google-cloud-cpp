@@ -1745,6 +1745,21 @@ service {
   retryable_status_codes: ["kUnavailable"]
 }
 
+# Datastore
+service {
+  service_proto_path: "google/datastore/admin/v1/datastore_admin.proto"
+  product_path: "google/cloud/datastore/admin/v1"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/datastore/v1/datastore.proto"
+  product_path: "google/cloud/datastore/v1"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # Datastream
 service {
   service_proto_path: "google/cloud/datastream/v1/datastream.proto"
