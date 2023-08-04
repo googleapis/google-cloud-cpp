@@ -44,12 +44,14 @@ using ::google::cloud::testing_util::AsyncSequencer;
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::StatusIs;
 using ::google::protobuf::TextFormat;
+using ::testing::_;
 using ::testing::AtLeast;
 using ::testing::Contains;
 using ::testing::ContainsRegex;
 using ::testing::ElementsAre;
 using ::testing::Eq;
 using ::testing::HasSubstr;
+using ::testing::Pair;
 using ::testing::Return;
 
 std::shared_ptr<GoldenThingAdminConnection> CreateTestingConnection(
@@ -1254,10 +1256,12 @@ TEST(GoldenThingAdminConnectionTest, AsyncGetDatabaseTooManyFailures) {
   auto fut = conn->AsyncGetDatabase(dbase);
   ASSERT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(10)));
   auto db = fut.get();
-  ASSERT_THAT(db, StatusIs(StatusCode::kDeadlineExceeded,
-                           AllOf(HasSubstr("Retry policy exhausted"),
-                                 HasSubstr("AsyncGetDatabase"),
-                                 HasSubstr("try again"))));
+  ASSERT_THAT(db,
+              StatusIs(StatusCode::kDeadlineExceeded, HasSubstr("try again")));
+  auto const& metadata = db.status().error_info().metadata();
+  EXPECT_THAT(metadata, Contains(Pair("gcloud-cpp.retry.function", _)));
+  EXPECT_THAT(metadata, Contains(Pair("gcloud-cpp.retry.reason",
+                                      "retry-policy-exhausted")));
 }
 
 TEST(GoldenThingAdminConnectionTest, AsyncGetDatabaseCancel) {
@@ -1286,10 +1290,11 @@ TEST(GoldenThingAdminConnectionTest, AsyncGetDatabaseCancel) {
   fut.cancel();
   EXPECT_TRUE(cancel_completed.get());
   auto db = fut.get();
-  ASSERT_THAT(db, StatusIs(StatusCode::kDeadlineExceeded,
-                           AllOf(HasSubstr("Retry loop cancelled"),
-                                 HasSubstr("AsyncGetDatabase"),
-                                 HasSubstr("try again"))));
+  ASSERT_THAT(db,
+              StatusIs(StatusCode::kDeadlineExceeded, HasSubstr("try again")));
+  auto const& metadata = db.status().error_info().metadata();
+  EXPECT_THAT(metadata, Contains(Pair("gcloud-cpp.retry.function", _)));
+  EXPECT_THAT(metadata, Contains(Pair("gcloud-cpp.retry.reason", "cancelled")));
 }
 
 TEST(GoldenThingAdminConnectionTest, AsyncDropDatabaseSuccess) {
@@ -1338,10 +1343,12 @@ TEST(GoldenThingAdminConnectionTest, AsyncDropDatabaseFailure) {
   auto fut = conn->AsyncDropDatabase(request);
   ASSERT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(10)));
   auto status = fut.get();
-  ASSERT_THAT(status, StatusIs(StatusCode::kDeadlineExceeded,
-                               AllOf(HasSubstr("Retry policy exhausted"),
-                                     HasSubstr("AsyncDropDatabase"),
-                                     HasSubstr("try again"))));
+  ASSERT_THAT(status,
+              StatusIs(StatusCode::kDeadlineExceeded, HasSubstr("try again")));
+  auto const& metadata = status.error_info().metadata();
+  EXPECT_THAT(metadata, Contains(Pair("gcloud-cpp.retry.function", _)));
+  EXPECT_THAT(metadata, Contains(Pair("gcloud-cpp.retry.reason",
+                                      "retry-policy-exhausted")));
 }
 
 TEST(GoldenThingAdminConnectionTest, AsyncDropDatabaseCancel) {
@@ -1376,10 +1383,11 @@ TEST(GoldenThingAdminConnectionTest, AsyncDropDatabaseCancel) {
   fut.cancel();
   EXPECT_TRUE(cancel_completed.get());
   auto status = fut.get();
-  ASSERT_THAT(status, StatusIs(StatusCode::kDeadlineExceeded,
-                               AllOf(HasSubstr("Retry loop cancelled"),
-                                     HasSubstr("AsyncDropDatabase"),
-                                     HasSubstr("try again"))));
+  ASSERT_THAT(status,
+              StatusIs(StatusCode::kDeadlineExceeded, HasSubstr("try again")));
+  auto const& metadata = status.error_info().metadata();
+  EXPECT_THAT(metadata, Contains(Pair("gcloud-cpp.retry.function", _)));
+  EXPECT_THAT(metadata, Contains(Pair("gcloud-cpp.retry.reason", "cancelled")));
 }
 
 TEST(GoldenThingAdminConnectionTest, CheckExpectedOptions) {

@@ -194,7 +194,9 @@ std::string StatusCodeToString(StatusCode code);
 std::ostream& operator<<(std::ostream& os, StatusCode code);
 
 class Status;
+class ErrorInfo;
 namespace internal {
+void AddMetadata(ErrorInfo&, std::string const& key, std::string value);
 void SetPayload(Status&, std::string key, std::string payload);
 absl::optional<std::string> GetPayload(Status const&, std::string const& key);
 }  // namespace internal
@@ -271,6 +273,9 @@ class ErrorInfo {
   friend bool operator!=(ErrorInfo const&, ErrorInfo const&);
 
  private:
+  friend void internal::AddMetadata(ErrorInfo&, std::string const& key,
+                                    std::string value);
+
   std::string reason_;
   std::string domain_;
   std::unordered_map<std::string, std::string> metadata_;

@@ -30,8 +30,10 @@ namespace {
 
 using ::google::cloud::testing_util::MockBackoffPolicy;
 using ::google::cloud::testing_util::StatusIs;
+using ::testing::Contains;
 using ::testing::ElementsAre;
 using ::testing::HasSubstr;
+using ::testing::Pair;
 using ::testing::Return;
 
 struct StringOption {
@@ -151,12 +153,14 @@ TEST(RetryLoopTest, TransientFailureNonIdempotent) {
                   "TransientFailureNonIdempotent");
         return StatusOr<int>(Status(StatusCode::kUnavailable, "try again"));
       },
-      42, "the answer to everything");
+      42, __func__);
   OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
   EXPECT_EQ(StatusCode::kUnavailable, actual.status().code());
   EXPECT_THAT(actual.status().message(), HasSubstr("try again"));
-  EXPECT_THAT(actual.status().message(), HasSubstr("the answer to everything"));
-  EXPECT_THAT(actual.status().message(), HasSubstr("Error in non-idempotent"));
+  auto const& metadata = actual.status().error_info().metadata();
+  EXPECT_THAT(metadata,
+              Contains(Pair("gcloud-cpp.retry.reason", "non-idempotent")));
+  EXPECT_THAT(metadata, Contains(Pair("gcloud-cpp.retry.function", __func__)));
 }
 
 TEST(RetryLoopTest, PermanentFailureFailureIdempotent) {
@@ -169,12 +173,14 @@ TEST(RetryLoopTest, PermanentFailureFailureIdempotent) {
                   "PermanentFailureFailureIdempotent");
         return StatusOr<int>(Status(StatusCode::kPermissionDenied, "uh oh"));
       },
-      42, "the answer to everything");
+      42, __func__);
   OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
   EXPECT_EQ(StatusCode::kPermissionDenied, actual.status().code());
   EXPECT_THAT(actual.status().message(), HasSubstr("uh oh"));
-  EXPECT_THAT(actual.status().message(), HasSubstr("the answer to everything"));
-  EXPECT_THAT(actual.status().message(), HasSubstr("Permanent error"));
+  auto const& metadata = actual.status().error_info().metadata();
+  EXPECT_THAT(metadata,
+              Contains(Pair("gcloud-cpp.retry.reason", "permanent-error")));
+  EXPECT_THAT(metadata, Contains(Pair("gcloud-cpp.retry.function", __func__)));
 }
 
 TEST(RetryLoopTest, TooManyTransientFailuresIdempotent) {
@@ -187,12 +193,15 @@ TEST(RetryLoopTest, TooManyTransientFailuresIdempotent) {
                   "TransientFailureNonIdempotent");
         return StatusOr<int>(Status(StatusCode::kUnavailable, "try again"));
       },
-      42, "the answer to everything");
+      42, __func__);
   OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
   EXPECT_EQ(StatusCode::kUnavailable, actual.status().code());
   EXPECT_THAT(actual.status().message(), HasSubstr("try again"));
-  EXPECT_THAT(actual.status().message(), HasSubstr("the answer to everything"));
-  EXPECT_THAT(actual.status().message(), HasSubstr("Retry policy exhausted"));
+  auto const& metadata = actual.status().error_info().metadata();
+  EXPECT_THAT(metadata, Contains(Pair("gcloud-cpp.retry.reason",
+                                      "retry-policy-exhausted")));
+  EXPECT_THAT(metadata, Contains(Pair("gcloud-cpp.retry.on-entry", "false")));
+  EXPECT_THAT(metadata, Contains(Pair("gcloud-cpp.retry.function", __func__)));
 }
 
 TEST(RetryLoopTest, ExhaustedOnStart) {
@@ -207,10 +216,14 @@ TEST(RetryLoopTest, ExhaustedOnStart) {
                   "ExhaustedOnStart");
         return StatusOr<int>(Status(StatusCode::kUnavailable, "try again"));
       },
-      42, "the answer to everything");
+      42, __func__);
   internal::OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
-  EXPECT_THAT(actual, StatusIs(StatusCode::kDeadlineExceeded,
-                               HasSubstr("Retry policy exhausted before")));
+  EXPECT_THAT(actual, StatusIs(StatusCode::kDeadlineExceeded));
+  auto const& metadata = actual.status().error_info().metadata();
+  EXPECT_THAT(metadata, Contains(Pair("gcloud-cpp.retry.reason",
+                                      "retry-policy-exhausted")));
+  EXPECT_THAT(metadata, Contains(Pair("gcloud-cpp.retry.on-entry", "true")));
+  EXPECT_THAT(metadata, Contains(Pair("gcloud-cpp.retry.function", __func__)));
 }
 
 TEST(RetryLoopTest, ConfigureContext) {

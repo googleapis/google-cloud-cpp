@@ -226,8 +226,7 @@ class AsyncRetryLoopImpl
   void StartAttempt() {
     auto self = this->shared_from_this();
     if (retry_policy_->IsExhausted()) {
-      return SetDone(
-          RetryLoopError("Retry policy exhausted in", location_, last_status_));
+      return SetDone(RetryLoopPolicyExhaustedError(last_status_, location_));
     }
     auto state = StartOperation();
     if (state.cancelled) return;
@@ -258,16 +257,14 @@ class AsyncRetryLoopImpl
     // Some kind of failure, first verify that it is retryable.
     last_status_ = GetResultStatus(std::move(result));
     if (idempotency_ == Idempotency::kNonIdempotent) {
-      return SetDone(RetryLoopError("Error in non-idempotent operation",
-                                    location_, last_status_));
+      return SetDone(
+          RetryLoopNonIdempotentError(std::move(last_status_), location_));
     }
     if (!retry_policy_->OnFailure(last_status_)) {
       if (retry_policy_->IsPermanentFailure(last_status_)) {
-        return SetDone(
-            RetryLoopError("Permanent error in", location_, last_status_));
+        return SetDone(RetryLoopPermanentError(last_status_, location_));
       }
-      return SetDone(
-          RetryLoopError("Retry policy exhausted in", location_, last_status_));
+      return SetDone(RetryLoopPolicyExhaustedError(last_status_, location_));
     }
     StartBackoff();
   }
@@ -279,8 +276,7 @@ class AsyncRetryLoopImpl
     if (state.cancelled) return;
     if (!tp) {
       // Some kind of error in the CompletionQueue, probably shutting down.
-      return SetDone(RetryLoopError("Timer failure in", location_,
-                                    std::move(tp).status()));
+      return SetDone(RetryLoopCancelled(std::move(tp).status(), location_));
     }
     StartAttempt();
   }
@@ -307,8 +303,7 @@ class AsyncRetryLoopImpl
     if (done_) return State{true, 0};
     done_ = true;
     lk.unlock();
-    result_.set_value(
-        RetryLoopError("Retry loop cancelled", location_, last_status_));
+    result_.set_value(RetryLoopCancelled(last_status_, location_));
     return State{true, 0};
   }
 
@@ -329,7 +324,7 @@ class AsyncRetryLoopImpl
   Request request_;
   char const* location_ = "unknown";
   CallContext call_context_;
-  Status last_status_ = Status(StatusCode::kUnknown, "Retry policy exhausted");
+  Status last_status_;
   promise<T> result_;
 
   // Only the following variables require synchronization, as they coordinate

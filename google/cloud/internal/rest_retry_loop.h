@@ -68,28 +68,23 @@ auto RestRetryLoopImpl(RetryPolicy& retry_policy, BackoffPolicy& backoff_policy,
                        Sleeper sleeper)
     -> google::cloud::internal::invoke_result_t<Functor, RestContext&,
                                                 Request const&> {
-  auto last_status = internal::DeadlineExceededError(
-      "Retry policy exhausted before first request attempt", GCP_ERROR_INFO());
+  auto last_status = Status{};
   while (!retry_policy.IsExhausted()) {
     RestContext rest_context;
     auto result = functor(rest_context, request);
     if (result.ok()) return result;
     last_status = internal::GetResultStatus(std::move(result));
     if (idempotency == Idempotency::kNonIdempotent) {
-      return internal::RetryLoopError("Error in non-idempotent operation",
-                                      location, last_status);
+      return internal::RetryLoopNonIdempotentError(std::move(last_status),
+                                                   location);
     }
     // The retry policy is exhausted or the error is not retryable. Either
     // way, exit the loop.
     if (!retry_policy.OnFailure(last_status)) break;
     sleeper(backoff_policy.OnCompletion());
   }
-  // The last error cannot be retried, but it is not because the retry
-  // policy is exhausted. We call these "permanent errors", and they
-  // get a special message.
-  auto const* prefix = retry_policy.IsExhausted() ? "Retry policy exhausted in"
-                                                  : "Permanent error in";
-  return internal::RetryLoopError(prefix, location, last_status);
+  return internal::RetryLoopError(last_status, location,
+                                  retry_policy.IsExhausted());
 }
 
 /// @copydoc RestRetryLoopImpl

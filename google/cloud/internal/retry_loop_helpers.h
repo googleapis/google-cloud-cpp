@@ -32,9 +32,26 @@ Status GetResultStatus(StatusOr<T> result) {
   return std::move(result).status();
 }
 
-/// Generate an error Status for `RetryLoop()` and `AsyncRetryLoop()`
-Status RetryLoopError(char const* loop_message, char const* location,
-                      Status const& status);
+/// Use this if the retry loop detects any error on a non-idempotent RPC.
+Status RetryLoopNonIdempotentError(Status status, char const* location);
+
+/// Use this if the retry loop finished with an error.
+///
+/// Set @p exhausted to true if the retry policy has been exhausted
+Status RetryLoopError(Status const& s, char const* location, bool exhausted);
+
+/// Use this if the retry loop detects any permanent errors.
+Status RetryLoopPermanentError(Status const& status, char const* location);
+
+/// Use this if the retry loop exits as the retry policy has been exhausted.
+Status RetryLoopPolicyExhaustedError(Status const& status,
+                                     char const* location);
+
+/// Use this if the retry loop is cancelled by the caller.
+///
+/// This is only applicable for asynchronous RPCs, as unary RPCs cannot be
+/// cancelled.
+Status RetryLoopCancelled(Status const& status, char const* location);
 
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

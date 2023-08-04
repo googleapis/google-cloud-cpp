@@ -93,12 +93,8 @@ StatusOr<pubsub::PullResponse> SubscriberConnectionImpl::Pull() {
     return google::cloud::internal::UnavailableError("no messages returned",
                                                      GCP_ERROR_INFO());
   }
-  if (retry_policy->IsExhausted()) {
-    return google::cloud::internal::RetryLoopError("Retry policy exhausted in",
-                                                   __func__, last_status);
-  }
-  return google::cloud::internal::RetryLoopError("Permanent error in", __func__,
-                                                 last_status);
+  return google::cloud::internal::RetryLoopError(last_status, __func__,
+                                                 retry_policy->IsExhausted());
 }
 
 Options SubscriberConnectionImpl::options() { return opts_; }

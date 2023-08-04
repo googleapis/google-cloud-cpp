@@ -23,22 +23,118 @@ namespace internal {
 namespace {
 
 using ::google::cloud::testing_util::StatusIs;
+using ::testing::Contains;
 using ::testing::HasSubstr;
+using ::testing::IsSupersetOf;
+using ::testing::Pair;
 
-TEST(RetryLoopHelpersTest, IncludeErrorInfo) {
+ErrorInfo TestErrorInfo() {
+  return ErrorInfo("conditionNotMet", "global",
+                   {{"locationType", "header"},
+                    {"location", "If-Match"},
+                    {"http_status_code", "412"}});
+}
+
+TEST(RetryLoopHelpers, RetryLoopNonIdempotentError) {
   auto const code = StatusCode::kFailedPrecondition;
   auto const message = std::string{
       "At least one of the pre-conditions you specified did not hold."};
-  auto const error_info = ErrorInfo("conditionNotMet", "global",
-                                    {{"locationType", "header"},
-                                     {"location", "If-Match"},
-                                     {"http_status_code", "412"}});
-  auto input = Status(code, message, error_info);
-  auto actual = RetryLoopError("permanent error", "SomeFunction", input);
+  auto const ei = TestErrorInfo();
+  auto actual =
+      RetryLoopNonIdempotentError(Status(code, message, ei), "SomeFunction");
   EXPECT_THAT(actual, StatusIs(code, HasSubstr(message)));
-  EXPECT_THAT(actual.message(), HasSubstr("permanent error"));
-  EXPECT_THAT(actual.message(), HasSubstr("SomeFunction"));
-  EXPECT_EQ(actual.error_info(), error_info);
+  EXPECT_THAT(actual.error_info().reason(), ei.reason());
+  EXPECT_THAT(actual.error_info().domain(), ei.domain());
+  EXPECT_THAT(actual.error_info().metadata(), IsSupersetOf(ei.metadata()));
+  EXPECT_THAT(actual.error_info().metadata(),
+              Contains(Pair("gcloud-cpp.retry.function", "SomeFunction")));
+  EXPECT_THAT(actual.error_info().metadata(),
+              Contains(Pair("gcloud-cpp.retry.reason", "non-idempotent")));
+}
+
+TEST(RetryLoopHelpers, RetryLoopPolicyErrorExhausted) {
+  auto const code = StatusCode::kFailedPrecondition;
+  auto const message = std::string{
+      "At least one of the pre-conditions you specified did not hold."};
+  auto const ei = TestErrorInfo();
+  auto actual = RetryLoopError(Status(code, message, ei), "SomeFunction",
+                               /*exhausted=*/true);
+  EXPECT_THAT(actual, StatusIs(code, HasSubstr(message)));
+  EXPECT_THAT(actual.error_info().reason(), ei.reason());
+  EXPECT_THAT(actual.error_info().domain(), ei.domain());
+  EXPECT_THAT(actual.error_info().metadata(), IsSupersetOf(ei.metadata()));
+  EXPECT_THAT(actual.error_info().metadata(),
+              Contains(Pair("gcloud-cpp.retry.function", "SomeFunction")));
+  EXPECT_THAT(
+      actual.error_info().metadata(),
+      Contains(Pair("gcloud-cpp.retry.reason", "retry-policy-exhausted")));
+  EXPECT_THAT(actual.error_info().metadata(),
+              Contains(Pair("gcloud-cpp.retry.on-entry", "false")));
+}
+
+TEST(RetryLoopHelpers, RetryLoopPolicyErrorExhaustedButOkay) {
+  auto const ei = TestErrorInfo();
+  auto actual = RetryLoopError(Status(), "SomeFunction",
+                               /*exhausted=*/true);
+  EXPECT_THAT(actual, StatusIs(StatusCode::kDeadlineExceeded));
+  EXPECT_THAT(actual.error_info().metadata(),
+              Contains(Pair("gcloud-cpp.retry.function", "SomeFunction")));
+  EXPECT_THAT(
+      actual.error_info().metadata(),
+      Contains(Pair("gcloud-cpp.retry.reason", "retry-policy-exhausted")));
+  EXPECT_THAT(actual.error_info().metadata(),
+              Contains(Pair("gcloud-cpp.retry.on-entry", "true")));
+}
+
+TEST(RetryLoopHelpers, RetryLoopPolicyErrorNotExhausted) {
+  auto const code = StatusCode::kFailedPrecondition;
+  auto const message = std::string{
+      "At least one of the pre-conditions you specified did not hold."};
+  auto const ei = TestErrorInfo();
+  auto actual = RetryLoopError(Status(code, message, ei), "SomeFunction",
+                               /*exhausted=*/false);
+  EXPECT_THAT(actual, StatusIs(code, HasSubstr(message)));
+  EXPECT_THAT(actual.error_info().reason(), ei.reason());
+  EXPECT_THAT(actual.error_info().domain(), ei.domain());
+  EXPECT_THAT(actual.error_info().metadata(), IsSupersetOf(ei.metadata()));
+  EXPECT_THAT(actual.error_info().metadata(),
+              Contains(Pair("gcloud-cpp.retry.function", "SomeFunction")));
+  EXPECT_THAT(actual.error_info().metadata(),
+              Contains(Pair("gcloud-cpp.retry.reason", "permanent-error")));
+}
+
+TEST(RetryLoopHelpers, RetryLoopPolicyErrorNotExhaustedButOkay) {
+  auto actual = RetryLoopPermanentError(Status(), "SomeFunction");
+  EXPECT_THAT(actual, StatusIs(StatusCode::kUnknown));
+  EXPECT_THAT(actual.error_info().metadata(),
+              Contains(Pair("gcloud-cpp.retry.function", "SomeFunction")));
+  EXPECT_THAT(actual.error_info().metadata(),
+              Contains(Pair("gcloud-cpp.retry.reason", "permanent-error")));
+}
+
+TEST(RetryLoopHelpers, RetryLoopErrorCancelled) {
+  auto const code = StatusCode::kFailedPrecondition;
+  auto const message = std::string{
+      "At least one of the pre-conditions you specified did not hold."};
+  auto const ei = TestErrorInfo();
+  auto actual = RetryLoopCancelled(Status(code, message, ei), "SomeFunction");
+  EXPECT_THAT(actual, StatusIs(code, HasSubstr(message)));
+  EXPECT_THAT(actual.error_info().reason(), ei.reason());
+  EXPECT_THAT(actual.error_info().domain(), ei.domain());
+  EXPECT_THAT(actual.error_info().metadata(), IsSupersetOf(ei.metadata()));
+  EXPECT_THAT(actual.error_info().metadata(),
+              Contains(Pair("gcloud-cpp.retry.function", "SomeFunction")));
+  EXPECT_THAT(actual.error_info().metadata(),
+              Contains(Pair("gcloud-cpp.retry.reason", "cancelled")));
+}
+
+TEST(RetryLoopHelpers, RetryLoopErrorCancelledButOkay) {
+  auto actual = RetryLoopCancelled(Status(), "SomeFunction");
+  EXPECT_THAT(actual, StatusIs(StatusCode::kCancelled));
+  EXPECT_THAT(actual.error_info().metadata(),
+              Contains(Pair("gcloud-cpp.retry.function", "SomeFunction")));
+  EXPECT_THAT(actual.error_info().metadata(),
+              Contains(Pair("gcloud-cpp.retry.reason", "cancelled")));
 }
 
 }  // namespace

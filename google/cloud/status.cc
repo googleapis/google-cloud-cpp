@@ -96,11 +96,11 @@ class Status::Impl {
   StatusCode code() const { return code_; }
   std::string const& message() const { return message_; }
   ErrorInfo const& error_info() const { return error_info_; }
-  PayloadType const& payload() const { return payload_; };
+  PayloadType const& payload() const { return payload_; }
 
   // Allows mutable access to payload, which is needed in the
   // `internal::SetPayload()` function.
-  PayloadType& payload() { return payload_; };
+  PayloadType& payload() { return payload_; }
 
   friend inline bool operator==(Impl const& a, Impl const& b) {
     return a.code_ == b.code_ && a.message_ == b.message_ &&
@@ -177,6 +177,10 @@ std::ostream& operator<<(std::ostream& os, Status const& s) {
 }
 
 namespace internal {
+
+void AddMetadata(ErrorInfo& ei, std::string const& key, std::string value) {
+  ei.metadata_[key] = std::move(value);
+}
 
 // Sets the given `payload`, indexed by the given `key`, on the given `Status`,
 // IFF the status is not OK. Payloads are considered in equality comparisons.
