@@ -15,6 +15,7 @@
 #include "google/cloud/storage/client.h"
 #include "google/cloud/storage/internal/curl/client.h"
 #include "google/cloud/storage/internal/curl/handle.h"
+#include "google/cloud/storage/internal/generic_stub_adapter.h"
 #include "google/cloud/storage/internal/openssl_util.h"
 #include "google/cloud/storage/internal/rest/client.h"
 #include "google/cloud/storage/internal/tracing_client.h"
@@ -55,7 +56,8 @@ std::shared_ptr<internal::RawClient> Client::CreateDefaultInternalClient(
   if (google::cloud::internal::TracingEnabled(opts)) {
     client = storage_internal::MakeTracingClient(std::move(client));
   }
-  return internal::RetryClient::Create(std::move(client), opts);
+  return internal::RetryClient::Create(
+      storage_internal::MakeGenericStubAdapter(std::move(client)), opts);
 }
 
 std::shared_ptr<internal::RawClient> Client::CreateDefaultInternalClient(

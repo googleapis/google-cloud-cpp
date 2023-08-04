@@ -15,6 +15,7 @@
 #include "google/cloud/storage/internal/object_write_streambuf.h"
 #include "google/cloud/storage/object_metadata.h"
 #include "google/cloud/storage/testing/mock_client.h"
+#include "google/cloud/storage/testing/mock_generic_stub.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 
@@ -416,14 +417,14 @@ TEST(ObjectWriteStreambufTest, CreatedForFinalizedUpload) {
 /// @test A regression test for #8868.
 ///    https://github.com/googleapis/google-cloud-cpp/issues/8868
 TEST(ObjectWriteStreambufTest, Regression8868) {
-  auto mock = std::make_unique<testing::MockClient>();
-
   auto const quantum = UploadChunkRequest::kChunkSizeQuantum;
   auto const payload = std::string(quantum, '0');
   using ::testing::Return;
 
+  auto mock = std::make_unique<testing::MockGenericStub>();
   ::testing::InSequence sequence;
   // Simulate an upload chunk that has some kind of transient error.
+  EXPECT_CALL(*mock, options);  // Called from RetryClient::Create()
   EXPECT_CALL(*mock, UploadChunk)
       .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")));
   // This should trigger a `QueryResumableUpload()`, simulate the case where

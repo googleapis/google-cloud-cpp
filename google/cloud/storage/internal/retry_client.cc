@@ -130,18 +130,20 @@ Status PartialWriteStatus(int error_count, int upload_count,
 }  // namespace
 
 std::shared_ptr<RetryClient> RetryClient::Create(
-    std::shared_ptr<RawClient> client, Options options) {
+    std::unique_ptr<storage_internal::GenericStub> stub, Options options) {
   // Cannot use `std::make_shared<>` because the constructor is private.
   return std::shared_ptr<RetryClient>(
-      new RetryClient(std::move(client), std::move(options)));
+      new RetryClient(std::move(stub), std::move(options)));
 }
 
-RetryClient::RetryClient(std::shared_ptr<RawClient> client, Options options)
-    : client_(std::move(client)),
-      options_(MergeOptions(std::move(options), client_->options())) {}
+RetryClient::RetryClient(std::unique_ptr<storage_internal::GenericStub> stub,
+                         Options options)
+    : stub_(std::move(stub)),
+      options_(MergeOptions(std::move(options), stub_->options())),
+      client_options_(MakeBackwardsCompatibleClientOptions(options_)) {}
 
 ClientOptions const& RetryClient::client_options() const {
-  return client_->client_options();
+  return client_options_;
 }
 
 Options RetryClient::options() const { return options_; }
@@ -153,8 +155,9 @@ StatusOr<ListBucketsResponse> RetryClient::ListBuckets(
                                : Idempotency::kNonIdempotent;
   return RestRetryLoop(
       current_retry_policy(), current_backoff_policy(), idempotency,
-      [this](rest_internal::RestContext&, auto const& request) {
-        return client_->ListBuckets(request);
+      [this](rest_internal::RestContext& context, auto const& request) {
+        auto const& current = google::cloud::internal::CurrentOptions();
+        return stub_->ListBuckets(context, current, request);
       },
       request, __func__);
 }
@@ -166,8 +169,9 @@ StatusOr<BucketMetadata> RetryClient::CreateBucket(
                                : Idempotency::kNonIdempotent;
   return RestRetryLoop(
       current_retry_policy(), current_backoff_policy(), idempotency,
-      [this](rest_internal::RestContext&, auto const& request) {
-        return client_->CreateBucket(request);
+      [this](rest_internal::RestContext& context, auto const& request) {
+        auto const& current = google::cloud::internal::CurrentOptions();
+        return stub_->CreateBucket(context, current, request);
       },
       request, __func__);
 }
@@ -179,8 +183,9 @@ StatusOr<BucketMetadata> RetryClient::GetBucketMetadata(
                                : Idempotency::kNonIdempotent;
   return RestRetryLoop(
       current_retry_policy(), current_backoff_policy(), idempotency,
-      [this](rest_internal::RestContext&, auto const& request) {
-        return client_->GetBucketMetadata(request);
+      [this](rest_internal::RestContext& context, auto const& request) {
+        auto const& current = google::cloud::internal::CurrentOptions();
+        return stub_->GetBucketMetadata(context, current, request);
       },
       request, __func__);
 }
@@ -192,8 +197,9 @@ StatusOr<EmptyResponse> RetryClient::DeleteBucket(
                          : Idempotency::kNonIdempotent;
   return RestRetryLoop(
       current_retry_policy(), current_backoff_policy(), idempotency,
-      [this](rest_internal::RestContext&, auto const& request) {
-        return client_->DeleteBucket(request);
+      [this](rest_internal::RestContext& context, auto const& request) {
+        auto const& current = google::cloud::internal::CurrentOptions();
+        return stub_->DeleteBucket(context, current, request);
       },
       request, __func__);
 }
@@ -205,8 +211,9 @@ StatusOr<BucketMetadata> RetryClient::UpdateBucket(
                                : Idempotency::kNonIdempotent;
   return RestRetryLoop(
       current_retry_policy(), current_backoff_policy(), idempotency,
-      [this](rest_internal::RestContext&, auto const& request) {
-        return client_->UpdateBucket(request);
+      [this](rest_internal::RestContext& context, auto const& request) {
+        auto const& current = google::cloud::internal::CurrentOptions();
+        return stub_->UpdateBucket(context, current, request);
       },
       request, __func__);
 }
@@ -218,8 +225,9 @@ StatusOr<BucketMetadata> RetryClient::PatchBucket(
                                : Idempotency::kNonIdempotent;
   return RestRetryLoop(
       current_retry_policy(), current_backoff_policy(), idempotency,
-      [this](rest_internal::RestContext&, auto const& request) {
-        return client_->PatchBucket(request);
+      [this](rest_internal::RestContext& context, auto const& request) {
+        auto const& current = google::cloud::internal::CurrentOptions();
+        return stub_->PatchBucket(context, current, request);
       },
       request, __func__);
 }
@@ -231,8 +239,9 @@ StatusOr<NativeIamPolicy> RetryClient::GetNativeBucketIamPolicy(
                                : Idempotency::kNonIdempotent;
   return RestRetryLoop(
       current_retry_policy(), current_backoff_policy(), idempotency,
-      [this](rest_internal::RestContext&, auto const& request) {
-        return client_->GetNativeBucketIamPolicy(request);
+      [this](rest_internal::RestContext& context, auto const& request) {
+        auto const& current = google::cloud::internal::CurrentOptions();
+        return stub_->GetNativeBucketIamPolicy(context, current, request);
       },
       request, __func__);
 }
@@ -244,8 +253,9 @@ StatusOr<NativeIamPolicy> RetryClient::SetNativeBucketIamPolicy(
                                : Idempotency::kNonIdempotent;
   return RestRetryLoop(
       current_retry_policy(), current_backoff_policy(), idempotency,
-      [this](rest_internal::RestContext&, auto const& request) {
-        return client_->SetNativeBucketIamPolicy(request);
+      [this](rest_internal::RestContext& context, auto const& request) {
+        auto const& current = google::cloud::internal::CurrentOptions();
+        return stub_->SetNativeBucketIamPolicy(context, current, request);
       },
       request, __func__);
 }
@@ -258,8 +268,9 @@ RetryClient::TestBucketIamPermissions(
                                : Idempotency::kNonIdempotent;
   return RestRetryLoop(
       current_retry_policy(), current_backoff_policy(), idempotency,
-      [this](rest_internal::RestContext&, auto const& request) {
-        return client_->TestBucketIamPermissions(request);
+      [this](rest_internal::RestContext& context, auto const& request) {
+        auto const& current = google::cloud::internal::CurrentOptions();
+        return stub_->TestBucketIamPermissions(context, current, request);
       },
       request, __func__);
 }
@@ -271,8 +282,9 @@ StatusOr<BucketMetadata> RetryClient::LockBucketRetentionPolicy(
                                : Idempotency::kNonIdempotent;
   return RestRetryLoop(
       current_retry_policy(), current_backoff_policy(), idempotency,
-      [this](rest_internal::RestContext&, auto const& request) {
-        return client_->LockBucketRetentionPolicy(request);
+      [this](rest_internal::RestContext& context, auto const& request) {
+        auto const& current = google::cloud::internal::CurrentOptions();
+        return stub_->LockBucketRetentionPolicy(context, current, request);
       },
       request, __func__);
 }
@@ -284,8 +296,9 @@ StatusOr<ObjectMetadata> RetryClient::InsertObjectMedia(
                                : Idempotency::kNonIdempotent;
   return RestRetryLoop(
       current_retry_policy(), current_backoff_policy(), idempotency,
-      [this](rest_internal::RestContext&, auto const& request) {
-        return client_->InsertObjectMedia(request);
+      [this](rest_internal::RestContext& context, auto const& request) {
+        auto const& current = google::cloud::internal::CurrentOptions();
+        return stub_->InsertObjectMedia(context, current, request);
       },
       request, __func__);
 }
@@ -297,8 +310,9 @@ StatusOr<ObjectMetadata> RetryClient::CopyObject(
                                : Idempotency::kNonIdempotent;
   return RestRetryLoop(
       current_retry_policy(), current_backoff_policy(), idempotency,
-      [this](rest_internal::RestContext&, auto const& request) {
-        return client_->CopyObject(request);
+      [this](rest_internal::RestContext& context, auto const& request) {
+        auto const& current = google::cloud::internal::CurrentOptions();
+        return stub_->CopyObject(context, current, request);
       },
       request, __func__);
 }
@@ -310,8 +324,9 @@ StatusOr<ObjectMetadata> RetryClient::GetObjectMetadata(
                                : Idempotency::kNonIdempotent;
   return RestRetryLoop(
       current_retry_policy(), current_backoff_policy(), idempotency,
-      [this](rest_internal::RestContext&, auto const& request) {
-        return client_->GetObjectMetadata(request);
+      [this](rest_internal::RestContext& context, auto const& request) {
+        auto const& current = google::cloud::internal::CurrentOptions();
+        return stub_->GetObjectMetadata(context, current, request);
       },
       request, __func__);
 }
@@ -324,8 +339,9 @@ StatusOr<std::unique_ptr<ObjectReadSource>> RetryClient::ReadObjectNotWrapped(
                                : Idempotency::kNonIdempotent;
   return RestRetryLoop(
       retry_policy, backoff_policy, idempotency,
-      [this](rest_internal::RestContext&, auto const& request) {
-        return client_->ReadObject(request);
+      [this](rest_internal::RestContext& context, auto const& request) {
+        auto const& current = google::cloud::internal::CurrentOptions();
+        return stub_->ReadObject(context, current, request);
       },
       request, __func__);
 }
@@ -351,8 +367,9 @@ StatusOr<ListObjectsResponse> RetryClient::ListObjects(
                                : Idempotency::kNonIdempotent;
   return RestRetryLoop(
       current_retry_policy(), current_backoff_policy(), idempotency,
-      [this](rest_internal::RestContext&, auto const& request) {
-        return client_->ListObjects(request);
+      [this](rest_internal::RestContext& context, auto const& request) {
+        auto const& current = google::cloud::internal::CurrentOptions();
+        return stub_->ListObjects(context, current, request);
       },
       request, __func__);
 }
@@ -364,8 +381,9 @@ StatusOr<EmptyResponse> RetryClient::DeleteObject(
                                : Idempotency::kNonIdempotent;
   return RestRetryLoop(
       current_retry_policy(), current_backoff_policy(), idempotency,
-      [this](rest_internal::RestContext&, auto const& request) {
-        return client_->DeleteObject(request);
+      [this](rest_internal::RestContext& context, auto const& request) {
+        auto const& current = google::cloud::internal::CurrentOptions();
+        return stub_->DeleteObject(context, current, request);
       },
       request, __func__);
 }
@@ -377,8 +395,9 @@ StatusOr<ObjectMetadata> RetryClient::UpdateObject(
                                : Idempotency::kNonIdempotent;
   return RestRetryLoop(
       current_retry_policy(), current_backoff_policy(), idempotency,
-      [this](rest_internal::RestContext&, auto const& request) {
-        return client_->UpdateObject(request);
+      [this](rest_internal::RestContext& context, auto const& request) {
+        auto const& current = google::cloud::internal::CurrentOptions();
+        return stub_->UpdateObject(context, current, request);
       },
       request, __func__);
 }
@@ -390,8 +409,9 @@ StatusOr<ObjectMetadata> RetryClient::PatchObject(
                                : Idempotency::kNonIdempotent;
   return RestRetryLoop(
       current_retry_policy(), current_backoff_policy(), idempotency,
-      [this](rest_internal::RestContext&, auto const& request) {
-        return client_->PatchObject(request);
+      [this](rest_internal::RestContext& context, auto const& request) {
+        auto const& current = google::cloud::internal::CurrentOptions();
+        return stub_->PatchObject(context, current, request);
       },
       request, __func__);
 }
@@ -403,8 +423,9 @@ StatusOr<ObjectMetadata> RetryClient::ComposeObject(
                                : Idempotency::kNonIdempotent;
   return RestRetryLoop(
       current_retry_policy(), current_backoff_policy(), idempotency,
-      [this](rest_internal::RestContext&, auto const& request) {
-        return client_->ComposeObject(request);
+      [this](rest_internal::RestContext& context, auto const& request) {
+        auto const& current = google::cloud::internal::CurrentOptions();
+        return stub_->ComposeObject(context, current, request);
       },
       request, __func__);
 }
@@ -416,8 +437,9 @@ StatusOr<RewriteObjectResponse> RetryClient::RewriteObject(
                                : Idempotency::kNonIdempotent;
   return RestRetryLoop(
       current_retry_policy(), current_backoff_policy(), idempotency,
-      [this](rest_internal::RestContext&, auto const& request) {
-        return client_->RewriteObject(request);
+      [this](rest_internal::RestContext& context, auto const& request) {
+        auto const& current = google::cloud::internal::CurrentOptions();
+        return stub_->RewriteObject(context, current, request);
       },
       request, __func__);
 }
@@ -429,8 +451,9 @@ StatusOr<CreateResumableUploadResponse> RetryClient::CreateResumableUpload(
                                : Idempotency::kNonIdempotent;
   return RestRetryLoop(
       current_retry_policy(), current_backoff_policy(), idempotency,
-      [this](rest_internal::RestContext&, auto const& request) {
-        return client_->CreateResumableUpload(request);
+      [this](rest_internal::RestContext& context, auto const& request) {
+        auto const& current = google::cloud::internal::CurrentOptions();
+        return stub_->CreateResumableUpload(context, current, request);
       },
       request, __func__);
 }
@@ -440,8 +463,9 @@ StatusOr<QueryResumableUploadResponse> RetryClient::QueryResumableUpload(
   auto const idempotency = Idempotency::kIdempotent;
   return RestRetryLoop(
       current_retry_policy(), current_backoff_policy(), idempotency,
-      [this](rest_internal::RestContext&, auto const& request) {
-        return client_->QueryResumableUpload(request);
+      [this](rest_internal::RestContext& context, auto const& request) {
+        auto const& current = google::cloud::internal::CurrentOptions();
+        return stub_->QueryResumableUpload(context, current, request);
       },
       request, __func__);
 }
@@ -451,8 +475,9 @@ StatusOr<EmptyResponse> RetryClient::DeleteResumableUpload(
   return RestRetryLoop(
       current_retry_policy(), current_backoff_policy(),
       Idempotency::kIdempotent,
-      [this](rest_internal::RestContext&, auto const& request) {
-        return client_->DeleteResumableUpload(request);
+      [this](rest_internal::RestContext& context, auto const& request) {
+        auto const& current = google::cloud::internal::CurrentOptions();
+        return stub_->DeleteResumableUpload(context, current, request);
       },
       request, __func__);
 }
@@ -530,11 +555,15 @@ StatusOr<QueryResumableUploadResponse> RetryClient::UploadChunk(
   using Action =
       std::function<StatusOr<QueryResumableUploadResponse>(std::uint64_t)>;
 
+  auto const& current = google::cloud::internal::CurrentOptions();
   int upload_count = 0;
-  auto upload =
-      Action([&upload_count, &request, this](std::uint64_t committed_size) {
+  auto upload = Action(
+      [&upload_count, &current, &request, this](std::uint64_t committed_size) {
+        // TODO(#12294) - use a unique invocation id for each call.
+        rest_internal::RestContext context;
         ++upload_count;
-        return client_->UploadChunk(request.RemainingChunk(committed_size));
+        return stub_->UploadChunk(context, current,
+                                  request.RemainingChunk(committed_size));
       });
   int reset_count = 0;
   auto reset = Action([&reset_count, &request, this](std::uint64_t) {
@@ -627,8 +656,9 @@ StatusOr<ListBucketAclResponse> RetryClient::ListBucketAcl(
                                : Idempotency::kNonIdempotent;
   return RestRetryLoop(
       current_retry_policy(), current_backoff_policy(), idempotency,
-      [this](rest_internal::RestContext&, auto const& request) {
-        return client_->ListBucketAcl(request);
+      [this](rest_internal::RestContext& context, auto const& request) {
+        auto const& current = google::cloud::internal::CurrentOptions();
+        return stub_->ListBucketAcl(context, current, request);
       },
       request, __func__);
 }
@@ -640,8 +670,9 @@ StatusOr<BucketAccessControl> RetryClient::GetBucketAcl(
                                : Idempotency::kNonIdempotent;
   return RestRetryLoop(
       current_retry_policy(), current_backoff_policy(), idempotency,
-      [this](rest_internal::RestContext&, auto const& request) {
-        return client_->GetBucketAcl(request);
+      [this](rest_internal::RestContext& context, auto const& request) {
+        auto const& current = google::cloud::internal::CurrentOptions();
+        return stub_->GetBucketAcl(context, current, request);
       },
       request, __func__);
 }
@@ -653,8 +684,9 @@ StatusOr<BucketAccessControl> RetryClient::CreateBucketAcl(
                                : Idempotency::kNonIdempotent;
   return RestRetryLoop(
       current_retry_policy(), current_backoff_policy(), idempotency,
-      [this](rest_internal::RestContext&, auto const& request) {
-        return client_->CreateBucketAcl(request);
+      [this](rest_internal::RestContext& context, auto const& request) {
+        auto const& current = google::cloud::internal::CurrentOptions();
+        return stub_->CreateBucketAcl(context, current, request);
       },
       request, __func__);
 }
@@ -666,8 +698,9 @@ StatusOr<EmptyResponse> RetryClient::DeleteBucketAcl(
                                : Idempotency::kNonIdempotent;
   return RestRetryLoop(
       current_retry_policy(), current_backoff_policy(), idempotency,
-      [this](rest_internal::RestContext&, auto const& request) {
-        return client_->DeleteBucketAcl(request);
+      [this](rest_internal::RestContext& context, auto const& request) {
+        auto const& current = google::cloud::internal::CurrentOptions();
+        return stub_->DeleteBucketAcl(context, current, request);
       },
       request, __func__);
 }
@@ -679,8 +712,9 @@ StatusOr<ListObjectAclResponse> RetryClient::ListObjectAcl(
                                : Idempotency::kNonIdempotent;
   return RestRetryLoop(
       current_retry_policy(), current_backoff_policy(), idempotency,
-      [this](rest_internal::RestContext&, auto const& request) {
-        return client_->ListObjectAcl(request);
+      [this](rest_internal::RestContext& context, auto const& request) {
+        auto const& current = google::cloud::internal::CurrentOptions();
+        return stub_->ListObjectAcl(context, current, request);
       },
       request, __func__);
 }
@@ -692,8 +726,9 @@ StatusOr<BucketAccessControl> RetryClient::UpdateBucketAcl(
                                : Idempotency::kNonIdempotent;
   return RestRetryLoop(
       current_retry_policy(), current_backoff_policy(), idempotency,
-      [this](rest_internal::RestContext&, auto const& request) {
-        return client_->UpdateBucketAcl(request);
+      [this](rest_internal::RestContext& context, auto const& request) {
+        auto const& current = google::cloud::internal::CurrentOptions();
+        return stub_->UpdateBucketAcl(context, current, request);
       },
       request, __func__);
 }
@@ -705,8 +740,9 @@ StatusOr<BucketAccessControl> RetryClient::PatchBucketAcl(
                                : Idempotency::kNonIdempotent;
   return RestRetryLoop(
       current_retry_policy(), current_backoff_policy(), idempotency,
-      [this](rest_internal::RestContext&, auto const& request) {
-        return client_->PatchBucketAcl(request);
+      [this](rest_internal::RestContext& context, auto const& request) {
+        auto const& current = google::cloud::internal::CurrentOptions();
+        return stub_->PatchBucketAcl(context, current, request);
       },
       request, __func__);
 }
@@ -718,8 +754,9 @@ StatusOr<ObjectAccessControl> RetryClient::CreateObjectAcl(
                                : Idempotency::kNonIdempotent;
   return RestRetryLoop(
       current_retry_policy(), current_backoff_policy(), idempotency,
-      [this](rest_internal::RestContext&, auto const& request) {
-        return client_->CreateObjectAcl(request);
+      [this](rest_internal::RestContext& context, auto const& request) {
+        auto const& current = google::cloud::internal::CurrentOptions();
+        return stub_->CreateObjectAcl(context, current, request);
       },
       request, __func__);
 }
@@ -731,8 +768,9 @@ StatusOr<EmptyResponse> RetryClient::DeleteObjectAcl(
                                : Idempotency::kNonIdempotent;
   return RestRetryLoop(
       current_retry_policy(), current_backoff_policy(), idempotency,
-      [this](rest_internal::RestContext&, auto const& request) {
-        return client_->DeleteObjectAcl(request);
+      [this](rest_internal::RestContext& context, auto const& request) {
+        auto const& current = google::cloud::internal::CurrentOptions();
+        return stub_->DeleteObjectAcl(context, current, request);
       },
       request, __func__);
 }
@@ -744,8 +782,9 @@ StatusOr<ObjectAccessControl> RetryClient::GetObjectAcl(
                                : Idempotency::kNonIdempotent;
   return RestRetryLoop(
       current_retry_policy(), current_backoff_policy(), idempotency,
-      [this](rest_internal::RestContext&, auto const& request) {
-        return client_->GetObjectAcl(request);
+      [this](rest_internal::RestContext& context, auto const& request) {
+        auto const& current = google::cloud::internal::CurrentOptions();
+        return stub_->GetObjectAcl(context, current, request);
       },
       request, __func__);
 }
@@ -757,8 +796,9 @@ StatusOr<ObjectAccessControl> RetryClient::UpdateObjectAcl(
                                : Idempotency::kNonIdempotent;
   return RestRetryLoop(
       current_retry_policy(), current_backoff_policy(), idempotency,
-      [this](rest_internal::RestContext&, auto const& request) {
-        return client_->UpdateObjectAcl(request);
+      [this](rest_internal::RestContext& context, auto const& request) {
+        auto const& current = google::cloud::internal::CurrentOptions();
+        return stub_->UpdateObjectAcl(context, current, request);
       },
       request, __func__);
 }
@@ -770,8 +810,9 @@ StatusOr<ObjectAccessControl> RetryClient::PatchObjectAcl(
                                : Idempotency::kNonIdempotent;
   return RestRetryLoop(
       current_retry_policy(), current_backoff_policy(), idempotency,
-      [this](rest_internal::RestContext&, auto const& request) {
-        return client_->PatchObjectAcl(request);
+      [this](rest_internal::RestContext& context, auto const& request) {
+        auto const& current = google::cloud::internal::CurrentOptions();
+        return stub_->PatchObjectAcl(context, current, request);
       },
       request, __func__);
 }
@@ -783,8 +824,9 @@ StatusOr<ListDefaultObjectAclResponse> RetryClient::ListDefaultObjectAcl(
                                : Idempotency::kNonIdempotent;
   return RestRetryLoop(
       current_retry_policy(), current_backoff_policy(), idempotency,
-      [this](rest_internal::RestContext&, auto const& request) {
-        return client_->ListDefaultObjectAcl(request);
+      [this](rest_internal::RestContext& context, auto const& request) {
+        auto const& current = google::cloud::internal::CurrentOptions();
+        return stub_->ListDefaultObjectAcl(context, current, request);
       },
       request, __func__);
 }
@@ -796,8 +838,9 @@ StatusOr<ObjectAccessControl> RetryClient::CreateDefaultObjectAcl(
                                : Idempotency::kNonIdempotent;
   return RestRetryLoop(
       current_retry_policy(), current_backoff_policy(), idempotency,
-      [this](rest_internal::RestContext&, auto const& request) {
-        return client_->CreateDefaultObjectAcl(request);
+      [this](rest_internal::RestContext& context, auto const& request) {
+        auto const& current = google::cloud::internal::CurrentOptions();
+        return stub_->CreateDefaultObjectAcl(context, current, request);
       },
       request, __func__);
 }
@@ -809,8 +852,9 @@ StatusOr<EmptyResponse> RetryClient::DeleteDefaultObjectAcl(
                                : Idempotency::kNonIdempotent;
   return RestRetryLoop(
       current_retry_policy(), current_backoff_policy(), idempotency,
-      [this](rest_internal::RestContext&, auto const& request) {
-        return client_->DeleteDefaultObjectAcl(request);
+      [this](rest_internal::RestContext& context, auto const& request) {
+        auto const& current = google::cloud::internal::CurrentOptions();
+        return stub_->DeleteDefaultObjectAcl(context, current, request);
       },
       request, __func__);
 }
@@ -822,8 +866,9 @@ StatusOr<ObjectAccessControl> RetryClient::GetDefaultObjectAcl(
                                : Idempotency::kNonIdempotent;
   return RestRetryLoop(
       current_retry_policy(), current_backoff_policy(), idempotency,
-      [this](rest_internal::RestContext&, auto const& request) {
-        return client_->GetDefaultObjectAcl(request);
+      [this](rest_internal::RestContext& context, auto const& request) {
+        auto const& current = google::cloud::internal::CurrentOptions();
+        return stub_->GetDefaultObjectAcl(context, current, request);
       },
       request, __func__);
 }
@@ -835,8 +880,9 @@ StatusOr<ObjectAccessControl> RetryClient::UpdateDefaultObjectAcl(
                                : Idempotency::kNonIdempotent;
   return RestRetryLoop(
       current_retry_policy(), current_backoff_policy(), idempotency,
-      [this](rest_internal::RestContext&, auto const& request) {
-        return client_->UpdateDefaultObjectAcl(request);
+      [this](rest_internal::RestContext& context, auto const& request) {
+        auto const& current = google::cloud::internal::CurrentOptions();
+        return stub_->UpdateDefaultObjectAcl(context, current, request);
       },
       request, __func__);
 }
@@ -848,8 +894,9 @@ StatusOr<ObjectAccessControl> RetryClient::PatchDefaultObjectAcl(
                                : Idempotency::kNonIdempotent;
   return RestRetryLoop(
       current_retry_policy(), current_backoff_policy(), idempotency,
-      [this](rest_internal::RestContext&, auto const& request) {
-        return client_->PatchDefaultObjectAcl(request);
+      [this](rest_internal::RestContext& context, auto const& request) {
+        auto const& current = google::cloud::internal::CurrentOptions();
+        return stub_->PatchDefaultObjectAcl(context, current, request);
       },
       request, __func__);
 }
@@ -861,8 +908,9 @@ StatusOr<ServiceAccount> RetryClient::GetServiceAccount(
                                : Idempotency::kNonIdempotent;
   return RestRetryLoop(
       current_retry_policy(), current_backoff_policy(), idempotency,
-      [this](rest_internal::RestContext&, auto const& request) {
-        return client_->GetServiceAccount(request);
+      [this](rest_internal::RestContext& context, auto const& request) {
+        auto const& current = google::cloud::internal::CurrentOptions();
+        return stub_->GetServiceAccount(context, current, request);
       },
       request, __func__);
 }
@@ -874,8 +922,9 @@ StatusOr<ListHmacKeysResponse> RetryClient::ListHmacKeys(
                                : Idempotency::kNonIdempotent;
   return RestRetryLoop(
       current_retry_policy(), current_backoff_policy(), idempotency,
-      [this](rest_internal::RestContext&, auto const& request) {
-        return client_->ListHmacKeys(request);
+      [this](rest_internal::RestContext& context, auto const& request) {
+        auto const& current = google::cloud::internal::CurrentOptions();
+        return stub_->ListHmacKeys(context, current, request);
       },
       request, __func__);
 }
@@ -887,8 +936,9 @@ StatusOr<CreateHmacKeyResponse> RetryClient::CreateHmacKey(
                                : Idempotency::kNonIdempotent;
   return RestRetryLoop(
       current_retry_policy(), current_backoff_policy(), idempotency,
-      [this](rest_internal::RestContext&, auto const& request) {
-        return client_->CreateHmacKey(request);
+      [this](rest_internal::RestContext& context, auto const& request) {
+        auto const& current = google::cloud::internal::CurrentOptions();
+        return stub_->CreateHmacKey(context, current, request);
       },
       request, __func__);
 }
@@ -900,8 +950,9 @@ StatusOr<EmptyResponse> RetryClient::DeleteHmacKey(
                                : Idempotency::kNonIdempotent;
   return RestRetryLoop(
       current_retry_policy(), current_backoff_policy(), idempotency,
-      [this](rest_internal::RestContext&, auto const& request) {
-        return client_->DeleteHmacKey(request);
+      [this](rest_internal::RestContext& context, auto const& request) {
+        auto const& current = google::cloud::internal::CurrentOptions();
+        return stub_->DeleteHmacKey(context, current, request);
       },
       request, __func__);
 }
@@ -913,8 +964,9 @@ StatusOr<HmacKeyMetadata> RetryClient::GetHmacKey(
                                : Idempotency::kNonIdempotent;
   return RestRetryLoop(
       current_retry_policy(), current_backoff_policy(), idempotency,
-      [this](rest_internal::RestContext&, auto const& request) {
-        return client_->GetHmacKey(request);
+      [this](rest_internal::RestContext& context, auto const& request) {
+        auto const& current = google::cloud::internal::CurrentOptions();
+        return stub_->GetHmacKey(context, current, request);
       },
       request, __func__);
 }
@@ -926,8 +978,9 @@ StatusOr<HmacKeyMetadata> RetryClient::UpdateHmacKey(
                                : Idempotency::kNonIdempotent;
   return RestRetryLoop(
       current_retry_policy(), current_backoff_policy(), idempotency,
-      [this](rest_internal::RestContext&, auto const& request) {
-        return client_->UpdateHmacKey(request);
+      [this](rest_internal::RestContext& context, auto const& request) {
+        auto const& current = google::cloud::internal::CurrentOptions();
+        return stub_->UpdateHmacKey(context, current, request);
       },
       request, __func__);
 }
@@ -939,8 +992,9 @@ StatusOr<SignBlobResponse> RetryClient::SignBlob(
                                : Idempotency::kNonIdempotent;
   return RestRetryLoop(
       current_retry_policy(), current_backoff_policy(), idempotency,
-      [this](rest_internal::RestContext&, auto const& request) {
-        return client_->SignBlob(request);
+      [this](rest_internal::RestContext& context, auto const& request) {
+        auto const& current = google::cloud::internal::CurrentOptions();
+        return stub_->SignBlob(context, current, request);
       },
       request, __func__);
 }
@@ -952,8 +1006,9 @@ StatusOr<ListNotificationsResponse> RetryClient::ListNotifications(
                                : Idempotency::kNonIdempotent;
   return RestRetryLoop(
       current_retry_policy(), current_backoff_policy(), idempotency,
-      [this](rest_internal::RestContext&, auto const& request) {
-        return client_->ListNotifications(request);
+      [this](rest_internal::RestContext& context, auto const& request) {
+        auto const& current = google::cloud::internal::CurrentOptions();
+        return stub_->ListNotifications(context, current, request);
       },
       request, __func__);
 }
@@ -965,8 +1020,9 @@ StatusOr<NotificationMetadata> RetryClient::CreateNotification(
                                : Idempotency::kNonIdempotent;
   return RestRetryLoop(
       current_retry_policy(), current_backoff_policy(), idempotency,
-      [this](rest_internal::RestContext&, auto const& request) {
-        return client_->CreateNotification(request);
+      [this](rest_internal::RestContext& context, auto const& request) {
+        auto const& current = google::cloud::internal::CurrentOptions();
+        return stub_->CreateNotification(context, current, request);
       },
       request, __func__);
 }
@@ -978,8 +1034,9 @@ StatusOr<NotificationMetadata> RetryClient::GetNotification(
                                : Idempotency::kNonIdempotent;
   return RestRetryLoop(
       current_retry_policy(), current_backoff_policy(), idempotency,
-      [this](rest_internal::RestContext&, auto const& request) {
-        return client_->GetNotification(request);
+      [this](rest_internal::RestContext& context, auto const& request) {
+        auto const& current = google::cloud::internal::CurrentOptions();
+        return stub_->GetNotification(context, current, request);
       },
       request, __func__);
 }
@@ -991,14 +1048,15 @@ StatusOr<EmptyResponse> RetryClient::DeleteNotification(
                                : Idempotency::kNonIdempotent;
   return RestRetryLoop(
       current_retry_policy(), current_backoff_policy(), idempotency,
-      [this](rest_internal::RestContext&, auto const& request) {
-        return client_->DeleteNotification(request);
+      [this](rest_internal::RestContext& context, auto const& request) {
+        auto const& current = google::cloud::internal::CurrentOptions();
+        return stub_->DeleteNotification(context, current, request);
       },
       request, __func__);
 }
 
 std::vector<std::string> RetryClient::InspectStackStructure() const {
-  auto stack = client_->InspectStackStructure();
+  auto stack = stub_->InspectStackStructure();
   stack.emplace_back("RetryClient");
   return stack;
 }
