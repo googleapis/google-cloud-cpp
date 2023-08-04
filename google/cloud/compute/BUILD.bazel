@@ -18,130 +18,6 @@ licenses(["notice"])  # Apache 2.0
 
 load("@rules_proto//proto:defs.bzl", "proto_library")
 
-proto_library(
-    name = "google_cloud_cpp_compute_proto",
-    srcs = [
-        "accelerator_types/v1/accelerator_types.proto",
-        "addresses/v1/addresses.proto",
-        "autoscalers/v1/autoscalers.proto",
-        "backend_buckets/v1/backend_buckets.proto",
-        "backend_services/v1/backend_services.proto",
-        "disk_types/v1/disk_types.proto",
-        "disks/v1/disks.proto",
-        "external_vpn_gateways/v1/external_vpn_gateways.proto",
-        "firewall_policies/v1/firewall_policies.proto",
-        "firewalls/v1/firewalls.proto",
-        "forwarding_rules/v1/forwarding_rules.proto",
-        "global_addresses/v1/global_addresses.proto",
-        "global_forwarding_rules/v1/global_forwarding_rules.proto",
-        "global_network_endpoint_groups/v1/global_network_endpoint_groups.proto",
-        "global_operations/v1/global_operations.proto",
-        "global_organization_operations/v1/global_organization_operations.proto",
-        "global_public_delegated_prefixes/v1/global_public_delegated_prefixes.proto",
-        "health_checks/v1/health_checks.proto",
-        "http_health_checks/v1/http_health_checks.proto",
-        "https_health_checks/v1/https_health_checks.proto",
-        "image_family_views/v1/image_family_views.proto",
-        "images/v1/images.proto",
-        "instance_group_managers/v1/instance_group_managers.proto",
-        "instance_groups/v1/instance_groups.proto",
-        "instance_templates/v1/instance_templates.proto",
-        "instances/v1/instances.proto",
-        "interconnect_attachments/v1/interconnect_attachments.proto",
-        "interconnect_locations/v1/interconnect_locations.proto",
-        "interconnects/v1/interconnects.proto",
-        "license_codes/v1/license_codes.proto",
-        "licenses/v1/licenses.proto",
-        "machine_images/v1/machine_images.proto",
-        "machine_types/v1/machine_types.proto",
-        "network_attachments/v1/network_attachments.proto",
-        "network_edge_security_services/v1/network_edge_security_services.proto",
-        "network_endpoint_groups/v1/network_endpoint_groups.proto",
-        "network_firewall_policies/v1/network_firewall_policies.proto",
-        "networks/v1/networks.proto",
-        "node_groups/v1/node_groups.proto",
-        "node_templates/v1/node_templates.proto",
-        "node_types/v1/node_types.proto",
-        "packet_mirrorings/v1/packet_mirrorings.proto",
-        "projects/v1/projects.proto",
-        "public_advertised_prefixes/v1/public_advertised_prefixes.proto",
-        "public_delegated_prefixes/v1/public_delegated_prefixes.proto",
-        "region_autoscalers/v1/region_autoscalers.proto",
-        "region_backend_services/v1/region_backend_services.proto",
-        "region_commitments/v1/region_commitments.proto",
-        "region_disk_types/v1/region_disk_types.proto",
-        "region_disks/v1/region_disks.proto",
-        "region_health_check_services/v1/region_health_check_services.proto",
-        "region_health_checks/v1/region_health_checks.proto",
-        "region_instance_group_managers/v1/region_instance_group_managers.proto",
-        "region_instance_groups/v1/region_instance_groups.proto",
-        "region_instance_templates/v1/region_instance_templates.proto",
-        "region_instances/v1/region_instances.proto",
-        "region_network_endpoint_groups/v1/region_network_endpoint_groups.proto",
-        "region_network_firewall_policies/v1/region_network_firewall_policies.proto",
-        "region_notification_endpoints/v1/region_notification_endpoints.proto",
-        "region_operations/v1/region_operations.proto",
-        "region_security_policies/v1/region_security_policies.proto",
-        "region_ssl_certificates/v1/region_ssl_certificates.proto",
-        "region_ssl_policies/v1/region_ssl_policies.proto",
-        "region_target_http_proxies/v1/region_target_http_proxies.proto",
-        "region_target_https_proxies/v1/region_target_https_proxies.proto",
-        "region_target_tcp_proxies/v1/region_target_tcp_proxies.proto",
-        "region_url_maps/v1/region_url_maps.proto",
-        "regions/v1/regions.proto",
-        "reservations/v1/reservations.proto",
-        "resource_policies/v1/resource_policies.proto",
-        "routers/v1/routers.proto",
-        "routes/v1/routes.proto",
-        "security_policies/v1/security_policies.proto",
-        "service_attachments/v1/service_attachments.proto",
-        "snapshots/v1/snapshots.proto",
-        "ssl_certificates/v1/ssl_certificates.proto",
-        "ssl_policies/v1/ssl_policies.proto",
-        "subnetworks/v1/subnetworks.proto",
-        "target_grpc_proxies/v1/target_grpc_proxies.proto",
-        "target_http_proxies/v1/target_http_proxies.proto",
-        "target_https_proxies/v1/target_https_proxies.proto",
-        "target_instances/v1/target_instances.proto",
-        "target_pools/v1/target_pools.proto",
-        "target_ssl_proxies/v1/target_ssl_proxies.proto",
-        "target_tcp_proxies/v1/target_tcp_proxies.proto",
-        "target_vpn_gateways/v1/target_vpn_gateways.proto",
-        "url_maps/v1/url_maps.proto",
-        "v1/internal/common.proto",
-        "vpn_gateways/v1/vpn_gateways.proto",
-        "vpn_tunnels/v1/vpn_tunnels.proto",
-        "zone_operations/v1/zone_operations.proto",
-        "zones/v1/zones.proto",
-    ],
-    visibility = ["//:__pkg__"],
-    deps = [
-        "@com_google_googleapis//google/api:annotations_proto",
-        "@com_google_googleapis//google/api:client_proto",
-        "@com_google_googleapis//google/api:field_behavior_proto",
-        "@com_google_googleapis//google/api:http_proto",
-        "@com_google_googleapis//google/api:resource_proto",
-        "@com_google_googleapis//google/api:routing_proto",
-        "@com_google_googleapis//google/cloud:extended_operations_proto",
-        "@com_google_protobuf//:any_proto",
-        "@com_google_protobuf//:duration_proto",
-        "@com_google_protobuf//:empty_proto",
-        "@com_google_protobuf//:field_mask_proto",
-        "@com_google_protobuf//:struct_proto",
-        "@com_google_protobuf//:timestamp_proto",
-    ],
-)
-
-load(
-    "@com_google_googleapis_imports//:imports.bzl",
-    "cc_proto_library",
-)
-
-cc_proto_library(
-    name = "google_cloud_cpp_compute_cc_proto",
-    deps = [":google_cloud_cpp_compute_proto"],
-)
-
 service_dirs = [
     "accelerator_types/v1/",
     "addresses/v1/",
@@ -222,6 +98,44 @@ service_dirs = [
     "zone_operations/v1/",
     "zones/v1/",
 ]
+
+proto_dirs = service_dirs + [d + "internal/" for d in service_dirs]
+
+filegroup(
+    name = "protos",
+    srcs = glob([d + "*.proto" for d in proto_dirs]),
+)
+
+proto_library(
+    name = "google_cloud_cpp_compute_proto",
+    srcs = [":protos"],
+    visibility = ["//:__pkg__"],
+    deps = [
+        "@com_google_googleapis//google/api:annotations_proto",
+        "@com_google_googleapis//google/api:client_proto",
+        "@com_google_googleapis//google/api:field_behavior_proto",
+        "@com_google_googleapis//google/api:http_proto",
+        "@com_google_googleapis//google/api:resource_proto",
+        "@com_google_googleapis//google/api:routing_proto",
+        "@com_google_googleapis//google/cloud:extended_operations_proto",
+        "@com_google_protobuf//:any_proto",
+        "@com_google_protobuf//:duration_proto",
+        "@com_google_protobuf//:empty_proto",
+        "@com_google_protobuf//:field_mask_proto",
+        "@com_google_protobuf//:struct_proto",
+        "@com_google_protobuf//:timestamp_proto",
+    ],
+)
+
+load(
+    "@com_google_googleapis_imports//:imports.bzl",
+    "cc_proto_library",
+)
+
+cc_proto_library(
+    name = "google_cloud_cpp_compute_cc_proto",
+    deps = [":google_cloud_cpp_compute_proto"],
+)
 
 src_dirs = service_dirs + [d + "internal/" for d in service_dirs]
 

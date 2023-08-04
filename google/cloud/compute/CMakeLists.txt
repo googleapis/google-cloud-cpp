@@ -138,20 +138,18 @@ include(GoogleCloudCppCommon)
 include(CompileProtos)
 google_cloud_cpp_find_proto_include_dir(PROTO_INCLUDE_DIR)
 
-google_cloud_cpp_load_protolist(
-    proto_list
-    "${PROJECT_SOURCE_DIR}/external/googleapis/protolists/compute.list"
-    PROTO_DIR "${PROJECT_SOURCE_DIR}")
 google_cloud_cpp_load_protodeps(
     proto_deps
     "${PROJECT_SOURCE_DIR}/external/googleapis/protodeps/compute.deps")
 
-file(GLOB proto_files RELATIVE_PATH "${CMAKE_CURRENT_SOURCE_DIR}"
-     ${proto_globs})
+file(
+    GLOB proto_files
+    LIST_DIRECTORIES false
+    RELATIVE_PATH "${CMAKE_CURRENT_SOURCE_DIR}" ${proto_globs})
 list(SORT proto_files)
 
 google_cloud_cpp_proto_library(
-    google_cloud_cpp_compute_protos ${proto_list} PROTO_PATH_DIRECTORIES
+    google_cloud_cpp_compute_protos ${proto_files} PROTO_PATH_DIRECTORIES
     "${EXTERNAL_GOOGLEAPIS_SOURCE}" "${PROTO_INCLUDE_DIR}"
     "${PROJECT_SOURCE_DIR}")
 external_googleapis_set_version_and_alias(compute_protos)
