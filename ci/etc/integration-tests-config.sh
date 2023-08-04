@@ -130,6 +130,9 @@ export GOOGLE_CLOUD_CPP_RESOURCEMANAGER_TEST_FOLDER="204009073908"
 # To run google/cloud/gkemulticloud's quickstart. The service is not available in `us-central1`
 export GOOGLE_CLOUD_CPP_GKEMULTICLOUD_TEST_REGION="us-west1"
 
+# google/cloud/policysimulator's quickstart
+export GOOGLE_CLOUD_CPP_POLICYSIMULATOR_RESOURCE="//cloudresourcemanager.googleapis.com/projects/cloud-cpp-community"
+
 # google/cloud/policytroubleshooter's quickstart
 export GOOGLE_CLOUD_CPP_POLICYTROUBLESHOOTER_PRINCIPAL="${GOOGLE_CLOUD_CPP_STORAGE_TEST_SERVICE_ACCOUNT}"
 export GOOGLE_CLOUD_CPP_POLICYTROUBLESHOOTER_RESOURCE="//cloudresourcemanager.googleapis.com/projects/${GOOGLE_CLOUD_PROJECT}"

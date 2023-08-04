@@ -1,0 +1,54 @@
+/*!
+
+@mainpage Policy Simulator API C++ Client Library
+
+An idiomatic C++ client library for the [Policy Simulator API][cloud-service-docs]
+
+Policy Simulator is a collection of endpoints for creating, running, and viewing
+a `Replay`. A `Replay` is a type of simulation that lets you see how your
+members' access to resources might change if you changed your IAM policy.
+
+During a `Replay`, Policy Simulator re-evaluates, or replays, past access
+attempts under both the current policy and your proposed policy, and compares
+those results to determine how your members' access might change under the
+proposed policy.
+
+While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
+[Semantic Versioning](https://semver.org/).
+
+@tableofcontents{HTML:2}
+
+## Quickstart
+
+The following shows the code that you'll run in the
+`google/cloud/policysimulator/quickstart/` directory,
+which should give you a taste of the Policy Simulator API C++ client library API.
+
+@snippet quickstart.cc all
+
+## Main classes
+
+<!-- inject-client-list-start -->
+The main class in this library is
+[`policysimulator_v1::SimulatorClient`](@ref google::cloud::policysimulator_v1::SimulatorClient). All RPCs are exposed
+as member functions of this class. Other classes provide helpers, configuration
+parameters, and infrastructure to mock
+[`policysimulator_v1::SimulatorClient`](@ref google::cloud::policysimulator_v1::SimulatorClient) when testing your
+application.
+<!-- inject-client-list-end -->
+
+## More Information
+
+- @ref common-error-handling - describes how the library reports errors.
+- @ref policysimulator-override-endpoint - describes how to override the default
+  endpoint.
+- @ref policysimulator-override-authentication - describes how to change the
+  authentication credentials used by the library.
+- @ref policysimulator-override-retry - describes how to change the default retry
+  policies.
+- @ref policysimulator-env - describes environment variables that can configure the
+  behavior of the library.
+
+[cloud-service-docs]: https://cloud.google.com/policy-intelligence/docs/iam-simulator-overview
+
+*/
