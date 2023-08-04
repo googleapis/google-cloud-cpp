@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/logging_client.h"
-#include "google/cloud/storage/internal/raw_client_wrapper_utils.h"
+#include "google/cloud/internal/invoke_result.h"
 #include "google/cloud/log.h"
 
 namespace google {
@@ -24,347 +24,565 @@ namespace internal {
 
 namespace {
 
-using ::google::cloud::storage::internal::raw_client_wrapper_utils::Signature;
-
-/**
- * Logs the input and results of each `RawClient` operation.
- *
- * @tparam MemberFunction the signature of the member function.
- * @param client the storage::RawClient object to make the call through.
- * @param function the pointer to the member function to call.
- * @param request an initialized request parameter for the call.
- * @param error_message include this message in any exception or error log.
- * @return the result from making the call;
- */
-template <typename MemberFunction>
-typename Signature<MemberFunction>::ReturnType MakeCall(
-    RawClient& client, MemberFunction function,
-    typename Signature<MemberFunction>::RequestType const& request,
-    char const* context) {
-  GCP_LOG(INFO) << context << "() << " << request;
-  auto response = (client.*function)(request);
+// We cannot use the `google::cloud::internal::LogWrapper` functions because
+// they depend on `DebugString()` working, and introduce dependencies on gRPC
+// and Protobuf.
+template <typename Functor, typename Request>
+auto LogWrapper(Functor&& functor,
+                google::cloud::rest_internal::RestContext& context,
+                google::cloud::Options const& options, Request const& request,
+                char const* where)
+    -> google::cloud::internal::invoke_result_t<
+        Functor, google::cloud::rest_internal::RestContext&,
+        google::cloud::Options const&, Request const&> {
+  GCP_LOG(INFO) << where << "() << " << request;
+  auto response = functor(context, options, request);
   if (response.ok()) {
-    GCP_LOG(INFO) << context << "() >> payload={" << response.value() << "}";
+    GCP_LOG(INFO) << where << "() >> payload={" << response.value() << "}";
   } else {
-    GCP_LOG(INFO) << context << "() >> status={" << response.status() << "}";
+    GCP_LOG(INFO) << where << "() >> status={" << response.status() << "}";
   }
   return response;
 }
 
-/**
- * Calls a `RawClient` operation logging only the input.
- *
- * This is useful when the result is not something you can easily log, such as
- * a pointer of some kind.
- *
- * @tparam MemberFunction the signature of the member function.
- * @param client the storage::RawClient object to make the call through.
- * @param function the pointer to the member function to call.
- * @param request an initialized request parameter for the call.
- * @param error_message include this message in any exception or error log.
- * @return the result from making the call;
- */
-template <typename MemberFunction>
-typename Signature<MemberFunction>::ReturnType MakeCallNoResponseLogging(
-    google::cloud::storage::internal::RawClient& client,
-    MemberFunction function,
-    typename Signature<MemberFunction>::RequestType const& request,
-    char const* context) {
-  GCP_LOG(INFO) << context << "() << " << request;
-  return (client.*function)(request);
-}
 }  // namespace
 
-LoggingClient::LoggingClient(std::shared_ptr<RawClient> client)
-    : client_(std::move(client)) {}
+LoggingClient::LoggingClient(
+    std::unique_ptr<storage_internal::GenericStub> stub)
+    : stub_(std::move(stub)) {}
 
-ClientOptions const& LoggingClient::client_options() const {
-  return client_->client_options();
-}
-
-Options LoggingClient::options() const { return client_->options(); }
+Options LoggingClient::options() const { return stub_->options(); }
 
 StatusOr<ListBucketsResponse> LoggingClient::ListBuckets(
+    rest_internal::RestContext& context, Options const& options,
     ListBucketsRequest const& request) {
-  return MakeCall(*client_, &RawClient::ListBuckets, request, __func__);
+  return LogWrapper(
+      [this](auto& context, auto const& options, auto& request) {
+        return stub_->ListBuckets(context, options, request);
+      },
+      context, options, request, __func__);
 }
 
 StatusOr<BucketMetadata> LoggingClient::CreateBucket(
+    rest_internal::RestContext& context, Options const& options,
     CreateBucketRequest const& request) {
-  return MakeCall(*client_, &RawClient::CreateBucket, request, __func__);
+  return LogWrapper(
+      [this](auto& context, auto const& options, auto& request) {
+        return stub_->CreateBucket(context, options, request);
+      },
+      context, options, request, __func__);
 }
 
 StatusOr<BucketMetadata> LoggingClient::GetBucketMetadata(
+    rest_internal::RestContext& context, Options const& options,
     GetBucketMetadataRequest const& request) {
-  return MakeCall(*client_, &RawClient::GetBucketMetadata, request, __func__);
+  return LogWrapper(
+      [this](auto& context, auto const& options, auto& request) {
+        return stub_->GetBucketMetadata(context, options, request);
+      },
+      context, options, request, __func__);
 }
 
 StatusOr<EmptyResponse> LoggingClient::DeleteBucket(
+    rest_internal::RestContext& context, Options const& options,
     DeleteBucketRequest const& request) {
-  return MakeCall(*client_, &RawClient::DeleteBucket, request, __func__);
+  return LogWrapper(
+      [this](auto& context, auto const& options, auto& request) {
+        return stub_->DeleteBucket(context, options, request);
+      },
+      context, options, request, __func__);
 }
 
 StatusOr<BucketMetadata> LoggingClient::UpdateBucket(
+    rest_internal::RestContext& context, Options const& options,
     UpdateBucketRequest const& request) {
-  return MakeCall(*client_, &RawClient::UpdateBucket, request, __func__);
+  return LogWrapper(
+      [this](auto& context, auto const& options, auto& request) {
+        return stub_->UpdateBucket(context, options, request);
+      },
+      context, options, request, __func__);
 }
 
 StatusOr<BucketMetadata> LoggingClient::PatchBucket(
+    rest_internal::RestContext& context, Options const& options,
     PatchBucketRequest const& request) {
-  return MakeCall(*client_, &RawClient::PatchBucket, request, __func__);
+  return LogWrapper(
+      [this](auto& context, auto const& options, auto& request) {
+        return stub_->PatchBucket(context, options, request);
+      },
+      context, options, request, __func__);
 }
 
 StatusOr<NativeIamPolicy> LoggingClient::GetNativeBucketIamPolicy(
+    rest_internal::RestContext& context, Options const& options,
     GetBucketIamPolicyRequest const& request) {
-  return MakeCall(*client_, &RawClient::GetNativeBucketIamPolicy, request,
-                  __func__);
+  return LogWrapper(
+      [this](auto& context, auto const& options, auto& request) {
+        return stub_->GetNativeBucketIamPolicy(context, options, request);
+      },
+      context, options, request, __func__);
 }
 
 StatusOr<NativeIamPolicy> LoggingClient::SetNativeBucketIamPolicy(
+    rest_internal::RestContext& context, Options const& options,
     SetNativeBucketIamPolicyRequest const& request) {
-  return MakeCall(*client_, &RawClient::SetNativeBucketIamPolicy, request,
-                  __func__);
+  return LogWrapper(
+      [this](auto& context, auto const& options, auto& request) {
+        return stub_->SetNativeBucketIamPolicy(context, options, request);
+      },
+      context, options, request, __func__);
 }
 
 StatusOr<TestBucketIamPermissionsResponse>
 LoggingClient::TestBucketIamPermissions(
+    rest_internal::RestContext& context, Options const& options,
     TestBucketIamPermissionsRequest const& request) {
-  return MakeCall(*client_, &RawClient::TestBucketIamPermissions, request,
-                  __func__);
+  return LogWrapper(
+      [this](auto& context, auto const& options, auto& request) {
+        return stub_->TestBucketIamPermissions(context, options, request);
+      },
+      context, options, request, __func__);
 }
 
 StatusOr<BucketMetadata> LoggingClient::LockBucketRetentionPolicy(
+    rest_internal::RestContext& context, Options const& options,
     LockBucketRetentionPolicyRequest const& request) {
-  return MakeCall(*client_, &RawClient::LockBucketRetentionPolicy, request,
-                  __func__);
+  return LogWrapper(
+      [this](auto& context, auto const& options, auto& request) {
+        return stub_->LockBucketRetentionPolicy(context, options, request);
+      },
+      context, options, request, __func__);
 }
 
 StatusOr<ObjectMetadata> LoggingClient::InsertObjectMedia(
+    rest_internal::RestContext& context, Options const& options,
     InsertObjectMediaRequest const& request) {
-  return MakeCall(*client_, &RawClient::InsertObjectMedia, request, __func__);
+  return LogWrapper(
+      [this](auto& context, auto const& options, auto& request) {
+        return stub_->InsertObjectMedia(context, options, request);
+      },
+      context, options, request, __func__);
 }
 
 StatusOr<ObjectMetadata> LoggingClient::CopyObject(
+    rest_internal::RestContext& context, Options const& options,
     CopyObjectRequest const& request) {
-  return MakeCall(*client_, &RawClient::CopyObject, request, __func__);
+  return LogWrapper(
+      [this](auto& context, auto const& options, auto& request) {
+        return stub_->CopyObject(context, options, request);
+      },
+      context, options, request, __func__);
 }
 
 StatusOr<ObjectMetadata> LoggingClient::GetObjectMetadata(
+    rest_internal::RestContext& context, Options const& options,
     GetObjectMetadataRequest const& request) {
-  return MakeCall(*client_, &RawClient::GetObjectMetadata, request, __func__);
+  return LogWrapper(
+      [this](auto& context, auto const& options, auto& request) {
+        return stub_->GetObjectMetadata(context, options, request);
+      },
+      context, options, request, __func__);
 }
 
 StatusOr<std::unique_ptr<ObjectReadSource>> LoggingClient::ReadObject(
+    rest_internal::RestContext& context, Options const& options,
     ReadObjectRangeRequest const& request) {
-  return MakeCallNoResponseLogging(*client_, &RawClient::ReadObject, request,
-                                   __func__);
+  GCP_LOG(INFO) << __func__ << "() << " << request;
+  return stub_->ReadObject(context, options, request);
 }
 
 StatusOr<ListObjectsResponse> LoggingClient::ListObjects(
+    rest_internal::RestContext& context, Options const& options,
     ListObjectsRequest const& request) {
-  return MakeCall(*client_, &RawClient::ListObjects, request, __func__);
+  return LogWrapper(
+      [this](auto& context, auto const& options, auto& request) {
+        return stub_->ListObjects(context, options, request);
+      },
+      context, options, request, __func__);
 }
 
 StatusOr<EmptyResponse> LoggingClient::DeleteObject(
+    rest_internal::RestContext& context, Options const& options,
     DeleteObjectRequest const& request) {
-  return MakeCall(*client_, &RawClient::DeleteObject, request, __func__);
+  return LogWrapper(
+      [this](auto& context, auto const& options, auto& request) {
+        return stub_->DeleteObject(context, options, request);
+      },
+      context, options, request, __func__);
 }
 
 StatusOr<ObjectMetadata> LoggingClient::UpdateObject(
+    rest_internal::RestContext& context, Options const& options,
     UpdateObjectRequest const& request) {
-  return MakeCall(*client_, &RawClient::UpdateObject, request, __func__);
+  return LogWrapper(
+      [this](auto& context, auto const& options, auto& request) {
+        return stub_->UpdateObject(context, options, request);
+      },
+      context, options, request, __func__);
 }
 
 StatusOr<ObjectMetadata> LoggingClient::PatchObject(
+    rest_internal::RestContext& context, Options const& options,
     PatchObjectRequest const& request) {
-  return MakeCall(*client_, &RawClient::PatchObject, request, __func__);
+  return LogWrapper(
+      [this](auto& context, auto const& options, auto& request) {
+        return stub_->PatchObject(context, options, request);
+      },
+      context, options, request, __func__);
 }
 
 StatusOr<ObjectMetadata> LoggingClient::ComposeObject(
+    rest_internal::RestContext& context, Options const& options,
     ComposeObjectRequest const& request) {
-  return MakeCall(*client_, &RawClient::ComposeObject, request, __func__);
+  return LogWrapper(
+      [this](auto& context, auto const& options, auto& request) {
+        return stub_->ComposeObject(context, options, request);
+      },
+      context, options, request, __func__);
 }
 
 StatusOr<RewriteObjectResponse> LoggingClient::RewriteObject(
+    rest_internal::RestContext& context, Options const& options,
     RewriteObjectRequest const& request) {
-  return MakeCall(*client_, &RawClient::RewriteObject, request, __func__);
+  return LogWrapper(
+      [this](auto& context, auto const& options, auto& request) {
+        return stub_->RewriteObject(context, options, request);
+      },
+      context, options, request, __func__);
 }
 
 StatusOr<CreateResumableUploadResponse> LoggingClient::CreateResumableUpload(
+    rest_internal::RestContext& context, Options const& options,
     ResumableUploadRequest const& request) {
-  return MakeCall(*client_, &RawClient::CreateResumableUpload, request,
-                  __func__);
+  return LogWrapper(
+      [this](auto& context, auto const& options, auto& request) {
+        return stub_->CreateResumableUpload(context, options, request);
+      },
+      context, options, request, __func__);
 }
 
 StatusOr<QueryResumableUploadResponse> LoggingClient::QueryResumableUpload(
+    rest_internal::RestContext& context, Options const& options,
     QueryResumableUploadRequest const& request) {
-  return MakeCall(*client_, &RawClient::QueryResumableUpload, request,
-                  __func__);
+  return LogWrapper(
+      [this](auto& context, auto const& options, auto& request) {
+        return stub_->QueryResumableUpload(context, options, request);
+      },
+      context, options, request, __func__);
 }
 
 StatusOr<EmptyResponse> LoggingClient::DeleteResumableUpload(
+    rest_internal::RestContext& context, Options const& options,
     DeleteResumableUploadRequest const& request) {
-  return MakeCall(*client_, &RawClient::DeleteResumableUpload, request,
-                  __func__);
+  return LogWrapper(
+      [this](auto& context, auto const& options, auto& request) {
+        return stub_->DeleteResumableUpload(context, options, request);
+      },
+      context, options, request, __func__);
 }
 
 StatusOr<QueryResumableUploadResponse> LoggingClient::UploadChunk(
+    rest_internal::RestContext& context, Options const& options,
     UploadChunkRequest const& request) {
-  return MakeCall(*client_, &RawClient::UploadChunk, request, __func__);
+  return LogWrapper(
+      [this](auto& context, auto const& options, auto& request) {
+        return stub_->UploadChunk(context, options, request);
+      },
+      context, options, request, __func__);
 }
 
 StatusOr<ListBucketAclResponse> LoggingClient::ListBucketAcl(
+    rest_internal::RestContext& context, Options const& options,
     ListBucketAclRequest const& request) {
-  return MakeCall(*client_, &RawClient::ListBucketAcl, request, __func__);
+  return LogWrapper(
+      [this](auto& context, auto const& options, auto& request) {
+        return stub_->ListBucketAcl(context, options, request);
+      },
+      context, options, request, __func__);
 }
 
 StatusOr<BucketAccessControl> LoggingClient::GetBucketAcl(
+    rest_internal::RestContext& context, Options const& options,
     GetBucketAclRequest const& request) {
-  return MakeCall(*client_, &RawClient::GetBucketAcl, request, __func__);
+  return LogWrapper(
+      [this](auto& context, auto const& options, auto& request) {
+        return stub_->GetBucketAcl(context, options, request);
+      },
+      context, options, request, __func__);
 }
 
 StatusOr<BucketAccessControl> LoggingClient::CreateBucketAcl(
+    rest_internal::RestContext& context, Options const& options,
     CreateBucketAclRequest const& request) {
-  return MakeCall(*client_, &RawClient::CreateBucketAcl, request, __func__);
+  return LogWrapper(
+      [this](auto& context, auto const& options, auto& request) {
+        return stub_->CreateBucketAcl(context, options, request);
+      },
+      context, options, request, __func__);
 }
 
 StatusOr<EmptyResponse> LoggingClient::DeleteBucketAcl(
+    rest_internal::RestContext& context, Options const& options,
     DeleteBucketAclRequest const& request) {
-  return MakeCall(*client_, &RawClient::DeleteBucketAcl, request, __func__);
+  return LogWrapper(
+      [this](auto& context, auto const& options, auto& request) {
+        return stub_->DeleteBucketAcl(context, options, request);
+      },
+      context, options, request, __func__);
 }
 
 StatusOr<BucketAccessControl> LoggingClient::UpdateBucketAcl(
+    rest_internal::RestContext& context, Options const& options,
     UpdateBucketAclRequest const& request) {
-  return MakeCall(*client_, &RawClient::UpdateBucketAcl, request, __func__);
+  return LogWrapper(
+      [this](auto& context, auto const& options, auto& request) {
+        return stub_->UpdateBucketAcl(context, options, request);
+      },
+      context, options, request, __func__);
 }
 
 StatusOr<BucketAccessControl> LoggingClient::PatchBucketAcl(
+    rest_internal::RestContext& context, Options const& options,
     PatchBucketAclRequest const& request) {
-  return MakeCall(*client_, &RawClient::PatchBucketAcl, request, __func__);
+  return LogWrapper(
+      [this](auto& context, auto const& options, auto& request) {
+        return stub_->PatchBucketAcl(context, options, request);
+      },
+      context, options, request, __func__);
 }
 
 StatusOr<ListObjectAclResponse> LoggingClient::ListObjectAcl(
+    rest_internal::RestContext& context, Options const& options,
     ListObjectAclRequest const& request) {
-  return MakeCall(*client_, &RawClient::ListObjectAcl, request, __func__);
+  return LogWrapper(
+      [this](auto& context, auto const& options, auto& request) {
+        return stub_->ListObjectAcl(context, options, request);
+      },
+      context, options, request, __func__);
 }
 
 StatusOr<ObjectAccessControl> LoggingClient::CreateObjectAcl(
+    rest_internal::RestContext& context, Options const& options,
     CreateObjectAclRequest const& request) {
-  return MakeCall(*client_, &RawClient::CreateObjectAcl, request, __func__);
+  return LogWrapper(
+      [this](auto& context, auto const& options, auto& request) {
+        return stub_->CreateObjectAcl(context, options, request);
+      },
+      context, options, request, __func__);
 }
 
 StatusOr<EmptyResponse> LoggingClient::DeleteObjectAcl(
+    rest_internal::RestContext& context, Options const& options,
     DeleteObjectAclRequest const& request) {
-  return MakeCall(*client_, &RawClient::DeleteObjectAcl, request, __func__);
+  return LogWrapper(
+      [this](auto& context, auto const& options, auto& request) {
+        return stub_->DeleteObjectAcl(context, options, request);
+      },
+      context, options, request, __func__);
 }
 
 StatusOr<ObjectAccessControl> LoggingClient::GetObjectAcl(
+    rest_internal::RestContext& context, Options const& options,
     GetObjectAclRequest const& request) {
-  return MakeCall(*client_, &RawClient::GetObjectAcl, request, __func__);
+  return LogWrapper(
+      [this](auto& context, auto const& options, auto& request) {
+        return stub_->GetObjectAcl(context, options, request);
+      },
+      context, options, request, __func__);
 }
 
 StatusOr<ObjectAccessControl> LoggingClient::UpdateObjectAcl(
+    rest_internal::RestContext& context, Options const& options,
     UpdateObjectAclRequest const& request) {
-  return MakeCall(*client_, &RawClient::UpdateObjectAcl, request, __func__);
+  return LogWrapper(
+      [this](auto& context, auto const& options, auto& request) {
+        return stub_->UpdateObjectAcl(context, options, request);
+      },
+      context, options, request, __func__);
 }
 
 StatusOr<ObjectAccessControl> LoggingClient::PatchObjectAcl(
+    rest_internal::RestContext& context, Options const& options,
     PatchObjectAclRequest const& request) {
-  return MakeCall(*client_, &RawClient::PatchObjectAcl, request, __func__);
+  return LogWrapper(
+      [this](auto& context, auto const& options, auto& request) {
+        return stub_->PatchObjectAcl(context, options, request);
+      },
+      context, options, request, __func__);
 }
 
 StatusOr<ListDefaultObjectAclResponse> LoggingClient::ListDefaultObjectAcl(
+    rest_internal::RestContext& context, Options const& options,
     ListDefaultObjectAclRequest const& request) {
-  return MakeCall(*client_, &RawClient::ListDefaultObjectAcl, request,
-                  __func__);
+  return LogWrapper(
+      [this](auto& context, auto const& options, auto& request) {
+        return stub_->ListDefaultObjectAcl(context, options, request);
+      },
+      context, options, request, __func__);
 }
 
 StatusOr<ObjectAccessControl> LoggingClient::CreateDefaultObjectAcl(
+    rest_internal::RestContext& context, Options const& options,
     CreateDefaultObjectAclRequest const& request) {
-  return MakeCall(*client_, &RawClient::CreateDefaultObjectAcl, request,
-                  __func__);
+  return LogWrapper(
+      [this](auto& context, auto const& options, auto& request) {
+        return stub_->CreateDefaultObjectAcl(context, options, request);
+      },
+      context, options, request, __func__);
 }
 
 StatusOr<EmptyResponse> LoggingClient::DeleteDefaultObjectAcl(
+    rest_internal::RestContext& context, Options const& options,
     DeleteDefaultObjectAclRequest const& request) {
-  return MakeCall(*client_, &RawClient::DeleteDefaultObjectAcl, request,
-                  __func__);
+  return LogWrapper(
+      [this](auto& context, auto const& options, auto& request) {
+        return stub_->DeleteDefaultObjectAcl(context, options, request);
+      },
+      context, options, request, __func__);
 }
 
 StatusOr<ObjectAccessControl> LoggingClient::GetDefaultObjectAcl(
+    rest_internal::RestContext& context, Options const& options,
     GetDefaultObjectAclRequest const& request) {
-  return MakeCall(*client_, &RawClient::GetDefaultObjectAcl, request, __func__);
+  return LogWrapper(
+      [this](auto& context, auto const& options, auto& request) {
+        return stub_->GetDefaultObjectAcl(context, options, request);
+      },
+      context, options, request, __func__);
 }
 
 StatusOr<ObjectAccessControl> LoggingClient::UpdateDefaultObjectAcl(
+    rest_internal::RestContext& context, Options const& options,
     UpdateDefaultObjectAclRequest const& request) {
-  return MakeCall(*client_, &RawClient::UpdateDefaultObjectAcl, request,
-                  __func__);
+  return LogWrapper(
+      [this](auto& context, auto const& options, auto& request) {
+        return stub_->UpdateDefaultObjectAcl(context, options, request);
+      },
+      context, options, request, __func__);
 }
 
 StatusOr<ObjectAccessControl> LoggingClient::PatchDefaultObjectAcl(
+    rest_internal::RestContext& context, Options const& options,
     PatchDefaultObjectAclRequest const& request) {
-  return MakeCall(*client_, &RawClient::PatchDefaultObjectAcl, request,
-                  __func__);
+  return LogWrapper(
+      [this](auto& context, auto const& options, auto& request) {
+        return stub_->PatchDefaultObjectAcl(context, options, request);
+      },
+      context, options, request, __func__);
 }
 
 StatusOr<ServiceAccount> LoggingClient::GetServiceAccount(
+    rest_internal::RestContext& context, Options const& options,
     GetProjectServiceAccountRequest const& request) {
-  return MakeCall(*client_, &RawClient::GetServiceAccount, request, __func__);
+  return LogWrapper(
+      [this](auto& context, auto const& options, auto& request) {
+        return stub_->GetServiceAccount(context, options, request);
+      },
+      context, options, request, __func__);
 }
 
 StatusOr<ListHmacKeysResponse> LoggingClient::ListHmacKeys(
+    rest_internal::RestContext& context, Options const& options,
     ListHmacKeysRequest const& request) {
-  return MakeCall(*client_, &RawClient::ListHmacKeys, request, __func__);
+  return LogWrapper(
+      [this](auto& context, auto const& options, auto& request) {
+        return stub_->ListHmacKeys(context, options, request);
+      },
+      context, options, request, __func__);
 }
 
 StatusOr<CreateHmacKeyResponse> LoggingClient::CreateHmacKey(
+    rest_internal::RestContext& context, Options const& options,
     CreateHmacKeyRequest const& request) {
-  return MakeCall(*client_, &RawClient::CreateHmacKey, request, __func__);
+  return LogWrapper(
+      [this](auto& context, auto const& options, auto& request) {
+        return stub_->CreateHmacKey(context, options, request);
+      },
+      context, options, request, __func__);
 }
 
 StatusOr<EmptyResponse> LoggingClient::DeleteHmacKey(
+    rest_internal::RestContext& context, Options const& options,
     DeleteHmacKeyRequest const& request) {
-  return MakeCall(*client_, &RawClient::DeleteHmacKey, request, __func__);
+  return LogWrapper(
+      [this](auto& context, auto const& options, auto& request) {
+        return stub_->DeleteHmacKey(context, options, request);
+      },
+      context, options, request, __func__);
 }
 
 StatusOr<HmacKeyMetadata> LoggingClient::GetHmacKey(
+    rest_internal::RestContext& context, Options const& options,
     GetHmacKeyRequest const& request) {
-  return MakeCall(*client_, &RawClient::GetHmacKey, request, __func__);
+  return LogWrapper(
+      [this](auto& context, auto const& options, auto& request) {
+        return stub_->GetHmacKey(context, options, request);
+      },
+      context, options, request, __func__);
 }
 
 StatusOr<HmacKeyMetadata> LoggingClient::UpdateHmacKey(
+    rest_internal::RestContext& context, Options const& options,
     UpdateHmacKeyRequest const& request) {
-  return MakeCall(*client_, &RawClient::UpdateHmacKey, request, __func__);
+  return LogWrapper(
+      [this](auto& context, auto const& options, auto& request) {
+        return stub_->UpdateHmacKey(context, options, request);
+      },
+      context, options, request, __func__);
 }
 
 StatusOr<SignBlobResponse> LoggingClient::SignBlob(
+    rest_internal::RestContext& context, Options const& options,
     SignBlobRequest const& request) {
-  return MakeCall(*client_, &RawClient::SignBlob, request, __func__);
+  return LogWrapper(
+      [this](auto& context, auto const& options, auto& request) {
+        return stub_->SignBlob(context, options, request);
+      },
+      context, options, request, __func__);
 }
 
 StatusOr<ListNotificationsResponse> LoggingClient::ListNotifications(
+    rest_internal::RestContext& context, Options const& options,
     ListNotificationsRequest const& request) {
-  return MakeCall(*client_, &RawClient::ListNotifications, request, __func__);
+  return LogWrapper(
+      [this](auto& context, auto const& options, auto& request) {
+        return stub_->ListNotifications(context, options, request);
+      },
+      context, options, request, __func__);
 }
 
 StatusOr<NotificationMetadata> LoggingClient::CreateNotification(
+    rest_internal::RestContext& context, Options const& options,
     CreateNotificationRequest const& request) {
-  return MakeCall(*client_, &RawClient::CreateNotification, request, __func__);
+  return LogWrapper(
+      [this](auto& context, auto const& options, auto& request) {
+        return stub_->CreateNotification(context, options, request);
+      },
+      context, options, request, __func__);
 }
 
 StatusOr<NotificationMetadata> LoggingClient::GetNotification(
+    rest_internal::RestContext& context, Options const& options,
     GetNotificationRequest const& request) {
-  return MakeCall(*client_, &RawClient::GetNotification, request, __func__);
+  return LogWrapper(
+      [this](auto& context, auto const& options, auto& request) {
+        return stub_->GetNotification(context, options, request);
+      },
+      context, options, request, __func__);
 }
 
 StatusOr<EmptyResponse> LoggingClient::DeleteNotification(
+    rest_internal::RestContext& context, Options const& options,
     DeleteNotificationRequest const& request) {
-  return MakeCall(*client_, &RawClient::DeleteNotification, request, __func__);
+  return LogWrapper(
+      [this](auto& context, auto const& options, auto& request) {
+        return stub_->DeleteNotification(context, options, request);
+      },
+      context, options, request, __func__);
 }
 
 std::vector<std::string> LoggingClient::InspectStackStructure() const {
-  auto stack = client_->InspectStackStructure();
+  auto stack = stub_->InspectStackStructure();
   stack.emplace_back("LoggingClient");
   return stack;
 }

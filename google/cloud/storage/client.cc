@@ -50,11 +50,11 @@ std::shared_ptr<internal::RawClient> Client::CreateDefaultInternalClient(
   auto const& tracing_components = opts.get<TracingComponentsOption>();
   auto const enable_logging = Contains(tracing_components, "raw-client") ||
                               Contains(tracing_components, "rpc");
+  auto stub = storage_internal::MakeGenericStubAdapter(std::move(client));
   if (enable_logging) {
-    client = std::make_shared<internal::LoggingClient>(std::move(client));
+    stub = std::make_unique<internal::LoggingClient>(std::move(stub));
   }
-  client = internal::RetryClient::Create(
-      storage_internal::MakeGenericStubAdapter(std::move(client)), opts);
+  client = internal::RetryClient::Create(std::move(stub), opts);
   if (google::cloud::internal::TracingEnabled(opts)) {
     client = storage_internal::MakeTracingClient(std::move(client));
   }
