@@ -20,6 +20,7 @@
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/opentelemetry_options.h"
 #include "google/cloud/testing_util/mock_backoff_policy.h"
+#include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/testing_util/scoped_environment.h"
 #include <gmock/gmock.h>
 #include <chrono>
@@ -221,10 +222,11 @@ TEST_F(ClientTest, LoggingDecoratorsRestClient) {
                           "RetryClient"));
 }
 
-/// @test Verify the constructor creates the right set of RawClient decorations.
-TEST_F(ClientTest, FullStack) {
-  // Reset environment variables. We want the `Options` parameter to control the
-  // structure of the stack.
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+using ::google::cloud::testing_util::DisableTracing;
+using ::google::cloud::testing_util::EnableTracing;
+
+TEST_F(ClientTest, OTelEnableTracing) {
   ScopedEnvironment logging("CLOUD_STORAGE_ENABLE_TRACING", absl::nullopt);
   ScopedEnvironment legacy("GOOGLE_CLOUD_CPP_STORAGE_USE_LEGACY_HTTP",
                            absl::nullopt);
@@ -235,23 +237,38 @@ TEST_F(ClientTest, FullStack) {
                      .set<UnifiedCredentialsOption>(MakeInsecureCredentials())
                      .set<internal::UseRestClientOption>(true)
                      .set<TracingComponentsOption>({"raw-client"});
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-  options.set<experimental::OpenTelemetryTracingOption>(true);
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-  auto tested = Client(options);
+  auto tested = Client(EnableTracing(std::move(options)));
   auto const impl = ClientImplDetails::GetRawClient(tested);
   ASSERT_THAT(impl, NotNull());
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
   EXPECT_THAT(impl->InspectStackStructure(),
               ElementsAre("RestClient", "LoggingClient", "GenericStubAdapter",
                           "RetryClient", "TracingClient"));
-#else
+}
+
+TEST_F(ClientTest, OTelDisableTracing) {
+  ScopedEnvironment logging("CLOUD_STORAGE_ENABLE_TRACING", absl::nullopt);
+  ScopedEnvironment legacy("GOOGLE_CLOUD_CPP_STORAGE_USE_LEGACY_HTTP",
+                           absl::nullopt);
+
+  // Create a client. Use the anonymous credentials because on the CI
+  // environment there may not be other credentials configured.
+  auto options = Options{}
+                     .set<UnifiedCredentialsOption>(MakeInsecureCredentials())
+                     .set<internal::UseRestClientOption>(true)
+                     .set<TracingComponentsOption>({"raw-client"});
+
+  auto tested = Client(DisableTracing(std::move(options)));
+  auto const impl = ClientImplDetails::GetRawClient(tested);
+  ASSERT_THAT(impl, NotNull());
+
   EXPECT_THAT(impl->InspectStackStructure(),
               ElementsAre("RestClient", "LoggingClient", "GenericStubAdapter",
                           "RetryClient"));
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 #include "google/cloud/internal/disable_deprecation_warnings.inc"
 
