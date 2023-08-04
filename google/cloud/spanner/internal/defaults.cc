@@ -104,22 +104,17 @@ Options DefaultOptions(Options opts) {
   min_sessions =
       (std::min)(min_sessions, max_sessions_per_channel * num_channels);
 
-  // TODO(#11111): Restore on-by-default behavior.
   if (!opts.has<spanner::RouteToLeaderOption>()) {
-    opts.set<spanner::RouteToLeaderOption>(false);  // off by default
-  }
-  // ${GOOGLE_CLOUD_CPP_SPANNER_ROUTE_TO_LEADER} overrides option setting.
-  if (auto e = internal::GetEnv("GOOGLE_CLOUD_CPP_SPANNER_ROUTE_TO_LEADER")) {
-    for (auto const* disable : {"N", "n", "F", "f", "0", "off"}) {
-      if (*e == disable) {
-        // Never route to leader.
-        opts.set<spanner::RouteToLeaderOption>(false);
-      }
-    }
-    for (auto const* enable : {"Y", "y", "T", "t", "1", "on"}) {
-      if (*e == enable) {
-        // Route to leader for RW/PartitionedDml transactions.
-        opts.unset<spanner::RouteToLeaderOption>();
+    // The option defaults to on (unset), but the default can be changed with a
+    // suitably-negative value in `${GOOGLE_CLOUD_CPP_SPANNER_ROUTE_TO_LEADER}`.
+    if (auto e = internal::GetEnv("GOOGLE_CLOUD_CPP_SPANNER_ROUTE_TO_LEADER")) {
+      for (auto const* disable : {"N", "n", "F", "f", "0", "off"}) {
+        if (*e == disable) {
+          // Change the default from "for RW/PartitionedDml transactions"
+          // to "never".
+          opts.set<spanner::RouteToLeaderOption>(false);
+          break;
+        }
       }
     }
   }
