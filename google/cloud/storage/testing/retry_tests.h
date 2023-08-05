@@ -15,9 +15,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_TESTING_RETRY_TESTS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_TESTING_RETRY_TESTS_H
 
+#include "google/cloud/internal/rest_context.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status.h"
 #include <gmock/gmock.h>
+#include <memory>
+#include <string>
+#include <vector>
 
 namespace google {
 namespace cloud {
@@ -38,6 +42,35 @@ Options RetryClientTestOptions();
 
 /// Validates the `Status` produced in a "permanent error" test.
 ::testing::Matcher<Status> StoppedOnPermanentError(char const* api_name);
+
+/// Validates the idempotency tokens used in a retry loop.
+::testing::Matcher<std::vector<std::string>> RetryLoopUsesSingleToken();
+
+/// Captures the idempotency token. Refactors some code in
+/// MockRetryClientFunction.
+void CaptureIdempotencyToken(std::vector<std::string>& tokens,
+                             rest_internal::RestContext const& context);
+
+/// Captures information to validate the RetryClient loops and return a
+/// transient error.
+class MockRetryClientFunction {
+ public:
+  explicit MockRetryClientFunction(Status status);
+
+  std::vector<std::string> const& captured_tokens() const { return *tokens_; }
+
+  template <typename Request>
+  Status operator()(rest_internal::RestContext& context, Options const&,
+                    Request const&) {
+    CaptureIdempotencyToken(*tokens_, context);
+    return status_;
+  }
+
+ private:
+  std::shared_ptr<std::vector<std::string>> tokens_ =
+      std::make_shared<std::vector<std::string>>();
+  Status status_;
+};
 
 }  // namespace testing
 }  // namespace storage

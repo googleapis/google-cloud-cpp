@@ -17,6 +17,7 @@
 #include "google/cloud/storage/retry_policy.h"
 #include "google/cloud/storage/testing/canonical_errors.h"
 #include "google/cloud/testing_util/status_matchers.h"
+#include <algorithm>
 #include <chrono>
 
 namespace google {
@@ -29,10 +30,13 @@ using ::google::cloud::storage::testing::canonical_errors::TransientError;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::Contains;
 using ::testing::HasSubstr;
+using ::testing::IsEmpty;
 using ::testing::Pair;
 using ::testing::ResultOf;
+using ::testing::Truly;
 
 auto constexpr kTooManyFailuresCount = 2;
+auto constexpr kIdempotencyTokenHeader = "x-goog-gcs-idempotency-token";
 
 Options RetryClientTestOptions() {
   return Options{}
@@ -80,6 +84,36 @@ Options RetryClientTestOptions() {
       StatusIs(PermanentError().code(), HasSubstr(PermanentError().message())),
       matches_api_name(api_name), matches_exhausted());
 }
+
+::testing::Matcher<std::vector<std::string>> RetryLoopUsesSingleToken() {
+  return ::testing::AllOf(
+      Not(IsEmpty()),
+      ResultOf(
+          "The retry loop uses a non-empty token",
+          [](std::vector<std::string> const& v) {
+            return v.empty() ? std::string{} : v.front();
+          },
+          Not(IsEmpty())),
+      ResultOf(
+          "All tokens are equal",
+          [](std::vector<std::string> const& v) { return v; },
+          Truly([](std::vector<std::string> const& v) {
+            auto const s = v.empty() ? std::string{} : v.front();
+            return std::all_of(v.begin(), v.end(),
+                               [s](auto const& x) { return x == s; });
+          })));
+}
+
+void CaptureIdempotencyToken(std::vector<std::string>& tokens,
+                             rest_internal::RestContext const& context) {
+  auto const& headers = context.headers();
+  auto l = headers.find(kIdempotencyTokenHeader);
+  if (l == headers.end()) return;
+  tokens.insert(tokens.end(), l->second.begin(), l->second.end());
+}
+
+MockRetryClientFunction::MockRetryClientFunction(Status status)
+    : status_(std::move(status)) {}
 
 }  // namespace testing
 }  // namespace storage
