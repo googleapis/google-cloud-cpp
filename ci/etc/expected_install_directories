@@ -621,6 +621,14 @@
 ./include/google/cloud/dataproc/v1
 ./include/google/cloud/dataproc/v1/internal
 ./include/google/cloud/dataproc/v1/mocks
+./include/google/cloud/datastore
+./include/google/cloud/datastore/admin
+./include/google/cloud/datastore/admin/v1
+./include/google/cloud/datastore/admin/v1/internal
+./include/google/cloud/datastore/admin/v1/mocks
+./include/google/cloud/datastore/v1
+./include/google/cloud/datastore/v1/internal
+./include/google/cloud/datastore/v1/mocks
 ./include/google/cloud/datastream
 ./include/google/cloud/datastream/mocks
 ./include/google/cloud/datastream/v1
@@ -1076,6 +1084,10 @@
 ./include/google/cloud/workstations/v1/mocks
 ./include/google/container
 ./include/google/container/v1
+./include/google/datastore
+./include/google/datastore/admin
+./include/google/datastore/admin/v1
+./include/google/datastore/v1
 ./include/google/devtools
 ./include/google/devtools/artifactregistry
 ./include/google/devtools/artifactregistry/v1
@@ -1162,6 +1174,7 @@
 ./lib64/cmake/google_cloud_cpp_datamigration
 ./lib64/cmake/google_cloud_cpp_dataplex
 ./lib64/cmake/google_cloud_cpp_dataproc
+./lib64/cmake/google_cloud_cpp_datastore
 ./lib64/cmake/google_cloud_cpp_datastream
 ./lib64/cmake/google_cloud_cpp_deploy
 ./lib64/cmake/google_cloud_cpp_dialogflow_cx
