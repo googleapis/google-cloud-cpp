@@ -27,155 +27,168 @@ namespace internal {
 namespace {
 
 using ::google::cloud::storage::testing::MockGenericStub;
+using ::google::cloud::storage::testing::MockRetryClientFunction;
 using ::google::cloud::storage::testing::RetryClientTestOptions;
+using ::google::cloud::storage::testing::RetryLoopUsesSingleToken;
 using ::google::cloud::storage::testing::StoppedOnPermanentError;
 using ::google::cloud::storage::testing::StoppedOnTooManyTransients;
 using ::google::cloud::storage::testing::canonical_errors::PermanentError;
 using ::google::cloud::storage::testing::canonical_errors::TransientError;
-using ::testing::Return;
 
 TEST(RetryClient, ListDefaultObjectAclTooManyFailures) {
+  auto transient = MockRetryClientFunction(TransientError());
   auto mock = std::make_unique<MockGenericStub>();
   EXPECT_CALL(*mock, options);
-  EXPECT_CALL(*mock, ListDefaultObjectAcl)
-      .Times(3)
-      .WillRepeatedly(Return(TransientError()));
+  EXPECT_CALL(*mock, ListDefaultObjectAcl).Times(3).WillRepeatedly(transient);
   auto client = RetryClient::Create(std::move(mock), RetryClientTestOptions());
   google::cloud::internal::OptionsSpan span(client->options());
   auto response =
       client->ListDefaultObjectAcl(ListDefaultObjectAclRequest()).status();
   EXPECT_THAT(response, StoppedOnTooManyTransients("ListDefaultObjectAcl"));
+  EXPECT_THAT(transient.captured_tokens(), RetryLoopUsesSingleToken());
 }
 
 TEST(RetryClient, ListDefaultObjectAclPermanentFailure) {
+  auto permanent = MockRetryClientFunction(PermanentError());
   auto mock = std::make_unique<MockGenericStub>();
   EXPECT_CALL(*mock, options);
-  EXPECT_CALL(*mock, ListDefaultObjectAcl).WillOnce(Return(PermanentError()));
+  EXPECT_CALL(*mock, ListDefaultObjectAcl).WillOnce(permanent);
   auto client = RetryClient::Create(std::move(mock), RetryClientTestOptions());
   google::cloud::internal::OptionsSpan span(client->options());
   auto response =
       client->ListDefaultObjectAcl(ListDefaultObjectAclRequest()).status();
   EXPECT_THAT(response, StoppedOnPermanentError("ListDefaultObjectAcl"));
+  EXPECT_THAT(permanent.captured_tokens(), RetryLoopUsesSingleToken());
 }
 
 TEST(RetryClient, CreateDefaultObjectAclTooManyFailures) {
+  auto transient = MockRetryClientFunction(TransientError());
   auto mock = std::make_unique<MockGenericStub>();
   EXPECT_CALL(*mock, options);
-  EXPECT_CALL(*mock, CreateDefaultObjectAcl)
-      .Times(3)
-      .WillRepeatedly(Return(TransientError()));
+  EXPECT_CALL(*mock, CreateDefaultObjectAcl).Times(3).WillRepeatedly(transient);
   auto client = RetryClient::Create(std::move(mock), RetryClientTestOptions());
   google::cloud::internal::OptionsSpan span(client->options());
   auto response =
       client->CreateDefaultObjectAcl(CreateDefaultObjectAclRequest()).status();
   EXPECT_THAT(response, StoppedOnTooManyTransients("CreateDefaultObjectAcl"));
+  EXPECT_THAT(transient.captured_tokens(), RetryLoopUsesSingleToken());
 }
 
 TEST(RetryClient, CreateDefaultObjectAclPermanentFailure) {
+  auto permanent = MockRetryClientFunction(PermanentError());
   auto mock = std::make_unique<MockGenericStub>();
   EXPECT_CALL(*mock, options);
-  EXPECT_CALL(*mock, CreateDefaultObjectAcl).WillOnce(Return(PermanentError()));
+  EXPECT_CALL(*mock, CreateDefaultObjectAcl).WillOnce(permanent);
   auto client = RetryClient::Create(std::move(mock), RetryClientTestOptions());
   google::cloud::internal::OptionsSpan span(client->options());
   auto response =
       client->CreateDefaultObjectAcl(CreateDefaultObjectAclRequest()).status();
   EXPECT_THAT(response, StoppedOnPermanentError("CreateDefaultObjectAcl"));
+  EXPECT_THAT(permanent.captured_tokens(), RetryLoopUsesSingleToken());
 }
 
 TEST(RetryClient, DeleteDefaultObjectAclTooManyFailures) {
+  auto transient = MockRetryClientFunction(TransientError());
   auto mock = std::make_unique<MockGenericStub>();
   EXPECT_CALL(*mock, options);
-  EXPECT_CALL(*mock, DeleteDefaultObjectAcl)
-      .Times(3)
-      .WillRepeatedly(Return(TransientError()));
+  EXPECT_CALL(*mock, DeleteDefaultObjectAcl).Times(3).WillRepeatedly(transient);
   auto client = RetryClient::Create(std::move(mock), RetryClientTestOptions());
   google::cloud::internal::OptionsSpan span(client->options());
   auto response =
       client->DeleteDefaultObjectAcl(DeleteDefaultObjectAclRequest()).status();
   EXPECT_THAT(response, StoppedOnTooManyTransients("DeleteDefaultObjectAcl"));
+  EXPECT_THAT(transient.captured_tokens(), RetryLoopUsesSingleToken());
 }
 
 TEST(RetryClient, DeleteDefaultObjectAclPermanentFailure) {
+  auto permanent = MockRetryClientFunction(PermanentError());
   auto mock = std::make_unique<MockGenericStub>();
   EXPECT_CALL(*mock, options);
-  EXPECT_CALL(*mock, DeleteDefaultObjectAcl).WillOnce(Return(PermanentError()));
+  EXPECT_CALL(*mock, DeleteDefaultObjectAcl).WillOnce(permanent);
   auto client = RetryClient::Create(std::move(mock), RetryClientTestOptions());
   google::cloud::internal::OptionsSpan span(client->options());
   auto response =
       client->DeleteDefaultObjectAcl(DeleteDefaultObjectAclRequest()).status();
   EXPECT_THAT(response, StoppedOnPermanentError("DeleteDefaultObjectAcl"));
+  EXPECT_THAT(permanent.captured_tokens(), RetryLoopUsesSingleToken());
 }
 
 TEST(RetryClient, GetDefaultObjectAclTooManyFailures) {
+  auto transient = MockRetryClientFunction(TransientError());
   auto mock = std::make_unique<MockGenericStub>();
   EXPECT_CALL(*mock, options);
-  EXPECT_CALL(*mock, GetDefaultObjectAcl)
-      .Times(3)
-      .WillRepeatedly(Return(TransientError()));
+  EXPECT_CALL(*mock, GetDefaultObjectAcl).Times(3).WillRepeatedly(transient);
   auto client = RetryClient::Create(std::move(mock), RetryClientTestOptions());
   google::cloud::internal::OptionsSpan span(client->options());
   auto response =
       client->GetDefaultObjectAcl(GetDefaultObjectAclRequest()).status();
   EXPECT_THAT(response, StoppedOnTooManyTransients("GetDefaultObjectAcl"));
+  EXPECT_THAT(transient.captured_tokens(), RetryLoopUsesSingleToken());
 }
 
 TEST(RetryClient, GetDefaultObjectAclPermanentFailure) {
+  auto permanent = MockRetryClientFunction(PermanentError());
   auto mock = std::make_unique<MockGenericStub>();
   EXPECT_CALL(*mock, options);
-  EXPECT_CALL(*mock, GetDefaultObjectAcl).WillOnce(Return(PermanentError()));
+  EXPECT_CALL(*mock, GetDefaultObjectAcl).WillOnce(permanent);
   auto client = RetryClient::Create(std::move(mock), RetryClientTestOptions());
   google::cloud::internal::OptionsSpan span(client->options());
   auto response =
       client->GetDefaultObjectAcl(GetDefaultObjectAclRequest()).status();
   EXPECT_THAT(response, StoppedOnPermanentError("GetDefaultObjectAcl"));
+  EXPECT_THAT(permanent.captured_tokens(), RetryLoopUsesSingleToken());
 }
 
 TEST(RetryClient, UpdateDefaultObjectAclTooManyFailures) {
+  auto transient = MockRetryClientFunction(TransientError());
   auto mock = std::make_unique<MockGenericStub>();
   EXPECT_CALL(*mock, options);
-  EXPECT_CALL(*mock, UpdateDefaultObjectAcl)
-      .Times(3)
-      .WillRepeatedly(Return(TransientError()));
+  EXPECT_CALL(*mock, UpdateDefaultObjectAcl).Times(3).WillRepeatedly(transient);
   auto client = RetryClient::Create(std::move(mock), RetryClientTestOptions());
   google::cloud::internal::OptionsSpan span(client->options());
   auto response =
       client->UpdateDefaultObjectAcl(UpdateDefaultObjectAclRequest()).status();
   EXPECT_THAT(response, StoppedOnTooManyTransients("UpdateDefaultObjectAcl"));
+  EXPECT_THAT(transient.captured_tokens(), RetryLoopUsesSingleToken());
 }
 
 TEST(RetryClient, UpdateDefaultObjectAclPermanentFailure) {
+  auto permanent = MockRetryClientFunction(PermanentError());
   auto mock = std::make_unique<MockGenericStub>();
   EXPECT_CALL(*mock, options);
-  EXPECT_CALL(*mock, UpdateDefaultObjectAcl).WillOnce(Return(PermanentError()));
+  EXPECT_CALL(*mock, UpdateDefaultObjectAcl).WillOnce(permanent);
   auto client = RetryClient::Create(std::move(mock), RetryClientTestOptions());
   google::cloud::internal::OptionsSpan span(client->options());
   auto response =
       client->UpdateDefaultObjectAcl(UpdateDefaultObjectAclRequest()).status();
   EXPECT_THAT(response, StoppedOnPermanentError("UpdateDefaultObjectAcl"));
+  EXPECT_THAT(permanent.captured_tokens(), RetryLoopUsesSingleToken());
 }
 
 TEST(RetryClient, PatchDefaultObjectAclTooManyFailures) {
+  auto transient = MockRetryClientFunction(TransientError());
   auto mock = std::make_unique<MockGenericStub>();
   EXPECT_CALL(*mock, options);
-  EXPECT_CALL(*mock, PatchDefaultObjectAcl)
-      .Times(3)
-      .WillRepeatedly(Return(TransientError()));
+  EXPECT_CALL(*mock, PatchDefaultObjectAcl).Times(3).WillRepeatedly(transient);
   auto client = RetryClient::Create(std::move(mock), RetryClientTestOptions());
   google::cloud::internal::OptionsSpan span(client->options());
   auto response =
       client->PatchDefaultObjectAcl(PatchDefaultObjectAclRequest()).status();
   EXPECT_THAT(response, StoppedOnTooManyTransients("PatchDefaultObjectAcl"));
+  EXPECT_THAT(transient.captured_tokens(), RetryLoopUsesSingleToken());
 }
 
 TEST(RetryClient, PatchDefaultObjectAclPermanentFailure) {
+  auto permanent = MockRetryClientFunction(PermanentError());
   auto mock = std::make_unique<MockGenericStub>();
   EXPECT_CALL(*mock, options);
-  EXPECT_CALL(*mock, PatchDefaultObjectAcl).WillOnce(Return(PermanentError()));
+  EXPECT_CALL(*mock, PatchDefaultObjectAcl).WillOnce(permanent);
   auto client = RetryClient::Create(std::move(mock), RetryClientTestOptions());
   google::cloud::internal::OptionsSpan span(client->options());
   auto response =
       client->PatchDefaultObjectAcl(PatchDefaultObjectAclRequest()).status();
   EXPECT_THAT(response, StoppedOnPermanentError("PatchDefaultObjectAcl"));
+  EXPECT_THAT(permanent.captured_tokens(), RetryLoopUsesSingleToken());
 }
 
 }  // namespace

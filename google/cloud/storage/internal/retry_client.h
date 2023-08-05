@@ -17,6 +17,7 @@
 
 #include "google/cloud/storage/idempotency_policy.h"
 #include "google/cloud/storage/internal/generic_stub.h"
+#include "google/cloud/storage/internal/invocation_id_generator.h"
 #include "google/cloud/storage/internal/raw_client.h"
 #include "google/cloud/storage/retry_policy.h"
 #include "google/cloud/storage/version.h"
@@ -164,9 +165,14 @@ class RetryClient : public RawClient,
   static std::unique_ptr<BackoffPolicy> current_backoff_policy();
   static IdempotencyPolicy& current_idempotency_policy();
 
+  std::string MakeIdempotencyToken() {
+    return invocation_id_generator_.MakeInvocationId();
+  }
+
   std::unique_ptr<storage_internal::GenericStub> stub_;
   Options options_;
   ClientOptions client_options_;  // For backwards compatibility
+  InvocationIdGenerator invocation_id_generator_;
 };
 
 }  // namespace internal
