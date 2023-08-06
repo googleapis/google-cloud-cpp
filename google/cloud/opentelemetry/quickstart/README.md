@@ -159,7 +159,35 @@ install `*.pc` files, so it is not yet usable with `make`.
 
 ### Package Managers
 
-We are working on this, but at the moment, no package managers support
+#### [`vcpkg`](https://github.com/Microsoft/vcpkg.git)
+
+1. Install the dependencies for this quickstart:
+
+   ```bash
+   cd $HOME/vcpkg
+   ./vcpkg install google-cloud-cpp[core,experimental-opentelemetry,storage]
+   ```
+
+   Note that, as it is often the case with C++ libraries, compiling these
+   dependencies may take several minutes.
+
+1. Configure CMake:
+
+   ```bash
+   cd $HOME/google-cloud-cpp/google/cloud/opentelemetry/quickstart
+   cmake -S . -B .build -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake
+   cmake --build .build
+   ```
+
+1. Run the example, changing the placeholder(s) to appropriate values:
+
+   ```bash
+   .build/quickstart [BUCKET_NAME] [PROJECT_ID]
+   ```
+
+#### Other
+
+We are working on this, but at the moment, no other package managers support
 `google-cloud-cpp`'s native integration with Cloud Trace.
 
 ## Platform Specific Notes
