@@ -619,6 +619,27 @@ TEST(Recordable, SetIdentity) {
   EXPECT_EQ(proto.parent_span_id(), "0505060607070808");
 }
 
+TEST(Recordable, InvalidParentSpanIsOmitted) {
+  opentelemetry::trace::TraceId const trace_id(
+      std::array<uint8_t const, opentelemetry::trace::TraceId::kSize>(
+          {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15}));
+
+  opentelemetry::trace::SpanId const span_id(
+      std::array<uint8_t const, opentelemetry::trace::SpanId::kSize>(
+          {1, 1, 2, 2, 3, 3, 4, 4}));
+
+  opentelemetry::trace::SpanContext span_context(trace_id, span_id, {}, false);
+
+  opentelemetry::trace::SpanId const invalid_parent_span_id;
+  EXPECT_FALSE(invalid_parent_span_id.IsValid());
+
+  auto rec = Recordable(Project(kProjectId));
+  rec.SetIdentity(span_context, invalid_parent_span_id);
+  auto proto = std::move(rec).as_proto();
+
+  EXPECT_THAT(proto.parent_span_id(), IsEmpty());
+}
+
 TEST(Recordable, SetAttribute) {
   auto rec = Recordable(Project(kProjectId));
   rec.SetAttribute("key", "value");

@@ -322,15 +322,18 @@ void Recordable::SetIdentityImpl(
   std::array<char, 2 * opentelemetry::trace::SpanId::kSize> span;
   span_context.span_id().ToLowerBase16(span);
 
-  std::array<char, 2 * opentelemetry::trace::SpanId::kSize> parent_span;
-  parent_span_id.ToLowerBase16(parent_span);
-
   span_.set_name(absl::StrCat(project_.FullName(), "/traces/",
                               absl::string_view{trace.data(), trace.size()},
                               "/spans/",
                               absl::string_view{span.data(), span.size()}));
   span_.set_span_id({span.data(), span.size()});
-  span_.set_parent_span_id({parent_span.data(), parent_span.size()});
+
+  if (parent_span_id.IsValid()) {
+    std::array<char, 2 * opentelemetry::trace::SpanId::kSize> parent_span;
+    parent_span_id.ToLowerBase16(parent_span);
+
+    span_.set_parent_span_id({parent_span.data(), parent_span.size()});
+  }
 }
 
 void Recordable::AddEventImpl(
