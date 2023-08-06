@@ -14,7 +14,8 @@
 
 #include "google/cloud/opentelemetry/internal/recordable.h"
 #include "google/cloud/internal/time_utils.h"
-#include "google/cloud/version.h" #include "absl/time/clock.h"
+#include "google/cloud/version.h"
+#include "absl/time/clock.h"
 #include <gmock/gmock.h>
 #include <grpcpp/grpcpp.h>
 #include <opentelemetry/sdk/resource/resource.h>
