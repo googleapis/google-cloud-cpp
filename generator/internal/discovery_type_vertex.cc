@@ -95,6 +95,10 @@ void DiscoveryTypeVertex::AddNeededByType(DiscoveryTypeVertex* type) {
   needed_by_type_.insert(type);
 }
 
+void DiscoveryTypeVertex::AddNeededByResource(std::string resource_name) {
+  needed_by_resource_.insert(std::move(resource_name));
+}
+
 std::string DiscoveryTypeVertex::DetermineIntroducer(
     nlohmann::json const& field) {
   if (field.empty()) return "";

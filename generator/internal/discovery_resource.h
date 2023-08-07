@@ -33,8 +33,10 @@ class DiscoveryResource {
   std::string const& name() const { return name_; }
   std::string const& package_name() const { return package_name_; }
   nlohmann::json const& json() const { return json_; }
-  std::map<std::string, DiscoveryTypeVertex const*> const& response_types()
-      const {
+  std::map<std::string, DiscoveryTypeVertex*> const& request_types() {
+    return request_types_;
+  }
+  std::map<std::string, DiscoveryTypeVertex*> const& response_types() const {
     return response_types_;
   }
 
@@ -43,10 +45,10 @@ class DiscoveryResource {
     return response_types_.find("Operation") != response_types_.end();
   }
 
-  void AddRequestType(std::string name, DiscoveryTypeVertex const* type);
+  void AddRequestType(std::string name, DiscoveryTypeVertex* type);
   void AddEmptyRequestType() { has_empty_request_or_response_ = true; }
 
-  void AddResponseType(std::string name, DiscoveryTypeVertex const* type);
+  void AddResponseType(std::string name, DiscoveryTypeVertex* type);
   void AddEmptyResponseType() { has_empty_request_or_response_ = true; }
 
   std::vector<DiscoveryTypeVertex const*> GetRequestTypesList() const;
@@ -86,8 +88,8 @@ class DiscoveryResource {
   std::string package_name_;
   bool has_empty_request_or_response_;
   nlohmann::json json_;
-  std::map<std::string, DiscoveryTypeVertex const*> request_types_;
-  std::map<std::string, DiscoveryTypeVertex const*> response_types_;
+  std::map<std::string, DiscoveryTypeVertex*> request_types_;
+  std::map<std::string, DiscoveryTypeVertex*> response_types_;
 };
 
 }  // namespace generator_internal

@@ -75,6 +75,16 @@ bool IsDiscoveryNestedType(nlohmann::json const& json) {
          json.contains("properties");
 }
 
+// NOLINTNEXTLINE(misc-no-recursion)
+void ApplyResourceLabelsToTypesHelper(std::string const& resource_name,
+                                      DiscoveryTypeVertex& type) {
+  type.AddNeededByResource(resource_name);
+  auto deps = type.needs_type();
+  for (auto* dep : deps) {
+    ApplyResourceLabelsToTypesHelper(resource_name, *dep);
+  }
+}
+
 }  // namespace
 
 StatusOr<std::map<std::string, DiscoveryTypeVertex>> ExtractTypesFromSchema(
@@ -149,11 +159,11 @@ std::map<std::string, DiscoveryResource> ExtractResources(
 
 // The DiscoveryResource& parameter will be used later to help determine what
 // protobuf files need to be imported to provide the response message.
-StatusOr<DiscoveryTypeVertex const*> DetermineAndVerifyResponseType(
+StatusOr<DiscoveryTypeVertex*> DetermineAndVerifyResponseType(
     nlohmann::json const& method_json, DiscoveryResource&,
     std::map<std::string, DiscoveryTypeVertex>& types) {
   std::string response_type_name;
-  DiscoveryTypeVertex const* response_type = nullptr;
+  DiscoveryTypeVertex* response_type = nullptr;
   auto const& response_iter = method_json.find("response");
   if (response_iter != method_json.end()) {
     auto const& ref_iter = response_iter->find("$ref");
@@ -260,8 +270,7 @@ Status ProcessMethodRequestsAndResponses(
       std::string response_type_name;
       if (*response_type != nullptr) {
         response_type_name = (*response_type)->name();
-        DiscoveryTypeVertex const* node = *response_type;
-        resource.second.AddResponseType(response_type_name, node);
+        resource.second.AddResponseType(response_type_name, *response_type);
       } else {
         resource.second.AddEmptyResponseType();
       }
@@ -332,6 +341,18 @@ Status EstablishTypeDependencies(
   }
 
   return {};
+}
+
+void ApplyResourceLabelsToTypes(
+    std::map<std::string, DiscoveryResource>& resources) {
+  for (auto& resource : resources) {
+    for (auto const& request_type : resource.second.request_types()) {
+      ApplyResourceLabelsToTypesHelper(resource.first, *request_type.second);
+    }
+    for (auto const& response_type : resource.second.response_types()) {
+      ApplyResourceLabelsToTypesHelper(resource.first, *response_type.second);
+    }
+  }
 }
 
 std::vector<DiscoveryFile> CreateFilesFromResources(
