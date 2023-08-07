@@ -67,11 +67,13 @@ TEST(RestRetryLoopTest, Success) {
   internal::OptionsSpan span(Options{}.set<StringOption>("Success"));
   StatusOr<int> actual = RestRetryLoop(
       TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kIdempotent,
-      [](RestContext&, int request) {
+      [](RestContext& context, int request) {
         EXPECT_EQ(internal::CurrentOptions().get<StringOption>(), "Success");
+        EXPECT_EQ(context.options().get<StringOption>(), "Success/Arg");
         return StatusOr<int>(2 * request);
       },
-      42, "error message");
+      Options{}.set<StringOption>("Success/Arg"), /*request=*/42,
+      /*location=*/"error message");
   internal::OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
   EXPECT_STATUS_OK(actual);
   EXPECT_EQ(84, *actual);
@@ -83,15 +85,18 @@ TEST(RestRetryLoopTest, TransientThenSuccess) {
       Options{}.set<StringOption>("TransientThenSuccess"));
   StatusOr<int> actual = RestRetryLoop(
       TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kIdempotent,
-      [&counter](RestContext&, int request) {
+      [&counter](RestContext& context, int request) {
         EXPECT_EQ(internal::CurrentOptions().get<StringOption>(),
                   "TransientThenSuccess");
+        EXPECT_EQ(context.options().get<StringOption>(),
+                  "TransientThenSuccess/Arg");
         if (++counter < 3) {
           return StatusOr<int>(Status(StatusCode::kUnavailable, "try again"));
         }
         return StatusOr<int>(2 * request);
       },
-      42, "error message");
+      Options{}.set<StringOption>("TransientThenSuccess/Arg"), /*request=*/42,
+      /*location=*/"error message");
   internal::OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
   EXPECT_STATUS_OK(actual);
   EXPECT_EQ(84, *actual);
@@ -102,15 +107,18 @@ TEST(RestRetryLoopTest, ReturnJustStatus) {
   internal::OptionsSpan span(Options{}.set<StringOption>("ReturnJustStatus"));
   Status actual = RestRetryLoop(
       TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kIdempotent,
-      [&counter](RestContext&, int) {
+      [&counter](RestContext& context, int) {
         EXPECT_EQ(internal::CurrentOptions().get<StringOption>(),
                   "ReturnJustStatus");
+        EXPECT_EQ(context.options().get<StringOption>(),
+                  "ReturnJustStatus/Arg");
         if (++counter <= 3) {
           return Status(StatusCode::kResourceExhausted, "slow-down");
         }
         return Status();
       },
-      42, "error message");
+      Options{}.set<StringOption>("ReturnJustStatus/Arg"), /*request=*/42,
+      /*location=*/"error message");
   internal::OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
   EXPECT_STATUS_OK(actual);
 }
@@ -143,7 +151,8 @@ TEST(RestRetryLoopTest, UsesBackoffPolicy) {
         }
         return StatusOr<int>(2 * request);
       },
-      42, "error message", [&sleep_for](ms p) { sleep_for.push_back(p); });
+      Options{}, /*request=*/42, /*location=*/"error message",
+      /*sleeper=*/[&sleep_for](ms p) { sleep_for.push_back(p); });
   internal::OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
   EXPECT_STATUS_OK(actual);
   EXPECT_EQ(84, *actual);
@@ -161,7 +170,7 @@ TEST(RestRetryLoopTest, TransientFailureNonIdempotent) {
                   "TransientFailureNonIdempotent");
         return StatusOr<int>(Status(StatusCode::kUnavailable, "try again"));
       },
-      42, __func__);
+      Options{}, /*request=*/42, /*location=*/__func__);
   internal::OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
   EXPECT_EQ(StatusCode::kUnavailable, actual.status().code());
   EXPECT_THAT(actual.status().message(), HasSubstr("try again"));
@@ -181,7 +190,7 @@ TEST(RestRetryLoopTest, PermanentFailureFailureIdempotent) {
                   "PermanentFailureFailureIdempotent");
         return StatusOr<int>(Status(StatusCode::kPermissionDenied, "uh oh"));
       },
-      42, __func__);
+      Options{}, /*request=*/42, /*location=*/__func__);
   internal::OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
   EXPECT_EQ(StatusCode::kPermissionDenied, actual.status().code());
   EXPECT_THAT(actual.status().message(), HasSubstr("uh oh"));
@@ -201,7 +210,7 @@ TEST(RestRetryLoopTest, TooManyTransientFailuresIdempotent) {
                   "TransientFailureNonIdempotent");
         return StatusOr<int>(Status(StatusCode::kUnavailable, "try again"));
       },
-      42, __func__);
+      Options{}, /*request=*/42, /*location=*/__func__);
   internal::OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
   EXPECT_EQ(StatusCode::kUnavailable, actual.status().code());
   EXPECT_THAT(actual.status().message(), HasSubstr("try again"));
@@ -224,7 +233,7 @@ TEST(RestRetryLoopTest, ExhaustedOnStart) {
                   "ExhaustedOnStart");
         return StatusOr<int>(Status(StatusCode::kUnavailable, "try again"));
       },
-      42, __func__);
+      Options{}, /*request=*/42, /*location=*/__func__);
   internal::OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
   EXPECT_THAT(actual, StatusIs(StatusCode::kDeadlineExceeded));
   auto const& metadata = actual.status().error_info().metadata();
@@ -252,7 +261,7 @@ TEST(RestRetryLoopTest, TracingEnabled) {
       [](RestContext&, int) {
         return StatusOr<int>(internal::UnavailableError("try again"));
       },
-      0, "error message");
+      Options{}, /*request=*/42, /*location=*/"error message");
 
   auto spans = span_catcher->GetSpans();
   EXPECT_THAT(spans, AllOf(SizeIs(kNumRetries), Each(SpanNamed("Backoff"))));
