@@ -15,7 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_REST_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_REST_CLIENT_H
 
-#include "google/cloud/storage/internal/raw_client.h"
+#include "google/cloud/storage/internal/generic_stub.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/internal/rest_client.h"
@@ -35,15 +35,14 @@ namespace internal {
  *
  * Over time, this will migrate from 100% libcurl wrappers to 100% REST library.
  */
-class RestClient : public RawClient {
+class RestClient : public storage_internal::GenericStub {
  public:
-  static std::shared_ptr<RestClient> Create(Options options);
-  static std::shared_ptr<RestClient> Create(
-      Options options,
-      std::shared_ptr<google::cloud::rest_internal::RestClient>
-          storage_rest_client,
-      std::shared_ptr<google::cloud::rest_internal::RestClient>
-          iam_rest_client);
+  explicit RestClient(Options options);
+  explicit RestClient(Options options,
+                      std::shared_ptr<google::cloud::rest_internal::RestClient>
+                          storage_rest_client,
+                      std::shared_ptr<google::cloud::rest_internal::RestClient>
+                          iam_rest_client);
 
   static Options ResolveStorageAuthority(Options const& options);
   static Options ResolveIamAuthority(Options const& options);
@@ -53,143 +52,194 @@ class RestClient : public RawClient {
   RestClient& operator=(RestClient const& rhs) = delete;
   RestClient& operator=(RestClient&& rhs) = delete;
 
-  ClientOptions const& client_options() const override;
   Options options() const override;
 
   StatusOr<ListBucketsResponse> ListBuckets(
+      rest_internal::RestContext& context, Options const& options,
       ListBucketsRequest const& request) override;
   StatusOr<BucketMetadata> CreateBucket(
+      rest_internal::RestContext& context, Options const& options,
       CreateBucketRequest const& request) override;
   StatusOr<BucketMetadata> GetBucketMetadata(
+      rest_internal::RestContext& context, Options const& options,
       GetBucketMetadataRequest const& request) override;
-  StatusOr<EmptyResponse> DeleteBucket(DeleteBucketRequest const&) override;
+  StatusOr<EmptyResponse> DeleteBucket(rest_internal::RestContext& context,
+                                       Options const& options,
+                                       DeleteBucketRequest const&) override;
   StatusOr<BucketMetadata> UpdateBucket(
+      rest_internal::RestContext& context, Options const& options,
       UpdateBucketRequest const& request) override;
   StatusOr<BucketMetadata> PatchBucket(
+      rest_internal::RestContext& context, Options const& options,
       PatchBucketRequest const& request) override;
   StatusOr<NativeIamPolicy> GetNativeBucketIamPolicy(
+      rest_internal::RestContext& context, Options const& options,
       GetBucketIamPolicyRequest const& request) override;
   StatusOr<NativeIamPolicy> SetNativeBucketIamPolicy(
+      rest_internal::RestContext& context, Options const& options,
       SetNativeBucketIamPolicyRequest const& request) override;
   StatusOr<TestBucketIamPermissionsResponse> TestBucketIamPermissions(
+      rest_internal::RestContext& context, Options const& options,
       TestBucketIamPermissionsRequest const& request) override;
   StatusOr<BucketMetadata> LockBucketRetentionPolicy(
+      rest_internal::RestContext& context, Options const& options,
       LockBucketRetentionPolicyRequest const& request) override;
 
   StatusOr<ObjectMetadata> InsertObjectMedia(
+      rest_internal::RestContext& context, Options const& options,
       InsertObjectMediaRequest const& request) override;
   StatusOr<ObjectMetadata> GetObjectMetadata(
+      rest_internal::RestContext& context, Options const& options,
       GetObjectMetadataRequest const& request) override;
   StatusOr<std::unique_ptr<ObjectReadSource>> ReadObject(
+      rest_internal::RestContext& context, Options const& options,
       ReadObjectRangeRequest const&) override;
   StatusOr<ListObjectsResponse> ListObjects(
+      rest_internal::RestContext& context, Options const& options,
       ListObjectsRequest const& request) override;
   StatusOr<EmptyResponse> DeleteObject(
+      rest_internal::RestContext& context, Options const& options,
       DeleteObjectRequest const& request) override;
   StatusOr<ObjectMetadata> UpdateObject(
+      rest_internal::RestContext& context, Options const& options,
       UpdateObjectRequest const& request) override;
   StatusOr<ObjectMetadata> PatchObject(
+      rest_internal::RestContext& context, Options const& options,
       PatchObjectRequest const& request) override;
   StatusOr<ObjectMetadata> ComposeObject(
+      rest_internal::RestContext& context, Options const& options,
       ComposeObjectRequest const& request) override;
 
   StatusOr<CreateResumableUploadResponse> CreateResumableUpload(
+      rest_internal::RestContext& context, Options const& options,
       ResumableUploadRequest const& request) override;
   StatusOr<QueryResumableUploadResponse> QueryResumableUpload(
+      rest_internal::RestContext& context, Options const& options,
       QueryResumableUploadRequest const& request) override;
   StatusOr<EmptyResponse> DeleteResumableUpload(
+      rest_internal::RestContext& context, Options const& options,
       DeleteResumableUploadRequest const& request) override;
   StatusOr<QueryResumableUploadResponse> UploadChunk(
+      rest_internal::RestContext& context, Options const& options,
       UploadChunkRequest const& request) override;
 
   StatusOr<ListBucketAclResponse> ListBucketAcl(
+      rest_internal::RestContext& context, Options const& options,
       ListBucketAclRequest const& request) override;
   StatusOr<ObjectMetadata> CopyObject(
+      rest_internal::RestContext& context, Options const& options,
       CopyObjectRequest const& request) override;
   StatusOr<BucketAccessControl> CreateBucketAcl(
-      CreateBucketAclRequest const&) override;
+      rest_internal::RestContext& context, Options const& options,
+      CreateBucketAclRequest const& request) override;
   StatusOr<BucketAccessControl> GetBucketAcl(
-      GetBucketAclRequest const&) override;
+      rest_internal::RestContext& context, Options const& options,
+      GetBucketAclRequest const& request) override;
   StatusOr<EmptyResponse> DeleteBucketAcl(
-      DeleteBucketAclRequest const&) override;
+      rest_internal::RestContext& context, Options const& options,
+      DeleteBucketAclRequest const& request) override;
   StatusOr<BucketAccessControl> UpdateBucketAcl(
-      UpdateBucketAclRequest const&) override;
+      rest_internal::RestContext& context, Options const& options,
+      UpdateBucketAclRequest const& request) override;
   StatusOr<BucketAccessControl> PatchBucketAcl(
-      PatchBucketAclRequest const&) override;
+      rest_internal::RestContext& context, Options const& options,
+      PatchBucketAclRequest const& request) override;
 
   StatusOr<ListObjectAclResponse> ListObjectAcl(
+      rest_internal::RestContext& context, Options const& options,
       ListObjectAclRequest const& request) override;
   StatusOr<ObjectAccessControl> CreateObjectAcl(
-      CreateObjectAclRequest const&) override;
+      rest_internal::RestContext& context, Options const& options,
+      CreateObjectAclRequest const& request) override;
   StatusOr<EmptyResponse> DeleteObjectAcl(
-      DeleteObjectAclRequest const&) override;
+      rest_internal::RestContext& context, Options const& options,
+      DeleteObjectAclRequest const& request) override;
   StatusOr<ObjectAccessControl> GetObjectAcl(
-      GetObjectAclRequest const&) override;
+      rest_internal::RestContext& context, Options const& options,
+      GetObjectAclRequest const& request) override;
   StatusOr<ObjectAccessControl> UpdateObjectAcl(
-      UpdateObjectAclRequest const&) override;
+      rest_internal::RestContext& context, Options const& options,
+      UpdateObjectAclRequest const& request) override;
   StatusOr<ObjectAccessControl> PatchObjectAcl(
-      PatchObjectAclRequest const&) override;
+      rest_internal::RestContext& context, Options const& options,
+      PatchObjectAclRequest const& request) override;
   StatusOr<RewriteObjectResponse> RewriteObject(
-      RewriteObjectRequest const&) override;
+      rest_internal::RestContext& context, Options const& options,
+      RewriteObjectRequest const& request) override;
 
   StatusOr<ListDefaultObjectAclResponse> ListDefaultObjectAcl(
+      rest_internal::RestContext& context, Options const& options,
       ListDefaultObjectAclRequest const& request) override;
   StatusOr<ObjectAccessControl> CreateDefaultObjectAcl(
-      CreateDefaultObjectAclRequest const&) override;
+      rest_internal::RestContext& context, Options const& options,
+      CreateDefaultObjectAclRequest const& request) override;
   StatusOr<EmptyResponse> DeleteDefaultObjectAcl(
-      DeleteDefaultObjectAclRequest const&) override;
+      rest_internal::RestContext& context, Options const& options,
+      DeleteDefaultObjectAclRequest const& request) override;
   StatusOr<ObjectAccessControl> GetDefaultObjectAcl(
-      GetDefaultObjectAclRequest const&) override;
+      rest_internal::RestContext& context, Options const& options,
+      GetDefaultObjectAclRequest const& request) override;
   StatusOr<ObjectAccessControl> UpdateDefaultObjectAcl(
-      UpdateDefaultObjectAclRequest const&) override;
+      rest_internal::RestContext& context, Options const& options,
+      UpdateDefaultObjectAclRequest const& request) override;
   StatusOr<ObjectAccessControl> PatchDefaultObjectAcl(
-      PatchDefaultObjectAclRequest const&) override;
+      rest_internal::RestContext& context, Options const& options,
+      PatchDefaultObjectAclRequest const& request) override;
 
   StatusOr<ServiceAccount> GetServiceAccount(
+      rest_internal::RestContext& context, Options const& options,
       GetProjectServiceAccountRequest const&) override;
   StatusOr<ListHmacKeysResponse> ListHmacKeys(
-      ListHmacKeysRequest const&) override;
+      rest_internal::RestContext& context, Options const& options,
+      ListHmacKeysRequest const& request) override;
   StatusOr<CreateHmacKeyResponse> CreateHmacKey(
-      CreateHmacKeyRequest const&) override;
-  StatusOr<EmptyResponse> DeleteHmacKey(DeleteHmacKeyRequest const&) override;
-  StatusOr<HmacKeyMetadata> GetHmacKey(GetHmacKeyRequest const&) override;
-  StatusOr<HmacKeyMetadata> UpdateHmacKey(UpdateHmacKeyRequest const&) override;
-  StatusOr<SignBlobResponse> SignBlob(SignBlobRequest const&) override;
+      rest_internal::RestContext& context, Options const& options,
+      CreateHmacKeyRequest const& request) override;
+  StatusOr<EmptyResponse> DeleteHmacKey(rest_internal::RestContext& context,
+                                        Options const& options,
+                                        DeleteHmacKeyRequest const&) override;
+  StatusOr<HmacKeyMetadata> GetHmacKey(
+      rest_internal::RestContext& context, Options const& options,
+      GetHmacKeyRequest const& request) override;
+  StatusOr<HmacKeyMetadata> UpdateHmacKey(
+      rest_internal::RestContext& context, Options const& options,
+      UpdateHmacKeyRequest const& request) override;
+  StatusOr<SignBlobResponse> SignBlob(rest_internal::RestContext& context,
+                                      Options const& options,
+                                      SignBlobRequest const& request) override;
 
   StatusOr<ListNotificationsResponse> ListNotifications(
-      ListNotificationsRequest const&) override;
+      rest_internal::RestContext& context, Options const& options,
+      ListNotificationsRequest const& request) override;
   StatusOr<NotificationMetadata> CreateNotification(
-      CreateNotificationRequest const&) override;
+      rest_internal::RestContext& context, Options const& options,
+      CreateNotificationRequest const& request) override;
   StatusOr<NotificationMetadata> GetNotification(
-      GetNotificationRequest const&) override;
+      rest_internal::RestContext& context, Options const& options,
+      GetNotificationRequest const& request) override;
   StatusOr<EmptyResponse> DeleteNotification(
-      DeleteNotificationRequest const&) override;
+      rest_internal::RestContext& context, Options const& options,
+      DeleteNotificationRequest const& request) override;
 
   std::vector<std::string> InspectStackStructure() const override;
 
- protected:
-  explicit RestClient(
-      std::shared_ptr<google::cloud::rest_internal::RestClient>
-          storage_rest_client,
-      std::shared_ptr<google::cloud::rest_internal::RestClient> iam_rest_client,
-      Options options);
-
  private:
   StatusOr<ObjectMetadata> InsertObjectMediaMultipart(
+      rest_internal::RestContext& context, Options const& options,
       InsertObjectMediaRequest const& request);
 
   StatusOr<ObjectMetadata> InsertObjectMediaSimple(
+      rest_internal::RestContext& context, Options const& options,
       InsertObjectMediaRequest const& request);
 
   std::string MakeBoundary();
 
+  google::cloud::Options options_;
   std::shared_ptr<google::cloud::rest_internal::RestClient>
       storage_rest_client_;
   std::shared_ptr<google::cloud::rest_internal::RestClient> iam_rest_client_;
   std::mutex mu_;
   google::cloud::internal::DefaultPRNG generator_;  // GUARDED_BY(mu_);
-  google::cloud::Options options_;
-  ClientOptions backwards_compatibility_options_;
 };
 
 }  // namespace internal

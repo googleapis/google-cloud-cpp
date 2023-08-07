@@ -214,7 +214,7 @@ class HybridClient : public GenericStub {
 
  private:
   std::shared_ptr<storage::internal::RawClient> grpc_;
-  std::shared_ptr<storage::internal::RawClient> rest_;
+  std::unique_ptr<storage_internal::GenericStub> rest_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
