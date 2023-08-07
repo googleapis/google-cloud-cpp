@@ -42,8 +42,8 @@ else ()
         internal/async/connection.h
         internal/async/connection_impl.cc
         internal/async/connection_impl.h
-        internal/async_token_impl.cc
-        internal/async_token_impl.h
+        internal/async/token_impl.cc
+        internal/async/token_impl.h
         internal/grpc/bucket_access_control_parser.cc
         internal/grpc/bucket_access_control_parser.h
         internal/grpc/bucket_metadata_parser.cc

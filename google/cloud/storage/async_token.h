@@ -15,7 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_ASYNC_TOKEN_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_ASYNC_TOKEN_H
 
-#include "google/cloud/storage/internal/async_token_impl.h"
+#include "google/cloud/storage/internal/async/token_impl.h"
 #include "google/cloud/version.h"
 #include <algorithm>
 #include <utility>
@@ -29,14 +29,15 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * Serialize streams of asynchronous operations.
  *
  * Some asynchronous APIs produce streams of results, where (1) each of these
- * results is obtained asynchronously, and (2) only one result can be
- * in-progress at a time.
+ * results is obtained asynchronously, and (2) on a single stream, only one of
+ * these results can be requested at a time.
  *
- * Where both conditions apply the APis will consume a `AsyncToken` as a
- * parameter, and return a `future<std::pair<T, AsyncToken>`. When this
- * [`future`] is satisfied the caller can invoke the API once again. Before the
- * future is satisfied the application does not have (and cannot create) a
- * valid `AsyncToken` to invoke the API again.
+ * Where both conditions apply the APIs will consume an `AsyncToken` as a
+ * parameter, and return a `future<std::pair<ResultT, StatusOr<AsyncToken>>`.
+ * When this [`future`] is satisfied, and the `StatusOr<>` contains an value,
+ * the caller can invoke the API once again. Before the future is satisfied the
+ * application does not have (and cannot create) a valid `AsyncToken` to invoke
+ * the API again.
  *
  * [`future`]: @ref google::cloud::future
  */
