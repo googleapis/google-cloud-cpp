@@ -33,6 +33,8 @@ bazel run --action_env=GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes \
   --config_file="${PWD}/generator/integration_tests/golden_config.textproto"
 
 if [ -z "${GENERATE_GOLDEN_ONLY}" ]; then
+  newer_tmp_file="$(mktemp)"
+
   io::log_h2 "Running the generator to emit protos from discovery docs"
   bazel run --action_env=GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes \
     //generator:google-cloud-cpp-codegen -- \
@@ -43,6 +45,10 @@ if [ -z "${GENERATE_GOLDEN_ONLY}" ]; then
     --check_parameter_comment_substitutions=true \
     --generate_discovery_protos=true \
     --config_file="${PROJECT_ROOT}/generator/generator_config.textproto"
+
+  io::log_h2 "Removing obsolete google/cloud/compute/v1/internal/*.proto"
+  find "${PROJECT_ROOT}/google/cloud/compute/v1/internal/" -name '*.proto' -a ! -newer "${newer_tmp_file}" -exec git rm {} \;
+  rm "${newer_tmp_file}"
 
   io::log_h2 "Formatting generated protos"
   git ls-files -z -- '*.proto' |
