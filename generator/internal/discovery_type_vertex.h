@@ -44,8 +44,8 @@ class DiscoveryTypeVertex {
   std::string const& name() const { return name_; }
   std::string const& package_name() const { return package_name_; }
   nlohmann::json const& json() const { return json_; }
-  std::set<DiscoveryTypeVertex*> needs_type() { return needs_type_; }
-  std::set<DiscoveryTypeVertex*> needed_by_type() { return needed_by_type_; }
+  std::set<DiscoveryTypeVertex*>& needs_type() { return needs_type_; }
+  std::set<DiscoveryTypeVertex*>& needed_by_type() { return needed_by_type_; }
 
   bool IsSynthesizedRequestType() const;
 

@@ -1408,8 +1408,8 @@ TEST_F(EstablishTypeDependenciesTest, DependedTypeNotFound) {
   ASSERT_TRUE(iter.second);
   auto result = EstablishTypeDependencies(types);
 
-  EXPECT_THAT(result, StatusIs(StatusCode::kInternal,
-                               HasSubstr("Unknown depended upon type")));
+  EXPECT_THAT(result, StatusIs(StatusCode::kInvalidArgument,
+                               HasSubstr("Unknown depended upon type: Foo")));
   EXPECT_THAT(
       result.error_info().metadata(),
       Contains(AllOf(

@@ -467,10 +467,10 @@ std::string DiscoveryTypeVertex::DebugString() const {
   auto formatter = [](std::string* out, DiscoveryTypeVertex* t) {
     out->append(t->name());
   };
-  return absl::StrFormat(
-      "name: %s; needs_type_name: %s; needed_by_type_name: %s", name_,
-      absl::StrJoin(needs_type_, ",", formatter),
-      absl::StrJoin(needed_by_type_, ",", formatter));
+  return absl::StrCat(
+      "name: ", absl::StrJoin(needs_type_, ",", formatter),
+      "; needs_type_name: ", absl::StrJoin(needed_by_type_, ",", formatter),
+      "; needed_by_type_name: ", name_);
 }
 
 }  // namespace generator_internal

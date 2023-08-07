@@ -297,8 +297,6 @@ std::set<std::string> FindAllRefValues(nlohmann::json const& json) {
     fields = json["properties"];
   } else if (json.contains("additionalProperties") || json.contains("items")) {
     fields = json;
-  } else {
-    return ref_values;
   }
 
   for (auto const& f : fields) {
@@ -322,8 +320,8 @@ Status EstablishTypeDependencies(
     for (auto const& ref : ref_values) {
       auto ref_iter = types.find(ref);
       if (ref_iter == types.end()) {
-        return internal::InternalError(
-            "Unknown depended upon type",
+        return internal::InvalidArgumentError(
+            absl::StrCat("Unknown depended upon type: ", ref),
             GCP_ERROR_INFO()
                 .WithMetadata("dependent type", type.first)
                 .WithMetadata("depended upon type", ref));
