@@ -25,7 +25,16 @@ export CXX=g++
 
 mapfile -t cmake_args < <(cmake::common_args)
 readonly INSTALL_PREFIX=/var/tmp/google-cloud-cpp
-readonly ENABLED_FEATURES="__ga_libraries__"
+
+if [ "${GOOGLE_CLOUD_CPP_CHECK_API:-}" ]; then
+  readonly ENABLED_FEATURES="${GOOGLE_CLOUD_CPP_CHECK_API}"
+  IFS=',' read -ra library_list <<<"${GOOGLE_CLOUD_CPP_CHECK_API}"
+else
+  readonly ENABLED_FEATURES="__ga_libraries__"
+  mapfile -t library_list < <(cmake -DCMAKE_MODULE_PATH="${PWD}/cmake" -P cmake/print-ga-libraries.cmake 2>&1)
+  # These libraries are not "features", but they are part of the public API
+  library_list+=("common" "grpc_utils" "oauth2")
+fi
 
 # abi-dumper wants us to use -Og, but that causes bogus warnings about
 # uninitialized values with GCC, so we disable that warning with
@@ -40,14 +49,6 @@ io::run cmake "${cmake_args[@]}" \
   -DCMAKE_CXX_FLAGS="-Og -Wno-maybe-uninitialized"
 io::run cmake --build cmake-out
 io::run cmake --install cmake-out >/dev/null
-
-if [ "${GOOGLE_CLOUD_CPP_CHECK_API:-}" ]; then
-  IFS=',' read -ra library_list <<<"${GOOGLE_CLOUD_CPP_CHECK_API}"
-else
-  mapfile -t library_list < <(cmake -DCMAKE_MODULE_PATH="${PWD}/cmake" -P cmake/print-ga-libraries.cmake 2>&1)
-  # These libraries are not "features", but they are part of the public API
-  library_list+=("common" "grpc_utils" "oauth2")
-fi
 
 # Uses `abi-dumper` to dump the ABI for the given library, which should
 # be installed at the given @p prefix, and `abi-compliance-checker` to
