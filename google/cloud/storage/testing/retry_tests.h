@@ -28,8 +28,8 @@ namespace testing {
  * Returns options used in the `RetryClient` tests.
  *
  * These options set the retry policy to accept at most 2 transient errors. The
- * backoff policy is uses very short backoffs. This works will in unit tests.
- * And the idempotency policy retries all operations.
+ * backoff policy uses very short backoffs. This works well in unit tests. The
+ * idempotency policy retries all operations.
  */
 Options RetryClientTestOptions();
 
