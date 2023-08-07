@@ -61,6 +61,7 @@ application.
 - [\c compute_instances_v1::InstancesClient](@ref google::cloud::compute_instances_v1::InstancesClient)
 - [\c compute_interconnect_attachments_v1::InterconnectAttachmentsClient](@ref google::cloud::compute_interconnect_attachments_v1::InterconnectAttachmentsClient)
 - [\c compute_interconnect_locations_v1::InterconnectLocationsClient](@ref google::cloud::compute_interconnect_locations_v1::InterconnectLocationsClient)
+- [\c compute_interconnect_remote_locations_v1::InterconnectRemoteLocationsClient](@ref google::cloud::compute_interconnect_remote_locations_v1::InterconnectRemoteLocationsClient)
 - [\c compute_interconnects_v1::InterconnectsClient](@ref google::cloud::compute_interconnects_v1::InterconnectsClient)
 - [\c compute_license_codes_v1::LicenseCodesClient](@ref google::cloud::compute_license_codes_v1::LicenseCodesClient)
 - [\c compute_licenses_v1::LicensesClient](@ref google::cloud::compute_licenses_v1::LicensesClient)

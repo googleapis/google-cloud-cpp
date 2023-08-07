@@ -126,6 +126,10 @@ environment variables are convenient when troubleshooting problems.
   `EndpointOption` (which defaults to "compute.googleapis.com")
   used by `MakeInterconnectLocationsConnection()`.
 
+- `GOOGLE_CLOUD_CPP_INTERCONNECT_REMOTE_LOCATIONS_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeInterconnectRemoteLocationsConnection()`.
+
 - `GOOGLE_CLOUD_CPP_LICENSES_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "compute.googleapis.com")
   used by `MakeLicensesConnection()`.

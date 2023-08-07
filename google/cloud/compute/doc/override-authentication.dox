@@ -41,6 +41,7 @@ Follow these links to find examples for other \c *Client classes:
 - [\c compute_instances_v1::InstancesClient](@ref compute_instances_v1::InstancesClient-service-account-snippet)
 - [\c compute_interconnect_attachments_v1::InterconnectAttachmentsClient](@ref compute_interconnect_attachments_v1::InterconnectAttachmentsClient-service-account-snippet)
 - [\c compute_interconnect_locations_v1::InterconnectLocationsClient](@ref compute_interconnect_locations_v1::InterconnectLocationsClient-service-account-snippet)
+- [\c compute_interconnect_remote_locations_v1::InterconnectRemoteLocationsClient](@ref compute_interconnect_remote_locations_v1::InterconnectRemoteLocationsClient-service-account-snippet)
 - [\c compute_interconnects_v1::InterconnectsClient](@ref compute_interconnects_v1::InterconnectsClient-service-account-snippet)
 - [\c compute_license_codes_v1::LicenseCodesClient](@ref compute_license_codes_v1::LicenseCodesClient-service-account-snippet)
 - [\c compute_licenses_v1::LicensesClient](@ref compute_licenses_v1::LicensesClient-service-account-snippet)
@@ -286,6 +287,12 @@ guide for more details.
 /*! @page compute_interconnect_locations_v1::InterconnectLocationsClient-service-account-snippet Override compute_interconnect_locations_v1::InterconnectLocationsClient Authentication Defaults
 
 @snippet google/cloud/compute/interconnect_locations/v1/samples/interconnect_locations_client_samples.cc with-service-account
+
+*/
+
+/*! @page compute_interconnect_remote_locations_v1::InterconnectRemoteLocationsClient-service-account-snippet Override compute_interconnect_remote_locations_v1::InterconnectRemoteLocationsClient Authentication Defaults
+
+@snippet google/cloud/compute/interconnect_remote_locations/v1/samples/interconnect_remote_locations_client_samples.cc with-service-account
 
 */
 
