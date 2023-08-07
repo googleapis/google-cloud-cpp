@@ -67,9 +67,12 @@ class MockRetryClientFunction {
   }
 
  private:
+  Status status_;
+  // This must be shared between copied instances. We use this class as mock
+  // functions for `.WillOnce()` and `.WillRepeatedly()`, both of which make a
+  // copy, and then we examine the contents of this (shared) member variable.
   std::shared_ptr<std::vector<std::string>> tokens_ =
       std::make_shared<std::vector<std::string>>();
-  Status status_;
 };
 
 }  // namespace testing
