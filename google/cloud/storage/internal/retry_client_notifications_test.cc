@@ -27,105 +27,114 @@ namespace internal {
 namespace {
 
 using ::google::cloud::storage::testing::MockGenericStub;
+using ::google::cloud::storage::testing::MockRetryClientFunction;
 using ::google::cloud::storage::testing::RetryClientTestOptions;
+using ::google::cloud::storage::testing::RetryLoopUsesSingleToken;
 using ::google::cloud::storage::testing::StoppedOnPermanentError;
 using ::google::cloud::storage::testing::StoppedOnTooManyTransients;
 using ::google::cloud::storage::testing::canonical_errors::PermanentError;
 using ::google::cloud::storage::testing::canonical_errors::TransientError;
-using ::testing::Return;
 
 TEST(RetryClient, ListNotificationTooManyFailures) {
+  auto transient = MockRetryClientFunction(TransientError());
   auto mock = std::make_unique<MockGenericStub>();
   EXPECT_CALL(*mock, options);
-  EXPECT_CALL(*mock, ListNotifications)
-      .Times(3)
-      .WillRepeatedly(Return(TransientError()));
+  EXPECT_CALL(*mock, ListNotifications).Times(3).WillRepeatedly(transient);
   auto client = RetryClient::Create(std::move(mock), RetryClientTestOptions());
   google::cloud::internal::OptionsSpan span(client->options());
   auto response =
       client->ListNotifications(ListNotificationsRequest()).status();
   EXPECT_THAT(response, StoppedOnTooManyTransients("ListNotifications"));
+  EXPECT_THAT(transient.captured_tokens(), RetryLoopUsesSingleToken());
 }
 
 TEST(RetryClient, ListNotificationPermanentFailure) {
+  auto permanent = MockRetryClientFunction(PermanentError());
   auto mock = std::make_unique<MockGenericStub>();
   EXPECT_CALL(*mock, options);
-  EXPECT_CALL(*mock, ListNotifications).WillOnce(Return(PermanentError()));
+  EXPECT_CALL(*mock, ListNotifications).WillOnce(permanent);
   auto client = RetryClient::Create(std::move(mock), RetryClientTestOptions());
   google::cloud::internal::OptionsSpan span(client->options());
   auto response =
       client->ListNotifications(ListNotificationsRequest()).status();
   EXPECT_THAT(response, StoppedOnPermanentError("ListNotifications"));
+  EXPECT_THAT(permanent.captured_tokens(), RetryLoopUsesSingleToken());
 }
 
 TEST(RetryClient, CreateNotificationTooManyFailures) {
+  auto transient = MockRetryClientFunction(TransientError());
   auto mock = std::make_unique<MockGenericStub>();
   EXPECT_CALL(*mock, options);
-  EXPECT_CALL(*mock, CreateNotification)
-      .Times(3)
-      .WillRepeatedly(Return(TransientError()));
+  EXPECT_CALL(*mock, CreateNotification).Times(3).WillRepeatedly(transient);
   auto client = RetryClient::Create(std::move(mock), RetryClientTestOptions());
   google::cloud::internal::OptionsSpan span(client->options());
   auto response =
       client->CreateNotification(CreateNotificationRequest()).status();
   EXPECT_THAT(response, StoppedOnTooManyTransients("CreateNotification"));
+  EXPECT_THAT(transient.captured_tokens(), RetryLoopUsesSingleToken());
 }
 
 TEST(RetryClient, CreateNotificationPermanentFailure) {
+  auto permanent = MockRetryClientFunction(PermanentError());
   auto mock = std::make_unique<MockGenericStub>();
   EXPECT_CALL(*mock, options);
-  EXPECT_CALL(*mock, CreateNotification).WillOnce(Return(PermanentError()));
+  EXPECT_CALL(*mock, CreateNotification).WillOnce(permanent);
   auto client = RetryClient::Create(std::move(mock), RetryClientTestOptions());
   google::cloud::internal::OptionsSpan span(client->options());
   auto response =
       client->CreateNotification(CreateNotificationRequest()).status();
   EXPECT_THAT(response, StoppedOnPermanentError("CreateNotification"));
+  EXPECT_THAT(permanent.captured_tokens(), RetryLoopUsesSingleToken());
 }
 
 TEST(RetryClient, DeleteNotificationTooManyFailures) {
+  auto transient = MockRetryClientFunction(TransientError());
   auto mock = std::make_unique<MockGenericStub>();
   EXPECT_CALL(*mock, options);
-  EXPECT_CALL(*mock, DeleteNotification)
-      .Times(3)
-      .WillRepeatedly(Return(TransientError()));
+  EXPECT_CALL(*mock, DeleteNotification).Times(3).WillRepeatedly(transient);
   auto client = RetryClient::Create(std::move(mock), RetryClientTestOptions());
   google::cloud::internal::OptionsSpan span(client->options());
   auto response =
       client->DeleteNotification(DeleteNotificationRequest()).status();
   EXPECT_THAT(response, StoppedOnTooManyTransients("DeleteNotification"));
+  EXPECT_THAT(transient.captured_tokens(), RetryLoopUsesSingleToken());
 }
 
 TEST(RetryClient, DeleteNotificationPermanentFailure) {
+  auto permanent = MockRetryClientFunction(PermanentError());
   auto mock = std::make_unique<MockGenericStub>();
   EXPECT_CALL(*mock, options);
-  EXPECT_CALL(*mock, DeleteNotification).WillOnce(Return(PermanentError()));
+  EXPECT_CALL(*mock, DeleteNotification).WillOnce(permanent);
   auto client = RetryClient::Create(std::move(mock), RetryClientTestOptions());
   google::cloud::internal::OptionsSpan span(client->options());
   auto response =
       client->DeleteNotification(DeleteNotificationRequest()).status();
   EXPECT_THAT(response, StoppedOnPermanentError("DeleteNotification"));
+  EXPECT_THAT(permanent.captured_tokens(), RetryLoopUsesSingleToken());
 }
 
 TEST(RetryClient, GetNotificationTooManyFailures) {
+  auto transient = MockRetryClientFunction(TransientError());
   auto mock = std::make_unique<MockGenericStub>();
   EXPECT_CALL(*mock, options);
-  EXPECT_CALL(*mock, GetNotification)
-      .Times(3)
-      .WillRepeatedly(Return(TransientError()));
+  EXPECT_CALL(*mock, GetNotification).Times(3).WillRepeatedly(transient);
   auto client = RetryClient::Create(std::move(mock), RetryClientTestOptions());
   google::cloud::internal::OptionsSpan span(client->options());
   auto response = client->GetNotification(GetNotificationRequest()).status();
   EXPECT_THAT(response, StoppedOnTooManyTransients("GetNotification"));
+  EXPECT_THAT(transient.captured_tokens(), RetryLoopUsesSingleToken());
 }
 
 TEST(RetryClient, GetNotificationPermanentFailure) {
+  auto permanent = MockRetryClientFunction(PermanentError());
   auto mock = std::make_unique<MockGenericStub>();
   EXPECT_CALL(*mock, options);
-  EXPECT_CALL(*mock, GetNotification).WillOnce(Return(PermanentError()));
+  EXPECT_CALL(*mock, GetNotification).WillOnce(permanent);
   auto client = RetryClient::Create(std::move(mock), RetryClientTestOptions());
   google::cloud::internal::OptionsSpan span(client->options());
   auto response = client->GetNotification(GetNotificationRequest()).status();
   EXPECT_THAT(response, StoppedOnPermanentError("GetNotification"));
+  EXPECT_THAT(permanent.captured_tokens(), RetryLoopUsesSingleToken());
 }
 
 }  // namespace

@@ -27,33 +27,36 @@ namespace internal {
 namespace {
 
 using ::google::cloud::storage::testing::MockGenericStub;
+using ::google::cloud::storage::testing::MockRetryClientFunction;
 using ::google::cloud::storage::testing::RetryClientTestOptions;
+using ::google::cloud::storage::testing::RetryLoopUsesSingleToken;
 using ::google::cloud::storage::testing::StoppedOnPermanentError;
 using ::google::cloud::storage::testing::StoppedOnTooManyTransients;
 using ::google::cloud::storage::testing::canonical_errors::PermanentError;
 using ::google::cloud::storage::testing::canonical_errors::TransientError;
-using ::testing::Return;
 
 TEST(RetryClient, SignBlobTooManyFailures) {
+  auto transient = MockRetryClientFunction(TransientError());
   auto mock = std::make_unique<MockGenericStub>();
   EXPECT_CALL(*mock, options);
-  EXPECT_CALL(*mock, SignBlob).Times(3).WillRepeatedly([] {
-    return TransientError();
-  });
+  EXPECT_CALL(*mock, SignBlob).Times(3).WillRepeatedly(transient);
   auto client = RetryClient::Create(std::move(mock), RetryClientTestOptions());
   google::cloud::internal::OptionsSpan span(client->options());
   auto response = client->SignBlob(SignBlobRequest()).status();
   EXPECT_THAT(response, StoppedOnTooManyTransients("SignBlob"));
+  EXPECT_THAT(transient.captured_tokens(), RetryLoopUsesSingleToken());
 }
 
 TEST(RetryClient, SignBlobPermanentFailure) {
+  auto permanent = MockRetryClientFunction(PermanentError());
   auto mock = std::make_unique<MockGenericStub>();
   EXPECT_CALL(*mock, options);
-  EXPECT_CALL(*mock, SignBlob).WillOnce(Return(PermanentError()));
+  EXPECT_CALL(*mock, SignBlob).WillOnce(permanent);
   auto client = RetryClient::Create(std::move(mock), RetryClientTestOptions());
   google::cloud::internal::OptionsSpan span(client->options());
   auto response = client->SignBlob(SignBlobRequest()).status();
   EXPECT_THAT(response, StoppedOnPermanentError("SignBlob"));
+  EXPECT_THAT(permanent.captured_tokens(), RetryLoopUsesSingleToken());
 }
 
 }  // namespace
