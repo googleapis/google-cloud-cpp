@@ -44,16 +44,16 @@ class DiscoveryTypeVertex {
   std::string const& name() const { return name_; }
   std::string const& package_name() const { return package_name_; }
   nlohmann::json const& json() const { return json_; }
+  std::set<DiscoveryTypeVertex*>& needs_type() { return needs_type_; }
+  std::set<DiscoveryTypeVertex*>& needed_by_type() { return needed_by_type_; }
 
   bool IsSynthesizedRequestType() const;
 
-  // Adds edge to this vertex for a type name that exists as a field in this
-  // type.
-  void AddNeedsTypeName(std::string type_name);
+  // Adds edge to this vertex for a type that exists as a field in this type.
+  void AddNeedsType(DiscoveryTypeVertex* type);
 
-  // Adds edge to this vertex for a type name that contains this type as a
-  // field.
-  void AddNeededByTypeName(std::string type_name);
+  // Adds edge to this vertex for a type that contains this type as a field.
+  void AddNeededByType(DiscoveryTypeVertex* type);
 
   // Returns "optional ", "repeated ", or an empty string depending on the
   // field type.
@@ -131,8 +131,8 @@ class DiscoveryTypeVertex {
   std::string package_name_;
   nlohmann::json json_;
   google::protobuf::DescriptorPool const* const descriptor_pool_;
-  std::set<std::string> needs_;
-  std::set<std::string> needed_by_;
+  std::set<DiscoveryTypeVertex*> needs_type_;
+  std::set<DiscoveryTypeVertex*> needed_by_type_;
 };
 
 }  // namespace generator_internal

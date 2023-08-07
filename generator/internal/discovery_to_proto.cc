@@ -297,8 +297,6 @@ std::set<std::string> FindAllRefValues(nlohmann::json const& json) {
     fields = json["properties"];
   } else if (json.contains("additionalProperties") || json.contains("items")) {
     fields = json;
-  } else {
-    return {};
   }
 
   for (auto const& f : fields) {
@@ -312,6 +310,28 @@ std::set<std::string> FindAllRefValues(nlohmann::json const& json) {
   }
 
   return ref_values;
+}
+
+Status EstablishTypeDependencies(
+    std::map<std::string, DiscoveryTypeVertex>& types) {
+  for (auto& type : types) {
+    auto const& json = type.second.json();
+    auto ref_values = FindAllRefValues(json);
+    for (auto const& ref : ref_values) {
+      auto ref_iter = types.find(ref);
+      if (ref_iter == types.end()) {
+        return internal::InvalidArgumentError(
+            absl::StrCat("Unknown depended upon type: ", ref),
+            GCP_ERROR_INFO()
+                .WithMetadata("dependent type", type.first)
+                .WithMetadata("depended upon type", ref));
+      }
+      type.second.AddNeedsType(&ref_iter->second);
+      ref_iter->second.AddNeededByType(&type.second);
+    }
+  }
+
+  return {};
 }
 
 std::vector<DiscoveryFile> CreateFilesFromResources(
