@@ -29,6 +29,7 @@ namespace {
 using ::google::cloud::storage::testing::MockGenericStub;
 using ::google::cloud::storage::testing::MockRetryClientFunction;
 using ::google::cloud::storage::testing::RetryClientTestOptions;
+using ::google::cloud::storage::testing::RetryLoopUsesOptions;
 using ::google::cloud::storage::testing::RetryLoopUsesSingleToken;
 using ::google::cloud::storage::testing::StoppedOnPermanentError;
 using ::google::cloud::storage::testing::StoppedOnTooManyTransients;
@@ -46,6 +47,7 @@ TEST(RetryClient, GetServiceAccountTooManyFailures) {
       client->GetServiceAccount(GetProjectServiceAccountRequest()).status();
   EXPECT_THAT(response, StoppedOnTooManyTransients("GetServiceAccount"));
   EXPECT_THAT(transient.captured_tokens(), RetryLoopUsesSingleToken());
+  EXPECT_THAT(transient.captured_authority_options(), RetryLoopUsesOptions());
 }
 
 TEST(RetryClient, GetServiceAccountPermanentFailure) {
@@ -59,6 +61,7 @@ TEST(RetryClient, GetServiceAccountPermanentFailure) {
       client->GetServiceAccount(GetProjectServiceAccountRequest()).status();
   EXPECT_THAT(response, StoppedOnPermanentError("GetServiceAccount"));
   EXPECT_THAT(permanent.captured_tokens(), RetryLoopUsesSingleToken());
+  EXPECT_THAT(permanent.captured_authority_options(), RetryLoopUsesOptions());
 }
 
 TEST(RetryClient, ListHmacKeysTooManyFailures) {
@@ -71,6 +74,7 @@ TEST(RetryClient, ListHmacKeysTooManyFailures) {
   auto response = client->ListHmacKeys(ListHmacKeysRequest()).status();
   EXPECT_THAT(response, StoppedOnTooManyTransients("ListHmacKeys"));
   EXPECT_THAT(transient.captured_tokens(), RetryLoopUsesSingleToken());
+  EXPECT_THAT(transient.captured_authority_options(), RetryLoopUsesOptions());
 }
 
 TEST(RetryClient, ListHmacKeysPermanentFailure) {
@@ -83,6 +87,7 @@ TEST(RetryClient, ListHmacKeysPermanentFailure) {
   auto response = client->ListHmacKeys(ListHmacKeysRequest()).status();
   EXPECT_THAT(response, StoppedOnPermanentError("ListHmacKeys"));
   EXPECT_THAT(permanent.captured_tokens(), RetryLoopUsesSingleToken());
+  EXPECT_THAT(permanent.captured_authority_options(), RetryLoopUsesOptions());
 }
 
 TEST(RetryClient, CreateHmacKeyTooManyFailures) {
@@ -95,6 +100,7 @@ TEST(RetryClient, CreateHmacKeyTooManyFailures) {
   auto response = client->CreateHmacKey(CreateHmacKeyRequest()).status();
   EXPECT_THAT(response, StoppedOnTooManyTransients("CreateHmacKey"));
   EXPECT_THAT(transient.captured_tokens(), RetryLoopUsesSingleToken());
+  EXPECT_THAT(transient.captured_authority_options(), RetryLoopUsesOptions());
 }
 
 TEST(RetryClient, CreateHmacKeyPermanentFailure) {
@@ -107,6 +113,7 @@ TEST(RetryClient, CreateHmacKeyPermanentFailure) {
   auto response = client->CreateHmacKey(CreateHmacKeyRequest()).status();
   EXPECT_THAT(response, StoppedOnPermanentError("CreateHmacKey"));
   EXPECT_THAT(permanent.captured_tokens(), RetryLoopUsesSingleToken());
+  EXPECT_THAT(permanent.captured_authority_options(), RetryLoopUsesOptions());
 }
 
 TEST(RetryClient, DeleteHmacKeyTooManyFailures) {
@@ -119,6 +126,7 @@ TEST(RetryClient, DeleteHmacKeyTooManyFailures) {
   auto response = client->DeleteHmacKey(DeleteHmacKeyRequest()).status();
   EXPECT_THAT(response, StoppedOnTooManyTransients("DeleteHmacKey"));
   EXPECT_THAT(transient.captured_tokens(), RetryLoopUsesSingleToken());
+  EXPECT_THAT(transient.captured_authority_options(), RetryLoopUsesOptions());
 }
 
 TEST(RetryClient, DeleteHmacKeyPermanentFailure) {
@@ -131,6 +139,7 @@ TEST(RetryClient, DeleteHmacKeyPermanentFailure) {
   auto response = client->DeleteHmacKey(DeleteHmacKeyRequest()).status();
   EXPECT_THAT(response, StoppedOnPermanentError("DeleteHmacKey"));
   EXPECT_THAT(permanent.captured_tokens(), RetryLoopUsesSingleToken());
+  EXPECT_THAT(permanent.captured_authority_options(), RetryLoopUsesOptions());
 }
 
 TEST(RetryClient, GetHmacKeyTooManyFailures) {
@@ -143,6 +152,7 @@ TEST(RetryClient, GetHmacKeyTooManyFailures) {
   auto response = client->GetHmacKey(GetHmacKeyRequest()).status();
   EXPECT_THAT(response, StoppedOnTooManyTransients("GetHmacKey"));
   EXPECT_THAT(transient.captured_tokens(), RetryLoopUsesSingleToken());
+  EXPECT_THAT(transient.captured_authority_options(), RetryLoopUsesOptions());
 }
 
 TEST(RetryClient, GetHmacKeyPermanentFailure) {
@@ -155,6 +165,7 @@ TEST(RetryClient, GetHmacKeyPermanentFailure) {
   auto response = client->GetHmacKey(GetHmacKeyRequest()).status();
   EXPECT_THAT(response, StoppedOnPermanentError("GetHmacKey"));
   EXPECT_THAT(permanent.captured_tokens(), RetryLoopUsesSingleToken());
+  EXPECT_THAT(permanent.captured_authority_options(), RetryLoopUsesOptions());
 }
 
 TEST(RetryClient, UpdateHmacKeyTooManyFailures) {
@@ -167,6 +178,7 @@ TEST(RetryClient, UpdateHmacKeyTooManyFailures) {
   auto response = client->UpdateHmacKey(UpdateHmacKeyRequest()).status();
   EXPECT_THAT(response, StoppedOnTooManyTransients("UpdateHmacKey"));
   EXPECT_THAT(transient.captured_tokens(), RetryLoopUsesSingleToken());
+  EXPECT_THAT(transient.captured_authority_options(), RetryLoopUsesOptions());
 }
 
 TEST(RetryClient, UpdateHmacKeyPermanentFailure) {
@@ -179,6 +191,7 @@ TEST(RetryClient, UpdateHmacKeyPermanentFailure) {
   auto response = client->UpdateHmacKey(UpdateHmacKeyRequest()).status();
   EXPECT_THAT(response, StoppedOnPermanentError("UpdateHmacKey"));
   EXPECT_THAT(permanent.captured_tokens(), RetryLoopUsesSingleToken());
+  EXPECT_THAT(permanent.captured_authority_options(), RetryLoopUsesOptions());
 }
 
 }  // namespace

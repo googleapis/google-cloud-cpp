@@ -29,6 +29,7 @@ namespace {
 using ::google::cloud::storage::testing::MockGenericStub;
 using ::google::cloud::storage::testing::MockRetryClientFunction;
 using ::google::cloud::storage::testing::RetryClientTestOptions;
+using ::google::cloud::storage::testing::RetryLoopUsesOptions;
 using ::google::cloud::storage::testing::RetryLoopUsesSingleToken;
 using ::google::cloud::storage::testing::StoppedOnPermanentError;
 using ::google::cloud::storage::testing::StoppedOnTooManyTransients;
@@ -45,6 +46,7 @@ TEST(RetryClient, CopyObjectTooManyFailures) {
   auto response = client->CopyObject(CopyObjectRequest()).status();
   EXPECT_THAT(response, StoppedOnTooManyTransients("CopyObject"));
   EXPECT_THAT(transient.captured_tokens(), RetryLoopUsesSingleToken());
+  EXPECT_THAT(transient.captured_authority_options(), RetryLoopUsesOptions());
 }
 
 TEST(RetryClient, CopyObjectPermanentFailure) {
@@ -57,6 +59,7 @@ TEST(RetryClient, CopyObjectPermanentFailure) {
   auto response = client->CopyObject(CopyObjectRequest()).status();
   EXPECT_THAT(response, StoppedOnPermanentError("CopyObject"));
   EXPECT_THAT(permanent.captured_tokens(), RetryLoopUsesSingleToken());
+  EXPECT_THAT(permanent.captured_authority_options(), RetryLoopUsesOptions());
 }
 
 TEST(RetryClient, ComposeObjectTooManyFailures) {
@@ -69,6 +72,7 @@ TEST(RetryClient, ComposeObjectTooManyFailures) {
   auto response = client->ComposeObject(ComposeObjectRequest()).status();
   EXPECT_THAT(response, StoppedOnTooManyTransients("ComposeObject"));
   EXPECT_THAT(transient.captured_tokens(), RetryLoopUsesSingleToken());
+  EXPECT_THAT(transient.captured_authority_options(), RetryLoopUsesOptions());
 }
 
 TEST(RetryClient, ComposeObjectPermanentFailure) {
@@ -81,6 +85,7 @@ TEST(RetryClient, ComposeObjectPermanentFailure) {
   auto response = client->ComposeObject(ComposeObjectRequest()).status();
   EXPECT_THAT(response, StoppedOnPermanentError("ComposeObject"));
   EXPECT_THAT(permanent.captured_tokens(), RetryLoopUsesSingleToken());
+  EXPECT_THAT(permanent.captured_authority_options(), RetryLoopUsesOptions());
 }
 
 TEST(RetryClient, RewriteObjectTooManyFailures) {
@@ -93,6 +98,7 @@ TEST(RetryClient, RewriteObjectTooManyFailures) {
   auto response = client->RewriteObject(RewriteObjectRequest()).status();
   EXPECT_THAT(response, StoppedOnTooManyTransients("RewriteObject"));
   EXPECT_THAT(transient.captured_tokens(), RetryLoopUsesSingleToken());
+  EXPECT_THAT(transient.captured_authority_options(), RetryLoopUsesOptions());
 }
 
 TEST(RetryClient, RewriteObjectPermanentFailure) {
@@ -105,6 +111,7 @@ TEST(RetryClient, RewriteObjectPermanentFailure) {
   auto response = client->RewriteObject(RewriteObjectRequest()).status();
   EXPECT_THAT(response, StoppedOnPermanentError("RewriteObject"));
   EXPECT_THAT(permanent.captured_tokens(), RetryLoopUsesSingleToken());
+  EXPECT_THAT(permanent.captured_authority_options(), RetryLoopUsesOptions());
 }
 
 }  // namespace

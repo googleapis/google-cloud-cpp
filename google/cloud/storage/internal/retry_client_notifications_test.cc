@@ -29,6 +29,7 @@ namespace {
 using ::google::cloud::storage::testing::MockGenericStub;
 using ::google::cloud::storage::testing::MockRetryClientFunction;
 using ::google::cloud::storage::testing::RetryClientTestOptions;
+using ::google::cloud::storage::testing::RetryLoopUsesOptions;
 using ::google::cloud::storage::testing::RetryLoopUsesSingleToken;
 using ::google::cloud::storage::testing::StoppedOnPermanentError;
 using ::google::cloud::storage::testing::StoppedOnTooManyTransients;
@@ -46,6 +47,7 @@ TEST(RetryClient, ListNotificationTooManyFailures) {
       client->ListNotifications(ListNotificationsRequest()).status();
   EXPECT_THAT(response, StoppedOnTooManyTransients("ListNotifications"));
   EXPECT_THAT(transient.captured_tokens(), RetryLoopUsesSingleToken());
+  EXPECT_THAT(transient.captured_authority_options(), RetryLoopUsesOptions());
 }
 
 TEST(RetryClient, ListNotificationPermanentFailure) {
@@ -59,6 +61,7 @@ TEST(RetryClient, ListNotificationPermanentFailure) {
       client->ListNotifications(ListNotificationsRequest()).status();
   EXPECT_THAT(response, StoppedOnPermanentError("ListNotifications"));
   EXPECT_THAT(permanent.captured_tokens(), RetryLoopUsesSingleToken());
+  EXPECT_THAT(permanent.captured_authority_options(), RetryLoopUsesOptions());
 }
 
 TEST(RetryClient, CreateNotificationTooManyFailures) {
@@ -72,6 +75,7 @@ TEST(RetryClient, CreateNotificationTooManyFailures) {
       client->CreateNotification(CreateNotificationRequest()).status();
   EXPECT_THAT(response, StoppedOnTooManyTransients("CreateNotification"));
   EXPECT_THAT(transient.captured_tokens(), RetryLoopUsesSingleToken());
+  EXPECT_THAT(transient.captured_authority_options(), RetryLoopUsesOptions());
 }
 
 TEST(RetryClient, CreateNotificationPermanentFailure) {
@@ -85,6 +89,7 @@ TEST(RetryClient, CreateNotificationPermanentFailure) {
       client->CreateNotification(CreateNotificationRequest()).status();
   EXPECT_THAT(response, StoppedOnPermanentError("CreateNotification"));
   EXPECT_THAT(permanent.captured_tokens(), RetryLoopUsesSingleToken());
+  EXPECT_THAT(permanent.captured_authority_options(), RetryLoopUsesOptions());
 }
 
 TEST(RetryClient, DeleteNotificationTooManyFailures) {
@@ -98,6 +103,7 @@ TEST(RetryClient, DeleteNotificationTooManyFailures) {
       client->DeleteNotification(DeleteNotificationRequest()).status();
   EXPECT_THAT(response, StoppedOnTooManyTransients("DeleteNotification"));
   EXPECT_THAT(transient.captured_tokens(), RetryLoopUsesSingleToken());
+  EXPECT_THAT(transient.captured_authority_options(), RetryLoopUsesOptions());
 }
 
 TEST(RetryClient, DeleteNotificationPermanentFailure) {
@@ -111,6 +117,7 @@ TEST(RetryClient, DeleteNotificationPermanentFailure) {
       client->DeleteNotification(DeleteNotificationRequest()).status();
   EXPECT_THAT(response, StoppedOnPermanentError("DeleteNotification"));
   EXPECT_THAT(permanent.captured_tokens(), RetryLoopUsesSingleToken());
+  EXPECT_THAT(permanent.captured_authority_options(), RetryLoopUsesOptions());
 }
 
 TEST(RetryClient, GetNotificationTooManyFailures) {
@@ -123,6 +130,7 @@ TEST(RetryClient, GetNotificationTooManyFailures) {
   auto response = client->GetNotification(GetNotificationRequest()).status();
   EXPECT_THAT(response, StoppedOnTooManyTransients("GetNotification"));
   EXPECT_THAT(transient.captured_tokens(), RetryLoopUsesSingleToken());
+  EXPECT_THAT(transient.captured_authority_options(), RetryLoopUsesOptions());
 }
 
 TEST(RetryClient, GetNotificationPermanentFailure) {
@@ -135,6 +143,7 @@ TEST(RetryClient, GetNotificationPermanentFailure) {
   auto response = client->GetNotification(GetNotificationRequest()).status();
   EXPECT_THAT(response, StoppedOnPermanentError("GetNotification"));
   EXPECT_THAT(permanent.captured_tokens(), RetryLoopUsesSingleToken());
+  EXPECT_THAT(permanent.captured_authority_options(), RetryLoopUsesOptions());
 }
 
 }  // namespace

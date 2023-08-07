@@ -29,11 +29,13 @@ namespace {
 using ::google::cloud::storage::testing::MockGenericStub;
 using ::google::cloud::storage::testing::MockRetryClientFunction;
 using ::google::cloud::storage::testing::RetryClientTestOptions;
+using ::google::cloud::storage::testing::RetryLoopUsesOptions;
 using ::google::cloud::storage::testing::RetryLoopUsesSingleToken;
 using ::google::cloud::storage::testing::StoppedOnPermanentError;
 using ::google::cloud::storage::testing::StoppedOnTooManyTransients;
 using ::google::cloud::storage::testing::canonical_errors::PermanentError;
 using ::google::cloud::storage::testing::canonical_errors::TransientError;
+using ::testing::IsEmpty;
 
 TEST(RetryClient, InsertObjectMediaTooManyFailures) {
   auto transient = MockRetryClientFunction(TransientError());
@@ -46,6 +48,7 @@ TEST(RetryClient, InsertObjectMediaTooManyFailures) {
       client->InsertObjectMedia(InsertObjectMediaRequest()).status();
   EXPECT_THAT(response, StoppedOnTooManyTransients("InsertObjectMedia"));
   EXPECT_THAT(transient.captured_tokens(), RetryLoopUsesSingleToken());
+  EXPECT_THAT(transient.captured_authority_options(), RetryLoopUsesOptions());
 }
 
 TEST(RetryClient, InsertObjectMediaPermanentFailure) {
@@ -59,6 +62,7 @@ TEST(RetryClient, InsertObjectMediaPermanentFailure) {
       client->InsertObjectMedia(InsertObjectMediaRequest()).status();
   EXPECT_THAT(response, StoppedOnPermanentError("InsertObjectMedia"));
   EXPECT_THAT(permanent.captured_tokens(), RetryLoopUsesSingleToken());
+  EXPECT_THAT(permanent.captured_authority_options(), RetryLoopUsesOptions());
 }
 
 TEST(RetryClient, GetObjectMetadataTooManyFailures) {
@@ -72,6 +76,7 @@ TEST(RetryClient, GetObjectMetadataTooManyFailures) {
       client->GetObjectMetadata(GetObjectMetadataRequest()).status();
   EXPECT_THAT(response, StoppedOnTooManyTransients("GetObjectMetadata"));
   EXPECT_THAT(transient.captured_tokens(), RetryLoopUsesSingleToken());
+  EXPECT_THAT(transient.captured_authority_options(), RetryLoopUsesOptions());
 }
 
 TEST(RetryClient, GetObjectMetadataPermanentFailure) {
@@ -85,6 +90,7 @@ TEST(RetryClient, GetObjectMetadataPermanentFailure) {
       client->GetObjectMetadata(GetObjectMetadataRequest()).status();
   EXPECT_THAT(response, StoppedOnPermanentError("GetObjectMetadata"));
   EXPECT_THAT(permanent.captured_tokens(), RetryLoopUsesSingleToken());
+  EXPECT_THAT(permanent.captured_authority_options(), RetryLoopUsesOptions());
 }
 
 TEST(RetryClient, ListObjectsTooManyFailures) {
@@ -97,6 +103,7 @@ TEST(RetryClient, ListObjectsTooManyFailures) {
   auto response = client->ListObjects(ListObjectsRequest()).status();
   EXPECT_THAT(response, StoppedOnTooManyTransients("ListObjects"));
   EXPECT_THAT(transient.captured_tokens(), RetryLoopUsesSingleToken());
+  EXPECT_THAT(transient.captured_authority_options(), RetryLoopUsesOptions());
 }
 
 TEST(RetryClient, ListObjectsPermanentFailure) {
@@ -109,6 +116,7 @@ TEST(RetryClient, ListObjectsPermanentFailure) {
   auto response = client->ListObjects(ListObjectsRequest()).status();
   EXPECT_THAT(response, StoppedOnPermanentError("ListObjects"));
   EXPECT_THAT(permanent.captured_tokens(), RetryLoopUsesSingleToken());
+  EXPECT_THAT(permanent.captured_authority_options(), RetryLoopUsesOptions());
 }
 
 TEST(RetryClient, ReadObjectTooManyFailures) {
@@ -121,6 +129,7 @@ TEST(RetryClient, ReadObjectTooManyFailures) {
   auto response = client->ReadObject(ReadObjectRangeRequest()).status();
   EXPECT_THAT(response, StoppedOnTooManyTransients("ReadObjectNotWrapped"));
   EXPECT_THAT(transient.captured_tokens(), RetryLoopUsesSingleToken());
+  EXPECT_THAT(transient.captured_authority_options(), RetryLoopUsesOptions());
 }
 
 TEST(RetryClient, ReadObjectPermanentFailure) {
@@ -133,6 +142,7 @@ TEST(RetryClient, ReadObjectPermanentFailure) {
   auto response = client->ReadObject(ReadObjectRangeRequest()).status();
   EXPECT_THAT(response, StoppedOnPermanentError("ReadObjectNotWrapped"));
   EXPECT_THAT(permanent.captured_tokens(), RetryLoopUsesSingleToken());
+  EXPECT_THAT(permanent.captured_authority_options(), RetryLoopUsesOptions());
 }
 
 TEST(RetryClient, CreateResumableUploadTooManyFailures) {
@@ -146,6 +156,7 @@ TEST(RetryClient, CreateResumableUploadTooManyFailures) {
       client->CreateResumableUpload(ResumableUploadRequest()).status();
   EXPECT_THAT(response, StoppedOnTooManyTransients("CreateResumableUpload"));
   EXPECT_THAT(transient.captured_tokens(), RetryLoopUsesSingleToken());
+  EXPECT_THAT(transient.captured_authority_options(), RetryLoopUsesOptions());
 }
 
 TEST(RetryClient, CreateResumableUploadPermanentFailure) {
@@ -159,6 +170,7 @@ TEST(RetryClient, CreateResumableUploadPermanentFailure) {
       client->CreateResumableUpload(ResumableUploadRequest()).status();
   EXPECT_THAT(response, StoppedOnPermanentError("CreateResumableUpload"));
   EXPECT_THAT(permanent.captured_tokens(), RetryLoopUsesSingleToken());
+  EXPECT_THAT(permanent.captured_authority_options(), RetryLoopUsesOptions());
 }
 
 TEST(RetryClient, QueryResumableUploadTooManyFailures) {
@@ -172,6 +184,7 @@ TEST(RetryClient, QueryResumableUploadTooManyFailures) {
       client->QueryResumableUpload(QueryResumableUploadRequest()).status();
   EXPECT_THAT(response, StoppedOnTooManyTransients("QueryResumableUpload"));
   EXPECT_THAT(transient.captured_tokens(), RetryLoopUsesSingleToken());
+  EXPECT_THAT(transient.captured_authority_options(), RetryLoopUsesOptions());
 }
 
 TEST(RetryClient, QueryResumableUploadPermanentFailure) {
@@ -185,6 +198,7 @@ TEST(RetryClient, QueryResumableUploadPermanentFailure) {
       client->QueryResumableUpload(QueryResumableUploadRequest()).status();
   EXPECT_THAT(response, StoppedOnPermanentError("QueryResumableUpload"));
   EXPECT_THAT(permanent.captured_tokens(), RetryLoopUsesSingleToken());
+  EXPECT_THAT(permanent.captured_authority_options(), RetryLoopUsesOptions());
 }
 
 TEST(RetryClient, DeleteResumableUploadTooManyFailures) {
@@ -198,6 +212,7 @@ TEST(RetryClient, DeleteResumableUploadTooManyFailures) {
       client->DeleteResumableUpload(DeleteResumableUploadRequest()).status();
   EXPECT_THAT(response, StoppedOnTooManyTransients("DeleteResumableUpload"));
   EXPECT_THAT(transient.captured_tokens(), RetryLoopUsesSingleToken());
+  EXPECT_THAT(transient.captured_authority_options(), RetryLoopUsesOptions());
 }
 
 TEST(RetryClient, DeleteResumableUploadPermanentFailure) {
@@ -211,6 +226,46 @@ TEST(RetryClient, DeleteResumableUploadPermanentFailure) {
       client->DeleteResumableUpload(DeleteResumableUploadRequest()).status();
   EXPECT_THAT(response, StoppedOnPermanentError("DeleteResumableUpload"));
   EXPECT_THAT(permanent.captured_tokens(), RetryLoopUsesSingleToken());
+  EXPECT_THAT(permanent.captured_authority_options(), RetryLoopUsesOptions());
+}
+
+TEST(RetryClient, UploadChunkTooManyFailures) {
+  auto transient = MockRetryClientFunction(TransientError());
+  auto mock = std::make_unique<MockGenericStub>();
+  EXPECT_CALL(*mock, options);
+  EXPECT_CALL(*mock, UploadChunk).Times(3).WillRepeatedly(transient);
+  EXPECT_CALL(*mock, QueryResumableUpload).WillRepeatedly([] {
+    return QueryResumableUploadResponse{absl::nullopt, absl::nullopt};
+  });
+  auto client = RetryClient::Create(std::move(mock), RetryClientTestOptions());
+  google::cloud::internal::OptionsSpan span(client->options());
+  auto request = UploadChunkRequest(/*upload_session_url=*/"unused",
+                                    /*offset=*/0, /*payload=*/{{"test-data"}},
+                                    CreateNullHashFunction());
+  auto response = client->UploadChunk(request).status();
+  EXPECT_THAT(response, StoppedOnTooManyTransients("UploadChunk"));
+  // UploadChunk is special, it should not use an idempotency token because
+  // it is always idempotent.
+  EXPECT_THAT(transient.captured_tokens(), IsEmpty());
+  EXPECT_THAT(transient.captured_authority_options(), RetryLoopUsesOptions());
+}
+
+TEST(RetryClient, UploadChunkPermanentFailure) {
+  auto permanent = MockRetryClientFunction(PermanentError());
+  auto mock = std::make_unique<MockGenericStub>();
+  EXPECT_CALL(*mock, options);
+  EXPECT_CALL(*mock, UploadChunk).WillOnce(permanent);
+  auto client = RetryClient::Create(std::move(mock), RetryClientTestOptions());
+  google::cloud::internal::OptionsSpan span(client->options());
+  auto request = UploadChunkRequest(/*upload_session_url=*/"unused",
+                                    /*offset=*/0, /*payload=*/{{"test-data"}},
+                                    CreateNullHashFunction());
+  auto response = client->UploadChunk(request).status();
+  EXPECT_THAT(response, StoppedOnPermanentError("UploadChunk"));
+  // UploadChunk is special, it should not use an idempotency token because
+  // it is always idempotent.
+  EXPECT_THAT(permanent.captured_tokens(), IsEmpty());
+  EXPECT_THAT(permanent.captured_authority_options(), RetryLoopUsesOptions());
 }
 
 TEST(RetryClient, DeleteObjectTooManyFailures) {
@@ -223,6 +278,7 @@ TEST(RetryClient, DeleteObjectTooManyFailures) {
   auto response = client->DeleteObject(DeleteObjectRequest()).status();
   EXPECT_THAT(response, StoppedOnTooManyTransients("DeleteObject"));
   EXPECT_THAT(transient.captured_tokens(), RetryLoopUsesSingleToken());
+  EXPECT_THAT(transient.captured_authority_options(), RetryLoopUsesOptions());
 }
 
 TEST(RetryClient, DeleteObjectPermanentFailure) {
@@ -235,6 +291,7 @@ TEST(RetryClient, DeleteObjectPermanentFailure) {
   auto response = client->DeleteObject(DeleteObjectRequest()).status();
   EXPECT_THAT(response, StoppedOnPermanentError("DeleteObject"));
   EXPECT_THAT(permanent.captured_tokens(), RetryLoopUsesSingleToken());
+  EXPECT_THAT(permanent.captured_authority_options(), RetryLoopUsesOptions());
 }
 
 TEST(RetryClient, UpdateObjectTooManyFailures) {
@@ -247,6 +304,7 @@ TEST(RetryClient, UpdateObjectTooManyFailures) {
   auto response = client->UpdateObject(UpdateObjectRequest()).status();
   EXPECT_THAT(response, StoppedOnTooManyTransients("UpdateObject"));
   EXPECT_THAT(transient.captured_tokens(), RetryLoopUsesSingleToken());
+  EXPECT_THAT(transient.captured_authority_options(), RetryLoopUsesOptions());
 }
 
 TEST(RetryClient, UpdateObjectPermanentFailure) {
@@ -259,6 +317,7 @@ TEST(RetryClient, UpdateObjectPermanentFailure) {
   auto response = client->UpdateObject(UpdateObjectRequest()).status();
   EXPECT_THAT(response, StoppedOnPermanentError("UpdateObject"));
   EXPECT_THAT(permanent.captured_tokens(), RetryLoopUsesSingleToken());
+  EXPECT_THAT(permanent.captured_authority_options(), RetryLoopUsesOptions());
 }
 
 TEST(RetryClient, PatchObjectTooManyFailures) {
@@ -271,6 +330,7 @@ TEST(RetryClient, PatchObjectTooManyFailures) {
   auto response = client->PatchObject(PatchObjectRequest()).status();
   EXPECT_THAT(response, StoppedOnTooManyTransients("PatchObject"));
   EXPECT_THAT(transient.captured_tokens(), RetryLoopUsesSingleToken());
+  EXPECT_THAT(transient.captured_authority_options(), RetryLoopUsesOptions());
 }
 
 TEST(RetryClient, PatchObjectPermanentFailure) {
@@ -283,6 +343,7 @@ TEST(RetryClient, PatchObjectPermanentFailure) {
   auto response = client->PatchObject(PatchObjectRequest()).status();
   EXPECT_THAT(response, StoppedOnPermanentError("PatchObject"));
   EXPECT_THAT(permanent.captured_tokens(), RetryLoopUsesSingleToken());
+  EXPECT_THAT(permanent.captured_authority_options(), RetryLoopUsesOptions());
 }
 
 }  // namespace

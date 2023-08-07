@@ -29,6 +29,7 @@ namespace {
 using ::google::cloud::storage::testing::MockGenericStub;
 using ::google::cloud::storage::testing::MockRetryClientFunction;
 using ::google::cloud::storage::testing::RetryClientTestOptions;
+using ::google::cloud::storage::testing::RetryLoopUsesOptions;
 using ::google::cloud::storage::testing::RetryLoopUsesSingleToken;
 using ::google::cloud::storage::testing::StoppedOnPermanentError;
 using ::google::cloud::storage::testing::StoppedOnTooManyTransients;
@@ -45,6 +46,7 @@ TEST(RetryClient, ListObjectAclTooManyFailures) {
   auto response = client->ListObjectAcl(ListObjectAclRequest()).status();
   EXPECT_THAT(response, StoppedOnTooManyTransients("ListObjectAcl"));
   EXPECT_THAT(transient.captured_tokens(), RetryLoopUsesSingleToken());
+  EXPECT_THAT(transient.captured_authority_options(), RetryLoopUsesOptions());
 }
 
 TEST(RetryClient, ListObjectAclPermanentFailure) {
@@ -57,6 +59,7 @@ TEST(RetryClient, ListObjectAclPermanentFailure) {
   auto response = client->ListObjectAcl(ListObjectAclRequest()).status();
   EXPECT_THAT(response, StoppedOnPermanentError("ListObjectAcl"));
   EXPECT_THAT(permanent.captured_tokens(), RetryLoopUsesSingleToken());
+  EXPECT_THAT(permanent.captured_authority_options(), RetryLoopUsesOptions());
 }
 
 TEST(RetryClient, CreateObjectAclTooManyFailures) {
@@ -69,6 +72,7 @@ TEST(RetryClient, CreateObjectAclTooManyFailures) {
   auto response = client->CreateObjectAcl(CreateObjectAclRequest()).status();
   EXPECT_THAT(response, StoppedOnTooManyTransients("CreateObjectAcl"));
   EXPECT_THAT(transient.captured_tokens(), RetryLoopUsesSingleToken());
+  EXPECT_THAT(transient.captured_authority_options(), RetryLoopUsesOptions());
 }
 
 TEST(RetryClient, CreateObjectAclPermanentFailure) {
@@ -81,6 +85,7 @@ TEST(RetryClient, CreateObjectAclPermanentFailure) {
   auto response = client->CreateObjectAcl(CreateObjectAclRequest()).status();
   EXPECT_THAT(response, StoppedOnPermanentError("CreateObjectAcl"));
   EXPECT_THAT(permanent.captured_tokens(), RetryLoopUsesSingleToken());
+  EXPECT_THAT(permanent.captured_authority_options(), RetryLoopUsesOptions());
 }
 
 TEST(RetryClient, DeleteObjectAclTooManyFailures) {
@@ -93,6 +98,7 @@ TEST(RetryClient, DeleteObjectAclTooManyFailures) {
   auto response = client->DeleteObjectAcl(DeleteObjectAclRequest()).status();
   EXPECT_THAT(response, StoppedOnTooManyTransients("DeleteObjectAcl"));
   EXPECT_THAT(transient.captured_tokens(), RetryLoopUsesSingleToken());
+  EXPECT_THAT(transient.captured_authority_options(), RetryLoopUsesOptions());
 }
 
 TEST(RetryClient, DeleteObjectAclPermanentFailure) {
@@ -105,6 +111,7 @@ TEST(RetryClient, DeleteObjectAclPermanentFailure) {
   auto response = client->DeleteObjectAcl(DeleteObjectAclRequest()).status();
   EXPECT_THAT(response, StoppedOnPermanentError("DeleteObjectAcl"));
   EXPECT_THAT(permanent.captured_tokens(), RetryLoopUsesSingleToken());
+  EXPECT_THAT(permanent.captured_authority_options(), RetryLoopUsesOptions());
 }
 
 TEST(RetryClient, GetObjectAclTooManyFailures) {
@@ -117,6 +124,7 @@ TEST(RetryClient, GetObjectAclTooManyFailures) {
   auto response = client->GetObjectAcl(GetObjectAclRequest()).status();
   EXPECT_THAT(response, StoppedOnTooManyTransients("GetObjectAcl"));
   EXPECT_THAT(transient.captured_tokens(), RetryLoopUsesSingleToken());
+  EXPECT_THAT(transient.captured_authority_options(), RetryLoopUsesOptions());
 }
 
 TEST(RetryClient, GetObjectAclPermanentFailure) {
@@ -129,6 +137,7 @@ TEST(RetryClient, GetObjectAclPermanentFailure) {
   auto response = client->GetObjectAcl(GetObjectAclRequest()).status();
   EXPECT_THAT(response, StoppedOnPermanentError("GetObjectAcl"));
   EXPECT_THAT(permanent.captured_tokens(), RetryLoopUsesSingleToken());
+  EXPECT_THAT(permanent.captured_authority_options(), RetryLoopUsesOptions());
 }
 
 TEST(RetryClient, UpdateObjectAclTooManyFailures) {
@@ -141,6 +150,7 @@ TEST(RetryClient, UpdateObjectAclTooManyFailures) {
   auto response = client->UpdateObjectAcl(UpdateObjectAclRequest()).status();
   EXPECT_THAT(response, StoppedOnTooManyTransients("UpdateObjectAcl"));
   EXPECT_THAT(transient.captured_tokens(), RetryLoopUsesSingleToken());
+  EXPECT_THAT(transient.captured_authority_options(), RetryLoopUsesOptions());
 }
 
 TEST(RetryClient, UpdateObjectAclPermanentFailure) {
@@ -153,6 +163,7 @@ TEST(RetryClient, UpdateObjectAclPermanentFailure) {
   auto response = client->UpdateObjectAcl(UpdateObjectAclRequest()).status();
   EXPECT_THAT(response, StoppedOnPermanentError("UpdateObjectAcl"));
   EXPECT_THAT(permanent.captured_tokens(), RetryLoopUsesSingleToken());
+  EXPECT_THAT(permanent.captured_authority_options(), RetryLoopUsesOptions());
 }
 
 TEST(RetryClient, PatchObjectAclTooManyFailures) {
@@ -165,6 +176,7 @@ TEST(RetryClient, PatchObjectAclTooManyFailures) {
   auto response = client->PatchObjectAcl(PatchObjectAclRequest()).status();
   EXPECT_THAT(response, StoppedOnTooManyTransients("PatchObjectAcl"));
   EXPECT_THAT(transient.captured_tokens(), RetryLoopUsesSingleToken());
+  EXPECT_THAT(transient.captured_authority_options(), RetryLoopUsesOptions());
 }
 
 TEST(RetryClient, PatchObjectAclPermanentFailure) {
@@ -177,6 +189,7 @@ TEST(RetryClient, PatchObjectAclPermanentFailure) {
   auto response = client->PatchObjectAcl(PatchObjectAclRequest()).status();
   EXPECT_THAT(response, StoppedOnPermanentError("PatchObjectAcl"));
   EXPECT_THAT(permanent.captured_tokens(), RetryLoopUsesSingleToken());
+  EXPECT_THAT(permanent.captured_authority_options(), RetryLoopUsesOptions());
 }
 
 }  // namespace

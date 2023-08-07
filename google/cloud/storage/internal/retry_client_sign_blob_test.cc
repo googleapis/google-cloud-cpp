@@ -29,6 +29,7 @@ namespace {
 using ::google::cloud::storage::testing::MockGenericStub;
 using ::google::cloud::storage::testing::MockRetryClientFunction;
 using ::google::cloud::storage::testing::RetryClientTestOptions;
+using ::google::cloud::storage::testing::RetryLoopUsesOptions;
 using ::google::cloud::storage::testing::RetryLoopUsesSingleToken;
 using ::google::cloud::storage::testing::StoppedOnPermanentError;
 using ::google::cloud::storage::testing::StoppedOnTooManyTransients;
@@ -45,6 +46,7 @@ TEST(RetryClient, SignBlobTooManyFailures) {
   auto response = client->SignBlob(SignBlobRequest()).status();
   EXPECT_THAT(response, StoppedOnTooManyTransients("SignBlob"));
   EXPECT_THAT(transient.captured_tokens(), RetryLoopUsesSingleToken());
+  EXPECT_THAT(transient.captured_authority_options(), RetryLoopUsesOptions());
 }
 
 TEST(RetryClient, SignBlobPermanentFailure) {
@@ -57,6 +59,7 @@ TEST(RetryClient, SignBlobPermanentFailure) {
   auto response = client->SignBlob(SignBlobRequest()).status();
   EXPECT_THAT(response, StoppedOnPermanentError("SignBlob"));
   EXPECT_THAT(permanent.captured_tokens(), RetryLoopUsesSingleToken());
+  EXPECT_THAT(permanent.captured_authority_options(), RetryLoopUsesOptions());
 }
 
 }  // namespace
