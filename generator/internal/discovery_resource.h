@@ -33,11 +33,11 @@ class DiscoveryResource {
   std::string const& name() const { return name_; }
   std::string const& package_name() const { return package_name_; }
   nlohmann::json const& json() const { return json_; }
-  std::map<std::string, DiscoveryTypeVertex*> const& response_types() const {
-    return response_types_;
-  }
   std::map<std::string, DiscoveryTypeVertex*> const& request_types() {
     return request_types_;
+  }
+  std::map<std::string, DiscoveryTypeVertex*> const& response_types() const {
+    return response_types_;
   }
 
   bool RequiresEmptyImport() const { return has_empty_request_or_response_; }
