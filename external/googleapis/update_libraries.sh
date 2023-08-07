@@ -113,6 +113,11 @@ declare -A -r LIBRARIES=(
   )"
   ["dataplex"]="@com_google_googleapis//google/cloud/dataplex/v1:dataplex_cc_grpc"
   ["dataproc"]="@com_google_googleapis//google/cloud/dataproc/v1:dataproc_cc_grpc"
+  ["datastore"]="$(
+    printf ",%s" \
+      "@com_google_googleapis//google/datastore/admin/v1:admin_cc_grpc" \
+      "@com_google_googleapis//google/datastore/v1:datastore_cc_grpc"
+  )"
   ["datastream"]="@com_google_googleapis//google/cloud/datastream/v1:datastream_cc_grpc"
   ["deploy"]="@com_google_googleapis//google/cloud/deploy/v1:deploy_cc_grpc"
   ["dialogflow"]="@com_google_googleapis//google/cloud/dialogflow/v2:dialogflow_cc_grpc"
