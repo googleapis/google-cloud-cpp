@@ -43,7 +43,7 @@ std::map<std::string, DiscoveryResource> ExtractResources(
 
 // Determines the name of the response type for each method and verifies it
 // exists in the collection of DiscoveryTypeVertex objects.
-StatusOr<DiscoveryTypeVertex const*> DetermineAndVerifyResponseType(
+StatusOr<DiscoveryTypeVertex*> DetermineAndVerifyResponseType(
     nlohmann::json const& method_json, DiscoveryResource& resource,
     std::map<std::string, DiscoveryTypeVertex>& types);
 
@@ -97,6 +97,12 @@ std::set<std::string> FindAllRefValues(nlohmann::json const& json);
 // DiscoveryTypeVertex::AddNeedsType and DiscoveryTypeVertex::AddNeededByType.
 Status EstablishTypeDependencies(
     std::map<std::string, DiscoveryTypeVertex>& types);
+
+// Starting with the request and response types for every rpc of each
+// resource, traverse the graph of `DiscoveryTypeVertex` via the "needs_type"
+// edges and add the name of the resource to each type.
+void ApplyResourceLabelsToTypes(
+    std::map<std::string, DiscoveryResource>& resources);
 
 }  // namespace generator_internal
 }  // namespace cloud

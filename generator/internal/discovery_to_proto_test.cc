@@ -28,6 +28,7 @@ using ::google::cloud::testing_util::IsOkAndHolds;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::AllOf;
 using ::testing::Contains;
+using ::testing::ElementsAre;
 using ::testing::Eq;
 using ::testing::HasSubstr;
 using ::testing::IsEmpty;
@@ -1492,6 +1493,79 @@ TEST_F(EstablishTypeDependenciesTest, AllTypesLinked) {
   EXPECT_THAT(label2->needs_type(), IsEmpty());
   EXPECT_THAT(label2->needed_by_type(),
               UnorderedElementsAre(named("Operation")));
+}
+
+class ApplyResourceLabelsToTypesTest
+    : public generator_testing::DescriptorPoolFixture {};
+
+TEST_F(ApplyResourceLabelsToTypesTest,
+       LabelsAllRequestAndResponseDependedTypes) {
+  std::map<std::string, DiscoveryTypeVertex> types;
+  auto add_to_types = [&](DiscoveryTypeVertex t,
+                          DiscoveryTypeVertex*& return_val) {
+    auto iter = types.emplace(t.name(), std::move(t));
+    ASSERT_TRUE(iter.second);
+    return_val = &(iter.first->second);
+  };
+
+  DiscoveryTypeVertex* localized_message;
+  add_to_types(
+      DiscoveryTypeVertex{"LocalizedMessage", "package_name", {}, &pool()},
+      localized_message);
+  DiscoveryTypeVertex* quota_exceeded_info;
+  add_to_types(
+      DiscoveryTypeVertex{"QuotaExceededInfo", "package_name", {}, &pool()},
+      quota_exceeded_info);
+  DiscoveryTypeVertex* error_info;
+  add_to_types(DiscoveryTypeVertex{"ErrorInfo", "package_name", {}, &pool()},
+               error_info);
+  DiscoveryTypeVertex* help;
+  add_to_types(DiscoveryTypeVertex{"Help", "package_name", {}, &pool()}, help);
+  DiscoveryTypeVertex* timestamp;
+  add_to_types(DiscoveryTypeVertex{"Timestamp", "package_name", {}, &pool()},
+               timestamp);
+  DiscoveryTypeVertex* label;
+  add_to_types(DiscoveryTypeVertex{"Label", "package_name", {}, &pool()},
+               label);
+  DiscoveryTypeVertex* label2;
+  add_to_types(DiscoveryTypeVertex{"Label2", "package_name", {}, &pool()},
+               label2);
+  auto const operation_json =
+      nlohmann::json::parse(kOperationJson, nullptr, false);
+  ASSERT_TRUE(operation_json.is_object());
+  auto operation_iter = types.emplace(
+      "Operation", DiscoveryTypeVertex{"Operation", "package_name",
+                                       operation_json, &pool()});
+  ASSERT_TRUE(operation_iter.second);
+  DiscoveryTypeVertex* operation = &operation_iter.first->second;
+  auto result = EstablishTypeDependencies(types);
+  ASSERT_STATUS_OK(result);
+
+  std::map<std::string, DiscoveryResource> resources;
+  auto resource_iter = resources.emplace(
+      "resource_name", DiscoveryResource("resource_name", "package_name", {}));
+  ASSERT_TRUE(resource_iter.second);
+  auto& resource = resource_iter.first->second;
+  resource.AddResponseType("Operation", operation);
+
+  auto other_resource_iter = resources.emplace(
+      "other_resource_name",
+      DiscoveryResource("other_resource_name", "package_name", {}));
+  ASSERT_TRUE(other_resource_iter.second);
+  auto& other_resource = other_resource_iter.first->second;
+  other_resource.AddRequestType("LocalizedMessage", localized_message);
+
+  ApplyResourceLabelsToTypes(resources);
+  EXPECT_THAT(operation->needed_by_resource(), ElementsAre("resource_name"));
+  EXPECT_THAT(quota_exceeded_info->needed_by_resource(),
+              ElementsAre("resource_name"));
+  EXPECT_THAT(error_info->needed_by_resource(), ElementsAre("resource_name"));
+  EXPECT_THAT(help->needed_by_resource(), ElementsAre("resource_name"));
+  EXPECT_THAT(timestamp->needed_by_resource(), ElementsAre("resource_name"));
+  EXPECT_THAT(label->needed_by_resource(), ElementsAre("resource_name"));
+  EXPECT_THAT(label2->needed_by_resource(), ElementsAre("resource_name"));
+  EXPECT_THAT(localized_message->needed_by_resource(),
+              ElementsAre("other_resource_name", "resource_name"));
 }
 
 }  // namespace

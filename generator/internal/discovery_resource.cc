@@ -72,12 +72,12 @@ DiscoveryResource::DiscoveryResource(std::string name, std::string package_name,
       json_(std::move(json)) {}
 
 void DiscoveryResource::AddRequestType(std::string name,
-                                       DiscoveryTypeVertex const* type) {
+                                       DiscoveryTypeVertex* type) {
   request_types_.insert(std::make_pair(std::move(name), type));
 }
 
 void DiscoveryResource::AddResponseType(std::string name,
-                                        DiscoveryTypeVertex const* type) {
+                                        DiscoveryTypeVertex* type) {
   response_types_.insert(std::make_pair(std::move(name), type));
 }
 
