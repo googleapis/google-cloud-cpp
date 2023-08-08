@@ -70,8 +70,8 @@ std::shared_ptr<internal::RawClient> Client::CreateDefaultInternalClient(
 std::shared_ptr<internal::RawClient> Client::CreateDefaultInternalClient(
     Options const& opts) {
   if (opts.get<internal::UseRestClientOption>()) {
-    return CreateDefaultInternalClient(opts,
-                                       internal::RestClient::Create(opts));
+    return CreateDefaultInternalClient(
+        opts, std::make_unique<internal::RestClient>(opts));
   }
   return CreateDefaultInternalClient(opts, internal::CurlClient::Create(opts));
 }

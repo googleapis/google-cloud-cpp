@@ -62,7 +62,7 @@ TEST(GrpcPluginTest, EnvironmentOverrides) {
   auto impl = ClientImplDetails::GetRawClient(client);
   ASSERT_THAT(impl, NotNull());
   EXPECT_THAT(impl->InspectStackStructure(),
-              ElementsAre("RestClient", "GenericStubAdapter", "RetryClient"));
+              ElementsAre("RestClient", "RetryClient"));
 }
 
 TEST(GrpcPluginTest, UnsetConfigCreatesMetadata) {
@@ -88,7 +88,7 @@ TEST(GrpcPluginTest, NoneConfigCreatesCurl) {
   auto impl = ClientImplDetails::GetRawClient(client);
   ASSERT_THAT(impl, NotNull());
   EXPECT_THAT(impl->InspectStackStructure(),
-              ElementsAre("RestClient", "GenericStubAdapter", "RetryClient"));
+              ElementsAre("RestClient", "RetryClient"));
 }
 
 TEST(GrpcPluginTest, MediaConfigCreatesHybrid) {
