@@ -48,7 +48,7 @@ TEST(GrpcPluginTest, MetadataConfigCreatesGrpc) {
   auto impl = ClientImplDetails::GetRawClient(client);
   ASSERT_THAT(impl, NotNull());
   EXPECT_THAT(impl->InspectStackStructure(),
-              ElementsAre("GrpcClient", "GenericStubAdapter", "RetryClient"));
+              ElementsAre("GrpcClient", "RetryClient"));
 }
 
 TEST(GrpcPluginTest, EnvironmentOverrides) {
@@ -75,7 +75,7 @@ TEST(GrpcPluginTest, UnsetConfigCreatesMetadata) {
   auto impl = ClientImplDetails::GetRawClient(client);
   ASSERT_THAT(impl, NotNull());
   EXPECT_THAT(impl->InspectStackStructure(),
-              ElementsAre("GrpcClient", "GenericStubAdapter", "RetryClient"));
+              ElementsAre("GrpcClient", "RetryClient"));
 }
 
 TEST(GrpcPluginTest, NoneConfigCreatesCurl) {

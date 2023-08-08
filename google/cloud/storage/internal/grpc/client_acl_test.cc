@@ -166,6 +166,8 @@ auto constexpr kObjectProtoText = R"pb(
   }
 )pb";
 
+auto constexpr kIdempotencyTokenHeader = "x-goog-gcs-idempotency-token";
+
 class GrpcClientAclTest : public ::testing::Test {
  protected:
   std::multimap<std::string, std::string> GetMetadata(
@@ -185,9 +187,16 @@ google::cloud::Options TestOptions() {
   return Options{}.set<UnifiedCredentialsOption>(MakeInsecureCredentials());
 }
 
+rest_internal::RestContext TestContext() {
+  return rest_internal::RestContext(TestOptions())
+      .AddHeader(kIdempotencyTokenHeader, "test-token-1234");
+}
+
 std::shared_ptr<GrpcClient> CreateTestClient(
     std::shared_ptr<storage_internal::StorageStub> stub) {
-  return GrpcClient::CreateMock(std::move(stub), TestOptions());
+  std::shared_ptr<google::cloud::internal::MinimalIamCredentialsStub> unused;
+  return std::make_unique<GrpcClient>(std::move(stub), /*iam=*/unused,
+                                      TestOptions());
 }
 
 TEST_F(GrpcClientAclTest, ListBucketAclFailure) {
@@ -196,15 +205,20 @@ TEST_F(GrpcClientAclTest, ListBucketAclFailure) {
       .WillOnce([this](grpc::ClientContext& context,
                        v2::GetBucketRequest const& request) {
         auto metadata = GetMetadata(context);
-        EXPECT_THAT(metadata, UnorderedElementsAre(
-                                  Pair("x-goog-quota-user", "test-quota-user"),
-                                  Pair("x-goog-fieldmask", "field1,field2")));
+        EXPECT_THAT(metadata,
+                    UnorderedElementsAre(
+                        Pair(kIdempotencyTokenHeader, "test-token-1234"),
+                        Pair("x-goog-quota-user", "test-quota-user"),
+                        Pair("x-goog-fieldmask", "field1,field2")));
         EXPECT_THAT(request.name(), "projects/_/buckets/test-bucket-name");
         return PermanentError();
       });
 
   auto client = CreateTestClient(mock);
+  auto context = TestContext();
+  auto const options = TestOptions();
   auto response = client->ListBucketAcl(
+      context, options,
       storage::internal::ListBucketAclRequest("test-bucket-name")
           .set_multiple_options(Fields("field1,field2"),
                                 QuotaUser("test-quota-user"),
@@ -224,7 +238,10 @@ TEST_F(GrpcClientAclTest, ListBucketAclSuccess) {
       });
 
   auto client = CreateTestClient(mock);
+  auto context = TestContext();
+  auto const options = TestOptions();
   auto response = client->ListBucketAcl(
+      context, options,
       storage::internal::ListBucketAclRequest("test-bucket-id"));
   ASSERT_STATUS_OK(response);
   auto make_matcher = [](std::string const& role, std::string const& entity) {
@@ -257,7 +274,10 @@ TEST_F(GrpcClientAclTest, GetBucketAclSuccess) {
       });
 
   auto client = CreateTestClient(mock);
+  auto context = TestContext();
+  auto const options = TestOptions();
   auto response = client->GetBucketAcl(
+      context, options,
       storage::internal::GetBucketAclRequest("test-bucket-id", "test-entity1"));
   ASSERT_STATUS_OK(response);
   EXPECT_EQ(response->entity(), "test-entity1");
@@ -265,6 +285,7 @@ TEST_F(GrpcClientAclTest, GetBucketAclSuccess) {
   EXPECT_EQ(response->bucket(), "test-bucket-id");
 
   response = client->GetBucketAcl(
+      context, options,
       storage::internal::GetBucketAclRequest("test-bucket-id", "test-alt1"));
   ASSERT_STATUS_OK(response);
   EXPECT_EQ(response->entity(), "test-entity1");
@@ -278,15 +299,20 @@ TEST_F(GrpcClientAclTest, GetBucketAclFailure) {
       .WillOnce([this](grpc::ClientContext& context,
                        v2::GetBucketRequest const& request) {
         auto metadata = GetMetadata(context);
-        EXPECT_THAT(metadata, UnorderedElementsAre(
-                                  Pair("x-goog-quota-user", "test-quota-user"),
-                                  Pair("x-goog-fieldmask", "field1,field2")));
+        EXPECT_THAT(metadata,
+                    UnorderedElementsAre(
+                        Pair(kIdempotencyTokenHeader, "test-token-1234"),
+                        Pair("x-goog-quota-user", "test-quota-user"),
+                        Pair("x-goog-fieldmask", "field1,field2")));
         EXPECT_THAT(request.name(), "projects/_/buckets/test-bucket-name");
         return PermanentError();
       });
 
   auto client = CreateTestClient(mock);
+  auto context = TestContext();
+  auto const options = TestOptions();
   auto response = client->GetBucketAcl(
+      context, options,
       storage::internal::GetBucketAclRequest("test-bucket-name", "test-entity1")
           .set_multiple_options(Fields("field1,field2"),
                                 QuotaUser("test-quota-user"),
@@ -306,8 +332,11 @@ TEST_F(GrpcClientAclTest, GetBucketAclNotFound) {
       });
 
   auto client = CreateTestClient(mock);
-  auto response = client->GetBucketAcl(storage::internal::GetBucketAclRequest(
-      "test-bucket-id", "test-not-found"));
+  auto context = TestContext();
+  auto const options = TestOptions();
+  auto response = client->GetBucketAcl(context, options,
+                                       storage::internal::GetBucketAclRequest(
+                                           "test-bucket-id", "test-not-found"));
   EXPECT_THAT(response, StatusIs(StatusCode::kNotFound));
 }
 
@@ -341,8 +370,11 @@ TEST_F(GrpcClientAclTest, CreateBucketAclSuccess) {
       });
 
   auto client = CreateTestClient(mock);
-  auto response =
-      client->CreateBucketAcl(storage::internal::CreateBucketAclRequest(
+  auto context = TestContext();
+  auto const options = TestOptions();
+  auto response = client->CreateBucketAcl(
+      context, options,
+      storage::internal::CreateBucketAclRequest(
           "test-bucket-id", "test-new-entity", "test-new-role"));
   ASSERT_STATUS_OK(response);
   EXPECT_EQ(response->entity(), "test-new-entity");
@@ -363,7 +395,10 @@ TEST_F(GrpcClientAclTest, CreateBucketAclFailure) {
       });
 
   auto client = CreateTestClient(mock);
+  auto context = TestContext();
+  auto const options = TestOptions();
   auto response = client->CreateBucketAcl(
+      context, options,
       storage::internal::CreateBucketAclRequest("test-bucket-name",
                                                 "test-entity1", "test-role1")
           .set_multiple_options(Fields("field1,field2"),
@@ -395,8 +430,11 @@ TEST_F(GrpcClientAclTest, CreateBucketAclPatchFails) {
       });
 
   auto client = CreateTestClient(mock);
-  auto response =
-      client->CreateBucketAcl(storage::internal::CreateBucketAclRequest(
+  auto context = TestContext();
+  auto const options = TestOptions();
+  auto response = client->CreateBucketAcl(
+      context, options,
+      storage::internal::CreateBucketAclRequest(
           "test-bucket-id", "test-new-entity", "test-new-role"));
   EXPECT_THAT(response, StatusIs(StatusCode::kUnavailable));
 }
@@ -428,12 +466,16 @@ TEST_F(GrpcClientAclTest, DeleteBucketAclSuccess) {
       });
 
   auto client = CreateTestClient(mock);
+  auto context = TestContext();
+  auto const options = TestOptions();
   auto response =
-      client->DeleteBucketAcl(storage::internal::DeleteBucketAclRequest(
-          "test-bucket-id", "test-entity1"));
+      client->DeleteBucketAcl(context, options,
+                              storage::internal::DeleteBucketAclRequest(
+                                  "test-bucket-id", "test-entity1"));
   EXPECT_STATUS_OK(response);
 
   response = client->DeleteBucketAcl(
+      context, options,
       storage::internal::DeleteBucketAclRequest("test-bucket-id", "test-alt1"));
   EXPECT_STATUS_OK(response);
 }
@@ -453,7 +495,10 @@ TEST_F(GrpcClientAclTest, DeleteBucketAclFailure) {
       });
 
   auto client = CreateTestClient(mock);
+  auto context = TestContext();
+  auto const options = TestOptions();
   auto response = client->DeleteBucketAcl(
+      context, options,
       storage::internal::DeleteBucketAclRequest("test-bucket-name",
                                                 "test-entity1")
           .set_multiple_options(Fields("field1,field2"),
@@ -486,9 +531,12 @@ TEST_F(GrpcClientAclTest, DeleteBucketAclPatchFails) {
       });
 
   auto client = CreateTestClient(mock);
+  auto context = TestContext();
+  auto const options = TestOptions();
   auto response =
-      client->DeleteBucketAcl(storage::internal::DeleteBucketAclRequest(
-          "test-bucket-id", "test-entity1"));
+      client->DeleteBucketAcl(context, options,
+                              storage::internal::DeleteBucketAclRequest(
+                                  "test-bucket-id", "test-entity1"));
   EXPECT_THAT(response, StatusIs(StatusCode::kUnavailable));
 }
 
@@ -505,9 +553,12 @@ TEST_F(GrpcClientAclTest, DeleteBucketAclNotFound) {
   EXPECT_CALL(*mock, UpdateBucket).Times(0);
 
   auto client = CreateTestClient(mock);
+  auto context = TestContext();
+  auto const options = TestOptions();
   auto response =
-      client->DeleteBucketAcl(storage::internal::DeleteBucketAclRequest(
-          "test-bucket-id", "test-not-found"));
+      client->DeleteBucketAcl(context, options,
+                              storage::internal::DeleteBucketAclRequest(
+                                  "test-bucket-id", "test-not-found"));
   EXPECT_THAT(response, StatusIs(StatusCode::kNotFound));
 }
 
@@ -540,15 +591,20 @@ TEST_F(GrpcClientAclTest, UpdateBucketSuccess) {
       });
 
   auto client = CreateTestClient(mock);
-  auto response =
-      client->UpdateBucketAcl(storage::internal::UpdateBucketAclRequest(
+  auto context = TestContext();
+  auto const options = TestOptions();
+  auto response = client->UpdateBucketAcl(
+      context, options,
+      storage::internal::UpdateBucketAclRequest(
           "test-bucket-id", "test-entity1", "updated-role"));
   ASSERT_STATUS_OK(response);
   EXPECT_EQ(response->entity(), "test-entity1");
   EXPECT_EQ(response->role(), "updated-role");
 
-  response = client->UpdateBucketAcl(storage::internal::UpdateBucketAclRequest(
-      "test-bucket-id", "test-alt1", "updated-role"));
+  response = client->UpdateBucketAcl(
+      context, options,
+      storage::internal::UpdateBucketAclRequest("test-bucket-id", "test-alt1",
+                                                "updated-role"));
   ASSERT_STATUS_OK(response);
   EXPECT_EQ(response->entity(), "test-entity1");
   EXPECT_EQ(response->role(), "updated-role");
@@ -569,7 +625,10 @@ TEST_F(GrpcClientAclTest, UpdateBucketAclFailure) {
       });
 
   auto client = CreateTestClient(mock);
+  auto context = TestContext();
+  auto const options = TestOptions();
   auto response = client->UpdateBucketAcl(
+      context, options,
       storage::internal::UpdateBucketAclRequest("test-bucket-name",
                                                 "test-entity1", "updated-role")
           .set_multiple_options(Fields("field1,field2"),
@@ -601,8 +660,11 @@ TEST_F(GrpcClientAclTest, UpdateBucketAclPatchFails) {
       });
 
   auto client = CreateTestClient(mock);
-  auto response =
-      client->UpdateBucketAcl(storage::internal::UpdateBucketAclRequest(
+  auto context = TestContext();
+  auto const options = TestOptions();
+  auto response = client->UpdateBucketAcl(
+      context, options,
+      storage::internal::UpdateBucketAclRequest(
           "test-bucket-id", "test-entity1", "updated-role"));
   EXPECT_THAT(response, StatusIs(StatusCode::kUnavailable));
 }
@@ -636,17 +698,22 @@ TEST_F(GrpcClientAclTest, PatchBucketAclSuccess) {
       });
 
   auto client = CreateTestClient(mock);
-  auto response =
-      client->PatchBucketAcl(storage::internal::PatchBucketAclRequest(
+  auto context = TestContext();
+  auto const options = TestOptions();
+  auto response = client->PatchBucketAcl(
+      context, options,
+      storage::internal::PatchBucketAclRequest(
           "test-bucket-id", "test-entity1",
           BucketAccessControlPatchBuilder().set_role("updated-role")));
   ASSERT_STATUS_OK(response);
   EXPECT_EQ(response->entity(), "test-entity1");
   EXPECT_EQ(response->role(), "updated-role");
 
-  response = client->PatchBucketAcl(storage::internal::PatchBucketAclRequest(
-      "test-bucket-id", "test-alt1",
-      BucketAccessControlPatchBuilder().set_role("updated-role")));
+  response = client->PatchBucketAcl(
+      context, options,
+      storage::internal::PatchBucketAclRequest(
+          "test-bucket-id", "test-alt1",
+          BucketAccessControlPatchBuilder().set_role("updated-role")));
   ASSERT_STATUS_OK(response);
   EXPECT_EQ(response->entity(), "test-entity1");
   EXPECT_EQ(response->role(), "updated-role");
@@ -666,7 +733,10 @@ TEST_F(GrpcClientAclTest, PatchBucketAclFailure) {
       });
 
   auto client = CreateTestClient(mock);
+  auto context = TestContext();
+  auto const options = TestOptions();
   auto response = client->PatchBucketAcl(
+      context, options,
       storage::internal::PatchBucketAclRequest(
           "test-bucket-name", "test-entity1",
           BucketAccessControlPatchBuilder().set_role("updated-role"))
@@ -699,8 +769,11 @@ TEST_F(GrpcClientAclTest, PatchBucketAclPatchFails) {
       });
 
   auto client = CreateTestClient(mock);
-  auto response =
-      client->PatchBucketAcl(storage::internal::PatchBucketAclRequest(
+  auto context = TestContext();
+  auto const options = TestOptions();
+  auto response = client->PatchBucketAcl(
+      context, options,
+      storage::internal::PatchBucketAclRequest(
           "test-bucket-id", "test-entity1",
           BucketAccessControlPatchBuilder().set_role("updated-role")));
   EXPECT_THAT(response, StatusIs(StatusCode::kUnavailable));
@@ -712,16 +785,21 @@ TEST_F(GrpcClientAclTest, ListObjectAclFailure) {
       .WillOnce([this](grpc::ClientContext& context,
                        v2::GetObjectRequest const& request) {
         auto metadata = GetMetadata(context);
-        EXPECT_THAT(metadata, UnorderedElementsAre(
-                                  Pair("x-goog-quota-user", "test-quota-user"),
-                                  Pair("x-goog-fieldmask", "field1,field2")));
+        EXPECT_THAT(metadata,
+                    UnorderedElementsAre(
+                        Pair(kIdempotencyTokenHeader, "test-token-1234"),
+                        Pair("x-goog-quota-user", "test-quota-user"),
+                        Pair("x-goog-fieldmask", "field1,field2")));
         EXPECT_THAT(request.bucket(), "projects/_/buckets/test-bucket-name");
         EXPECT_THAT(request.object(), "test-object-id");
         return PermanentError();
       });
 
   auto client = CreateTestClient(mock);
+  auto context = TestContext();
+  auto const options = TestOptions();
   auto response = client->ListObjectAcl(
+      context, options,
       storage::internal::ListObjectAclRequest("test-bucket-name",
                                               "test-object-id")
           .set_multiple_options(Fields("field1,field2"),
@@ -742,8 +820,12 @@ TEST_F(GrpcClientAclTest, ListObjectAclSuccess) {
       });
 
   auto client = CreateTestClient(mock);
-  auto response = client->ListObjectAcl(storage::internal::ListObjectAclRequest(
-      "test-bucket-id", "test-object-id"));
+  auto context = TestContext();
+  auto const options = TestOptions();
+  auto response =
+      client->ListObjectAcl(context, options,
+                            storage::internal::ListObjectAclRequest(
+                                "test-bucket-id", "test-object-id"));
   ASSERT_STATUS_OK(response);
   auto make_matcher = [](std::string const& role, std::string const& entity) {
     auto get_role = [](ObjectAccessControl const& acl) { return acl.role(); };
@@ -779,15 +861,21 @@ TEST_F(GrpcClientAclTest, GetObjectAclSuccess) {
       });
 
   auto client = CreateTestClient(mock);
-  auto response = client->GetObjectAcl(storage::internal::GetObjectAclRequest(
-      "test-bucket-id", "test-object-id", "test-entity1"));
+  auto context = TestContext();
+  auto const options = TestOptions();
+  auto response = client->GetObjectAcl(
+      context, options,
+      storage::internal::GetObjectAclRequest("test-bucket-id", "test-object-id",
+                                             "test-entity1"));
   ASSERT_STATUS_OK(response);
   EXPECT_EQ(response->entity(), "test-entity1");
   EXPECT_EQ(response->role(), "test-role1");
   EXPECT_EQ(response->object(), "test-object-id");
 
-  response = client->GetObjectAcl(storage::internal::GetObjectAclRequest(
-      "test-bucket-id", "test-object-id", "test-alt1"));
+  response = client->GetObjectAcl(
+      context, options,
+      storage::internal::GetObjectAclRequest("test-bucket-id", "test-object-id",
+                                             "test-alt1"));
   ASSERT_STATUS_OK(response);
   EXPECT_EQ(response->entity(), "test-entity1");
   EXPECT_EQ(response->role(), "test-role1");
@@ -800,16 +888,21 @@ TEST_F(GrpcClientAclTest, GetObjectAclFailure) {
       .WillOnce([this](grpc::ClientContext& context,
                        v2::GetObjectRequest const& request) {
         auto metadata = GetMetadata(context);
-        EXPECT_THAT(metadata, UnorderedElementsAre(
-                                  Pair("x-goog-quota-user", "test-quota-user"),
-                                  Pair("x-goog-fieldmask", "field1,field2")));
+        EXPECT_THAT(metadata,
+                    UnorderedElementsAre(
+                        Pair(kIdempotencyTokenHeader, "test-token-1234"),
+                        Pair("x-goog-quota-user", "test-quota-user"),
+                        Pair("x-goog-fieldmask", "field1,field2")));
         EXPECT_THAT(request.bucket(), "projects/_/buckets/test-bucket-id");
         EXPECT_THAT(request.object(), "test-object-id");
         return PermanentError();
       });
 
   auto client = CreateTestClient(mock);
+  auto context = TestContext();
+  auto const options = TestOptions();
   auto response = client->GetObjectAcl(
+      context, options,
       storage::internal::GetObjectAclRequest("test-bucket-id", "test-object-id",
                                              "test-entity1")
           .set_multiple_options(Fields("field1,field2"),
@@ -830,8 +923,12 @@ TEST_F(GrpcClientAclTest, GetObjectAclNotFound) {
       });
 
   auto client = CreateTestClient(mock);
-  auto response = client->GetObjectAcl(storage::internal::GetObjectAclRequest(
-      "test-bucket-id", "test-object-id", "test-not-found"));
+  auto context = TestContext();
+  auto const options = TestOptions();
+  auto response = client->GetObjectAcl(
+      context, options,
+      storage::internal::GetObjectAclRequest("test-bucket-id", "test-object-id",
+                                             "test-not-found"));
   EXPECT_THAT(response, StatusIs(StatusCode::kNotFound));
 }
 
@@ -867,10 +964,13 @@ TEST_F(GrpcClientAclTest, CreateObjectAclSuccess) {
       });
 
   auto client = CreateTestClient(mock);
+  auto context = TestContext();
+  auto const options = TestOptions();
   auto response =
-      client->CreateObjectAcl(storage::internal::CreateObjectAclRequest(
-          "test-bucket-id", "test-object-id", "test-new-entity",
-          "test-new-role"));
+      client->CreateObjectAcl(context, options,
+                              storage::internal::CreateObjectAclRequest(
+                                  "test-bucket-id", "test-object-id",
+                                  "test-new-entity", "test-new-role"));
   ASSERT_STATUS_OK(response);
   EXPECT_EQ(response->entity(), "test-new-entity");
 }
@@ -890,7 +990,10 @@ TEST_F(GrpcClientAclTest, CreateObjectAclFailure) {
       });
 
   auto client = CreateTestClient(mock);
+  auto context = TestContext();
+  auto const options = TestOptions();
   auto response = client->CreateObjectAcl(
+      context, options,
       storage::internal::CreateObjectAclRequest(
           "test-bucket-name", "test-object-id", "test-entity1", "test-role1")
           .set_multiple_options(Fields("field1,field2"),
@@ -924,10 +1027,13 @@ TEST_F(GrpcClientAclTest, CreateObjectAclPatchFails) {
       });
 
   auto client = CreateTestClient(mock);
+  auto context = TestContext();
+  auto const options = TestOptions();
   auto response =
-      client->CreateObjectAcl(storage::internal::CreateObjectAclRequest(
-          "test-bucket-id", "test-object-id", "test-new-entity",
-          "test-new-role"));
+      client->CreateObjectAcl(context, options,
+                              storage::internal::CreateObjectAclRequest(
+                                  "test-bucket-id", "test-object-id",
+                                  "test-new-entity", "test-new-role"));
   EXPECT_THAT(response, StatusIs(StatusCode::kUnavailable));
 }
 
@@ -959,13 +1065,18 @@ TEST_F(GrpcClientAclTest, DeleteObjectAclSuccess) {
       });
 
   auto client = CreateTestClient(mock);
-  auto response =
-      client->DeleteObjectAcl(storage::internal::DeleteObjectAclRequest(
+  auto context = TestContext();
+  auto const options = TestOptions();
+  auto response = client->DeleteObjectAcl(
+      context, options,
+      storage::internal::DeleteObjectAclRequest(
           "test-bucket-id", "test-object-id", "test-entity1"));
   EXPECT_STATUS_OK(response);
 
-  response = client->DeleteObjectAcl(storage::internal::DeleteObjectAclRequest(
-      "test-bucket-id", "test-object-id", "test-alt2"));
+  response = client->DeleteObjectAcl(
+      context, options,
+      storage::internal::DeleteObjectAclRequest("test-bucket-id",
+                                                "test-object-id", "test-alt2"));
   EXPECT_STATUS_OK(response);
 }
 
@@ -984,7 +1095,10 @@ TEST_F(GrpcClientAclTest, DeleteObjectAclFailure) {
       });
 
   auto client = CreateTestClient(mock);
+  auto context = TestContext();
+  auto const options = TestOptions();
   auto response = client->DeleteObjectAcl(
+      context, options,
       storage::internal::DeleteObjectAclRequest(
           "test-bucket-id", "test-object-id", "test-entity1")
           .set_multiple_options(Fields("field1,field2"),
@@ -1019,8 +1133,11 @@ TEST_F(GrpcClientAclTest, DeleteObjectAclPatchFails) {
           });
 
   auto client = CreateTestClient(mock);
-  auto response =
-      client->DeleteObjectAcl(storage::internal::DeleteObjectAclRequest(
+  auto context = TestContext();
+  auto const options = TestOptions();
+  auto response = client->DeleteObjectAcl(
+      context, options,
+      storage::internal::DeleteObjectAclRequest(
           "test-bucket-id", "test-object-id", "test-entity1"));
   EXPECT_THAT(response, StatusIs(StatusCode::kUnavailable));
 }
@@ -1038,8 +1155,11 @@ TEST_F(GrpcClientAclTest, DeleteObjectAclNotFound) {
   EXPECT_CALL(*mock, UpdateObject).Times(0);
 
   auto client = CreateTestClient(mock);
-  auto response =
-      client->DeleteObjectAcl(storage::internal::DeleteObjectAclRequest(
+  auto context = TestContext();
+  auto const options = TestOptions();
+  auto response = client->DeleteObjectAcl(
+      context, options,
+      storage::internal::DeleteObjectAclRequest(
           "test-bucket-id", "test-object-id", "test-not-found"));
   EXPECT_THAT(response, StatusIs(StatusCode::kNotFound));
 }
@@ -1074,15 +1194,20 @@ TEST_F(GrpcClientAclTest, UpdateObjectAclSuccess) {
       });
 
   auto client = CreateTestClient(mock);
-  auto response =
-      client->UpdateObjectAcl(storage::internal::UpdateObjectAclRequest(
+  auto context = TestContext();
+  auto const options = TestOptions();
+  auto response = client->UpdateObjectAcl(
+      context, options,
+      storage::internal::UpdateObjectAclRequest(
           "test-bucket-id", "test-object-id", "test-entity1", "updated-role"));
   ASSERT_STATUS_OK(response);
   EXPECT_EQ(response->entity(), "test-entity1");
   EXPECT_EQ(response->role(), "updated-role");
 
-  response = client->UpdateObjectAcl(storage::internal::UpdateObjectAclRequest(
-      "test-bucket-id", "test-object-id", "test-alt1", "updated-role"));
+  response = client->UpdateObjectAcl(
+      context, options,
+      storage::internal::UpdateObjectAclRequest(
+          "test-bucket-id", "test-object-id", "test-alt1", "updated-role"));
   ASSERT_STATUS_OK(response);
   EXPECT_EQ(response->entity(), "test-entity1");
   EXPECT_EQ(response->role(), "updated-role");
@@ -1103,7 +1228,10 @@ TEST_F(GrpcClientAclTest, UpdateObjectAclFailure) {
       });
 
   auto client = CreateTestClient(mock);
+  auto context = TestContext();
+  auto const options = TestOptions();
   auto response = client->UpdateObjectAcl(
+      context, options,
       storage::internal::UpdateObjectAclRequest(
           "test-bucket-id", "test-object-id", "test-entity1", "updated-role")
           .set_multiple_options(Fields("field1,field2"),
@@ -1137,8 +1265,11 @@ TEST_F(GrpcClientAclTest, UpdateObjectAclPatchFails) {
       });
 
   auto client = CreateTestClient(mock);
-  auto response =
-      client->UpdateObjectAcl(storage::internal::UpdateObjectAclRequest(
+  auto context = TestContext();
+  auto const options = TestOptions();
+  auto response = client->UpdateObjectAcl(
+      context, options,
+      storage::internal::UpdateObjectAclRequest(
           "test-bucket-id", "test-object-id", "test-entity1", "updated-role"));
   EXPECT_THAT(response, StatusIs(StatusCode::kUnavailable));
 }
@@ -1173,17 +1304,22 @@ TEST_F(GrpcClientAclTest, PatchObjectAclSuccess) {
       });
 
   auto client = CreateTestClient(mock);
-  auto response =
-      client->PatchObjectAcl(storage::internal::PatchObjectAclRequest(
+  auto context = TestContext();
+  auto const options = TestOptions();
+  auto response = client->PatchObjectAcl(
+      context, options,
+      storage::internal::PatchObjectAclRequest(
           "test-bucket-id", "test-object-id", "test-entity1",
           ObjectAccessControlPatchBuilder().set_role("updated-role")));
   ASSERT_STATUS_OK(response);
   EXPECT_EQ(response->entity(), "test-entity1");
   EXPECT_EQ(response->role(), "updated-role");
 
-  response = client->PatchObjectAcl(storage::internal::PatchObjectAclRequest(
-      "test-bucket-id", "test-object-id", "test-alt1",
-      ObjectAccessControlPatchBuilder().set_role("updated-role")));
+  response = client->PatchObjectAcl(
+      context, options,
+      storage::internal::PatchObjectAclRequest(
+          "test-bucket-id", "test-object-id", "test-alt1",
+          ObjectAccessControlPatchBuilder().set_role("updated-role")));
   ASSERT_STATUS_OK(response);
   EXPECT_EQ(response->entity(), "test-entity1");
   EXPECT_EQ(response->role(), "updated-role");
@@ -1204,7 +1340,10 @@ TEST_F(GrpcClientAclTest, PatchObjectAclFailure) {
       });
 
   auto client = CreateTestClient(mock);
+  auto context = TestContext();
+  auto const options = TestOptions();
   auto response = client->PatchObjectAcl(
+      context, options,
       storage::internal::PatchObjectAclRequest(
           "test-bucket-id", "test-object-id", "test-entity1",
           ObjectAccessControlPatchBuilder().set_role("updated-role"))
@@ -1239,8 +1378,11 @@ TEST_F(GrpcClientAclTest, PatchObjectAclPatchFails) {
       });
 
   auto client = CreateTestClient(mock);
-  auto response =
-      client->PatchObjectAcl(storage::internal::PatchObjectAclRequest(
+  auto context = TestContext();
+  auto const options = TestOptions();
+  auto response = client->PatchObjectAcl(
+      context, options,
+      storage::internal::PatchObjectAclRequest(
           "test-bucket-id", "test-object-id", "test-entity1",
           ObjectAccessControlPatchBuilder().set_role("updated-role")));
   EXPECT_THAT(response, StatusIs(StatusCode::kUnavailable));
@@ -1252,15 +1394,20 @@ TEST_F(GrpcClientAclTest, ListDefaultObjectAclFailure) {
       .WillOnce([this](grpc::ClientContext& context,
                        v2::GetBucketRequest const& request) {
         auto metadata = GetMetadata(context);
-        EXPECT_THAT(metadata, UnorderedElementsAre(
-                                  Pair("x-goog-quota-user", "test-quota-user"),
-                                  Pair("x-goog-fieldmask", "field1,field2")));
+        EXPECT_THAT(metadata,
+                    UnorderedElementsAre(
+                        Pair(kIdempotencyTokenHeader, "test-token-1234"),
+                        Pair("x-goog-quota-user", "test-quota-user"),
+                        Pair("x-goog-fieldmask", "field1,field2")));
         EXPECT_THAT(request.name(), "projects/_/buckets/test-bucket-name");
         return PermanentError();
       });
 
   auto client = CreateTestClient(mock);
+  auto context = TestContext();
+  auto const options = TestOptions();
   auto response = client->ListDefaultObjectAcl(
+      context, options,
       storage::internal::ListDefaultObjectAclRequest("test-bucket-name")
           .set_multiple_options(Fields("field1,field2"),
                                 QuotaUser("test-quota-user"),
@@ -1280,7 +1427,10 @@ TEST_F(GrpcClientAclTest, ListDefaultObjectAclSuccess) {
       });
 
   auto client = CreateTestClient(mock);
+  auto context = TestContext();
+  auto const options = TestOptions();
   auto response = client->ListDefaultObjectAcl(
+      context, options,
       storage::internal::ListDefaultObjectAclRequest("test-bucket-id"));
   ASSERT_STATUS_OK(response);
   auto make_matcher = [](std::string const& role, std::string const& entity) {
@@ -1313,17 +1463,21 @@ TEST_F(GrpcClientAclTest, GetDefaultObjectAclSuccess) {
       });
 
   auto client = CreateTestClient(mock);
+  auto context = TestContext();
+  auto const options = TestOptions();
   auto response =
-      client->GetDefaultObjectAcl(storage::internal::GetDefaultObjectAclRequest(
-          "test-bucket-id", "test-entity3"));
+      client->GetDefaultObjectAcl(context, options,
+                                  storage::internal::GetDefaultObjectAclRequest(
+                                      "test-bucket-id", "test-entity3"));
   ASSERT_STATUS_OK(response);
   EXPECT_EQ(response->entity(), "test-entity3");
   EXPECT_EQ(response->role(), "test-role3");
   EXPECT_EQ(response->bucket(), "test-bucket-id");
 
   response =
-      client->GetDefaultObjectAcl(storage::internal::GetDefaultObjectAclRequest(
-          "test-bucket-id", "test-alt3"));
+      client->GetDefaultObjectAcl(context, options,
+                                  storage::internal::GetDefaultObjectAclRequest(
+                                      "test-bucket-id", "test-alt3"));
   ASSERT_STATUS_OK(response);
   EXPECT_EQ(response->entity(), "test-entity3");
   EXPECT_EQ(response->role(), "test-role3");
@@ -1336,15 +1490,20 @@ TEST_F(GrpcClientAclTest, GetDefaultObjectAclFailure) {
       .WillOnce([this](grpc::ClientContext& context,
                        v2::GetBucketRequest const& request) {
         auto metadata = GetMetadata(context);
-        EXPECT_THAT(metadata, UnorderedElementsAre(
-                                  Pair("x-goog-quota-user", "test-quota-user"),
-                                  Pair("x-goog-fieldmask", "field1,field2")));
+        EXPECT_THAT(metadata,
+                    UnorderedElementsAre(
+                        Pair(kIdempotencyTokenHeader, "test-token-1234"),
+                        Pair("x-goog-quota-user", "test-quota-user"),
+                        Pair("x-goog-fieldmask", "field1,field2")));
         EXPECT_THAT(request.name(), "projects/_/buckets/test-bucket-name");
         return PermanentError();
       });
 
   auto client = CreateTestClient(mock);
+  auto context = TestContext();
+  auto const options = TestOptions();
   auto response = client->GetDefaultObjectAcl(
+      context, options,
       storage::internal::GetDefaultObjectAclRequest("test-bucket-name",
                                                     "test-entity1")
           .set_multiple_options(Fields("field1,field2"),
@@ -1365,9 +1524,12 @@ TEST_F(GrpcClientAclTest, GetDefaultObjectAclNotFound) {
       });
 
   auto client = CreateTestClient(mock);
+  auto context = TestContext();
+  auto const options = TestOptions();
   auto response =
-      client->GetDefaultObjectAcl(storage::internal::GetDefaultObjectAclRequest(
-          "test-bucket-id", "test-not-found"));
+      client->GetDefaultObjectAcl(context, options,
+                                  storage::internal::GetDefaultObjectAclRequest(
+                                      "test-bucket-id", "test-not-found"));
   EXPECT_THAT(response, StatusIs(StatusCode::kNotFound));
 }
 
@@ -1397,7 +1559,10 @@ TEST_F(GrpcClientAclTest, CreateDefaultObjectAclSuccess) {
       });
 
   auto client = CreateTestClient(mock);
+  auto context = TestContext();
+  auto const options = TestOptions();
   auto response = client->CreateDefaultObjectAcl(
+      context, options,
       storage::internal::CreateDefaultObjectAclRequest(
           "test-bucket-id", "test-new-entity", "test-new-role"));
   ASSERT_STATUS_OK(response);
@@ -1419,7 +1584,10 @@ TEST_F(GrpcClientAclTest, CreateDefaultObjectAclFailure) {
       });
 
   auto client = CreateTestClient(mock);
+  auto context = TestContext();
+  auto const options = TestOptions();
   auto response = client->CreateDefaultObjectAcl(
+      context, options,
       storage::internal::CreateDefaultObjectAclRequest(
           "test-bucket-name", "test-entity3", "test-role3")
           .set_multiple_options(Fields("field1,field2"),
@@ -1453,7 +1621,10 @@ TEST_F(GrpcClientAclTest, CreateDefaultObjectAclPatchFails) {
       });
 
   auto client = CreateTestClient(mock);
+  auto context = TestContext();
+  auto const options = TestOptions();
   auto response = client->CreateDefaultObjectAcl(
+      context, options,
       storage::internal::CreateDefaultObjectAclRequest(
           "test-bucket-id", "test-new-entity", "test-new-role"));
   EXPECT_THAT(response, StatusIs(StatusCode::kUnavailable));
@@ -1488,11 +1659,15 @@ TEST_F(GrpcClientAclTest, DeleteDefaultObjectAclSuccess) {
       });
 
   auto client = CreateTestClient(mock);
+  auto context = TestContext();
+  auto const options = TestOptions();
   auto response = client->DeleteDefaultObjectAcl(
+      context, options,
       storage::internal::DeleteDefaultObjectAclRequest("test-bucket-id",
                                                        "test-entity3"));
   EXPECT_STATUS_OK(response);
   response = client->DeleteDefaultObjectAcl(
+      context, options,
       storage::internal::DeleteDefaultObjectAclRequest("test-bucket-id",
                                                        "test-alt3"));
   EXPECT_STATUS_OK(response);
@@ -1512,7 +1687,10 @@ TEST_F(GrpcClientAclTest, DeleteDefaultObjectAclFailure) {
       });
 
   auto client = CreateTestClient(mock);
+  auto context = TestContext();
+  auto const options = TestOptions();
   auto response = client->DeleteDefaultObjectAcl(
+      context, options,
       storage::internal::DeleteDefaultObjectAclRequest("test-bucket-name",
                                                        "test-entity1")
           .set_multiple_options(Fields("field1,field2"),
@@ -1546,7 +1724,10 @@ TEST_F(GrpcClientAclTest, DeleteDefaultObjectAclPatchFails) {
       });
 
   auto client = CreateTestClient(mock);
+  auto context = TestContext();
+  auto const options = TestOptions();
   auto response = client->DeleteDefaultObjectAcl(
+      context, options,
       storage::internal::DeleteDefaultObjectAclRequest("test-bucket-id",
                                                        "test-entity3"));
   EXPECT_THAT(response, StatusIs(StatusCode::kUnavailable));
@@ -1565,7 +1746,10 @@ TEST_F(GrpcClientAclTest, DeleteDefaultObjectAclNotFound) {
   EXPECT_CALL(*mock, UpdateBucket).Times(0);
 
   auto client = CreateTestClient(mock);
+  auto context = TestContext();
+  auto const options = TestOptions();
   auto response = client->DeleteDefaultObjectAcl(
+      context, options,
       storage::internal::DeleteDefaultObjectAclRequest("test-bucket-id",
                                                        "test-not-found"));
   EXPECT_THAT(response, StatusIs(StatusCode::kNotFound));
@@ -1601,7 +1785,10 @@ TEST_F(GrpcClientAclTest, UpdateDefaultObjectAclSuccess) {
       });
 
   auto client = CreateTestClient(mock);
+  auto context = TestContext();
+  auto const options = TestOptions();
   auto response = client->UpdateDefaultObjectAcl(
+      context, options,
       storage::internal::UpdateDefaultObjectAclRequest(
           "test-bucket-id", "test-entity3", "updated-role"));
   ASSERT_STATUS_OK(response);
@@ -1609,6 +1796,7 @@ TEST_F(GrpcClientAclTest, UpdateDefaultObjectAclSuccess) {
   EXPECT_EQ(response->role(), "updated-role");
 
   response = client->UpdateDefaultObjectAcl(
+      context, options,
       storage::internal::UpdateDefaultObjectAclRequest(
           "test-bucket-id", "test-alt3", "updated-role"));
   ASSERT_STATUS_OK(response);
@@ -1628,7 +1816,10 @@ TEST_F(GrpcClientAclTest, UpdateDefaultObjectAclFailure) {
       });
 
   auto client = CreateTestClient(mock);
+  auto context = TestContext();
+  auto const options = TestOptions();
   auto response = client->UpdateDefaultObjectAcl(
+      context, options,
       storage::internal::UpdateDefaultObjectAclRequest(
           "test-bucket-name", "test-entity3", "updated-role")
           .set_multiple_options(Fields("field1,field2"),
@@ -1662,7 +1853,10 @@ TEST_F(GrpcClientAclTest, UpdateDefaultObjectAclPatchFails) {
       });
 
   auto client = CreateTestClient(mock);
+  auto context = TestContext();
+  auto const options = TestOptions();
   auto response = client->UpdateDefaultObjectAcl(
+      context, options,
       storage::internal::UpdateDefaultObjectAclRequest(
           "test-bucket-id", "test-entity3", "updated-role"));
   EXPECT_THAT(response, StatusIs(StatusCode::kUnavailable));
@@ -1698,7 +1892,10 @@ TEST_F(GrpcClientAclTest, PatchDefaultObjectAclSuccess) {
       });
 
   auto client = CreateTestClient(mock);
+  auto context = TestContext();
+  auto const options = TestOptions();
   auto response = client->PatchDefaultObjectAcl(
+      context, options,
       storage::internal::PatchDefaultObjectAclRequest(
           "test-bucket-id", "test-entity3",
           ObjectAccessControlPatchBuilder().set_role("updated-role")));
@@ -1707,6 +1904,7 @@ TEST_F(GrpcClientAclTest, PatchDefaultObjectAclSuccess) {
   EXPECT_EQ(response->role(), "updated-role");
 
   response = client->PatchDefaultObjectAcl(
+      context, options,
       storage::internal::PatchDefaultObjectAclRequest(
           "test-bucket-id", "test-alt3",
           ObjectAccessControlPatchBuilder().set_role("updated-role")));
@@ -1729,7 +1927,10 @@ TEST_F(GrpcClientAclTest, PatchDefaultObjectAclFailure) {
       });
 
   auto client = CreateTestClient(mock);
+  auto context = TestContext();
+  auto const options = TestOptions();
   auto response = client->PatchDefaultObjectAcl(
+      context, options,
       storage::internal::PatchDefaultObjectAclRequest(
           "test-bucket-name", "test-entity3",
           ObjectAccessControlPatchBuilder().set_role("updated-role"))
@@ -1764,7 +1965,10 @@ TEST_F(GrpcClientAclTest, PatchDefaultObjectAclPatchFails) {
       });
 
   auto client = CreateTestClient(mock);
+  auto context = TestContext();
+  auto const options = TestOptions();
   auto response = client->PatchDefaultObjectAcl(
+      context, options,
       storage::internal::PatchDefaultObjectAclRequest(
           "test-bucket-id", "test-entity3",
           ObjectAccessControlPatchBuilder().set_role("updated-role")));

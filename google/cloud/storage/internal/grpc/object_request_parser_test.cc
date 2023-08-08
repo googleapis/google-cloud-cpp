@@ -320,12 +320,13 @@ TEST(GrpcObjectRequestParser, ReadObjectRangeRequestReadLastZero) {
   auto const actual = ToProto(req).value();
   EXPECT_THAT(actual, IsProtoEqual(expected));
 
-  auto client = GrpcClient::Create(DefaultOptionsGrpc(
+  auto client = std::make_unique<GrpcClient>(DefaultOptionsGrpc(
       Options{}
           .set<GrpcCredentialOption>(grpc::InsecureChannelCredentials())
           .set<EndpointOption>("localhost:1")));
+  rest_internal::RestContext context;
   StatusOr<std::unique_ptr<storage::internal::ObjectReadSource>> reader =
-      client->ReadObject(req);
+      client->ReadObject(context, client->options(), req);
   EXPECT_THAT(reader, StatusIs(StatusCode::kOutOfRange));
 }
 

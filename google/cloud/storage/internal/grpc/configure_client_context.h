@@ -19,12 +19,17 @@
 #include "google/cloud/storage/internal/object_requests.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/grpc_options.h"
+#include "google/cloud/internal/rest_context.h"
 #include <grpcpp/client_context.h>
 
 namespace google {
 namespace cloud {
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+/// Configures @p ctx using @p context.
+void AddIdempotencyToken(grpc::ClientContext& ctx,
+                         rest_internal::RestContext const& context);
 
 /**
  * Inject request query parameters into grpc::ClientContext.
@@ -36,7 +41,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * @see https://cloud.google.com/apis/docs/system-parameters
  */
 template <typename Request>
-void ApplyQueryParameters(grpc::ClientContext& context, Request const& request,
+void ApplyQueryParameters(grpc::ClientContext& ctx, Options const& options,
+                          Request const& request,
                           std::string const& prefix = std::string{}) {
   // The gRPC API has a single field for the `QuotaUser` parameter, while the
   // JSON API has two:
@@ -46,22 +52,19 @@ void ApplyQueryParameters(grpc::ClientContext& context, Request const& request,
   // `QuotaUser` is also set. A bit bizarre, but at least it is backwards
   // compatible.
   if (request.template HasOption<storage::QuotaUser>()) {
-    context.AddMetadata(
-        "x-goog-quota-user",
-        request.template GetOption<storage::QuotaUser>().value());
+    ctx.AddMetadata("x-goog-quota-user",
+                    request.template GetOption<storage::QuotaUser>().value());
   } else if (request.template HasOption<storage::UserIp>()) {
-    context.AddMetadata("x-goog-quota-user",
-                        request.template GetOption<storage::UserIp>().value());
+    ctx.AddMetadata("x-goog-quota-user",
+                    request.template GetOption<storage::UserIp>().value());
   }
 
   if (request.template HasOption<storage::Fields>()) {
     auto field_mask = request.template GetOption<storage::Fields>().value();
     if (!prefix.empty()) field_mask = prefix + "(" + field_mask + ")";
-    context.AddMetadata("x-goog-fieldmask", std::move(field_mask));
+    ctx.AddMetadata("x-goog-fieldmask", std::move(field_mask));
   }
-
-  google::cloud::internal::ConfigureContext(
-      context, google::cloud::internal::CurrentOptions());
+  google::cloud::internal::ConfigureContext(ctx, options);
 }
 
 /**

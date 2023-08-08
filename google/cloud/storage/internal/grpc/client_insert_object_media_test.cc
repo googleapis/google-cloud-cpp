@@ -81,8 +81,11 @@ TEST(GrpcClientInsertObjectMediaTest, Small) {
     return stream;
   });
 
-  auto client = GrpcClient::CreateMock(mock);
+  std::shared_ptr<google::cloud::internal::MinimalIamCredentialsStub> unused;
+  auto client = std::make_unique<GrpcClient>(mock, unused, Options{});
+  auto context = rest_internal::RestContext{};
   auto metadata = client->InsertObjectMedia(
+      context, client->options(),
       InsertObjectMediaRequest("test-bucket", "test-object",
                                "The quick brown fox jumps over the lazy dog"));
   ASSERT_STATUS_OK(metadata);
@@ -111,13 +114,15 @@ TEST(GrpcClientInsertObjectMediaTest, StallTimeoutWrite) {
           make_status_or(std::chrono::system_clock::now())))));
   auto cq = CompletionQueue(mock_cq);
 
-  auto client = GrpcClient::CreateMock(
-      mock, Options{}
-                .set<TransferStallTimeoutOption>(expected)
-                .set<GrpcCompletionQueueOption>(cq));
-  google::cloud::internal::OptionsSpan const span(
-      Options{}.set<TransferStallTimeoutOption>(expected));
+  std::shared_ptr<google::cloud::internal::MinimalIamCredentialsStub> unused;
+  auto client = std::make_unique<GrpcClient>(
+      mock, unused,
+      Options{}
+          .set<TransferStallTimeoutOption>(expected)
+          .set<GrpcCompletionQueueOption>(cq));
+  auto context = rest_internal::RestContext{};
   auto metadata = client->InsertObjectMedia(
+      context, client->options(),
       InsertObjectMediaRequest("test-bucket", "test-object",
                                "The quick brown fox jumps over the lazy dog"));
   EXPECT_THAT(metadata,
@@ -147,13 +152,15 @@ TEST(GrpcClientInsertObjectMediaTest, StallTimeoutClose) {
           make_status_or(std::chrono::system_clock::now())))));
   auto cq = CompletionQueue(mock_cq);
 
-  auto client = GrpcClient::CreateMock(
-      mock, Options{}
-                .set<TransferStallTimeoutOption>(expected)
-                .set<GrpcCompletionQueueOption>(cq));
-  google::cloud::internal::OptionsSpan const span(
-      Options{}.set<TransferStallTimeoutOption>(expected));
+  std::shared_ptr<google::cloud::internal::MinimalIamCredentialsStub> unused;
+  auto client = std::make_unique<GrpcClient>(
+      mock, unused,
+      Options{}
+          .set<TransferStallTimeoutOption>(expected)
+          .set<GrpcCompletionQueueOption>(cq));
+  auto context = rest_internal::RestContext{};
   auto metadata = client->InsertObjectMedia(
+      context, client->options(),
       InsertObjectMediaRequest("test-bucket", "test-object",
                                "The quick brown fox jumps over the lazy dog"));
   EXPECT_THAT(metadata,
