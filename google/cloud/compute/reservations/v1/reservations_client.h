@@ -107,8 +107,8 @@ class ReservationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.reservations.v1.AggregatedListReservationsRequest]: @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L148}
-  /// [google.cloud.cpp.compute.v1.ReservationAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L21775}
+  /// [google.cloud.cpp.compute.reservations.v1.AggregatedListReservationsRequest]: @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L153}
+  /// [google.cloud.cpp.compute.v1.ReservationAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_file_102.proto#L27}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::ReservationAggregatedList>
@@ -138,8 +138,8 @@ class ReservationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.reservations.v1.AggregatedListReservationsRequest]: @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L148}
-  /// [google.cloud.cpp.compute.v1.ReservationAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L21775}
+  /// [google.cloud.cpp.compute.reservations.v1.AggregatedListReservationsRequest]: @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L153}
+  /// [google.cloud.cpp.compute.v1.ReservationAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_file_102.proto#L27}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::ReservationAggregatedList>
@@ -175,7 +175,7 @@ class ReservationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.reservations.v1.DeleteReservationsRequest]: @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L222}
+  /// [google.cloud.cpp.compute.reservations.v1.DeleteReservationsRequest]: @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L227}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -212,7 +212,7 @@ class ReservationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.reservations.v1.DeleteReservationsRequest]: @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L222}
+  /// [google.cloud.cpp.compute.reservations.v1.DeleteReservationsRequest]: @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L227}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -241,8 +241,8 @@ class ReservationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.reservations.v1.GetReservationsRequest]: @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L267}
-  /// [google.cloud.cpp.compute.v1.Reservation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L21681}
+  /// [google.cloud.cpp.compute.reservations.v1.GetReservationsRequest]: @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L272}
+  /// [google.cloud.cpp.compute.v1.Reservation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_file_005.proto#L106}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Reservation> GetReservations(
@@ -273,8 +273,8 @@ class ReservationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.reservations.v1.GetReservationsRequest]: @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L267}
-  /// [google.cloud.cpp.compute.v1.Reservation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L21681}
+  /// [google.cloud.cpp.compute.reservations.v1.GetReservationsRequest]: @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L272}
+  /// [google.cloud.cpp.compute.v1.Reservation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_file_005.proto#L106}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Reservation> GetReservations(
@@ -304,8 +304,8 @@ class ReservationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.reservations.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L252}
-  /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L19592}
+  /// [google.cloud.cpp.compute.reservations.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L257}
+  /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_file_006.proto#L262}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
@@ -337,8 +337,8 @@ class ReservationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.reservations.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L252}
-  /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L19592}
+  /// [google.cloud.cpp.compute.reservations.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L257}
+  /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_file_006.proto#L262}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
@@ -374,7 +374,7 @@ class ReservationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.reservations.v1.InsertReservationsRequest]: @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L279}
+  /// [google.cloud.cpp.compute.reservations.v1.InsertReservationsRequest]: @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L284}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -414,7 +414,7 @@ class ReservationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.reservations.v1.InsertReservationsRequest]: @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L279}
+  /// [google.cloud.cpp.compute.reservations.v1.InsertReservationsRequest]: @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L284}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -452,8 +452,8 @@ class ReservationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.reservations.v1.ListReservationsRequest]: @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L310}
-  /// [google.cloud.cpp.compute.v1.Reservation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L21681}
+  /// [google.cloud.cpp.compute.reservations.v1.ListReservationsRequest]: @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L315}
+  /// [google.cloud.cpp.compute.v1.Reservation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_file_005.proto#L106}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::Reservation> ListReservations(
@@ -493,8 +493,8 @@ class ReservationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.reservations.v1.ListReservationsRequest]: @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L310}
-  /// [google.cloud.cpp.compute.v1.Reservation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L21681}
+  /// [google.cloud.cpp.compute.reservations.v1.ListReservationsRequest]: @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L315}
+  /// [google.cloud.cpp.compute.v1.Reservation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_file_005.proto#L106}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::Reservation> ListReservations(
@@ -531,7 +531,7 @@ class ReservationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.reservations.v1.ResizeRequest]: @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L378}
+  /// [google.cloud.cpp.compute.reservations.v1.ResizeRequest]: @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L383}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Resize(
@@ -572,7 +572,7 @@ class ReservationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.reservations.v1.ResizeRequest]: @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L378}
+  /// [google.cloud.cpp.compute.reservations.v1.ResizeRequest]: @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L383}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Resize(
@@ -603,8 +603,8 @@ class ReservationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.reservations.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L413}
-  /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L19592}
+  /// [google.cloud.cpp.compute.reservations.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L418}
+  /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_file_006.proto#L262}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
@@ -639,8 +639,8 @@ class ReservationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.reservations.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L413}
-  /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L19592}
+  /// [google.cloud.cpp.compute.reservations.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L418}
+  /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_file_006.proto#L262}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
@@ -670,8 +670,8 @@ class ReservationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.reservations.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L429}
-  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L30256}
+  /// [google.cloud.cpp.compute.reservations.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L434}
+  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_file_130.proto#L30}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
@@ -706,8 +706,8 @@ class ReservationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.reservations.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L429}
-  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L30256}
+  /// [google.cloud.cpp.compute.reservations.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L434}
+  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_file_130.proto#L30}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
@@ -743,7 +743,7 @@ class ReservationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.reservations.v1.UpdateReservationsRequest]: @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L445}
+  /// [google.cloud.cpp.compute.reservations.v1.UpdateReservationsRequest]: @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L450}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -783,7 +783,7 @@ class ReservationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.reservations.v1.UpdateReservationsRequest]: @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L445}
+  /// [google.cloud.cpp.compute.reservations.v1.UpdateReservationsRequest]: @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L450}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

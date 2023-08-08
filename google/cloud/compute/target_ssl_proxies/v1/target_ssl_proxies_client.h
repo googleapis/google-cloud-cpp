@@ -113,7 +113,7 @@ class TargetSslProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_ssl_proxies.v1.DeleteTargetSslProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L145}
+  /// [google.cloud.cpp.compute.target_ssl_proxies.v1.DeleteTargetSslProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L147}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -151,7 +151,7 @@ class TargetSslProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_ssl_proxies.v1.DeleteTargetSslProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L145}
+  /// [google.cloud.cpp.compute.target_ssl_proxies.v1.DeleteTargetSslProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L147}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -179,8 +179,8 @@ class TargetSslProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_ssl_proxies.v1.GetTargetSslProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L169}
-  /// [google.cloud.cpp.compute.v1.TargetSslProxy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L29301}
+  /// [google.cloud.cpp.compute.target_ssl_proxies.v1.GetTargetSslProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L171}
+  /// [google.cloud.cpp.compute.v1.TargetSslProxy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_file_126.proto#L55}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TargetSslProxy> GetTargetSslProxies(
@@ -211,8 +211,8 @@ class TargetSslProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_ssl_proxies.v1.GetTargetSslProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L169}
-  /// [google.cloud.cpp.compute.v1.TargetSslProxy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L29301}
+  /// [google.cloud.cpp.compute.target_ssl_proxies.v1.GetTargetSslProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L171}
+  /// [google.cloud.cpp.compute.v1.TargetSslProxy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_file_126.proto#L55}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TargetSslProxy> GetTargetSslProxies(
@@ -247,7 +247,7 @@ class TargetSslProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_ssl_proxies.v1.InsertTargetSslProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L178}
+  /// [google.cloud.cpp.compute.target_ssl_proxies.v1.InsertTargetSslProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L180}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -287,7 +287,7 @@ class TargetSslProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_ssl_proxies.v1.InsertTargetSslProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L178}
+  /// [google.cloud.cpp.compute.target_ssl_proxies.v1.InsertTargetSslProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L180}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -324,8 +324,8 @@ class TargetSslProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_ssl_proxies.v1.ListTargetSslProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L203}
-  /// [google.cloud.cpp.compute.v1.TargetSslProxy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L29301}
+  /// [google.cloud.cpp.compute.target_ssl_proxies.v1.ListTargetSslProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L205}
+  /// [google.cloud.cpp.compute.v1.TargetSslProxy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_file_126.proto#L55}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::TargetSslProxy>
@@ -365,8 +365,8 @@ class TargetSslProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_ssl_proxies.v1.ListTargetSslProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L203}
-  /// [google.cloud.cpp.compute.v1.TargetSslProxy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L29301}
+  /// [google.cloud.cpp.compute.target_ssl_proxies.v1.ListTargetSslProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L205}
+  /// [google.cloud.cpp.compute.v1.TargetSslProxy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_file_126.proto#L55}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::TargetSslProxy>
@@ -402,7 +402,7 @@ class TargetSslProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_ssl_proxies.v1.SetBackendServiceRequest]: @googleapis_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L268}
+  /// [google.cloud.cpp.compute.target_ssl_proxies.v1.SetBackendServiceRequest]: @googleapis_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L270}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -443,7 +443,7 @@ class TargetSslProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_ssl_proxies.v1.SetBackendServiceRequest]: @googleapis_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L268}
+  /// [google.cloud.cpp.compute.target_ssl_proxies.v1.SetBackendServiceRequest]: @googleapis_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L270}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -479,7 +479,7 @@ class TargetSslProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_ssl_proxies.v1.SetCertificateMapRequest]: @googleapis_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L298}
+  /// [google.cloud.cpp.compute.target_ssl_proxies.v1.SetCertificateMapRequest]: @googleapis_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L300}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -520,7 +520,7 @@ class TargetSslProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_ssl_proxies.v1.SetCertificateMapRequest]: @googleapis_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L298}
+  /// [google.cloud.cpp.compute.target_ssl_proxies.v1.SetCertificateMapRequest]: @googleapis_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L300}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -555,7 +555,7 @@ class TargetSslProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_ssl_proxies.v1.SetProxyHeaderRequest]: @googleapis_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L328}
+  /// [google.cloud.cpp.compute.target_ssl_proxies.v1.SetProxyHeaderRequest]: @googleapis_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L330}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetProxyHeader(
@@ -595,7 +595,7 @@ class TargetSslProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_ssl_proxies.v1.SetProxyHeaderRequest]: @googleapis_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L328}
+  /// [google.cloud.cpp.compute.target_ssl_proxies.v1.SetProxyHeaderRequest]: @googleapis_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L330}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetProxyHeader(
@@ -631,7 +631,7 @@ class TargetSslProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_ssl_proxies.v1.SetSslCertificatesRequest]: @googleapis_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L357}
+  /// [google.cloud.cpp.compute.target_ssl_proxies.v1.SetSslCertificatesRequest]: @googleapis_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L359}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -672,7 +672,7 @@ class TargetSslProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_ssl_proxies.v1.SetSslCertificatesRequest]: @googleapis_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L357}
+  /// [google.cloud.cpp.compute.target_ssl_proxies.v1.SetSslCertificatesRequest]: @googleapis_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L359}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -711,7 +711,7 @@ class TargetSslProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_ssl_proxies.v1.SetSslPolicyRequest]: @googleapis_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L387}
+  /// [google.cloud.cpp.compute.target_ssl_proxies.v1.SetSslPolicyRequest]: @googleapis_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L389}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetSslPolicy(
@@ -753,7 +753,7 @@ class TargetSslProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_ssl_proxies.v1.SetSslPolicyRequest]: @googleapis_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L387}
+  /// [google.cloud.cpp.compute.target_ssl_proxies.v1.SetSslPolicyRequest]: @googleapis_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L389}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetSslPolicy(

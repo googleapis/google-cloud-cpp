@@ -24,7 +24,14 @@ package google.cloud.cpp.compute.images.v1;
 import "google/api/annotations.proto";
 import "google/api/client.proto";
 import "google/api/field_behavior.proto";
-import "google/cloud/compute/v1/internal/common.proto";
+import "google/cloud/compute/v1/internal/common_file_006.proto";
+import "google/cloud/compute/v1/internal/common_file_021.proto";
+import "google/cloud/compute/v1/internal/common_file_029.proto";
+import "google/cloud/compute/v1/internal/common_file_045.proto";
+import "google/cloud/compute/v1/internal/common_file_046.proto";
+import "google/cloud/compute/v1/internal/common_file_054.proto";
+import "google/cloud/compute/v1/internal/common_file_056.proto";
+import "google/cloud/compute/v1/internal/common_file_130.proto";
 import "google/cloud/extended_operations.proto";
 
 // Service for the images resource.

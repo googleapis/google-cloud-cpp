@@ -115,7 +115,7 @@ class InterconnectRemoteLocationsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.interconnect_remote_locations.v1.GetInterconnectRemoteLocationsRequest]: @googleapis_reference_link{google/cloud/compute/interconnect_remote_locations/v1/interconnect_remote_locations.proto#L61}
-  /// [google.cloud.cpp.compute.v1.InterconnectRemoteLocation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L13595}
+  /// [google.cloud.cpp.compute.v1.InterconnectRemoteLocation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_file_067.proto#L29}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::InterconnectRemoteLocation>
@@ -149,7 +149,7 @@ class InterconnectRemoteLocationsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.interconnect_remote_locations.v1.GetInterconnectRemoteLocationsRequest]: @googleapis_reference_link{google/cloud/compute/interconnect_remote_locations/v1/interconnect_remote_locations.proto#L61}
-  /// [google.cloud.cpp.compute.v1.InterconnectRemoteLocation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L13595}
+  /// [google.cloud.cpp.compute.v1.InterconnectRemoteLocation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_file_067.proto#L29}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::InterconnectRemoteLocation>
@@ -188,7 +188,7 @@ class InterconnectRemoteLocationsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.interconnect_remote_locations.v1.ListInterconnectRemoteLocationsRequest]: @googleapis_reference_link{google/cloud/compute/interconnect_remote_locations/v1/interconnect_remote_locations.proto#L71}
-  /// [google.cloud.cpp.compute.v1.InterconnectRemoteLocation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L13595}
+  /// [google.cloud.cpp.compute.v1.InterconnectRemoteLocation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_file_067.proto#L29}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::InterconnectRemoteLocation>
@@ -230,7 +230,7 @@ class InterconnectRemoteLocationsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.interconnect_remote_locations.v1.ListInterconnectRemoteLocationsRequest]: @googleapis_reference_link{google/cloud/compute/interconnect_remote_locations/v1/interconnect_remote_locations.proto#L71}
-  /// [google.cloud.cpp.compute.v1.InterconnectRemoteLocation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L13595}
+  /// [google.cloud.cpp.compute.v1.InterconnectRemoteLocation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_file_067.proto#L29}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::InterconnectRemoteLocation>
