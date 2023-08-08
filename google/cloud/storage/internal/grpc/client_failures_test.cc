@@ -12,8 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/storage/internal/grpc/client.h"
-#include "google/cloud/storage/internal/hybrid_client.h"
+#include "google/cloud/storage/grpc_plugin.h"
 #include "google/cloud/storage/oauth2/google_credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/testing_util/scoped_environment.h"
@@ -28,8 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 namespace {
 
-using ::google::cloud::internal::OptionsSpan;
 using ::google::cloud::testing_util::StatusIs;
+using ::testing::ElementsAre;
 
 /**
  * @test Verify GrpcClient and HybridClient report failures correctly.
@@ -42,368 +41,286 @@ class GrpcClientFailuresTest
       : grpc_config_("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG", {}),
         rest_endpoint_("CLOUD_STORAGE_EMULATOR_ENDPOINT", {}),
         grpc_endpoint_("CLOUD_STORAGE_EXPERIMENTAL_GRPC_TESTBENCH_ENDPOINT",
-                       {}) {}
+                       {}),
+        client_(
+            storage_experimental::DefaultGrpcClient(TestOptions(GetParam()))) {}
 
-  void SetUp() override {
-    std::string const grpc_config = GetParam();
-    google::cloud::testing_util::SetEnv("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG",
-                                        grpc_config);
-    auto options =
-        Options{}
-            .set<RestEndpointOption>("http://localhost:1")
-            .set<IamEndpointOption>("http://localhost:1")
-            .set<EndpointOption>("localhost:1")
-            .set<Oauth2CredentialsOption>(oauth2::CreateAnonymousCredentials())
-            .set<GrpcCredentialOption>(grpc::InsecureChannelCredentials());
-    if (grpc_config == "metadata") {
-      client_ = storage_internal::GrpcClient::Create(
-          storage_internal::DefaultOptionsGrpc(std::move(options)));
-    } else {
-      client_ = storage_internal::HybridClient::Create(
-          storage_internal::DefaultOptionsGrpc(std::move(options)));
-    }
+  static Options TestOptions(std::string const& plugin_config) {
+    using us = std::chrono::microseconds;
+    return Options{}
+        .set<ProjectIdOption>("project-id")
+        .set<RetryPolicyOption>(LimitedErrorCountRetryPolicy(0).clone())
+        .set<BackoffPolicyOption>(
+            ExponentialBackoffPolicy(us(1), us(1), 2).clone())
+        .set<IdempotencyPolicyOption>(AlwaysRetryIdempotencyPolicy().clone())
+        .set<RestEndpointOption>("http://localhost:1")
+        .set<IamEndpointOption>("http://localhost:1")
+        .set<EndpointOption>("localhost:1")
+        .set<Oauth2CredentialsOption>(oauth2::CreateAnonymousCredentials())
+        .set<GrpcCredentialOption>(grpc::InsecureChannelCredentials())
+        .set<storage_experimental::GrpcPluginOption>(plugin_config);
   }
 
   testing_util::ScopedEnvironment grpc_config_;
   testing_util::ScopedEnvironment rest_endpoint_;
   testing_util::ScopedEnvironment grpc_endpoint_;
-  std::shared_ptr<internal::RawClient> client_;
+  Client client_;
 };
 
 TEST_P(GrpcClientFailuresTest, ListBuckets) {
-  OptionsSpan const span(client_->options());
-  auto actual = client_->ListBuckets(ListBucketsRequest{"project_id"});
-  EXPECT_THAT(actual, StatusIs(StatusCode::kUnavailable));
+  auto actual = client_.ListBuckets();
+  std::vector<decltype(actual)::value_type> copy(actual.begin(), actual.end());
+  EXPECT_THAT(copy, ElementsAre(StatusIs(StatusCode::kUnavailable)));
 }
 
 TEST_P(GrpcClientFailuresTest, CreateBucket) {
-  OptionsSpan const span(client_->options());
-  auto actual = client_->CreateBucket(
-      CreateBucketRequest("bkt", BucketMetadata().set_name("bkt")));
+  auto actual = client_.CreateBucket("bkt", BucketMetadata());
   EXPECT_THAT(actual, StatusIs(StatusCode::kUnavailable));
 }
 
 TEST_P(GrpcClientFailuresTest, GetBucketMetadata) {
-  OptionsSpan const span(client_->options());
-  auto actual = client_->GetBucketMetadata(GetBucketMetadataRequest("bkt"));
+  auto actual = client_.GetBucketMetadata("bkt");
   EXPECT_THAT(actual, StatusIs(StatusCode::kUnavailable));
 }
 
 TEST_P(GrpcClientFailuresTest, DeleteBucket) {
-  OptionsSpan const span(client_->options());
-  auto actual = client_->DeleteBucket(DeleteBucketRequest("bkt"));
+  auto actual = client_.DeleteBucket("bkt");
   EXPECT_THAT(actual, StatusIs(StatusCode::kUnavailable));
 }
 
 TEST_P(GrpcClientFailuresTest, UpdateBucket) {
-  OptionsSpan const span(client_->options());
-  auto actual = client_->UpdateBucket(
-      UpdateBucketRequest(BucketMetadata().set_name("bkt")));
+  auto actual = client_.UpdateBucket("bkt", BucketMetadata());
   EXPECT_THAT(actual, StatusIs(StatusCode::kUnavailable));
 }
 
 TEST_P(GrpcClientFailuresTest, PatchBucket) {
-  OptionsSpan const span(client_->options());
-  auto actual = client_->PatchBucket(
-      PatchBucketRequest("bkt", BucketMetadata().set_name("bkt"),
-                         BucketMetadata().set_name("bkt")));
+  auto actual = client_.PatchBucket("bkt", BucketMetadataPatchBuilder());
   EXPECT_THAT(actual, StatusIs(StatusCode::kUnavailable));
 }
 
 TEST_P(GrpcClientFailuresTest, GetNativeBucketIamPolicy) {
-  OptionsSpan const span(client_->options());
-  auto actual =
-      client_->GetNativeBucketIamPolicy(GetBucketIamPolicyRequest("bkt"));
+  auto actual = client_.GetNativeBucketIamPolicy("bkt");
   EXPECT_THAT(actual, StatusIs(StatusCode::kUnavailable));
 }
 
 TEST_P(GrpcClientFailuresTest, SetNativeBucketIamPolicy) {
-  OptionsSpan const span(client_->options());
-  auto actual =
-      client_->SetNativeBucketIamPolicy(SetNativeBucketIamPolicyRequest(
-          "bkt", NativeIamPolicy(std::vector<NativeIamBinding>())));
+  auto actual = client_.SetNativeBucketIamPolicy(
+      "bkt", NativeIamPolicy(std::vector<NativeIamBinding>{}));
   EXPECT_THAT(actual, StatusIs(StatusCode::kUnavailable));
 }
 
 TEST_P(GrpcClientFailuresTest, TestBucketIamPermissions) {
-  OptionsSpan const span(client_->options());
-  auto actual = client_->TestBucketIamPermissions(
-      TestBucketIamPermissionsRequest("bkt", {}));
+  auto actual = client_.TestBucketIamPermissions("bkt", {});
   EXPECT_THAT(actual, StatusIs(StatusCode::kUnavailable));
 }
 
 TEST_P(GrpcClientFailuresTest, LockBucketRetentionPolicy) {
-  OptionsSpan const span(client_->options());
-  auto actual = client_->LockBucketRetentionPolicy(
-      LockBucketRetentionPolicyRequest("bkt", 0));
+  auto actual = client_.LockBucketRetentionPolicy("bkt", 0);
   EXPECT_THAT(actual, StatusIs(StatusCode::kUnavailable));
 }
 
 TEST_P(GrpcClientFailuresTest, InsertObjectMediaSimple) {
-  OptionsSpan const span(client_->options());
-  auto actual = client_->InsertObjectMedia(
-      InsertObjectMediaRequest("bkt", "obj", "contents")
-          .set_multiple_options(DisableMD5Hash(true),
-                                DisableCrc32cChecksum(true)));
+  auto actual =
+      client_.InsertObject("bkt", "obj", "contents", DisableMD5Hash(true),
+                           DisableCrc32cChecksum(true));
   EXPECT_THAT(actual, StatusIs(StatusCode::kUnavailable));
 }
 
 TEST_P(GrpcClientFailuresTest, InsertObjectMediaMultipart) {
-  OptionsSpan const span(client_->options());
-  auto actual = client_->InsertObjectMedia(
-      InsertObjectMediaRequest("bkt", "obj", "contents"));
+  auto actual = client_.InsertObject("bkt", "obj", "contents");
   EXPECT_THAT(actual, StatusIs(StatusCode::kUnavailable));
 }
 
 TEST_P(GrpcClientFailuresTest, InsertObjectMedia) {
-  OptionsSpan const span(client_->options());
-  auto actual = client_->InsertObjectMedia(
-      InsertObjectMediaRequest("bkt", "obj", "contents")
-          .set_multiple_options(Fields("")));
+  auto actual = client_.InsertObject("bkt", "obj", "contents", Fields(""));
   EXPECT_THAT(actual, StatusIs(StatusCode::kUnavailable));
 }
 
 TEST_P(GrpcClientFailuresTest, GetObjectMetadata) {
-  OptionsSpan const span(client_->options());
-  auto actual =
-      client_->GetObjectMetadata(GetObjectMetadataRequest("bkt", "obj"));
+  auto actual = client_.GetObjectMetadata("bkt", "obj");
   EXPECT_THAT(actual, StatusIs(StatusCode::kUnavailable));
 }
 
 TEST_P(GrpcClientFailuresTest, ListObjects) {
-  OptionsSpan const span(client_->options());
-  auto actual = client_->ListObjects(ListObjectsRequest("bkt"));
-  EXPECT_THAT(actual, StatusIs(StatusCode::kUnavailable));
+  auto actual = client_.ListObjects("bkt");
+  std::vector<decltype(actual)::value_type> copy(actual.begin(), actual.end());
+  EXPECT_THAT(copy, ElementsAre(StatusIs(StatusCode::kUnavailable)));
 }
 
 TEST_P(GrpcClientFailuresTest, DeleteObject) {
-  OptionsSpan const span(client_->options());
-  auto actual = client_->DeleteObject(DeleteObjectRequest("bkt", "obj"));
+  auto actual = client_.DeleteObject("bkt", "obj");
   EXPECT_THAT(actual, StatusIs(StatusCode::kUnavailable));
 }
 
 TEST_P(GrpcClientFailuresTest, UpdateObject) {
-  OptionsSpan const span(client_->options());
-  auto actual = client_->UpdateObject(
-      UpdateObjectRequest("bkt", "obj", ObjectMetadata()));
+  auto actual = client_.UpdateObject("bkt", "obj", ObjectMetadata());
   EXPECT_THAT(actual, StatusIs(StatusCode::kUnavailable));
 }
 
 TEST_P(GrpcClientFailuresTest, PatchObject) {
-  OptionsSpan const span(client_->options());
-  auto actual = client_->PatchObject(
-      PatchObjectRequest("bkt", "obj", ObjectMetadata(), ObjectMetadata()));
+  auto actual = client_.PatchObject("bkt", "obj", ObjectMetadataPatchBuilder());
   EXPECT_THAT(actual, StatusIs(StatusCode::kUnavailable));
 }
 
 TEST_P(GrpcClientFailuresTest, ComposeObject) {
-  OptionsSpan const span(client_->options());
-  auto actual = client_->ComposeObject(ComposeObjectRequest("bkt", {}, "obj"));
+  auto actual = client_.ComposeObject("bkt", {}, "obj");
   EXPECT_THAT(actual, StatusIs(StatusCode::kUnavailable));
 }
 
 TEST_P(GrpcClientFailuresTest, ListBucketAcl) {
-  OptionsSpan const span(client_->options());
-  auto actual = client_->ListBucketAcl(ListBucketAclRequest("bkt"));
+  auto actual = client_.ListBucketAcl("bkt");
   EXPECT_THAT(actual, StatusIs(StatusCode::kUnavailable));
 }
 
 TEST_P(GrpcClientFailuresTest, CopyObject) {
-  OptionsSpan const span(client_->options());
-  auto actual =
-      client_->CopyObject(CopyObjectRequest("bkt", "obj1", "bkt", "obj2"));
+  auto actual = client_.CopyObject("bkt", "obj1", "bkt", "obj2");
   EXPECT_THAT(actual, StatusIs(StatusCode::kUnavailable));
 }
 
 TEST_P(GrpcClientFailuresTest, CreateBucketAcl) {
-  OptionsSpan const span(client_->options());
-  auto actual =
-      client_->CreateBucketAcl(CreateBucketAclRequest("bkt", "entity", "role"));
+  auto actual = client_.CreateBucketAcl("bkt", "entity", "role");
   EXPECT_THAT(actual, StatusIs(StatusCode::kUnavailable));
 }
 
 TEST_P(GrpcClientFailuresTest, GetBucketAcl) {
-  OptionsSpan const span(client_->options());
-  auto actual = client_->GetBucketAcl(GetBucketAclRequest("bkt", "entity"));
+  auto actual = client_.GetBucketAcl("bkt", "entity");
   EXPECT_THAT(actual, StatusIs(StatusCode::kUnavailable));
 }
 
 TEST_P(GrpcClientFailuresTest, DeleteBucketAcl) {
-  OptionsSpan const span(client_->options());
-  auto actual =
-      client_->DeleteBucketAcl(DeleteBucketAclRequest("bkt", "entity"));
+  auto actual = client_.DeleteBucketAcl("bkt", "entity");
   EXPECT_THAT(actual, StatusIs(StatusCode::kUnavailable));
 }
 
 TEST_P(GrpcClientFailuresTest, UpdateBucketAcl) {
-  OptionsSpan const span(client_->options());
-  auto actual =
-      client_->UpdateBucketAcl(UpdateBucketAclRequest("bkt", "entity", "role"));
+  auto actual = client_.UpdateBucketAcl("bkt", BucketAccessControl());
   EXPECT_THAT(actual, StatusIs(StatusCode::kUnavailable));
 }
 
 TEST_P(GrpcClientFailuresTest, PatchBucketAcl) {
-  OptionsSpan const span(client_->options());
-  auto actual = client_->PatchBucketAcl(PatchBucketAclRequest(
-      "bkt", "entity", BucketAccessControl(), BucketAccessControl()));
+  auto actual = client_.PatchBucketAcl("bkt", "entity",
+                                       BucketAccessControlPatchBuilder());
   EXPECT_THAT(actual, StatusIs(StatusCode::kUnavailable));
 }
 
 TEST_P(GrpcClientFailuresTest, ListObjectAcl) {
-  OptionsSpan const span(client_->options());
-  auto actual = client_->ListObjectAcl(ListObjectAclRequest("bkt", "obj"));
+  auto actual = client_.ListObjectAcl("bkt", "obj");
   EXPECT_THAT(actual, StatusIs(StatusCode::kUnavailable));
 }
 
 TEST_P(GrpcClientFailuresTest, CreateObjectAcl) {
-  OptionsSpan const span(client_->options());
-  auto actual = client_->CreateObjectAcl(
-      CreateObjectAclRequest("bkt", "obj", "entity", "role"));
+  auto actual = client_.CreateObjectAcl("bkt", "obj", "entity", "role");
   EXPECT_THAT(actual, StatusIs(StatusCode::kUnavailable));
 }
 
 TEST_P(GrpcClientFailuresTest, DeleteObjectAcl) {
-  OptionsSpan const span(client_->options());
-  auto actual =
-      client_->DeleteObjectAcl(DeleteObjectAclRequest("bkt", "obj", "entity"));
+  auto actual = client_.DeleteObjectAcl("bkt", "obj", "entity");
   EXPECT_THAT(actual, StatusIs(StatusCode::kUnavailable));
 }
 
 TEST_P(GrpcClientFailuresTest, GetObjectAcl) {
-  OptionsSpan const span(client_->options());
-  auto actual =
-      client_->GetObjectAcl(GetObjectAclRequest("bkt", "obj", "entity"));
+  auto actual = client_.GetObjectAcl("bkt", "obj", "entity");
   EXPECT_THAT(actual, StatusIs(StatusCode::kUnavailable));
 }
 
 TEST_P(GrpcClientFailuresTest, UpdateObjectAcl) {
-  OptionsSpan const span(client_->options());
-  auto actual = client_->UpdateObjectAcl(
-      UpdateObjectAclRequest("bkt", "obj", "entity", "role"));
+  auto actual = client_.UpdateObjectAcl("bkt", "obj", ObjectAccessControl());
   EXPECT_THAT(actual, StatusIs(StatusCode::kUnavailable));
 }
 
 TEST_P(GrpcClientFailuresTest, PatchObjectAcl) {
-  OptionsSpan const span(client_->options());
-  auto actual = client_->PatchObjectAcl(PatchObjectAclRequest(
-      "bkt", "obj", "entity", ObjectAccessControl(), ObjectAccessControl()));
+  auto actual = client_.PatchObjectAcl(
+      "bkt", "obj", "entity", ObjectAccessControl(), ObjectAccessControl());
   EXPECT_THAT(actual, StatusIs(StatusCode::kUnavailable));
 }
 
 TEST_P(GrpcClientFailuresTest, RewriteObject) {
-  OptionsSpan const span(client_->options());
-  auto actual = client_->RewriteObject(
-      RewriteObjectRequest("bkt", "obj", "bkt2", "obj2", "token"));
-  EXPECT_THAT(actual, StatusIs(StatusCode::kUnavailable));
+  auto actual = client_.RewriteObject("bkt", "obj", "bkt2", "obj2");
+  EXPECT_THAT(actual.Iterate(), StatusIs(StatusCode::kUnavailable));
 }
 
 TEST_P(GrpcClientFailuresTest, CreateResumableUpload) {
-  OptionsSpan const span(client_->options());
-  auto actual = client_->CreateResumableUpload(
-      ResumableUploadRequest("test-bucket", "test-object"));
-  EXPECT_THAT(actual, StatusIs(StatusCode::kUnavailable));
+  auto actual = client_.WriteObject("test-bucket", "test-object");
+  EXPECT_TRUE(actual.bad());
+  EXPECT_THAT(actual.last_status(), StatusIs(StatusCode::kUnavailable));
 }
 
 TEST_P(GrpcClientFailuresTest, DeleteResumableUpload) {
-  OptionsSpan const span(client_->options());
-  auto actual = client_->DeleteResumableUpload(
-      DeleteResumableUploadRequest("test-upload-id"));
+  auto actual = client_.DeleteResumableUpload("test-upload-id");
   EXPECT_THAT(actual, StatusIs(StatusCode::kUnavailable));
 }
 
 TEST_P(GrpcClientFailuresTest, ListDefaultObjectAcl) {
-  OptionsSpan const span(client_->options());
-  auto actual =
-      client_->ListDefaultObjectAcl(ListDefaultObjectAclRequest("bkt"));
+  auto actual = client_.ListDefaultObjectAcl("bkt");
   EXPECT_THAT(actual, StatusIs(StatusCode::kUnavailable));
 }
 
 TEST_P(GrpcClientFailuresTest, CreateDefaultObjectAcl) {
-  OptionsSpan const span(client_->options());
-  auto actual = client_->CreateDefaultObjectAcl(
-      CreateDefaultObjectAclRequest("bkt", "entity", "role"));
+  auto actual = client_.CreateDefaultObjectAcl("bkt", "entity", "role");
   EXPECT_THAT(actual, StatusIs(StatusCode::kUnavailable));
 }
 
 TEST_P(GrpcClientFailuresTest, DeleteDefaultObjectAcl) {
-  OptionsSpan const span(client_->options());
-  auto actual = client_->DeleteDefaultObjectAcl(
-      DeleteDefaultObjectAclRequest("bkt", "entity"));
+  auto actual = client_.DeleteDefaultObjectAcl("bkt", "entity");
   EXPECT_THAT(actual, StatusIs(StatusCode::kUnavailable));
 }
 
 TEST_P(GrpcClientFailuresTest, GetDefaultObjectAcl) {
-  OptionsSpan const span(client_->options());
-  auto actual =
-      client_->GetDefaultObjectAcl(GetDefaultObjectAclRequest("bkt", "entity"));
+  auto actual = client_.GetDefaultObjectAcl("bkt", "entity");
   EXPECT_THAT(actual, StatusIs(StatusCode::kUnavailable));
 }
 
 TEST_P(GrpcClientFailuresTest, UpdateDefaultObjectAcl) {
-  OptionsSpan const span(client_->options());
-  auto actual = client_->UpdateDefaultObjectAcl(
-      UpdateDefaultObjectAclRequest("bkt", "entity", "role"));
+  auto actual = client_.UpdateDefaultObjectAcl("bkt", ObjectAccessControl());
   EXPECT_THAT(actual, StatusIs(StatusCode::kUnavailable));
 }
 
 TEST_P(GrpcClientFailuresTest, PatchDefaultObjectAcl) {
-  OptionsSpan const span(client_->options());
-  auto actual = client_->PatchDefaultObjectAcl(PatchDefaultObjectAclRequest(
-      "bkt", "entity", ObjectAccessControl(), ObjectAccessControl()));
+  auto actual = client_.PatchDefaultObjectAcl(
+      "bkt", "entity", ObjectAccessControlPatchBuilder());
   EXPECT_THAT(actual, StatusIs(StatusCode::kUnavailable));
 }
 
 TEST_P(GrpcClientFailuresTest, GetServiceAccount) {
-  OptionsSpan const span(client_->options());
-  auto actual =
-      client_->GetServiceAccount(GetProjectServiceAccountRequest("project_id"));
+  auto actual = client_.GetServiceAccount();
   EXPECT_THAT(actual, StatusIs(StatusCode::kUnavailable));
 }
 
-TEST_P(GrpcClientFailuresTest, ListHmacKeyRequest) {
-  OptionsSpan const span(client_->options());
-  auto actual = client_->ListHmacKeys(ListHmacKeysRequest("project_id"));
-  EXPECT_THAT(actual, StatusIs(StatusCode::kUnavailable));
+TEST_P(GrpcClientFailuresTest, ListHmacKeys) {
+  auto actual = client_.ListHmacKeys();
+  std::vector<decltype(actual)::value_type> copy(actual.begin(), actual.end());
+  EXPECT_THAT(copy, ElementsAre(StatusIs(StatusCode::kUnavailable)));
 }
 
 TEST_P(GrpcClientFailuresTest, CreateHmacKeyRequest) {
-  OptionsSpan const span(client_->options());
-  auto actual = client_->CreateHmacKey(
-      CreateHmacKeyRequest("project_id", "service-account"));
+  auto actual = client_.CreateHmacKey("service-account");
   EXPECT_THAT(actual, StatusIs(StatusCode::kUnavailable));
 }
 
 TEST_P(GrpcClientFailuresTest, SignBlob) {
-  OptionsSpan const span(client_->options());
-  auto actual = client_->SignBlob(
-      SignBlobRequest("test-service-account", "test-blob", {}));
+  auto actual = client_.CreateV4SignedUrl("GET", "bkt", "obj",
+                                          SigningAccount("test-only@invalid"));
   EXPECT_THAT(actual, StatusIs(StatusCode::kUnavailable));
 }
 
 TEST_P(GrpcClientFailuresTest, ListNotifications) {
-  OptionsSpan const span(client_->options());
-  auto actual = client_->ListNotifications(ListNotificationsRequest("bkt"));
+  auto actual = client_.ListNotifications("bkt");
   EXPECT_THAT(actual, StatusIs(StatusCode::kUnavailable));
 }
 
 TEST_P(GrpcClientFailuresTest, CreateNotification) {
-  OptionsSpan const span(client_->options());
-  auto actual = client_->CreateNotification(
-      CreateNotificationRequest("bkt", NotificationMetadata()));
+  auto actual =
+      client_.CreateNotification("bkt", "topic", NotificationMetadata());
   EXPECT_THAT(actual, StatusIs(StatusCode::kUnavailable));
 }
 
 TEST_P(GrpcClientFailuresTest, GetNotification) {
-  OptionsSpan const span(client_->options());
-  auto actual = client_->GetNotification(
-      GetNotificationRequest("bkt", "notification_id"));
+  auto actual = client_.GetNotification("bkt", "notification_id");
   EXPECT_THAT(actual, StatusIs(StatusCode::kUnavailable));
 }
 
 TEST_P(GrpcClientFailuresTest, DeleteNotification) {
-  OptionsSpan const span(client_->options());
-  auto actual = client_->DeleteNotification(
-      DeleteNotificationRequest("bkt", "notification_id"));
+  auto actual = client_.DeleteNotification("bkt", "notification_id");
   EXPECT_THAT(actual, StatusIs(StatusCode::kUnavailable));
 }
 
