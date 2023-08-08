@@ -100,9 +100,9 @@ TEST(GrpcPluginTest, MediaConfigCreatesHybrid) {
   auto client = DefaultGrpcClient(TestOptions().set<GrpcPluginOption>("media"));
   auto impl = ClientImplDetails::GetRawClient(client);
   ASSERT_THAT(impl, NotNull());
-  EXPECT_THAT(impl->InspectStackStructure(),
-              ElementsAre("GrpcClient", "RestClient", "HybridClient",
-                          "GenericStubAdapter", "RetryClient"));
+  EXPECT_THAT(
+      impl->InspectStackStructure(),
+      ElementsAre("GrpcClient", "RestClient", "HybridClient", "RetryClient"));
 }
 
 #include "google/cloud/internal/disable_deprecation_warnings.inc"

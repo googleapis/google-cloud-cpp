@@ -32,10 +32,10 @@ google::cloud::storage::Client DefaultGrpcClient(Options opts) {
   if (config == "metadata" || config.empty()) {
     opts = google::cloud::storage_internal::DefaultOptionsGrpc(std::move(opts));
     return storage::internal::ClientImplDetails::CreateClient(
-        storage_internal::GrpcClient::Create(opts));
+        storage_internal::GrpcClient::Create(std::move(opts)));
   }
   return storage::internal::ClientImplDetails::CreateClient(
-      storage_internal::HybridClient::Create(opts));
+      opts, std::make_unique<storage_internal::HybridClient>(opts));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
