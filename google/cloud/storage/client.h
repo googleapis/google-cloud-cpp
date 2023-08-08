@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_CLIENT_H
 
 #include "google/cloud/storage/hmac_key_metadata.h"
+#include "google/cloud/storage/internal/generic_stub_adapter.h"
 #include "google/cloud/storage/internal/logging_client.h"
 #include "google/cloud/storage/internal/policy_document_request.h"
 #include "google/cloud/storage/internal/request_project_id.h"
@@ -3340,6 +3341,8 @@ class Client {
       : raw_client_(std::move(c)) {}
 
   static std::shared_ptr<internal::RawClient> CreateDefaultInternalClient(
+      Options const& opts, std::unique_ptr<storage_internal::GenericStub> stub);
+  static std::shared_ptr<internal::RawClient> CreateDefaultInternalClient(
       Options const& opts, std::shared_ptr<internal::RawClient> client);
   static std::shared_ptr<internal::RawClient> CreateDefaultInternalClient(
       Options const& opts);
@@ -3472,6 +3475,13 @@ struct ClientImplDetails {
         internal::ApplyPolicies(c->options(), std::forward<Policies>(p)...);
     return Client(Client::InternalOnlyNoDecorations{},
                   Client::CreateDefaultInternalClient(opts, std::move(c)));
+  }
+
+  static Client CreateClient(
+      Options const& opts,
+      std::unique_ptr<storage_internal::GenericStub> stub) {
+    return Client(Client::InternalOnlyNoDecorations{},
+                  Client::CreateDefaultInternalClient(opts, std::move(stub)));
   }
 
   static Client CreateWithoutDecorations(
