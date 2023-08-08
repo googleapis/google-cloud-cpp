@@ -46,10 +46,17 @@ Options RetryClientTestOptions();
 /// Validates the idempotency tokens used in a retry loop.
 ::testing::Matcher<std::vector<std::string>> RetryLoopUsesSingleToken();
 
+/// Validates the Options used in a retry loop.
+::testing::Matcher<std::vector<std::string>> RetryLoopUsesOptions();
+
 /// Captures the idempotency token. Refactors some code in
 /// MockRetryClientFunction.
 void CaptureIdempotencyToken(std::vector<std::string>& tokens,
                              rest_internal::RestContext const& context);
+
+/// Captures the authority values.
+void CaptureAuthorityOption(std::vector<std::string>& authority,
+                            rest_internal::RestContext const& context);
 
 /// Captures information to validate the RetryClient loops and return a
 /// transient error.
@@ -58,20 +65,26 @@ class MockRetryClientFunction {
   explicit MockRetryClientFunction(Status status);
 
   std::vector<std::string> const& captured_tokens() const { return *tokens_; }
+  std::vector<std::string> const& captured_authority_options() const {
+    return *authority_options_;
+  }
 
   template <typename Request>
   Status operator()(rest_internal::RestContext& context, Options const&,
                     Request const&) {
     CaptureIdempotencyToken(*tokens_, context);
+    CaptureAuthorityOption(*authority_options_, context);
     return status_;
   }
 
  private:
   Status status_;
-  // This must be shared between copied instances. We use this class as mock
+  // These must be shared between copied instances. We use this class as mock
   // functions for `.WillOnce()` and `.WillRepeatedly()`, both of which make a
-  // copy, and then we examine the contents of this (shared) member variable.
+  // copy, and then we examine the contents of these (shared) member variables.
   std::shared_ptr<std::vector<std::string>> tokens_ =
+      std::make_shared<std::vector<std::string>>();
+  std::shared_ptr<std::vector<std::string>> authority_options_ =
       std::make_shared<std::vector<std::string>>();
 };
 

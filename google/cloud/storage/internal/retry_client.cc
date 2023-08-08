@@ -162,7 +162,7 @@ StatusOr<ListBucketsResponse> RetryClient::ListBuckets(
         context.AddHeader(kIdempotencyTokenHeader, token);
         return stub_->ListBuckets(context, current, request);
       },
-      request, __func__);
+      google::cloud::internal::CurrentOptions(), request, __func__);
 }
 
 StatusOr<BucketMetadata> RetryClient::CreateBucket(
@@ -178,7 +178,7 @@ StatusOr<BucketMetadata> RetryClient::CreateBucket(
         context.AddHeader(kIdempotencyTokenHeader, token);
         return stub_->CreateBucket(context, current, request);
       },
-      request, __func__);
+      google::cloud::internal::CurrentOptions(), request, __func__);
 }
 
 StatusOr<BucketMetadata> RetryClient::GetBucketMetadata(
@@ -194,7 +194,7 @@ StatusOr<BucketMetadata> RetryClient::GetBucketMetadata(
         context.AddHeader(kIdempotencyTokenHeader, token);
         return stub_->GetBucketMetadata(context, current, request);
       },
-      request, __func__);
+      google::cloud::internal::CurrentOptions(), request, __func__);
 }
 
 StatusOr<EmptyResponse> RetryClient::DeleteBucket(
@@ -210,7 +210,7 @@ StatusOr<EmptyResponse> RetryClient::DeleteBucket(
         context.AddHeader(kIdempotencyTokenHeader, token);
         return stub_->DeleteBucket(context, current, request);
       },
-      request, __func__);
+      google::cloud::internal::CurrentOptions(), request, __func__);
 }
 
 StatusOr<BucketMetadata> RetryClient::UpdateBucket(
@@ -226,7 +226,7 @@ StatusOr<BucketMetadata> RetryClient::UpdateBucket(
         context.AddHeader(kIdempotencyTokenHeader, token);
         return stub_->UpdateBucket(context, current, request);
       },
-      request, __func__);
+      google::cloud::internal::CurrentOptions(), request, __func__);
 }
 
 StatusOr<BucketMetadata> RetryClient::PatchBucket(
@@ -242,7 +242,7 @@ StatusOr<BucketMetadata> RetryClient::PatchBucket(
         context.AddHeader(kIdempotencyTokenHeader, token);
         return stub_->PatchBucket(context, current, request);
       },
-      request, __func__);
+      google::cloud::internal::CurrentOptions(), request, __func__);
 }
 
 StatusOr<NativeIamPolicy> RetryClient::GetNativeBucketIamPolicy(
@@ -258,7 +258,7 @@ StatusOr<NativeIamPolicy> RetryClient::GetNativeBucketIamPolicy(
         context.AddHeader(kIdempotencyTokenHeader, token);
         return stub_->GetNativeBucketIamPolicy(context, current, request);
       },
-      request, __func__);
+      google::cloud::internal::CurrentOptions(), request, __func__);
 }
 
 StatusOr<NativeIamPolicy> RetryClient::SetNativeBucketIamPolicy(
@@ -274,7 +274,7 @@ StatusOr<NativeIamPolicy> RetryClient::SetNativeBucketIamPolicy(
         context.AddHeader(kIdempotencyTokenHeader, token);
         return stub_->SetNativeBucketIamPolicy(context, current, request);
       },
-      request, __func__);
+      google::cloud::internal::CurrentOptions(), request, __func__);
 }
 
 StatusOr<TestBucketIamPermissionsResponse>
@@ -291,7 +291,7 @@ RetryClient::TestBucketIamPermissions(
         context.AddHeader(kIdempotencyTokenHeader, token);
         return stub_->TestBucketIamPermissions(context, current, request);
       },
-      request, __func__);
+      google::cloud::internal::CurrentOptions(), request, __func__);
 }
 
 StatusOr<BucketMetadata> RetryClient::LockBucketRetentionPolicy(
@@ -307,7 +307,7 @@ StatusOr<BucketMetadata> RetryClient::LockBucketRetentionPolicy(
         context.AddHeader(kIdempotencyTokenHeader, token);
         return stub_->LockBucketRetentionPolicy(context, current, request);
       },
-      request, __func__);
+      google::cloud::internal::CurrentOptions(), request, __func__);
 }
 
 StatusOr<ObjectMetadata> RetryClient::InsertObjectMedia(
@@ -323,7 +323,7 @@ StatusOr<ObjectMetadata> RetryClient::InsertObjectMedia(
         context.AddHeader(kIdempotencyTokenHeader, token);
         return stub_->InsertObjectMedia(context, current, request);
       },
-      request, __func__);
+      google::cloud::internal::CurrentOptions(), request, __func__);
 }
 
 StatusOr<ObjectMetadata> RetryClient::CopyObject(
@@ -339,7 +339,7 @@ StatusOr<ObjectMetadata> RetryClient::CopyObject(
         context.AddHeader(kIdempotencyTokenHeader, token);
         return stub_->CopyObject(context, current, request);
       },
-      request, __func__);
+      google::cloud::internal::CurrentOptions(), request, __func__);
 }
 
 StatusOr<ObjectMetadata> RetryClient::GetObjectMetadata(
@@ -355,7 +355,7 @@ StatusOr<ObjectMetadata> RetryClient::GetObjectMetadata(
         context.AddHeader(kIdempotencyTokenHeader, token);
         return stub_->GetObjectMetadata(context, current, request);
       },
-      request, __func__);
+      google::cloud::internal::CurrentOptions(), request, __func__);
 }
 
 StatusOr<std::unique_ptr<ObjectReadSource>> RetryClient::ReadObjectNotWrapped(
@@ -372,7 +372,7 @@ StatusOr<std::unique_ptr<ObjectReadSource>> RetryClient::ReadObjectNotWrapped(
         context.AddHeader(kIdempotencyTokenHeader, token);
         return stub_->ReadObject(context, current, request);
       },
-      request, __func__);
+      google::cloud::internal::CurrentOptions(), request, __func__);
 }
 
 StatusOr<std::unique_ptr<ObjectReadSource>> RetryClient::ReadObject(
@@ -402,7 +402,7 @@ StatusOr<ListObjectsResponse> RetryClient::ListObjects(
         context.AddHeader(kIdempotencyTokenHeader, token);
         return stub_->ListObjects(context, current, request);
       },
-      request, __func__);
+      google::cloud::internal::CurrentOptions(), request, __func__);
 }
 
 StatusOr<EmptyResponse> RetryClient::DeleteObject(
@@ -418,7 +418,7 @@ StatusOr<EmptyResponse> RetryClient::DeleteObject(
         context.AddHeader(kIdempotencyTokenHeader, token);
         return stub_->DeleteObject(context, current, request);
       },
-      request, __func__);
+      google::cloud::internal::CurrentOptions(), request, __func__);
 }
 
 StatusOr<ObjectMetadata> RetryClient::UpdateObject(
@@ -434,7 +434,7 @@ StatusOr<ObjectMetadata> RetryClient::UpdateObject(
         context.AddHeader(kIdempotencyTokenHeader, token);
         return stub_->UpdateObject(context, current, request);
       },
-      request, __func__);
+      google::cloud::internal::CurrentOptions(), request, __func__);
 }
 
 StatusOr<ObjectMetadata> RetryClient::PatchObject(
@@ -450,7 +450,7 @@ StatusOr<ObjectMetadata> RetryClient::PatchObject(
         context.AddHeader(kIdempotencyTokenHeader, token);
         return stub_->PatchObject(context, current, request);
       },
-      request, __func__);
+      google::cloud::internal::CurrentOptions(), request, __func__);
 }
 
 StatusOr<ObjectMetadata> RetryClient::ComposeObject(
@@ -466,7 +466,7 @@ StatusOr<ObjectMetadata> RetryClient::ComposeObject(
         context.AddHeader(kIdempotencyTokenHeader, token);
         return stub_->ComposeObject(context, current, request);
       },
-      request, __func__);
+      google::cloud::internal::CurrentOptions(), request, __func__);
 }
 
 StatusOr<RewriteObjectResponse> RetryClient::RewriteObject(
@@ -482,7 +482,7 @@ StatusOr<RewriteObjectResponse> RetryClient::RewriteObject(
         context.AddHeader(kIdempotencyTokenHeader, token);
         return stub_->RewriteObject(context, current, request);
       },
-      request, __func__);
+      google::cloud::internal::CurrentOptions(), request, __func__);
 }
 
 StatusOr<CreateResumableUploadResponse> RetryClient::CreateResumableUpload(
@@ -498,7 +498,7 @@ StatusOr<CreateResumableUploadResponse> RetryClient::CreateResumableUpload(
         context.AddHeader(kIdempotencyTokenHeader, token);
         return stub_->CreateResumableUpload(context, current, request);
       },
-      request, __func__);
+      google::cloud::internal::CurrentOptions(), request, __func__);
 }
 
 StatusOr<QueryResumableUploadResponse> RetryClient::QueryResumableUpload(
@@ -512,7 +512,7 @@ StatusOr<QueryResumableUploadResponse> RetryClient::QueryResumableUpload(
         context.AddHeader(kIdempotencyTokenHeader, token);
         return stub_->QueryResumableUpload(context, current, request);
       },
-      request, __func__);
+      google::cloud::internal::CurrentOptions(), request, __func__);
 }
 
 StatusOr<EmptyResponse> RetryClient::DeleteResumableUpload(
@@ -526,7 +526,7 @@ StatusOr<EmptyResponse> RetryClient::DeleteResumableUpload(
         context.AddHeader(kIdempotencyTokenHeader, token);
         return stub_->DeleteResumableUpload(context, current, request);
       },
-      request, __func__);
+      google::cloud::internal::CurrentOptions(), request, __func__);
 }
 
 // Implements the retry loop for a resumable upload session.
@@ -609,7 +609,7 @@ StatusOr<QueryResumableUploadResponse> RetryClient::UploadChunk(
         // There is no need to use an idempotency token for this function, as
         // we do not "retry" the operation. On transient failures we call
         // QueryResumableUpload() before trying the request again.
-        rest_internal::RestContext context;
+        rest_internal::RestContext context(current);
         ++upload_count;
         return stub_->UploadChunk(context, current,
                                   request.RemainingChunk(committed_size));
@@ -711,7 +711,7 @@ StatusOr<ListBucketAclResponse> RetryClient::ListBucketAcl(
         context.AddHeader(kIdempotencyTokenHeader, token);
         return stub_->ListBucketAcl(context, current, request);
       },
-      request, __func__);
+      google::cloud::internal::CurrentOptions(), request, __func__);
 }
 
 StatusOr<BucketAccessControl> RetryClient::GetBucketAcl(
@@ -727,7 +727,7 @@ StatusOr<BucketAccessControl> RetryClient::GetBucketAcl(
         context.AddHeader(kIdempotencyTokenHeader, token);
         return stub_->GetBucketAcl(context, current, request);
       },
-      request, __func__);
+      google::cloud::internal::CurrentOptions(), request, __func__);
 }
 
 StatusOr<BucketAccessControl> RetryClient::CreateBucketAcl(
@@ -743,7 +743,7 @@ StatusOr<BucketAccessControl> RetryClient::CreateBucketAcl(
         context.AddHeader(kIdempotencyTokenHeader, token);
         return stub_->CreateBucketAcl(context, current, request);
       },
-      request, __func__);
+      google::cloud::internal::CurrentOptions(), request, __func__);
 }
 
 StatusOr<EmptyResponse> RetryClient::DeleteBucketAcl(
@@ -759,7 +759,7 @@ StatusOr<EmptyResponse> RetryClient::DeleteBucketAcl(
         context.AddHeader(kIdempotencyTokenHeader, token);
         return stub_->DeleteBucketAcl(context, current, request);
       },
-      request, __func__);
+      google::cloud::internal::CurrentOptions(), request, __func__);
 }
 
 StatusOr<ListObjectAclResponse> RetryClient::ListObjectAcl(
@@ -775,7 +775,7 @@ StatusOr<ListObjectAclResponse> RetryClient::ListObjectAcl(
         context.AddHeader(kIdempotencyTokenHeader, token);
         return stub_->ListObjectAcl(context, current, request);
       },
-      request, __func__);
+      google::cloud::internal::CurrentOptions(), request, __func__);
 }
 
 StatusOr<BucketAccessControl> RetryClient::UpdateBucketAcl(
@@ -791,7 +791,7 @@ StatusOr<BucketAccessControl> RetryClient::UpdateBucketAcl(
         context.AddHeader(kIdempotencyTokenHeader, token);
         return stub_->UpdateBucketAcl(context, current, request);
       },
-      request, __func__);
+      google::cloud::internal::CurrentOptions(), request, __func__);
 }
 
 StatusOr<BucketAccessControl> RetryClient::PatchBucketAcl(
@@ -807,7 +807,7 @@ StatusOr<BucketAccessControl> RetryClient::PatchBucketAcl(
         context.AddHeader(kIdempotencyTokenHeader, token);
         return stub_->PatchBucketAcl(context, current, request);
       },
-      request, __func__);
+      google::cloud::internal::CurrentOptions(), request, __func__);
 }
 
 StatusOr<ObjectAccessControl> RetryClient::CreateObjectAcl(
@@ -823,7 +823,7 @@ StatusOr<ObjectAccessControl> RetryClient::CreateObjectAcl(
         context.AddHeader(kIdempotencyTokenHeader, token);
         return stub_->CreateObjectAcl(context, current, request);
       },
-      request, __func__);
+      google::cloud::internal::CurrentOptions(), request, __func__);
 }
 
 StatusOr<EmptyResponse> RetryClient::DeleteObjectAcl(
@@ -839,7 +839,7 @@ StatusOr<EmptyResponse> RetryClient::DeleteObjectAcl(
         context.AddHeader(kIdempotencyTokenHeader, token);
         return stub_->DeleteObjectAcl(context, current, request);
       },
-      request, __func__);
+      google::cloud::internal::CurrentOptions(), request, __func__);
 }
 
 StatusOr<ObjectAccessControl> RetryClient::GetObjectAcl(
@@ -855,7 +855,7 @@ StatusOr<ObjectAccessControl> RetryClient::GetObjectAcl(
         context.AddHeader(kIdempotencyTokenHeader, token);
         return stub_->GetObjectAcl(context, current, request);
       },
-      request, __func__);
+      google::cloud::internal::CurrentOptions(), request, __func__);
 }
 
 StatusOr<ObjectAccessControl> RetryClient::UpdateObjectAcl(
@@ -871,7 +871,7 @@ StatusOr<ObjectAccessControl> RetryClient::UpdateObjectAcl(
         context.AddHeader(kIdempotencyTokenHeader, token);
         return stub_->UpdateObjectAcl(context, current, request);
       },
-      request, __func__);
+      google::cloud::internal::CurrentOptions(), request, __func__);
 }
 
 StatusOr<ObjectAccessControl> RetryClient::PatchObjectAcl(
@@ -887,7 +887,7 @@ StatusOr<ObjectAccessControl> RetryClient::PatchObjectAcl(
         context.AddHeader(kIdempotencyTokenHeader, token);
         return stub_->PatchObjectAcl(context, current, request);
       },
-      request, __func__);
+      google::cloud::internal::CurrentOptions(), request, __func__);
 }
 
 StatusOr<ListDefaultObjectAclResponse> RetryClient::ListDefaultObjectAcl(
@@ -903,7 +903,7 @@ StatusOr<ListDefaultObjectAclResponse> RetryClient::ListDefaultObjectAcl(
         context.AddHeader(kIdempotencyTokenHeader, token);
         return stub_->ListDefaultObjectAcl(context, current, request);
       },
-      request, __func__);
+      google::cloud::internal::CurrentOptions(), request, __func__);
 }
 
 StatusOr<ObjectAccessControl> RetryClient::CreateDefaultObjectAcl(
@@ -919,7 +919,7 @@ StatusOr<ObjectAccessControl> RetryClient::CreateDefaultObjectAcl(
         context.AddHeader(kIdempotencyTokenHeader, token);
         return stub_->CreateDefaultObjectAcl(context, current, request);
       },
-      request, __func__);
+      google::cloud::internal::CurrentOptions(), request, __func__);
 }
 
 StatusOr<EmptyResponse> RetryClient::DeleteDefaultObjectAcl(
@@ -935,7 +935,7 @@ StatusOr<EmptyResponse> RetryClient::DeleteDefaultObjectAcl(
         context.AddHeader(kIdempotencyTokenHeader, token);
         return stub_->DeleteDefaultObjectAcl(context, current, request);
       },
-      request, __func__);
+      google::cloud::internal::CurrentOptions(), request, __func__);
 }
 
 StatusOr<ObjectAccessControl> RetryClient::GetDefaultObjectAcl(
@@ -951,7 +951,7 @@ StatusOr<ObjectAccessControl> RetryClient::GetDefaultObjectAcl(
         context.AddHeader(kIdempotencyTokenHeader, token);
         return stub_->GetDefaultObjectAcl(context, current, request);
       },
-      request, __func__);
+      google::cloud::internal::CurrentOptions(), request, __func__);
 }
 
 StatusOr<ObjectAccessControl> RetryClient::UpdateDefaultObjectAcl(
@@ -967,7 +967,7 @@ StatusOr<ObjectAccessControl> RetryClient::UpdateDefaultObjectAcl(
         context.AddHeader(kIdempotencyTokenHeader, token);
         return stub_->UpdateDefaultObjectAcl(context, current, request);
       },
-      request, __func__);
+      google::cloud::internal::CurrentOptions(), request, __func__);
 }
 
 StatusOr<ObjectAccessControl> RetryClient::PatchDefaultObjectAcl(
@@ -983,7 +983,7 @@ StatusOr<ObjectAccessControl> RetryClient::PatchDefaultObjectAcl(
         context.AddHeader(kIdempotencyTokenHeader, token);
         return stub_->PatchDefaultObjectAcl(context, current, request);
       },
-      request, __func__);
+      google::cloud::internal::CurrentOptions(), request, __func__);
 }
 
 StatusOr<ServiceAccount> RetryClient::GetServiceAccount(
@@ -999,7 +999,7 @@ StatusOr<ServiceAccount> RetryClient::GetServiceAccount(
         context.AddHeader(kIdempotencyTokenHeader, token);
         return stub_->GetServiceAccount(context, current, request);
       },
-      request, __func__);
+      google::cloud::internal::CurrentOptions(), request, __func__);
 }
 
 StatusOr<ListHmacKeysResponse> RetryClient::ListHmacKeys(
@@ -1015,7 +1015,7 @@ StatusOr<ListHmacKeysResponse> RetryClient::ListHmacKeys(
         context.AddHeader(kIdempotencyTokenHeader, token);
         return stub_->ListHmacKeys(context, current, request);
       },
-      request, __func__);
+      google::cloud::internal::CurrentOptions(), request, __func__);
 }
 
 StatusOr<CreateHmacKeyResponse> RetryClient::CreateHmacKey(
@@ -1031,7 +1031,7 @@ StatusOr<CreateHmacKeyResponse> RetryClient::CreateHmacKey(
         context.AddHeader(kIdempotencyTokenHeader, token);
         return stub_->CreateHmacKey(context, current, request);
       },
-      request, __func__);
+      google::cloud::internal::CurrentOptions(), request, __func__);
 }
 
 StatusOr<EmptyResponse> RetryClient::DeleteHmacKey(
@@ -1047,7 +1047,7 @@ StatusOr<EmptyResponse> RetryClient::DeleteHmacKey(
         context.AddHeader(kIdempotencyTokenHeader, token);
         return stub_->DeleteHmacKey(context, current, request);
       },
-      request, __func__);
+      google::cloud::internal::CurrentOptions(), request, __func__);
 }
 
 StatusOr<HmacKeyMetadata> RetryClient::GetHmacKey(
@@ -1063,7 +1063,7 @@ StatusOr<HmacKeyMetadata> RetryClient::GetHmacKey(
         context.AddHeader(kIdempotencyTokenHeader, token);
         return stub_->GetHmacKey(context, current, request);
       },
-      request, __func__);
+      google::cloud::internal::CurrentOptions(), request, __func__);
 }
 
 StatusOr<HmacKeyMetadata> RetryClient::UpdateHmacKey(
@@ -1079,7 +1079,7 @@ StatusOr<HmacKeyMetadata> RetryClient::UpdateHmacKey(
         context.AddHeader(kIdempotencyTokenHeader, token);
         return stub_->UpdateHmacKey(context, current, request);
       },
-      request, __func__);
+      google::cloud::internal::CurrentOptions(), request, __func__);
 }
 
 StatusOr<SignBlobResponse> RetryClient::SignBlob(
@@ -1095,7 +1095,7 @@ StatusOr<SignBlobResponse> RetryClient::SignBlob(
         context.AddHeader(kIdempotencyTokenHeader, token);
         return stub_->SignBlob(context, current, request);
       },
-      request, __func__);
+      google::cloud::internal::CurrentOptions(), request, __func__);
 }
 
 StatusOr<ListNotificationsResponse> RetryClient::ListNotifications(
@@ -1111,7 +1111,7 @@ StatusOr<ListNotificationsResponse> RetryClient::ListNotifications(
         context.AddHeader(kIdempotencyTokenHeader, token);
         return stub_->ListNotifications(context, current, request);
       },
-      request, __func__);
+      google::cloud::internal::CurrentOptions(), request, __func__);
 }
 
 StatusOr<NotificationMetadata> RetryClient::CreateNotification(
@@ -1127,7 +1127,7 @@ StatusOr<NotificationMetadata> RetryClient::CreateNotification(
         context.AddHeader(kIdempotencyTokenHeader, token);
         return stub_->CreateNotification(context, current, request);
       },
-      request, __func__);
+      google::cloud::internal::CurrentOptions(), request, __func__);
 }
 
 StatusOr<NotificationMetadata> RetryClient::GetNotification(
@@ -1143,7 +1143,7 @@ StatusOr<NotificationMetadata> RetryClient::GetNotification(
         context.AddHeader(kIdempotencyTokenHeader, token);
         return stub_->GetNotification(context, current, request);
       },
-      request, __func__);
+      google::cloud::internal::CurrentOptions(), request, __func__);
 }
 
 StatusOr<EmptyResponse> RetryClient::DeleteNotification(
@@ -1159,7 +1159,7 @@ StatusOr<EmptyResponse> RetryClient::DeleteNotification(
         context.AddHeader(kIdempotencyTokenHeader, token);
         return stub_->DeleteNotification(context, current, request);
       },
-      request, __func__);
+      google::cloud::internal::CurrentOptions(), request, __func__);
 }
 
 std::vector<std::string> RetryClient::InspectStackStructure() const {

@@ -29,6 +29,7 @@ namespace {
 using ::google::cloud::storage::testing::MockGenericStub;
 using ::google::cloud::storage::testing::MockRetryClientFunction;
 using ::google::cloud::storage::testing::RetryClientTestOptions;
+using ::google::cloud::storage::testing::RetryLoopUsesOptions;
 using ::google::cloud::storage::testing::RetryLoopUsesSingleToken;
 using ::google::cloud::storage::testing::StoppedOnPermanentError;
 using ::google::cloud::storage::testing::StoppedOnTooManyTransients;
@@ -45,6 +46,7 @@ TEST(RetryClient, ListBucketAclTooManyFailures) {
   auto response = client->ListBucketAcl(ListBucketAclRequest()).status();
   EXPECT_THAT(response, StoppedOnTooManyTransients("ListBucketAcl"));
   EXPECT_THAT(transient.captured_tokens(), RetryLoopUsesSingleToken());
+  EXPECT_THAT(transient.captured_authority_options(), RetryLoopUsesOptions());
 }
 
 TEST(RetryClient, ListBucketAclPermanentFailure) {
@@ -57,6 +59,7 @@ TEST(RetryClient, ListBucketAclPermanentFailure) {
   auto response = client->ListBucketAcl(ListBucketAclRequest()).status();
   EXPECT_THAT(response, StoppedOnPermanentError("ListBucketAcl"));
   EXPECT_THAT(permanent.captured_tokens(), RetryLoopUsesSingleToken());
+  EXPECT_THAT(permanent.captured_authority_options(), RetryLoopUsesOptions());
 }
 
 TEST(RetryClient, CreateBucketAclTooManyFailures) {
@@ -69,6 +72,7 @@ TEST(RetryClient, CreateBucketAclTooManyFailures) {
   auto response = client->CreateBucketAcl(CreateBucketAclRequest()).status();
   EXPECT_THAT(response, StoppedOnTooManyTransients("CreateBucketAcl"));
   EXPECT_THAT(transient.captured_tokens(), RetryLoopUsesSingleToken());
+  EXPECT_THAT(transient.captured_authority_options(), RetryLoopUsesOptions());
 }
 
 TEST(RetryClient, CreateBucketAclPermanentFailure) {
@@ -81,6 +85,7 @@ TEST(RetryClient, CreateBucketAclPermanentFailure) {
   auto response = client->CreateBucketAcl(CreateBucketAclRequest()).status();
   EXPECT_THAT(response, StoppedOnPermanentError("CreateBucketAcl"));
   EXPECT_THAT(permanent.captured_tokens(), RetryLoopUsesSingleToken());
+  EXPECT_THAT(permanent.captured_authority_options(), RetryLoopUsesOptions());
 }
 
 TEST(RetryClient, DeleteBucketAclTooManyFailures) {
@@ -93,6 +98,7 @@ TEST(RetryClient, DeleteBucketAclTooManyFailures) {
   auto response = client->DeleteBucketAcl(DeleteBucketAclRequest()).status();
   EXPECT_THAT(response, StoppedOnTooManyTransients("DeleteBucketAcl"));
   EXPECT_THAT(transient.captured_tokens(), RetryLoopUsesSingleToken());
+  EXPECT_THAT(transient.captured_authority_options(), RetryLoopUsesOptions());
 }
 
 TEST(RetryClient, DeleteBucketAclPermanentFailure) {
@@ -105,6 +111,7 @@ TEST(RetryClient, DeleteBucketAclPermanentFailure) {
   auto response = client->DeleteBucketAcl(DeleteBucketAclRequest()).status();
   EXPECT_THAT(response, StoppedOnPermanentError("DeleteBucketAcl"));
   EXPECT_THAT(permanent.captured_tokens(), RetryLoopUsesSingleToken());
+  EXPECT_THAT(permanent.captured_authority_options(), RetryLoopUsesOptions());
 }
 
 TEST(RetryClient, GetBucketAclTooManyFailures) {
@@ -117,6 +124,7 @@ TEST(RetryClient, GetBucketAclTooManyFailures) {
   auto response = client->GetBucketAcl(GetBucketAclRequest()).status();
   EXPECT_THAT(response, StoppedOnTooManyTransients("GetBucketAcl"));
   EXPECT_THAT(transient.captured_tokens(), RetryLoopUsesSingleToken());
+  EXPECT_THAT(transient.captured_authority_options(), RetryLoopUsesOptions());
 }
 
 TEST(RetryClient, GetBucketAclPermanentFailure) {
@@ -129,6 +137,7 @@ TEST(RetryClient, GetBucketAclPermanentFailure) {
   auto response = client->GetBucketAcl(GetBucketAclRequest()).status();
   EXPECT_THAT(response, StoppedOnPermanentError("GetBucketAcl"));
   EXPECT_THAT(permanent.captured_tokens(), RetryLoopUsesSingleToken());
+  EXPECT_THAT(permanent.captured_authority_options(), RetryLoopUsesOptions());
 }
 
 TEST(RetryClient, UpdateBucketAclTooManyFailures) {
@@ -141,6 +150,7 @@ TEST(RetryClient, UpdateBucketAclTooManyFailures) {
   auto response = client->UpdateBucketAcl(UpdateBucketAclRequest()).status();
   EXPECT_THAT(response, StoppedOnTooManyTransients("UpdateBucketAcl"));
   EXPECT_THAT(transient.captured_tokens(), RetryLoopUsesSingleToken());
+  EXPECT_THAT(transient.captured_authority_options(), RetryLoopUsesOptions());
 }
 
 TEST(RetryClient, UpdateBucketAclPermanentFailure) {
@@ -153,6 +163,7 @@ TEST(RetryClient, UpdateBucketAclPermanentFailure) {
   auto response = client->UpdateBucketAcl(UpdateBucketAclRequest()).status();
   EXPECT_THAT(response, StoppedOnPermanentError("UpdateBucketAcl"));
   EXPECT_THAT(permanent.captured_tokens(), RetryLoopUsesSingleToken());
+  EXPECT_THAT(permanent.captured_authority_options(), RetryLoopUsesOptions());
 }
 
 TEST(RetryClient, PatchBucketAclTooManyFailures) {
@@ -165,6 +176,7 @@ TEST(RetryClient, PatchBucketAclTooManyFailures) {
   auto response = client->PatchBucketAcl(PatchBucketAclRequest()).status();
   EXPECT_THAT(response, StoppedOnTooManyTransients("PatchBucketAcl"));
   EXPECT_THAT(transient.captured_tokens(), RetryLoopUsesSingleToken());
+  EXPECT_THAT(transient.captured_authority_options(), RetryLoopUsesOptions());
 }
 
 TEST(RetryClient, PatchBucketAclPermanentFailure) {
@@ -177,6 +189,7 @@ TEST(RetryClient, PatchBucketAclPermanentFailure) {
   auto response = client->PatchBucketAcl(PatchBucketAclRequest()).status();
   EXPECT_THAT(response, StoppedOnPermanentError("PatchBucketAcl"));
   EXPECT_THAT(permanent.captured_tokens(), RetryLoopUsesSingleToken());
+  EXPECT_THAT(permanent.captured_authority_options(), RetryLoopUsesOptions());
 }
 
 }  // namespace

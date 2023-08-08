@@ -16,6 +16,7 @@
 #include "google/cloud/storage/options.h"
 #include "google/cloud/storage/retry_policy.h"
 #include "google/cloud/storage/testing/canonical_errors.h"
+#include "google/cloud/options.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <algorithm>
 #include <chrono>
@@ -28,7 +29,10 @@ namespace testing {
 using ::google::cloud::storage::testing::canonical_errors::PermanentError;
 using ::google::cloud::storage::testing::canonical_errors::TransientError;
 using ::google::cloud::testing_util::StatusIs;
+using ::testing::AllOf;
 using ::testing::Contains;
+using ::testing::Each;
+using ::testing::Eq;
 using ::testing::HasSubstr;
 using ::testing::IsEmpty;
 using ::testing::Pair;
@@ -37,6 +41,7 @@ using ::testing::Truly;
 
 auto constexpr kTooManyFailuresCount = 2;
 auto constexpr kIdempotencyTokenHeader = "x-goog-gcs-idempotency-token";
+auto constexpr kTestAuthority = "test-only-authority.googleapis.com";
 
 Options RetryClientTestOptions() {
   return Options{}
@@ -46,7 +51,8 @@ Options RetryClientTestOptions() {
           ExponentialBackoffPolicy(std::chrono::microseconds(1),
                                    std::chrono::microseconds(1), 2.0)
               .clone())
-      .set<IdempotencyPolicyOption>(AlwaysRetryIdempotencyPolicy().clone());
+      .set<IdempotencyPolicyOption>(AlwaysRetryIdempotencyPolicy().clone())
+      .set<AuthorityOption>(kTestAuthority);
 }
 
 ::testing::Matcher<Status> StoppedOnTooManyTransients(char const* api_name) {
@@ -86,22 +92,25 @@ Options RetryClientTestOptions() {
 }
 
 ::testing::Matcher<std::vector<std::string>> RetryLoopUsesSingleToken() {
-  return ::testing::AllOf(
-      Not(IsEmpty()),
-      ResultOf(
-          "The retry loop uses a non-empty token",
-          [](std::vector<std::string> const& v) {
-            return v.empty() ? std::string{} : v.front();
-          },
-          Not(IsEmpty())),
-      ResultOf(
-          "All tokens are equal",
-          [](std::vector<std::string> const& v) { return v; },
-          Truly([](std::vector<std::string> const& v) {
-            auto const s = v.empty() ? std::string{} : v.front();
-            return std::all_of(v.begin(), v.end(),
-                               [s](auto const& x) { return x == s; });
-          })));
+  return AllOf(Not(IsEmpty()),
+               ResultOf(
+                   "The retry loop uses a non-empty token",
+                   [](std::vector<std::string> const& v) {
+                     return v.empty() ? std::string{} : v.front();
+                   },
+                   Not(IsEmpty())),
+               ResultOf(
+                   "All tokens are equal",
+                   [](std::vector<std::string> const& v) { return v; },
+                   Truly([](std::vector<std::string> const& v) {
+                     auto const s = v.empty() ? std::string{} : v.front();
+                     return std::all_of(v.begin(), v.end(),
+                                        [s](auto const& x) { return x == s; });
+                   })));
+}
+
+::testing::Matcher<std::vector<std::string>> RetryLoopUsesOptions() {
+  return AllOf(Not(IsEmpty()), Each(Eq(kTestAuthority)));
 }
 
 void CaptureIdempotencyToken(std::vector<std::string>& tokens,
@@ -110,6 +119,12 @@ void CaptureIdempotencyToken(std::vector<std::string>& tokens,
   auto l = headers.find(kIdempotencyTokenHeader);
   if (l == headers.end()) return;
   tokens.insert(tokens.end(), l->second.begin(), l->second.end());
+}
+
+void CaptureAuthorityOption(std::vector<std::string>& authority,
+                            rest_internal::RestContext const& context) {
+  if (!context.options().has<AuthorityOption>()) return;
+  authority.push_back(context.options().get<AuthorityOption>());
 }
 
 MockRetryClientFunction::MockRetryClientFunction(Status status)
