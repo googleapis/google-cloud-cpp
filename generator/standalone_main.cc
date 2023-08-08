@@ -177,7 +177,11 @@ int WriteFeatureList(
     google::cloud::cpp::generator::GeneratorConfiguration const& config,
     std::string const& output_path) {
   std::vector<std::string> features;
-  for (auto const& service : config.service()) {
+  auto services = config.service();
+  for (auto const& p : config.discovery_products()) {
+    services.Add(p.rest_services().begin(), p.rest_services().end());
+  }
+  for (auto const& service : services) {
     if (service.product_path().empty()) {
       GCP_LOG(ERROR) << "Empty product path in config, service="
                      << service.DebugString() << "\n";
