@@ -47,9 +47,6 @@ TEST(RetryClient, ListBucketAclTooManyFailures) {
   EXPECT_THAT(response, StoppedOnTooManyTransients("ListBucketAcl"));
   EXPECT_THAT(transient.captured_tokens(), RetryLoopUsesSingleToken());
   EXPECT_THAT(transient.captured_authority_options(), RetryLoopUsesOptions());
-  EXPECT_THAT(transient.captured_authority_options(), RetryLoopUsesOptions());
-  EXPECT_THAT(transient.captured_authority_options(), RetryLoopUsesOptions());
-  EXPECT_THAT(transient.captured_authority_options(), RetryLoopUsesOptions());
 }
 
 TEST(RetryClient, ListBucketAclPermanentFailure) {
