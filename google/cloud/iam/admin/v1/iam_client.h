@@ -1024,7 +1024,7 @@ class IAMClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.iam.admin.v1.ServiceAccount]: @googleapis_reference_link{google/iam/admin/v1/iam.proto#L493}
   /// [google.iam.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L123}
-  /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L98}
+  /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
   ///
   // clang-format on
   StatusOr<google::iam::v1::Policy> GetIamPolicy(std::string const& resource,
@@ -1065,7 +1065,7 @@ class IAMClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.iam.admin.v1.ServiceAccount]: @googleapis_reference_link{google/iam/admin/v1/iam.proto#L493}
   /// [google.iam.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L123}
-  /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L98}
+  /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
   ///
   // clang-format on
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
@@ -1114,7 +1114,7 @@ class IAMClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.iam.admin.v1.ServiceAccount]: @googleapis_reference_link{google/iam/admin/v1/iam.proto#L493}
-  /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L98}
+  /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
   /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
   ///
   // clang-format on
@@ -1189,7 +1189,7 @@ class IAMClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.iam.admin.v1.ServiceAccount]: @googleapis_reference_link{google/iam/admin/v1/iam.proto#L493}
-  /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L98}
+  /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
   /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
   ///
   // clang-format on
@@ -1527,7 +1527,7 @@ class IAMClient {
   /// [google.iam.admin.v1.DeleteRoleRequest]: @googleapis_reference_link{google/iam/admin/v1/iam.proto#L1347}
   /// [google.iam.admin.v1.IAM.ListRoles]: @googleapis_reference_link{google/iam/admin/v1/iam.proto#L359}
   /// [google.iam.admin.v1.Role]: @googleapis_reference_link{google/iam/admin/v1/iam.proto#L1070}
-  /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L98}
+  /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
   ///
   // clang-format on
   StatusOr<google::iam::admin::v1::Role> DeleteRole(
@@ -1677,7 +1677,7 @@ class IAMClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.iam.admin.v1.LintPolicyRequest]: @googleapis_reference_link{google/iam/admin/v1/iam.proto#L1522}
   /// [google.iam.admin.v1.LintPolicyResponse]: @googleapis_reference_link{google/iam/admin/v1/iam.proto#L1620}
-  /// [google.iam.v1.Binding.condition]: @googleapis_reference_link{google/iam/v1/policy.proto#L220}
+  /// [google.iam.v1.Binding.condition]: @googleapis_reference_link{google/iam/v1/policy.proto#L224}
   ///
   // clang-format on
   StatusOr<google::iam::admin::v1::LintPolicyResponse> LintPolicy(

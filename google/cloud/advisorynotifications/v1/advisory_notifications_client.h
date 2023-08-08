@@ -118,8 +118,8 @@ class AdvisoryNotificationsServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.advisorynotifications.v1.ListNotificationsRequest]: @googleapis_reference_link{google/cloud/advisorynotifications/v1/service.proto#L204}
-  /// [google.cloud.advisorynotifications.v1.Notification]: @googleapis_reference_link{google/cloud/advisorynotifications/v1/service.proto#L109}
+  /// [google.cloud.advisorynotifications.v1.ListNotificationsRequest]: @googleapis_reference_link{google/cloud/advisorynotifications/v1/service.proto#L212}
+  /// [google.cloud.advisorynotifications.v1.Notification]: @googleapis_reference_link{google/cloud/advisorynotifications/v1/service.proto#L115}
   ///
   // clang-format on
   StreamRange<google::cloud::advisorynotifications::v1::Notification>
@@ -158,8 +158,8 @@ class AdvisoryNotificationsServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.advisorynotifications.v1.ListNotificationsRequest]: @googleapis_reference_link{google/cloud/advisorynotifications/v1/service.proto#L204}
-  /// [google.cloud.advisorynotifications.v1.Notification]: @googleapis_reference_link{google/cloud/advisorynotifications/v1/service.proto#L109}
+  /// [google.cloud.advisorynotifications.v1.ListNotificationsRequest]: @googleapis_reference_link{google/cloud/advisorynotifications/v1/service.proto#L212}
+  /// [google.cloud.advisorynotifications.v1.Notification]: @googleapis_reference_link{google/cloud/advisorynotifications/v1/service.proto#L115}
   ///
   // clang-format on
   StreamRange<google::cloud::advisorynotifications::v1::Notification>
@@ -189,8 +189,8 @@ class AdvisoryNotificationsServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.advisorynotifications.v1.GetNotificationRequest]: @googleapis_reference_link{google/cloud/advisorynotifications/v1/service.proto#L251}
-  /// [google.cloud.advisorynotifications.v1.Notification]: @googleapis_reference_link{google/cloud/advisorynotifications/v1/service.proto#L109}
+  /// [google.cloud.advisorynotifications.v1.GetNotificationRequest]: @googleapis_reference_link{google/cloud/advisorynotifications/v1/service.proto#L259}
+  /// [google.cloud.advisorynotifications.v1.Notification]: @googleapis_reference_link{google/cloud/advisorynotifications/v1/service.proto#L115}
   ///
   // clang-format on
   StatusOr<google::cloud::advisorynotifications::v1::Notification>
@@ -220,8 +220,8 @@ class AdvisoryNotificationsServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.advisorynotifications.v1.GetNotificationRequest]: @googleapis_reference_link{google/cloud/advisorynotifications/v1/service.proto#L251}
-  /// [google.cloud.advisorynotifications.v1.Notification]: @googleapis_reference_link{google/cloud/advisorynotifications/v1/service.proto#L109}
+  /// [google.cloud.advisorynotifications.v1.GetNotificationRequest]: @googleapis_reference_link{google/cloud/advisorynotifications/v1/service.proto#L259}
+  /// [google.cloud.advisorynotifications.v1.Notification]: @googleapis_reference_link{google/cloud/advisorynotifications/v1/service.proto#L115}
   ///
   // clang-format on
   StatusOr<google::cloud::advisorynotifications::v1::Notification>

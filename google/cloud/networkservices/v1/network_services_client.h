@@ -90,8 +90,8 @@ class NetworkServicesClient {
   ///
   /// Lists EndpointPolicies in a given project and location.
   ///
-  /// @param parent  Required. The project and location from which the EndpointPolicies should be
-  ///  listed, specified in the format `projects/*/locations/global`.
+  /// @param parent  Required. The project and location from which the EndpointPolicies should
+  ///  be listed, specified in the format `projects/*/locations/global`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [StreamRange](@ref google::cloud::StreamRange)
@@ -116,7 +116,7 @@ class NetworkServicesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.networkservices.v1.EndpointPolicy]: @googleapis_reference_link{google/cloud/networkservices/v1/endpoint_policy.proto#L49}
-  /// [google.cloud.networkservices.v1.ListEndpointPoliciesRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/endpoint_policy.proto#L134}
+  /// [google.cloud.networkservices.v1.ListEndpointPoliciesRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/endpoint_policy.proto#L139}
   ///
   // clang-format on
   StreamRange<google::cloud::networkservices::v1::EndpointPolicy>
@@ -156,7 +156,7 @@ class NetworkServicesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.networkservices.v1.EndpointPolicy]: @googleapis_reference_link{google/cloud/networkservices/v1/endpoint_policy.proto#L49}
-  /// [google.cloud.networkservices.v1.ListEndpointPoliciesRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/endpoint_policy.proto#L134}
+  /// [google.cloud.networkservices.v1.ListEndpointPoliciesRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/endpoint_policy.proto#L139}
   ///
   // clang-format on
   StreamRange<google::cloud::networkservices::v1::EndpointPolicy>
@@ -185,7 +185,7 @@ class NetworkServicesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.networkservices.v1.EndpointPolicy]: @googleapis_reference_link{google/cloud/networkservices/v1/endpoint_policy.proto#L49}
-  /// [google.cloud.networkservices.v1.GetEndpointPolicyRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/endpoint_policy.proto#L166}
+  /// [google.cloud.networkservices.v1.GetEndpointPolicyRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/endpoint_policy.proto#L171}
   ///
   // clang-format on
   StatusOr<google::cloud::networkservices::v1::EndpointPolicy>
@@ -216,7 +216,7 @@ class NetworkServicesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.networkservices.v1.EndpointPolicy]: @googleapis_reference_link{google/cloud/networkservices/v1/endpoint_policy.proto#L49}
-  /// [google.cloud.networkservices.v1.GetEndpointPolicyRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/endpoint_policy.proto#L166}
+  /// [google.cloud.networkservices.v1.GetEndpointPolicyRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/endpoint_policy.proto#L171}
   ///
   // clang-format on
   StatusOr<google::cloud::networkservices::v1::EndpointPolicy>
@@ -254,7 +254,7 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.CreateEndpointPolicyRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/endpoint_policy.proto#L178}
+  /// [google.cloud.networkservices.v1.CreateEndpointPolicyRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/endpoint_policy.proto#L183}
   /// [google.cloud.networkservices.v1.EndpointPolicy]: @googleapis_reference_link{google/cloud/networkservices/v1/endpoint_policy.proto#L49}
   ///
   // clang-format on
@@ -294,7 +294,7 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.CreateEndpointPolicyRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/endpoint_policy.proto#L178}
+  /// [google.cloud.networkservices.v1.CreateEndpointPolicyRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/endpoint_policy.proto#L183}
   /// [google.cloud.networkservices.v1.EndpointPolicy]: @googleapis_reference_link{google/cloud/networkservices/v1/endpoint_policy.proto#L49}
   ///
   // clang-format on
@@ -335,7 +335,7 @@ class NetworkServicesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.networkservices.v1.EndpointPolicy]: @googleapis_reference_link{google/cloud/networkservices/v1/endpoint_policy.proto#L49}
-  /// [google.cloud.networkservices.v1.UpdateEndpointPolicyRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/endpoint_policy.proto#L197}
+  /// [google.cloud.networkservices.v1.UpdateEndpointPolicyRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/endpoint_policy.proto#L202}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::EndpointPolicy>>
@@ -374,7 +374,7 @@ class NetworkServicesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.networkservices.v1.EndpointPolicy]: @googleapis_reference_link{google/cloud/networkservices/v1/endpoint_policy.proto#L49}
-  /// [google.cloud.networkservices.v1.UpdateEndpointPolicyRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/endpoint_policy.proto#L197}
+  /// [google.cloud.networkservices.v1.UpdateEndpointPolicyRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/endpoint_policy.proto#L202}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::EndpointPolicy>>
@@ -409,7 +409,7 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.DeleteEndpointPolicyRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/endpoint_policy.proto#L210}
+  /// [google.cloud.networkservices.v1.DeleteEndpointPolicyRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/endpoint_policy.proto#L216}
   /// [google.cloud.networkservices.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/networkservices/v1/common.proto#L31}
   ///
   // clang-format on
@@ -446,7 +446,7 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.DeleteEndpointPolicyRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/endpoint_policy.proto#L210}
+  /// [google.cloud.networkservices.v1.DeleteEndpointPolicyRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/endpoint_policy.proto#L216}
   /// [google.cloud.networkservices.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/networkservices/v1/common.proto#L31}
   ///
   // clang-format on
@@ -486,7 +486,7 @@ class NetworkServicesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.networkservices.v1.Gateway]: @googleapis_reference_link{google/cloud/networkservices/v1/gateway.proto#L36}
-  /// [google.cloud.networkservices.v1.ListGatewaysRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/gateway.proto#L105}
+  /// [google.cloud.networkservices.v1.ListGatewaysRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/gateway.proto#L108}
   ///
   // clang-format on
   StreamRange<google::cloud::networkservices::v1::Gateway> ListGateways(
@@ -526,7 +526,7 @@ class NetworkServicesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.networkservices.v1.Gateway]: @googleapis_reference_link{google/cloud/networkservices/v1/gateway.proto#L36}
-  /// [google.cloud.networkservices.v1.ListGatewaysRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/gateway.proto#L105}
+  /// [google.cloud.networkservices.v1.ListGatewaysRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/gateway.proto#L108}
   ///
   // clang-format on
   StreamRange<google::cloud::networkservices::v1::Gateway> ListGateways(
@@ -554,7 +554,7 @@ class NetworkServicesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.networkservices.v1.Gateway]: @googleapis_reference_link{google/cloud/networkservices/v1/gateway.proto#L36}
-  /// [google.cloud.networkservices.v1.GetGatewayRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/gateway.proto#L136}
+  /// [google.cloud.networkservices.v1.GetGatewayRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/gateway.proto#L139}
   ///
   // clang-format on
   StatusOr<google::cloud::networkservices::v1::Gateway> GetGateway(
@@ -585,7 +585,7 @@ class NetworkServicesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.networkservices.v1.Gateway]: @googleapis_reference_link{google/cloud/networkservices/v1/gateway.proto#L36}
-  /// [google.cloud.networkservices.v1.GetGatewayRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/gateway.proto#L136}
+  /// [google.cloud.networkservices.v1.GetGatewayRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/gateway.proto#L139}
   ///
   // clang-format on
   StatusOr<google::cloud::networkservices::v1::Gateway> GetGateway(
@@ -620,7 +620,7 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.CreateGatewayRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/gateway.proto#L148}
+  /// [google.cloud.networkservices.v1.CreateGatewayRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/gateway.proto#L151}
   /// [google.cloud.networkservices.v1.Gateway]: @googleapis_reference_link{google/cloud/networkservices/v1/gateway.proto#L36}
   ///
   // clang-format on
@@ -659,7 +659,7 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.CreateGatewayRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/gateway.proto#L148}
+  /// [google.cloud.networkservices.v1.CreateGatewayRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/gateway.proto#L151}
   /// [google.cloud.networkservices.v1.Gateway]: @googleapis_reference_link{google/cloud/networkservices/v1/gateway.proto#L36}
   ///
   // clang-format on
@@ -698,7 +698,7 @@ class NetworkServicesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.networkservices.v1.Gateway]: @googleapis_reference_link{google/cloud/networkservices/v1/gateway.proto#L36}
-  /// [google.cloud.networkservices.v1.UpdateGatewayRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/gateway.proto#L166}
+  /// [google.cloud.networkservices.v1.UpdateGatewayRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/gateway.proto#L169}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::Gateway>> UpdateGateway(
@@ -736,7 +736,7 @@ class NetworkServicesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.networkservices.v1.Gateway]: @googleapis_reference_link{google/cloud/networkservices/v1/gateway.proto#L36}
-  /// [google.cloud.networkservices.v1.UpdateGatewayRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/gateway.proto#L166}
+  /// [google.cloud.networkservices.v1.UpdateGatewayRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/gateway.proto#L169}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::Gateway>> UpdateGateway(
@@ -769,7 +769,7 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.DeleteGatewayRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/gateway.proto#L179}
+  /// [google.cloud.networkservices.v1.DeleteGatewayRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/gateway.proto#L183}
   /// [google.cloud.networkservices.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/networkservices/v1/common.proto#L31}
   ///
   // clang-format on
@@ -806,7 +806,7 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.DeleteGatewayRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/gateway.proto#L179}
+  /// [google.cloud.networkservices.v1.DeleteGatewayRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/gateway.proto#L183}
   /// [google.cloud.networkservices.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/networkservices/v1/common.proto#L31}
   ///
   // clang-format on
@@ -845,7 +845,7 @@ class NetworkServicesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.networkservices.v1.GrpcRoute]: @googleapis_reference_link{google/cloud/networkservices/v1/grpc_route.proto#L35}
-  /// [google.cloud.networkservices.v1.ListGrpcRoutesRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/grpc_route.proto#L330}
+  /// [google.cloud.networkservices.v1.ListGrpcRoutesRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/grpc_route.proto#L340}
   ///
   // clang-format on
   StreamRange<google::cloud::networkservices::v1::GrpcRoute> ListGrpcRoutes(
@@ -885,7 +885,7 @@ class NetworkServicesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.networkservices.v1.GrpcRoute]: @googleapis_reference_link{google/cloud/networkservices/v1/grpc_route.proto#L35}
-  /// [google.cloud.networkservices.v1.ListGrpcRoutesRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/grpc_route.proto#L330}
+  /// [google.cloud.networkservices.v1.ListGrpcRoutesRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/grpc_route.proto#L340}
   ///
   // clang-format on
   StreamRange<google::cloud::networkservices::v1::GrpcRoute> ListGrpcRoutes(
@@ -912,7 +912,7 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.GetGrpcRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/grpc_route.proto#L361}
+  /// [google.cloud.networkservices.v1.GetGrpcRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/grpc_route.proto#L371}
   /// [google.cloud.networkservices.v1.GrpcRoute]: @googleapis_reference_link{google/cloud/networkservices/v1/grpc_route.proto#L35}
   ///
   // clang-format on
@@ -943,7 +943,7 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.GetGrpcRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/grpc_route.proto#L361}
+  /// [google.cloud.networkservices.v1.GetGrpcRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/grpc_route.proto#L371}
   /// [google.cloud.networkservices.v1.GrpcRoute]: @googleapis_reference_link{google/cloud/networkservices/v1/grpc_route.proto#L35}
   ///
   // clang-format on
@@ -979,7 +979,7 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.CreateGrpcRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/grpc_route.proto#L373}
+  /// [google.cloud.networkservices.v1.CreateGrpcRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/grpc_route.proto#L383}
   /// [google.cloud.networkservices.v1.GrpcRoute]: @googleapis_reference_link{google/cloud/networkservices/v1/grpc_route.proto#L35}
   ///
   // clang-format on
@@ -1019,7 +1019,7 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.CreateGrpcRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/grpc_route.proto#L373}
+  /// [google.cloud.networkservices.v1.CreateGrpcRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/grpc_route.proto#L383}
   /// [google.cloud.networkservices.v1.GrpcRoute]: @googleapis_reference_link{google/cloud/networkservices/v1/grpc_route.proto#L35}
   ///
   // clang-format on
@@ -1059,7 +1059,7 @@ class NetworkServicesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.networkservices.v1.GrpcRoute]: @googleapis_reference_link{google/cloud/networkservices/v1/grpc_route.proto#L35}
-  /// [google.cloud.networkservices.v1.UpdateGrpcRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/grpc_route.proto#L391}
+  /// [google.cloud.networkservices.v1.UpdateGrpcRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/grpc_route.proto#L401}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::GrpcRoute>>
@@ -1098,7 +1098,7 @@ class NetworkServicesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.networkservices.v1.GrpcRoute]: @googleapis_reference_link{google/cloud/networkservices/v1/grpc_route.proto#L35}
-  /// [google.cloud.networkservices.v1.UpdateGrpcRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/grpc_route.proto#L391}
+  /// [google.cloud.networkservices.v1.UpdateGrpcRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/grpc_route.proto#L401}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::GrpcRoute>>
@@ -1132,7 +1132,7 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.DeleteGrpcRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/grpc_route.proto#L404}
+  /// [google.cloud.networkservices.v1.DeleteGrpcRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/grpc_route.proto#L415}
   /// [google.cloud.networkservices.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/networkservices/v1/common.proto#L31}
   ///
   // clang-format on
@@ -1169,7 +1169,7 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.DeleteGrpcRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/grpc_route.proto#L404}
+  /// [google.cloud.networkservices.v1.DeleteGrpcRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/grpc_route.proto#L415}
   /// [google.cloud.networkservices.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/networkservices/v1/common.proto#L31}
   ///
   // clang-format on
@@ -1208,7 +1208,7 @@ class NetworkServicesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.networkservices.v1.HttpRoute]: @googleapis_reference_link{google/cloud/networkservices/v1/http_route.proto#L35}
-  /// [google.cloud.networkservices.v1.ListHttpRoutesRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/http_route.proto#L533}
+  /// [google.cloud.networkservices.v1.ListHttpRoutesRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/http_route.proto#L541}
   ///
   // clang-format on
   StreamRange<google::cloud::networkservices::v1::HttpRoute> ListHttpRoutes(
@@ -1248,7 +1248,7 @@ class NetworkServicesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.networkservices.v1.HttpRoute]: @googleapis_reference_link{google/cloud/networkservices/v1/http_route.proto#L35}
-  /// [google.cloud.networkservices.v1.ListHttpRoutesRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/http_route.proto#L533}
+  /// [google.cloud.networkservices.v1.ListHttpRoutesRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/http_route.proto#L541}
   ///
   // clang-format on
   StreamRange<google::cloud::networkservices::v1::HttpRoute> ListHttpRoutes(
@@ -1275,7 +1275,7 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.GetHttpRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/http_route.proto#L564}
+  /// [google.cloud.networkservices.v1.GetHttpRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/http_route.proto#L572}
   /// [google.cloud.networkservices.v1.HttpRoute]: @googleapis_reference_link{google/cloud/networkservices/v1/http_route.proto#L35}
   ///
   // clang-format on
@@ -1306,7 +1306,7 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.GetHttpRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/http_route.proto#L564}
+  /// [google.cloud.networkservices.v1.GetHttpRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/http_route.proto#L572}
   /// [google.cloud.networkservices.v1.HttpRoute]: @googleapis_reference_link{google/cloud/networkservices/v1/http_route.proto#L35}
   ///
   // clang-format on
@@ -1342,7 +1342,7 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.CreateHttpRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/http_route.proto#L576}
+  /// [google.cloud.networkservices.v1.CreateHttpRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/http_route.proto#L584}
   /// [google.cloud.networkservices.v1.HttpRoute]: @googleapis_reference_link{google/cloud/networkservices/v1/http_route.proto#L35}
   ///
   // clang-format on
@@ -1382,7 +1382,7 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.CreateHttpRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/http_route.proto#L576}
+  /// [google.cloud.networkservices.v1.CreateHttpRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/http_route.proto#L584}
   /// [google.cloud.networkservices.v1.HttpRoute]: @googleapis_reference_link{google/cloud/networkservices/v1/http_route.proto#L35}
   ///
   // clang-format on
@@ -1422,7 +1422,7 @@ class NetworkServicesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.networkservices.v1.HttpRoute]: @googleapis_reference_link{google/cloud/networkservices/v1/http_route.proto#L35}
-  /// [google.cloud.networkservices.v1.UpdateHttpRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/http_route.proto#L594}
+  /// [google.cloud.networkservices.v1.UpdateHttpRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/http_route.proto#L602}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::HttpRoute>>
@@ -1461,7 +1461,7 @@ class NetworkServicesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.networkservices.v1.HttpRoute]: @googleapis_reference_link{google/cloud/networkservices/v1/http_route.proto#L35}
-  /// [google.cloud.networkservices.v1.UpdateHttpRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/http_route.proto#L594}
+  /// [google.cloud.networkservices.v1.UpdateHttpRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/http_route.proto#L602}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::HttpRoute>>
@@ -1495,7 +1495,7 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.DeleteHttpRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/http_route.proto#L607}
+  /// [google.cloud.networkservices.v1.DeleteHttpRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/http_route.proto#L616}
   /// [google.cloud.networkservices.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/networkservices/v1/common.proto#L31}
   ///
   // clang-format on
@@ -1532,7 +1532,7 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.DeleteHttpRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/http_route.proto#L607}
+  /// [google.cloud.networkservices.v1.DeleteHttpRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/http_route.proto#L616}
   /// [google.cloud.networkservices.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/networkservices/v1/common.proto#L31}
   ///
   // clang-format on
@@ -1570,7 +1570,7 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.ListTcpRoutesRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/tcp_route.proto#L167}
+  /// [google.cloud.networkservices.v1.ListTcpRoutesRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/tcp_route.proto#L173}
   /// [google.cloud.networkservices.v1.TcpRoute]: @googleapis_reference_link{google/cloud/networkservices/v1/tcp_route.proto#L38}
   ///
   // clang-format on
@@ -1610,7 +1610,7 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.ListTcpRoutesRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/tcp_route.proto#L167}
+  /// [google.cloud.networkservices.v1.ListTcpRoutesRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/tcp_route.proto#L173}
   /// [google.cloud.networkservices.v1.TcpRoute]: @googleapis_reference_link{google/cloud/networkservices/v1/tcp_route.proto#L38}
   ///
   // clang-format on
@@ -1638,7 +1638,7 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.GetTcpRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/tcp_route.proto#L198}
+  /// [google.cloud.networkservices.v1.GetTcpRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/tcp_route.proto#L204}
   /// [google.cloud.networkservices.v1.TcpRoute]: @googleapis_reference_link{google/cloud/networkservices/v1/tcp_route.proto#L38}
   ///
   // clang-format on
@@ -1669,7 +1669,7 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.GetTcpRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/tcp_route.proto#L198}
+  /// [google.cloud.networkservices.v1.GetTcpRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/tcp_route.proto#L204}
   /// [google.cloud.networkservices.v1.TcpRoute]: @googleapis_reference_link{google/cloud/networkservices/v1/tcp_route.proto#L38}
   ///
   // clang-format on
@@ -1684,8 +1684,7 @@ class NetworkServicesClient {
   /// @param parent  Required. The parent resource of the TcpRoute. Must be in the
   ///  format `projects/*/locations/global`.
   /// @param tcp_route  Required. TcpRoute resource to be created.
-  /// @param tcp_route_id  Required. Short name of the TcpRoute resource to be created. E.g. TODO(Add an
-  ///  example).
+  /// @param tcp_route_id  Required. Short name of the TcpRoute resource to be created.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return A [`future`] that becomes satisfied when the LRO
@@ -1706,7 +1705,7 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.CreateTcpRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/tcp_route.proto#L210}
+  /// [google.cloud.networkservices.v1.CreateTcpRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/tcp_route.proto#L216}
   /// [google.cloud.networkservices.v1.TcpRoute]: @googleapis_reference_link{google/cloud/networkservices/v1/tcp_route.proto#L38}
   ///
   // clang-format on
@@ -1745,7 +1744,7 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.CreateTcpRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/tcp_route.proto#L210}
+  /// [google.cloud.networkservices.v1.CreateTcpRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/tcp_route.proto#L216}
   /// [google.cloud.networkservices.v1.TcpRoute]: @googleapis_reference_link{google/cloud/networkservices/v1/tcp_route.proto#L38}
   ///
   // clang-format on
@@ -1784,7 +1783,7 @@ class NetworkServicesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.networkservices.v1.TcpRoute]: @googleapis_reference_link{google/cloud/networkservices/v1/tcp_route.proto#L38}
-  /// [google.cloud.networkservices.v1.UpdateTcpRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/tcp_route.proto#L229}
+  /// [google.cloud.networkservices.v1.UpdateTcpRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/tcp_route.proto#L234}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::TcpRoute>> UpdateTcpRoute(
@@ -1822,7 +1821,7 @@ class NetworkServicesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.networkservices.v1.TcpRoute]: @googleapis_reference_link{google/cloud/networkservices/v1/tcp_route.proto#L38}
-  /// [google.cloud.networkservices.v1.UpdateTcpRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/tcp_route.proto#L229}
+  /// [google.cloud.networkservices.v1.UpdateTcpRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/tcp_route.proto#L234}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::TcpRoute>> UpdateTcpRoute(
@@ -1855,7 +1854,7 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.DeleteTcpRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/tcp_route.proto#L242}
+  /// [google.cloud.networkservices.v1.DeleteTcpRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/tcp_route.proto#L248}
   /// [google.cloud.networkservices.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/networkservices/v1/common.proto#L31}
   ///
   // clang-format on
@@ -1892,7 +1891,7 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.DeleteTcpRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/tcp_route.proto#L242}
+  /// [google.cloud.networkservices.v1.DeleteTcpRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/tcp_route.proto#L248}
   /// [google.cloud.networkservices.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/networkservices/v1/common.proto#L31}
   ///
   // clang-format on
@@ -1930,7 +1929,7 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.ListTlsRoutesRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/tls_route.proto#L146}
+  /// [google.cloud.networkservices.v1.ListTlsRoutesRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/tls_route.proto#L150}
   /// [google.cloud.networkservices.v1.TlsRoute]: @googleapis_reference_link{google/cloud/networkservices/v1/tls_route.proto#L34}
   ///
   // clang-format on
@@ -1970,7 +1969,7 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.ListTlsRoutesRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/tls_route.proto#L146}
+  /// [google.cloud.networkservices.v1.ListTlsRoutesRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/tls_route.proto#L150}
   /// [google.cloud.networkservices.v1.TlsRoute]: @googleapis_reference_link{google/cloud/networkservices/v1/tls_route.proto#L34}
   ///
   // clang-format on
@@ -1998,7 +1997,7 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.GetTlsRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/tls_route.proto#L177}
+  /// [google.cloud.networkservices.v1.GetTlsRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/tls_route.proto#L181}
   /// [google.cloud.networkservices.v1.TlsRoute]: @googleapis_reference_link{google/cloud/networkservices/v1/tls_route.proto#L34}
   ///
   // clang-format on
@@ -2029,7 +2028,7 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.GetTlsRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/tls_route.proto#L177}
+  /// [google.cloud.networkservices.v1.GetTlsRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/tls_route.proto#L181}
   /// [google.cloud.networkservices.v1.TlsRoute]: @googleapis_reference_link{google/cloud/networkservices/v1/tls_route.proto#L34}
   ///
   // clang-format on
@@ -2044,8 +2043,7 @@ class NetworkServicesClient {
   /// @param parent  Required. The parent resource of the TlsRoute. Must be in the
   ///  format `projects/*/locations/global`.
   /// @param tls_route  Required. TlsRoute resource to be created.
-  /// @param tls_route_id  Required. Short name of the TlsRoute resource to be created. E.g. TODO(Add an
-  ///  example).
+  /// @param tls_route_id  Required. Short name of the TlsRoute resource to be created.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return A [`future`] that becomes satisfied when the LRO
@@ -2066,7 +2064,7 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.CreateTlsRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/tls_route.proto#L189}
+  /// [google.cloud.networkservices.v1.CreateTlsRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/tls_route.proto#L193}
   /// [google.cloud.networkservices.v1.TlsRoute]: @googleapis_reference_link{google/cloud/networkservices/v1/tls_route.proto#L34}
   ///
   // clang-format on
@@ -2105,7 +2103,7 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.CreateTlsRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/tls_route.proto#L189}
+  /// [google.cloud.networkservices.v1.CreateTlsRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/tls_route.proto#L193}
   /// [google.cloud.networkservices.v1.TlsRoute]: @googleapis_reference_link{google/cloud/networkservices/v1/tls_route.proto#L34}
   ///
   // clang-format on
@@ -2144,7 +2142,7 @@ class NetworkServicesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.networkservices.v1.TlsRoute]: @googleapis_reference_link{google/cloud/networkservices/v1/tls_route.proto#L34}
-  /// [google.cloud.networkservices.v1.UpdateTlsRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/tls_route.proto#L208}
+  /// [google.cloud.networkservices.v1.UpdateTlsRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/tls_route.proto#L211}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::TlsRoute>> UpdateTlsRoute(
@@ -2182,7 +2180,7 @@ class NetworkServicesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.networkservices.v1.TlsRoute]: @googleapis_reference_link{google/cloud/networkservices/v1/tls_route.proto#L34}
-  /// [google.cloud.networkservices.v1.UpdateTlsRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/tls_route.proto#L208}
+  /// [google.cloud.networkservices.v1.UpdateTlsRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/tls_route.proto#L211}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::TlsRoute>> UpdateTlsRoute(
@@ -2215,7 +2213,7 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.DeleteTlsRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/tls_route.proto#L221}
+  /// [google.cloud.networkservices.v1.DeleteTlsRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/tls_route.proto#L225}
   /// [google.cloud.networkservices.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/networkservices/v1/common.proto#L31}
   ///
   // clang-format on
@@ -2252,7 +2250,7 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.DeleteTlsRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/tls_route.proto#L221}
+  /// [google.cloud.networkservices.v1.DeleteTlsRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/tls_route.proto#L225}
   /// [google.cloud.networkservices.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/networkservices/v1/common.proto#L31}
   ///
   // clang-format on
@@ -2290,7 +2288,7 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.ListServiceBindingsRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/service_binding.proto#L61}
+  /// [google.cloud.networkservices.v1.ListServiceBindingsRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/service_binding.proto#L64}
   /// [google.cloud.networkservices.v1.ServiceBinding]: @googleapis_reference_link{google/cloud/networkservices/v1/service_binding.proto#L33}
   ///
   // clang-format on
@@ -2330,7 +2328,7 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.ListServiceBindingsRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/service_binding.proto#L61}
+  /// [google.cloud.networkservices.v1.ListServiceBindingsRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/service_binding.proto#L64}
   /// [google.cloud.networkservices.v1.ServiceBinding]: @googleapis_reference_link{google/cloud/networkservices/v1/service_binding.proto#L33}
   ///
   // clang-format on
@@ -2359,7 +2357,7 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.GetServiceBindingRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/service_binding.proto#L92}
+  /// [google.cloud.networkservices.v1.GetServiceBindingRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/service_binding.proto#L95}
   /// [google.cloud.networkservices.v1.ServiceBinding]: @googleapis_reference_link{google/cloud/networkservices/v1/service_binding.proto#L33}
   ///
   // clang-format on
@@ -2390,7 +2388,7 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.GetServiceBindingRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/service_binding.proto#L92}
+  /// [google.cloud.networkservices.v1.GetServiceBindingRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/service_binding.proto#L95}
   /// [google.cloud.networkservices.v1.ServiceBinding]: @googleapis_reference_link{google/cloud/networkservices/v1/service_binding.proto#L33}
   ///
   // clang-format on
@@ -2428,7 +2426,7 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.CreateServiceBindingRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/service_binding.proto#L104}
+  /// [google.cloud.networkservices.v1.CreateServiceBindingRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/service_binding.proto#L107}
   /// [google.cloud.networkservices.v1.ServiceBinding]: @googleapis_reference_link{google/cloud/networkservices/v1/service_binding.proto#L33}
   ///
   // clang-format on
@@ -2468,7 +2466,7 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.CreateServiceBindingRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/service_binding.proto#L104}
+  /// [google.cloud.networkservices.v1.CreateServiceBindingRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/service_binding.proto#L107}
   /// [google.cloud.networkservices.v1.ServiceBinding]: @googleapis_reference_link{google/cloud/networkservices/v1/service_binding.proto#L33}
   ///
   // clang-format on
@@ -2504,7 +2502,7 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.DeleteServiceBindingRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/service_binding.proto#L122}
+  /// [google.cloud.networkservices.v1.DeleteServiceBindingRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/service_binding.proto#L125}
   /// [google.cloud.networkservices.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/networkservices/v1/common.proto#L31}
   ///
   // clang-format on
@@ -2541,7 +2539,7 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.DeleteServiceBindingRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/service_binding.proto#L122}
+  /// [google.cloud.networkservices.v1.DeleteServiceBindingRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/service_binding.proto#L125}
   /// [google.cloud.networkservices.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/networkservices/v1/common.proto#L31}
   ///
   // clang-format on
@@ -2580,7 +2578,7 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.ListMeshesRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/mesh.proto#L70}
+  /// [google.cloud.networkservices.v1.ListMeshesRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/mesh.proto#L73}
   /// [google.cloud.networkservices.v1.Mesh]: @googleapis_reference_link{google/cloud/networkservices/v1/mesh.proto#L35}
   ///
   // clang-format on
@@ -2620,7 +2618,7 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.ListMeshesRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/mesh.proto#L70}
+  /// [google.cloud.networkservices.v1.ListMeshesRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/mesh.proto#L73}
   /// [google.cloud.networkservices.v1.Mesh]: @googleapis_reference_link{google/cloud/networkservices/v1/mesh.proto#L35}
   ///
   // clang-format on
@@ -2648,7 +2646,7 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.GetMeshRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/mesh.proto#L101}
+  /// [google.cloud.networkservices.v1.GetMeshRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/mesh.proto#L104}
   /// [google.cloud.networkservices.v1.Mesh]: @googleapis_reference_link{google/cloud/networkservices/v1/mesh.proto#L35}
   ///
   // clang-format on
@@ -2679,7 +2677,7 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.GetMeshRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/mesh.proto#L101}
+  /// [google.cloud.networkservices.v1.GetMeshRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/mesh.proto#L104}
   /// [google.cloud.networkservices.v1.Mesh]: @googleapis_reference_link{google/cloud/networkservices/v1/mesh.proto#L35}
   ///
   // clang-format on
@@ -2715,7 +2713,7 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.CreateMeshRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/mesh.proto#L113}
+  /// [google.cloud.networkservices.v1.CreateMeshRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/mesh.proto#L116}
   /// [google.cloud.networkservices.v1.Mesh]: @googleapis_reference_link{google/cloud/networkservices/v1/mesh.proto#L35}
   ///
   // clang-format on
@@ -2754,7 +2752,7 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.CreateMeshRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/mesh.proto#L113}
+  /// [google.cloud.networkservices.v1.CreateMeshRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/mesh.proto#L116}
   /// [google.cloud.networkservices.v1.Mesh]: @googleapis_reference_link{google/cloud/networkservices/v1/mesh.proto#L35}
   ///
   // clang-format on
@@ -2793,7 +2791,7 @@ class NetworkServicesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.networkservices.v1.Mesh]: @googleapis_reference_link{google/cloud/networkservices/v1/mesh.proto#L35}
-  /// [google.cloud.networkservices.v1.UpdateMeshRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/mesh.proto#L131}
+  /// [google.cloud.networkservices.v1.UpdateMeshRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/mesh.proto#L134}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::Mesh>> UpdateMesh(
@@ -2831,7 +2829,7 @@ class NetworkServicesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.networkservices.v1.Mesh]: @googleapis_reference_link{google/cloud/networkservices/v1/mesh.proto#L35}
-  /// [google.cloud.networkservices.v1.UpdateMeshRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/mesh.proto#L131}
+  /// [google.cloud.networkservices.v1.UpdateMeshRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/mesh.proto#L134}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::Mesh>> UpdateMesh(
@@ -2864,7 +2862,7 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.DeleteMeshRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/mesh.proto#L144}
+  /// [google.cloud.networkservices.v1.DeleteMeshRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/mesh.proto#L148}
   /// [google.cloud.networkservices.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/networkservices/v1/common.proto#L31}
   ///
   // clang-format on
@@ -2901,7 +2899,7 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.DeleteMeshRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/mesh.proto#L144}
+  /// [google.cloud.networkservices.v1.DeleteMeshRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/mesh.proto#L148}
   /// [google.cloud.networkservices.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/networkservices/v1/common.proto#L31}
   ///
   // clang-format on

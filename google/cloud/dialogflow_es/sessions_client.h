@@ -122,12 +122,12 @@ class SessionsClient {
   ///  environments](https://cloud.google.com/dialogflow/es/docs/agents-versions).
   /// @param query_input  Required. The input specification. It can be set to:
   ///  @n
-  ///  1.  an audio config
-  ///      which instructs the speech recognizer how to process the speech audio,
+  ///  1. an audio config which instructs the speech recognizer how to process
+  ///  the speech audio,
   ///  @n
-  ///  2.  a conversational query in the form of text, or
+  ///  2. a conversational query in the form of text, or
   ///  @n
-  ///  3.  an event that specifies which intent to trigger.
+  ///  3. an event that specifies which intent to trigger.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -232,8 +232,8 @@ class SessionsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.StreamingDetectIntentRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/session.proto#L418}
-  /// [google.cloud.dialogflow.v2.StreamingDetectIntentResponse]: @googleapis_reference_link{google/cloud/dialogflow/v2/session.proto#L570}
+  /// [google.cloud.dialogflow.v2.StreamingDetectIntentRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/session.proto#L416}
+  /// [google.cloud.dialogflow.v2.StreamingDetectIntentResponse]: @googleapis_reference_link{google/cloud/dialogflow/v2/session.proto#L568}
   ///
   // clang-format on
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
