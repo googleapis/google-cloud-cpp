@@ -35,7 +35,7 @@ class DiscoveryFile {
   // Set resources == nullptr to indicate the file only contains messages.
   DiscoveryFile(DiscoveryResource const* resource, std::string file_path,
                 std::string relative_proto_path, std::string package_name,
-                std::vector<DiscoveryTypeVertex const*> types);
+                std::vector<DiscoveryTypeVertex*> types);
 
   std::string const& file_path() const { return file_path_; }
   std::string const& relative_proto_path() const {
@@ -45,7 +45,13 @@ class DiscoveryFile {
   std::string resource_name() const {
     return (resource_ ? resource_->name() : "");
   }
-  std::vector<DiscoveryTypeVertex const*> types() const { return types_; }
+  std::vector<DiscoveryTypeVertex*> const& types() const { return types_; }
+  std::set<std::string> const& import_paths() const { return import_paths_; }
+
+  DiscoveryFile& AddType(DiscoveryTypeVertex* type) {
+    types_.push_back(type);
+    return *this;
+  }
 
   DiscoveryFile& AddImportPath(std::string import_path) {
     import_paths_.insert(std::move(import_path));
@@ -68,7 +74,8 @@ class DiscoveryFile {
   std::string relative_proto_path_;
   std::string package_name_;
   std::set<std::string> import_paths_;
-  std::vector<DiscoveryTypeVertex const*> types_;
+  std::set<std::string> resource_labels_;
+  std::vector<DiscoveryTypeVertex*> types_;
 };
 
 }  // namespace generator_internal

@@ -60,17 +60,20 @@ Status ProcessMethodRequestsAndResponses(
     std::map<std::string, DiscoveryTypeVertex>& types,
     google::protobuf::DescriptorPool const* descriptor_pool);
 
-// Creates a DiscoveryFile object for each DiscoveryResource in resources.
+// Creates a DiscoveryFile object for each DiscoveryResource in resources and
+// adds the necessary import statements for types the resource depends upon.
 std::vector<DiscoveryFile> CreateFilesFromResources(
     std::map<std::string, DiscoveryResource> const& resources,
     DiscoveryDocumentProperties const& document_properties,
-    std::string const& output_path);
+    std::string const& output_path,
+    std::map<std::string, DiscoveryFile> const& common_files);
 
-// Creates a DiscoveryFile object for each resource and each group of
-// non-request types.
-std::vector<DiscoveryFile> AssignResourcesAndTypesToFiles(
+// Creates a DiscoveryFile object for each resource and its request types, as
+// well as creates a DiscoveryFile for each group of common types that are
+// depended upon by the same set types.
+StatusOr<std::vector<DiscoveryFile>> AssignResourcesAndTypesToFiles(
     std::map<std::string, DiscoveryResource> const& resources,
-    std::map<std::string, DiscoveryTypeVertex> const& types,
+    std::map<std::string, DiscoveryTypeVertex>& types,
     DiscoveryDocumentProperties const& document_properties,
     std::string const& output_path);
 

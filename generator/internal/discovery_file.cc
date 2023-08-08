@@ -54,7 +54,7 @@ DiscoveryFile::DiscoveryFile(DiscoveryResource const* resource,
                              std::string file_path,
                              std::string relative_proto_path,
                              std::string package_name,
-                             std::vector<DiscoveryTypeVertex const*> types)
+                             std::vector<DiscoveryTypeVertex*> types)
     : resource_(resource),
       file_path_(std::move(file_path)),
       relative_proto_path_(std::move(relative_proto_path)),

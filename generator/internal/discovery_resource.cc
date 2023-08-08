@@ -81,14 +81,14 @@ void DiscoveryResource::AddResponseType(std::string name,
   response_types_.insert(std::make_pair(std::move(name), type));
 }
 
-std::vector<DiscoveryTypeVertex const*> DiscoveryResource::GetRequestTypesList()
+std::vector<DiscoveryTypeVertex*> DiscoveryResource::GetRequestTypesList()
     const {
-  std::vector<DiscoveryTypeVertex const*> v;
-  std::transform(
-      request_types_.begin(), request_types_.end(), std::back_inserter(v),
-      [](std::pair<std::string, DiscoveryTypeVertex const*> const& p) {
-        return p.second;
-      });
+  std::vector<DiscoveryTypeVertex*> v;
+  std::transform(request_types_.begin(), request_types_.end(),
+                 std::back_inserter(v),
+                 [](std::pair<std::string, DiscoveryTypeVertex*> const& p) {
+                   return p.second;
+                 });
   return v;
 }
 
