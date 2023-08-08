@@ -468,11 +468,11 @@ class BackupForGKEClient {
   /// @param backup_id  The client-provided short name for the Backup resource.
   ///  This name must:
   ///  @n
-  ///   - be between 1 and 63 characters long (inclusive)
-  ///   - consist of only lower-case ASCII letters, numbers, and dashes
-  ///   - start with a lower-case letter
-  ///   - end with a lower-case letter or number
-  ///   - be unique within the set of Backups in this BackupPlan
+  ///  - be between 1 and 63 characters long (inclusive)
+  ///  - consist of only lower-case ASCII letters, numbers, and dashes
+  ///  - start with a lower-case letter
+  ///  - end with a lower-case letter or number
+  ///  - be unique within the set of Backups in this BackupPlan
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return A [`future`] that becomes satisfied when the LRO
@@ -973,11 +973,11 @@ class BackupForGKEClient {
   /// @param restore_plan_id  Required. The client-provided short name for the RestorePlan resource.
   ///  This name must:
   ///  @n
-  ///   - be between 1 and 63 characters long (inclusive)
-  ///   - consist of only lower-case ASCII letters, numbers, and dashes
-  ///   - start with a lower-case letter
-  ///   - end with a lower-case letter or number
-  ///   - be unique within the set of RestorePlans in this location
+  ///  - be between 1 and 63 characters long (inclusive)
+  ///  - consist of only lower-case ASCII letters, numbers, and dashes
+  ///  - start with a lower-case letter
+  ///  - end with a lower-case letter or number
+  ///  - be unique within the set of RestorePlans in this location
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return A [`future`] that becomes satisfied when the LRO
@@ -1343,11 +1343,11 @@ class BackupForGKEClient {
   /// @param restore_id  Required. The client-provided short name for the Restore resource.
   ///  This name must:
   ///  @n
-  ///   - be between 1 and 63 characters long (inclusive)
-  ///   - consist of only lower-case ASCII letters, numbers, and dashes
-  ///   - start with a lower-case letter
-  ///   - end with a lower-case letter or number
-  ///   - be unique within the set of Restores in this RestorePlan.
+  ///  - be between 1 and 63 characters long (inclusive)
+  ///  - consist of only lower-case ASCII letters, numbers, and dashes
+  ///  - start with a lower-case letter
+  ///  - end with a lower-case letter or number
+  ///  - be unique within the set of Restores in this RestorePlan.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return A [`future`] that becomes satisfied when the LRO

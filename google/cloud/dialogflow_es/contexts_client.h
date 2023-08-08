@@ -119,7 +119,7 @@ class ContextsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dialogflow.v2.Context]: @googleapis_reference_link{google/cloud/dialogflow/v2/context.proto#L171}
-  /// [google.cloud.dialogflow.v2.ListContextsRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/context.proto#L227}
+  /// [google.cloud.dialogflow.v2.ListContextsRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/context.proto#L225}
   ///
   // clang-format on
   StreamRange<google::cloud::dialogflow::v2::Context> ListContexts(
@@ -159,7 +159,7 @@ class ContextsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dialogflow.v2.Context]: @googleapis_reference_link{google/cloud/dialogflow/v2/context.proto#L171}
-  /// [google.cloud.dialogflow.v2.ListContextsRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/context.proto#L227}
+  /// [google.cloud.dialogflow.v2.ListContextsRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/context.proto#L225}
   ///
   // clang-format on
   StreamRange<google::cloud::dialogflow::v2::Context> ListContexts(
@@ -198,7 +198,7 @@ class ContextsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dialogflow.v2.Context]: @googleapis_reference_link{google/cloud/dialogflow/v2/context.proto#L171}
-  /// [google.cloud.dialogflow.v2.GetContextRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/context.proto#L263}
+  /// [google.cloud.dialogflow.v2.GetContextRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/context.proto#L261}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::v2::Context> GetContext(
@@ -229,7 +229,7 @@ class ContextsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dialogflow.v2.Context]: @googleapis_reference_link{google/cloud/dialogflow/v2/context.proto#L171}
-  /// [google.cloud.dialogflow.v2.GetContextRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/context.proto#L263}
+  /// [google.cloud.dialogflow.v2.GetContextRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/context.proto#L261}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::v2::Context> GetContext(
@@ -264,7 +264,7 @@ class ContextsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dialogflow.v2.Context]: @googleapis_reference_link{google/cloud/dialogflow/v2/context.proto#L171}
-  /// [google.cloud.dialogflow.v2.CreateContextRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/context.proto#L280}
+  /// [google.cloud.dialogflow.v2.CreateContextRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/context.proto#L278}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::v2::Context> CreateContext(
@@ -298,7 +298,7 @@ class ContextsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dialogflow.v2.Context]: @googleapis_reference_link{google/cloud/dialogflow/v2/context.proto#L171}
-  /// [google.cloud.dialogflow.v2.CreateContextRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/context.proto#L280}
+  /// [google.cloud.dialogflow.v2.CreateContextRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/context.proto#L278}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::v2::Context> CreateContext(
@@ -326,7 +326,7 @@ class ContextsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dialogflow.v2.Context]: @googleapis_reference_link{google/cloud/dialogflow/v2/context.proto#L171}
-  /// [google.cloud.dialogflow.v2.UpdateContextRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/context.proto#L300}
+  /// [google.cloud.dialogflow.v2.UpdateContextRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/context.proto#L298}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::v2::Context> UpdateContext(
@@ -358,7 +358,7 @@ class ContextsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dialogflow.v2.Context]: @googleapis_reference_link{google/cloud/dialogflow/v2/context.proto#L171}
-  /// [google.cloud.dialogflow.v2.UpdateContextRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/context.proto#L300}
+  /// [google.cloud.dialogflow.v2.UpdateContextRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/context.proto#L298}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::v2::Context> UpdateContext(
@@ -394,7 +394,7 @@ class ContextsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.DeleteContextRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/context.proto#L311}
+  /// [google.cloud.dialogflow.v2.DeleteContextRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/context.proto#L309}
   ///
   // clang-format on
   Status DeleteContext(std::string const& name, Options opts = {});
@@ -421,7 +421,7 @@ class ContextsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.DeleteContextRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/context.proto#L311}
+  /// [google.cloud.dialogflow.v2.DeleteContextRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/context.proto#L309}
   ///
   // clang-format on
   Status DeleteContext(
@@ -457,7 +457,7 @@ class ContextsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.DeleteAllContextsRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/context.proto#L328}
+  /// [google.cloud.dialogflow.v2.DeleteAllContextsRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/context.proto#L326}
   ///
   // clang-format on
   Status DeleteAllContexts(std::string const& parent, Options opts = {});
@@ -484,7 +484,7 @@ class ContextsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.DeleteAllContextsRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/context.proto#L328}
+  /// [google.cloud.dialogflow.v2.DeleteAllContextsRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/context.proto#L326}
   ///
   // clang-format on
   Status DeleteAllContexts(

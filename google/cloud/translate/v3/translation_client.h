@@ -125,8 +125,8 @@ class TranslationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.translation.v3.TranslateTextRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L198}
-  /// [google.cloud.translation.v3.TranslateTextResponse]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L276}
+  /// [google.cloud.translation.v3.TranslateTextRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L199}
+  /// [google.cloud.translation.v3.TranslateTextResponse]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L277}
   ///
   // clang-format on
   StatusOr<google::cloud::translation::v3::TranslateTextResponse> TranslateText(
@@ -165,7 +165,7 @@ class TranslationServiceClient {
   ///  For example,
   ///  `projects/{project-number-or-id}/locations/global/models/general/nmt`.
   ///  @n
-  ///  If not provided, the default Google model (NMT) will be used.
+  ///  If not provided, the default Google model (NMT) will be used
   /// @param mime_type  Optional. The format of the source text, for example, "text/html",
   ///   "text/plain". If left blank, the MIME type defaults to "text/html".
   /// @param source_language_code  Optional. The ISO-639 language code of the input text if
@@ -192,8 +192,8 @@ class TranslationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.translation.v3.TranslateTextRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L198}
-  /// [google.cloud.translation.v3.TranslateTextResponse]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L276}
+  /// [google.cloud.translation.v3.TranslateTextRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L199}
+  /// [google.cloud.translation.v3.TranslateTextResponse]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L277}
   ///
   // clang-format on
   StatusOr<google::cloud::translation::v3::TranslateTextResponse> TranslateText(
@@ -226,8 +226,8 @@ class TranslationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.translation.v3.TranslateTextRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L198}
-  /// [google.cloud.translation.v3.TranslateTextResponse]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L276}
+  /// [google.cloud.translation.v3.TranslateTextRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L199}
+  /// [google.cloud.translation.v3.TranslateTextResponse]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L277}
   ///
   // clang-format on
   StatusOr<google::cloud::translation::v3::TranslateTextResponse> TranslateText(
@@ -275,8 +275,8 @@ class TranslationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.translation.v3.DetectLanguageRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L318}
-  /// [google.cloud.translation.v3.DetectLanguageResponse]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L381}
+  /// [google.cloud.translation.v3.DetectLanguageRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L319}
+  /// [google.cloud.translation.v3.DetectLanguageResponse]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L382}
   ///
   // clang-format on
   StatusOr<google::cloud::translation::v3::DetectLanguageResponse>
@@ -308,8 +308,8 @@ class TranslationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.translation.v3.DetectLanguageRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L318}
-  /// [google.cloud.translation.v3.DetectLanguageResponse]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L381}
+  /// [google.cloud.translation.v3.DetectLanguageRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L319}
+  /// [google.cloud.translation.v3.DetectLanguageResponse]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L382}
   ///
   // clang-format on
   StatusOr<google::cloud::translation::v3::DetectLanguageResponse>
@@ -363,8 +363,8 @@ class TranslationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.translation.v3.GetSupportedLanguagesRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L388}
-  /// [google.cloud.translation.v3.SupportedLanguages]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L431}
+  /// [google.cloud.translation.v3.GetSupportedLanguagesRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L389}
+  /// [google.cloud.translation.v3.SupportedLanguages]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L432}
   ///
   // clang-format on
   StatusOr<google::cloud::translation::v3::SupportedLanguages>
@@ -396,8 +396,8 @@ class TranslationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.translation.v3.GetSupportedLanguagesRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L388}
-  /// [google.cloud.translation.v3.SupportedLanguages]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L431}
+  /// [google.cloud.translation.v3.GetSupportedLanguagesRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L389}
+  /// [google.cloud.translation.v3.SupportedLanguages]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L432}
   ///
   // clang-format on
   StatusOr<google::cloud::translation::v3::SupportedLanguages>
@@ -430,8 +430,8 @@ class TranslationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.translation.v3.TranslateDocumentRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L683}
-  /// [google.cloud.translation.v3.TranslateDocumentResponse]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L792}
+  /// [google.cloud.translation.v3.TranslateDocumentRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L684}
+  /// [google.cloud.translation.v3.TranslateDocumentResponse]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L797}
   ///
   // clang-format on
   StatusOr<google::cloud::translation::v3::TranslateDocumentResponse>
@@ -475,8 +475,8 @@ class TranslationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.translation.v3.BatchTranslateResponse]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L936}
-  /// [google.cloud.translation.v3.BatchTranslateTextRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L816}
+  /// [google.cloud.translation.v3.BatchTranslateResponse]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L941}
+  /// [google.cloud.translation.v3.BatchTranslateTextRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L821}
   ///
   // clang-format on
   future<StatusOr<google::cloud::translation::v3::BatchTranslateResponse>>
@@ -535,8 +535,8 @@ class TranslationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.translation.v3.BatchTranslateDocumentRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1217}
-  /// [google.cloud.translation.v3.BatchTranslateDocumentResponse]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1383}
+  /// [google.cloud.translation.v3.BatchTranslateDocumentRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1222}
+  /// [google.cloud.translation.v3.BatchTranslateDocumentResponse]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1398}
   ///
   // clang-format on
   future<
@@ -587,8 +587,8 @@ class TranslationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.translation.v3.BatchTranslateDocumentRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1217}
-  /// [google.cloud.translation.v3.BatchTranslateDocumentResponse]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1383}
+  /// [google.cloud.translation.v3.BatchTranslateDocumentRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1222}
+  /// [google.cloud.translation.v3.BatchTranslateDocumentResponse]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1398}
   ///
   // clang-format on
   future<
@@ -625,8 +625,8 @@ class TranslationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.translation.v3.CreateGlossaryRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1043}
-  /// [google.cloud.translation.v3.Glossary]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L985}
+  /// [google.cloud.translation.v3.CreateGlossaryRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1048}
+  /// [google.cloud.translation.v3.Glossary]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L990}
   ///
   // clang-format on
   future<StatusOr<google::cloud::translation::v3::Glossary>> CreateGlossary(
@@ -665,8 +665,8 @@ class TranslationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.translation.v3.CreateGlossaryRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1043}
-  /// [google.cloud.translation.v3.Glossary]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L985}
+  /// [google.cloud.translation.v3.CreateGlossaryRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1048}
+  /// [google.cloud.translation.v3.Glossary]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L990}
   ///
   // clang-format on
   future<StatusOr<google::cloud::translation::v3::Glossary>> CreateGlossary(
@@ -702,8 +702,8 @@ class TranslationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.translation.v3.Glossary]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L985}
-  /// [google.cloud.translation.v3.ListGlossariesRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1079}
+  /// [google.cloud.translation.v3.Glossary]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L990}
+  /// [google.cloud.translation.v3.ListGlossariesRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1084}
   ///
   // clang-format on
   StreamRange<google::cloud::translation::v3::Glossary> ListGlossaries(
@@ -743,8 +743,8 @@ class TranslationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.translation.v3.Glossary]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L985}
-  /// [google.cloud.translation.v3.ListGlossariesRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1079}
+  /// [google.cloud.translation.v3.Glossary]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L990}
+  /// [google.cloud.translation.v3.ListGlossariesRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1084}
   ///
   // clang-format on
   StreamRange<google::cloud::translation::v3::Glossary> ListGlossaries(
@@ -771,8 +771,8 @@ class TranslationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.translation.v3.GetGlossaryRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1057}
-  /// [google.cloud.translation.v3.Glossary]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L985}
+  /// [google.cloud.translation.v3.GetGlossaryRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1062}
+  /// [google.cloud.translation.v3.Glossary]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L990}
   ///
   // clang-format on
   StatusOr<google::cloud::translation::v3::Glossary> GetGlossary(
@@ -803,8 +803,8 @@ class TranslationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.translation.v3.GetGlossaryRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1057}
-  /// [google.cloud.translation.v3.Glossary]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L985}
+  /// [google.cloud.translation.v3.GetGlossaryRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1062}
+  /// [google.cloud.translation.v3.Glossary]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L990}
   ///
   // clang-format on
   StatusOr<google::cloud::translation::v3::Glossary> GetGlossary(
@@ -838,8 +838,8 @@ class TranslationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.translation.v3.DeleteGlossaryRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1068}
-  /// [google.cloud.translation.v3.DeleteGlossaryResponse]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1203}
+  /// [google.cloud.translation.v3.DeleteGlossaryRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1073}
+  /// [google.cloud.translation.v3.DeleteGlossaryResponse]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1208}
   ///
   // clang-format on
   future<StatusOr<google::cloud::translation::v3::DeleteGlossaryResponse>>
@@ -877,8 +877,8 @@ class TranslationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.translation.v3.DeleteGlossaryRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1068}
-  /// [google.cloud.translation.v3.DeleteGlossaryResponse]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1203}
+  /// [google.cloud.translation.v3.DeleteGlossaryRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1073}
+  /// [google.cloud.translation.v3.DeleteGlossaryResponse]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1208}
   ///
   // clang-format on
   future<StatusOr<google::cloud::translation::v3::DeleteGlossaryResponse>>
