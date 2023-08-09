@@ -50,6 +50,10 @@ if [ -z "${GENERATE_GOLDEN_ONLY}" ]; then
   find "${PROJECT_ROOT}/google/cloud/compute/v1/internal/" -name '*.proto' -a ! -newer "${newer_tmp_file}" -exec git rm {} \;
   rm "${newer_tmp_file}"
 
+  io::log_h2 "Formatting and adding any new google/cloud/compute/v1/internal/common_*.proto"
+  find "${PROJECT_ROOT}/google/cloud/compute/v1/internal" -name '*.proto' -exec clang-format -i {} \;
+  git add "${PROJECT_ROOT}/google/cloud/compute/v1/internal/common_*.proto"
+
   io::log_h2 "Formatting generated protos"
   git ls-files -z -- '*.proto' |
     xargs -P "$(nproc)" -n 1 -0 clang-format -i
