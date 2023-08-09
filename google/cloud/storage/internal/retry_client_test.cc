@@ -70,7 +70,7 @@ TEST(RetryClientTest, NonIdempotentErrorHandling) {
   auto client = RetryClient::Create(std::move(mock));
   google::cloud::internal::OptionsSpan const span(
       BasicTestPolicies().set<IdempotencyPolicyOption>(
-           CustomIdempotencyPolicy().clone()));
+          CustomIdempotencyPolicy().clone()));
 
   StatusOr<EmptyResponse> result =
       client->DeleteObject(DeleteObjectRequest("test-bucket", "test-object"));
