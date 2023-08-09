@@ -59,13 +59,8 @@ Options PopulateCommonOptions(Options opts, std::string const& endpoint_env_var,
     opts.set<UserProjectOption>(*std::move(e));
   }
 
-  if (!opts.has<experimental::OpenTelemetryTracingOption>()) {
-    // The Option takes precedence over the environment variable, so we can
-    // explicitly turn off tracing in the Cloud Trace client that implements our
-    // Cloud Trace Exporter.
-    if (GetEnv("GOOGLE_CLOUD_CPP_OPENTELEMETRY_TRACING")) {
-      opts.set<experimental::OpenTelemetryTracingOption>(true);
-    }
+  if (GetEnv("GOOGLE_CLOUD_CPP_OPENTELEMETRY_TRACING")) {
+    opts.set<experimental::OpenTelemetryTracingOption>(true);
   }
   if (!opts.has<TracingComponentsOption>()) {
     opts.set<TracingComponentsOption>(DefaultTracingComponents());
