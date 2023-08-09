@@ -14,7 +14,7 @@
 
 #include "google/cloud/storage/internal/hybrid_client.h"
 #include "google/cloud/storage/internal/generic_stub_adapter.h"
-#include "google/cloud/storage/internal/grpc/client.h"
+#include "google/cloud/storage/internal/grpc/stub.h"
 #include "google/cloud/storage/internal/rest/client.h"
 #include "absl/strings/match.h"
 #include <iterator>
@@ -25,7 +25,7 @@ namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 HybridClient::HybridClient(Options const& options)
-    : grpc_(std::make_unique<GrpcClient>(DefaultOptionsGrpc(options))),
+    : grpc_(std::make_unique<GrpcStub>(DefaultOptionsGrpc(options))),
       rest_(std::make_unique<storage::internal::RestClient>(
           storage::internal::DefaultOptionsWithCredentials(options))) {}
 

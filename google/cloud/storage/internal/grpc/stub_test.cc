@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/storage/internal/grpc/client.h"
+#include "google/cloud/storage/internal/grpc/stub.h"
 #include "google/cloud/storage/grpc_plugin.h"
 #include "google/cloud/storage/options.h"
 #include "google/cloud/storage/testing/mock_storage_stub.h"
@@ -73,11 +73,11 @@ rest_internal::RestContext TestContext() {
       .AddHeader(kIdempotencyTokenHeader, "test-token-1234");
 }
 
-std::unique_ptr<GrpcClient> CreateTestClient(
+std::unique_ptr<GrpcStub> CreateTestClient(
     std::shared_ptr<storage_internal::StorageStub> stub) {
   std::shared_ptr<google::cloud::internal::MinimalIamCredentialsStub> unused;
-  return std::make_unique<GrpcClient>(std::move(stub), /*iam=*/unused,
-                                      TestOptions());
+  return std::make_unique<GrpcStub>(std::move(stub), /*iam=*/unused,
+                                    TestOptions());
 }
 
 TEST(DefaultOptionsGrpc, DefaultOptionsGrpcChannelCount) {

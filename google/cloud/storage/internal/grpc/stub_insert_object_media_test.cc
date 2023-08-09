@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/storage/internal/grpc/client.h"
+#include "google/cloud/storage/internal/grpc/stub.h"
 #include "google/cloud/storage/oauth2/google_credentials.h"
 #include "google/cloud/storage/testing/mock_storage_stub.h"
 #include "google/cloud/grpc_options.h"
@@ -82,7 +82,7 @@ TEST(GrpcClientInsertObjectMediaTest, Small) {
   });
 
   std::shared_ptr<google::cloud::internal::MinimalIamCredentialsStub> unused;
-  auto client = std::make_unique<GrpcClient>(mock, unused, Options{});
+  auto client = std::make_unique<GrpcStub>(mock, unused, Options{});
   auto context = rest_internal::RestContext{};
   auto metadata = client->InsertObjectMedia(
       context, client->options(),
@@ -115,11 +115,11 @@ TEST(GrpcClientInsertObjectMediaTest, StallTimeoutWrite) {
   auto cq = CompletionQueue(mock_cq);
 
   std::shared_ptr<google::cloud::internal::MinimalIamCredentialsStub> unused;
-  auto client = std::make_unique<GrpcClient>(
-      mock, unused,
-      Options{}
-          .set<TransferStallTimeoutOption>(expected)
-          .set<GrpcCompletionQueueOption>(cq));
+  auto client =
+      std::make_unique<GrpcStub>(mock, unused,
+                                 Options{}
+                                     .set<TransferStallTimeoutOption>(expected)
+                                     .set<GrpcCompletionQueueOption>(cq));
   auto context = rest_internal::RestContext{};
   auto metadata = client->InsertObjectMedia(
       context, client->options(),
@@ -153,11 +153,11 @@ TEST(GrpcClientInsertObjectMediaTest, StallTimeoutClose) {
   auto cq = CompletionQueue(mock_cq);
 
   std::shared_ptr<google::cloud::internal::MinimalIamCredentialsStub> unused;
-  auto client = std::make_unique<GrpcClient>(
-      mock, unused,
-      Options{}
-          .set<TransferStallTimeoutOption>(expected)
-          .set<GrpcCompletionQueueOption>(cq));
+  auto client =
+      std::make_unique<GrpcStub>(mock, unused,
+                                 Options{}
+                                     .set<TransferStallTimeoutOption>(expected)
+                                     .set<GrpcCompletionQueueOption>(cq));
   auto context = rest_internal::RestContext{};
   auto metadata = client->InsertObjectMedia(
       context, client->options(),

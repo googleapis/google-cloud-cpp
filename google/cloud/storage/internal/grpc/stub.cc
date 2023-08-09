@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/storage/internal/grpc/client.h"
+#include "google/cloud/storage/internal/grpc/stub.h"
 #include "google/cloud/storage/internal/crc32c.h"
 #include "google/cloud/storage/internal/grpc/bucket_access_control_parser.h"
 #include "google/cloud/storage/internal/grpc/bucket_metadata_parser.h"
@@ -128,7 +128,7 @@ Status TimeoutError(std::chrono::milliseconds timeout, std::string const& op) {
 StatusOr<storage::internal::QueryResumableUploadResponse>
 HandleWriteObjectError(std::chrono::milliseconds timeout,
                        std::function<future<bool>()> const& create_watchdog,
-                       std::unique_ptr<GrpcClient::WriteObjectStream> writer,
+                       std::unique_ptr<GrpcStub::WriteObjectStream> writer,
                        google::cloud::Options const& options) {
   auto watchdog = create_watchdog().then([&writer](auto f) {
     if (!f.get()) return false;
@@ -145,7 +145,7 @@ HandleWriteObjectError(std::chrono::milliseconds timeout,
 StatusOr<storage::internal::QueryResumableUploadResponse>
 HandleUploadChunkError(std::chrono::milliseconds timeout,
                        std::function<future<bool>()> const& create_watchdog,
-                       std::unique_ptr<GrpcClient::WriteObjectStream> writer,
+                       std::unique_ptr<GrpcStub::WriteObjectStream> writer,
                        google::cloud::Options const& options) {
   return HandleWriteObjectError(timeout, create_watchdog, std::move(writer),
                                 options);
@@ -154,7 +154,7 @@ HandleUploadChunkError(std::chrono::milliseconds timeout,
 StatusOr<storage::ObjectMetadata> HandleInsertObjectMediaError(
     std::chrono::milliseconds timeout,
     std::function<future<bool>()> const& create_watchdog,
-    std::unique_ptr<GrpcClient::WriteObjectStream> writer,
+    std::unique_ptr<GrpcStub::WriteObjectStream> writer,
     google::cloud::Options const& options) {
   auto response = HandleWriteObjectError(timeout, create_watchdog,
                                          std::move(writer), options);
@@ -166,7 +166,7 @@ StatusOr<storage::ObjectMetadata> HandleInsertObjectMediaError(
 StatusOr<storage::internal::QueryResumableUploadResponse>
 CloseWriteObjectStream(std::chrono::milliseconds timeout,
                        std::function<future<bool>()> const& create_watchdog,
-                       std::unique_ptr<GrpcClient::WriteObjectStream> writer,
+                       std::unique_ptr<GrpcStub::WriteObjectStream> writer,
                        google::cloud::Options const& options) {
   auto watchdog = create_watchdog().then([&writer](auto f) {
     if (!f.get()) return false;
@@ -239,7 +239,7 @@ Options DefaultOptionsGrpc(Options options) {
       std::move(options), Options{}.set<GrpcNumChannelsOption>(num_channels));
 }
 
-GrpcClient::GrpcClient(Options opts)
+GrpcStub::GrpcStub(Options opts)
     : options_(std::move(opts)),
       background_(MakeBackgroundThreadsFactory(options_)()),
       iam_stub_(CreateStorageIamStub(background_->cq(), options_)) {
@@ -248,7 +248,7 @@ GrpcClient::GrpcClient(Options opts)
   stub_ = std::move(p.second);
 }
 
-GrpcClient::GrpcClient(
+GrpcStub::GrpcStub(
     std::shared_ptr<StorageStub> stub,
     std::shared_ptr<google::cloud::internal::MinimalIamCredentialsStub> iam,
     Options opts)
@@ -257,9 +257,9 @@ GrpcClient::GrpcClient(
       stub_(std::move(stub)),
       iam_stub_(std::move(iam)) {}
 
-Options GrpcClient::options() const { return options_; }
+Options GrpcStub::options() const { return options_; }
 
-StatusOr<storage::internal::ListBucketsResponse> GrpcClient::ListBuckets(
+StatusOr<storage::internal::ListBucketsResponse> GrpcStub::ListBuckets(
     rest_internal::RestContext& context, Options const& options,
     storage::internal::ListBucketsRequest const& request) {
   auto proto = ToProto(request);
@@ -271,7 +271,7 @@ StatusOr<storage::internal::ListBucketsResponse> GrpcClient::ListBuckets(
   return FromProto(*response);
 }
 
-StatusOr<storage::BucketMetadata> GrpcClient::CreateBucket(
+StatusOr<storage::BucketMetadata> GrpcStub::CreateBucket(
     rest_internal::RestContext& context, Options const& options,
     storage::internal::CreateBucketRequest const& request) {
   auto proto = ToProto(request);
@@ -292,7 +292,7 @@ StatusOr<storage::BucketMetadata> GrpcClient::CreateBucket(
   return std::move(response).status();
 }
 
-StatusOr<storage::BucketMetadata> GrpcClient::GetBucketMetadata(
+StatusOr<storage::BucketMetadata> GrpcStub::GetBucketMetadata(
     rest_internal::RestContext& context, Options const& options,
     storage::internal::GetBucketMetadataRequest const& request) {
   auto response = GetBucketMetadataImpl(context, options, request);
@@ -300,7 +300,7 @@ StatusOr<storage::BucketMetadata> GrpcClient::GetBucketMetadata(
   return FromProto(*response, options);
 }
 
-StatusOr<storage::internal::EmptyResponse> GrpcClient::DeleteBucket(
+StatusOr<storage::internal::EmptyResponse> GrpcStub::DeleteBucket(
     rest_internal::RestContext& context, Options const& options,
     storage::internal::DeleteBucketRequest const& request) {
   auto proto = ToProto(request);
@@ -312,7 +312,7 @@ StatusOr<storage::internal::EmptyResponse> GrpcClient::DeleteBucket(
   return storage::internal::EmptyResponse{};
 }
 
-StatusOr<storage::BucketMetadata> GrpcClient::UpdateBucket(
+StatusOr<storage::BucketMetadata> GrpcStub::UpdateBucket(
     rest_internal::RestContext& context, Options const& options,
     storage::internal::UpdateBucketRequest const& request) {
   auto proto = ToProto(request);
@@ -324,7 +324,7 @@ StatusOr<storage::BucketMetadata> GrpcClient::UpdateBucket(
   return FromProto(*response, options);
 }
 
-StatusOr<storage::BucketMetadata> GrpcClient::PatchBucket(
+StatusOr<storage::BucketMetadata> GrpcStub::PatchBucket(
     rest_internal::RestContext& context, Options const& options,
     storage::internal::PatchBucketRequest const& request) {
   auto response = PatchBucketImpl(context, options, request);
@@ -332,7 +332,7 @@ StatusOr<storage::BucketMetadata> GrpcClient::PatchBucket(
   return FromProto(*response, options);
 }
 
-StatusOr<storage::NativeIamPolicy> GrpcClient::GetNativeBucketIamPolicy(
+StatusOr<storage::NativeIamPolicy> GrpcStub::GetNativeBucketIamPolicy(
     rest_internal::RestContext& context, Options const& options,
     storage::internal::GetBucketIamPolicyRequest const& request) {
   auto proto = ToProto(request);
@@ -344,7 +344,7 @@ StatusOr<storage::NativeIamPolicy> GrpcClient::GetNativeBucketIamPolicy(
   return FromProto(*response);
 }
 
-StatusOr<storage::NativeIamPolicy> GrpcClient::SetNativeBucketIamPolicy(
+StatusOr<storage::NativeIamPolicy> GrpcStub::SetNativeBucketIamPolicy(
     rest_internal::RestContext& context, Options const& options,
     storage::internal::SetNativeBucketIamPolicyRequest const& request) {
   auto proto = ToProto(request);
@@ -357,7 +357,7 @@ StatusOr<storage::NativeIamPolicy> GrpcClient::SetNativeBucketIamPolicy(
 }
 
 StatusOr<storage::internal::TestBucketIamPermissionsResponse>
-GrpcClient::TestBucketIamPermissions(
+GrpcStub::TestBucketIamPermissions(
     rest_internal::RestContext& context, Options const& options,
     storage::internal::TestBucketIamPermissionsRequest const& request) {
   auto proto = ToProto(request);
@@ -369,7 +369,7 @@ GrpcClient::TestBucketIamPermissions(
   return FromProto(*response);
 }
 
-StatusOr<storage::BucketMetadata> GrpcClient::LockBucketRetentionPolicy(
+StatusOr<storage::BucketMetadata> GrpcStub::LockBucketRetentionPolicy(
     rest_internal::RestContext& context, Options const& options,
     storage::internal::LockBucketRetentionPolicyRequest const& request) {
   auto proto = ToProto(request);
@@ -381,7 +381,7 @@ StatusOr<storage::BucketMetadata> GrpcClient::LockBucketRetentionPolicy(
   return FromProto(*response, options);
 }
 
-StatusOr<storage::ObjectMetadata> GrpcClient::InsertObjectMedia(
+StatusOr<storage::ObjectMetadata> GrpcStub::InsertObjectMedia(
     rest_internal::RestContext& context, Options const& options,
     storage::internal::InsertObjectMediaRequest const& request) {
   auto r = ToProto(request);
@@ -457,7 +457,7 @@ StatusOr<storage::ObjectMetadata> GrpcClient::InsertObjectMedia(
   return storage::ObjectMetadata{};
 }
 
-StatusOr<storage::ObjectMetadata> GrpcClient::CopyObject(
+StatusOr<storage::ObjectMetadata> GrpcStub::CopyObject(
     rest_internal::RestContext& context, Options const& options,
     storage::internal::CopyObjectRequest const& request) {
   auto proto = ToProto(request);
@@ -474,7 +474,7 @@ StatusOr<storage::ObjectMetadata> GrpcClient::CopyObject(
   return FromProto(response->resource(), options);
 }
 
-StatusOr<storage::ObjectMetadata> GrpcClient::GetObjectMetadata(
+StatusOr<storage::ObjectMetadata> GrpcStub::GetObjectMetadata(
     rest_internal::RestContext& context, Options const& options,
     storage::internal::GetObjectMetadataRequest const& request) {
   auto response = GetObjectMetadataImpl(context, options, request);
@@ -483,9 +483,9 @@ StatusOr<storage::ObjectMetadata> GrpcClient::GetObjectMetadata(
 }
 
 StatusOr<std::unique_ptr<storage::internal::ObjectReadSource>>
-GrpcClient::ReadObject(
-    rest_internal::RestContext& context, Options const& options,
-    storage::internal::ReadObjectRangeRequest const& request) {
+GrpcStub::ReadObject(rest_internal::RestContext& context,
+                     Options const& options,
+                     storage::internal::ReadObjectRangeRequest const& request) {
   // With the REST API this condition was detected by the server as an error,
   // generally we prefer the server to detect errors because its answers are
   // authoritative. In this case, the server cannot: with gRPC '0' is the same
@@ -524,7 +524,7 @@ GrpcClient::ReadObject(
                                              std::move(stream)));
 }
 
-StatusOr<storage::internal::ListObjectsResponse> GrpcClient::ListObjects(
+StatusOr<storage::internal::ListObjectsResponse> GrpcStub::ListObjects(
     rest_internal::RestContext& context, Options const& options,
     storage::internal::ListObjectsRequest const& request) {
   auto proto = ToProto(request);
@@ -536,7 +536,7 @@ StatusOr<storage::internal::ListObjectsResponse> GrpcClient::ListObjects(
   return FromProto(*response, options);
 }
 
-StatusOr<storage::internal::EmptyResponse> GrpcClient::DeleteObject(
+StatusOr<storage::internal::EmptyResponse> GrpcStub::DeleteObject(
     rest_internal::RestContext& context, Options const& options,
     storage::internal::DeleteObjectRequest const& request) {
   auto proto = ToProto(request);
@@ -548,7 +548,7 @@ StatusOr<storage::internal::EmptyResponse> GrpcClient::DeleteObject(
   return storage::internal::EmptyResponse{};
 }
 
-StatusOr<storage::ObjectMetadata> GrpcClient::UpdateObject(
+StatusOr<storage::ObjectMetadata> GrpcStub::UpdateObject(
     rest_internal::RestContext& context, Options const& options,
     storage::internal::UpdateObjectRequest const& request) {
   auto proto = ToProto(request);
@@ -561,7 +561,7 @@ StatusOr<storage::ObjectMetadata> GrpcClient::UpdateObject(
   return FromProto(*response, options);
 }
 
-StatusOr<storage::ObjectMetadata> GrpcClient::PatchObject(
+StatusOr<storage::ObjectMetadata> GrpcStub::PatchObject(
     rest_internal::RestContext& context, Options const& options,
     storage::internal::PatchObjectRequest const& request) {
   auto response = PatchObjectImpl(context, options, request);
@@ -569,7 +569,7 @@ StatusOr<storage::ObjectMetadata> GrpcClient::PatchObject(
   return FromProto(*response, options);
 }
 
-StatusOr<storage::ObjectMetadata> GrpcClient::ComposeObject(
+StatusOr<storage::ObjectMetadata> GrpcStub::ComposeObject(
     rest_internal::RestContext& context, Options const& options,
     storage::internal::ComposeObjectRequest const& request) {
   auto proto = ToProto(request);
@@ -582,7 +582,7 @@ StatusOr<storage::ObjectMetadata> GrpcClient::ComposeObject(
   return FromProto(*response, options);
 }
 
-StatusOr<storage::internal::RewriteObjectResponse> GrpcClient::RewriteObject(
+StatusOr<storage::internal::RewriteObjectResponse> GrpcStub::RewriteObject(
     rest_internal::RestContext& context, Options const& options,
     storage::internal::RewriteObjectRequest const& request) {
   auto proto = ToProto(request);
@@ -596,7 +596,7 @@ StatusOr<storage::internal::RewriteObjectResponse> GrpcClient::RewriteObject(
 }
 
 StatusOr<storage::internal::CreateResumableUploadResponse>
-GrpcClient::CreateResumableUpload(
+GrpcStub::CreateResumableUpload(
     rest_internal::RestContext& context, Options const& options,
     storage::internal::ResumableUploadRequest const& request) {
   auto proto_request = ToProto(request);
@@ -617,7 +617,7 @@ GrpcClient::CreateResumableUpload(
 }
 
 StatusOr<storage::internal::QueryResumableUploadResponse>
-GrpcClient::QueryResumableUpload(
+GrpcStub::QueryResumableUpload(
     rest_internal::RestContext& context, Options const& options,
     storage::internal::QueryResumableUploadRequest const& request) {
   grpc::ClientContext ctx;
@@ -632,7 +632,7 @@ GrpcClient::QueryResumableUpload(
   return FromProto(*response, options);
 }
 
-StatusOr<storage::internal::EmptyResponse> GrpcClient::DeleteResumableUpload(
+StatusOr<storage::internal::EmptyResponse> GrpcStub::DeleteResumableUpload(
     rest_internal::RestContext& context, Options const& options,
     storage::internal::DeleteResumableUploadRequest const& request) {
   grpc::ClientContext ctx;
@@ -647,10 +647,9 @@ StatusOr<storage::internal::EmptyResponse> GrpcClient::DeleteResumableUpload(
   return storage::internal::EmptyResponse{};
 }
 
-StatusOr<storage::internal::QueryResumableUploadResponse>
-GrpcClient::UploadChunk(rest_internal::RestContext& context,
-                        Options const& options,
-                        storage::internal::UploadChunkRequest const& request) {
+StatusOr<storage::internal::QueryResumableUploadResponse> GrpcStub::UploadChunk(
+    rest_internal::RestContext& context, Options const& options,
+    storage::internal::UploadChunkRequest const& request) {
   auto proto_request = google::storage::v2::WriteObjectRequest{};
   proto_request.set_upload_id(request.upload_session_url());
 
@@ -720,7 +719,7 @@ GrpcClient::UploadChunk(rest_internal::RestContext& context,
                                 options);
 }
 
-StatusOr<storage::internal::ListBucketAclResponse> GrpcClient::ListBucketAcl(
+StatusOr<storage::internal::ListBucketAclResponse> GrpcStub::ListBucketAcl(
     rest_internal::RestContext& context, Options const& options,
     storage::internal::ListBucketAclRequest const& request) {
   auto get_request =
@@ -734,7 +733,7 @@ StatusOr<storage::internal::ListBucketAclResponse> GrpcClient::ListBucketAcl(
   return response;
 }
 
-StatusOr<storage::BucketAccessControl> GrpcClient::GetBucketAcl(
+StatusOr<storage::BucketAccessControl> GrpcStub::GetBucketAcl(
     rest_internal::RestContext& context, Options const& options,
     storage::internal::GetBucketAclRequest const& request) {
   auto get_request =
@@ -748,7 +747,7 @@ StatusOr<storage::BucketAccessControl> GrpcClient::GetBucketAcl(
                                  bucket_self_link);
 }
 
-StatusOr<storage::BucketAccessControl> GrpcClient::CreateBucketAcl(
+StatusOr<storage::BucketAccessControl> GrpcStub::CreateBucketAcl(
     rest_internal::RestContext&, Options const& options,
     storage::internal::CreateBucketAclRequest const& request) {
   auto get_request =
@@ -766,7 +765,7 @@ StatusOr<storage::BucketAccessControl> GrpcClient::CreateBucketAcl(
       request.entity(), bucket_self_link);
 }
 
-StatusOr<storage::internal::EmptyResponse> GrpcClient::DeleteBucketAcl(
+StatusOr<storage::internal::EmptyResponse> GrpcStub::DeleteBucketAcl(
     rest_internal::RestContext&, Options const& options,
     storage::internal::DeleteBucketAclRequest const& request) {
   auto get_request =
@@ -795,7 +794,7 @@ StatusOr<storage::internal::EmptyResponse> GrpcClient::DeleteBucketAcl(
   return storage::internal::EmptyResponse{};
 }
 
-StatusOr<storage::BucketAccessControl> GrpcClient::UpdateBucketAcl(
+StatusOr<storage::BucketAccessControl> GrpcStub::UpdateBucketAcl(
     rest_internal::RestContext&, Options const& options,
     storage::internal::UpdateBucketAclRequest const& request) {
   auto get_request =
@@ -813,7 +812,7 @@ StatusOr<storage::BucketAccessControl> GrpcClient::UpdateBucketAcl(
       request.entity(), bucket_self_link);
 }
 
-StatusOr<storage::BucketAccessControl> GrpcClient::PatchBucketAcl(
+StatusOr<storage::BucketAccessControl> GrpcStub::PatchBucketAcl(
     rest_internal::RestContext&, Options const& options,
     storage::internal::PatchBucketAclRequest const& request) {
   auto get_request =
@@ -830,7 +829,7 @@ StatusOr<storage::BucketAccessControl> GrpcClient::PatchBucketAcl(
       request.entity(), bucket_self_link);
 }
 
-StatusOr<storage::internal::ListObjectAclResponse> GrpcClient::ListObjectAcl(
+StatusOr<storage::internal::ListObjectAclResponse> GrpcStub::ListObjectAcl(
     rest_internal::RestContext& context, Options const& options,
     storage::internal::ListObjectAclRequest const& request) {
   auto get_request = storage::internal::GetObjectMetadataRequest(
@@ -844,7 +843,7 @@ StatusOr<storage::internal::ListObjectAclResponse> GrpcClient::ListObjectAcl(
   return response;
 }
 
-StatusOr<storage::ObjectAccessControl> GrpcClient::CreateObjectAcl(
+StatusOr<storage::ObjectAccessControl> GrpcStub::CreateObjectAcl(
     rest_internal::RestContext&, Options const& options,
     storage::internal::CreateObjectAclRequest const& request) {
   auto get_request = storage::internal::GetObjectMetadataRequest(
@@ -861,7 +860,7 @@ StatusOr<storage::ObjectAccessControl> GrpcClient::CreateObjectAcl(
       request.entity(), object_self_link);
 }
 
-StatusOr<storage::internal::EmptyResponse> GrpcClient::DeleteObjectAcl(
+StatusOr<storage::internal::EmptyResponse> GrpcStub::DeleteObjectAcl(
     rest_internal::RestContext&, Options const& options,
     storage::internal::DeleteObjectAclRequest const& request) {
   auto get_request = storage::internal::GetObjectMetadataRequest(
@@ -889,7 +888,7 @@ StatusOr<storage::internal::EmptyResponse> GrpcClient::DeleteObjectAcl(
   return storage::internal::EmptyResponse{};
 }
 
-StatusOr<storage::ObjectAccessControl> GrpcClient::GetObjectAcl(
+StatusOr<storage::ObjectAccessControl> GrpcStub::GetObjectAcl(
     rest_internal::RestContext& context, Options const& options,
     storage::internal::GetObjectAclRequest const& request) {
   auto get_request = storage::internal::GetObjectMetadataRequest(
@@ -903,7 +902,7 @@ StatusOr<storage::ObjectAccessControl> GrpcClient::GetObjectAcl(
                                  object_self_link);
 }
 
-StatusOr<storage::ObjectAccessControl> GrpcClient::UpdateObjectAcl(
+StatusOr<storage::ObjectAccessControl> GrpcStub::UpdateObjectAcl(
     rest_internal::RestContext&, Options const& options,
     storage::internal::UpdateObjectAclRequest const& request) {
   auto get_request = storage::internal::GetObjectMetadataRequest(
@@ -920,7 +919,7 @@ StatusOr<storage::ObjectAccessControl> GrpcClient::UpdateObjectAcl(
       request.entity(), object_self_link);
 }
 
-StatusOr<storage::ObjectAccessControl> GrpcClient::PatchObjectAcl(
+StatusOr<storage::ObjectAccessControl> GrpcStub::PatchObjectAcl(
     rest_internal::RestContext&, Options const& options,
     storage::internal::PatchObjectAclRequest const& request) {
   auto get_request = storage::internal::GetObjectMetadataRequest(
@@ -938,7 +937,7 @@ StatusOr<storage::ObjectAccessControl> GrpcClient::PatchObjectAcl(
 }
 
 StatusOr<storage::internal::ListDefaultObjectAclResponse>
-GrpcClient::ListDefaultObjectAcl(
+GrpcStub::ListDefaultObjectAcl(
     rest_internal::RestContext& context, Options const& options,
     storage::internal::ListDefaultObjectAclRequest const& request) {
   auto get_request =
@@ -952,7 +951,7 @@ GrpcClient::ListDefaultObjectAcl(
   return response;
 }
 
-StatusOr<storage::ObjectAccessControl> GrpcClient::CreateDefaultObjectAcl(
+StatusOr<storage::ObjectAccessControl> GrpcStub::CreateDefaultObjectAcl(
     rest_internal::RestContext&, Options const& options,
     storage::internal::CreateDefaultObjectAclRequest const& request) {
   auto get_request =
@@ -967,7 +966,7 @@ StatusOr<storage::ObjectAccessControl> GrpcClient::CreateDefaultObjectAcl(
       request.entity());
 }
 
-StatusOr<storage::internal::EmptyResponse> GrpcClient::DeleteDefaultObjectAcl(
+StatusOr<storage::internal::EmptyResponse> GrpcStub::DeleteDefaultObjectAcl(
     rest_internal::RestContext&, Options const& options,
     storage::internal::DeleteDefaultObjectAclRequest const& request) {
   auto get_request =
@@ -995,7 +994,7 @@ StatusOr<storage::internal::EmptyResponse> GrpcClient::DeleteDefaultObjectAcl(
   return storage::internal::EmptyResponse{};
 }
 
-StatusOr<storage::ObjectAccessControl> GrpcClient::GetDefaultObjectAcl(
+StatusOr<storage::ObjectAccessControl> GrpcStub::GetDefaultObjectAcl(
     rest_internal::RestContext& context, Options const& options,
     storage::internal::GetDefaultObjectAclRequest const& request) {
   auto get_request =
@@ -1006,7 +1005,7 @@ StatusOr<storage::ObjectAccessControl> GrpcClient::GetDefaultObjectAcl(
   return FindDefaultObjectAccessControl(std::move(get), request.entity());
 }
 
-StatusOr<storage::ObjectAccessControl> GrpcClient::UpdateDefaultObjectAcl(
+StatusOr<storage::ObjectAccessControl> GrpcStub::UpdateDefaultObjectAcl(
     rest_internal::RestContext&, Options const& options,
     storage::internal::UpdateDefaultObjectAclRequest const& request) {
   auto get_request =
@@ -1021,7 +1020,7 @@ StatusOr<storage::ObjectAccessControl> GrpcClient::UpdateDefaultObjectAcl(
       request.entity());
 }
 
-StatusOr<storage::ObjectAccessControl> GrpcClient::PatchDefaultObjectAcl(
+StatusOr<storage::ObjectAccessControl> GrpcStub::PatchDefaultObjectAcl(
     rest_internal::RestContext&, Options const& options,
     storage::internal::PatchDefaultObjectAclRequest const& request) {
   auto get_request =
@@ -1036,7 +1035,7 @@ StatusOr<storage::ObjectAccessControl> GrpcClient::PatchDefaultObjectAcl(
       request.entity());
 }
 
-StatusOr<storage::ServiceAccount> GrpcClient::GetServiceAccount(
+StatusOr<storage::ServiceAccount> GrpcStub::GetServiceAccount(
     rest_internal::RestContext& context, Options const& options,
     storage::internal::GetProjectServiceAccountRequest const& request) {
   auto proto = ToProto(request);
@@ -1048,7 +1047,7 @@ StatusOr<storage::ServiceAccount> GrpcClient::GetServiceAccount(
   return FromProto(*response);
 }
 
-StatusOr<storage::internal::ListHmacKeysResponse> GrpcClient::ListHmacKeys(
+StatusOr<storage::internal::ListHmacKeysResponse> GrpcStub::ListHmacKeys(
     rest_internal::RestContext& context, Options const& options,
     storage::internal::ListHmacKeysRequest const& request) {
   auto proto = ToProto(request);
@@ -1060,7 +1059,7 @@ StatusOr<storage::internal::ListHmacKeysResponse> GrpcClient::ListHmacKeys(
   return FromProto(*response);
 }
 
-StatusOr<storage::internal::CreateHmacKeyResponse> GrpcClient::CreateHmacKey(
+StatusOr<storage::internal::CreateHmacKeyResponse> GrpcStub::CreateHmacKey(
     rest_internal::RestContext& context, Options const& options,
     storage::internal::CreateHmacKeyRequest const& request) {
   auto proto = ToProto(request);
@@ -1072,7 +1071,7 @@ StatusOr<storage::internal::CreateHmacKeyResponse> GrpcClient::CreateHmacKey(
   return FromProto(*response);
 }
 
-StatusOr<storage::internal::EmptyResponse> GrpcClient::DeleteHmacKey(
+StatusOr<storage::internal::EmptyResponse> GrpcStub::DeleteHmacKey(
     rest_internal::RestContext& context, Options const& options,
     storage::internal::DeleteHmacKeyRequest const& request) {
   auto proto = ToProto(request);
@@ -1084,7 +1083,7 @@ StatusOr<storage::internal::EmptyResponse> GrpcClient::DeleteHmacKey(
   return storage::internal::EmptyResponse{};
 }
 
-StatusOr<storage::HmacKeyMetadata> GrpcClient::GetHmacKey(
+StatusOr<storage::HmacKeyMetadata> GrpcStub::GetHmacKey(
     rest_internal::RestContext& context, Options const& options,
     storage::internal::GetHmacKeyRequest const& request) {
   auto proto = ToProto(request);
@@ -1096,7 +1095,7 @@ StatusOr<storage::HmacKeyMetadata> GrpcClient::GetHmacKey(
   return FromProto(*response);
 }
 
-StatusOr<storage::HmacKeyMetadata> GrpcClient::UpdateHmacKey(
+StatusOr<storage::HmacKeyMetadata> GrpcStub::UpdateHmacKey(
     rest_internal::RestContext& context, Options const& options,
     storage::internal::UpdateHmacKeyRequest const& request) {
   auto proto = ToProto(request);
@@ -1108,7 +1107,7 @@ StatusOr<storage::HmacKeyMetadata> GrpcClient::UpdateHmacKey(
   return FromProto(*response);
 }
 
-StatusOr<storage::internal::SignBlobResponse> GrpcClient::SignBlob(
+StatusOr<storage::internal::SignBlobResponse> GrpcStub::SignBlob(
     rest_internal::RestContext& context, Options const&,
     storage::internal::SignBlobRequest const& request) {
   auto proto = ToProto(request);
@@ -1122,7 +1121,7 @@ StatusOr<storage::internal::SignBlobResponse> GrpcClient::SignBlob(
 }
 
 StatusOr<storage::internal::ListNotificationsResponse>
-GrpcClient::ListNotifications(
+GrpcStub::ListNotifications(
     rest_internal::RestContext& context, Options const& options,
     storage::internal::ListNotificationsRequest const& request) {
   auto proto = ToProto(request);
@@ -1134,7 +1133,7 @@ GrpcClient::ListNotifications(
   return FromProto(*response);
 }
 
-StatusOr<storage::NotificationMetadata> GrpcClient::CreateNotification(
+StatusOr<storage::NotificationMetadata> GrpcStub::CreateNotification(
     rest_internal::RestContext& context, Options const& options,
     storage::internal::CreateNotificationRequest const& request) {
   auto proto = ToProto(request);
@@ -1146,7 +1145,7 @@ StatusOr<storage::NotificationMetadata> GrpcClient::CreateNotification(
   return FromProto(*response);
 }
 
-StatusOr<storage::NotificationMetadata> GrpcClient::GetNotification(
+StatusOr<storage::NotificationMetadata> GrpcStub::GetNotification(
     rest_internal::RestContext& context, Options const& options,
     storage::internal::GetNotificationRequest const& request) {
   auto proto = ToProto(request);
@@ -1158,7 +1157,7 @@ StatusOr<storage::NotificationMetadata> GrpcClient::GetNotification(
   return FromProto(*response);
 }
 
-StatusOr<storage::internal::EmptyResponse> GrpcClient::DeleteNotification(
+StatusOr<storage::internal::EmptyResponse> GrpcStub::DeleteNotification(
     rest_internal::RestContext& context, Options const& options,
     storage::internal::DeleteNotificationRequest const& request) {
   auto proto = ToProto(request);
@@ -1170,11 +1169,11 @@ StatusOr<storage::internal::EmptyResponse> GrpcClient::DeleteNotification(
   return storage::internal::EmptyResponse{};
 }
 
-std::vector<std::string> GrpcClient::InspectStackStructure() const {
+std::vector<std::string> GrpcStub::InspectStackStructure() const {
   return {"GrpcClient"};
 }
 
-StatusOr<google::storage::v2::Bucket> GrpcClient::GetBucketMetadataImpl(
+StatusOr<google::storage::v2::Bucket> GrpcStub::GetBucketMetadataImpl(
     rest_internal::RestContext& context, Options const& options,
     storage::internal::GetBucketMetadataRequest const& request) {
   auto proto = ToProto(request);
@@ -1184,7 +1183,7 @@ StatusOr<google::storage::v2::Bucket> GrpcClient::GetBucketMetadataImpl(
   return stub_->GetBucket(ctx, proto);
 }
 
-StatusOr<google::storage::v2::Bucket> GrpcClient::PatchBucketImpl(
+StatusOr<google::storage::v2::Bucket> GrpcStub::PatchBucketImpl(
     rest_internal::RestContext& context, Options const& options,
     storage::internal::PatchBucketRequest const& request) {
   auto proto = ToProto(request);
@@ -1195,7 +1194,7 @@ StatusOr<google::storage::v2::Bucket> GrpcClient::PatchBucketImpl(
   return stub_->UpdateBucket(ctx, *proto);
 }
 
-StatusOr<google::storage::v2::Object> GrpcClient::GetObjectMetadataImpl(
+StatusOr<google::storage::v2::Object> GrpcStub::GetObjectMetadataImpl(
     rest_internal::RestContext& context, Options const& options,
     storage::internal::GetObjectMetadataRequest const& request) {
   auto proto = ToProto(request);
@@ -1205,7 +1204,7 @@ StatusOr<google::storage::v2::Object> GrpcClient::GetObjectMetadataImpl(
   return stub_->GetObject(ctx, proto);
 }
 
-StatusOr<google::storage::v2::Object> GrpcClient::PatchObjectImpl(
+StatusOr<google::storage::v2::Object> GrpcStub::PatchObjectImpl(
     rest_internal::RestContext& context, Options const& options,
     storage::internal::PatchObjectRequest const& request) {
   auto proto = ToProto(request);
@@ -1216,7 +1215,7 @@ StatusOr<google::storage::v2::Object> GrpcClient::PatchObjectImpl(
   return stub_->UpdateObject(ctx, *proto);
 }
 
-StatusOr<google::storage::v2::Bucket> GrpcClient::ModifyBucketAccessControl(
+StatusOr<google::storage::v2::Bucket> GrpcStub::ModifyBucketAccessControl(
     Options const& options,
     storage::internal::GetBucketMetadataRequest const& request,
     BucketAclUpdater const& updater) {
@@ -1250,7 +1249,7 @@ StatusOr<google::storage::v2::Bucket> GrpcClient::ModifyBucketAccessControl(
   return patch;
 }
 
-StatusOr<google::storage::v2::Object> GrpcClient::ModifyObjectAccessControl(
+StatusOr<google::storage::v2::Object> GrpcStub::ModifyObjectAccessControl(
     Options const& options,
     storage::internal::GetObjectMetadataRequest const& request,
     ObjectAclUpdater const& updater) {
@@ -1285,7 +1284,7 @@ StatusOr<google::storage::v2::Object> GrpcClient::ModifyObjectAccessControl(
   return patch;
 }
 
-StatusOr<google::storage::v2::Bucket> GrpcClient::ModifyDefaultAccessControl(
+StatusOr<google::storage::v2::Bucket> GrpcStub::ModifyDefaultAccessControl(
     Options const& options,
     storage::internal::GetBucketMetadataRequest const& request,
     DefaultObjectAclUpdater const& updater) {
