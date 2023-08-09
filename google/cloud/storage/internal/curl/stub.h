@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_CURL_CLIENT_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_CURL_CLIENT_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_CURL_STUB_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_CURL_STUB_H
 
 #include "google/cloud/storage/internal/curl/handle_factory.h"
 #include "google/cloud/storage/internal/generic_stub.h"
@@ -47,14 +47,14 @@ std::string HostHeader(Options const& options, char const* service);
 /**
  * Implements the low-level RPCs to Google Cloud Storage using libcurl.
  */
-class CurlClient : public storage_internal::GenericStub {
+class CurlStub : public storage_internal::GenericStub {
  public:
-  explicit CurlClient(Options options);
+  explicit CurlStub(Options options);
 
-  CurlClient(CurlClient const& rhs) = delete;
-  CurlClient(CurlClient&& rhs) = delete;
-  CurlClient& operator=(CurlClient const& rhs) = delete;
-  CurlClient& operator=(CurlClient&& rhs) = delete;
+  CurlStub(CurlStub const& rhs) = delete;
+  CurlStub(CurlStub&& rhs) = delete;
+  CurlStub& operator=(CurlStub const& rhs) = delete;
+  CurlStub& operator=(CurlStub&& rhs) = delete;
 
   Options options() const override;
 
@@ -274,4 +274,4 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_CURL_CLIENT_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_CURL_STUB_H

@@ -168,7 +168,7 @@ TEST_F(ClientTest, DefaultDecoratorsCurlClient) {
   auto const impl = ClientImplDetails::GetRawClient(tested);
   ASSERT_THAT(impl, NotNull());
   EXPECT_THAT(impl->InspectStackStructure(),
-              ElementsAre("CurlClient", "RetryClient"));
+              ElementsAre("CurlStub", "RetryClient"));
 }
 
 /// @test Verify the constructor creates the right set of RawClient decorations.
@@ -185,7 +185,7 @@ TEST_F(ClientTest, LoggingDecoratorsCurlClient) {
   auto const impl = ClientImplDetails::GetRawClient(tested);
   ASSERT_THAT(impl, NotNull());
   EXPECT_THAT(impl->InspectStackStructure(),
-              ElementsAre("CurlClient", "LoggingClient", "RetryClient"));
+              ElementsAre("CurlStub", "LoggingClient", "RetryClient"));
 }
 
 /// @test Verify the constructor creates the right set of RawClient decorations.
