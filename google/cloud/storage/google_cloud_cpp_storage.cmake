@@ -170,12 +170,12 @@ add_library(
     internal/raw_client_wrapper_utils.h
     internal/request_project_id.cc
     internal/request_project_id.h
-    internal/rest/client.cc
-    internal/rest/client.h
     internal/rest/object_read_source.cc
     internal/rest/object_read_source.h
     internal/rest/request_builder.cc
     internal/rest/request_builder.h
+    internal/rest/stub.cc
+    internal/rest/stub.h
     internal/retry_client.cc
     internal/retry_client.h
     internal/retry_object_read_source.cc
@@ -511,9 +511,9 @@ if (BUILD_TESTING)
         internal/patch_builder_test.cc
         internal/policy_document_request_test.cc
         internal/request_project_id_test.cc
-        internal/rest/client_test.cc
         internal/rest/object_read_source_test.cc
         internal/rest/request_builder_test.cc
+        internal/rest/stub_test.cc
         internal/retry_client_bucket_acl_test.cc
         internal/retry_client_bucket_test.cc
         internal/retry_client_default_object_acl_test.cc

@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/storage/internal/rest/client.h"
+#include "google/cloud/storage/internal/rest/stub.h"
 #include "google/cloud/storage/testing/canonical_errors.h"
 #include "google/cloud/testing_util/mock_rest_client.h"
 #include "google/cloud/testing_util/status_matchers.h"
@@ -43,63 +43,63 @@ using ::testing::Pair;
 using ::testing::ResultOf;
 using ::testing::Return;
 
-TEST(RestClientTest, ResolveStorageAuthorityProdEndpoint) {
+TEST(RestStubTest, ResolveStorageAuthorityProdEndpoint) {
   auto options =
       Options{}.set<RestEndpointOption>("https://storage.googleapis.com");
-  auto result_options = RestClient::ResolveStorageAuthority(options);
+  auto result_options = RestStub::ResolveStorageAuthority(options);
   EXPECT_THAT(result_options.get<AuthorityOption>(),
               Eq("storage.googleapis.com"));
 }
 
-TEST(RestClientTest, ResolveStorageAuthorityEapEndpoint) {
+TEST(RestStubTest, ResolveStorageAuthorityEapEndpoint) {
   auto options =
       Options{}.set<RestEndpointOption>("https://eap.googleapis.com");
-  auto result_options = RestClient::ResolveStorageAuthority(options);
+  auto result_options = RestStub::ResolveStorageAuthority(options);
   EXPECT_THAT(result_options.get<AuthorityOption>(),
               Eq("storage.googleapis.com"));
 }
 
-TEST(RestClientTest, ResolveStorageAuthorityNonGoogleEndpoint) {
+TEST(RestStubTest, ResolveStorageAuthorityNonGoogleEndpoint) {
   auto options = Options{}.set<RestEndpointOption>("https://localhost");
-  auto result_options = RestClient::ResolveStorageAuthority(options);
+  auto result_options = RestStub::ResolveStorageAuthority(options);
   EXPECT_FALSE(result_options.has<AuthorityOption>());
 }
 
-TEST(RestClientTest, ResolveStorageAuthorityOptionSpecified) {
+TEST(RestStubTest, ResolveStorageAuthorityOptionSpecified) {
   auto options = Options{}
                      .set<RestEndpointOption>("https://storage.googleapis.com")
                      .set<AuthorityOption>("auth_option_set");
-  auto result_options = RestClient::ResolveStorageAuthority(options);
+  auto result_options = RestStub::ResolveStorageAuthority(options);
   EXPECT_THAT(result_options.get<AuthorityOption>(), Eq("auth_option_set"));
 }
 
-TEST(RestClientTest, ResolveIamAuthorityProdEndpoint) {
+TEST(RestStubTest, ResolveIamAuthorityProdEndpoint) {
   auto options =
       Options{}.set<IamEndpointOption>("https://iamcredentials.googleapis.com");
-  auto result_options = RestClient::ResolveIamAuthority(options);
+  auto result_options = RestStub::ResolveIamAuthority(options);
   EXPECT_THAT(result_options.get<AuthorityOption>(),
               Eq("iamcredentials.googleapis.com"));
 }
 
-TEST(RestClientTest, ResolveIamAuthorityEapEndpoint) {
+TEST(RestStubTest, ResolveIamAuthorityEapEndpoint) {
   auto options = Options{}.set<IamEndpointOption>("https://eap.googleapis.com");
-  auto result_options = RestClient::ResolveIamAuthority(options);
+  auto result_options = RestStub::ResolveIamAuthority(options);
   EXPECT_THAT(result_options.get<AuthorityOption>(),
               Eq("iamcredentials.googleapis.com"));
 }
 
-TEST(RestClientTest, ResolveIamAuthorityNonGoogleEndpoint) {
+TEST(RestStubTest, ResolveIamAuthorityNonGoogleEndpoint) {
   auto options = Options{}.set<IamEndpointOption>("https://localhost");
-  auto result_options = RestClient::ResolveIamAuthority(options);
+  auto result_options = RestStub::ResolveIamAuthority(options);
   EXPECT_FALSE(result_options.has<AuthorityOption>());
 }
 
-TEST(RestClientTest, ResolveIamAuthorityOptionSpecified) {
+TEST(RestStubTest, ResolveIamAuthorityOptionSpecified) {
   auto options =
       Options{}
           .set<IamEndpointOption>("https://iamcredentials.googleapis.com")
           .set<AuthorityOption>("auth_option_set");
-  auto result_options = RestClient::ResolveIamAuthority(options);
+  auto result_options = RestStub::ResolveIamAuthority(options);
   EXPECT_THAT(result_options.get<AuthorityOption>(), Eq("auth_option_set"));
 }
 
@@ -137,11 +137,11 @@ Matcher<std::vector<absl::Span<char const>> const&> ExpectedPayload() {
   return An<std::vector<absl::Span<char const>> const&>();
 }
 
-TEST(RestClientTest, ListBuckets) {
+TEST(RestStubTest, ListBuckets) {
   auto mock = std::make_shared<MockRestClient>();
   EXPECT_CALL(*mock, Get(ExpectedContext(), ExpectedRequest()))
       .WillOnce(Return(PermanentError()));
-  auto tested = std::make_unique<RestClient>(Options{}, mock, mock);
+  auto tested = std::make_unique<RestStub>(Options{}, mock, mock);
   auto context = TestContext();
   auto status =
       tested->ListBuckets(context, TestOptions(), ListBucketsRequest());
@@ -149,12 +149,12 @@ TEST(RestClientTest, ListBuckets) {
               StatusIs(PermanentError().code(), PermanentError().message()));
 }
 
-TEST(RestClientTest, CreateBucket) {
+TEST(RestStubTest, CreateBucket) {
   auto mock = std::make_shared<MockRestClient>();
   EXPECT_CALL(*mock,
               Post(ExpectedContext(), ExpectedRequest(), ExpectedPayload()))
       .WillOnce(Return(PermanentError()));
-  auto tested = std::make_unique<RestClient>(Options{}, mock, mock);
+  auto tested = std::make_unique<RestStub>(Options{}, mock, mock);
   auto context = TestContext();
   auto status =
       tested->CreateBucket(context, TestOptions(), CreateBucketRequest());
@@ -162,11 +162,11 @@ TEST(RestClientTest, CreateBucket) {
               StatusIs(PermanentError().code(), PermanentError().message()));
 }
 
-TEST(RestClientTest, GetBucketMetadata) {
+TEST(RestStubTest, GetBucketMetadata) {
   auto mock = std::make_shared<MockRestClient>();
   EXPECT_CALL(*mock, Get(ExpectedContext(), ExpectedRequest()))
       .WillOnce(Return(PermanentError()));
-  auto tested = std::make_unique<RestClient>(Options{}, mock, mock);
+  auto tested = std::make_unique<RestStub>(Options{}, mock, mock);
   auto context = TestContext();
   auto status = tested->GetBucketMetadata(context, TestOptions(),
                                           GetBucketMetadataRequest());
@@ -174,11 +174,11 @@ TEST(RestClientTest, GetBucketMetadata) {
               StatusIs(PermanentError().code(), PermanentError().message()));
 }
 
-TEST(RestClientTest, DeleteBucket) {
+TEST(RestStubTest, DeleteBucket) {
   auto mock = std::make_shared<MockRestClient>();
   EXPECT_CALL(*mock, Delete(ExpectedContext(), ExpectedRequest()))
       .WillOnce(Return(PermanentError()));
-  auto tested = std::make_unique<RestClient>(Options{}, mock, mock);
+  auto tested = std::make_unique<RestStub>(Options{}, mock, mock);
   auto context = TestContext();
   auto status =
       tested->DeleteBucket(context, TestOptions(), DeleteBucketRequest());
@@ -186,11 +186,11 @@ TEST(RestClientTest, DeleteBucket) {
               StatusIs(PermanentError().code(), PermanentError().message()));
 }
 
-TEST(RestClientTest, UpdateBucket) {
+TEST(RestStubTest, UpdateBucket) {
   auto mock = std::make_shared<MockRestClient>();
   EXPECT_CALL(*mock, Put(ExpectedContext(), ExpectedRequest(), _))
       .WillOnce(Return(PermanentError()));
-  auto tested = std::make_unique<RestClient>(Options{}, mock, mock);
+  auto tested = std::make_unique<RestStub>(Options{}, mock, mock);
   auto context = TestContext();
   auto status =
       tested->UpdateBucket(context, TestOptions(), UpdateBucketRequest());
@@ -198,11 +198,11 @@ TEST(RestClientTest, UpdateBucket) {
               StatusIs(PermanentError().code(), PermanentError().message()));
 }
 
-TEST(RestClientTest, PatchBucket) {
+TEST(RestStubTest, PatchBucket) {
   auto mock = std::make_shared<MockRestClient>();
   EXPECT_CALL(*mock, Patch(ExpectedContext(), ExpectedRequest(), _))
       .WillOnce(Return(PermanentError()));
-  auto tested = std::make_unique<RestClient>(Options{}, mock, mock);
+  auto tested = std::make_unique<RestStub>(Options{}, mock, mock);
   auto context = TestContext();
   auto status =
       tested->PatchBucket(context, TestOptions(), PatchBucketRequest());
@@ -210,11 +210,11 @@ TEST(RestClientTest, PatchBucket) {
               StatusIs(PermanentError().code(), PermanentError().message()));
 }
 
-TEST(RestClientTest, GetNativeBucketIamPolicy) {
+TEST(RestStubTest, GetNativeBucketIamPolicy) {
   auto mock = std::make_shared<MockRestClient>();
   EXPECT_CALL(*mock, Get(ExpectedContext(), ExpectedRequest()))
       .WillOnce(Return(PermanentError()));
-  auto tested = std::make_unique<RestClient>(Options{}, mock, mock);
+  auto tested = std::make_unique<RestStub>(Options{}, mock, mock);
   auto context = TestContext();
   auto status = tested->GetNativeBucketIamPolicy(context, TestOptions(),
                                                  GetBucketIamPolicyRequest());
@@ -222,11 +222,11 @@ TEST(RestClientTest, GetNativeBucketIamPolicy) {
               StatusIs(PermanentError().code(), PermanentError().message()));
 }
 
-TEST(RestClientTest, SetNativeBucketIamPolicy) {
+TEST(RestStubTest, SetNativeBucketIamPolicy) {
   auto mock = std::make_shared<MockRestClient>();
   EXPECT_CALL(*mock, Put(ExpectedContext(), ExpectedRequest(), _))
       .WillOnce(Return(PermanentError()));
-  auto tested = std::make_unique<RestClient>(Options{}, mock, mock);
+  auto tested = std::make_unique<RestStub>(Options{}, mock, mock);
   auto context = TestContext();
   auto status = tested->SetNativeBucketIamPolicy(
       context, TestOptions(), SetNativeBucketIamPolicyRequest());
@@ -234,11 +234,11 @@ TEST(RestClientTest, SetNativeBucketIamPolicy) {
               StatusIs(PermanentError().code(), PermanentError().message()));
 }
 
-TEST(RestClientTest, TestBucketIamPermissions) {
+TEST(RestStubTest, TestBucketIamPermissions) {
   auto mock = std::make_shared<MockRestClient>();
   EXPECT_CALL(*mock, Get(ExpectedContext(), ExpectedRequest()))
       .WillOnce(Return(PermanentError()));
-  auto tested = std::make_unique<RestClient>(Options{}, mock, mock);
+  auto tested = std::make_unique<RestStub>(Options{}, mock, mock);
   auto context = TestContext();
   auto status = tested->TestBucketIamPermissions(
       context, TestOptions(), TestBucketIamPermissionsRequest());
@@ -246,12 +246,12 @@ TEST(RestClientTest, TestBucketIamPermissions) {
               StatusIs(PermanentError().code(), PermanentError().message()));
 }
 
-TEST(RestClientTest, LockBucketRetentionPolicy) {
+TEST(RestStubTest, LockBucketRetentionPolicy) {
   auto mock = std::make_shared<MockRestClient>();
   EXPECT_CALL(*mock,
               Post(ExpectedContext(), ExpectedRequest(), ExpectedPayload()))
       .WillOnce(Return(PermanentError()));
-  auto tested = std::make_unique<RestClient>(Options{}, mock, mock);
+  auto tested = std::make_unique<RestStub>(Options{}, mock, mock);
   auto context = TestContext();
   auto status = tested->LockBucketRetentionPolicy(
       context, TestOptions(), LockBucketRetentionPolicyRequest());
@@ -259,12 +259,12 @@ TEST(RestClientTest, LockBucketRetentionPolicy) {
               StatusIs(PermanentError().code(), PermanentError().message()));
 }
 
-TEST(RestClientTest, InsertObjectMedia) {
+TEST(RestStubTest, InsertObjectMedia) {
   auto mock = std::make_shared<MockRestClient>();
   EXPECT_CALL(*mock,
               Post(ExpectedContext(), ExpectedRequest(), ExpectedPayload()))
       .WillOnce(Return(PermanentError()));
-  auto tested = std::make_unique<RestClient>(Options{}, mock, mock);
+  auto tested = std::make_unique<RestStub>(Options{}, mock, mock);
   auto context = TestContext();
   auto status = tested->InsertObjectMedia(context, TestOptions(),
                                           InsertObjectMediaRequest());
@@ -272,11 +272,11 @@ TEST(RestClientTest, InsertObjectMedia) {
               StatusIs(PermanentError().code(), PermanentError().message()));
 }
 
-TEST(RestClientTest, GetObjectMetadata) {
+TEST(RestStubTest, GetObjectMetadata) {
   auto mock = std::make_shared<MockRestClient>();
   EXPECT_CALL(*mock, Get(ExpectedContext(), ExpectedRequest()))
       .WillOnce(Return(PermanentError()));
-  auto tested = std::make_unique<RestClient>(Options{}, mock, mock);
+  auto tested = std::make_unique<RestStub>(Options{}, mock, mock);
   auto context = TestContext();
   auto status = tested->GetObjectMetadata(context, TestOptions(),
                                           GetObjectMetadataRequest());
@@ -284,11 +284,11 @@ TEST(RestClientTest, GetObjectMetadata) {
               StatusIs(PermanentError().code(), PermanentError().message()));
 }
 
-TEST(RestClientTest, ReadObject) {
+TEST(RestStubTest, ReadObject) {
   auto mock = std::make_shared<MockRestClient>();
   EXPECT_CALL(*mock, Get(ExpectedContext(), ExpectedRequest()))
       .WillOnce(Return(PermanentError()));
-  auto tested = std::make_unique<RestClient>(Options{}, mock, mock);
+  auto tested = std::make_unique<RestStub>(Options{}, mock, mock);
   auto context = TestContext();
   auto status =
       tested->ReadObject(context, TestOptions(), ReadObjectRangeRequest());
@@ -296,11 +296,11 @@ TEST(RestClientTest, ReadObject) {
               StatusIs(PermanentError().code(), PermanentError().message()));
 }
 
-TEST(RestClientTest, ListObjects) {
+TEST(RestStubTest, ListObjects) {
   auto mock = std::make_shared<MockRestClient>();
   EXPECT_CALL(*mock, Get(ExpectedContext(), ExpectedRequest()))
       .WillOnce(Return(PermanentError()));
-  auto tested = std::make_unique<RestClient>(Options{}, mock, mock);
+  auto tested = std::make_unique<RestStub>(Options{}, mock, mock);
   auto context = TestContext();
   auto status =
       tested->ListObjects(context, TestOptions(), ListObjectsRequest());
@@ -308,11 +308,11 @@ TEST(RestClientTest, ListObjects) {
               StatusIs(PermanentError().code(), PermanentError().message()));
 }
 
-TEST(RestClientTest, DeleteObject) {
+TEST(RestStubTest, DeleteObject) {
   auto mock = std::make_shared<MockRestClient>();
   EXPECT_CALL(*mock, Delete(ExpectedContext(), ExpectedRequest()))
       .WillOnce(Return(PermanentError()));
-  auto tested = std::make_unique<RestClient>(Options{}, mock, mock);
+  auto tested = std::make_unique<RestStub>(Options{}, mock, mock);
   auto context = TestContext();
   auto status =
       tested->DeleteObject(context, TestOptions(), DeleteObjectRequest());
@@ -320,11 +320,11 @@ TEST(RestClientTest, DeleteObject) {
               StatusIs(PermanentError().code(), PermanentError().message()));
 }
 
-TEST(RestClientTest, UpdateObject) {
+TEST(RestStubTest, UpdateObject) {
   auto mock = std::make_shared<MockRestClient>();
   EXPECT_CALL(*mock, Put(ExpectedContext(), ExpectedRequest(), _))
       .WillOnce(Return(PermanentError()));
-  auto tested = std::make_unique<RestClient>(Options{}, mock, mock);
+  auto tested = std::make_unique<RestStub>(Options{}, mock, mock);
   auto context = TestContext();
   auto status =
       tested->UpdateObject(context, TestOptions(), UpdateObjectRequest());
@@ -332,11 +332,11 @@ TEST(RestClientTest, UpdateObject) {
               StatusIs(PermanentError().code(), PermanentError().message()));
 }
 
-TEST(RestClientTest, PatchObject) {
+TEST(RestStubTest, PatchObject) {
   auto mock = std::make_shared<MockRestClient>();
   EXPECT_CALL(*mock, Patch(ExpectedContext(), ExpectedRequest(), _))
       .WillOnce(Return(PermanentError()));
-  auto tested = std::make_unique<RestClient>(Options{}, mock, mock);
+  auto tested = std::make_unique<RestStub>(Options{}, mock, mock);
   auto context = TestContext();
   auto status =
       tested->PatchObject(context, TestOptions(), PatchObjectRequest());
@@ -344,12 +344,12 @@ TEST(RestClientTest, PatchObject) {
               StatusIs(PermanentError().code(), PermanentError().message()));
 }
 
-TEST(RestClientTest, ComposeObject) {
+TEST(RestStubTest, ComposeObject) {
   auto mock = std::make_shared<MockRestClient>();
   EXPECT_CALL(*mock,
               Post(ExpectedContext(), ExpectedRequest(), ExpectedPayload()))
       .WillOnce(Return(PermanentError()));
-  auto tested = std::make_unique<RestClient>(Options{}, mock, mock);
+  auto tested = std::make_unique<RestStub>(Options{}, mock, mock);
   auto context = TestContext();
   auto status =
       tested->ComposeObject(context, TestOptions(), ComposeObjectRequest());
@@ -357,12 +357,12 @@ TEST(RestClientTest, ComposeObject) {
               StatusIs(PermanentError().code(), PermanentError().message()));
 }
 
-TEST(RestClientTest, CreateResumableUpload) {
+TEST(RestStubTest, CreateResumableUpload) {
   auto mock = std::make_shared<MockRestClient>();
   EXPECT_CALL(*mock,
               Post(ExpectedContext(), ExpectedRequest(), ExpectedPayload()))
       .WillOnce(Return(PermanentError()));
-  auto tested = std::make_unique<RestClient>(Options{}, mock, mock);
+  auto tested = std::make_unique<RestStub>(Options{}, mock, mock);
   auto context = TestContext();
   auto status = tested->CreateResumableUpload(context, TestOptions(),
                                               ResumableUploadRequest());
@@ -370,11 +370,11 @@ TEST(RestClientTest, CreateResumableUpload) {
               StatusIs(PermanentError().code(), PermanentError().message()));
 }
 
-TEST(RestClientTest, QueryResumableUpload) {
+TEST(RestStubTest, QueryResumableUpload) {
   auto mock = std::make_shared<MockRestClient>();
   EXPECT_CALL(*mock, Put(ExpectedContext(), _, _))
       .WillOnce(Return(PermanentError()));
-  auto tested = std::make_unique<RestClient>(Options{}, mock, mock);
+  auto tested = std::make_unique<RestStub>(Options{}, mock, mock);
   auto context = TestContext();
   auto status = tested->QueryResumableUpload(context, TestOptions(),
                                              QueryResumableUploadRequest());
@@ -382,11 +382,11 @@ TEST(RestClientTest, QueryResumableUpload) {
               StatusIs(PermanentError().code(), PermanentError().message()));
 }
 
-TEST(RestClientTest, DeleteResumableUpload) {
+TEST(RestStubTest, DeleteResumableUpload) {
   auto mock = std::make_shared<MockRestClient>();
   EXPECT_CALL(*mock, Delete(ExpectedContext(), _))
       .WillOnce(Return(PermanentError()));
-  auto tested = std::make_unique<RestClient>(Options{}, mock, mock);
+  auto tested = std::make_unique<RestStub>(Options{}, mock, mock);
   auto context = TestContext();
   auto status = tested->DeleteResumableUpload(context, TestOptions(),
                                               DeleteResumableUploadRequest());
@@ -394,11 +394,11 @@ TEST(RestClientTest, DeleteResumableUpload) {
               StatusIs(PermanentError().code(), PermanentError().message()));
 }
 
-TEST(RestClientTest, UploadChunk) {
+TEST(RestStubTest, UploadChunk) {
   auto mock = std::make_shared<MockRestClient>();
   EXPECT_CALL(*mock, Put(ExpectedContext(), _, _))
       .WillOnce(Return(PermanentError()));
-  auto tested = std::make_unique<RestClient>(Options{}, mock, mock);
+  auto tested = std::make_unique<RestStub>(Options{}, mock, mock);
   auto context = TestContext();
   auto status =
       tested->UploadChunk(context, TestOptions(), UploadChunkRequest());
@@ -406,11 +406,11 @@ TEST(RestClientTest, UploadChunk) {
               StatusIs(PermanentError().code(), PermanentError().message()));
 }
 
-TEST(RestClientTest, ListBucketAcl) {
+TEST(RestStubTest, ListBucketAcl) {
   auto mock = std::make_shared<MockRestClient>();
   EXPECT_CALL(*mock, Get(ExpectedContext(), ExpectedRequest()))
       .WillOnce(Return(PermanentError()));
-  auto tested = std::make_unique<RestClient>(Options{}, mock, mock);
+  auto tested = std::make_unique<RestStub>(Options{}, mock, mock);
   auto context = TestContext();
   auto status =
       tested->ListBucketAcl(context, TestOptions(), ListBucketAclRequest());
@@ -418,24 +418,24 @@ TEST(RestClientTest, ListBucketAcl) {
               StatusIs(PermanentError().code(), PermanentError().message()));
 }
 
-TEST(RestClientTest, CopyObject) {
+TEST(RestStubTest, CopyObject) {
   auto mock = std::make_shared<MockRestClient>();
   EXPECT_CALL(*mock,
               Post(ExpectedContext(), ExpectedRequest(), ExpectedPayload()))
       .WillOnce(Return(PermanentError()));
-  auto tested = std::make_unique<RestClient>(Options{}, mock, mock);
+  auto tested = std::make_unique<RestStub>(Options{}, mock, mock);
   auto context = TestContext();
   auto status = tested->CopyObject(context, TestOptions(), CopyObjectRequest());
   EXPECT_THAT(status,
               StatusIs(PermanentError().code(), PermanentError().message()));
 }
 
-TEST(RestClientTest, CreateBucketAcl) {
+TEST(RestStubTest, CreateBucketAcl) {
   auto mock = std::make_shared<MockRestClient>();
   EXPECT_CALL(*mock,
               Post(ExpectedContext(), ExpectedRequest(), ExpectedPayload()))
       .WillOnce(Return(PermanentError()));
-  auto tested = std::make_unique<RestClient>(Options{}, mock, mock);
+  auto tested = std::make_unique<RestStub>(Options{}, mock, mock);
   auto context = TestContext();
   auto status =
       tested->CreateBucketAcl(context, TestOptions(), CreateBucketAclRequest());
@@ -443,11 +443,11 @@ TEST(RestClientTest, CreateBucketAcl) {
               StatusIs(PermanentError().code(), PermanentError().message()));
 }
 
-TEST(RestClientTest, GetBucketAcl) {
+TEST(RestStubTest, GetBucketAcl) {
   auto mock = std::make_shared<MockRestClient>();
   EXPECT_CALL(*mock, Get(ExpectedContext(), ExpectedRequest()))
       .WillOnce(Return(PermanentError()));
-  auto tested = std::make_unique<RestClient>(Options{}, mock, mock);
+  auto tested = std::make_unique<RestStub>(Options{}, mock, mock);
   auto context = TestContext();
   auto status =
       tested->GetBucketAcl(context, TestOptions(), GetBucketAclRequest());
@@ -455,11 +455,11 @@ TEST(RestClientTest, GetBucketAcl) {
               StatusIs(PermanentError().code(), PermanentError().message()));
 }
 
-TEST(RestClientTest, DeleteBucketAcl) {
+TEST(RestStubTest, DeleteBucketAcl) {
   auto mock = std::make_shared<MockRestClient>();
   EXPECT_CALL(*mock, Delete(ExpectedContext(), ExpectedRequest()))
       .WillOnce(Return(PermanentError()));
-  auto tested = std::make_unique<RestClient>(Options{}, mock, mock);
+  auto tested = std::make_unique<RestStub>(Options{}, mock, mock);
   auto context = TestContext();
   auto status =
       tested->DeleteBucketAcl(context, TestOptions(), DeleteBucketAclRequest());
@@ -467,11 +467,11 @@ TEST(RestClientTest, DeleteBucketAcl) {
               StatusIs(PermanentError().code(), PermanentError().message()));
 }
 
-TEST(RestClientTest, UpdateBucketAcl) {
+TEST(RestStubTest, UpdateBucketAcl) {
   auto mock = std::make_shared<MockRestClient>();
   EXPECT_CALL(*mock, Put(ExpectedContext(), ExpectedRequest(), _))
       .WillOnce(Return(PermanentError()));
-  auto tested = std::make_unique<RestClient>(Options{}, mock, mock);
+  auto tested = std::make_unique<RestStub>(Options{}, mock, mock);
   auto context = TestContext();
   auto status =
       tested->UpdateBucketAcl(context, TestOptions(), UpdateBucketAclRequest());
@@ -479,11 +479,11 @@ TEST(RestClientTest, UpdateBucketAcl) {
               StatusIs(PermanentError().code(), PermanentError().message()));
 }
 
-TEST(RestClientTest, PatchBucketAcl) {
+TEST(RestStubTest, PatchBucketAcl) {
   auto mock = std::make_shared<MockRestClient>();
   EXPECT_CALL(*mock, Patch(ExpectedContext(), ExpectedRequest(), _))
       .WillOnce(Return(PermanentError()));
-  auto tested = std::make_unique<RestClient>(Options{}, mock, mock);
+  auto tested = std::make_unique<RestStub>(Options{}, mock, mock);
   auto context = TestContext();
   auto status =
       tested->PatchBucketAcl(context, TestOptions(), PatchBucketAclRequest());
@@ -491,11 +491,11 @@ TEST(RestClientTest, PatchBucketAcl) {
               StatusIs(PermanentError().code(), PermanentError().message()));
 }
 
-TEST(RestClientTest, ListObjectAcl) {
+TEST(RestStubTest, ListObjectAcl) {
   auto mock = std::make_shared<MockRestClient>();
   EXPECT_CALL(*mock, Get(ExpectedContext(), ExpectedRequest()))
       .WillOnce(Return(PermanentError()));
-  auto tested = std::make_unique<RestClient>(Options{}, mock, mock);
+  auto tested = std::make_unique<RestStub>(Options{}, mock, mock);
   auto context = TestContext();
   auto status =
       tested->ListObjectAcl(context, TestOptions(), ListObjectAclRequest());
@@ -503,12 +503,12 @@ TEST(RestClientTest, ListObjectAcl) {
               StatusIs(PermanentError().code(), PermanentError().message()));
 }
 
-TEST(RestClientTest, CreateObjectAcl) {
+TEST(RestStubTest, CreateObjectAcl) {
   auto mock = std::make_shared<MockRestClient>();
   EXPECT_CALL(*mock,
               Post(ExpectedContext(), ExpectedRequest(), ExpectedPayload()))
       .WillOnce(Return(PermanentError()));
-  auto tested = std::make_unique<RestClient>(Options{}, mock, mock);
+  auto tested = std::make_unique<RestStub>(Options{}, mock, mock);
   auto context = TestContext();
   auto status =
       tested->CreateObjectAcl(context, TestOptions(), CreateObjectAclRequest());
@@ -516,11 +516,11 @@ TEST(RestClientTest, CreateObjectAcl) {
               StatusIs(PermanentError().code(), PermanentError().message()));
 }
 
-TEST(RestClientTest, DeleteObjectAcl) {
+TEST(RestStubTest, DeleteObjectAcl) {
   auto mock = std::make_shared<MockRestClient>();
   EXPECT_CALL(*mock, Delete(ExpectedContext(), ExpectedRequest()))
       .WillOnce(Return(PermanentError()));
-  auto tested = std::make_unique<RestClient>(Options{}, mock, mock);
+  auto tested = std::make_unique<RestStub>(Options{}, mock, mock);
   auto context = TestContext();
   auto status =
       tested->DeleteObjectAcl(context, TestOptions(), DeleteObjectAclRequest());
@@ -528,11 +528,11 @@ TEST(RestClientTest, DeleteObjectAcl) {
               StatusIs(PermanentError().code(), PermanentError().message()));
 }
 
-TEST(RestClientTest, GetObjectAcl) {
+TEST(RestStubTest, GetObjectAcl) {
   auto mock = std::make_shared<MockRestClient>();
   EXPECT_CALL(*mock, Get(ExpectedContext(), ExpectedRequest()))
       .WillOnce(Return(PermanentError()));
-  auto tested = std::make_unique<RestClient>(Options{}, mock, mock);
+  auto tested = std::make_unique<RestStub>(Options{}, mock, mock);
   auto context = TestContext();
   auto status =
       tested->GetObjectAcl(context, TestOptions(), GetObjectAclRequest());
@@ -540,11 +540,11 @@ TEST(RestClientTest, GetObjectAcl) {
               StatusIs(PermanentError().code(), PermanentError().message()));
 }
 
-TEST(RestClientTest, UpdateObjectAcl) {
+TEST(RestStubTest, UpdateObjectAcl) {
   auto mock = std::make_shared<MockRestClient>();
   EXPECT_CALL(*mock, Put(ExpectedContext(), ExpectedRequest(), _))
       .WillOnce(Return(PermanentError()));
-  auto tested = std::make_unique<RestClient>(Options{}, mock, mock);
+  auto tested = std::make_unique<RestStub>(Options{}, mock, mock);
   auto context = TestContext();
   auto status =
       tested->UpdateObjectAcl(context, TestOptions(), UpdateObjectAclRequest());
@@ -552,11 +552,11 @@ TEST(RestClientTest, UpdateObjectAcl) {
               StatusIs(PermanentError().code(), PermanentError().message()));
 }
 
-TEST(RestClientTest, PatchObjectAcl) {
+TEST(RestStubTest, PatchObjectAcl) {
   auto mock = std::make_shared<MockRestClient>();
   EXPECT_CALL(*mock, Patch(ExpectedContext(), ExpectedRequest(), _))
       .WillOnce(Return(PermanentError()));
-  auto tested = std::make_unique<RestClient>(Options{}, mock, mock);
+  auto tested = std::make_unique<RestStub>(Options{}, mock, mock);
   auto context = TestContext();
   auto status =
       tested->PatchObjectAcl(context, TestOptions(), PatchObjectAclRequest());
@@ -564,12 +564,12 @@ TEST(RestClientTest, PatchObjectAcl) {
               StatusIs(PermanentError().code(), PermanentError().message()));
 }
 
-TEST(RestClientTest, RewriteObject) {
+TEST(RestStubTest, RewriteObject) {
   auto mock = std::make_shared<MockRestClient>();
   EXPECT_CALL(*mock,
               Post(ExpectedContext(), ExpectedRequest(), ExpectedPayload()))
       .WillOnce(Return(PermanentError()));
-  auto tested = std::make_unique<RestClient>(Options{}, mock, mock);
+  auto tested = std::make_unique<RestStub>(Options{}, mock, mock);
   auto context = TestContext();
   auto status =
       tested->RewriteObject(context, TestOptions(), RewriteObjectRequest());
@@ -577,11 +577,11 @@ TEST(RestClientTest, RewriteObject) {
               StatusIs(PermanentError().code(), PermanentError().message()));
 }
 
-TEST(RestClientTest, ListDefaultObjectAcl) {
+TEST(RestStubTest, ListDefaultObjectAcl) {
   auto mock = std::make_shared<MockRestClient>();
   EXPECT_CALL(*mock, Get(ExpectedContext(), ExpectedRequest()))
       .WillOnce(Return(PermanentError()));
-  auto tested = std::make_unique<RestClient>(Options{}, mock, mock);
+  auto tested = std::make_unique<RestStub>(Options{}, mock, mock);
   auto context = TestContext();
   auto status = tested->ListDefaultObjectAcl(context, TestOptions(),
                                              ListDefaultObjectAclRequest());
@@ -589,12 +589,12 @@ TEST(RestClientTest, ListDefaultObjectAcl) {
               StatusIs(PermanentError().code(), PermanentError().message()));
 }
 
-TEST(RestClientTest, CreateDefaultObjectAcl) {
+TEST(RestStubTest, CreateDefaultObjectAcl) {
   auto mock = std::make_shared<MockRestClient>();
   EXPECT_CALL(*mock,
               Post(ExpectedContext(), ExpectedRequest(), ExpectedPayload()))
       .WillOnce(Return(PermanentError()));
-  auto tested = std::make_unique<RestClient>(Options{}, mock, mock);
+  auto tested = std::make_unique<RestStub>(Options{}, mock, mock);
   auto context = TestContext();
   auto status = tested->CreateDefaultObjectAcl(context, TestOptions(),
                                                CreateDefaultObjectAclRequest());
@@ -602,11 +602,11 @@ TEST(RestClientTest, CreateDefaultObjectAcl) {
               StatusIs(PermanentError().code(), PermanentError().message()));
 }
 
-TEST(RestClientTest, DeleteDefaultObjectAcl) {
+TEST(RestStubTest, DeleteDefaultObjectAcl) {
   auto mock = std::make_shared<MockRestClient>();
   EXPECT_CALL(*mock, Delete(ExpectedContext(), ExpectedRequest()))
       .WillOnce(Return(PermanentError()));
-  auto tested = std::make_unique<RestClient>(Options{}, mock, mock);
+  auto tested = std::make_unique<RestStub>(Options{}, mock, mock);
   auto context = TestContext();
   auto status = tested->DeleteDefaultObjectAcl(context, TestOptions(),
                                                DeleteDefaultObjectAclRequest());
@@ -614,11 +614,11 @@ TEST(RestClientTest, DeleteDefaultObjectAcl) {
               StatusIs(PermanentError().code(), PermanentError().message()));
 }
 
-TEST(RestClientTest, GetDefaultObjectAcl) {
+TEST(RestStubTest, GetDefaultObjectAcl) {
   auto mock = std::make_shared<MockRestClient>();
   EXPECT_CALL(*mock, Get(ExpectedContext(), ExpectedRequest()))
       .WillOnce(Return(PermanentError()));
-  auto tested = std::make_unique<RestClient>(Options{}, mock, mock);
+  auto tested = std::make_unique<RestStub>(Options{}, mock, mock);
   auto context = TestContext();
   auto status = tested->GetDefaultObjectAcl(context, TestOptions(),
                                             GetDefaultObjectAclRequest());
@@ -626,11 +626,11 @@ TEST(RestClientTest, GetDefaultObjectAcl) {
               StatusIs(PermanentError().code(), PermanentError().message()));
 }
 
-TEST(RestClientTest, UpdateDefaultObjectAcl) {
+TEST(RestStubTest, UpdateDefaultObjectAcl) {
   auto mock = std::make_shared<MockRestClient>();
   EXPECT_CALL(*mock, Put(ExpectedContext(), ExpectedRequest(), _))
       .WillOnce(Return(PermanentError()));
-  auto tested = std::make_unique<RestClient>(Options{}, mock, mock);
+  auto tested = std::make_unique<RestStub>(Options{}, mock, mock);
   auto context = TestContext();
   auto status = tested->UpdateDefaultObjectAcl(context, TestOptions(),
                                                UpdateDefaultObjectAclRequest());
@@ -638,11 +638,11 @@ TEST(RestClientTest, UpdateDefaultObjectAcl) {
               StatusIs(PermanentError().code(), PermanentError().message()));
 }
 
-TEST(RestClientTest, PatchDefaultObjectAcl) {
+TEST(RestStubTest, PatchDefaultObjectAcl) {
   auto mock = std::make_shared<MockRestClient>();
   EXPECT_CALL(*mock, Patch(ExpectedContext(), ExpectedRequest(), _))
       .WillOnce(Return(PermanentError()));
-  auto tested = std::make_unique<RestClient>(Options{}, mock, mock);
+  auto tested = std::make_unique<RestStub>(Options{}, mock, mock);
   auto context = TestContext();
   auto status = tested->PatchDefaultObjectAcl(context, TestOptions(),
                                               PatchDefaultObjectAclRequest());
@@ -650,11 +650,11 @@ TEST(RestClientTest, PatchDefaultObjectAcl) {
               StatusIs(PermanentError().code(), PermanentError().message()));
 }
 
-TEST(RestClientTest, GetServiceAccount) {
+TEST(RestStubTest, GetServiceAccount) {
   auto mock = std::make_shared<MockRestClient>();
   EXPECT_CALL(*mock, Get(ExpectedContext(), ExpectedRequest()))
       .WillOnce(Return(PermanentError()));
-  auto tested = std::make_unique<RestClient>(Options{}, mock, mock);
+  auto tested = std::make_unique<RestStub>(Options{}, mock, mock);
   auto context = TestContext();
   auto status = tested->GetServiceAccount(context, TestOptions(),
                                           GetProjectServiceAccountRequest());
@@ -662,11 +662,11 @@ TEST(RestClientTest, GetServiceAccount) {
               StatusIs(PermanentError().code(), PermanentError().message()));
 }
 
-TEST(RestClientTest, ListHmacKeys) {
+TEST(RestStubTest, ListHmacKeys) {
   auto mock = std::make_shared<MockRestClient>();
   EXPECT_CALL(*mock, Get(ExpectedContext(), ExpectedRequest()))
       .WillOnce(Return(PermanentError()));
-  auto tested = std::make_unique<RestClient>(Options{}, mock, mock);
+  auto tested = std::make_unique<RestStub>(Options{}, mock, mock);
   auto context = TestContext();
   auto status =
       tested->ListHmacKeys(context, TestOptions(), ListHmacKeysRequest());
@@ -674,14 +674,14 @@ TEST(RestClientTest, ListHmacKeys) {
               StatusIs(PermanentError().code(), PermanentError().message()));
 }
 
-TEST(RestClientTest, CreateHmacKey) {
+TEST(RestStubTest, CreateHmacKey) {
   auto mock = std::make_shared<MockRestClient>();
   auto expected_payload =
       An<std::vector<std::pair<std::string, std::string>> const&>();
   EXPECT_CALL(*mock,
               Post(ExpectedContext(), ExpectedRequest(), expected_payload))
       .WillOnce(Return(PermanentError()));
-  auto tested = std::make_unique<RestClient>(Options{}, mock, mock);
+  auto tested = std::make_unique<RestStub>(Options{}, mock, mock);
   auto context = TestContext();
   auto status =
       tested->CreateHmacKey(context, TestOptions(), CreateHmacKeyRequest());
@@ -689,11 +689,11 @@ TEST(RestClientTest, CreateHmacKey) {
               StatusIs(PermanentError().code(), PermanentError().message()));
 }
 
-TEST(RestClientTest, DeleteHmacKey) {
+TEST(RestStubTest, DeleteHmacKey) {
   auto mock = std::make_shared<MockRestClient>();
   EXPECT_CALL(*mock, Delete(ExpectedContext(), ExpectedRequest()))
       .WillOnce(Return(PermanentError()));
-  auto tested = std::make_unique<RestClient>(Options{}, mock, mock);
+  auto tested = std::make_unique<RestStub>(Options{}, mock, mock);
   auto context = TestContext();
   auto status =
       tested->DeleteHmacKey(context, TestOptions(), DeleteHmacKeyRequest());
@@ -701,22 +701,22 @@ TEST(RestClientTest, DeleteHmacKey) {
               StatusIs(PermanentError().code(), PermanentError().message()));
 }
 
-TEST(RestClientTest, GetHmacKey) {
+TEST(RestStubTest, GetHmacKey) {
   auto mock = std::make_shared<MockRestClient>();
   EXPECT_CALL(*mock, Get(ExpectedContext(), ExpectedRequest()))
       .WillOnce(Return(PermanentError()));
-  auto tested = std::make_unique<RestClient>(Options{}, mock, mock);
+  auto tested = std::make_unique<RestStub>(Options{}, mock, mock);
   auto context = TestContext();
   auto status = tested->GetHmacKey(context, TestOptions(), GetHmacKeyRequest());
   EXPECT_THAT(status,
               StatusIs(PermanentError().code(), PermanentError().message()));
 }
 
-TEST(RestClientTest, UpdateHmacKey) {
+TEST(RestStubTest, UpdateHmacKey) {
   auto mock = std::make_shared<MockRestClient>();
   EXPECT_CALL(*mock, Put(ExpectedContext(), ExpectedRequest(), _))
       .WillOnce(Return(PermanentError()));
-  auto tested = std::make_unique<RestClient>(Options{}, mock, mock);
+  auto tested = std::make_unique<RestStub>(Options{}, mock, mock);
   auto context = TestContext();
   auto status =
       tested->UpdateHmacKey(context, TestOptions(), UpdateHmacKeyRequest());
@@ -724,22 +724,22 @@ TEST(RestClientTest, UpdateHmacKey) {
               StatusIs(PermanentError().code(), PermanentError().message()));
 }
 
-TEST(RestClientTest, SignBlob) {
+TEST(RestStubTest, SignBlob) {
   auto mock = std::make_shared<MockRestClient>();
   EXPECT_CALL(*mock, Post(ExpectedContext(), _, ExpectedPayload()))
       .WillOnce(Return(PermanentError()));
-  auto tested = std::make_unique<RestClient>(Options{}, mock, mock);
+  auto tested = std::make_unique<RestStub>(Options{}, mock, mock);
   auto context = TestContext();
   auto status = tested->SignBlob(context, TestOptions(), SignBlobRequest());
   EXPECT_THAT(status,
               StatusIs(PermanentError().code(), PermanentError().message()));
 }
 
-TEST(RestClientTest, ListNotifications) {
+TEST(RestStubTest, ListNotifications) {
   auto mock = std::make_shared<MockRestClient>();
   EXPECT_CALL(*mock, Get(ExpectedContext(), ExpectedRequest()))
       .WillOnce(Return(PermanentError()));
-  auto tested = std::make_unique<RestClient>(Options{}, mock, mock);
+  auto tested = std::make_unique<RestStub>(Options{}, mock, mock);
   auto context = TestContext();
   auto status = tested->ListNotifications(context, TestOptions(),
                                           ListNotificationsRequest());
@@ -747,12 +747,12 @@ TEST(RestClientTest, ListNotifications) {
               StatusIs(PermanentError().code(), PermanentError().message()));
 }
 
-TEST(RestClientTest, CreateNotification) {
+TEST(RestStubTest, CreateNotification) {
   auto mock = std::make_shared<MockRestClient>();
   EXPECT_CALL(*mock,
               Post(ExpectedContext(), ExpectedRequest(), ExpectedPayload()))
       .WillOnce(Return(PermanentError()));
-  auto tested = std::make_unique<RestClient>(Options{}, mock, mock);
+  auto tested = std::make_unique<RestStub>(Options{}, mock, mock);
   auto context = TestContext();
   auto status = tested->CreateNotification(context, TestOptions(),
                                            CreateNotificationRequest());
@@ -760,11 +760,11 @@ TEST(RestClientTest, CreateNotification) {
               StatusIs(PermanentError().code(), PermanentError().message()));
 }
 
-TEST(RestClientTest, GetNotification) {
+TEST(RestStubTest, GetNotification) {
   auto mock = std::make_shared<MockRestClient>();
   EXPECT_CALL(*mock, Get(ExpectedContext(), ExpectedRequest()))
       .WillOnce(Return(PermanentError()));
-  auto tested = std::make_unique<RestClient>(Options{}, mock, mock);
+  auto tested = std::make_unique<RestStub>(Options{}, mock, mock);
   auto context = TestContext();
   auto status =
       tested->GetNotification(context, TestOptions(), GetNotificationRequest());
@@ -772,11 +772,11 @@ TEST(RestClientTest, GetNotification) {
               StatusIs(PermanentError().code(), PermanentError().message()));
 }
 
-TEST(RestClientTest, DeleteNotification) {
+TEST(RestStubTest, DeleteNotification) {
   auto mock = std::make_shared<MockRestClient>();
   EXPECT_CALL(*mock, Delete(ExpectedContext(), ExpectedRequest()))
       .WillOnce(Return(PermanentError()));
-  auto tested = std::make_unique<RestClient>(Options{}, mock, mock);
+  auto tested = std::make_unique<RestStub>(Options{}, mock, mock);
   auto context = TestContext();
   auto status = tested->DeleteNotification(context, TestOptions(),
                                            DeleteNotificationRequest());

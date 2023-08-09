@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_REST_CLIENT_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_REST_CLIENT_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_REST_STUB_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_REST_STUB_H
 
 #include "google/cloud/storage/internal/generic_stub.h"
 #include "google/cloud/storage/version.h"
@@ -35,22 +35,22 @@ namespace internal {
  *
  * Over time, this will migrate from 100% libcurl wrappers to 100% REST library.
  */
-class RestClient : public storage_internal::GenericStub {
+class RestStub : public storage_internal::GenericStub {
  public:
-  explicit RestClient(Options options);
-  explicit RestClient(Options options,
-                      std::shared_ptr<google::cloud::rest_internal::RestClient>
-                          storage_rest_client,
-                      std::shared_ptr<google::cloud::rest_internal::RestClient>
-                          iam_rest_client);
+  explicit RestStub(Options options);
+  explicit RestStub(Options options,
+                    std::shared_ptr<google::cloud::rest_internal::RestClient>
+                        storage_rest_client,
+                    std::shared_ptr<google::cloud::rest_internal::RestClient>
+                        iam_rest_client);
 
   static Options ResolveStorageAuthority(Options const& options);
   static Options ResolveIamAuthority(Options const& options);
 
-  RestClient(RestClient const& rhs) = delete;
-  RestClient(RestClient&& rhs) = delete;
-  RestClient& operator=(RestClient const& rhs) = delete;
-  RestClient& operator=(RestClient&& rhs) = delete;
+  RestStub(RestStub const& rhs) = delete;
+  RestStub(RestStub&& rhs) = delete;
+  RestStub& operator=(RestStub const& rhs) = delete;
+  RestStub& operator=(RestStub&& rhs) = delete;
 
   Options options() const override;
 
@@ -248,4 +248,4 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_REST_CLIENT_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_REST_STUB_H
