@@ -49,8 +49,6 @@ std::string HostHeader(Options const& options, char const* service);
  */
 class CurlClient : public storage_internal::GenericStub {
  public:
-  // The constructor is private because the class must always be created
-  // as a shared_ptr<>.
   explicit CurlClient(Options options);
 
   CurlClient(CurlClient const& rhs) = delete;
@@ -229,7 +227,6 @@ class CurlClient : public storage_internal::GenericStub {
 
   std::vector<std::string> InspectStackStructure() const override;
 
- protected:
  private:
   /// Setup the configuration parameters that do not depend on the request.
   Status SetupBuilderCommon(CurlRequestBuilder& builder,
