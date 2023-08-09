@@ -12,14 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/storage/internal/rest/client.h"
+#include "google/cloud/storage/internal/rest/stub.h"
 #include "google/cloud/storage/internal/bucket_access_control_parser.h"
 #include "google/cloud/storage/internal/bucket_metadata_parser.h"
 #include "google/cloud/storage/internal/bucket_requests.h"
 #include "google/cloud/storage/internal/curl/handle.h"
 #include "google/cloud/storage/internal/generate_message_boundary.h"
 #include "google/cloud/storage/internal/hmac_key_metadata_parser.h"
-#include "google/cloud/storage/internal/logging_client.h"
 #include "google/cloud/storage/internal/notification_metadata_parser.h"
 #include "google/cloud/storage/internal/object_access_control_parser.h"
 #include "google/cloud/storage/internal/object_metadata_parser.h"
@@ -123,7 +122,7 @@ Status AddAuthorizationHeader(Options const& options,
 
 }  // namespace
 
-RestClient::RestClient(Options options)
+RestStub::RestStub(Options options)
     : options_(std::move(options)),
       storage_rest_client_(rest::MakePooledRestClient(
           RestEndpoint(options_), ResolveStorageAuthority(options_))),
@@ -132,7 +131,7 @@ RestClient::RestClient(Options options)
   rest_internal::CurlInitializeOnce(options_);
 }
 
-RestClient::RestClient(
+RestStub::RestStub(
     Options options,
     std::shared_ptr<google::cloud::rest_internal::RestClient>
         storage_rest_client,
@@ -143,7 +142,7 @@ RestClient::RestClient(
   rest_internal::CurlInitializeOnce(options_);
 }
 
-Options RestClient::ResolveStorageAuthority(Options const& options) {
+Options RestStub::ResolveStorageAuthority(Options const& options) {
   auto endpoint = RestEndpoint(options);
   if (options.has<AuthorityOption>() ||
       !absl::StrContains(endpoint, "googleapis.com"))
@@ -151,7 +150,7 @@ Options RestClient::ResolveStorageAuthority(Options const& options) {
   return Options(options).set<AuthorityOption>("storage.googleapis.com");
 }
 
-Options RestClient::ResolveIamAuthority(Options const& options) {
+Options RestStub::ResolveIamAuthority(Options const& options) {
   auto endpoint = IamEndpoint(options);
   if (options.has<AuthorityOption>() ||
       !absl::StrContains(endpoint, "googleapis.com"))
@@ -159,9 +158,9 @@ Options RestClient::ResolveIamAuthority(Options const& options) {
   return Options(options).set<AuthorityOption>("iamcredentials.googleapis.com");
 }
 
-Options RestClient::options() const { return options_; }
+Options RestStub::options() const { return options_; }
 
-StatusOr<ListBucketsResponse> RestClient::ListBuckets(
+StatusOr<ListBucketsResponse> RestStub::ListBuckets(
     rest_internal::RestContext& context, Options const& options,
     ListBucketsRequest const& request) {
   RestRequestBuilder builder(
@@ -174,7 +173,7 @@ StatusOr<ListBucketsResponse> RestClient::ListBuckets(
       storage_rest_client_->Get(context, std::move(builder).BuildRequest()));
 }
 
-StatusOr<BucketMetadata> RestClient::CreateBucket(
+StatusOr<BucketMetadata> RestStub::CreateBucket(
     rest_internal::RestContext& context, Options const& options,
     CreateBucketRequest const& request) {
   RestRequestBuilder builder(
@@ -199,7 +198,7 @@ StatusOr<BucketMetadata> RestClient::CreateBucket(
   return response;
 }
 
-StatusOr<BucketMetadata> RestClient::GetBucketMetadata(
+StatusOr<BucketMetadata> RestStub::GetBucketMetadata(
     rest_internal::RestContext& context, Options const& options,
     GetBucketMetadataRequest const& request) {
   RestRequestBuilder builder(absl::StrCat("storage/",
@@ -212,7 +211,7 @@ StatusOr<BucketMetadata> RestClient::GetBucketMetadata(
       storage_rest_client_->Get(context, std::move(builder).BuildRequest()));
 }
 
-StatusOr<EmptyResponse> RestClient::DeleteBucket(
+StatusOr<EmptyResponse> RestStub::DeleteBucket(
     rest_internal::RestContext& context, Options const& options,
     DeleteBucketRequest const& request) {
   RestRequestBuilder builder(absl::StrCat("storage/",
@@ -225,7 +224,7 @@ StatusOr<EmptyResponse> RestClient::DeleteBucket(
       storage_rest_client_->Delete(context, std::move(builder).BuildRequest()));
 }
 
-StatusOr<BucketMetadata> RestClient::UpdateBucket(
+StatusOr<BucketMetadata> RestStub::UpdateBucket(
     rest_internal::RestContext& context, Options const& options,
     UpdateBucketRequest const& request) {
   RestRequestBuilder builder(absl::StrCat("storage/",
@@ -241,7 +240,7 @@ StatusOr<BucketMetadata> RestClient::UpdateBucket(
                                 {absl::MakeConstSpan(payload)}));
 }
 
-StatusOr<BucketMetadata> RestClient::PatchBucket(
+StatusOr<BucketMetadata> RestStub::PatchBucket(
     rest_internal::RestContext& context, Options const& options,
     PatchBucketRequest const& request) {
   RestRequestBuilder builder(absl::StrCat("storage/",
@@ -257,7 +256,7 @@ StatusOr<BucketMetadata> RestClient::PatchBucket(
                                   {absl::MakeConstSpan(payload)}));
 }
 
-StatusOr<NativeIamPolicy> RestClient::GetNativeBucketIamPolicy(
+StatusOr<NativeIamPolicy> RestStub::GetNativeBucketIamPolicy(
     rest_internal::RestContext& context, Options const& options,
     GetBucketIamPolicyRequest const& request) {
   RestRequestBuilder builder(
@@ -270,7 +269,7 @@ StatusOr<NativeIamPolicy> RestClient::GetNativeBucketIamPolicy(
       storage_rest_client_->Get(context, std::move(builder).BuildRequest()));
 }
 
-StatusOr<NativeIamPolicy> RestClient::SetNativeBucketIamPolicy(
+StatusOr<NativeIamPolicy> RestStub::SetNativeBucketIamPolicy(
     rest_internal::RestContext& context, Options const& options,
     SetNativeBucketIamPolicyRequest const& request) {
   RestRequestBuilder builder(
@@ -286,7 +285,7 @@ StatusOr<NativeIamPolicy> RestClient::SetNativeBucketIamPolicy(
                                 {absl::MakeConstSpan(payload)}));
 }
 
-StatusOr<TestBucketIamPermissionsResponse> RestClient::TestBucketIamPermissions(
+StatusOr<TestBucketIamPermissionsResponse> RestStub::TestBucketIamPermissions(
     rest_internal::RestContext& context, Options const& options,
     TestBucketIamPermissionsRequest const& request) {
   RestRequestBuilder builder(
@@ -302,7 +301,7 @@ StatusOr<TestBucketIamPermissionsResponse> RestClient::TestBucketIamPermissions(
       storage_rest_client_->Get(context, std::move(builder).BuildRequest()));
 }
 
-StatusOr<BucketMetadata> RestClient::LockBucketRetentionPolicy(
+StatusOr<BucketMetadata> RestStub::LockBucketRetentionPolicy(
     rest_internal::RestContext& context, Options const& options,
     LockBucketRetentionPolicyRequest const& request) {
   RestRequestBuilder builder(
@@ -318,12 +317,12 @@ StatusOr<BucketMetadata> RestClient::LockBucketRetentionPolicy(
                                  {absl::MakeConstSpan(std::string{})}));
 }
 
-std::string RestClient::MakeBoundary() {
+std::string RestStub::MakeBoundary() {
   std::unique_lock<std::mutex> lk(mu_);
   return GenerateMessageBoundaryCandidate(generator_);
 }
 
-StatusOr<ObjectMetadata> RestClient::InsertObjectMediaMultipart(
+StatusOr<ObjectMetadata> RestStub::InsertObjectMediaMultipart(
     rest_internal::RestContext& context, Options const& options,
     InsertObjectMediaRequest const& request) {
   RestRequestBuilder builder(absl::StrCat("upload/storage/",
@@ -391,7 +390,7 @@ StatusOr<ObjectMetadata> RestClient::InsertObjectMediaMultipart(
        absl::MakeConstSpan(trailer)}));
 }
 
-StatusOr<ObjectMetadata> RestClient::InsertObjectMediaSimple(
+StatusOr<ObjectMetadata> RestStub::InsertObjectMediaSimple(
     rest_internal::RestContext& context, Options const& options,
     InsertObjectMediaRequest const& request) {
   RestRequestBuilder builder(absl::StrCat("upload/storage/",
@@ -417,7 +416,7 @@ StatusOr<ObjectMetadata> RestClient::InsertObjectMediaSimple(
                                  {absl::MakeConstSpan(request.payload())}));
 }
 
-StatusOr<ObjectMetadata> RestClient::InsertObjectMedia(
+StatusOr<ObjectMetadata> RestStub::InsertObjectMedia(
     rest_internal::RestContext& context, Options const& options,
     InsertObjectMediaRequest const& request) {
   // If the object metadata is specified, then we need to do a multipart upload.
@@ -439,7 +438,7 @@ StatusOr<ObjectMetadata> RestClient::InsertObjectMedia(
   return InsertObjectMediaSimple(context, options, request);
 }
 
-StatusOr<ObjectMetadata> RestClient::CopyObject(
+StatusOr<ObjectMetadata> RestStub::CopyObject(
     rest_internal::RestContext& context, Options const& options,
     CopyObjectRequest const& request) {
   RestRequestBuilder builder(absl::StrCat(
@@ -463,7 +462,7 @@ StatusOr<ObjectMetadata> RestClient::CopyObject(
                                  {absl::MakeConstSpan(json_payload)}));
 }
 
-StatusOr<ObjectMetadata> RestClient::GetObjectMetadata(
+StatusOr<ObjectMetadata> RestStub::GetObjectMetadata(
     rest_internal::RestContext& context, Options const& options,
     GetObjectMetadataRequest const& request) {
   RestRequestBuilder builder(absl::StrCat(
@@ -476,7 +475,7 @@ StatusOr<ObjectMetadata> RestClient::GetObjectMetadata(
       storage_rest_client_->Get(context, std::move(builder).BuildRequest()));
 }
 
-StatusOr<std::unique_ptr<ObjectReadSource>> RestClient::ReadObject(
+StatusOr<std::unique_ptr<ObjectReadSource>> RestStub::ReadObject(
     rest_internal::RestContext& context, Options const& options,
     ReadObjectRangeRequest const& request) {
   RestRequestBuilder builder(absl::StrCat(
@@ -502,7 +501,7 @@ StatusOr<std::unique_ptr<ObjectReadSource>> RestClient::ReadObject(
       new RestObjectReadSource(*std::move(response)));
 }
 
-StatusOr<ListObjectsResponse> RestClient::ListObjects(
+StatusOr<ListObjectsResponse> RestStub::ListObjects(
     rest_internal::RestContext& context, Options const& options,
     ListObjectsRequest const& request) {
   RestRequestBuilder builder(absl::StrCat("storage/",
@@ -516,7 +515,7 @@ StatusOr<ListObjectsResponse> RestClient::ListObjects(
       storage_rest_client_->Get(context, std::move(builder).BuildRequest()));
 }
 
-StatusOr<EmptyResponse> RestClient::DeleteObject(
+StatusOr<EmptyResponse> RestStub::DeleteObject(
     rest_internal::RestContext& context, Options const& options,
     DeleteObjectRequest const& request) {
   RestRequestBuilder builder(absl::StrCat(
@@ -529,7 +528,7 @@ StatusOr<EmptyResponse> RestClient::DeleteObject(
       storage_rest_client_->Delete(context, std::move(builder).BuildRequest()));
 }
 
-StatusOr<ObjectMetadata> RestClient::UpdateObject(
+StatusOr<ObjectMetadata> RestStub::UpdateObject(
     rest_internal::RestContext& context, Options const& options,
     UpdateObjectRequest const& request) {
   RestRequestBuilder builder(absl::StrCat(
@@ -545,7 +544,7 @@ StatusOr<ObjectMetadata> RestClient::UpdateObject(
                                 {absl::MakeConstSpan(payload)}));
 }
 
-StatusOr<ObjectMetadata> RestClient::PatchObject(
+StatusOr<ObjectMetadata> RestStub::PatchObject(
     rest_internal::RestContext& context, Options const& options,
     PatchObjectRequest const& request) {
   RestRequestBuilder builder(absl::StrCat(
@@ -561,7 +560,7 @@ StatusOr<ObjectMetadata> RestClient::PatchObject(
                                   {absl::MakeConstSpan(payload)}));
 }
 
-StatusOr<ObjectMetadata> RestClient::ComposeObject(
+StatusOr<ObjectMetadata> RestStub::ComposeObject(
     rest_internal::RestContext& context, Options const& options,
     ComposeObjectRequest const& request) {
   RestRequestBuilder builder(
@@ -578,7 +577,7 @@ StatusOr<ObjectMetadata> RestClient::ComposeObject(
                                  {absl::MakeConstSpan(payload)}));
 }
 
-StatusOr<RewriteObjectResponse> RestClient::RewriteObject(
+StatusOr<RewriteObjectResponse> RestStub::RewriteObject(
     rest_internal::RestContext& context, Options const& options,
     RewriteObjectRequest const& request) {
   RestRequestBuilder builder(absl::StrCat(
@@ -605,7 +604,7 @@ StatusOr<RewriteObjectResponse> RestClient::RewriteObject(
                                  {absl::MakeConstSpan(json_payload)}));
 }
 
-StatusOr<CreateResumableUploadResponse> RestClient::CreateResumableUpload(
+StatusOr<CreateResumableUploadResponse> RestStub::CreateResumableUpload(
     rest_internal::RestContext& context, Options const& options,
     ResumableUploadRequest const& request) {
   RestRequestBuilder builder(absl::StrCat("upload/storage/",
@@ -650,7 +649,7 @@ StatusOr<CreateResumableUploadResponse> RestClient::CreateResumableUpload(
                                  {absl::MakeConstSpan(request_payload)}));
 }
 
-StatusOr<QueryResumableUploadResponse> RestClient::QueryResumableUpload(
+StatusOr<QueryResumableUploadResponse> RestStub::QueryResumableUpload(
     rest_internal::RestContext& context, Options const& options,
     QueryResumableUploadRequest const& request) {
   RestRequestBuilder builder(request.upload_session_url());
@@ -670,7 +669,7 @@ StatusOr<QueryResumableUploadResponse> RestClient::QueryResumableUpload(
       failure_predicate);
 }
 
-StatusOr<EmptyResponse> RestClient::DeleteResumableUpload(
+StatusOr<EmptyResponse> RestStub::DeleteResumableUpload(
     rest_internal::RestContext& context, Options const& options,
     DeleteResumableUploadRequest const& request) {
   RestRequestBuilder builder(request.upload_session_url());
@@ -688,7 +687,7 @@ StatusOr<EmptyResponse> RestClient::DeleteResumableUpload(
       failure_predicate);
 }
 
-StatusOr<QueryResumableUploadResponse> RestClient::UploadChunk(
+StatusOr<QueryResumableUploadResponse> RestStub::UploadChunk(
     rest_internal::RestContext& context, Options const& options,
     UploadChunkRequest const& request) {
   RestRequestBuilder builder(request.upload_session_url());
@@ -719,7 +718,7 @@ StatusOr<QueryResumableUploadResponse> RestClient::UploadChunk(
       failure_predicate);
 }
 
-StatusOr<ListBucketAclResponse> RestClient::ListBucketAcl(
+StatusOr<ListBucketAclResponse> RestStub::ListBucketAcl(
     rest_internal::RestContext& context, Options const& options,
     ListBucketAclRequest const& request) {
   RestRequestBuilder builder(
@@ -732,7 +731,7 @@ StatusOr<ListBucketAclResponse> RestClient::ListBucketAcl(
       storage_rest_client_->Get(context, std::move(builder).BuildRequest()));
 }
 
-StatusOr<BucketAccessControl> RestClient::GetBucketAcl(
+StatusOr<BucketAccessControl> RestStub::GetBucketAcl(
     rest_internal::RestContext& context, Options const& options,
     GetBucketAclRequest const& request) {
   RestRequestBuilder builder(absl::StrCat(
@@ -745,7 +744,7 @@ StatusOr<BucketAccessControl> RestClient::GetBucketAcl(
       storage_rest_client_->Get(context, std::move(builder).BuildRequest()));
 }
 
-StatusOr<BucketAccessControl> RestClient::CreateBucketAcl(
+StatusOr<BucketAccessControl> RestStub::CreateBucketAcl(
     rest_internal::RestContext& context, Options const& options,
     CreateBucketAclRequest const& request) {
   RestRequestBuilder builder(
@@ -764,7 +763,7 @@ StatusOr<BucketAccessControl> RestClient::CreateBucketAcl(
                                  {absl::MakeConstSpan(payload)}));
 }
 
-StatusOr<EmptyResponse> RestClient::DeleteBucketAcl(
+StatusOr<EmptyResponse> RestStub::DeleteBucketAcl(
     rest_internal::RestContext& context, Options const& options,
     DeleteBucketAclRequest const& request) {
   RestRequestBuilder builder(absl::StrCat(
@@ -777,7 +776,7 @@ StatusOr<EmptyResponse> RestClient::DeleteBucketAcl(
       storage_rest_client_->Delete(context, std::move(builder).BuildRequest()));
 }
 
-StatusOr<BucketAccessControl> RestClient::UpdateBucketAcl(
+StatusOr<BucketAccessControl> RestStub::UpdateBucketAcl(
     rest_internal::RestContext& context, Options const& options,
     UpdateBucketAclRequest const& request) {
   RestRequestBuilder builder(absl::StrCat(
@@ -796,7 +795,7 @@ StatusOr<BucketAccessControl> RestClient::UpdateBucketAcl(
                                 {absl::MakeConstSpan(payload)}));
 }
 
-StatusOr<BucketAccessControl> RestClient::PatchBucketAcl(
+StatusOr<BucketAccessControl> RestStub::PatchBucketAcl(
     rest_internal::RestContext& context, Options const& options,
     PatchBucketAclRequest const& request) {
   RestRequestBuilder builder(absl::StrCat(
@@ -812,7 +811,7 @@ StatusOr<BucketAccessControl> RestClient::PatchBucketAcl(
                                   {absl::MakeConstSpan(payload)}));
 }
 
-StatusOr<ListObjectAclResponse> RestClient::ListObjectAcl(
+StatusOr<ListObjectAclResponse> RestStub::ListObjectAcl(
     rest_internal::RestContext& context, Options const& options,
     ListObjectAclRequest const& request) {
   RestRequestBuilder builder(
@@ -826,7 +825,7 @@ StatusOr<ListObjectAclResponse> RestClient::ListObjectAcl(
       storage_rest_client_->Get(context, std::move(builder).BuildRequest()));
 }
 
-StatusOr<ObjectAccessControl> RestClient::CreateObjectAcl(
+StatusOr<ObjectAccessControl> RestStub::CreateObjectAcl(
     rest_internal::RestContext& context, Options const& options,
     CreateObjectAclRequest const& request) {
   RestRequestBuilder builder(
@@ -846,7 +845,7 @@ StatusOr<ObjectAccessControl> RestClient::CreateObjectAcl(
                                  {absl::MakeConstSpan(payload)}));
 }
 
-StatusOr<EmptyResponse> RestClient::DeleteObjectAcl(
+StatusOr<EmptyResponse> RestStub::DeleteObjectAcl(
     rest_internal::RestContext& context, Options const& options,
     DeleteObjectAclRequest const& request) {
   RestRequestBuilder builder(absl::StrCat(
@@ -860,7 +859,7 @@ StatusOr<EmptyResponse> RestClient::DeleteObjectAcl(
       storage_rest_client_->Delete(context, std::move(builder).BuildRequest()));
 }
 
-StatusOr<ObjectAccessControl> RestClient::GetObjectAcl(
+StatusOr<ObjectAccessControl> RestStub::GetObjectAcl(
     rest_internal::RestContext& context, Options const& options,
     GetObjectAclRequest const& request) {
   RestRequestBuilder builder(absl::StrCat(
@@ -874,7 +873,7 @@ StatusOr<ObjectAccessControl> RestClient::GetObjectAcl(
       storage_rest_client_->Get(context, std::move(builder).BuildRequest()));
 }
 
-StatusOr<ObjectAccessControl> RestClient::UpdateObjectAcl(
+StatusOr<ObjectAccessControl> RestStub::UpdateObjectAcl(
     rest_internal::RestContext& context, Options const& options,
     UpdateObjectAclRequest const& request) {
   RestRequestBuilder builder(absl::StrCat(
@@ -894,7 +893,7 @@ StatusOr<ObjectAccessControl> RestClient::UpdateObjectAcl(
                                 {absl::MakeConstSpan(payload)}));
 }
 
-StatusOr<ObjectAccessControl> RestClient::PatchObjectAcl(
+StatusOr<ObjectAccessControl> RestStub::PatchObjectAcl(
     rest_internal::RestContext& context, Options const& options,
     PatchObjectAclRequest const& request) {
   RestRequestBuilder builder(absl::StrCat(
@@ -911,7 +910,7 @@ StatusOr<ObjectAccessControl> RestClient::PatchObjectAcl(
                                   {absl::MakeConstSpan(payload)}));
 }
 
-StatusOr<ListDefaultObjectAclResponse> RestClient::ListDefaultObjectAcl(
+StatusOr<ListDefaultObjectAclResponse> RestStub::ListDefaultObjectAcl(
     rest_internal::RestContext& context, Options const& options,
     ListDefaultObjectAclRequest const& request) {
   RestRequestBuilder builder(
@@ -924,7 +923,7 @@ StatusOr<ListDefaultObjectAclResponse> RestClient::ListDefaultObjectAcl(
       storage_rest_client_->Get(context, std::move(builder).BuildRequest()));
 }
 
-StatusOr<ObjectAccessControl> RestClient::CreateDefaultObjectAcl(
+StatusOr<ObjectAccessControl> RestStub::CreateDefaultObjectAcl(
     rest_internal::RestContext& context, Options const& options,
     CreateDefaultObjectAclRequest const& request) {
   RestRequestBuilder builder(
@@ -943,7 +942,7 @@ StatusOr<ObjectAccessControl> RestClient::CreateDefaultObjectAcl(
                                  {absl::MakeConstSpan(payload)}));
 }
 
-StatusOr<EmptyResponse> RestClient::DeleteDefaultObjectAcl(
+StatusOr<EmptyResponse> RestStub::DeleteDefaultObjectAcl(
     rest_internal::RestContext& context, Options const& options,
     DeleteDefaultObjectAclRequest const& request) {
   RestRequestBuilder builder(
@@ -957,7 +956,7 @@ StatusOr<EmptyResponse> RestClient::DeleteDefaultObjectAcl(
       storage_rest_client_->Delete(context, std::move(builder).BuildRequest()));
 }
 
-StatusOr<ObjectAccessControl> RestClient::GetDefaultObjectAcl(
+StatusOr<ObjectAccessControl> RestStub::GetDefaultObjectAcl(
     rest_internal::RestContext& context, Options const& options,
     GetDefaultObjectAclRequest const& request) {
   RestRequestBuilder builder(
@@ -971,7 +970,7 @@ StatusOr<ObjectAccessControl> RestClient::GetDefaultObjectAcl(
       storage_rest_client_->Get(context, std::move(builder).BuildRequest()));
 }
 
-StatusOr<ObjectAccessControl> RestClient::UpdateDefaultObjectAcl(
+StatusOr<ObjectAccessControl> RestStub::UpdateDefaultObjectAcl(
     rest_internal::RestContext& context, Options const& options,
     UpdateDefaultObjectAclRequest const& request) {
   RestRequestBuilder builder(
@@ -991,7 +990,7 @@ StatusOr<ObjectAccessControl> RestClient::UpdateDefaultObjectAcl(
                                 {absl::MakeConstSpan(payload)}));
 }
 
-StatusOr<ObjectAccessControl> RestClient::PatchDefaultObjectAcl(
+StatusOr<ObjectAccessControl> RestStub::PatchDefaultObjectAcl(
     rest_internal::RestContext& context, Options const& options,
     PatchDefaultObjectAclRequest const& request) {
   RestRequestBuilder builder(
@@ -1008,7 +1007,7 @@ StatusOr<ObjectAccessControl> RestClient::PatchDefaultObjectAcl(
                                   {absl::MakeConstSpan(payload)}));
 }
 
-StatusOr<ServiceAccount> RestClient::GetServiceAccount(
+StatusOr<ServiceAccount> RestStub::GetServiceAccount(
     rest_internal::RestContext& context, Options const& options,
     GetProjectServiceAccountRequest const& request) {
   RestRequestBuilder builder(
@@ -1021,7 +1020,7 @@ StatusOr<ServiceAccount> RestClient::GetServiceAccount(
       storage_rest_client_->Get(context, std::move(builder).BuildRequest()));
 }
 
-StatusOr<ListHmacKeysResponse> RestClient::ListHmacKeys(
+StatusOr<ListHmacKeysResponse> RestStub::ListHmacKeys(
     rest_internal::RestContext& context, Options const& options,
     ListHmacKeysRequest const& request) {
   RestRequestBuilder builder(
@@ -1034,7 +1033,7 @@ StatusOr<ListHmacKeysResponse> RestClient::ListHmacKeys(
       storage_rest_client_->Get(context, std::move(builder).BuildRequest()));
 }
 
-StatusOr<CreateHmacKeyResponse> RestClient::CreateHmacKey(
+StatusOr<CreateHmacKeyResponse> RestStub::CreateHmacKey(
     rest_internal::RestContext& context, Options const& options,
     CreateHmacKeyRequest const& request) {
   RestRequestBuilder builder(
@@ -1050,7 +1049,7 @@ StatusOr<CreateHmacKeyResponse> RestClient::CreateHmacKey(
           std::vector<std::pair<std::string, std::string>>{}));
 }
 
-StatusOr<EmptyResponse> RestClient::DeleteHmacKey(
+StatusOr<EmptyResponse> RestStub::DeleteHmacKey(
     rest_internal::RestContext& context, Options const& options,
     DeleteHmacKeyRequest const& request) {
   RestRequestBuilder builder(absl::StrCat(
@@ -1063,7 +1062,7 @@ StatusOr<EmptyResponse> RestClient::DeleteHmacKey(
       storage_rest_client_->Delete(context, std::move(builder).BuildRequest()));
 }
 
-StatusOr<HmacKeyMetadata> RestClient::GetHmacKey(
+StatusOr<HmacKeyMetadata> RestStub::GetHmacKey(
     rest_internal::RestContext& context, Options const& options,
     GetHmacKeyRequest const& request) {
   RestRequestBuilder builder(absl::StrCat(
@@ -1076,7 +1075,7 @@ StatusOr<HmacKeyMetadata> RestClient::GetHmacKey(
       storage_rest_client_->Get(context, std::move(builder).BuildRequest()));
 }
 
-StatusOr<HmacKeyMetadata> RestClient::UpdateHmacKey(
+StatusOr<HmacKeyMetadata> RestStub::UpdateHmacKey(
     rest_internal::RestContext& context, Options const& options,
     UpdateHmacKeyRequest const& request) {
   RestRequestBuilder builder(absl::StrCat(
@@ -1099,7 +1098,7 @@ StatusOr<HmacKeyMetadata> RestClient::UpdateHmacKey(
                                 {absl::MakeConstSpan(payload)}));
 }
 
-StatusOr<SignBlobResponse> RestClient::SignBlob(
+StatusOr<SignBlobResponse> RestStub::SignBlob(
     rest_internal::RestContext& context, Options const& options,
     SignBlobRequest const& request) {
   RestRequestBuilder builder(absl::StrCat(
@@ -1118,7 +1117,7 @@ StatusOr<SignBlobResponse> RestClient::SignBlob(
                              {absl::MakeConstSpan(payload)}));
 }
 
-StatusOr<ListNotificationsResponse> RestClient::ListNotifications(
+StatusOr<ListNotificationsResponse> RestStub::ListNotifications(
     rest_internal::RestContext& context, Options const& options,
     ListNotificationsRequest const& request) {
   RestRequestBuilder builder(
@@ -1131,7 +1130,7 @@ StatusOr<ListNotificationsResponse> RestClient::ListNotifications(
       storage_rest_client_->Get(context, std::move(builder).BuildRequest()));
 }
 
-StatusOr<NotificationMetadata> RestClient::CreateNotification(
+StatusOr<NotificationMetadata> RestStub::CreateNotification(
     rest_internal::RestContext& context, Options const& options,
     CreateNotificationRequest const& request) {
   RestRequestBuilder builder(
@@ -1147,7 +1146,7 @@ StatusOr<NotificationMetadata> RestClient::CreateNotification(
                                  {absl::MakeConstSpan(payload)}));
 }
 
-StatusOr<NotificationMetadata> RestClient::GetNotification(
+StatusOr<NotificationMetadata> RestStub::GetNotification(
     rest_internal::RestContext& context, Options const& options,
     GetNotificationRequest const& request) {
   RestRequestBuilder builder(
@@ -1161,7 +1160,7 @@ StatusOr<NotificationMetadata> RestClient::GetNotification(
       storage_rest_client_->Get(context, std::move(builder).BuildRequest()));
 }
 
-StatusOr<EmptyResponse> RestClient::DeleteNotification(
+StatusOr<EmptyResponse> RestStub::DeleteNotification(
     rest_internal::RestContext& context, Options const& options,
     DeleteNotificationRequest const& request) {
   RestRequestBuilder builder(
@@ -1175,7 +1174,7 @@ StatusOr<EmptyResponse> RestClient::DeleteNotification(
       storage_rest_client_->Delete(context, std::move(builder).BuildRequest()));
 }
 
-std::vector<std::string> RestClient::InspectStackStructure() const {
+std::vector<std::string> RestStub::InspectStackStructure() const {
   return {"RestClient"};
 }
 
