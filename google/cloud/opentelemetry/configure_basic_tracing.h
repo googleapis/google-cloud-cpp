@@ -30,7 +30,6 @@ class BasicTracingConfiguration {
   virtual ~BasicTracingConfiguration() = default;
 };
 
-// TODO(#11360) - reference the quickstart when discussing program linking.
 /**
  * Configure the application for basic request tracing.
  *
@@ -67,7 +66,7 @@ class BasicTracingConfiguration {
  * @par Usage Example
  * @parblock
  * Change your build scripts to also build and link the library that provides
- * this function.
+ * this function, as described in this library's [quickstart].
  *
  * Change your application to call this function once, for example in `main()`
  * as follows:
@@ -119,6 +118,23 @@ class BasicTracingConfiguration {
  * @snippet samples.cc otel-basic-tracing-rate
  * @endparblock
  *
+ * @par Troubleshooting
+ * @parblock
+ * By design, OpenTelemetry exporters fail silently. To troubleshoot problems,
+ * [enable logging] in the client library. Errors during the export are logged
+ * at a WARNING level.
+ *
+ * Look through the logs for mentions of "BatchWriteSpans". These mentions are
+ * likely accompanied by actionable error messages.
+ *
+ * If "BatchWriteSpans" is not mentioned in the logs, the client library did not
+ * attempt to export any traces. In this case, check that the project ID is not
+ * empty and that the sample rate is high enough. Also ensure that OpenTelemetry
+ * tracing is enabled in the library.
+ *
+ * See also: https://cloud.google.com/trace/docs/troubleshooting#no-data
+ * @endparblock
+ *
  * @param project the project to send the traces to.
  * @param options how to configure the traces. The configuration parameters
  *     include `@ref BasicTracingRateOption`,
@@ -132,6 +148,10 @@ class BasicTracingConfiguration {
  * [OpenTelemetry C++ API]: https://opentelemetry-cpp.readthedocs.io/en/latest/
  * [Application Default Credentials]:
  * https://cloud.google.com/docs/authentication#adc
+ * [enable logging]:
+ * https://cloud.google.com/cpp/docs/reference/common/latest/logging#enabling-logs
+ * [quickstart]:
+ * https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/opentelemetry/quickstart/README.md#opentelemetry-dependency
  */
 std::unique_ptr<BasicTracingConfiguration> ConfigureBasicTracing(
     Project project, Options options = {});
