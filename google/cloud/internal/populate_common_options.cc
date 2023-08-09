@@ -59,7 +59,8 @@ Options PopulateCommonOptions(Options opts, std::string const& endpoint_env_var,
     opts.set<UserProjectOption>(*std::move(e));
   }
 
-  if (GetEnv("GOOGLE_CLOUD_CPP_OPENTELEMETRY_TRACING")) {
+  e = GetEnv("GOOGLE_CLOUD_CPP_OPENTELEMETRY_TRACING");
+  if (e && !e->empty()) {
     opts.set<experimental::OpenTelemetryTracingOption>(true);
   }
   if (!opts.has<TracingComponentsOption>()) {

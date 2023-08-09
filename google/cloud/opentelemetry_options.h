@@ -53,8 +53,8 @@ namespace experimental {
  *
  * @par Environment variable
  * This option is controlled by the `GOOGLE_CLOUD_CPP_OPENTELEMETRY_TRACING`
- * environment variable. If the environment variable is set, tracing with
- * OpenTelemetry is enabled.
+ * environment variable. If the environment variable is set to a non-empty
+ * value, tracing with OpenTelemetry is enabled.
  *
  * @ingroup options
  *
