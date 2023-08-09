@@ -52,6 +52,14 @@ Options BasicTestPolicies() {
       .set<IdempotencyPolicyOption>(AlwaysRetryIdempotencyPolicy{}.clone());
 }
 
+class CustomIdempotencyPolicy : public AlwaysRetryIdempotencyPolicy {
+ public:
+  std::unique_ptr<IdempotencyPolicy> clone() const override {
+    return std::make_unique<CustomIdempotencyPolicy>();
+  }
+  bool IsIdempotent(DeleteObjectRequest const&) const override { return false; }
+};
+
 /// @test Verify that non-idempotent operations return on the first failure.
 TEST(RetryClientTest, NonIdempotentErrorHandling) {
   auto mock = std::make_unique<MockGenericStub>();
@@ -62,10 +70,8 @@ TEST(RetryClientTest, NonIdempotentErrorHandling) {
   auto client = RetryClient::Create(std::move(mock));
   google::cloud::internal::OptionsSpan const span(
       BasicTestPolicies().set<IdempotencyPolicyOption>(
-          StrictIdempotencyPolicy().clone()));
+           CustomIdempotencyPolicy().clone()));
 
-  // Use a delete operation because this is idempotent only if it has
-  // the IfGenerationMatch() and/or Generation() option set.
   StatusOr<EmptyResponse> result =
       client->DeleteObject(DeleteObjectRequest("test-bucket", "test-object"));
   EXPECT_THAT(result, StatusIs(TransientError().code()));
