@@ -129,6 +129,7 @@ TEST(PopulateCommonOptions, OpenTelemetryTracing) {
   };
   std::vector<TestCase> tests = {
       {absl::nullopt, false},
+      {"", true},
       {"ON", true},
   };
   auto const input =
