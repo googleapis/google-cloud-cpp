@@ -24,7 +24,14 @@ package google.cloud.cpp.compute.instances.v1;
 import "google/api/annotations.proto";
 import "google/api/client.proto";
 import "google/api/field_behavior.proto";
-import "google/cloud/compute/v1/internal/common.proto";
+import "google/cloud/compute/v1/internal/common_002.proto";
+import "google/cloud/compute/v1/internal/common_006.proto";
+import "google/cloud/compute/v1/internal/common_015.proto";
+import "google/cloud/compute/v1/internal/common_020.proto";
+import "google/cloud/compute/v1/internal/common_029.proto";
+import "google/cloud/compute/v1/internal/common_073.proto";
+import "google/cloud/compute/v1/internal/common_130.proto";
+import "google/cloud/compute/v1/internal/common_135.proto";
 import "google/cloud/extended_operations.proto";
 import "google/protobuf/empty.proto";
 

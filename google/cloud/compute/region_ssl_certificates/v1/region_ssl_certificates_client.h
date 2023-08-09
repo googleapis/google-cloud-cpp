@@ -118,7 +118,7 @@ class RegionSslCertificatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_ssl_certificates.v1.DeleteRegionSslCertificatesRequest]: @googleapis_reference_link{google/cloud/compute/region_ssl_certificates/v1/region_ssl_certificates.proto#L84}
+  /// [google.cloud.cpp.compute.region_ssl_certificates.v1.DeleteRegionSslCertificatesRequest]: @googleapis_reference_link{google/cloud/compute/region_ssl_certificates/v1/region_ssl_certificates.proto#L85}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -157,7 +157,7 @@ class RegionSslCertificatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_ssl_certificates.v1.DeleteRegionSslCertificatesRequest]: @googleapis_reference_link{google/cloud/compute/region_ssl_certificates/v1/region_ssl_certificates.proto#L84}
+  /// [google.cloud.cpp.compute.region_ssl_certificates.v1.DeleteRegionSslCertificatesRequest]: @googleapis_reference_link{google/cloud/compute/region_ssl_certificates/v1/region_ssl_certificates.proto#L85}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -188,8 +188,8 @@ class RegionSslCertificatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_ssl_certificates.v1.GetRegionSslCertificatesRequest]: @googleapis_reference_link{google/cloud/compute/region_ssl_certificates/v1/region_ssl_certificates.proto#L114}
-  /// [google.cloud.cpp.compute.v1.SslCertificate]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L25991}
+  /// [google.cloud.cpp.compute.region_ssl_certificates.v1.GetRegionSslCertificatesRequest]: @googleapis_reference_link{google/cloud/compute/region_ssl_certificates/v1/region_ssl_certificates.proto#L115}
+  /// [google.cloud.cpp.compute.v1.SslCertificate]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_112.proto#L36}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::SslCertificate>
@@ -223,8 +223,8 @@ class RegionSslCertificatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_ssl_certificates.v1.GetRegionSslCertificatesRequest]: @googleapis_reference_link{google/cloud/compute/region_ssl_certificates/v1/region_ssl_certificates.proto#L114}
-  /// [google.cloud.cpp.compute.v1.SslCertificate]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L25991}
+  /// [google.cloud.cpp.compute.region_ssl_certificates.v1.GetRegionSslCertificatesRequest]: @googleapis_reference_link{google/cloud/compute/region_ssl_certificates/v1/region_ssl_certificates.proto#L115}
+  /// [google.cloud.cpp.compute.v1.SslCertificate]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_112.proto#L36}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::SslCertificate>
@@ -261,7 +261,7 @@ class RegionSslCertificatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_ssl_certificates.v1.InsertRegionSslCertificatesRequest]: @googleapis_reference_link{google/cloud/compute/region_ssl_certificates/v1/region_ssl_certificates.proto#L126}
+  /// [google.cloud.cpp.compute.region_ssl_certificates.v1.InsertRegionSslCertificatesRequest]: @googleapis_reference_link{google/cloud/compute/region_ssl_certificates/v1/region_ssl_certificates.proto#L127}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -302,7 +302,7 @@ class RegionSslCertificatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_ssl_certificates.v1.InsertRegionSslCertificatesRequest]: @googleapis_reference_link{google/cloud/compute/region_ssl_certificates/v1/region_ssl_certificates.proto#L126}
+  /// [google.cloud.cpp.compute.region_ssl_certificates.v1.InsertRegionSslCertificatesRequest]: @googleapis_reference_link{google/cloud/compute/region_ssl_certificates/v1/region_ssl_certificates.proto#L127}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -341,8 +341,8 @@ class RegionSslCertificatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_ssl_certificates.v1.ListRegionSslCertificatesRequest]: @googleapis_reference_link{google/cloud/compute/region_ssl_certificates/v1/region_ssl_certificates.proto#L157}
-  /// [google.cloud.cpp.compute.v1.SslCertificate]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L25991}
+  /// [google.cloud.cpp.compute.region_ssl_certificates.v1.ListRegionSslCertificatesRequest]: @googleapis_reference_link{google/cloud/compute/region_ssl_certificates/v1/region_ssl_certificates.proto#L158}
+  /// [google.cloud.cpp.compute.v1.SslCertificate]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_112.proto#L36}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::SslCertificate>
@@ -383,8 +383,8 @@ class RegionSslCertificatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_ssl_certificates.v1.ListRegionSslCertificatesRequest]: @googleapis_reference_link{google/cloud/compute/region_ssl_certificates/v1/region_ssl_certificates.proto#L157}
-  /// [google.cloud.cpp.compute.v1.SslCertificate]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L25991}
+  /// [google.cloud.cpp.compute.region_ssl_certificates.v1.ListRegionSslCertificatesRequest]: @googleapis_reference_link{google/cloud/compute/region_ssl_certificates/v1/region_ssl_certificates.proto#L158}
+  /// [google.cloud.cpp.compute.v1.SslCertificate]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_112.proto#L36}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::SslCertificate>

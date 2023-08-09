@@ -24,7 +24,8 @@ package google.cloud.cpp.compute.license_codes.v1;
 import "google/api/annotations.proto";
 import "google/api/client.proto";
 import "google/api/field_behavior.proto";
-import "google/cloud/compute/v1/internal/common.proto";
+import "google/cloud/compute/v1/internal/common_069.proto";
+import "google/cloud/compute/v1/internal/common_130.proto";
 
 // Service for the licenseCodes resource.
 // https://cloud.google.com/compute/docs/reference/rest/v1/licenseCodes

@@ -24,7 +24,12 @@ package google.cloud.cpp.compute.firewall_policies.v1;
 import "google/api/annotations.proto";
 import "google/api/client.proto";
 import "google/api/field_behavior.proto";
-import "google/cloud/compute/v1/internal/common.proto";
+import "google/cloud/compute/v1/internal/common_006.proto";
+import "google/cloud/compute/v1/internal/common_029.proto";
+import "google/cloud/compute/v1/internal/common_036.proto";
+import "google/cloud/compute/v1/internal/common_037.proto";
+import "google/cloud/compute/v1/internal/common_038.proto";
+import "google/cloud/compute/v1/internal/common_130.proto";
 import "google/cloud/extended_operations.proto";
 
 // Service for the firewallPolicies resource.

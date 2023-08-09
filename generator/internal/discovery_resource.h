@@ -33,7 +33,7 @@ class DiscoveryResource {
   std::string const& name() const { return name_; }
   std::string const& package_name() const { return package_name_; }
   nlohmann::json const& json() const { return json_; }
-  std::map<std::string, DiscoveryTypeVertex*> const& request_types() {
+  std::map<std::string, DiscoveryTypeVertex*> const& request_types() const {
     return request_types_;
   }
   std::map<std::string, DiscoveryTypeVertex*> const& response_types() const {
@@ -51,7 +51,7 @@ class DiscoveryResource {
   void AddResponseType(std::string name, DiscoveryTypeVertex* type);
   void AddEmptyResponseType() { has_empty_request_or_response_ = true; }
 
-  std::vector<DiscoveryTypeVertex const*> GetRequestTypesList() const;
+  std::vector<DiscoveryTypeVertex*> GetRequestTypesList() const;
 
   // Examines the provided path and converts any parameter names in curly braces
   // to snake case, e.g. "projects/{projectId}/zone/{zone}" yields

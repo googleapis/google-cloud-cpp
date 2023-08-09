@@ -107,8 +107,8 @@ class TargetInstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_instances.v1.AggregatedListTargetInstancesRequest]: @googleapis_reference_link{google/cloud/compute/target_instances/v1/target_instances.proto#L92}
-  /// [google.cloud.cpp.compute.v1.TargetInstanceAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28513}
+  /// [google.cloud.cpp.compute.target_instances.v1.AggregatedListTargetInstancesRequest]: @googleapis_reference_link{google/cloud/compute/target_instances/v1/target_instances.proto#L93}
+  /// [google.cloud.cpp.compute.v1.TargetInstanceAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_123.proto#L82}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TargetInstanceAggregatedList>
@@ -138,8 +138,8 @@ class TargetInstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_instances.v1.AggregatedListTargetInstancesRequest]: @googleapis_reference_link{google/cloud/compute/target_instances/v1/target_instances.proto#L92}
-  /// [google.cloud.cpp.compute.v1.TargetInstanceAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28513}
+  /// [google.cloud.cpp.compute.target_instances.v1.AggregatedListTargetInstancesRequest]: @googleapis_reference_link{google/cloud/compute/target_instances/v1/target_instances.proto#L93}
+  /// [google.cloud.cpp.compute.v1.TargetInstanceAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_123.proto#L82}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TargetInstanceAggregatedList>
@@ -175,7 +175,7 @@ class TargetInstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_instances.v1.DeleteTargetInstancesRequest]: @googleapis_reference_link{google/cloud/compute/target_instances/v1/target_instances.proto#L166}
+  /// [google.cloud.cpp.compute.target_instances.v1.DeleteTargetInstancesRequest]: @googleapis_reference_link{google/cloud/compute/target_instances/v1/target_instances.proto#L167}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -212,7 +212,7 @@ class TargetInstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_instances.v1.DeleteTargetInstancesRequest]: @googleapis_reference_link{google/cloud/compute/target_instances/v1/target_instances.proto#L166}
+  /// [google.cloud.cpp.compute.target_instances.v1.DeleteTargetInstancesRequest]: @googleapis_reference_link{google/cloud/compute/target_instances/v1/target_instances.proto#L167}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -241,8 +241,8 @@ class TargetInstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_instances.v1.GetTargetInstancesRequest]: @googleapis_reference_link{google/cloud/compute/target_instances/v1/target_instances.proto#L196}
-  /// [google.cloud.cpp.compute.v1.TargetInstance]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28459}
+  /// [google.cloud.cpp.compute.target_instances.v1.GetTargetInstancesRequest]: @googleapis_reference_link{google/cloud/compute/target_instances/v1/target_instances.proto#L197}
+  /// [google.cloud.cpp.compute.v1.TargetInstance]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_123.proto#L28}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TargetInstance> GetTargetInstances(
@@ -273,8 +273,8 @@ class TargetInstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_instances.v1.GetTargetInstancesRequest]: @googleapis_reference_link{google/cloud/compute/target_instances/v1/target_instances.proto#L196}
-  /// [google.cloud.cpp.compute.v1.TargetInstance]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28459}
+  /// [google.cloud.cpp.compute.target_instances.v1.GetTargetInstancesRequest]: @googleapis_reference_link{google/cloud/compute/target_instances/v1/target_instances.proto#L197}
+  /// [google.cloud.cpp.compute.v1.TargetInstance]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_123.proto#L28}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TargetInstance> GetTargetInstances(
@@ -310,7 +310,7 @@ class TargetInstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_instances.v1.InsertTargetInstancesRequest]: @googleapis_reference_link{google/cloud/compute/target_instances/v1/target_instances.proto#L208}
+  /// [google.cloud.cpp.compute.target_instances.v1.InsertTargetInstancesRequest]: @googleapis_reference_link{google/cloud/compute/target_instances/v1/target_instances.proto#L209}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -350,7 +350,7 @@ class TargetInstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_instances.v1.InsertTargetInstancesRequest]: @googleapis_reference_link{google/cloud/compute/target_instances/v1/target_instances.proto#L208}
+  /// [google.cloud.cpp.compute.target_instances.v1.InsertTargetInstancesRequest]: @googleapis_reference_link{google/cloud/compute/target_instances/v1/target_instances.proto#L209}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -388,8 +388,8 @@ class TargetInstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_instances.v1.ListTargetInstancesRequest]: @googleapis_reference_link{google/cloud/compute/target_instances/v1/target_instances.proto#L239}
-  /// [google.cloud.cpp.compute.v1.TargetInstance]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28459}
+  /// [google.cloud.cpp.compute.target_instances.v1.ListTargetInstancesRequest]: @googleapis_reference_link{google/cloud/compute/target_instances/v1/target_instances.proto#L240}
+  /// [google.cloud.cpp.compute.v1.TargetInstance]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_123.proto#L28}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::TargetInstance>
@@ -430,8 +430,8 @@ class TargetInstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_instances.v1.ListTargetInstancesRequest]: @googleapis_reference_link{google/cloud/compute/target_instances/v1/target_instances.proto#L239}
-  /// [google.cloud.cpp.compute.v1.TargetInstance]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28459}
+  /// [google.cloud.cpp.compute.target_instances.v1.ListTargetInstancesRequest]: @googleapis_reference_link{google/cloud/compute/target_instances/v1/target_instances.proto#L240}
+  /// [google.cloud.cpp.compute.v1.TargetInstance]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_123.proto#L28}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::TargetInstance>

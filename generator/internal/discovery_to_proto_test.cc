@@ -895,96 +895,25 @@ TEST(CreateFilesFromResourcesTest, NonEmptyResources) {
                         resource_json));
   DiscoveryDocumentProperties props{"", "", "product_name", "version", "",
                                     "", {}};
-  auto result = CreateFilesFromResources(resources, props, "tmp");
+  auto result = CreateFilesFromResources(resources, props, "tmp", {});
   ASSERT_THAT(result, SizeIs(1));
   EXPECT_THAT(result.front().resource_name(), Eq("foos"));
   EXPECT_THAT(result.front().file_path(),
               Eq("tmp/google/cloud/product_name/foos/version/foos.proto"));
   EXPECT_THAT(result.front().package_name(),
               Eq("google.cloud.cpp.product_name.foos.version"));
+  EXPECT_THAT(result.front().import_paths(),
+              UnorderedElementsAre("google/api/annotations.proto",
+                                   "google/api/client.proto",
+                                   "google/api/field_behavior.proto"));
 }
 
 TEST(CreateFilesFromResourcesTest, EmptyResources) {
   std::map<std::string, DiscoveryResource> resources;
   DiscoveryDocumentProperties props{"", "", "product_name", "version", "",
                                     "", {}};
-  auto result = CreateFilesFromResources(resources, props, "tmp");
+  auto result = CreateFilesFromResources(resources, props, "tmp", {});
   EXPECT_THAT(result, IsEmpty());
-}
-
-class AssignResourcesAndTypesToFilesTest
-    : public generator_testing::DescriptorPoolFixture {};
-
-TEST_F(AssignResourcesAndTypesToFilesTest,
-       TypesContainsBothSynthesizedAndNonsynthesizedTypes) {
-  auto constexpr kResourceJson = R"""({
-  "methods": {
-    "create": {
-      "scopes": [
-        "https://www.googleapis.com/auth/cloud-platform"
-      ],
-      "path": "projects/{project}/zones/{zone}/myResources/{fooId}",
-      "httpMethod": "POST",
-      "parameters": {
-        "project": {
-          "type": "string"
-        },
-        "zone": {
-          "type": "string"
-        },
-        "fooId": {
-          "type": "string"
-        }
-      },
-      "response": {
-        "$ref": "Operation"
-      },
-      "request": {
-        "$ref": "Foo"
-      },
-      "parameterOrder": [
-        "project",
-        "zone",
-        "fooId"
-      ]
-    }
-  }
-})""";
-  auto const resource_json =
-      nlohmann::json::parse(kResourceJson, nullptr, false);
-  ASSERT_TRUE(resource_json.is_object());
-  std::map<std::string, DiscoveryResource> resources;
-  resources.emplace("foos", DiscoveryResource("foos", "", resource_json));
-  std::map<std::string, DiscoveryTypeVertex> types;
-  auto constexpr kSynthesizedTypeJson = R"""({
-"synthesized_request": true
-})""";
-  auto const synthesized_type_json =
-      nlohmann::json::parse(kSynthesizedTypeJson, nullptr, false);
-  ASSERT_TRUE(synthesized_type_json.is_object());
-  types.emplace(
-      "Foos.CreateRequest",
-      DiscoveryTypeVertex("CreateRequest", "", synthesized_type_json, &pool()));
-  auto constexpr kOperationTypeJson = R"""({
-})""";
-  auto const operation_type_json =
-      nlohmann::json::parse(kOperationTypeJson, nullptr, false);
-  ASSERT_TRUE(operation_type_json.is_object());
-  types.emplace("Operation", DiscoveryTypeVertex("Operation", "",
-                                                 operation_type_json, &pool()));
-  DiscoveryDocumentProperties props{"", "", "product_name", "version", "",
-                                    "", {}};
-  auto result =
-      AssignResourcesAndTypesToFiles(resources, types, props, "output_path");
-  ASSERT_THAT(result.size(), Eq(2));
-  EXPECT_THAT(
-      result[0].file_path(),
-      Eq("output_path/google/cloud/product_name/foos/version/foos.proto"));
-  EXPECT_THAT(result[0].types(), IsEmpty());
-  EXPECT_THAT(result[1].file_path(), Eq("output_path/google/cloud/product_name/"
-                                        "version/internal/common.proto"));
-  ASSERT_THAT(result[1].types().size(), Eq(1));
-  EXPECT_THAT(result[1].types().front()->name(), Eq("Operation"));
 }
 
 TEST(DefaultHostFromRootUrlTest, RootUrlFormattedAsExpected) {
@@ -1566,6 +1495,899 @@ TEST_F(ApplyResourceLabelsToTypesTest,
   EXPECT_THAT(label2->needed_by_resource(), ElementsAre("resource_name"));
   EXPECT_THAT(localized_message->needed_by_resource(),
               ElementsAre("other_resource_name", "resource_name"));
+}
+
+class AssignResourcesAndTypesToFilesTest
+    : public generator_testing::DescriptorPoolFixture {};
+
+TEST_F(AssignResourcesAndTypesToFilesTest,
+       TypesContainsBothSynthesizedAndNonsynthesizedTypes) {
+  auto constexpr kResourceJson = R"""({
+  "methods": {
+    "create": {
+      "scopes": [
+        "https://www.googleapis.com/auth/cloud-platform"
+      ],
+      "path": "projects/{project}/zones/{zone}/myResources/{fooId}",
+      "httpMethod": "POST",
+      "parameters": {
+        "project": {
+          "type": "string"
+        },
+        "zone": {
+          "type": "string"
+        },
+        "fooId": {
+          "type": "string"
+        }
+      },
+      "response": {
+        "$ref": "Operation"
+      },
+      "request": {
+        "$ref": "Foo"
+      },
+      "parameterOrder": [
+        "project",
+        "zone",
+        "fooId"
+      ]
+    }
+  }
+})""";
+  auto const resource_json =
+      nlohmann::json::parse(kResourceJson, nullptr, false);
+  ASSERT_TRUE(resource_json.is_object());
+  std::map<std::string, DiscoveryResource> resources;
+  resources.emplace("foos", DiscoveryResource("foos", "", resource_json));
+  std::map<std::string, DiscoveryTypeVertex> types;
+  auto constexpr kSynthesizedTypeJson = R"""({
+"synthesized_request": true
+})""";
+  auto const synthesized_type_json =
+      nlohmann::json::parse(kSynthesizedTypeJson, nullptr, false);
+  ASSERT_TRUE(synthesized_type_json.is_object());
+  types.emplace(
+      "Foos.CreateRequest",
+      DiscoveryTypeVertex("CreateRequest", "", synthesized_type_json, &pool()));
+  auto constexpr kOperationTypeJson = R"""({
+})""";
+  auto const operation_type_json =
+      nlohmann::json::parse(kOperationTypeJson, nullptr, false);
+  ASSERT_TRUE(operation_type_json.is_object());
+  types.emplace("Operation", DiscoveryTypeVertex("Operation", "",
+                                                 operation_type_json, &pool()));
+  DiscoveryDocumentProperties props{"", "", "product_name", "version", "",
+                                    "", {}};
+  auto result =
+      AssignResourcesAndTypesToFiles(resources, types, props, "output_path");
+  ASSERT_STATUS_OK(result);
+  ASSERT_THAT(result->size(), Eq(2));
+  EXPECT_THAT(
+      (*result)[0].file_path(),
+      Eq("output_path/google/cloud/product_name/foos/version/foos.proto"));
+  EXPECT_THAT((*result)[0].types(), IsEmpty());
+  EXPECT_THAT((*result)[1].file_path(),
+              Eq("output_path/google/cloud/product_name/"
+                 "version/internal/common_000.proto"));
+  ASSERT_THAT((*result)[1].types().size(), Eq(1));
+  EXPECT_THAT((*result)[1].types().front()->name(), Eq("Operation"));
+}
+
+TEST_F(AssignResourcesAndTypesToFilesTest, ResourceAndCommonFilesWithImports) {
+  //  The JSON Discovery doc defines two resource:
+  //    disks
+  //    foos
+  //  As well as the schema:
+  //    CustomerEncryptionKey
+  //    Disk
+  //    DiskAsyncReplication
+  //    DiskAsyncReplicationList
+  //    ErrorInfo
+  //    GuestOsFeature
+  //    Operation
+  //    Snapshot
+  //    LocalizedMessage
+  //    TestPermissionsRequest
+  //    TestPermissionsResponse
+  //    OtherCommonSchema
+  //  The rpcs of the services use these schema in both request and response
+  //  roles.
+  auto constexpr kDiscoveryJson = R"""(
+{
+  "resources": {
+    "disks": {
+      "methods": {
+        "testIamPermissions": {
+          "httpMethod": "POST",
+          "id": "compute.disks.testIamPermissions",
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute",
+            "https://www.googleapis.com/auth/compute.readonly"
+          ],
+          "request": {
+            "$ref": "TestPermissionsRequest"
+          },
+          "parameterOrder": [
+            "project",
+            "zone",
+            "resource"
+          ],
+          "response": {
+            "$ref": "TestPermissionsResponse"
+          },
+          "path": "projects/{project}/zones/{zone}/disks/{resource}/testIamPermissions",
+          "parameters": {
+            "resource": {
+              "type": "string",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
+              "required": true
+            },
+            "zone": {
+              "type": "string",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "location": "path",
+              "required": true
+            },
+            "project": {
+              "location": "path",
+              "type": "string",
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+              "required": true
+            }
+          }
+        },
+        "delete": {
+          "parameters": {
+            "disk": {
+              "location": "path",
+              "type": "string",
+              "required": true
+            },
+            "zone": {
+              "type": "string",
+              "location": "path",
+              "required": true,
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?"
+            },
+            "project": {
+              "location": "path",
+              "type": "string",
+              "required": true,
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))"
+            },
+            "requestId": {
+              "type": "string",
+              "location": "query"
+            }
+          },
+          "path": "projects/{project}/zones/{zone}/disks/{disk}",
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute"
+          ],
+          "id": "compute.disks.delete",
+          "parameterOrder": [
+            "project",
+            "zone",
+            "disk"
+          ],
+          "response": {
+            "$ref": "Operation"
+          },
+          "httpMethod": "DELETE"
+        },
+        "insert": {
+          "parameterOrder": [
+            "project",
+            "zone"
+          ],
+          "response": {
+            "$ref": "Operation"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute"
+          ],
+          "httpMethod": "POST",
+          "parameters": {
+            "zone": {
+              "required": true,
+              "type": "string",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?"
+            },
+            "sourceImage": {
+              "location": "query",
+              "type": "string"
+            },
+            "project": {
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+              "type": "string",
+              "location": "path",
+              "required": true
+            },
+            "requestId": {
+              "location": "query",
+              "type": "string"
+            }
+          },
+          "id": "compute.disks.insert",
+          "path": "projects/{project}/zones/{zone}/disks",
+          "request": {
+            "$ref": "Disk"
+          }
+        },
+        "createSnapshot": {
+          "path": "projects/{project}/zones/{zone}/disks/{disk}/createSnapshot",
+          "request": {
+            "$ref": "Snapshot"
+          },
+          "parameters": {
+            "guestFlush": {
+              "type": "boolean",
+              "location": "query"
+            },
+            "zone": {
+              "type": "string",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "location": "path",
+              "required": true
+            },
+            "project": {
+              "required": true,
+              "type": "string",
+              "location": "path",
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))"
+            },
+            "requestId": {
+              "type": "string",
+              "location": "query"
+            },
+            "disk": {
+              "type": "string",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
+              "required": true
+            }
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute"
+          ],
+          "id": "compute.disks.createSnapshot",
+          "httpMethod": "POST",
+          "parameterOrder": [
+            "project",
+            "zone",
+            "disk"
+          ],
+          "response": {
+            "$ref": "Operation"
+          }
+        },
+        "get": {
+          "httpMethod": "GET",
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute",
+            "https://www.googleapis.com/auth/compute.readonly"
+          ],
+          "id": "compute.disks.get",
+          "parameters": {
+            "project": {
+              "type": "string",
+              "location": "path",
+              "required": true,
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))"
+            },
+            "disk": {
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            },
+            "zone": {
+              "type": "string",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "required": true,
+              "location": "path"
+            }
+          },
+          "response": {
+            "$ref": "Disk"
+          },
+          "path": "projects/{project}/zones/{zone}/disks/{disk}",
+          "parameterOrder": [
+            "project",
+            "zone",
+            "disk"
+          ]
+        }
+      }
+    },
+    "foos": {
+      "methods": {
+        "testIamPermissions": {
+          "httpMethod": "POST",
+          "id": "compute.foos.testIamPermissions",
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute",
+            "https://www.googleapis.com/auth/compute.readonly"
+          ],
+          "request": {
+            "$ref": "TestPermissionsRequest"
+          },
+          "parameterOrder": [
+            "project",
+            "zone",
+            "resource"
+          ],
+          "response": {
+            "$ref": "TestPermissionsResponse"
+          },
+          "path": "projects/{project}/zones/{zone}/foos/{resource}/testIamPermissions",
+          "parameters": {
+            "resource": {
+              "type": "string",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
+              "required": true
+            },
+            "zone": {
+              "type": "string",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "location": "path",
+              "required": true
+            },
+            "project": {
+              "location": "path",
+              "type": "string",
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+              "required": true
+            }
+          }
+        },
+        "emptyResponseMethod": {
+          "httpMethod": "POST",
+          "id": "compute.foos.emptyResponseMethod",
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute",
+            "https://www.googleapis.com/auth/compute.readonly"
+          ],
+          "request": {
+            "$ref": "LocalizedMessage"
+          },
+          "parameterOrder": [
+            "project",
+            "zone",
+            "resource"
+          ],
+          "path": "projects/{project}/zones/{zone}/foos/{resource}/emptyResponseMethod",
+          "parameters": {
+            "resource": {
+              "type": "string",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
+              "required": true
+            },
+            "zone": {
+              "type": "string",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "location": "path",
+              "required": true
+            },
+            "project": {
+              "location": "path",
+              "type": "string",
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+              "required": true
+            }
+          }
+        },
+        "otherCommonTypeMethod": {
+          "httpMethod": "POST",
+          "id": "compute.foos.otherCommonTypeMethod",
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute",
+            "https://www.googleapis.com/auth/compute.readonly"
+          ],
+          "request": {
+            "$ref": "OtherCommonSchema"
+          },
+          "parameterOrder": [
+            "project",
+            "zone",
+            "resource"
+          ],
+          "path": "projects/{project}/zones/{zone}/foos/{resource}/otherCommonTypeMethod",
+          "parameters": {
+            "resource": {
+              "type": "string",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
+              "required": true
+            },
+            "zone": {
+              "type": "string",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "location": "path",
+              "required": true
+            },
+            "project": {
+              "location": "path",
+              "type": "string",
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+              "required": true
+            }
+          }
+        }
+      }
+    }
+  },
+  "schemas": {
+    "CustomerEncryptionKey": {
+      "id": "CustomerEncryptionKey",
+      "type": "object",
+      "properties": {
+        "sha256": {
+          "type": "string"
+        },
+        "rsaEncryptedKey": {
+          "type": "string"
+        },
+        "rawKey": {
+          "type": "string"
+        },
+        "kmsKeyName": {
+          "type": "string"
+        },
+        "kmsKeyServiceAccount": {
+          "type": "string"
+        }
+      }
+    },
+    "Disk": {
+      "id": "Disk",
+      "type": "object",
+      "properties": {
+        "diskEncryptionKey": {
+          "$ref": "CustomerEncryptionKey"
+        },
+        "asyncSecondaryDisks": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "DiskAsyncReplicationList"
+          }
+        },
+        "sourceImageEncryptionKey": {
+          "$ref": "CustomerEncryptionKey"
+        },
+        "status": {
+          "enumDescriptions": [
+            "Disk is provisioning",
+            "Disk is deleting.",
+            "Disk creation failed.",
+            "Disk is ready for use.",
+            "Source data is being copied into the disk."
+          ],
+          "enum": [
+            "CREATING",
+            "DELETING",
+            "FAILED",
+            "READY",
+            "RESTORING"
+          ],
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "labels": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "type": "object"
+        },
+        "zone": {
+          "type": "string"
+        },
+        "sourceDiskId": {
+          "type": "string"
+        },
+        "name": {
+          "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+          "type": "string",
+          "annotations": {
+            "required": [
+              "compute.disks.insert"
+            ]
+          }
+        },
+        "guestOsFeatures": {
+          "items": {
+            "$ref": "GuestOsFeature"
+          },
+          "type": "array"
+        },
+        "sourceSnapshotEncryptionKey": {
+          "$ref": "CustomerEncryptionKey"
+        },
+        "type": {
+          "type": "string"
+        }
+      }
+    },
+    "DiskAsyncReplication": {
+      "id": "DiskAsyncReplication",
+      "type": "object",
+      "properties": {
+        "disk": {
+          "type": "string"
+        }
+      }
+    },
+    "DiskAsyncReplicationList": {
+      "type": "object",
+      "properties": {
+        "asyncReplicationDisk": {
+          "$ref": "DiskAsyncReplication"
+        }
+      },
+      "id": "DiskAsyncReplicationList"
+    },
+    "ErrorInfo": {
+      "id": "ErrorInfo",
+      "properties": {
+        "domain": {
+          "type": "string"
+        },
+        "reason": {
+          "type": "string"
+        },
+        "metadatas": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "type": "object"
+        }
+      },
+      "type": "object"
+    },
+    "GuestOsFeature": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "enum": [
+            "FEATURE_TYPE_UNSPECIFIED",
+            "GVNIC",
+            "MULTI_IP_SUBNET",
+            "SECURE_BOOT",
+            "SEV_CAPABLE",
+            "SEV_LIVE_MIGRATABLE",
+            "SEV_SNP_CAPABLE",
+            "UEFI_COMPATIBLE",
+            "VIRTIO_SCSI_MULTIQUEUE",
+            "WINDOWS"
+          ],
+          "enumDescriptions": [
+            "","","","","","","","","",""
+          ],
+          "type": "string"
+        }
+      },
+      "id": "GuestOsFeature"
+    },
+    "LocalizedMessage": {
+      "id": "LocalizedMessage",
+      "properties": {
+        "locale": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "Operation": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "object",
+          "properties": {
+            "errors": {
+              "items": {
+                "type": "object",
+                "properties": {
+                  "message": {
+                    "type": "string"
+                  },
+                  "code": {
+                    "type": "string"
+                  },
+                  "location": {
+                    "type": "string"
+                  },
+                  "errorDetails": {
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "localizedMessage": {
+                          "$ref": "LocalizedMessage"
+                        },
+                        "errorInfo": {
+                          "$ref": "ErrorInfo"
+                        }
+                      }
+                    },
+                    "type": "array"
+                  }
+                }
+              },
+              "type": "array"
+            }
+          }
+        },
+        "httpErrorStatusCode": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "DONE",
+            "PENDING",
+            "RUNNING"
+          ],
+          "enumDescriptions": [
+            "",
+            "",
+            ""
+          ]
+        },
+        "progress": {
+          "format": "int32",
+          "type": "integer"
+        }
+      },
+      "id": "Operation"
+    },
+    "OtherCommonSchema": {
+      "id": "OtherCommonSchema",
+      "type": "object",
+      "properties": {
+        "field_name": {
+          "type": "string"
+        }
+      }
+    },
+    "Snapshot": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "snapshotEncryptionKey": {
+          "$ref": "CustomerEncryptionKey"
+        }
+      },
+      "id": "Snapshot",
+      "type": "object"
+    },
+    "TestPermissionsRequest": {
+      "type": "object",
+      "properties": {
+        "permissions": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "id": "TestPermissionsRequest"
+    },
+    "TestPermissionsResponse": {
+      "properties": {
+        "permissions": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object",
+      "id": "TestPermissionsResponse"
+    }
+  }
+}
+)""";
+  auto const discovery_json =
+      nlohmann::json::parse(kDiscoveryJson, nullptr, false);
+  ASSERT_TRUE(discovery_json.is_object());
+  DiscoveryDocumentProperties document_properties{
+      "", "", "product_name", "version", "", "", {}};
+  auto types =
+      ExtractTypesFromSchema(document_properties, discovery_json, &pool());
+  ASSERT_STATUS_OK(types);
+  auto resources = ExtractResources(document_properties, discovery_json);
+  ASSERT_THAT(resources, Not(IsEmpty()));
+  auto method_status =
+      ProcessMethodRequestsAndResponses(resources, *types, &pool());
+  ASSERT_STATUS_OK(method_status);
+  EstablishTypeDependencies(*types);
+  ApplyResourceLabelsToTypes(resources);
+  auto files = AssignResourcesAndTypesToFiles(
+      resources, *types, document_properties, "output_path");
+  ASSERT_STATUS_OK(files);
+
+  //  The resulting set of proto files contains one file per resource as well as
+  //  a minimal number of common files containing shared types that are
+  //  imported. Package names are leveraged to allow us to discriminate when
+  //  type names are synthesized from rpc/method names.
+  //
+  //  Below is a pseudo-proto representation of each file:
+  //  file: google/cloud/product_name/disks/version/disks.proto
+  //    package: google.cloud.cpp.product_name.disks.version
+  //    import: google/api/annotations.proto
+  //    import: google/api/client.proto
+  //    import: google/api/field_behavior.proto
+  //    import: google/cloud/extended_operations.proto
+  //    import: google/cloud/product_name/version/internal/common_000.proto
+  //    import: google/cloud/product_name/version/internal/common_001.proto
+  //    type: CreateSnapshotRequest
+  //    type: DeleteDisksRequest
+  //    type: GetDisksRequest
+  //    type: InsertDisksRequest
+  //    type: TestIamPermissionsRequest
+  //  file: google/cloud/product_name/foos/version/foos.proto
+  //    package: google.cloud.cpp.product_name.foos.version
+  //    import: google/api/annotations.proto
+  //    import: google/api/client.proto
+  //    import: google/api/field_behavior.proto
+  //    import: google/cloud/product_name/version/internal/common_001.proto
+  //    import: google/cloud/product_name/version/internal/common_002.proto
+  //    import: google/protobuf/empty.proto
+  //    type: EmptyResponseMethodRequest
+  //    type: OtherCommonTypeMethodRequest
+  //    type: TestIamPermissionsRequest
+  //  file: google/cloud/product_name/version/internal/common_000.proto
+  //    package: google.cloud.cpp.product_name.version
+  //    import: google/cloud/product_name/version/internal/common_001.proto
+  //    type: CustomerEncryptionKey
+  //    type: Disk
+  //    type: DiskAsyncReplication
+  //    type: DiskAsyncReplicationList
+  //    type: ErrorInfo
+  //    type: GuestOsFeature
+  //    type: Operation
+  //    type: Snapshot
+  //  file: google/cloud/product_name/version/internal/common_001.proto
+  //    package: google.cloud.cpp.product_name.version
+  //    type: LocalizedMessage
+  //    type: TestPermissionsRequest
+  //    type: TestPermissionsResponse
+  //  file: google/cloud/product_name/version/internal/common_002.proto
+  //    package: google.cloud.cpp.product_name.version
+  //    type: OtherCommonSchema
+
+  auto file_path = [](std::string const& path) {
+    return Property(&DiscoveryFile::relative_proto_path, Eq(path));
+  };
+
+  EXPECT_THAT(
+      *files,
+      UnorderedElementsAre(
+          file_path("google/cloud/product_name/foos/version/foos.proto"),
+          file_path("google/cloud/product_name/disks/version/disks.proto"),
+          file_path("google/cloud/product_name/version/internal/"
+                    "common_000.proto"),
+          file_path("google/cloud/product_name/version/internal/"
+                    "common_001.proto"),
+          file_path("google/cloud/product_name/version/internal/"
+                    "common_002.proto")));
+
+  auto type_named = [](std::string const& name) {
+    return Pointee(Property(&DiscoveryTypeVertex::name, Eq(name)));
+  };
+
+  // There are no guarantees which generated common_file_xxx.proto the shared
+  // schema types exist in, so we have to determine them programmatically.
+  auto common_other_schema_file =
+      std::find_if(files->begin(), files->end(), [&](DiscoveryFile const& f) {
+        return std::find_if(f.types().begin(), f.types().end(),
+                            [&](DiscoveryTypeVertex* t) {
+                              return (t->name() == "OtherCommonSchema");
+                            }) != f.types().end();
+      });
+  EXPECT_THAT(common_other_schema_file->package_name(),
+              Eq("google.cloud.cpp.product_name.version"));
+  EXPECT_THAT(common_other_schema_file->types(),
+              UnorderedElementsAre(type_named("OtherCommonSchema")));
+  EXPECT_THAT(common_other_schema_file->import_paths(), IsEmpty());
+
+  auto common_test_permissions_file =
+      std::find_if(files->begin(), files->end(), [&](DiscoveryFile const& f) {
+        return std::find_if(f.types().begin(), f.types().end(),
+                            [&](DiscoveryTypeVertex* t) {
+                              return (t->name() == "TestPermissionsRequest");
+                            }) != f.types().end();
+      });
+  EXPECT_THAT(common_test_permissions_file->package_name(),
+              Eq("google.cloud.cpp.product_name.version"));
+  EXPECT_THAT(common_test_permissions_file->types(),
+              UnorderedElementsAre(type_named("LocalizedMessage"),
+                                   type_named("TestPermissionsRequest"),
+                                   type_named("TestPermissionsResponse")));
+  EXPECT_THAT(common_test_permissions_file->import_paths(), IsEmpty());
+
+  auto common_disk_types_file =
+      std::find_if(files->begin(), files->end(), [&](DiscoveryFile const& f) {
+        return std::find_if(f.types().begin(), f.types().end(),
+                            [&](DiscoveryTypeVertex* t) {
+                              return (t->name() == "Disk");
+                            }) != f.types().end();
+      });
+  EXPECT_THAT(common_disk_types_file->package_name(),
+              Eq("google.cloud.cpp.product_name.version"));
+  EXPECT_THAT(common_disk_types_file->types(),
+              UnorderedElementsAre(
+                  type_named("CustomerEncryptionKey"), type_named("Disk"),
+                  type_named("DiskAsyncReplication"),
+                  type_named("DiskAsyncReplicationList"),
+                  type_named("ErrorInfo"), type_named("GuestOsFeature"),
+                  type_named("Operation"), type_named("Snapshot")));
+  EXPECT_THAT(common_disk_types_file->import_paths(),
+              UnorderedElementsAre(
+                  common_test_permissions_file->relative_proto_path()));
+
+  // Proto files containing a resource/service have definitive file paths.
+  auto disks_file =
+      std::find_if(files->begin(), files->end(), [](auto const& f) {
+        return f.relative_proto_path() ==
+               "google/cloud/product_name/disks/version/disks.proto";
+      });
+  EXPECT_THAT(disks_file->package_name(),
+              Eq("google.cloud.cpp.product_name.disks.version"));
+  EXPECT_THAT(disks_file->types(),
+              UnorderedElementsAre(type_named("CreateSnapshotRequest"),
+                                   type_named("DeleteDisksRequest"),
+                                   type_named("GetDisksRequest"),
+                                   type_named("InsertDisksRequest"),
+                                   type_named("TestIamPermissionsRequest")));
+  EXPECT_THAT(disks_file->import_paths(),
+              UnorderedElementsAre(
+                  "google/api/annotations.proto", "google/api/client.proto",
+                  "google/api/field_behavior.proto",
+                  "google/cloud/extended_operations.proto",
+                  common_disk_types_file->relative_proto_path(),
+                  common_test_permissions_file->relative_proto_path()));
+
+  auto foos_file =
+      std::find_if(files->begin(), files->end(), [](auto const& f) {
+        return f.relative_proto_path() ==
+               "google/cloud/product_name/foos/version/foos.proto";
+      });
+  EXPECT_THAT(foos_file->package_name(),
+              Eq("google.cloud.cpp.product_name.foos.version"));
+  EXPECT_THAT(foos_file->types(),
+              UnorderedElementsAre(type_named("EmptyResponseMethodRequest"),
+                                   type_named("OtherCommonTypeMethodRequest"),
+                                   type_named("TestIamPermissionsRequest")));
+  EXPECT_THAT(
+      foos_file->import_paths(),
+      UnorderedElementsAre(
+          "google/api/annotations.proto", "google/api/client.proto",
+          "google/api/field_behavior.proto", "google/protobuf/empty.proto",
+          common_other_schema_file->relative_proto_path(),
+          common_test_permissions_file->relative_proto_path()));
 }
 
 }  // namespace

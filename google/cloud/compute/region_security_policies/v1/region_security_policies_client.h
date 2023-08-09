@@ -119,7 +119,7 @@ class RegionSecurityPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_security_policies.v1.DeleteRegionSecurityPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L99}
+  /// [google.cloud.cpp.compute.region_security_policies.v1.DeleteRegionSecurityPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L100}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -158,7 +158,7 @@ class RegionSecurityPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_security_policies.v1.DeleteRegionSecurityPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L99}
+  /// [google.cloud.cpp.compute.region_security_policies.v1.DeleteRegionSecurityPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L100}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -188,8 +188,8 @@ class RegionSecurityPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_security_policies.v1.GetRegionSecurityPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L129}
-  /// [google.cloud.cpp.compute.v1.SecurityPolicy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L24481}
+  /// [google.cloud.cpp.compute.region_security_policies.v1.GetRegionSecurityPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L130}
+  /// [google.cloud.cpp.compute.v1.SecurityPolicy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_106.proto#L29}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::SecurityPolicy>
@@ -222,8 +222,8 @@ class RegionSecurityPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_security_policies.v1.GetRegionSecurityPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L129}
-  /// [google.cloud.cpp.compute.v1.SecurityPolicy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L24481}
+  /// [google.cloud.cpp.compute.region_security_policies.v1.GetRegionSecurityPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L130}
+  /// [google.cloud.cpp.compute.v1.SecurityPolicy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_106.proto#L29}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::SecurityPolicy>
@@ -260,7 +260,7 @@ class RegionSecurityPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_security_policies.v1.InsertRegionSecurityPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L141}
+  /// [google.cloud.cpp.compute.region_security_policies.v1.InsertRegionSecurityPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L142}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -301,7 +301,7 @@ class RegionSecurityPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_security_policies.v1.InsertRegionSecurityPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L141}
+  /// [google.cloud.cpp.compute.region_security_policies.v1.InsertRegionSecurityPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L142}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -340,8 +340,8 @@ class RegionSecurityPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_security_policies.v1.ListRegionSecurityPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L175}
-  /// [google.cloud.cpp.compute.v1.SecurityPolicy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L24481}
+  /// [google.cloud.cpp.compute.region_security_policies.v1.ListRegionSecurityPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L176}
+  /// [google.cloud.cpp.compute.v1.SecurityPolicy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_106.proto#L29}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::SecurityPolicy>
@@ -382,8 +382,8 @@ class RegionSecurityPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_security_policies.v1.ListRegionSecurityPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L175}
-  /// [google.cloud.cpp.compute.v1.SecurityPolicy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L24481}
+  /// [google.cloud.cpp.compute.region_security_policies.v1.ListRegionSecurityPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L176}
+  /// [google.cloud.cpp.compute.v1.SecurityPolicy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_106.proto#L29}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::SecurityPolicy>
@@ -424,7 +424,7 @@ class RegionSecurityPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_security_policies.v1.PatchRegionSecurityPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L243}
+  /// [google.cloud.cpp.compute.region_security_policies.v1.PatchRegionSecurityPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L244}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -469,7 +469,7 @@ class RegionSecurityPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_security_policies.v1.PatchRegionSecurityPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L243}
+  /// [google.cloud.cpp.compute.region_security_policies.v1.PatchRegionSecurityPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L244}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

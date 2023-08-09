@@ -24,7 +24,10 @@ package google.cloud.cpp.compute.external_vpn_gateways.v1;
 import "google/api/annotations.proto";
 import "google/api/client.proto";
 import "google/api/field_behavior.proto";
-import "google/cloud/compute/v1/internal/common.proto";
+import "google/cloud/compute/v1/internal/common_029.proto";
+import "google/cloud/compute/v1/internal/common_032.proto";
+import "google/cloud/compute/v1/internal/common_045.proto";
+import "google/cloud/compute/v1/internal/common_130.proto";
 import "google/cloud/extended_operations.proto";
 
 // Service for the externalVpnGateways resource.

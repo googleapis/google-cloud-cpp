@@ -24,7 +24,11 @@ package google.cloud.cpp.compute.target_https_proxies.v1;
 import "google/api/annotations.proto";
 import "google/api/client.proto";
 import "google/api/field_behavior.proto";
-import "google/cloud/compute/v1/internal/common.proto";
+import "google/cloud/compute/v1/internal/common_029.proto";
+import "google/cloud/compute/v1/internal/common_116.proto";
+import "google/cloud/compute/v1/internal/common_121.proto";
+import "google/cloud/compute/v1/internal/common_122.proto";
+import "google/cloud/compute/v1/internal/common_131.proto";
 import "google/cloud/extended_operations.proto";
 
 // Service for the targetHttpsProxies resource.

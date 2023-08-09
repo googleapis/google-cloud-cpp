@@ -17,6 +17,7 @@
 #include "generator/internal/discovery_resource.h"
 #include "generator/internal/discovery_type_vertex.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
+#include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/rest_client.h"
@@ -82,6 +83,21 @@ void ApplyResourceLabelsToTypesHelper(std::string const& resource_name,
   auto deps = type.needs_type();
   for (auto* dep : deps) {
     ApplyResourceLabelsToTypesHelper(resource_name, *dep);
+  }
+}
+
+std::string FormatFileResourceKey(std::set<std::string> const& resources) {
+  return absl::StrJoin(resources, ":");
+}
+
+void AddImportToFile(std::map<std::string, DiscoveryFile> const& common_files,
+                     DiscoveryTypeVertex const& type, DiscoveryFile& file) {
+  auto iter =
+      common_files.find(FormatFileResourceKey(type.needed_by_resource()));
+  if (iter != common_files.end()) {
+    if (file.relative_proto_path() != iter->second.relative_proto_path()) {
+      file.AddImportPath(iter->second.relative_proto_path());
+    }
   }
 }
 
@@ -358,24 +374,22 @@ void ApplyResourceLabelsToTypes(
 std::vector<DiscoveryFile> CreateFilesFromResources(
     std::map<std::string, DiscoveryResource> const& resources,
     DiscoveryDocumentProperties const& document_properties,
-    std::string const& output_path) {
+    std::string const& output_path,
+    std::map<std::string, DiscoveryFile> const& common_files) {
   std::vector<DiscoveryFile> files;
   files.reserve(resources.size());
   for (auto const& r : resources) {
-    DiscoveryFile f{
-        &r.second,
-        r.second.FormatFilePath(document_properties.product_name,
-                                document_properties.version, output_path),
-        r.second.FormatFilePath(document_properties.product_name,
-                                document_properties.version, {}),
-        r.second.package_name(), r.second.GetRequestTypesList()};
-    f.AddImportPath("google/api/annotations.proto")
-        .AddImportPath("google/api/client.proto")
-        .AddImportPath("google/api/field_behavior.proto")
-        .AddImportPath(
-            "google/cloud/$product_name$/$version$/"
-            "internal/common.proto");
-
+    auto f =
+        DiscoveryFile{
+            &r.second,
+            r.second.FormatFilePath(document_properties.product_name,
+                                    document_properties.version, output_path),
+            r.second.FormatFilePath(document_properties.product_name,
+                                    document_properties.version, {}),
+            r.second.package_name(), r.second.GetRequestTypesList()}
+            .AddImportPath("google/api/annotations.proto")
+            .AddImportPath("google/api/client.proto")
+            .AddImportPath("google/api/field_behavior.proto");
     if (r.second.RequiresEmptyImport()) {
       f.AddImportPath("google/protobuf/empty.proto");
     }
@@ -383,40 +397,84 @@ std::vector<DiscoveryFile> CreateFilesFromResources(
       f.AddImportPath("google/cloud/extended_operations.proto");
     }
 
+    for (auto const& request : r.second.request_types()) {
+      for (auto const& needs : request.second->needs_type()) {
+        AddImportToFile(common_files, *needs, f);
+      }
+    }
+    for (auto const& response : r.second.response_types()) {
+      AddImportToFile(common_files, *response.second, f);
+    }
     files.push_back(std::move(f));
   }
   return files;
 }
 
-std::vector<DiscoveryFile> AssignResourcesAndTypesToFiles(
+StatusOr<std::vector<DiscoveryFile>> AssignResourcesAndTypesToFiles(
     std::map<std::string, DiscoveryResource> const& resources,
-    std::map<std::string, DiscoveryTypeVertex> const& types,
+    std::map<std::string, DiscoveryTypeVertex>& types,
     DiscoveryDocumentProperties const& document_properties,
     std::string const& output_path) {
-  auto files =
-      CreateFilesFromResources(resources, document_properties, output_path);
-
-  // TODO(#11190): For the first phase of implementation, we create one proto
-  // per resource and its request types. For the remainder of the types, we
-  // dump them all into one internal/common.proto file. This should be reworked
-  // to split the common types into multiple files and inject the corresponding
-  // import statements where needed.
-  std::vector<DiscoveryTypeVertex const*> common_types;
-  for (auto const& t : types) {
-    if (!t.second.IsSynthesizedRequestType()) {
-      common_types.push_back(&t.second);
+  std::map<std::string, DiscoveryFile> common_files_by_resource;
+  int i = 0;
+  for (auto& kv : types) {
+    if (!kv.second.IsSynthesizedRequestType()) {
+      auto* type = &kv.second;
+      std::string resource_key =
+          FormatFileResourceKey(type->needed_by_resource());
+      auto iter = common_files_by_resource.find(resource_key);
+      if (iter != common_files_by_resource.end()) {
+        iter->second.AddType(type);
+      } else {
+        auto relative_proto_path = absl::StrFormat(
+            "google/cloud/%s/%s/internal/common_%03d.proto",
+            document_properties.product_name, document_properties.version, i++);
+        common_files_by_resource.emplace(
+            resource_key,
+            DiscoveryFile(nullptr,
+                          absl::StrCat(output_path, "/", relative_proto_path),
+                          relative_proto_path,
+                          absl::StrFormat(kCommonPackageNameFormat,
+                                          document_properties.product_name,
+                                          document_properties.version),
+                          {})
+                .AddType(type));
+      }
     }
   }
 
-  auto proto_path = absl::StrFormat("google/cloud/%s/%s/internal/common.proto",
-                                    document_properties.product_name,
-                                    document_properties.version);
-  files.emplace_back(nullptr, absl::StrCat(output_path, "/", proto_path),
-                     proto_path,
-                     absl::StrFormat(kCommonPackageNameFormat,
-                                     document_properties.product_name,
-                                     document_properties.version),
-                     std::move(common_types));
+  for (auto& kv : common_files_by_resource) {
+    auto& file = kv.second;
+    for (auto* type : file.types()) {
+      for (auto* needed_type : type->needs_type()) {
+        std::string resource_key =
+            FormatFileResourceKey(needed_type->needed_by_resource());
+        auto iter = common_files_by_resource.find(resource_key);
+        if (iter == common_files_by_resource.end()) {
+          return internal::InvalidArgumentError(
+              absl::StrCat("Unable to find resource_key: ", resource_key),
+              GCP_ERROR_INFO()
+                  .WithMetadata("resource_key", resource_key)
+                  .WithMetadata("needed_type", needed_type->name())
+                  .WithMetadata("type", type->name())
+                  .WithMetadata("proto_file", file.relative_proto_path()));
+        }
+        auto needed_file_relative_proto_path =
+            iter->second.relative_proto_path();
+        if (file.relative_proto_path() != needed_file_relative_proto_path) {
+          file.AddImportPath(std::move(needed_file_relative_proto_path));
+        }
+      }
+    }
+  }
+
+  auto files = CreateFilesFromResources(resources, document_properties,
+                                        output_path, common_files_by_resource);
+
+  std::transform(common_files_by_resource.begin(),
+                 common_files_by_resource.end(), std::back_inserter(files),
+                 [](auto p) { return p.second; });
+
   return files;
 }
 
@@ -514,8 +572,11 @@ Status GenerateProtosFromDiscoveryDoc(
       ProcessMethodRequestsAndResponses(resources, *types, &descriptor_pool);
   if (!method_status.ok()) return method_status;
 
-  std::vector<DiscoveryFile> files = AssignResourcesAndTypesToFiles(
-      resources, *types, document_properties, output_path);
+  EstablishTypeDependencies(*types);
+  ApplyResourceLabelsToTypes(resources);
+  auto files = AssignResourcesAndTypesToFiles(resources, *types,
+                                              document_properties, output_path);
+  if (!files) return std::move(files.status());
 
   // google::protobuf::DescriptorPool lazily initializes itself. Searching for
   // types by name will fail if the descriptor has not yet been created. By
@@ -524,13 +585,13 @@ Status GenerateProtosFromDiscoveryDoc(
   // this mutation of the DescriptorPool before we begin the threaded write
   // process. Additionally, populating the DescriptorPool allows us to snapshot
   // the existing proto files before we overwrite them in place.
-  for (auto const& f : files) {
+  for (auto const& f : *files) {
     (void)descriptor_pool.FindFileByName(f.relative_proto_path());
   }
 
   std::vector<std::future<google::cloud::Status>> tasks;
-  tasks.reserve(files.size());
-  for (auto f : files) {
+  tasks.reserve(files->size());
+  for (auto f : *files) {
     tasks.push_back(std::async(
         std::launch::async,
         [](DiscoveryFile const& f,
