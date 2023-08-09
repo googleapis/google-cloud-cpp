@@ -36,11 +36,11 @@ namespace cloud {
 namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
+namespace {
 
 using ::google::cloud::internal::AuthHeaderError;
-using ::google::cloud::internal::CurrentOptions;
 
-namespace {
+auto constexpr kIdempotencyTokenHeader = "x-goog-gcs-idempotency-token";
 
 std::shared_ptr<rest_internal::CurlHandleFactory> CreateHandleFactory(
     Options const& options) {
@@ -121,15 +121,23 @@ std::string HostHeader(Options const& options, char const* service) {
 }
 
 Status CurlClient::SetupBuilderCommon(CurlRequestBuilder& builder,
+                                      rest_internal::RestContext const& context,
+                                      Options const& options,
                                       char const* method, char const* service) {
-  auto const& current = CurrentOptions();
   auto auth_header =
-      current.get<Oauth2CredentialsOption>()->AuthorizationHeader();
+      options.get<Oauth2CredentialsOption>()->AuthorizationHeader();
   if (!auth_header) return AuthHeaderError(std::move(auth_header).status());
+  auto const& headers = context.headers();
+  auto const l = headers.find(kIdempotencyTokenHeader);
+  if (l != headers.end()) {
+    for (auto const& v : l->second) {
+      builder.AddHeader(absl::StrCat(kIdempotencyTokenHeader, ": ", v));
+    }
+  }
   builder.SetMethod(method)
-      .ApplyClientOptions(current)
+      .ApplyClientOptions(options)
       .AddHeader(auth_header.value())
-      .AddHeader(HostHeader(current, service))
+      .AddHeader(HostHeader(options, service))
       .AddHeader(x_goog_api_client_header_);
   return Status();
 }
@@ -149,11 +157,11 @@ void SetupBuilderUserIp(CurlRequestBuilder& builder, Request const& request) {
 
 template <typename Request>
 Status CurlClient::SetupBuilder(CurlRequestBuilder& builder,
-                                Request const& request, char const* method) {
-  auto status = SetupBuilderCommon(builder, method);
-  if (!status.ok()) {
-    return status;
-  }
+                                rest_internal::RestContext const& context,
+                                Options const& options, Request const& request,
+                                char const* method) {
+  auto status = SetupBuilderCommon(builder, context, options, method);
+  if (!status.ok()) return status;
   request.AddOptionsToHttpRequest(builder);
   SetupBuilderUserIp(builder, request);
   return Status();
@@ -161,8 +169,6 @@ Status CurlClient::SetupBuilder(CurlRequestBuilder& builder,
 
 CurlClient::CurlClient(google::cloud::Options options)
     : opts_(std::move(options)),
-      backwards_compatibility_options_(
-          MakeBackwardsCompatibleClientOptions(opts_)),
       x_goog_api_client_header_("x-goog-api-client: " + x_goog_api_client()),
       storage_endpoint_(JsonEndpoint(opts_)),
       upload_endpoint_(JsonUploadEndpoint(opts_)),
@@ -179,22 +185,22 @@ CurlClient::CurlClient(google::cloud::Options options)
 Options CurlClient::options() const { return opts_; }
 
 StatusOr<ListBucketsResponse> CurlClient::ListBuckets(
+    rest_internal::RestContext& context, Options const& options,
     ListBucketsRequest const& request) {
   CurlRequestBuilder builder(storage_endpoint_ + "/b", storage_factory_);
-  auto status = SetupBuilder(builder, request, "GET");
-  if (!status.ok()) {
-    return status;
-  }
+  auto status = SetupBuilder(builder, context, options, request, "GET");
+  if (!status.ok()) return status;
   builder.AddQueryParameter("project", request.project_id());
   return ParseFromHttpResponse<ListBucketsResponse>(
       std::move(builder).BuildRequest().MakeRequest(std::string{}));
 }
 
 StatusOr<BucketMetadata> CurlClient::CreateBucket(
+    rest_internal::RestContext& context, Options const& options,
     CreateBucketRequest const& request) {
   // Assume the bucket name is validated by the caller.
   CurlRequestBuilder builder(storage_endpoint_ + "/b", storage_factory_);
-  auto status = SetupBuilder(builder, request, "POST");
+  auto status = SetupBuilder(builder, context, options, request, "POST");
   if (!status.ok()) return status;
   builder.AddQueryParameter("project", request.project_id());
   builder.AddHeader("Content-Type: application/json");
@@ -212,72 +218,65 @@ StatusOr<BucketMetadata> CurlClient::CreateBucket(
 }
 
 StatusOr<BucketMetadata> CurlClient::GetBucketMetadata(
+    rest_internal::RestContext& context, Options const& options,
     GetBucketMetadataRequest const& request) {
   // Assume the bucket name is validated by the caller.
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name(),
                              storage_factory_);
-  auto status = SetupBuilder(builder, request, "GET");
-  if (!status.ok()) {
-    return status;
-  }
+  auto status = SetupBuilder(builder, context, options, request, "GET");
+  if (!status.ok()) return status;
   return CheckedFromString<BucketMetadataParser>(
       std::move(builder).BuildRequest().MakeRequest(std::string{}));
 }
 
 StatusOr<EmptyResponse> CurlClient::DeleteBucket(
+    rest_internal::RestContext& context, Options const& options,
     DeleteBucketRequest const& request) {
   // Assume the bucket name is validated by the caller.
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name(),
                              storage_factory_);
-  auto status = SetupBuilder(builder, request, "DELETE");
-  if (!status.ok()) {
-    return status;
-  }
+  auto status = SetupBuilder(builder, context, options, request, "DELETE");
+  if (!status.ok()) return status;
   return ReturnEmptyResponse(
       std::move(builder).BuildRequest().MakeRequest(std::string{}));
 }
 
 StatusOr<BucketMetadata> CurlClient::UpdateBucket(
+    rest_internal::RestContext& context, Options const& options,
     UpdateBucketRequest const& request) {
   // Assume the bucket name is validated by the caller.
   CurlRequestBuilder builder(
       storage_endpoint_ + "/b/" + request.metadata().name(), storage_factory_);
-  auto status = SetupBuilder(builder, request, "PUT");
-  if (!status.ok()) {
-    return status;
-  }
+  auto status = SetupBuilder(builder, context, options, request, "PUT");
+  if (!status.ok()) return status;
   builder.AddHeader("Content-Type: application/json");
   return CheckedFromString<BucketMetadataParser>(
       std::move(builder).BuildRequest().MakeRequest(request.json_payload()));
 }
 
 StatusOr<BucketMetadata> CurlClient::PatchBucket(
+    rest_internal::RestContext& context, Options const& options,
     PatchBucketRequest const& request) {
   // Assume the bucket name is validated by the caller.
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket(),
                              storage_factory_);
-  auto status = SetupBuilder(builder, request, "PATCH");
-  if (!status.ok()) {
-    return status;
-  }
+  auto status = SetupBuilder(builder, context, options, request, "PATCH");
+  if (!status.ok()) return status;
   builder.AddHeader("Content-Type: application/json");
   return CheckedFromString<BucketMetadataParser>(
       std::move(builder).BuildRequest().MakeRequest(request.payload()));
 }
 
 StatusOr<NativeIamPolicy> CurlClient::GetNativeBucketIamPolicy(
+    rest_internal::RestContext& context, Options const& options,
     GetBucketIamPolicyRequest const& request) {
   CurlRequestBuilder builder(
       storage_endpoint_ + "/b/" + request.bucket_name() + "/iam",
       storage_factory_);
-  auto status = SetupBuilder(builder, request, "GET");
-  if (!status.ok()) {
-    return status;
-  }
+  auto status = SetupBuilder(builder, context, options, request, "GET");
+  if (!status.ok()) return status;
   auto response = std::move(builder).BuildRequest().MakeRequest(std::string{});
-  if (!response.ok()) {
-    return std::move(response).status();
-  }
+  if (!response.ok()) return std::move(response).status();
   if (response->status_code >= HttpStatusCode::kMinNotSuccess) {
     return AsStatus(*response);
   }
@@ -285,14 +284,13 @@ StatusOr<NativeIamPolicy> CurlClient::GetNativeBucketIamPolicy(
 }
 
 StatusOr<NativeIamPolicy> CurlClient::SetNativeBucketIamPolicy(
+    rest_internal::RestContext& context, Options const& options,
     SetNativeBucketIamPolicyRequest const& request) {
   CurlRequestBuilder builder(
       storage_endpoint_ + "/b/" + request.bucket_name() + "/iam",
       storage_factory_);
-  auto status = SetupBuilder(builder, request, "PUT");
-  if (!status.ok()) {
-    return status;
-  }
+  auto status = SetupBuilder(builder, context, options, request, "PUT");
+  if (!status.ok()) return status;
   builder.AddHeader("Content-Type: application/json");
   auto response =
       std::move(builder).BuildRequest().MakeRequest(request.json_payload());
@@ -306,14 +304,13 @@ StatusOr<NativeIamPolicy> CurlClient::SetNativeBucketIamPolicy(
 }
 
 StatusOr<TestBucketIamPermissionsResponse> CurlClient::TestBucketIamPermissions(
+    rest_internal::RestContext& context, Options const& options,
     TestBucketIamPermissionsRequest const& request) {
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
                                  "/iam/testPermissions",
                              storage_factory_);
-  auto status = SetupBuilder(builder, request, "GET");
-  if (!status.ok()) {
-    return status;
-  }
+  auto status = SetupBuilder(builder, context, options, request, "GET");
+  if (!status.ok()) return status;
   for (auto const& perm : request.permissions()) {
     builder.AddQueryParameter("permissions", perm);
   }
@@ -328,14 +325,13 @@ StatusOr<TestBucketIamPermissionsResponse> CurlClient::TestBucketIamPermissions(
 }
 
 StatusOr<BucketMetadata> CurlClient::LockBucketRetentionPolicy(
+    rest_internal::RestContext& context, Options const& options,
     LockBucketRetentionPolicyRequest const& request) {
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
                                  "/lockRetentionPolicy",
                              storage_factory_);
-  auto status = SetupBuilder(builder, request, "POST");
-  if (!status.ok()) {
-    return status;
-  }
+  auto status = SetupBuilder(builder, context, options, request, "POST");
+  if (!status.ok()) return status;
   builder.AddHeader("content-type: application/json");
   builder.AddHeader("content-length: 0");
   builder.AddOption(IfMetagenerationMatch(request.metageneration()));
@@ -344,10 +340,11 @@ StatusOr<BucketMetadata> CurlClient::LockBucketRetentionPolicy(
 }
 
 StatusOr<ObjectMetadata> CurlClient::InsertObjectMedia(
+    rest_internal::RestContext& context, Options const& options,
     InsertObjectMediaRequest const& request) {
   // If the object metadata is specified, then we need to do a multipart upload.
   if (request.HasOption<WithObjectMetadata>()) {
-    return InsertObjectMediaMultipart(request);
+    return InsertObjectMediaMultipart(context, options, request);
   }
 
   // If the application has set an explicit hash value we need to use multipart
@@ -357,14 +354,15 @@ StatusOr<ObjectMetadata> CurlClient::InsertObjectMedia(
       !request.GetOption<DisableCrc32cChecksum>().value_or(false) ||
       request.HasOption<MD5HashValue>() ||
       request.HasOption<Crc32cChecksumValue>()) {
-    return InsertObjectMediaMultipart(request);
+    return InsertObjectMediaMultipart(context, options, request);
   }
 
   // Otherwise do a simple upload.
-  return InsertObjectMediaSimple(request);
+  return InsertObjectMediaSimple(context, options, request);
 }
 
 StatusOr<ObjectMetadata> CurlClient::CopyObject(
+    rest_internal::RestContext& context, Options const& options,
     CopyObjectRequest const& request) {
   CurlRequestBuilder builder(
       storage_endpoint_ + "/b/" + request.source_bucket() + "/o/" +
@@ -372,10 +370,8 @@ StatusOr<ObjectMetadata> CurlClient::CopyObject(
           request.destination_bucket() + "/o/" +
           UrlEscapeString(request.destination_object()),
       storage_factory_);
-  auto status = SetupBuilder(builder, request, "POST");
-  if (!status.ok()) {
-    return status;
-  }
+  auto status = SetupBuilder(builder, context, options, request, "POST");
+  if (!status.ok()) return status;
   builder.AddHeader("Content-Type: application/json");
   std::string json_payload("{}");
   if (request.HasOption<WithObjectMetadata>()) {
@@ -388,28 +384,26 @@ StatusOr<ObjectMetadata> CurlClient::CopyObject(
 }
 
 StatusOr<ObjectMetadata> CurlClient::GetObjectMetadata(
+    rest_internal::RestContext& context, Options const& options,
     GetObjectMetadataRequest const& request) {
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
                                  "/o/" + UrlEscapeString(request.object_name()),
                              storage_factory_);
-  auto status = SetupBuilder(builder, request, "GET");
-  if (!status.ok()) {
-    return status;
-  }
+  auto status = SetupBuilder(builder, context, options, request, "GET");
+  if (!status.ok()) return status;
   return CheckedFromString<ObjectMetadataParser>(
       std::move(builder).BuildRequest().MakeRequest(std::string{}));
 }
 
 StatusOr<std::unique_ptr<ObjectReadSource>> CurlClient::ReadObject(
+    rest_internal::RestContext& context, Options const& options,
     ReadObjectRangeRequest const& request) {
   // Assume the bucket name is validated by the caller.
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
                                  "/o/" + UrlEscapeString(request.object_name()),
                              storage_factory_);
-  auto status = SetupBuilder(builder, request, "GET");
-  if (!status.ok()) {
-    return status;
-  }
+  auto status = SetupBuilder(builder, context, options, request, "GET");
+  if (!status.ok()) return status;
   builder.AddQueryParameter("alt", "media");
   if (request.RequiresRangeHeader()) {
     builder.AddHeader(request.RangeHeader());
@@ -424,78 +418,74 @@ StatusOr<std::unique_ptr<ObjectReadSource>> CurlClient::ReadObject(
 }
 
 StatusOr<ListObjectsResponse> CurlClient::ListObjects(
+    rest_internal::RestContext& context, Options const& options,
     ListObjectsRequest const& request) {
   // Assume the bucket name is validated by the caller.
   CurlRequestBuilder builder(
       storage_endpoint_ + "/b/" + request.bucket_name() + "/o",
       storage_factory_);
-  auto status = SetupBuilder(builder, request, "GET");
-  if (!status.ok()) {
-    return status;
-  }
+  auto status = SetupBuilder(builder, context, options, request, "GET");
+  if (!status.ok()) return status;
   builder.AddQueryParameter("pageToken", request.page_token());
   return ParseFromHttpResponse<ListObjectsResponse>(
       std::move(builder).BuildRequest().MakeRequest(std::string{}));
 }
 
 StatusOr<EmptyResponse> CurlClient::DeleteObject(
+    rest_internal::RestContext& context, Options const& options,
     DeleteObjectRequest const& request) {
   // Assume the bucket name is validated by the caller.
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
                                  "/o/" + UrlEscapeString(request.object_name()),
                              storage_factory_);
-  auto status = SetupBuilder(builder, request, "DELETE");
-  if (!status.ok()) {
-    return status;
-  }
+  auto status = SetupBuilder(builder, context, options, request, "DELETE");
+  if (!status.ok()) return status;
   return ReturnEmptyResponse(
       std::move(builder).BuildRequest().MakeRequest(std::string{}));
 }
 
 StatusOr<ObjectMetadata> CurlClient::UpdateObject(
+    rest_internal::RestContext& context, Options const& options,
     UpdateObjectRequest const& request) {
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
                                  "/o/" + UrlEscapeString(request.object_name()),
                              storage_factory_);
-  auto status = SetupBuilder(builder, request, "PUT");
-  if (!status.ok()) {
-    return status;
-  }
+  auto status = SetupBuilder(builder, context, options, request, "PUT");
+  if (!status.ok()) return status;
   builder.AddHeader("Content-Type: application/json");
   return CheckedFromString<ObjectMetadataParser>(
       std::move(builder).BuildRequest().MakeRequest(request.json_payload()));
 }
 
 StatusOr<ObjectMetadata> CurlClient::PatchObject(
+    rest_internal::RestContext& context, Options const& options,
     PatchObjectRequest const& request) {
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
                                  "/o/" + UrlEscapeString(request.object_name()),
                              storage_factory_);
-  auto status = SetupBuilder(builder, request, "PATCH");
-  if (!status.ok()) {
-    return status;
-  }
+  auto status = SetupBuilder(builder, context, options, request, "PATCH");
+  if (!status.ok()) return status;
   builder.AddHeader("Content-Type: application/json");
   return CheckedFromString<ObjectMetadataParser>(
       std::move(builder).BuildRequest().MakeRequest(request.payload()));
 }
 
 StatusOr<ObjectMetadata> CurlClient::ComposeObject(
+    rest_internal::RestContext& context, Options const& options,
     ComposeObjectRequest const& request) {
   CurlRequestBuilder builder(
       storage_endpoint_ + "/b/" + request.bucket_name() + "/o/" +
           UrlEscapeString(request.object_name()) + "/compose",
       storage_factory_);
-  auto status = SetupBuilder(builder, request, "POST");
-  if (!status.ok()) {
-    return status;
-  }
+  auto status = SetupBuilder(builder, context, options, request, "POST");
+  if (!status.ok()) return status;
   builder.AddHeader("Content-Type: application/json");
   return CheckedFromString<ObjectMetadataParser>(
       std::move(builder).BuildRequest().MakeRequest(request.JsonPayload()));
 }
 
 StatusOr<RewriteObjectResponse> CurlClient::RewriteObject(
+    rest_internal::RestContext& context, Options const& options,
     RewriteObjectRequest const& request) {
   CurlRequestBuilder builder(
       storage_endpoint_ + "/b/" + request.source_bucket() + "/o/" +
@@ -503,10 +493,8 @@ StatusOr<RewriteObjectResponse> CurlClient::RewriteObject(
           request.destination_bucket() + "/o/" +
           UrlEscapeString(request.destination_object()),
       storage_factory_);
-  auto status = SetupBuilder(builder, request, "POST");
-  if (!status.ok()) {
-    return status;
-  }
+  auto status = SetupBuilder(builder, context, options, request, "POST");
+  if (!status.ok()) return status;
   if (!request.rewrite_token().empty()) {
     builder.AddQueryParameter("rewriteToken", request.rewrite_token());
   }
@@ -530,10 +518,11 @@ StatusOr<RewriteObjectResponse> CurlClient::RewriteObject(
 }
 
 StatusOr<CreateResumableUploadResponse> CurlClient::CreateResumableUpload(
+    rest_internal::RestContext& context, Options const& options,
     ResumableUploadRequest const& request) {
   CurlRequestBuilder builder(
       upload_endpoint_ + "/b/" + request.bucket_name() + "/o", upload_factory_);
-  auto status = SetupBuilderCommon(builder, "POST");
+  auto status = SetupBuilderCommon(builder, context, options, "POST");
   if (!status.ok()) return status;
   SetupBuilderUserIp(builder, request);
   AddOptionsWithSkip<CurlRequestBuilder, ContentType> no_content_type{builder};
@@ -580,9 +569,10 @@ StatusOr<CreateResumableUploadResponse> CurlClient::CreateResumableUpload(
 }
 
 StatusOr<QueryResumableUploadResponse> CurlClient::QueryResumableUpload(
+    rest_internal::RestContext& context, Options const& options,
     QueryResumableUploadRequest const& request) {
   CurlRequestBuilder builder(request.upload_session_url(), upload_factory_);
-  auto status = SetupBuilder(builder, request, "PUT");
+  auto status = SetupBuilder(builder, context, options, request, "PUT");
   if (!status.ok()) return status;
   builder.AddHeader("Content-Range: bytes */*");
   builder.AddHeader("Content-Type: application/octet-stream");
@@ -597,12 +587,11 @@ StatusOr<QueryResumableUploadResponse> CurlClient::QueryResumableUpload(
 }
 
 StatusOr<EmptyResponse> CurlClient::DeleteResumableUpload(
+    rest_internal::RestContext& context, Options const& options,
     DeleteResumableUploadRequest const& request) {
   CurlRequestBuilder builder(request.upload_session_url(), upload_factory_);
-  auto status = SetupBuilderCommon(builder, "DELETE");
-  if (!status.ok()) {
-    return status;
-  }
+  auto status = SetupBuilderCommon(builder, context, options, "DELETE");
+  if (!status.ok()) return status;
   auto response = std::move(builder).BuildRequest().MakeRequest(std::string{});
   if (!response.ok()) {
     return std::move(response).status();
@@ -615,9 +604,10 @@ StatusOr<EmptyResponse> CurlClient::DeleteResumableUpload(
 }
 
 StatusOr<QueryResumableUploadResponse> CurlClient::UploadChunk(
+    rest_internal::RestContext& context, Options const& options,
     UploadChunkRequest const& request) {
   CurlRequestBuilder builder(request.upload_session_url(), upload_factory_);
-  auto status = SetupBuilder(builder, request, "PUT");
+  auto status = SetupBuilder(builder, context, options, request, "PUT");
   if (!status.ok()) return status;
   builder.AddHeader(request.RangeHeader());
   builder.AddHeader("Content-Type: application/octet-stream");
@@ -644,14 +634,13 @@ StatusOr<QueryResumableUploadResponse> CurlClient::UploadChunk(
 }
 
 StatusOr<ListBucketAclResponse> CurlClient::ListBucketAcl(
+    rest_internal::RestContext& context, Options const& options,
     ListBucketAclRequest const& request) {
   CurlRequestBuilder builder(
       storage_endpoint_ + "/b/" + request.bucket_name() + "/acl",
       storage_factory_);
-  auto status = SetupBuilder(builder, request, "GET");
-  if (!status.ok()) {
-    return status;
-  }
+  auto status = SetupBuilder(builder, context, options, request, "GET");
+  if (!status.ok()) return status;
   auto response = std::move(builder).BuildRequest().MakeRequest(std::string{});
   if (!response.ok()) {
     return std::move(response).status();
@@ -663,27 +652,25 @@ StatusOr<ListBucketAclResponse> CurlClient::ListBucketAcl(
 }
 
 StatusOr<BucketAccessControl> CurlClient::GetBucketAcl(
+    rest_internal::RestContext& context, Options const& options,
     GetBucketAclRequest const& request) {
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
                                  "/acl/" + UrlEscapeString(request.entity()),
                              storage_factory_);
-  auto status = SetupBuilder(builder, request, "GET");
-  if (!status.ok()) {
-    return status;
-  }
+  auto status = SetupBuilder(builder, context, options, request, "GET");
+  if (!status.ok()) return status;
   return CheckedFromString<internal::BucketAccessControlParser>(
       std::move(builder).BuildRequest().MakeRequest(std::string{}));
 }
 
 StatusOr<BucketAccessControl> CurlClient::CreateBucketAcl(
+    rest_internal::RestContext& context, Options const& options,
     CreateBucketAclRequest const& request) {
   CurlRequestBuilder builder(
       storage_endpoint_ + "/b/" + request.bucket_name() + "/acl",
       storage_factory_);
-  auto status = SetupBuilder(builder, request, "POST");
-  if (!status.ok()) {
-    return status;
-  }
+  auto status = SetupBuilder(builder, context, options, request, "POST");
+  if (!status.ok()) return status;
   builder.AddHeader("Content-Type: application/json");
   nlohmann::json object;
   object["entity"] = request.entity();
@@ -693,27 +680,25 @@ StatusOr<BucketAccessControl> CurlClient::CreateBucketAcl(
 }
 
 StatusOr<EmptyResponse> CurlClient::DeleteBucketAcl(
+    rest_internal::RestContext& context, Options const& options,
     DeleteBucketAclRequest const& request) {
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
                                  "/acl/" + UrlEscapeString(request.entity()),
                              storage_factory_);
-  auto status = SetupBuilder(builder, request, "DELETE");
-  if (!status.ok()) {
-    return status;
-  }
+  auto status = SetupBuilder(builder, context, options, request, "DELETE");
+  if (!status.ok()) return status;
   return ReturnEmptyResponse(
       std::move(builder).BuildRequest().MakeRequest(std::string{}));
 }
 
 StatusOr<BucketAccessControl> CurlClient::UpdateBucketAcl(
+    rest_internal::RestContext& context, Options const& options,
     UpdateBucketAclRequest const& request) {
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
                                  "/acl/" + UrlEscapeString(request.entity()),
                              storage_factory_);
-  auto status = SetupBuilder(builder, request, "PUT");
-  if (!status.ok()) {
-    return status;
-  }
+  auto status = SetupBuilder(builder, context, options, request, "PUT");
+  if (!status.ok()) return status;
   builder.AddHeader("Content-Type: application/json");
   nlohmann::json patch;
   patch["entity"] = request.entity();
@@ -723,44 +708,41 @@ StatusOr<BucketAccessControl> CurlClient::UpdateBucketAcl(
 }
 
 StatusOr<BucketAccessControl> CurlClient::PatchBucketAcl(
+    rest_internal::RestContext& context, Options const& options,
     PatchBucketAclRequest const& request) {
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
                                  "/acl/" + UrlEscapeString(request.entity()),
                              storage_factory_);
-  auto status = SetupBuilder(builder, request, "PATCH");
-  if (!status.ok()) {
-    return status;
-  }
+  auto status = SetupBuilder(builder, context, options, request, "PATCH");
+  if (!status.ok()) return status;
   builder.AddHeader("Content-Type: application/json");
   return CheckedFromString<internal::BucketAccessControlParser>(
       std::move(builder).BuildRequest().MakeRequest(request.payload()));
 }
 
 StatusOr<ListObjectAclResponse> CurlClient::ListObjectAcl(
+    rest_internal::RestContext& context, Options const& options,
     ListObjectAclRequest const& request) {
   // Assume the bucket name is validated by the caller.
   CurlRequestBuilder builder(
       storage_endpoint_ + "/b/" + request.bucket_name() + "/o/" +
           UrlEscapeString(request.object_name()) + "/acl",
       storage_factory_);
-  auto status = SetupBuilder(builder, request, "GET");
-  if (!status.ok()) {
-    return status;
-  }
+  auto status = SetupBuilder(builder, context, options, request, "GET");
+  if (!status.ok()) return status;
   return ParseFromHttpResponse<ListObjectAclResponse>(
       std::move(builder).BuildRequest().MakeRequest(std::string{}));
 }
 
 StatusOr<ObjectAccessControl> CurlClient::CreateObjectAcl(
+    rest_internal::RestContext& context, Options const& options,
     CreateObjectAclRequest const& request) {
   CurlRequestBuilder builder(
       storage_endpoint_ + "/b/" + request.bucket_name() + "/o/" +
           UrlEscapeString(request.object_name()) + "/acl",
       storage_factory_);
-  auto status = SetupBuilder(builder, request, "POST");
-  if (!status.ok()) {
-    return status;
-  }
+  auto status = SetupBuilder(builder, context, options, request, "POST");
+  if (!status.ok()) return status;
   builder.AddHeader("Content-Type: application/json");
   nlohmann::json object;
   object["entity"] = request.entity();
@@ -770,46 +752,43 @@ StatusOr<ObjectAccessControl> CurlClient::CreateObjectAcl(
 }
 
 StatusOr<EmptyResponse> CurlClient::DeleteObjectAcl(
+    rest_internal::RestContext& context, Options const& options,
     DeleteObjectAclRequest const& request) {
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
                                  "/o/" +
                                  UrlEscapeString(request.object_name()) +
                                  "/acl/" + UrlEscapeString(request.entity()),
                              storage_factory_);
-  auto status = SetupBuilder(builder, request, "DELETE");
-  if (!status.ok()) {
-    return status;
-  }
+  auto status = SetupBuilder(builder, context, options, request, "DELETE");
+  if (!status.ok()) return status;
   return ReturnEmptyResponse(
       std::move(builder).BuildRequest().MakeRequest(std::string{}));
 }
 
 StatusOr<ObjectAccessControl> CurlClient::GetObjectAcl(
+    rest_internal::RestContext& context, Options const& options,
     GetObjectAclRequest const& request) {
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
                                  "/o/" +
                                  UrlEscapeString(request.object_name()) +
                                  "/acl/" + UrlEscapeString(request.entity()),
                              storage_factory_);
-  auto status = SetupBuilder(builder, request, "GET");
-  if (!status.ok()) {
-    return status;
-  }
+  auto status = SetupBuilder(builder, context, options, request, "GET");
+  if (!status.ok()) return status;
   return CheckedFromString<ObjectAccessControlParser>(
       std::move(builder).BuildRequest().MakeRequest(std::string{}));
 }
 
 StatusOr<ObjectAccessControl> CurlClient::UpdateObjectAcl(
+    rest_internal::RestContext& context, Options const& options,
     UpdateObjectAclRequest const& request) {
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
                                  "/o/" +
                                  UrlEscapeString(request.object_name()) +
                                  "/acl/" + UrlEscapeString(request.entity()),
                              storage_factory_);
-  auto status = SetupBuilder(builder, request, "PUT");
-  if (!status.ok()) {
-    return status;
-  }
+  auto status = SetupBuilder(builder, context, options, request, "PUT");
+  if (!status.ok()) return status;
   builder.AddHeader("Content-Type: application/json");
   nlohmann::json object;
   object["entity"] = request.entity();
@@ -819,44 +798,41 @@ StatusOr<ObjectAccessControl> CurlClient::UpdateObjectAcl(
 }
 
 StatusOr<ObjectAccessControl> CurlClient::PatchObjectAcl(
+    rest_internal::RestContext& context, Options const& options,
     PatchObjectAclRequest const& request) {
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
                                  "/o/" +
                                  UrlEscapeString(request.object_name()) +
                                  "/acl/" + UrlEscapeString(request.entity()),
                              storage_factory_);
-  auto status = SetupBuilder(builder, request, "PATCH");
-  if (!status.ok()) {
-    return status;
-  }
+  auto status = SetupBuilder(builder, context, options, request, "PATCH");
+  if (!status.ok()) return status;
   builder.AddHeader("Content-Type: application/json");
   return CheckedFromString<ObjectAccessControlParser>(
       std::move(builder).BuildRequest().MakeRequest(request.payload()));
 }
 
 StatusOr<ListDefaultObjectAclResponse> CurlClient::ListDefaultObjectAcl(
+    rest_internal::RestContext& context, Options const& options,
     ListDefaultObjectAclRequest const& request) {
   // Assume the bucket name is validated by the caller.
   CurlRequestBuilder builder(
       storage_endpoint_ + "/b/" + request.bucket_name() + "/defaultObjectAcl",
       storage_factory_);
-  auto status = SetupBuilder(builder, request, "GET");
-  if (!status.ok()) {
-    return status;
-  }
+  auto status = SetupBuilder(builder, context, options, request, "GET");
+  if (!status.ok()) return status;
   return ParseFromHttpResponse<ListDefaultObjectAclResponse>(
       std::move(builder).BuildRequest().MakeRequest(std::string{}));
 }
 
 StatusOr<ObjectAccessControl> CurlClient::CreateDefaultObjectAcl(
+    rest_internal::RestContext& context, Options const& options,
     CreateDefaultObjectAclRequest const& request) {
   CurlRequestBuilder builder(
       storage_endpoint_ + "/b/" + request.bucket_name() + "/defaultObjectAcl",
       storage_factory_);
-  auto status = SetupBuilder(builder, request, "POST");
-  if (!status.ok()) {
-    return status;
-  }
+  auto status = SetupBuilder(builder, context, options, request, "POST");
+  if (!status.ok()) return status;
   nlohmann::json object;
   object["entity"] = request.entity();
   object["role"] = request.role();
@@ -866,43 +842,40 @@ StatusOr<ObjectAccessControl> CurlClient::CreateDefaultObjectAcl(
 }
 
 StatusOr<EmptyResponse> CurlClient::DeleteDefaultObjectAcl(
+    rest_internal::RestContext& context, Options const& options,
     DeleteDefaultObjectAclRequest const& request) {
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
                                  "/defaultObjectAcl/" +
                                  UrlEscapeString(request.entity()),
                              storage_factory_);
-  auto status = SetupBuilder(builder, request, "DELETE");
-  if (!status.ok()) {
-    return status;
-  }
+  auto status = SetupBuilder(builder, context, options, request, "DELETE");
+  if (!status.ok()) return status;
   return ReturnEmptyResponse(
       std::move(builder).BuildRequest().MakeRequest(std::string{}));
 }
 
 StatusOr<ObjectAccessControl> CurlClient::GetDefaultObjectAcl(
+    rest_internal::RestContext& context, Options const& options,
     GetDefaultObjectAclRequest const& request) {
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
                                  "/defaultObjectAcl/" +
                                  UrlEscapeString(request.entity()),
                              storage_factory_);
-  auto status = SetupBuilder(builder, request, "GET");
-  if (!status.ok()) {
-    return status;
-  }
+  auto status = SetupBuilder(builder, context, options, request, "GET");
+  if (!status.ok()) return status;
   return CheckedFromString<ObjectAccessControlParser>(
       std::move(builder).BuildRequest().MakeRequest(std::string{}));
 }
 
 StatusOr<ObjectAccessControl> CurlClient::UpdateDefaultObjectAcl(
+    rest_internal::RestContext& context, Options const& options,
     UpdateDefaultObjectAclRequest const& request) {
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
                                  "/defaultObjectAcl/" +
                                  UrlEscapeString(request.entity()),
                              storage_factory_);
-  auto status = SetupBuilder(builder, request, "PUT");
-  if (!status.ok()) {
-    return status;
-  }
+  auto status = SetupBuilder(builder, context, options, request, "PUT");
+  if (!status.ok()) return status;
   builder.AddHeader("Content-Type: application/json");
   nlohmann::json object;
   object["entity"] = request.entity();
@@ -912,55 +885,51 @@ StatusOr<ObjectAccessControl> CurlClient::UpdateDefaultObjectAcl(
 }
 
 StatusOr<ObjectAccessControl> CurlClient::PatchDefaultObjectAcl(
+    rest_internal::RestContext& context, Options const& options,
     PatchDefaultObjectAclRequest const& request) {
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
                                  "/defaultObjectAcl/" +
                                  UrlEscapeString(request.entity()),
                              storage_factory_);
-  auto status = SetupBuilder(builder, request, "PATCH");
-  if (!status.ok()) {
-    return status;
-  }
+  auto status = SetupBuilder(builder, context, options, request, "PATCH");
+  if (!status.ok()) return status;
   builder.AddHeader("Content-Type: application/json");
   return CheckedFromString<ObjectAccessControlParser>(
       std::move(builder).BuildRequest().MakeRequest(request.payload()));
 }
 
 StatusOr<ServiceAccount> CurlClient::GetServiceAccount(
+    rest_internal::RestContext& context, Options const& options,
     GetProjectServiceAccountRequest const& request) {
   CurlRequestBuilder builder(storage_endpoint_ + "/projects/" +
                                  request.project_id() + "/serviceAccount",
                              storage_factory_);
-  auto status = SetupBuilder(builder, request, "GET");
-  if (!status.ok()) {
-    return status;
-  }
+  auto status = SetupBuilder(builder, context, options, request, "GET");
+  if (!status.ok()) return status;
   return CheckedFromString<ServiceAccountParser>(
       std::move(builder).BuildRequest().MakeRequest(std::string{}));
 }
 
 StatusOr<ListHmacKeysResponse> CurlClient::ListHmacKeys(
+    rest_internal::RestContext& context, Options const& options,
     ListHmacKeysRequest const& request) {
   CurlRequestBuilder builder(
       storage_endpoint_ + "/projects/" + request.project_id() + "/hmacKeys",
       storage_factory_);
-  auto status = SetupBuilder(builder, request, "GET");
-  if (!status.ok()) {
-    return status;
-  }
+  auto status = SetupBuilder(builder, context, options, request, "GET");
+  if (!status.ok()) return status;
   return ParseFromHttpResponse<ListHmacKeysResponse>(
       std::move(builder).BuildRequest().MakeRequest(std::string{}));
 }
 
 StatusOr<CreateHmacKeyResponse> CurlClient::CreateHmacKey(
+    rest_internal::RestContext& context, Options const& options,
     CreateHmacKeyRequest const& request) {
   CurlRequestBuilder builder(
       storage_endpoint_ + "/projects/" + request.project_id() + "/hmacKeys",
       storage_factory_);
-  auto status = SetupBuilder(builder, request, "POST");
-  if (!status.ok()) {
-    return status;
-  }
+  auto status = SetupBuilder(builder, context, options, request, "POST");
+  if (!status.ok()) return status;
   builder.AddQueryParameter("serviceAccountEmail", request.service_account());
   builder.AddHeader("content-length: 0");
   return ParseFromHttpResponse<CreateHmacKeyResponse>(
@@ -968,43 +937,40 @@ StatusOr<CreateHmacKeyResponse> CurlClient::CreateHmacKey(
 }
 
 StatusOr<EmptyResponse> CurlClient::DeleteHmacKey(
+    rest_internal::RestContext& context, Options const& options,
     DeleteHmacKeyRequest const& request) {
   CurlRequestBuilder builder(storage_endpoint_ + "/projects/" +
                                  request.project_id() + "/hmacKeys/" +
                                  request.access_id(),
                              storage_factory_);
-  auto status = SetupBuilder(builder, request, "DELETE");
-  if (!status.ok()) {
-    return status;
-  }
+  auto status = SetupBuilder(builder, context, options, request, "DELETE");
+  if (!status.ok()) return status;
   return ReturnEmptyResponse(
       std::move(builder).BuildRequest().MakeRequest(std::string{}));
 }
 
 StatusOr<HmacKeyMetadata> CurlClient::GetHmacKey(
+    rest_internal::RestContext& context, Options const& options,
     GetHmacKeyRequest const& request) {
   CurlRequestBuilder builder(storage_endpoint_ + "/projects/" +
                                  request.project_id() + "/hmacKeys/" +
                                  request.access_id(),
                              storage_factory_);
-  auto status = SetupBuilder(builder, request, "GET");
-  if (!status.ok()) {
-    return status;
-  }
+  auto status = SetupBuilder(builder, context, options, request, "GET");
+  if (!status.ok()) return status;
   return CheckedFromString<HmacKeyMetadataParser>(
       std::move(builder).BuildRequest().MakeRequest(std::string{}));
 }
 
 StatusOr<HmacKeyMetadata> CurlClient::UpdateHmacKey(
+    rest_internal::RestContext& context, Options const& options,
     UpdateHmacKeyRequest const& request) {
   CurlRequestBuilder builder(storage_endpoint_ + "/projects/" +
                                  request.project_id() + "/hmacKeys/" +
                                  request.access_id(),
                              storage_factory_);
-  auto status = SetupBuilder(builder, request, "PUT");
-  if (!status.ok()) {
-    return status;
-  }
+  auto status = SetupBuilder(builder, context, options, request, "PUT");
+  if (!status.ok()) return status;
   nlohmann::json payload;
   if (!request.resource().state().empty()) {
     payload["state"] = request.resource().state();
@@ -1018,14 +984,14 @@ StatusOr<HmacKeyMetadata> CurlClient::UpdateHmacKey(
 }
 
 StatusOr<SignBlobResponse> CurlClient::SignBlob(
+    rest_internal::RestContext& context, Options const& options,
     SignBlobRequest const& request) {
   CurlRequestBuilder builder(iam_endpoint_ + "/projects/-/serviceAccounts/" +
                                  request.service_account() + ":signBlob",
                              storage_factory_);
-  auto status = SetupBuilderCommon(builder, "POST", "iamcredentials");
-  if (!status.ok()) {
-    return status;
-  }
+  auto status =
+      SetupBuilderCommon(builder, context, options, "POST", "iamcredentials");
+  if (!status.ok()) return status;
   nlohmann::json payload;
   payload["payload"] = request.base64_encoded_blob();
   if (!request.delegates().empty()) {
@@ -1037,57 +1003,53 @@ StatusOr<SignBlobResponse> CurlClient::SignBlob(
 }
 
 StatusOr<ListNotificationsResponse> CurlClient::ListNotifications(
+    rest_internal::RestContext& context, Options const& options,
     ListNotificationsRequest const& request) {
   // Assume the bucket name is validated by the caller.
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
                                  "/notificationConfigs",
                              storage_factory_);
-  auto status = SetupBuilder(builder, request, "GET");
-  if (!status.ok()) {
-    return status;
-  }
+  auto status = SetupBuilder(builder, context, options, request, "GET");
+  if (!status.ok()) return status;
   return ParseFromHttpResponse<ListNotificationsResponse>(
       std::move(builder).BuildRequest().MakeRequest(std::string{}));
 }
 
 StatusOr<NotificationMetadata> CurlClient::CreateNotification(
+    rest_internal::RestContext& context, Options const& options,
     CreateNotificationRequest const& request) {
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
                                  "/notificationConfigs",
                              storage_factory_);
-  auto status = SetupBuilder(builder, request, "POST");
-  if (!status.ok()) {
-    return status;
-  }
+  auto status = SetupBuilder(builder, context, options, request, "POST");
+  if (!status.ok()) return status;
   builder.AddHeader("Content-Type: application/json");
   return CheckedFromString<NotificationMetadataParser>(
       std::move(builder).BuildRequest().MakeRequest(request.json_payload()));
 }
 
 StatusOr<NotificationMetadata> CurlClient::GetNotification(
+    rest_internal::RestContext& context, Options const& options,
     GetNotificationRequest const& request) {
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
                                  "/notificationConfigs/" +
                                  request.notification_id(),
                              storage_factory_);
-  auto status = SetupBuilder(builder, request, "GET");
-  if (!status.ok()) {
-    return status;
-  }
+  auto status = SetupBuilder(builder, context, options, request, "GET");
+  if (!status.ok()) return status;
   return CheckedFromString<NotificationMetadataParser>(
       std::move(builder).BuildRequest().MakeRequest(std::string{}));
 }
 
 StatusOr<EmptyResponse> CurlClient::DeleteNotification(
+    rest_internal::RestContext& context, Options const& options,
     DeleteNotificationRequest const& request) {
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
                                  "/notificationConfigs/" +
                                  request.notification_id(),
                              storage_factory_);
-  auto status = SetupBuilder(builder, request, "DELETE");
-  if (!status.ok()) {
-    return status;
-  }
+  auto status = SetupBuilder(builder, context, options, request, "DELETE");
+  if (!status.ok()) return status;
   return ReturnEmptyResponse(
       std::move(builder).BuildRequest().MakeRequest(std::string{}));
 }
@@ -1097,6 +1059,7 @@ std::vector<std::string> CurlClient::InspectStackStructure() const {
 }
 
 StatusOr<ObjectMetadata> CurlClient::InsertObjectMediaMultipart(
+    rest_internal::RestContext& context, Options const& options,
     InsertObjectMediaRequest const& request) {
   // To perform a multipart upload we need to separate the parts as described
   // in:
@@ -1107,7 +1070,7 @@ StatusOr<ObjectMetadata> CurlClient::InsertObjectMediaMultipart(
   //    configure the options because we need to skip one (groan).
   CurlRequestBuilder builder(
       upload_endpoint_ + "/b/" + request.bucket_name() + "/o", upload_factory_);
-  auto status = SetupBuilderCommon(builder, "POST");
+  auto status = SetupBuilderCommon(builder, context, options, "POST");
   if (!status.ok()) return status;
   SetupBuilderUserIp(builder, request);
   AddOptionsWithSkip<CurlRequestBuilder, ContentType> no_content_type{builder};
@@ -1166,13 +1129,12 @@ std::string CurlClient::MakeBoundary() {
 }
 
 StatusOr<ObjectMetadata> CurlClient::InsertObjectMediaSimple(
+    rest_internal::RestContext& context, Options const& options,
     InsertObjectMediaRequest const& request) {
   CurlRequestBuilder builder(
       upload_endpoint_ + "/b/" + request.bucket_name() + "/o", upload_factory_);
-  auto status = SetupBuilder(builder, request, "POST");
-  if (!status.ok()) {
-    return status;
-  }
+  auto status = SetupBuilder(builder, context, options, request, "POST");
+  if (!status.ok()) return status;
   // Set the content type to a sensible value, the application can override this
   // in the options for the request.
   if (!request.HasOption<ContentType>()) {

@@ -32,7 +32,6 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 namespace {
 
-using ::google::cloud::internal::OptionsSpan;
 using ::google::cloud::storage::oauth2::Credentials;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::HasSubstr;
@@ -61,8 +60,9 @@ class CurlClientTest : public ::testing::Test,
   void SetUp() override {
     std::string const error_type = GetParam();
     if (error_type == "credentials-failure") {
-      client_ = CurlClient::Create(Options{}.set<Oauth2CredentialsOption>(
-          std::make_shared<FailingCredentials>()));
+      options_ = Options{}.set<Oauth2CredentialsOption>(
+          std::make_shared<FailingCredentials>());
+      client_ = std::make_unique<CurlClient>(options_);
       // We know exactly what error to expect, so setup the assertions to be
       // very strict.
       check_status_ = [](Status const& actual) {
@@ -72,11 +72,11 @@ class CurlClientTest : public ::testing::Test,
     } else if (error_type == "libcurl-failure") {
       google::cloud::testing_util::SetEnv("CLOUD_STORAGE_EMULATOR_ENDPOINT",
                                           "http://localhost:1");
-      client_ = CurlClient::Create(
-          Options{}
-              .set<Oauth2CredentialsOption>(
-                  oauth2::CreateAnonymousCredentials())
-              .set<RestEndpointOption>("http://localhost:1"));
+      options_ = Options{}
+                     .set<Oauth2CredentialsOption>(
+                         oauth2::CreateAnonymousCredentials())
+                     .set<RestEndpointOption>("http://localhost:1");
+      client_ = std::make_unique<CurlClient>(options_);
       // We do not know what libcurl will return. Some kind of error, but varies
       // by version of libcurl. Just make sure it is an error and the CURL
       // details are included in the error message.
@@ -94,7 +94,8 @@ class CurlClientTest : public ::testing::Test,
 
   void TearDown() override { client_.reset(); }
 
-  std::shared_ptr<CurlClient> client_;
+  Options options_;
+  std::unique_ptr<CurlClient> client_;
   std::function<void(Status const& status)> check_status_;
   testing_util::ScopedEnvironment endpoint_;
 };
@@ -144,113 +145,131 @@ TEST(CurlClientStandaloneFunctions, HostHeader) {
 
 TEST_P(CurlClientTest, UploadChunk) {
   // Use http://localhost:1 to force a libcurl failure
-  OptionsSpan const span(client_->options());
-  auto actual =
-      client_
-          ->UploadChunk(UploadChunkRequest(
-              "http://localhost:1/invalid-session-id", 0,
-              {ConstBuffer{std::string{}}}, internal::CreateNullHashFunction()))
-          .status();
+  auto context = rest_internal::RestContext{};
+  auto actual = client_
+                    ->UploadChunk(context, options_,
+                                  UploadChunkRequest(
+                                      "http://localhost:1/invalid-session-id",
+                                      0, {ConstBuffer{std::string{}}},
+                                      internal::CreateNullHashFunction()))
+                    .status();
   CheckStatus(actual);
 }
 
 TEST_P(CurlClientTest, QueryResumableUpload) {
   // Use http://localhost:1 to force a libcurl failure
-  OptionsSpan const span(client_->options());
-  auto actual = client_
-                    ->QueryResumableUpload(QueryResumableUploadRequest(
-                        "http://localhost:9/invalid-session-id"))
-                    .status();
+  auto context = rest_internal::RestContext{};
+  auto actual =
+      client_
+          ->QueryResumableUpload(context, options_,
+                                 QueryResumableUploadRequest(
+                                     "http://localhost:9/invalid-session-id"))
+          .status();
   CheckStatus(actual);
 }
 
 TEST_P(CurlClientTest, ListBuckets) {
-  OptionsSpan const span(client_->options());
-  auto actual = client_->ListBuckets(ListBucketsRequest{"project_id"}).status();
+  auto context = rest_internal::RestContext{};
+  auto actual =
+      client_->ListBuckets(context, options_, ListBucketsRequest{"project_id"})
+          .status();
   CheckStatus(actual);
 }
 
 TEST_P(CurlClientTest, CreateBucket) {
-  OptionsSpan const span(client_->options());
+  auto context = rest_internal::RestContext{};
   auto actual = client_
-                    ->CreateBucket(CreateBucketRequest(
-                        "bkt", BucketMetadata().set_name("bkt")))
+                    ->CreateBucket(context, options_,
+                                   CreateBucketRequest(
+                                       "bkt", BucketMetadata().set_name("bkt")))
                     .status();
   CheckStatus(actual);
 }
 
 TEST_P(CurlClientTest, GetBucketMetadata) {
-  OptionsSpan const span(client_->options());
-  auto actual =
-      client_->GetBucketMetadata(GetBucketMetadataRequest("bkt")).status();
+  auto context = rest_internal::RestContext{};
+  auto actual = client_
+                    ->GetBucketMetadata(context, options_,
+                                        GetBucketMetadataRequest("bkt"))
+                    .status();
   CheckStatus(actual);
 }
 
 TEST_P(CurlClientTest, DeleteBucket) {
-  OptionsSpan const span(client_->options());
-  auto actual = client_->DeleteBucket(DeleteBucketRequest("bkt")).status();
+  auto context = rest_internal::RestContext{};
+  auto actual =
+      client_->DeleteBucket(context, options_, DeleteBucketRequest("bkt"))
+          .status();
   CheckStatus(actual);
 }
 
 TEST_P(CurlClientTest, UpdateBucket) {
-  OptionsSpan const span(client_->options());
+  auto context = rest_internal::RestContext{};
   auto actual =
       client_
-          ->UpdateBucket(UpdateBucketRequest(BucketMetadata().set_name("bkt")))
+          ->UpdateBucket(context, options_,
+                         UpdateBucketRequest(BucketMetadata().set_name("bkt")))
           .status();
   CheckStatus(actual);
 }
 
 TEST_P(CurlClientTest, PatchBucket) {
-  OptionsSpan const span(client_->options());
+  auto context = rest_internal::RestContext{};
   auto actual = client_
-                    ->PatchBucket(PatchBucketRequest(
-                        "bkt", BucketMetadata().set_name("bkt"),
-                        BucketMetadata().set_name("bkt")))
+                    ->PatchBucket(context, options_,
+                                  PatchBucketRequest(
+                                      "bkt", BucketMetadata().set_name("bkt"),
+                                      BucketMetadata().set_name("bkt")))
                     .status();
   CheckStatus(actual);
 }
 
 TEST_P(CurlClientTest, GetNativeBucketIamPolicy) {
-  OptionsSpan const span(client_->options());
-  auto actual =
-      client_->GetNativeBucketIamPolicy(GetBucketIamPolicyRequest("bkt"))
-          .status();
+  auto context = rest_internal::RestContext{};
+  auto actual = client_
+                    ->GetNativeBucketIamPolicy(context, options_,
+                                               GetBucketIamPolicyRequest("bkt"))
+                    .status();
   CheckStatus(actual);
 }
 
 TEST_P(CurlClientTest, SetNativeBucketIamPolicy) {
-  OptionsSpan const span(client_->options());
+  auto context = rest_internal::RestContext{};
   auto actual =
       client_
-          ->SetNativeBucketIamPolicy(SetNativeBucketIamPolicyRequest(
-              "bkt", NativeIamPolicy(std::vector<NativeIamBinding>())))
+          ->SetNativeBucketIamPolicy(
+              context, options_,
+              SetNativeBucketIamPolicyRequest(
+                  "bkt", NativeIamPolicy(std::vector<NativeIamBinding>())))
           .status();
   CheckStatus(actual);
 }
 
 TEST_P(CurlClientTest, TestBucketIamPermissions) {
-  OptionsSpan const span(client_->options());
+  auto context = rest_internal::RestContext{};
   auto actual =
       client_
-          ->TestBucketIamPermissions(TestBucketIamPermissionsRequest("bkt", {}))
+          ->TestBucketIamPermissions(context, options_,
+                                     TestBucketIamPermissionsRequest("bkt", {}))
           .status();
   CheckStatus(actual);
 }
 
 TEST_P(CurlClientTest, LockBucketRetentionPolicy) {
-  OptionsSpan const span(client_->options());
-  auto actual = client_
-                    ->LockBucketRetentionPolicy(
-                        LockBucketRetentionPolicyRequest("bkt", 0))
-                    .status();
+  auto context = rest_internal::RestContext{};
+  auto actual =
+      client_
+          ->LockBucketRetentionPolicy(
+              context, options_, LockBucketRetentionPolicyRequest("bkt", 0))
+          .status();
   CheckStatus(actual);
 }
 
 TEST_P(CurlClientTest, InsertObjectMediaSimple) {
-  OptionsSpan const span(client_->options());
+  auto context = rest_internal::RestContext{};
   auto actual = client_
                     ->InsertObjectMedia(
+                        context, options_,
                         InsertObjectMediaRequest("bkt", "obj", "contents")
                             .set_multiple_options(DisableMD5Hash(true),
                                                   DisableCrc32cChecksum(true)))
@@ -259,317 +278,374 @@ TEST_P(CurlClientTest, InsertObjectMediaSimple) {
 }
 
 TEST_P(CurlClientTest, InsertObjectMediaMultipart) {
-  OptionsSpan const span(client_->options());
+  auto context = rest_internal::RestContext{};
   auto actual = client_
                     ->InsertObjectMedia(
+                        context, options_,
                         InsertObjectMediaRequest("bkt", "obj", "contents"))
                     .status();
   CheckStatus(actual);
 }
 
 TEST_P(CurlClientTest, GetObjectMetadata) {
-  OptionsSpan const span(client_->options());
-  auto actual =
-      client_->GetObjectMetadata(GetObjectMetadataRequest("bkt", "obj"))
-          .status();
+  auto context = rest_internal::RestContext{};
+  auto actual = client_
+                    ->GetObjectMetadata(context, options_,
+                                        GetObjectMetadataRequest("bkt", "obj"))
+                    .status();
   CheckStatus(actual);
 }
 
 TEST_P(CurlClientTest, ReadObjectJson) {
-  OptionsSpan const span(client_->options());
+  auto context = rest_internal::RestContext{};
   if (GetParam() == "libcurl-failure") GTEST_SKIP();
   auto actual =
       client_
-          ->ReadObject(ReadObjectRangeRequest("bkt", "obj")
+          ->ReadObject(context, options_,
+                       ReadObjectRangeRequest("bkt", "obj")
                            .set_multiple_options(IfGenerationNotMatch(0)))
           .status();
   CheckStatus(actual);
 }
 
 TEST_P(CurlClientTest, ListObjects) {
-  OptionsSpan const span(client_->options());
-  auto actual = client_->ListObjects(ListObjectsRequest("bkt")).status();
+  auto context = rest_internal::RestContext{};
+  auto actual =
+      client_->ListObjects(context, options_, ListObjectsRequest("bkt"))
+          .status();
   CheckStatus(actual);
 }
 
 TEST_P(CurlClientTest, DeleteObject) {
-  OptionsSpan const span(client_->options());
+  auto context = rest_internal::RestContext{};
   auto actual =
-      client_->DeleteObject(DeleteObjectRequest("bkt", "obj")).status();
+      client_
+          ->DeleteObject(context, options_, DeleteObjectRequest("bkt", "obj"))
+          .status();
   CheckStatus(actual);
 }
 
 TEST_P(CurlClientTest, UpdateObject) {
-  OptionsSpan const span(client_->options());
+  auto context = rest_internal::RestContext{};
   auto actual =
-      client_->UpdateObject(UpdateObjectRequest("bkt", "obj", ObjectMetadata()))
+      client_
+          ->UpdateObject(context, options_,
+                         UpdateObjectRequest("bkt", "obj", ObjectMetadata()))
           .status();
   CheckStatus(actual);
 }
 
 TEST_P(CurlClientTest, PatchObject) {
-  OptionsSpan const span(client_->options());
-  auto actual = client_
-                    ->PatchObject(PatchObjectRequest(
-                        "bkt", "obj", ObjectMetadata(), ObjectMetadata()))
-                    .status();
+  auto context = rest_internal::RestContext{};
+  auto actual =
+      client_
+          ->PatchObject(context, options_,
+                        PatchObjectRequest("bkt", "obj", ObjectMetadata(),
+                                           ObjectMetadata()))
+          .status();
   CheckStatus(actual);
 }
 
 TEST_P(CurlClientTest, ComposeObject) {
-  OptionsSpan const span(client_->options());
-  auto actual =
-      client_->ComposeObject(ComposeObjectRequest("bkt", {}, "obj")).status();
+  auto context = rest_internal::RestContext{};
+  auto actual = client_
+                    ->ComposeObject(context, options_,
+                                    ComposeObjectRequest("bkt", {}, "obj"))
+                    .status();
   CheckStatus(actual);
 }
 
 TEST_P(CurlClientTest, ListBucketAcl) {
-  OptionsSpan const span(client_->options());
-  auto actual = client_->ListBucketAcl(ListBucketAclRequest("bkt")).status();
+  auto context = rest_internal::RestContext{};
+  auto actual =
+      client_->ListBucketAcl(context, options_, ListBucketAclRequest("bkt"))
+          .status();
   CheckStatus(actual);
 }
 
 TEST_P(CurlClientTest, CopyObject) {
-  OptionsSpan const span(client_->options());
+  auto context = rest_internal::RestContext{};
   auto actual =
-      client_->CopyObject(CopyObjectRequest("bkt", "obj1", "bkt", "obj2"))
+      client_
+          ->CopyObject(context, options_,
+                       CopyObjectRequest("bkt", "obj1", "bkt", "obj2"))
           .status();
   CheckStatus(actual);
 }
 
 TEST_P(CurlClientTest, CreateBucketAcl) {
-  OptionsSpan const span(client_->options());
+  auto context = rest_internal::RestContext{};
   auto actual =
-      client_->CreateBucketAcl(CreateBucketAclRequest("bkt", "entity", "role"))
+      client_
+          ->CreateBucketAcl(context, options_,
+                            CreateBucketAclRequest("bkt", "entity", "role"))
           .status();
   CheckStatus(actual);
 }
 
 TEST_P(CurlClientTest, GetBucketAcl) {
-  OptionsSpan const span(client_->options());
-  auto actual =
-      client_->GetBucketAcl(GetBucketAclRequest("bkt", "entity")).status();
+  auto context = rest_internal::RestContext{};
+  auto actual = client_
+                    ->GetBucketAcl(context, options_,
+                                   GetBucketAclRequest("bkt", "entity"))
+                    .status();
   CheckStatus(actual);
 }
 
 TEST_P(CurlClientTest, DeleteBucketAcl) {
-  OptionsSpan const span(client_->options());
-  auto actual =
-      client_->DeleteBucketAcl(DeleteBucketAclRequest("bkt", "entity"))
-          .status();
+  auto context = rest_internal::RestContext{};
+  auto actual = client_
+                    ->DeleteBucketAcl(context, options_,
+                                      DeleteBucketAclRequest("bkt", "entity"))
+                    .status();
   CheckStatus(actual);
 }
 
 TEST_P(CurlClientTest, UpdateBucketAcl) {
-  OptionsSpan const span(client_->options());
+  auto context = rest_internal::RestContext{};
   auto actual =
-      client_->UpdateBucketAcl(UpdateBucketAclRequest("bkt", "entity", "role"))
+      client_
+          ->UpdateBucketAcl(context, options_,
+                            UpdateBucketAclRequest("bkt", "entity", "role"))
           .status();
   CheckStatus(actual);
 }
 
 TEST_P(CurlClientTest, PatchBucketAcl) {
-  OptionsSpan const span(client_->options());
-  auto actual =
-      client_
-          ->PatchBucketAcl(PatchBucketAclRequest(
-              "bkt", "entity", BucketAccessControl(), BucketAccessControl()))
-          .status();
+  auto context = rest_internal::RestContext{};
+  auto actual = client_
+                    ->PatchBucketAcl(context, options_,
+                                     PatchBucketAclRequest(
+                                         "bkt", "entity", BucketAccessControl(),
+                                         BucketAccessControl()))
+                    .status();
   CheckStatus(actual);
 }
 
 TEST_P(CurlClientTest, ListObjectAcl) {
-  OptionsSpan const span(client_->options());
+  auto context = rest_internal::RestContext{};
   auto actual =
-      client_->ListObjectAcl(ListObjectAclRequest("bkt", "obj")).status();
+      client_
+          ->ListObjectAcl(context, options_, ListObjectAclRequest("bkt", "obj"))
+          .status();
   CheckStatus(actual);
 }
 
 TEST_P(CurlClientTest, CreateObjectAcl) {
-  OptionsSpan const span(client_->options());
+  auto context = rest_internal::RestContext{};
   auto actual = client_
                     ->CreateObjectAcl(
+                        context, options_,
                         CreateObjectAclRequest("bkt", "obj", "entity", "role"))
                     .status();
   CheckStatus(actual);
 }
 
 TEST_P(CurlClientTest, DeleteObjectAcl) {
-  OptionsSpan const span(client_->options());
+  auto context = rest_internal::RestContext{};
   auto actual =
-      client_->DeleteObjectAcl(DeleteObjectAclRequest("bkt", "obj", "entity"))
+      client_
+          ->DeleteObjectAcl(context, options_,
+                            DeleteObjectAclRequest("bkt", "obj", "entity"))
           .status();
   CheckStatus(actual);
 }
 
 TEST_P(CurlClientTest, GetObjectAcl) {
-  OptionsSpan const span(client_->options());
-  auto actual =
-      client_->GetObjectAcl(GetObjectAclRequest("bkt", "obj", "entity"))
-          .status();
+  auto context = rest_internal::RestContext{};
+  auto actual = client_
+                    ->GetObjectAcl(context, options_,
+                                   GetObjectAclRequest("bkt", "obj", "entity"))
+                    .status();
   CheckStatus(actual);
 }
 
 TEST_P(CurlClientTest, UpdateObjectAcl) {
-  OptionsSpan const span(client_->options());
+  auto context = rest_internal::RestContext{};
   auto actual = client_
                     ->UpdateObjectAcl(
+                        context, options_,
                         UpdateObjectAclRequest("bkt", "obj", "entity", "role"))
                     .status();
   CheckStatus(actual);
 }
 
 TEST_P(CurlClientTest, PatchObjectAcl) {
-  OptionsSpan const span(client_->options());
-  auto actual = client_
-                    ->PatchObjectAcl(PatchObjectAclRequest(
-                        "bkt", "obj", "entity", ObjectAccessControl(),
-                        ObjectAccessControl()))
-                    .status();
+  auto context = rest_internal::RestContext{};
+  auto actual =
+      client_
+          ->PatchObjectAcl(context, options_,
+                           PatchObjectAclRequest("bkt", "obj", "entity",
+                                                 ObjectAccessControl(),
+                                                 ObjectAccessControl()))
+          .status();
   CheckStatus(actual);
 }
 
 TEST_P(CurlClientTest, RewriteObject) {
-  OptionsSpan const span(client_->options());
+  auto context = rest_internal::RestContext{};
   auto actual = client_
-                    ->RewriteObject(RewriteObjectRequest("bkt", "obj", "bkt2",
+                    ->RewriteObject(context, options_,
+                                    RewriteObjectRequest("bkt", "obj", "bkt2",
                                                          "obj2", "token"))
                     .status();
   CheckStatus(actual);
 }
 
 TEST_P(CurlClientTest, CreateResumableUpload) {
-  OptionsSpan const span(client_->options());
+  auto context = rest_internal::RestContext{};
   auto actual = client_
                     ->CreateResumableUpload(
+                        context, options_,
                         ResumableUploadRequest("test-bucket", "test-object"))
                     .status();
   CheckStatus(actual);
 }
 
 TEST_P(CurlClientTest, DeleteResumableUpload) {
-  OptionsSpan const span(client_->options());
+  auto context = rest_internal::RestContext{};
   auto actual = client_
                     ->DeleteResumableUpload(
+                        context, options_,
                         DeleteResumableUploadRequest("test-upload-session-url"))
                     .status();
   CheckStatus(actual);
 }
 
 TEST_P(CurlClientTest, ListDefaultObjectAcl) {
-  OptionsSpan const span(client_->options());
-  auto actual =
-      client_->ListDefaultObjectAcl(ListDefaultObjectAclRequest("bkt"))
-          .status();
+  auto context = rest_internal::RestContext{};
+  auto actual = client_
+                    ->ListDefaultObjectAcl(context, options_,
+                                           ListDefaultObjectAclRequest("bkt"))
+                    .status();
   CheckStatus(actual);
 }
 
 TEST_P(CurlClientTest, CreateDefaultObjectAcl) {
-  OptionsSpan const span(client_->options());
+  auto context = rest_internal::RestContext{};
   auto actual = client_
                     ->CreateDefaultObjectAcl(
+                        context, options_,
                         CreateDefaultObjectAclRequest("bkt", "entity", "role"))
                     .status();
   CheckStatus(actual);
 }
 
 TEST_P(CurlClientTest, DeleteDefaultObjectAcl) {
-  OptionsSpan const span(client_->options());
-  auto actual = client_
-                    ->DeleteDefaultObjectAcl(
-                        DeleteDefaultObjectAclRequest("bkt", "entity"))
-                    .status();
+  auto context = rest_internal::RestContext{};
+  auto actual =
+      client_
+          ->DeleteDefaultObjectAcl(
+              context, options_, DeleteDefaultObjectAclRequest("bkt", "entity"))
+          .status();
   CheckStatus(actual);
 }
 
 TEST_P(CurlClientTest, GetDefaultObjectAcl) {
-  OptionsSpan const span(client_->options());
+  auto context = rest_internal::RestContext{};
   auto actual =
-      client_->GetDefaultObjectAcl(GetDefaultObjectAclRequest("bkt", "entity"))
+      client_
+          ->GetDefaultObjectAcl(context, options_,
+                                GetDefaultObjectAclRequest("bkt", "entity"))
           .status();
   CheckStatus(actual);
 }
 
 TEST_P(CurlClientTest, UpdateDefaultObjectAcl) {
-  OptionsSpan const span(client_->options());
+  auto context = rest_internal::RestContext{};
   auto actual = client_
                     ->UpdateDefaultObjectAcl(
+                        context, options_,
                         UpdateDefaultObjectAclRequest("bkt", "entity", "role"))
                     .status();
   CheckStatus(actual);
 }
 
 TEST_P(CurlClientTest, PatchDefaultObjectAcl) {
-  OptionsSpan const span(client_->options());
+  auto context = rest_internal::RestContext{};
   auto actual =
       client_
-          ->PatchDefaultObjectAcl(PatchDefaultObjectAclRequest(
-              "bkt", "entity", ObjectAccessControl(), ObjectAccessControl()))
+          ->PatchDefaultObjectAcl(context, options_,
+                                  PatchDefaultObjectAclRequest(
+                                      "bkt", "entity", ObjectAccessControl(),
+                                      ObjectAccessControl()))
           .status();
   CheckStatus(actual);
 }
 
 TEST_P(CurlClientTest, GetServiceAccount) {
-  OptionsSpan const span(client_->options());
+  auto context = rest_internal::RestContext{};
   auto actual =
-      client_->GetServiceAccount(GetProjectServiceAccountRequest("project_id"))
+      client_
+          ->GetServiceAccount(context, options_,
+                              GetProjectServiceAccountRequest("project_id"))
           .status();
   CheckStatus(actual);
 }
 
 TEST_P(CurlClientTest, ListHmacKeyRequest) {
-  OptionsSpan const span(client_->options());
+  auto context = rest_internal::RestContext{};
   auto status =
-      client_->ListHmacKeys(ListHmacKeysRequest("project_id")).status();
+      client_
+          ->ListHmacKeys(context, options_, ListHmacKeysRequest("project_id"))
+          .status();
   CheckStatus(status);
 }
 
 TEST_P(CurlClientTest, CreateHmacKeyRequest) {
-  OptionsSpan const span(client_->options());
+  auto context = rest_internal::RestContext{};
   auto actual =
       client_
-          ->CreateHmacKey(CreateHmacKeyRequest("project_id", "service-account"))
+          ->CreateHmacKey(context, options_,
+                          CreateHmacKeyRequest("project_id", "service-account"))
           .status();
   CheckStatus(actual);
 }
 
 TEST_P(CurlClientTest, SignBlob) {
-  OptionsSpan const span(client_->options());
+  auto context = rest_internal::RestContext{};
   auto actual =
       client_
-          ->SignBlob(SignBlobRequest("test-service-account", "test-blob", {}))
+          ->SignBlob(context, options_,
+                     SignBlobRequest("test-service-account", "test-blob", {}))
           .status();
   CheckStatus(actual);
 }
 
 TEST_P(CurlClientTest, ListNotifications) {
-  OptionsSpan const span(client_->options());
-  auto actual =
-      client_->ListNotifications(ListNotificationsRequest("bkt")).status();
+  auto context = rest_internal::RestContext{};
+  auto actual = client_
+                    ->ListNotifications(context, options_,
+                                        ListNotificationsRequest("bkt"))
+                    .status();
   CheckStatus(actual);
 }
 
 TEST_P(CurlClientTest, CreateNotification) {
-  OptionsSpan const span(client_->options());
+  auto context = rest_internal::RestContext{};
   auto actual = client_
-                    ->CreateNotification(CreateNotificationRequest(
-                        "bkt", NotificationMetadata()))
+                    ->CreateNotification(context, options_,
+                                         CreateNotificationRequest(
+                                             "bkt", NotificationMetadata()))
                     .status();
   CheckStatus(actual);
 }
 
 TEST_P(CurlClientTest, GetNotification) {
-  OptionsSpan const span(client_->options());
+  auto context = rest_internal::RestContext{};
   auto actual =
-      client_->GetNotification(GetNotificationRequest("bkt", "notification_id"))
+      client_
+          ->GetNotification(context, options_,
+                            GetNotificationRequest("bkt", "notification_id"))
           .status();
   CheckStatus(actual);
 }
 
 TEST_P(CurlClientTest, DeleteNotification) {
-  OptionsSpan const span(client_->options());
+  auto context = rest_internal::RestContext{};
   auto actual = client_
                     ->DeleteNotification(
+                        context, options_,
                         DeleteNotificationRequest("bkt", "notification_id"))
                     .status();
   CheckStatus(actual);
