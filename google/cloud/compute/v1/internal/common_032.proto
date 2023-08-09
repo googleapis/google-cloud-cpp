@@ -108,7 +108,7 @@ message ExternalVpnGatewayInterface {
   // The numeric ID of this interface. The allowed input values for this id for
   // different redundancy types of external VPN gateway: -
   // SINGLE_IP_INTERNALLY_REDUNDANT - 0 - TWO_IPS_REDUNDANCY - 0, 1 -
-  // FOUR_IPS_REDUNDANCY - 0, 1, 2, 3 
+  // FOUR_IPS_REDUNDANCY - 0, 1, 2, 3
   optional uint32 id = 1;
 
   // IP address of the interface in the external VPN gateway. Only IPv4 is
@@ -216,7 +216,7 @@ message ExternalVpnGatewayList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.

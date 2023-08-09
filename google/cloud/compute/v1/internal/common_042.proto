@@ -114,8 +114,8 @@ message HTTP2HealthCheck {
 
   // Specifies the type of proxy header to append before sending data to the
   // backend, either NONE or PROXY_V1. The default is NONE.
-  // NONE: 
-  // PROXY_V1: 
+  // NONE:
+  // PROXY_V1:
   optional string proxy_header = 5;
 
   // The request path of the HTTP/2 health check request. The default value is
@@ -177,8 +177,8 @@ message HTTPHealthCheck {
 
   // Specifies the type of proxy header to append before sending data to the
   // backend, either NONE or PROXY_V1. The default is NONE.
-  // NONE: 
-  // PROXY_V1: 
+  // NONE:
+  // PROXY_V1:
   optional string proxy_header = 5;
 
   // The request path of the HTTP health check request. The default value is /.
@@ -239,8 +239,8 @@ message HTTPSHealthCheck {
 
   // Specifies the type of proxy header to append before sending data to the
   // backend, either NONE or PROXY_V1. The default is NONE.
-  // NONE: 
-  // PROXY_V1: 
+  // NONE:
+  // PROXY_V1:
   optional string proxy_header = 5;
 
   // The request path of the HTTPS health check request. The default value is /.
@@ -330,13 +330,13 @@ message HealthCheck {
   // Specifies the type of the healthCheck, either TCP, SSL, HTTP, HTTPS, HTTP2
   // or GRPC. Exactly one of the protocol-specific health check fields must be
   // specified, which must match type field.
-  // GRPC: 
-  // HTTP: 
-  // HTTP2: 
-  // HTTPS: 
-  // INVALID: 
-  // SSL: 
-  // TCP: 
+  // GRPC:
+  // HTTP:
+  // HTTP2:
+  // HTTPS:
+  // INVALID:
+  // SSL:
+  // TCP:
   optional string type = 18;
 
   // A so-far healthy instance will be marked unhealthy after this many
@@ -439,7 +439,7 @@ message HealthCheckList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -498,8 +498,8 @@ message SSLHealthCheck {
 
   // Specifies the type of proxy header to append before sending data to the
   // backend, either NONE or PROXY_V1. The default is NONE.
-  // NONE: 
-  // PROXY_V1: 
+  // NONE:
+  // PROXY_V1:
   optional string proxy_header = 4;
 
   // Instructs the health check prober to send this exact ASCII string, up to
@@ -555,8 +555,8 @@ message TCPHealthCheck {
 
   // Specifies the type of proxy header to append before sending data to the
   // backend, either NONE or PROXY_V1. The default is NONE.
-  // NONE: 
-  // PROXY_V1: 
+  // NONE:
+  // PROXY_V1:
   optional string proxy_header = 4;
 
   // Instructs the health check prober to send this exact ASCII string, up to

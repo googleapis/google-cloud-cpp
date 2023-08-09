@@ -82,10 +82,10 @@ message TargetVpnGateway {
 
   // [Output Only] The status of the VPN gateway, which can be one of the
   // following: CREATING, READY, FAILED, or DELETING.
-  // CREATING: 
-  // DELETING: 
-  // FAILED: 
-  // READY: 
+  // CREATING:
+  // DELETING:
+  // FAILED:
+  // READY:
   optional string status = 10;
 
   // [Output Only] A list of URLs to VpnTunnel resources. VpnTunnels are created
@@ -192,7 +192,7 @@ message TargetVpnGatewayAggregatedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -299,7 +299,7 @@ message TargetVpnGatewayList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -388,7 +388,7 @@ message TargetVpnGatewaysScopedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.

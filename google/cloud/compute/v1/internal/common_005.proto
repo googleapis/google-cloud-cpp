@@ -27,7 +27,8 @@ import "google/cloud/compute/v1/internal/common_109.proto";
 // [Output Only] Contains output only fields.
 message AllocationResourceStatus {
   // Allocation Properties of this reservation.
-  optional AllocationResourceStatusSpecificSKUAllocation specific_sku_allocation = 1;
+  optional AllocationResourceStatusSpecificSKUAllocation
+      specific_sku_allocation = 1;
 }
 
 // Contains Properties set for the reservation.
@@ -43,8 +44,8 @@ message AllocationSpecificSKUAllocationAllocatedInstancePropertiesReservedDisk {
   // Specifies the disk interface to use for attaching this disk, which is
   // either SCSI or NVME. The default is SCSI. For performance characteristics
   // of SCSI over NVMe, see Local SSD performance.
-  // NVME: 
-  // SCSI: 
+  // NVME:
+  // SCSI:
   optional string interface = 2;
 }
 
@@ -55,7 +56,9 @@ message AllocationSpecificSKUAllocationReservedInstanceProperties {
 
   // Specifies amount of local ssd to reserve with each instance. The type of
   // disk is local-ssd.
-  repeated AllocationSpecificSKUAllocationAllocatedInstancePropertiesReservedDisk local_ssds = 2;
+  repeated
+      AllocationSpecificSKUAllocationAllocatedInstancePropertiesReservedDisk
+          local_ssds = 2;
 
   // An opaque location hint used to place the allocation close to other
   // resources. This field is for use by internal tools that use the public API.
@@ -83,7 +86,8 @@ message AllocationSpecificSKUReservation {
   optional string in_use_count = 3;
 
   // The instance properties for the reservation.
-  optional AllocationSpecificSKUAllocationReservedInstanceProperties instance_properties = 4;
+  optional AllocationSpecificSKUAllocationReservedInstanceProperties
+      instance_properties = 4;
 
   // Specifies the instance template to create the reservation. If you use this
   // field, you must exclude the instanceProperties field. This field is
@@ -92,7 +96,7 @@ message AllocationSpecificSKUReservation {
   // https://www.googleapis.com/compute/v1/projects/project
   // /global/instanceTemplates/instanceTemplate -
   // projects/project/global/instanceTemplates/instanceTemplate -
-  // global/instanceTemplates/instanceTemplate 
+  // global/instanceTemplates/instanceTemplate
   optional string source_instance_template = 5;
 }
 
@@ -158,7 +162,7 @@ message Reservation {
   // [Output Only] The status of the reservation.
   // CREATING: Resources are being allocated for the reservation.
   // DELETING: Reservation is currently being deleted.
-  // INVALID: 
+  // INVALID:
   // READY: Reservation has allocated all its resources.
   // UPDATING: Reservation is currently being resized.
   optional string status = 14;

@@ -202,9 +202,9 @@ message Operation {
 
   // [Output Only] The status of the operation, which can be one of the
   // following: `PENDING`, `RUNNING`, or `DONE`.
-  // DONE: 
-  // PENDING: 
-  // RUNNING: 
+  // DONE:
+  // PENDING:
+  // RUNNING:
   optional string status = 18;
 
   // [Output Only] An optional textual description of the current status of the
@@ -298,7 +298,7 @@ message Operation {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.

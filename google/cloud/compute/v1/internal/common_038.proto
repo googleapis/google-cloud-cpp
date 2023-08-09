@@ -32,8 +32,8 @@ message FirewallPolicyRule {
   optional string description = 2;
 
   // The direction in which this rule applies.
-  // EGRESS: 
-  // INGRESS: 
+  // EGRESS:
+  // INGRESS:
   optional string direction = 3;
 
   // Denotes whether the firewall policy rule is disabled. When set to true, the
@@ -167,7 +167,7 @@ message FirewallPolicyRuleSecureTag {
 
   // [Output Only] State of the secure tag, either `EFFECTIVE` or `INEFFECTIVE`.
   // A secure tag is `INEFFECTIVE` when it is deleted or its network is deleted.
-  // EFFECTIVE: 
-  // INEFFECTIVE: 
+  // EFFECTIVE:
+  // INEFFECTIVE:
   optional string state = 2;
 }

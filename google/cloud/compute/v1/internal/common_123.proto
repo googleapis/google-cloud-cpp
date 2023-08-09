@@ -43,7 +43,7 @@ message TargetInstance {
   // For example, the following are all valid URLs: -
   // https://www.googleapis.com/compute/v1/projects/project/zones/zone
   // /instances/instance - projects/project/zones/zone/instances/instance -
-  // zones/zone/instances/instance 
+  // zones/zone/instances/instance
   optional string instance = 4;
 
   // [Output Only] The type of the resource. Always compute#targetInstance for
@@ -176,7 +176,7 @@ message TargetInstanceAggregatedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -282,7 +282,7 @@ message TargetInstanceList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -371,7 +371,7 @@ message TargetInstancesScopedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.

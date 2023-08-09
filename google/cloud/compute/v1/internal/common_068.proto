@@ -24,7 +24,7 @@ package google.cloud.cpp.compute.v1;
 // Represents a License resource. A License represents billing and aggregate
 // usage data for public and marketplace images. *Caution* This resource is
 // intended for use only by third-party partners who are creating Cloud
-// Marketplace images. 
+// Marketplace images.
 message License {
   // [Output Only] Deprecated. This field no longer reflects whether a license
   // charges a usage fee.
@@ -163,7 +163,7 @@ message LicensesListResponse {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.

@@ -42,17 +42,17 @@ message InterconnectLocation {
 
   // [Output Only] Continent for this location, which can take one of the
   // following values: - AFRICA - ASIA_PAC - EUROPE - NORTH_AMERICA -
-  // SOUTH_AMERICA 
-  // AFRICA: 
-  // ASIA_PAC: 
-  // C_AFRICA: 
-  // C_ASIA_PAC: 
-  // C_EUROPE: 
-  // C_NORTH_AMERICA: 
-  // C_SOUTH_AMERICA: 
-  // EUROPE: 
-  // NORTH_AMERICA: 
-  // SOUTH_AMERICA: 
+  // SOUTH_AMERICA
+  // AFRICA:
+  // ASIA_PAC:
+  // C_AFRICA:
+  // C_ASIA_PAC:
+  // C_EUROPE:
+  // C_NORTH_AMERICA:
+  // C_SOUTH_AMERICA:
+  // EUROPE:
+  // NORTH_AMERICA:
+  // SOUTH_AMERICA:
   optional string continent = 4;
 
   // [Output Only] Creation timestamp in RFC3339 text format.
@@ -94,7 +94,7 @@ message InterconnectLocation {
   // [Output Only] The status of this InterconnectLocation, which can take one
   // of the following values: - CLOSED: The InterconnectLocation is closed and
   // is unavailable for provisioning new Interconnects. - AVAILABLE: The
-  // InterconnectLocation is available for provisioning new Interconnects. 
+  // InterconnectLocation is available for provisioning new Interconnects.
   // AVAILABLE: The InterconnectLocation is available for provisioning new
   // Interconnects.
   // CLOSED: The InterconnectLocation is closed for provisioning new
@@ -201,7 +201,7 @@ message InterconnectLocationList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.

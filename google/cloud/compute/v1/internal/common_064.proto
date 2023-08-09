@@ -40,7 +40,7 @@ message InterconnectAttachment {
   // values: - BPS_50M: 50 Mbit/s - BPS_100M: 100 Mbit/s - BPS_200M: 200 Mbit/s
   // - BPS_300M: 300 Mbit/s - BPS_400M: 400 Mbit/s - BPS_500M: 500 Mbit/s -
   // BPS_1G: 1 Gbit/s - BPS_2G: 2 Gbit/s - BPS_5G: 5 Gbit/s - BPS_10G: 10 Gbit/s
-  // - BPS_20G: 20 Gbit/s - BPS_50G: 50 Gbit/s 
+  // - BPS_20G: 20 Gbit/s - BPS_50G: 50 Gbit/s
   // BPS_100M: 100 Mbit/s
   // BPS_10G: 10 Gbit/s
   // BPS_1G: 1 Gbit/s
@@ -80,7 +80,8 @@ message InterconnectAttachment {
 
   // [Output Only] Constraints for this attachment, if any. The attachment does
   // not work if these constraints are not met.
-  optional InterconnectAttachmentConfigurationConstraints configuration_constraints = 36;
+  optional InterconnectAttachmentConfigurationConstraints
+      configuration_constraints = 36;
 
   // [Output Only] Creation timestamp in RFC3339 text format.
   optional string creation_timestamp = 8;
@@ -112,9 +113,9 @@ message InterconnectAttachment {
   // to the Partner via the pairing key, so that the provisioned circuit will
   // lie in the specified domain. If not specified, the value will default to
   // AVAILABILITY_DOMAIN_ANY.
-  // AVAILABILITY_DOMAIN_1: 
-  // AVAILABILITY_DOMAIN_2: 
-  // AVAILABILITY_DOMAIN_ANY: 
+  // AVAILABILITY_DOMAIN_1:
+  // AVAILABILITY_DOMAIN_2:
+  // AVAILABILITY_DOMAIN_ANY:
   optional string edge_availability_domain = 14;
 
   // Indicates the user-supplied encryption option of this VLAN attachment
@@ -126,7 +127,7 @@ message InterconnectAttachment {
   // traffic that is encrypted by an IPsec device, such as an HA VPN gateway or
   // third-party IPsec VPN. VMs cannot directly send traffic to, or receive
   // traffic from, such a VLAN attachment. To use *HA VPN over Cloud
-  // Interconnect*, the VLAN attachment must be created with this option. 
+  // Interconnect*, the VLAN attachment must be created with this option.
   // IPSEC: The interconnect attachment will carry only encrypted traffic that
   // is encrypted by an IPsec device such as HA VPN gateway; VMs cannot directly
   // send traffic to or receive traffic from such an interconnect attachment. To
@@ -201,7 +202,7 @@ message InterconnectAttachment {
   // attachment is functional, which can take one of the following values: -
   // OS_ACTIVE: The attachment has been turned up and is ready to use. -
   // OS_UNPROVISIONED: The attachment is not ready to use yet, because turnup is
-  // not complete. 
+  // not complete.
   // OS_ACTIVE: Indicates that attachment has been turned up and is ready to
   // use.
   // OS_UNPROVISIONED: Indicates that attachment is not ready to use yet,
@@ -279,7 +280,7 @@ message InterconnectAttachment {
   // attachment that is waiting for a customer to activate it. - DEFUNCT: The
   // attachment was deleted externally and is no longer functional. This could
   // be because the associated Interconnect was removed, or because the other
-  // side of a Partner attachment was deleted. 
+  // side of a Partner attachment was deleted.
   // ACTIVE: Indicates that attachment has been turned up and is ready to use.
   // DEFUNCT: The attachment was deleted externally and is no longer functional.
   // This could be because the associated Interconnect was wiped out, or because
@@ -291,7 +292,7 @@ message InterconnectAttachment {
   // for the customer to activate.
   // PENDING_PARTNER: A newly created PARTNER attachment that has not yet been
   // configured on the Partner side.
-  // STATE_UNSPECIFIED: 
+  // STATE_UNSPECIFIED:
   // UNPROVISIONED: Indicates that attachment is not ready to use yet, because
   // turnup is not complete.
   optional string state = 33;
@@ -309,7 +310,7 @@ message InterconnectAttachment {
   // following values: - DEDICATED: an attachment to a Dedicated Interconnect. -
   // PARTNER: an attachment to a Partner Interconnect, created by the customer.
   // - PARTNER_PROVIDER: an attachment to a Partner Interconnect, created by the
-  // partner. 
+  // partner.
   // DEDICATED: Attachment to a dedicated interconnect.
   // PARTNER: Attachment to a partner interconnect, created by the customer.
   // PARTNER_PROVIDER: Attachment to a partner interconnect, created by the
@@ -420,7 +421,7 @@ message InterconnectAttachmentAggregatedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -528,7 +529,7 @@ message InterconnectAttachmentList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -644,7 +645,7 @@ message InterconnectAttachmentsScopedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.

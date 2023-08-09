@@ -49,9 +49,9 @@ message DeprecationStatus {
   // DEPRECATED resource will return successfully, but with a warning indicating
   // the deprecated resource and recommending its replacement. Operations which
   // use OBSOLETE or DELETED resources will be rejected and result in an error.
-  // ACTIVE: 
-  // DELETED: 
-  // DEPRECATED: 
-  // OBSOLETE: 
+  // ACTIVE:
+  // DELETED:
+  // DEPRECATED:
+  // OBSOLETE:
   optional string state = 5;
 }

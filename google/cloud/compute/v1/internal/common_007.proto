@@ -182,7 +182,7 @@ message AutoscalerStatusDetails {
   // SCHEDULED_INSTANCES_LESS_THAN_AUTOSCALER_MIN: For some scaling schedules
   // minRequiredReplicas is less than minNumReplicas. Autoscaler always
   // recommends at least minNumReplicas instances.
-  // UNKNOWN: 
+  // UNKNOWN:
   // UNSUPPORTED_MAX_RATE_LOAD_BALANCING_CONFIGURATION: Autoscaling does not
   // work with an HTTP/S load balancer that has been configured for maxRate.
   // ZONE_RESOURCE_STOCKOUT: For zonal autoscalers: there is a resource stockout
@@ -210,10 +210,12 @@ message AutoscalingPolicy {
   optional AutoscalingPolicyCpuUtilization cpu_utilization = 2;
 
   // Configuration parameters of autoscaling based on a custom metric.
-  repeated AutoscalingPolicyCustomMetricUtilization custom_metric_utilizations = 3;
+  repeated AutoscalingPolicyCustomMetricUtilization custom_metric_utilizations =
+      3;
 
   // Configuration parameters of autoscaling based on load balancer.
-  optional AutoscalingPolicyLoadBalancingUtilization load_balancing_utilization = 4;
+  optional AutoscalingPolicyLoadBalancingUtilization
+      load_balancing_utilization = 4;
 
   // The maximum number of instances that the autoscaler can scale out to. This
   // is required when creating or updating an autoscaler. The maximum number of

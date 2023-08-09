@@ -87,7 +87,7 @@ message NodeGroup {
   // information, see Maintenance policies.
   // DEFAULT: Allow the node and corresponding instances to retain default
   // maintenance behavior.
-  // MAINTENANCE_POLICY_UNSPECIFIED: 
+  // MAINTENANCE_POLICY_UNSPECIFIED:
   // MIGRATE_WITHIN_NODE_GROUP: When maintenance must be done on a node, the
   // instances on that node will be moved to other nodes in the group. Instances
   // with onHostMaintenance = MIGRATE will live migrate to their destinations
@@ -121,10 +121,10 @@ message NodeGroup {
   // [Output Only] The total number of nodes in the node group.
   optional int32 size = 14;
 
-  // CREATING: 
-  // DELETING: 
-  // INVALID: 
-  // READY: 
+  // CREATING:
+  // DELETING:
+  // INVALID:
+  // READY:
   optional string status = 15;
 
   // [Output Only] The name of the zone where the node group resides, such as
@@ -230,7 +230,7 @@ message NodeGroupAggregatedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -251,7 +251,7 @@ message NodeGroupAutoscalingPolicy {
 
   // The autoscaling mode. Set to one of: ON, OFF, or ONLY_SCALE_OUT. For more
   // information, see Autoscaler modes.
-  // MODE_UNSPECIFIED: 
+  // MODE_UNSPECIFIED:
   // OFF: Autoscaling is disabled.
   // ON: Autocaling is fully enabled.
   // ONLY_SCALE_OUT: Autoscaling will only scale out and will not remove nodes.
@@ -354,7 +354,7 @@ message NodeGroupList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -386,9 +386,9 @@ message NodeGroupNode {
   optional InstanceConsumptionInfo consumed_resources = 2;
 
   // CPU overcommit.
-  // CPU_OVERCOMMIT_TYPE_UNSPECIFIED: 
-  // ENABLED: 
-  // NONE: 
+  // CPU_OVERCOMMIT_TYPE_UNSPECIFIED:
+  // ENABLED:
+  // NONE:
   optional string cpu_overcommit_type = 3;
 
   // Local disk configurations.
@@ -415,11 +415,11 @@ message NodeGroupNode {
   // Server ID associated with this node.
   optional string server_id = 11;
 
-  // CREATING: 
-  // DELETING: 
-  // INVALID: 
-  // READY: 
-  // REPAIRING: 
+  // CREATING:
+  // DELETING:
+  // INVALID:
+  // READY:
+  // REPAIRING:
   optional string status = 12;
 
   // Total amount of available resources on the node.
@@ -532,7 +532,7 @@ message NodeGroupsListNodes {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -621,7 +621,7 @@ message NodeGroupsScopedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.

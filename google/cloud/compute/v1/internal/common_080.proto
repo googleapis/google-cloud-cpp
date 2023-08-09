@@ -31,9 +31,9 @@ message NodeTemplate {
   repeated AcceleratorConfig accelerators = 1;
 
   // CPU overcommit.
-  // CPU_OVERCOMMIT_TYPE_UNSPECIFIED: 
-  // ENABLED: 
-  // NONE: 
+  // CPU_OVERCOMMIT_TYPE_UNSPECIFIED:
+  // ENABLED:
+  // NONE:
   optional string cpu_overcommit_type = 2;
 
   // [Output Only] Creation timestamp in RFC3339 text format.
@@ -195,7 +195,7 @@ message NodeTemplateAggregatedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -302,7 +302,7 @@ message NodeTemplateList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -399,7 +399,7 @@ message NodeTemplatesScopedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.

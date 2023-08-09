@@ -182,7 +182,7 @@ message VpnGatewayAggregatedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -288,7 +288,7 @@ message VpnGatewayList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -322,7 +322,7 @@ message VpnGatewayStatusHighAvailabilityRequirementState {
   // Indicates the reason why the VPN connection does not meet the high
   // availability redundancy criteria/requirement. Valid values is
   // INCOMPLETE_TUNNELS_COVERAGE.
-  // INCOMPLETE_TUNNELS_COVERAGE: 
+  // INCOMPLETE_TUNNELS_COVERAGE:
   optional string unsatisfied_reason = 2;
 }
 
@@ -468,7 +468,7 @@ message VpnGatewaysScopedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.

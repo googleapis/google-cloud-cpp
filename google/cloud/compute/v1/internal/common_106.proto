@@ -27,7 +27,8 @@ import "google/cloud/compute/v1/internal/common_031.proto";
 // backend services that use load balancers can reference a security policy. For
 // more information, see Google Cloud Armor security policy overview.
 message SecurityPolicy {
-  optional SecurityPolicyAdaptiveProtectionConfig adaptive_protection_config = 1;
+  optional SecurityPolicyAdaptiveProtectionConfig adaptive_protection_config =
+      1;
 
   optional SecurityPolicyAdvancedOptionsConfig advanced_options_config = 2;
 
@@ -112,16 +113,17 @@ message SecurityPolicy {
   // services, target pools, target instances, and instances with external IPs.
   // They filter requests before the request is served from the application.
   // This field can be set only at resource creation time.
-  // CLOUD_ARMOR: 
-  // CLOUD_ARMOR_EDGE: 
-  // CLOUD_ARMOR_NETWORK: 
+  // CLOUD_ARMOR:
+  // CLOUD_ARMOR_EDGE:
+  // CLOUD_ARMOR_NETWORK:
   optional string type = 14;
 }
 
 // Configuration options for Cloud Armor Adaptive Protection (CAAP).
 message SecurityPolicyAdaptiveProtectionConfig {
   // If set to true, enables Cloud Armor Machine Learning.
-  optional SecurityPolicyAdaptiveProtectionConfigLayer7DdosDefenseConfig layer7_ddos_defense_config = 1;
+  optional SecurityPolicyAdaptiveProtectionConfigLayer7DdosDefenseConfig
+      layer7_ddos_defense_config = 1;
 }
 
 // Configuration options for L7 DDoS detection. This field is only supported in
@@ -134,22 +136,23 @@ message SecurityPolicyAdaptiveProtectionConfigLayer7DdosDefenseConfig {
   // Rule visibility can be one of the following: STANDARD - opaque rules.
   // (default) PREMIUM - transparent rules. This field is only supported in
   // Global Security Policies of type CLOUD_ARMOR.
-  // PREMIUM: 
-  // STANDARD: 
+  // PREMIUM:
+  // STANDARD:
   optional string rule_visibility = 2;
 }
 
 message SecurityPolicyAdvancedOptionsConfig {
   // Custom configuration to apply the JSON parsing. Only applicable when
   // json_parsing is set to STANDARD.
-  optional SecurityPolicyAdvancedOptionsConfigJsonCustomConfig json_custom_config = 1;
+  optional SecurityPolicyAdvancedOptionsConfigJsonCustomConfig
+      json_custom_config = 1;
 
-  // DISABLED: 
-  // STANDARD: 
+  // DISABLED:
+  // STANDARD:
   optional string json_parsing = 2;
 
-  // NORMAL: 
-  // VERBOSE: 
+  // NORMAL:
+  // VERBOSE:
   optional string log_level = 3;
 }
 
@@ -163,8 +166,8 @@ message SecurityPolicyAdvancedOptionsConfigJsonCustomConfig {
 }
 
 message SecurityPolicyDdosProtectionConfig {
-  // ADVANCED: 
-  // STANDARD: 
+  // ADVANCED:
+  // STANDARD:
   optional string ddos_protection = 1;
 }
 
@@ -260,7 +263,7 @@ message SecurityPolicyList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -296,7 +299,7 @@ message SecurityPolicyRule {
   // configured via redirectOptions. This action is only supported in Global
   // Security Policies of type CLOUD_ARMOR. - throttle: limit client traffic to
   // the configured threshold. Configure parameters for this action in
-  // rateLimitOptions. Requires rate_limit_options to be set for this. 
+  // rateLimitOptions. Requires rate_limit_options to be set for this.
   optional string action = 1;
 
   // An optional description of this resource. Provide this property when you
@@ -318,7 +321,8 @@ message SecurityPolicyRule {
   // Preconfigured WAF configuration to be applied for the rule. If the rule
   // does not evaluate preconfigured WAF rules, i.e., if
   // evaluatePreconfiguredWaf() is not used, this field will have no effect.
-  optional SecurityPolicyRulePreconfiguredWafConfig preconfigured_waf_config = 6;
+  optional SecurityPolicyRulePreconfiguredWafConfig preconfigured_waf_config =
+      6;
 
   // If set to true, the specified action is not enforced.
   optional bool preview = 7;
@@ -341,7 +345,8 @@ message SecurityPolicyRule {
 
 message SecurityPolicyRuleHttpHeaderAction {
   // The list of request headers to add or overwrite if they're already present.
-  repeated SecurityPolicyRuleHttpHeaderActionHttpHeaderOption request_headers_to_adds = 1;
+  repeated SecurityPolicyRuleHttpHeaderActionHttpHeaderOption
+      request_headers_to_adds = 1;
 }
 
 message SecurityPolicyRuleHttpHeaderActionHttpHeaderOption {
@@ -391,21 +396,25 @@ message SecurityPolicyRulePreconfiguredWafConfig {
 message SecurityPolicyRulePreconfiguredWafConfigExclusion {
   // A list of request cookie names whose value will be excluded from inspection
   // during preconfigured WAF evaluation.
-  repeated SecurityPolicyRulePreconfiguredWafConfigExclusionFieldParams request_cookies_to_exclude = 1;
+  repeated SecurityPolicyRulePreconfiguredWafConfigExclusionFieldParams
+      request_cookies_to_exclude = 1;
 
   // A list of request header names whose value will be excluded from inspection
   // during preconfigured WAF evaluation.
-  repeated SecurityPolicyRulePreconfiguredWafConfigExclusionFieldParams request_headers_to_exclude = 2;
+  repeated SecurityPolicyRulePreconfiguredWafConfigExclusionFieldParams
+      request_headers_to_exclude = 2;
 
   // A list of request query parameter names whose value will be excluded from
   // inspection during preconfigured WAF evaluation. Note that the parameter can
   // be in the query string or in the POST body.
-  repeated SecurityPolicyRulePreconfiguredWafConfigExclusionFieldParams request_query_params_to_exclude = 3;
+  repeated SecurityPolicyRulePreconfiguredWafConfigExclusionFieldParams
+      request_query_params_to_exclude = 3;
 
   // A list of request URIs from the request line to be excluded from inspection
   // during preconfigured WAF evaluation. When specifying this field, the query
   // or fragment part should be excluded.
-  repeated SecurityPolicyRulePreconfiguredWafConfigExclusionFieldParams request_uris_to_exclude = 4;
+  repeated SecurityPolicyRulePreconfiguredWafConfigExclusionFieldParams
+      request_uris_to_exclude = 4;
 
   // A list of target rule IDs under the WAF rule set to apply the preconfigured
   // WAF exclusion. If omitted, it refers to all the rule IDs under the WAF rule
@@ -467,15 +476,15 @@ message SecurityPolicyRuleRateLimitOptions {
   // bytes. - SNI: Server name indication in the TLS session of the HTTPS
   // request. The key value is truncated to the first 128 bytes. The key type
   // defaults to ALL on a HTTP session. - REGION_CODE: The country/region from
-  // which the request originates. 
-  // ALL: 
-  // HTTP_COOKIE: 
-  // HTTP_HEADER: 
-  // HTTP_PATH: 
-  // IP: 
-  // REGION_CODE: 
-  // SNI: 
-  // XFF_IP: 
+  // which the request originates.
+  // ALL:
+  // HTTP_COOKIE:
+  // HTTP_HEADER:
+  // HTTP_PATH:
+  // IP:
+  // REGION_CODE:
+  // SNI:
+  // XFF_IP:
   optional string enforce_on_key = 4;
 
   // If specified, any combination of values of
@@ -483,7 +492,8 @@ message SecurityPolicyRuleRateLimitOptions {
   // ratelimit threshold/action is enforced. You can specify up to 3
   // enforce_on_key_configs. If enforce_on_key_configs is specified,
   // enforce_on_key must not be specified.
-  repeated SecurityPolicyRuleRateLimitOptionsEnforceOnKeyConfig enforce_on_key_configs = 9;
+  repeated SecurityPolicyRuleRateLimitOptionsEnforceOnKeyConfig
+      enforce_on_key_configs = 9;
 
   // Rate limit key name applicable only for the following key types:
   // HTTP_HEADER -- Name of the HTTP header whose value is taken as the key
@@ -534,15 +544,15 @@ message SecurityPolicyRuleRateLimitOptionsEnforceOnKeyConfig {
   // bytes. - SNI: Server name indication in the TLS session of the HTTPS
   // request. The key value is truncated to the first 128 bytes. The key type
   // defaults to ALL on a HTTP session. - REGION_CODE: The country/region from
-  // which the request originates. 
-  // ALL: 
-  // HTTP_COOKIE: 
-  // HTTP_HEADER: 
-  // HTTP_PATH: 
-  // IP: 
-  // REGION_CODE: 
-  // SNI: 
-  // XFF_IP: 
+  // which the request originates.
+  // ALL:
+  // HTTP_COOKIE:
+  // HTTP_HEADER:
+  // HTTP_PATH:
+  // IP:
+  // REGION_CODE:
+  // SNI:
+  // XFF_IP:
   optional string enforce_on_key_type = 2;
 }
 
@@ -560,7 +570,7 @@ message SecurityPolicyRuleRedirectOptions {
   optional string target = 1;
 
   // Type of the redirect action.
-  // EXTERNAL_302: 
-  // GOOGLE_RECAPTCHA: 
+  // EXTERNAL_302:
+  // GOOGLE_RECAPTCHA:
   optional string type = 2;
 }

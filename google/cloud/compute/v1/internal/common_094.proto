@@ -45,6 +45,6 @@ message RegionDisksStartAsyncReplicationRequest {
   // https://www.googleapis.com/compute/v1/projects/project/regions/region
   // /disks/disk - projects/project/zones/zone/disks/disk -
   // projects/project/regions/region/disks/disk - zones/zone/disks/disk -
-  // regions/region/disks/disk 
+  // regions/region/disks/disk
   optional string async_secondary_disk = 1;
 }

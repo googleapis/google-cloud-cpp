@@ -285,7 +285,7 @@ message SubnetworkAggregatedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -392,7 +392,7 @@ message SubnetworkList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -409,12 +409,12 @@ message SubnetworkLogConfig {
   // Toggles the aggregation interval for collecting flow logs. Increasing the
   // interval time will reduce the amount of generated flow logs for long
   // lasting connections. Default is an interval of 5 seconds per connection.
-  // INTERVAL_10_MIN: 
-  // INTERVAL_15_MIN: 
-  // INTERVAL_1_MIN: 
-  // INTERVAL_30_SEC: 
-  // INTERVAL_5_MIN: 
-  // INTERVAL_5_SEC: 
+  // INTERVAL_10_MIN:
+  // INTERVAL_15_MIN:
+  // INTERVAL_1_MIN:
+  // INTERVAL_30_SEC:
+  // INTERVAL_5_MIN:
+  // INTERVAL_5_SEC:
   optional string aggregation_interval = 1;
 
   // Whether to enable flow logging for this subnetwork. If this field is not
@@ -440,9 +440,9 @@ message SubnetworkLogConfig {
   // Can only be specified if VPC flow logs for this subnetwork is enabled.
   // Configures whether all, none or a subset of metadata fields should be added
   // to the reported VPC flow logs. Default is EXCLUDE_ALL_METADATA.
-  // CUSTOM_METADATA: 
-  // EXCLUDE_ALL_METADATA: 
-  // INCLUDE_ALL_METADATA: 
+  // CUSTOM_METADATA:
+  // EXCLUDE_ALL_METADATA:
+  // INCLUDE_ALL_METADATA:
   optional string metadata = 5;
 
   // Can only be specified if VPC flow logs for this subnetwork is enabled and
@@ -551,7 +551,7 @@ message SubnetworksScopedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -751,7 +751,7 @@ message UsableSubnetworksAggregatedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.

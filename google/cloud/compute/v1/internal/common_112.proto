@@ -93,7 +93,7 @@ message SslCertificate {
   // certificate and private_key are used.
   // MANAGED: Google-managed SSLCertificate.
   // SELF_MANAGED: Certificate uploaded by user.
-  // TYPE_UNSPECIFIED: 
+  // TYPE_UNSPECIFIED:
   optional string type = 14;
 }
 
@@ -192,7 +192,7 @@ message SslCertificateList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -218,7 +218,7 @@ message SslCertificateManagedSslCertificate {
   // [Output only] Status of the managed certificate resource.
   // ACTIVE: The certificate management is working, and a certificate has been
   // provisioned.
-  // MANAGED_CERTIFICATE_STATUS_UNSPECIFIED: 
+  // MANAGED_CERTIFICATE_STATUS_UNSPECIFIED:
   // PROVISIONING: The certificate management is working. GCP will attempt to
   // provision the first certificate.
   // PROVISIONING_FAILED: Certificate provisioning failed due to an issue with

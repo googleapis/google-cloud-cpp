@@ -40,16 +40,16 @@ message BfdPacket {
   // in session state. This allows remote systems to determine the reason that
   // the previous session failed, for example. These diagnostic codes are
   // specified in section 4.1 of RFC5880
-  // ADMINISTRATIVELY_DOWN: 
-  // CONCATENATED_PATH_DOWN: 
-  // CONTROL_DETECTION_TIME_EXPIRED: 
-  // DIAGNOSTIC_UNSPECIFIED: 
-  // ECHO_FUNCTION_FAILED: 
-  // FORWARDING_PLANE_RESET: 
-  // NEIGHBOR_SIGNALED_SESSION_DOWN: 
-  // NO_DIAGNOSTIC: 
-  // PATH_DOWN: 
-  // REVERSE_CONCATENATED_PATH_DOWN: 
+  // ADMINISTRATIVELY_DOWN:
+  // CONCATENATED_PATH_DOWN:
+  // CONTROL_DETECTION_TIME_EXPIRED:
+  // DIAGNOSTIC_UNSPECIFIED:
+  // ECHO_FUNCTION_FAILED:
+  // FORWARDING_PLANE_RESET:
+  // NEIGHBOR_SIGNALED_SESSION_DOWN:
+  // NO_DIAGNOSTIC:
+  // PATH_DOWN:
+  // REVERSE_CONCATENATED_PATH_DOWN:
   optional string diagnostic = 4;
 
   // The Final bit of the BFD packet. This is specified in section 4.1 of
@@ -89,11 +89,11 @@ message BfdPacket {
 
   // The current BFD session state as seen by the transmitting system. These
   // states are specified in section 4.1 of RFC5880
-  // ADMIN_DOWN: 
-  // DOWN: 
-  // INIT: 
-  // STATE_UNSPECIFIED: 
-  // UP: 
+  // ADMIN_DOWN:
+  // DOWN:
+  // INIT:
+  // STATE_UNSPECIFIED:
+  // UP:
   optional string state = 14;
 
   // The version number of the BFD protocol, as specified in section 4.1 of
@@ -112,9 +112,9 @@ message BfdStatus {
   // PASSIVE, the Cloud Router will wait for the peer router to initiate the BFD
   // session for this BGP peer. If set to DISABLED, BFD is disabled for this BGP
   // peer.
-  // ACTIVE: 
-  // DISABLED: 
-  // PASSIVE: 
+  // ACTIVE:
+  // DISABLED:
+  // PASSIVE:
   optional string bfd_session_initialization_mode = 1;
 
   // Unix timestamp of the most recent config update.
@@ -130,25 +130,25 @@ message BfdStatus {
   // in session state. This allows remote systems to determine the reason that
   // the previous session failed, for example. These diagnostic codes are
   // specified in section 4.1 of RFC5880
-  // ADMINISTRATIVELY_DOWN: 
-  // CONCATENATED_PATH_DOWN: 
-  // CONTROL_DETECTION_TIME_EXPIRED: 
-  // DIAGNOSTIC_UNSPECIFIED: 
-  // ECHO_FUNCTION_FAILED: 
-  // FORWARDING_PLANE_RESET: 
-  // NEIGHBOR_SIGNALED_SESSION_DOWN: 
-  // NO_DIAGNOSTIC: 
-  // PATH_DOWN: 
-  // REVERSE_CONCATENATED_PATH_DOWN: 
+  // ADMINISTRATIVELY_DOWN:
+  // CONCATENATED_PATH_DOWN:
+  // CONTROL_DETECTION_TIME_EXPIRED:
+  // DIAGNOSTIC_UNSPECIFIED:
+  // ECHO_FUNCTION_FAILED:
+  // FORWARDING_PLANE_RESET:
+  // NEIGHBOR_SIGNALED_SESSION_DOWN:
+  // NO_DIAGNOSTIC:
+  // PATH_DOWN:
+  // REVERSE_CONCATENATED_PATH_DOWN:
   optional string local_diagnostic = 5;
 
   // The current BFD session state as seen by the transmitting system. These
   // states are specified in section 4.1 of RFC5880
-  // ADMIN_DOWN: 
-  // DOWN: 
-  // INIT: 
-  // STATE_UNSPECIFIED: 
-  // UP: 
+  // ADMIN_DOWN:
+  // DOWN:
+  // INIT:
+  // STATE_UNSPECIFIED:
+  // UP:
   optional string local_state = 6;
 
   // Negotiated transmit interval for control packets.
@@ -187,10 +187,10 @@ message PacketIntervals {
   optional string avg_ms = 1;
 
   // From how long ago in the past these intervals were observed.
-  // DURATION_UNSPECIFIED: 
-  // HOUR: 
+  // DURATION_UNSPECIFIED:
+  // HOUR:
   // MAX: From BfdSession object creation time.
-  // MINUTE: 
+  // MINUTE:
   optional string duration = 2;
 
   // Maximum observed inter-packet interval in milliseconds.
@@ -207,7 +207,7 @@ message PacketIntervals {
   // sending and receiving the same packet.
   // RECEIVE: Intervals between received packets.
   // TRANSMIT: Intervals between transmitted packets.
-  // TYPE_UNSPECIFIED: 
+  // TYPE_UNSPECIFIED:
   optional string type = 6;
 }
 
@@ -379,7 +379,7 @@ message RouterAggregatedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -393,8 +393,8 @@ message RouterAggregatedList {
 message RouterBgp {
   // User-specified flag to indicate which mode to use for advertisement. The
   // options are DEFAULT or CUSTOM.
-  // CUSTOM: 
-  // DEFAULT: 
+  // CUSTOM:
+  // DEFAULT:
   optional string advertise_mode = 1;
 
   // User-specified list of prefix groups to advertise in custom mode. This
@@ -428,8 +428,8 @@ message RouterBgp {
 
 message RouterBgpPeer {
   // User-specified flag to indicate which mode to use for advertisement.
-  // CUSTOM: 
-  // DEFAULT: 
+  // CUSTOM:
+  // DEFAULT:
   optional string advertise_mode = 1;
 
   // User-specified list of prefix groups to advertise in custom mode, which
@@ -470,8 +470,8 @@ message RouterBgpPeer {
   // with the peer is terminated and all associated routing information is
   // removed. If set to TRUE, the peer connection can be established with
   // routing information. The default is TRUE.
-  // FALSE: 
-  // TRUE: 
+  // FALSE:
+  // TRUE:
   optional string enable = 6;
 
   // Enable IPv6 traffic over BGP Peer. If not specified, it is disabled by
@@ -494,7 +494,7 @@ message RouterBgpPeer {
   // by Cloud Interconnect, specifically by an InterconnectAttachment of type
   // PARTNER. Google automatically creates, updates, and deletes this type of
   // BGP peer when the PARTNER InterconnectAttachment is created, updated, or
-  // deleted. 
+  // deleted.
   // MANAGED_BY_ATTACHMENT: The BGP peer is automatically created for PARTNER
   // type InterconnectAttachment; Google will automatically create/delete this
   // BGP peer when the PARTNER InterconnectAttachment is created/deleted, and
@@ -562,9 +562,9 @@ message RouterBgpPeerBfd {
   // PASSIVE, the Cloud Router will wait for the peer router to initiate the BFD
   // session for this BGP peer. If set to DISABLED, BFD is disabled for this BGP
   // peer. The default is DISABLED.
-  // ACTIVE: 
-  // DISABLED: 
-  // PASSIVE: 
+  // ACTIVE:
+  // DISABLED:
+  // PASSIVE:
   optional string session_initialization_mode = 4;
 }
 
@@ -599,7 +599,7 @@ message RouterInterface {
   // Cloud Interconnect, specifically, by an InterconnectAttachment of type
   // PARTNER. Google automatically creates, updates, and deletes this type of
   // interface when the PARTNER InterconnectAttachment is created, updated, or
-  // deleted. 
+  // deleted.
   // MANAGED_BY_ATTACHMENT: The interface is automatically created for PARTNER
   // type InterconnectAttachment, Google will automatically create/update/delete
   // this interface when the PARTNER InterconnectAttachment is
@@ -737,7 +737,7 @@ message RouterList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -787,7 +787,7 @@ message RouterNat {
   // NAT config. - enableEndpointIndependentMapping cannot be set to true. - If
   // minPorts is set, minPortsPerVm must be set to a power of two greater than
   // or equal to 32. If minPortsPerVm is not set, a minimum of 32 ports will be
-  // allocated to a VM from this NAT config. 
+  // allocated to a VM from this NAT config.
   optional bool enable_dynamic_port_allocation = 2;
 
   optional bool enable_endpoint_independent_mapping = 3;
@@ -826,7 +826,7 @@ message RouterNat {
   // When there are not enough specified Nat IPs, the Nat service fails for new
   // VMs. - AUTO_ONLY: Nat IPs are allocated by Google Cloud Platform; customers
   // can't specify any Nat IPs. When choosing AUTO_ONLY, then nat_ip should be
-  // empty. 
+  // empty.
   // AUTO_ONLY: Nat IPs are allocated by GCP; customers can not specify any Nat
   // IPs.
   // MANUAL_ONLY: Only use Nat IPs provided by customers. When specified Nat IPs
@@ -888,7 +888,7 @@ message RouterNatLogConfig {
   // exported for all connections handled by this NAT. This option can take one
   // of the following values: - ERRORS_ONLY: Export logs only for connection
   // failures. - TRANSLATIONS_ONLY: Export logs only for successful connections.
-  // - ALL: Export logs for all connections, successful and unsuccessful. 
+  // - ALL: Export logs for all connections, successful and unsuccessful.
   // ALL: Export logs for all (successful and unsuccessful) connections.
   // ERRORS_ONLY: Export logs for connection failures only.
   // TRANSLATIONS_ONLY: Export logs for successful connections only.
@@ -1007,16 +1007,16 @@ message RouterStatusBgpPeerStatus {
   optional string state = 13;
 
   // Status of the BGP peer: {UP, DOWN}
-  // DOWN: 
-  // UNKNOWN: 
-  // UP: 
+  // DOWN:
+  // UNKNOWN:
+  // UP:
   optional string status = 14;
 
   // Indicates why particular status was returned.
   // MD5_AUTH_INTERNAL_PROBLEM: Indicates internal problems with configuration
   // of MD5 authentication. This particular reason can only be returned when
   // md5AuthEnabled is true and status is DOWN.
-  // STATUS_REASON_UNSPECIFIED: 
+  // STATUS_REASON_UNSPECIFIED:
   optional string status_reason = 15;
 
   // Time this session has been up. Format: 14 years, 51 weeks, 6 days, 23
@@ -1175,7 +1175,7 @@ message RoutersScopedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -1217,7 +1217,8 @@ message VmEndpointNatMappingsInterfaceNatMappings {
   optional int32 num_total_nat_ports = 4;
 
   // Information about mappings provided by rules in this NAT.
-  repeated VmEndpointNatMappingsInterfaceNatMappingsNatRuleMappings rule_mappings = 5;
+  repeated VmEndpointNatMappingsInterfaceNatMappingsNatRuleMappings
+      rule_mappings = 5;
 
   // Alias IP range for this interface endpoint. It will be a private (RFC 1918)
   // IP range. Examples: "10.33.4.55/32", or "192.168.5.0/24".
@@ -1352,7 +1353,7 @@ message VmEndpointNatMappingsList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.

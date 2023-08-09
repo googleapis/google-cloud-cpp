@@ -101,7 +101,7 @@ message TargetTcpProxiesScopedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -121,8 +121,8 @@ message TargetTcpProxiesSetBackendServiceRequest {
 message TargetTcpProxiesSetProxyHeaderRequest {
   // The new type of proxy header to append before sending data to the backend.
   // NONE or PROXY_V1 are allowed.
-  // NONE: 
-  // PROXY_V1: 
+  // NONE:
+  // PROXY_V1:
   optional string proxy_header = 1;
 }
 
@@ -224,7 +224,7 @@ message TargetTcpProxyAggregatedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.

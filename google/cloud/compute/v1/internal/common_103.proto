@@ -99,7 +99,7 @@ message ResourcePoliciesScopedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -121,7 +121,8 @@ message ResourcePolicy {
   optional string description = 2;
 
   // Resource policy for disk consistency groups.
-  optional ResourcePolicyDiskConsistencyGroupPolicy disk_consistency_group_policy = 13;
+  optional ResourcePolicyDiskConsistencyGroupPolicy
+      disk_consistency_group_policy = 13;
 
   // Resource policy for instances for placement configuration.
   optional ResourcePolicyGroupPlacementPolicy group_placement_policy = 3;
@@ -161,7 +162,7 @@ message ResourcePolicy {
   // CREATING: Resource policy is being created.
   // DELETING: Resource policy is being deleted.
   // EXPIRED: Resource policy is expired and will not run again.
-  // INVALID: 
+  // INVALID:
   // READY: Resource policy is ready to be used.
   optional string status = 12;
 }
@@ -266,7 +267,7 @@ message ResourcePolicyAggregatedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -294,9 +295,7 @@ message ResourcePolicyDailyCycle {
 }
 
 // Resource policy for disk consistency groups.
-message ResourcePolicyDiskConsistencyGroupPolicy {
-
-}
+message ResourcePolicyDiskConsistencyGroupPolicy {}
 
 // A GroupPlacementPolicy specifies resource placement configuration. It
 // specifies the failure bucket separation as well as network locality
@@ -307,8 +306,8 @@ message ResourcePolicyGroupPlacementPolicy {
   optional int32 availability_domain_count = 1;
 
   // Specifies network collocation
-  // COLLOCATED: 
-  // UNSPECIFIED_COLLOCATION: 
+  // COLLOCATED:
+  // UNSPECIFIED_COLLOCATION:
   optional string collocation = 2;
 
   // Number of VMs in this placement group. Google does not recommend that you
@@ -457,7 +456,7 @@ message ResourcePolicyList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -475,7 +474,8 @@ message ResourcePolicyResourceStatus {
   // [Output Only] Specifies a set of output values reffering to the
   // instance_schedule_policy system status. This field should have the same
   // name as corresponding policy field.
-  optional ResourcePolicyResourceStatusInstanceSchedulePolicyStatus instance_schedule_policy = 1;
+  optional ResourcePolicyResourceStatusInstanceSchedulePolicyStatus
+      instance_schedule_policy = 1;
 }
 
 message ResourcePolicyResourceStatusInstanceSchedulePolicyStatus {
@@ -493,7 +493,8 @@ message ResourcePolicyResourceStatusInstanceSchedulePolicyStatus {
 // scheduled snapshots should be retained.
 message ResourcePolicySnapshotSchedulePolicy {
   // Retention policy applied to snapshots created by this resource policy.
-  optional ResourcePolicySnapshotSchedulePolicyRetentionPolicy retention_policy = 1;
+  optional ResourcePolicySnapshotSchedulePolicyRetentionPolicy
+      retention_policy = 1;
 
   // A Vm Maintenance Policy specifies what kind of infrastructure maintenance
   // we are allowed to perform on this VM and when. Schedule that is applied to
@@ -502,7 +503,8 @@ message ResourcePolicySnapshotSchedulePolicy {
 
   // Properties with which snapshots are created such as labels, encryption
   // keys.
-  optional ResourcePolicySnapshotSchedulePolicySnapshotProperties snapshot_properties = 3;
+  optional ResourcePolicySnapshotSchedulePolicySnapshotProperties
+      snapshot_properties = 3;
 }
 
 // Policy for retention of scheduled snapshots.
@@ -512,9 +514,9 @@ message ResourcePolicySnapshotSchedulePolicyRetentionPolicy {
 
   // Specifies the behavior to apply to scheduled snapshots when the source disk
   // is deleted.
-  // APPLY_RETENTION_POLICY: 
-  // KEEP_AUTO_SNAPSHOTS: 
-  // UNSPECIFIED_ON_SOURCE_DISK_DELETE: 
+  // APPLY_RETENTION_POLICY:
+  // KEEP_AUTO_SNAPSHOTS:
+  // UNSPECIFIED_ON_SOURCE_DISK_DELETE:
   optional string on_source_disk_delete = 2;
 }
 
@@ -554,14 +556,14 @@ message ResourcePolicyWeeklyCycleDayOfWeek {
   // Defines a schedule that runs on specific days of the week. Specify one or
   // more days. The following options are available: MONDAY, TUESDAY, WEDNESDAY,
   // THURSDAY, FRIDAY, SATURDAY, SUNDAY.
-  // FRIDAY: 
-  // INVALID: 
-  // MONDAY: 
-  // SATURDAY: 
-  // SUNDAY: 
-  // THURSDAY: 
-  // TUESDAY: 
-  // WEDNESDAY: 
+  // FRIDAY:
+  // INVALID:
+  // MONDAY:
+  // SATURDAY:
+  // SUNDAY:
+  // THURSDAY:
+  // TUESDAY:
+  // WEDNESDAY:
   optional string day = 1;
 
   // [Output only] Duration of the time window, automatically chosen to be

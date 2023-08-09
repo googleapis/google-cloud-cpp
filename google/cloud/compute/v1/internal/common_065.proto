@@ -43,7 +43,8 @@ message InterconnectAttachmentConfigurationConstraints {
   // allows the peer ASN to be 123 or anything in the range 64512-65534. This
   // field is only advisory. Although the API accepts other ranges, these are
   // the ranges that we recommend.
-  repeated InterconnectAttachmentConfigurationConstraintsBgpPeerASNRange bgp_peer_asn_ranges = 2;
+  repeated InterconnectAttachmentConfigurationConstraintsBgpPeerASNRange
+      bgp_peer_asn_ranges = 2;
 }
 
 message InterconnectAttachmentConfigurationConstraintsBgpPeerASNRange {

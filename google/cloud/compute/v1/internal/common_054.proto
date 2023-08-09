@@ -114,7 +114,7 @@ message Image {
     // The format used to encode and transmit the block device, which should be
     // TAR. This is just a container and transmission format and not a runtime
     // format. Provided by the client when the disk image is created.
-    // TAR: 
+    // TAR:
     optional string container_type = 1;
 
     // [Deprecated] This field is deprecated. An optional SHA1 checksum of the
@@ -128,7 +128,7 @@ message Image {
     // https://storage.googleapis.com/bucket_name/folder_name/
     // image_archive_name In order to create an image, you must provide the full
     // or partial URL of one of the following: - The rawDisk.source URL - The
-    // sourceDisk URL - The sourceImage URL - The sourceSnapshot URL 
+    // sourceDisk URL - The sourceImage URL - The sourceSnapshot URL
     optional string source = 3;
   }
 
@@ -150,7 +150,7 @@ message Image {
   // /disks/disk - projects/project/zones/zone/disks/disk -
   // zones/zone/disks/disk In order to create an image, you must provide the
   // full or partial URL of one of the following: - The rawDisk.source URL - The
-  // sourceDisk URL - The sourceImage URL - The sourceSnapshot URL 
+  // sourceDisk URL - The sourceImage URL - The sourceSnapshot URL
   optional string source_disk = 21;
 
   // The customer-supplied encryption key of the source disk. Required if the
@@ -168,7 +168,7 @@ message Image {
   // images/image_name - projects/project_id/global/images/image_name In order
   // to create an image, you must provide the full or partial URL of one of the
   // following: - The rawDisk.source URL - The sourceDisk URL - The sourceImage
-  // URL - The sourceSnapshot URL 
+  // URL - The sourceSnapshot URL
   optional string source_image = 24;
 
   // The customer-supplied encryption key of the source image. Required if the
@@ -187,7 +187,7 @@ message Image {
   // projects/project_id/global/snapshots/snapshot_name In order to create an
   // image, you must provide the full or partial URL of one of the following: -
   // The rawDisk.source URL - The sourceDisk URL - The sourceImage URL - The
-  // sourceSnapshot URL 
+  // sourceSnapshot URL
   optional string source_snapshot = 27;
 
   // The customer-supplied encryption key of the source snapshot. Required if
@@ -201,7 +201,7 @@ message Image {
 
   // The type of the image used to create this disk. The default and only valid
   // value is RAW.
-  // RAW: 
+  // RAW:
   optional string source_type = 30;
 
   // [Output Only] The status of the image. An image can be used to create other

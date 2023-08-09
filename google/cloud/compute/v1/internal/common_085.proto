@@ -42,8 +42,8 @@ message PacketMirroring {
   // Indicates whether or not this packet mirroring takes effect. If set to
   // FALSE, this packet mirroring policy will not be enforced on the network.
   // The default is TRUE.
-  // FALSE: 
-  // TRUE: 
+  // FALSE:
+  // TRUE:
   optional string enable = 4;
 
   // Filter for mirrored traffic. If unspecified, all traffic is mirrored.
@@ -187,7 +187,7 @@ message PacketMirroringAggregatedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -326,7 +326,7 @@ message PacketMirroringList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -458,7 +458,7 @@ message PacketMirroringsScopedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.

@@ -25,7 +25,7 @@ package google.cloud.cpp.compute.v1;
 // valid URLs: -
 // https://www.googleapis.com/compute/beta/projects/project-id/global/httpHealthChecks/health-check
 // - projects/project-id/global/httpHealthChecks/health-check -
-// global/httpHealthChecks/health-check 
+// global/httpHealthChecks/health-check
 message HealthCheckReference {
   optional string health_check = 1;
 }

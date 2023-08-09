@@ -36,7 +36,7 @@ message Address {
   // EXTERNAL: A publicly visible external IP address.
   // INTERNAL: A private network IP address, for use with an Instance or
   // Internal Load Balancer forwarding rule.
-  // UNSPECIFIED_TYPE: 
+  // UNSPECIFIED_TYPE:
   optional string address_type = 2;
 
   // [Output Only] Creation timestamp in RFC3339 text format.
@@ -52,9 +52,9 @@ message Address {
 
   // The IP version that will be used by this address. Valid options are IPV4 or
   // IPV6.
-  // IPV4: 
-  // IPV6: 
-  // UNSPECIFIED_VERSION: 
+  // IPV4:
+  // IPV6:
+  // UNSPECIFIED_VERSION:
   optional string ip_version = 6;
 
   // The endpoint type of this address, which should be VM or NETLB. This is
@@ -125,7 +125,7 @@ message Address {
   // `SHARED_LOADBALANCER_VIP` for an internal IP address that is assigned to
   // multiple internal forwarding rules. - `PRIVATE_SERVICE_CONNECT` for a
   // private network address that is used to configure Private Service Connect.
-  // Only global internal addresses can use this purpose. 
+  // Only global internal addresses can use this purpose.
   // DNS_RESOLVER: DNS resolver address in the subnetwork.
   // GCE_ENDPOINT: VM internal/alias IP, Internal LB service IP, etc.
   // IPSEC_INTERCONNECT: A regional internal IP address range reserved for the
@@ -269,7 +269,7 @@ message AddressList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.

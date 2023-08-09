@@ -167,7 +167,7 @@ message HttpHeaderMatch {
   // If set to false, the headerMatch is considered a match if the preceding
   // match criteria are met. If set to true, the headerMatch is considered a
   // match if the preceding match criteria are NOT met. The default setting is
-  // false. 
+  // false.
   optional bool invert_match = 3;
 
   // The value of the header must start with the contents of prefixMatch. Only
@@ -216,7 +216,7 @@ message HttpHeaderOption {
 
   // If false, headerValue is appended to any values that already exist for the
   // header. If true, headerValue is set for the header, discarding any values
-  // that were set for that header. The default value is false. 
+  // that were set for that header. The default value is false.
   optional bool replace = 3;
 }
 
@@ -224,7 +224,7 @@ message HttpHeaderOption {
 message HttpQueryParameterMatch {
   // The queryParameterMatch matches if the value of the parameter exactly
   // matches the contents of exactMatch. Only one of presentMatch, exactMatch,
-  // or regexMatch must be set. 
+  // or regexMatch must be set.
   optional string exact_match = 1;
 
   // The name of the query parameter to match. The query parameter must exist in
@@ -233,14 +233,14 @@ message HttpQueryParameterMatch {
 
   // Specifies that the queryParameterMatch matches if the request contains the
   // query parameter, irrespective of whether the parameter has a value or not.
-  // Only one of presentMatch, exactMatch, or regexMatch must be set. 
+  // Only one of presentMatch, exactMatch, or regexMatch must be set.
   optional bool present_match = 3;
 
   // The queryParameterMatch matches if the value of the parameter matches the
   // regular expression specified by regexMatch. For more information about
   // regular expression syntax, see Syntax. Only one of presentMatch,
   // exactMatch, or regexMatch must be set. Regular expressions can only be used
-  // when the loadBalancingScheme is set to INTERNAL_SELF_MANAGED. 
+  // when the loadBalancingScheme is set to INTERNAL_SELF_MANAGED.
   optional string regex_match = 4;
 }
 
@@ -277,7 +277,7 @@ message HttpRedirectAction {
   // 301. - FOUND, which corresponds to 302. - SEE_OTHER which corresponds to
   // 303. - TEMPORARY_REDIRECT, which corresponds to 307. In this case, the
   // request method is retained. - PERMANENT_REDIRECT, which corresponds to 308.
-  // In this case, the request method is retained. 
+  // In this case, the request method is retained.
   // FOUND: Http Status Code 302 - Found.
   // MOVED_PERMANENTLY_DEFAULT: Http Status Code 301 - Moved Permanently.
   // PERMANENT_REDIRECT: Http Status Code 308 - Permanent Redirect maintaining
@@ -289,7 +289,7 @@ message HttpRedirectAction {
 
   // If set to true, any accompanying query portion of the original URL is
   // removed before redirecting the request. If set to false, the query portion
-  // of the original URL is retained. The default is set to false. 
+  // of the original URL is retained. The default is set to false.
   optional bool strip_query = 6;
 }
 
@@ -329,7 +329,7 @@ message HttpRetryPolicy {
   // unavailable. Only the following codes are supported when the URL map is
   // bound to target gRPC proxy that has validateForProxyless field set to true.
   // - cancelled - deadline-exceeded - internal - resource-exhausted -
-  // unavailable 
+  // unavailable
   repeated string retry_conditions = 3;
 }
 
@@ -571,7 +571,7 @@ message PathMatcher {
   // defaultUrlRedirect , or defaultRouteAction.weightedBackendService must be
   // set. Authorization requires one or more of the following Google IAM
   // permissions on the specified resource default_service: -
-  // compute.backendBuckets.use - compute.backendServices.use 
+  // compute.backendBuckets.use - compute.backendServices.use
   optional string default_service = 2;
 
   // When none of the specified pathRules or routeRules match, the request is
@@ -657,7 +657,7 @@ message RequestMirrorPolicy {
   // The backend service configured for a mirroring policy must reference
   // backends that are of the same type as the original backend service matched
   // in the URL map. Serverless NEG backends are not currently supported as a
-  // mirrored backend service. 
+  // mirrored backend service.
   optional string backend_service = 1;
 }
 
@@ -898,7 +898,7 @@ message UrlMapList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.

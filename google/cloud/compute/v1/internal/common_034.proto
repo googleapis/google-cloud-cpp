@@ -114,7 +114,7 @@ message Firewall {
   // specify the network as a full or partial URL. For example, the following
   // are all valid URLs: -
   // https://www.googleapis.com/compute/v1/projects/myproject/global/networks/my-network
-  // - projects/myproject/global/networks/my-network - global/networks/default 
+  // - projects/myproject/global/networks/my-network - global/networks/default
   optional string network = 12;
 
   // Priority for this rule. This is an integer between `0` and `65535`, both
@@ -190,7 +190,7 @@ message FirewallLogConfig {
   // This field can only be specified for a particular firewall rule if logging
   // is enabled for that rule. This field denotes whether to include or exclude
   // metadata for firewall logs.
-  // EXCLUDE_ALL_METADATA: 
-  // INCLUDE_ALL_METADATA: 
+  // EXCLUDE_ALL_METADATA:
+  // INCLUDE_ALL_METADATA:
   optional string metadata = 2;
 }

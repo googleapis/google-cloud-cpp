@@ -26,9 +26,9 @@ message FileContentBuffer {
   optional string content = 1;
 
   // The file type of source file.
-  // BIN: 
-  // UNDEFINED: 
-  // X509: 
+  // BIN:
+  // UNDEFINED:
+  // X509:
   optional string file_type = 2;
 }
 

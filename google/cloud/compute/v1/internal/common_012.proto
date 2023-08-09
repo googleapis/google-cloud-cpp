@@ -36,7 +36,7 @@ message ForwardingRuleReference {
 // https://www.googleapis.com/compute/beta/projects/project-id/regions/us-west1/healthCheckServices/health-check-service
 // -
 // projects/project-id/regions/us-west1/healthCheckServices/health-check-service
-// - regions/us-west1/healthCheckServices/health-check-service 
+// - regions/us-west1/healthCheckServices/health-check-service
 message HealthCheckServiceReference {
   optional string health_check_service = 1;
 }
@@ -188,7 +188,7 @@ message NetworkEndpointGroupsListNetworkEndpoints {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.

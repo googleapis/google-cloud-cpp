@@ -94,7 +94,7 @@ message MachineImage {
   // as a partial or full URL to the resource. For example, the following are
   // valid values: -
   // https://www.googleapis.com/compute/v1/projects/project/zones/zone
-  // /instances/instance - projects/project/zones/zone/instances/instance 
+  // /instances/instance - projects/project/zones/zone/instances/instance
   optional string source_instance = 13;
 
   // [Output Only] DEPRECATED: Please use instance_properties instead for source
@@ -104,11 +104,11 @@ message MachineImage {
 
   // [Output Only] The status of the machine image. One of the following values:
   // INVALID, CREATING, READY, DELETING, and UPLOADING.
-  // CREATING: 
-  // DELETING: 
-  // INVALID: 
-  // READY: 
-  // UPLOADING: 
+  // CREATING:
+  // DELETING:
+  // INVALID:
+  // READY:
+  // UPLOADING:
   optional string status = 15;
 
   // The regional or multi-regional Cloud Storage bucket location where the
@@ -215,7 +215,7 @@ message MachineImageList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -261,8 +261,8 @@ message SavedAttachedDisk {
 
   // Specifies the disk interface to use for attaching this disk, which is
   // either SCSI or NVME.
-  // NVME: 
-  // SCSI: 
+  // NVME:
+  // SCSI:
   optional string interface = 9;
 
   // [Output Only] Type of the resource. Always compute#attachedDisk for
@@ -291,13 +291,13 @@ message SavedAttachedDisk {
   // is being adjusted as a result of shared storage reallocation. This status
   // can either be UPDATING, meaning the size of the snapshot is being updated,
   // or UP_TO_DATE, meaning the size of the snapshot is up-to-date.
-  // UPDATING: 
-  // UP_TO_DATE: 
+  // UPDATING:
+  // UP_TO_DATE:
   optional string storage_bytes_status = 15;
 
   // Specifies the type of the attached disk, either SCRATCH or PERSISTENT.
-  // PERSISTENT: 
-  // SCRATCH: 
+  // PERSISTENT:
+  // SCRATCH:
   optional string type = 16;
 }
 
@@ -324,8 +324,8 @@ message SavedDisk {
   // is being adjusted as a result of shared storage reallocation. This status
   // can either be UPDATING, meaning the size of the snapshot is being updated,
   // or UP_TO_DATE, meaning the size of the snapshot is up-to-date.
-  // UPDATING: 
-  // UP_TO_DATE: 
+  // UPDATING:
+  // UP_TO_DATE:
   optional string storage_bytes_status = 5;
 }
 
@@ -338,7 +338,7 @@ message SourceDiskEncryptionKey {
   // valid partial URL. For example, the following are valid values: -
   // https://www.googleapis.com/compute/v1/projects/project/zones/zone
   // /disks/disk - projects/project/zones/zone/disks/disk -
-  // zones/zone/disks/disk 
+  // zones/zone/disks/disk
   optional string source_disk = 2;
 }
 

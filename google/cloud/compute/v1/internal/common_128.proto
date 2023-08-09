@@ -62,8 +62,8 @@ message TargetTcpProxy {
 
   // Specifies the type of proxy header to append before sending data to the
   // backend, either NONE or PROXY_V1. The default is NONE.
-  // NONE: 
-  // PROXY_V1: 
+  // NONE:
+  // PROXY_V1:
   optional string proxy_header = 7;
 
   // [Output Only] URL of the region where the regional TCP proxy resides. This
@@ -172,7 +172,7 @@ message TargetTcpProxyList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.

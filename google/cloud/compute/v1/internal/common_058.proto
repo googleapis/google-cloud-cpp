@@ -61,7 +61,7 @@ message InstanceGroup {
   // This allows the system to reference ports by the assigned name instead of a
   // port number. Named ports can also contain multiple ports. For example:
   // [{name: "app1", port: 8080}, {name: "app1", port: 8081}, {name: "app2",
-  // port: 8082}] Named ports apply to all instances in this instance group. 
+  // port: 8082}] Named ports apply to all instances in this instance group.
   repeated NamedPort named_ports = 7;
 
   // [Output Only] The URL of the network to which all instances in the instance

@@ -142,7 +142,7 @@ message ExchangedPeeringRoutesList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -222,8 +222,8 @@ message Network {
   // The network firewall policy enforcement order. Can be either
   // AFTER_CLASSIC_FIREWALL or BEFORE_CLASSIC_FIREWALL. Defaults to
   // AFTER_CLASSIC_FIREWALL if the field is not specified.
-  // AFTER_CLASSIC_FIREWALL: 
-  // BEFORE_CLASSIC_FIREWALL: 
+  // AFTER_CLASSIC_FIREWALL:
+  // BEFORE_CLASSIC_FIREWALL:
   optional string network_firewall_policy_enforcement_order = 13;
 
   // [Output Only] A list of network peerings for the resource.
@@ -340,7 +340,7 @@ message NetworkList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -433,8 +433,8 @@ message NetworkRoutingConfig {
   // the same region as the router. If set to GLOBAL, this network's Cloud
   // Routers will advertise routes with all subnets of this network, across
   // regions.
-  // GLOBAL: 
-  // REGIONAL: 
+  // GLOBAL:
+  // REGIONAL:
   optional string routing_mode = 1;
 }
 
@@ -466,7 +466,8 @@ message NetworksAddPeeringRequest {
 
 message NetworksGetEffectiveFirewallsResponse {
   // Effective firewalls from firewall policy.
-  repeated NetworksGetEffectiveFirewallsResponseEffectiveFirewallPolicy firewall_policys = 1;
+  repeated NetworksGetEffectiveFirewallsResponseEffectiveFirewallPolicy
+      firewall_policys = 1;
 
   // Effective firewalls on the network.
   repeated Firewall firewalls = 2;
@@ -487,9 +488,9 @@ message NetworksGetEffectiveFirewallsResponseEffectiveFirewallPolicy {
   optional string short_name = 4;
 
   // [Output Only] The type of the firewall policy.
-  // HIERARCHY: 
-  // NETWORK: 
-  // UNSPECIFIED: 
+  // HIERARCHY:
+  // NETWORK:
+  // UNSPECIFIED:
   optional string type = 5;
 }
 

@@ -285,7 +285,7 @@ message NetworkEndpointGroupList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -317,6 +317,6 @@ message NetworkEndpointGroupPscData {
   // traffic.
   // PENDING: The connection is pending acceptance by the producer.
   // REJECTED: The connection has been rejected by the producer.
-  // STATUS_UNSPECIFIED: 
+  // STATUS_UNSPECIFIED:
   optional string psc_connection_status = 3;
 }

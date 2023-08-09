@@ -35,7 +35,7 @@ message CustomerEncryptionKeyProtectedDisk {
 
   // Specifies a valid partial or full URL to an existing Persistent Disk
   // resource. This field is only applicable for persistent disks. For example:
-  // "source": "/compute/v1/projects/project_id/zones/zone/disks/ disk_name 
+  // "source": "/compute/v1/projects/project_id/zones/zone/disks/ disk_name
   optional string source = 2;
 }
 
@@ -266,7 +266,8 @@ message Instance {
 
   optional ShieldedInstanceConfig shielded_instance_config = 36;
 
-  optional ShieldedInstanceIntegrityPolicy shielded_instance_integrity_policy = 37;
+  optional ShieldedInstanceIntegrityPolicy shielded_instance_integrity_policy =
+      37;
 
   // Source machine image
   optional string source_machine_image = 38;
@@ -414,7 +415,7 @@ message InstanceAggregatedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -521,7 +522,7 @@ message InstanceList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -628,7 +629,7 @@ message InstanceListReferrers {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -655,7 +656,8 @@ message InstancesAddResourcePoliciesRequest {
 
 message InstancesGetEffectiveFirewallsResponse {
   // Effective firewalls from firewall policies.
-  repeated InstancesGetEffectiveFirewallsResponseEffectiveFirewallPolicy firewall_policys = 1;
+  repeated InstancesGetEffectiveFirewallsResponseEffectiveFirewallPolicy
+      firewall_policys = 1;
 
   // Effective firewalls on the instance.
   repeated Firewall firewalls = 2;
@@ -677,10 +679,10 @@ message InstancesGetEffectiveFirewallsResponseEffectiveFirewallPolicy {
 
   // [Output Only] The type of the firewall policy. Can be one of HIERARCHY,
   // NETWORK, NETWORK_REGIONAL.
-  // HIERARCHY: 
-  // NETWORK: 
-  // NETWORK_REGIONAL: 
-  // UNSPECIFIED: 
+  // HIERARCHY:
+  // NETWORK:
+  // NETWORK_REGIONAL:
+  // UNSPECIFIED:
   optional string type = 5;
 }
 
@@ -767,7 +769,7 @@ message InstancesScopedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -838,7 +840,7 @@ message Reference {
   optional string kind = 1;
 
   // A description of the reference type with no implied semantics. Possible
-  // values include: 1. MEMBER_OF 
+  // values include: 1. MEMBER_OF
   optional string reference_type = 2;
 
   // URL of the resource which refers to the target.

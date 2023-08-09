@@ -228,7 +228,7 @@ message TargetPoolAggregatedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -343,7 +343,7 @@ message TargetPoolList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -365,7 +365,7 @@ message TargetPoolsAddInstanceRequest {
   // https://www.googleapis.com/compute/v1/projects/project-id/zones/zone
   // /instances/instance-name -
   // projects/project-id/zones/zone/instances/instance-name -
-  // zones/zone/instances/instance-name 
+  // zones/zone/instances/instance-name
   repeated InstanceReference instances = 1;
 }
 
@@ -375,7 +375,7 @@ message TargetPoolsRemoveHealthCheckRequest {
   // https://www.googleapis.com/compute/beta/projects/project
   // /global/httpHealthChecks/health-check -
   // projects/project/global/httpHealthChecks/health-check -
-  // global/httpHealthChecks/health-check 
+  // global/httpHealthChecks/health-check
   repeated HealthCheckReference health_checks = 1;
 }
 
@@ -462,7 +462,7 @@ message TargetPoolsScopedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.

@@ -90,8 +90,8 @@ message AccessConfig {
   // The type of configuration. In accessConfigs (IPv4), the default and only
   // option is ONE_TO_ONE_NAT. In ipv6AccessConfigs, the default and only option
   // is DIRECT_IPV6.
-  // DIRECT_IPV6: 
-  // ONE_TO_ONE_NAT: 
+  // DIRECT_IPV6:
+  // ONE_TO_ONE_NAT:
   optional string type = 9;
 }
 
@@ -203,8 +203,8 @@ message AttachedDisk {
   // either SCSI or NVME. For most machine types, the default is SCSI. Local
   // SSDs can use either NVME or SCSI. In certain configurations, persistent
   // disks can use NVMe. For more information, see About persistent disks.
-  // NVME: 
-  // SCSI: 
+  // NVME:
+  // SCSI:
   optional string interface = 11;
 
   // [Output Only] Type of the resource. Always compute#attachedDisk for
@@ -245,8 +245,8 @@ message AttachedDisk {
 
   // Specifies the type of the disk, either SCRATCH or PERSISTENT. If not
   // specified, the default is PERSISTENT.
-  // PERSISTENT: 
-  // SCRATCH: 
+  // PERSISTENT:
+  // SCRATCH:
   optional string type = 17;
 }
 
@@ -545,7 +545,7 @@ message NetworkInterface {
   // full or partial URL. For example, the following are all valid URLs: -
   // https://www.googleapis.com/compute/v1/projects/project/global/networks/
   // network - projects/project/global/networks/network -
-  // global/networks/default 
+  // global/networks/default
   optional string network = 10;
 
   // The URL of the network attachment that this interface should connect to in
@@ -585,13 +585,13 @@ message NetworkInterface {
   // specify this field, you can specify the subnetwork as a full or partial
   // URL. For example, the following are all valid URLs: -
   // https://www.googleapis.com/compute/v1/projects/project/regions/region
-  // /subnetworks/subnetwork - regions/region/subnetworks/subnetwork 
+  // /subnetworks/subnetwork - regions/region/subnetworks/subnetwork
   optional string subnetwork = 16;
 }
 
 message NetworkPerformanceConfig {
-  // DEFAULT: 
-  // TIER_1: 
+  // DEFAULT:
+  // TIER_1:
   optional string total_egress_bandwidth_tier = 1;
 }
 
@@ -604,7 +604,7 @@ message ReservationAffinity {
   // NO_RESERVATION: Do not consume from any allocated capacity.
   // SPECIFIC_RESERVATION: Must consume from a specific reservation. Must
   // specify key value fields for specifying the reservations.
-  // UNSPECIFIED: 
+  // UNSPECIFIED:
   optional string consume_reservation_type = 1;
 
   // Corresponds to the label key of a reservation resource. To target a
@@ -689,7 +689,7 @@ message SchedulingNodeAffinity {
   // affinity and NOT_IN for anti-affinity.
   // IN: Requires Compute Engine to seek for matched nodes.
   // NOT_IN: Requires Compute Engine to avoid certain nodes.
-  // OPERATOR_UNSPECIFIED: 
+  // OPERATOR_UNSPECIFIED:
   optional string operator = 2;
 
   // Corresponds to the label values of Node resource.

@@ -73,7 +73,7 @@ message Route {
   // For example, the following are all valid URLs: - 10.128.0.56 -
   // https://www.googleapis.com/compute/v1/projects/project/regions/region
   // /forwardingRules/forwardingRule -
-  // regions/region/forwardingRules/forwardingRule 
+  // regions/region/forwardingRules/forwardingRule
   optional string next_hop_ilb = 10;
 
   // The URL to an instance that should handle matching packets. You can specify
@@ -117,10 +117,10 @@ message Route {
   // another Cloud Router and will readvertise to one of its BGP peers -
   // 'SUBNET' for a route from a subnet of the VPC - 'BGP' for a route learned
   // from a BGP peer of this router - 'STATIC' for a static route
-  // BGP: 
-  // STATIC: 
-  // SUBNET: 
-  // TRANSIT: 
+  // BGP:
+  // STATIC:
+  // SUBNET:
+  // TRANSIT:
   optional string route_type = 18;
 
   // [Output Only] Server-defined fully-qualified URL for this resource.
@@ -203,7 +203,7 @@ message Route {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -225,10 +225,10 @@ message RouteAsPath {
   // route has traversed - 'AS_CONFED_SEQUENCE': ordered set of Member
   // Autonomous Systems in the local confederation that the route has traversed
   // - 'AS_CONFED_SET': unordered set of Member Autonomous Systems in the local
-  // confederation that the route has traversed 
-  // AS_CONFED_SEQUENCE: 
-  // AS_CONFED_SET: 
-  // AS_SEQUENCE: 
-  // AS_SET: 
+  // confederation that the route has traversed
+  // AS_CONFED_SEQUENCE:
+  // AS_CONFED_SET:
+  // AS_SEQUENCE:
+  // AS_SET:
   optional string path_segment_type = 2;
 }

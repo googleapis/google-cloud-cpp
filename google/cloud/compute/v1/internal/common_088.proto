@@ -72,7 +72,8 @@ message PublicDelegatedPrefix {
 
   // The list of sub public delegated prefixes that exist for this public
   // delegated prefix.
-  repeated PublicDelegatedPrefixPublicDelegatedSubPrefix public_delegated_sub_prefixs = 10;
+  repeated PublicDelegatedPrefixPublicDelegatedSubPrefix
+      public_delegated_sub_prefixs = 10;
 
   // [Output Only] URL of the region where the public delegated prefix resides.
   // This field applies only to the region resource. You must specify this field
@@ -88,7 +89,7 @@ message PublicDelegatedPrefix {
   // initialized and addresses cannot be created yet. - `READY_TO_ANNOUNCE` The
   // public delegated prefix is a live migration prefix and is active. -
   // `ANNOUNCED` The public delegated prefix is active. - `DELETING` The public
-  // delegated prefix is being deprovsioned. 
+  // delegated prefix is being deprovsioned.
   // ANNOUNCED: The public delegated prefix is active.
   // DELETING: The public delegated prefix is being deprovsioned.
   // INITIALIZING: The public delegated prefix is being initialized and
@@ -193,7 +194,7 @@ message PublicDelegatedPrefixList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -229,7 +230,7 @@ message PublicDelegatedPrefixPublicDelegatedSubPrefix {
   optional string region = 6;
 
   // [Output Only] The status of the sub public delegated prefix.
-  // ACTIVE: 
-  // INACTIVE: 
+  // ACTIVE:
+  // INACTIVE:
   optional string status = 7;
 }

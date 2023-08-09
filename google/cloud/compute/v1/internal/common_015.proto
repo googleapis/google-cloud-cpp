@@ -59,7 +59,8 @@ message BulkInsertInstanceResource {
 
   // Per-instance properties to be set on individual instances. Keys of this map
   // specify requested instance names. Can be empty if name_pattern is used.
-  map<string, BulkInsertInstanceResourcePerInstanceProperties> per_instance_properties = 6;
+  map<string, BulkInsertInstanceResourcePerInstanceProperties>
+      per_instance_properties = 6;
 
   // Specifies the instance template from which to create instances. You may
   // combine sourceInstanceTemplate with instanceProperties to override specific

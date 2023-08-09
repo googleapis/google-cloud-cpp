@@ -47,7 +47,7 @@ message DiskInstantiationConfig {
   // Applicable to the boot disk and additional read-write disks. -
   // attach-read-only: to attach a read-only disk. Applicable to read-only
   // disks. - do-not-include: to exclude a disk from the template. Applicable to
-  // additional read-write disks, local SSDs, and read-only disks. 
+  // additional read-write disks, local SSDs, and read-only disks.
   // ATTACH_READ_ONLY: Attach the existing disk in read-only mode. The request
   // will fail if the disk was attached in read-write mode on the source
   // instance. Applicable to: read-only disks.
@@ -115,7 +115,7 @@ message InstanceTemplate {
   // The source instance used to create the template. You can provide this as a
   // partial or full URL to the resource. For example, the following are valid
   // values: - https://www.googleapis.com/compute/v1/projects/project/zones/zone
-  // /instances/instance - projects/project/zones/zone/instances/instance 
+  // /instances/instance - projects/project/zones/zone/instances/instance
   optional string source_instance = 9;
 
   // The source instance params to use to create this instance template.
@@ -218,7 +218,7 @@ message InstanceTemplateList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.

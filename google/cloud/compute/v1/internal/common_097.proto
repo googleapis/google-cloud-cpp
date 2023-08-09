@@ -26,13 +26,16 @@ import "google/cloud/compute/v1/internal/common_038.proto";
 
 message RegionNetworkFirewallPoliciesGetEffectiveFirewallsResponse {
   // Effective firewalls from firewall policy.
-  repeated RegionNetworkFirewallPoliciesGetEffectiveFirewallsResponseEffectiveFirewallPolicy firewall_policys = 1;
+  repeated
+      RegionNetworkFirewallPoliciesGetEffectiveFirewallsResponseEffectiveFirewallPolicy
+          firewall_policys = 1;
 
   // Effective firewalls on the network.
   repeated Firewall firewalls = 2;
 }
 
-message RegionNetworkFirewallPoliciesGetEffectiveFirewallsResponseEffectiveFirewallPolicy {
+message
+RegionNetworkFirewallPoliciesGetEffectiveFirewallsResponseEffectiveFirewallPolicy {
   // [Output Only] The display name of the firewall policy.
   optional string display_name = 1;
 
@@ -44,9 +47,9 @@ message RegionNetworkFirewallPoliciesGetEffectiveFirewallsResponseEffectiveFirew
 
   // [Output Only] The type of the firewall policy. Can be one of HIERARCHY,
   // NETWORK, NETWORK_REGIONAL.
-  // HIERARCHY: 
-  // NETWORK: 
-  // NETWORK_REGIONAL: 
-  // UNSPECIFIED: 
+  // HIERARCHY:
+  // NETWORK:
+  // NETWORK_REGIONAL:
+  // UNSPECIFIED:
   optional string type = 4;
 }

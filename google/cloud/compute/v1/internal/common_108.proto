@@ -33,9 +33,9 @@ message ServiceAttachment {
   // The connection preference of service attachment. The value can be set to
   // ACCEPT_AUTOMATIC. An ACCEPT_AUTOMATIC service attachment is one that always
   // accepts the connection from consumer forwarding rules.
-  // ACCEPT_AUTOMATIC: 
-  // ACCEPT_MANUAL: 
-  // CONNECTION_PREFERENCE_UNSPECIFIED: 
+  // ACCEPT_AUTOMATIC:
+  // ACCEPT_MANUAL:
+  // CONNECTION_PREFERENCE_UNSPECIFIED:
   optional string connection_preference = 2;
 
   // Projects that are allowed to connect to this service attachment.
@@ -222,7 +222,7 @@ message ServiceAttachmentAggregatedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -252,7 +252,7 @@ message ServiceAttachmentConnectedEndpoint {
   // traffic.
   // PENDING: The connection is pending acceptance by the producer.
   // REJECTED: The consumer is still connected but not using the connection.
-  // STATUS_UNSPECIFIED: 
+  // STATUS_UNSPECIFIED:
   optional string status = 3;
 }
 
@@ -362,7 +362,7 @@ message ServiceAttachmentList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -451,7 +451,7 @@ message ServiceAttachmentsScopedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.

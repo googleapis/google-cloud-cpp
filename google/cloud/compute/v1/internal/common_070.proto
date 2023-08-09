@@ -39,6 +39,6 @@ message ServerBinding {
   // over its lifetime.
   // RESTART_NODE_ON_MINIMAL_SERVERS: Node may associate with minimal physical
   // servers over its lifetime.
-  // SERVER_BINDING_TYPE_UNSPECIFIED: 
+  // SERVER_BINDING_TYPE_UNSPECIFIED:
   optional string type = 1;
 }

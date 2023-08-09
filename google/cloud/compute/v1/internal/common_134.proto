@@ -56,8 +56,8 @@ message Zone {
   optional string self_link = 9;
 
   // [Output Only] Status of the zone, either UP or DOWN.
-  // DOWN: 
-  // UP: 
+  // DOWN:
+  // UP:
   optional string status = 10;
 
   // [Output Only] Reserved for future use.
@@ -159,7 +159,7 @@ message ZoneList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.

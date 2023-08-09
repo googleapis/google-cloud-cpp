@@ -27,9 +27,9 @@ message NetworkAttachment {
   // this network attachment.
   repeated NetworkAttachmentConnectedEndpoint connection_endpoints = 1;
 
-  // ACCEPT_AUTOMATIC: 
-  // ACCEPT_MANUAL: 
-  // INVALID: 
+  // ACCEPT_AUTOMATIC:
+  // ACCEPT_MANUAL:
+  // INVALID:
   optional string connection_preference = 2;
 
   // [Output Only] Creation timestamp in RFC3339 text format.
@@ -187,7 +187,7 @@ message NetworkAttachmentAggregatedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -219,7 +219,7 @@ message NetworkAttachmentConnectedEndpoint {
   // producer to reach its VPC.
   // REJECTED: The consumer prohibits traffic from the producer to reach its
   // VPC.
-  // STATUS_UNSPECIFIED: 
+  // STATUS_UNSPECIFIED:
   optional string status = 4;
 
   // The subnetwork used to assign the IP to the producer instance network
@@ -320,7 +320,7 @@ message NetworkAttachmentList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -409,7 +409,7 @@ message NetworkAttachmentsScopedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.

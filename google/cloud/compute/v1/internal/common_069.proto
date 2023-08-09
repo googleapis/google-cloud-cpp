@@ -23,7 +23,7 @@ package google.cloud.cpp.compute.v1;
 
 // Represents a License Code resource. A License Code is a unique identifier
 // used to represent a license resource. *Caution* This resource is intended for
-// use only by third-party partners who are creating Cloud Marketplace images. 
+// use only by third-party partners who are creating Cloud Marketplace images.
 message LicenseCode {
   // [Output Only] Creation timestamp in RFC3339 text format.
   optional string creation_timestamp = 1;
@@ -55,7 +55,7 @@ message LicenseCode {
   // ENABLED: Use is allowed for anyone with USE_READ_ONLY access to this
   // License Code.
   // RESTRICTED: Use of this license is limited to a project whitelist.
-  // STATE_UNSPECIFIED: 
+  // STATE_UNSPECIFIED:
   // TERMINATED: Reserved state.
   optional string state = 8;
 

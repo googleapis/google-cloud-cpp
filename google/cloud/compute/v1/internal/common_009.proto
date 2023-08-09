@@ -149,7 +149,8 @@ message BackendService {
   // Connection Tracking configuration for this BackendService. Connection
   // tracking policy settings are only available for Network Load Balancing and
   // Internal TCP/UDP Load Balancing.
-  optional BackendServiceConnectionTrackingPolicy connection_tracking_policy = 7;
+  optional BackendServiceConnectionTrackingPolicy connection_tracking_policy =
+      7;
 
   // Consistent Hash-based load balancing can be used to provide soft session
   // affinity based on HTTP headers, cookies or other properties. This load
@@ -161,7 +162,7 @@ message BackendService {
   // either: - A regional backend service with the service_protocol set to HTTP,
   // HTTPS, or HTTP2, and load_balancing_scheme set to INTERNAL_MANAGED. - A
   // global backend service with the load_balancing_scheme set to
-  // INTERNAL_SELF_MANAGED. 
+  // INTERNAL_SELF_MANAGED.
   optional ConsistentHashLoadBalancerSettings consistent_hash = 8;
 
   // [Output Only] Creation timestamp in RFC3339 text format.
@@ -239,7 +240,7 @@ message BackendService {
   // Load Balancing.
   // INTERNAL_SELF_MANAGED: Signifies that this will be used by Traffic
   // Director.
-  // INVALID_LOAD_BALANCING_SCHEME: 
+  // INVALID_LOAD_BALANCING_SCHEME:
   optional string load_balancing_scheme = 21;
 
   // A list of locality load-balancing policies to be used in order of
@@ -251,7 +252,8 @@ message BackendService {
   // children are intended for use in a service mesh that includes gRPC clients
   // only. Envoy proxies can't use backend services that have this
   // configuration.
-  repeated BackendServiceLocalityLoadBalancingPolicyConfig locality_lb_policies = 22;
+  repeated BackendServiceLocalityLoadBalancingPolicyConfig
+      locality_lb_policies = 22;
 
   // The load balancing algorithm used within the scope of the locality. The
   // possible values are: - ROUND_ROBIN: This is a simple policy in which each
@@ -277,7 +279,7 @@ message BackendService {
   // effect. Only ROUND_ROBIN and RING_HASH are supported when the backend
   // service is referenced by a URL map that is bound to target gRPC proxy that
   // has validateForProxyless field set to true.
-  // INVALID_LB_POLICY: 
+  // INVALID_LB_POLICY:
   // LEAST_REQUEST: An O(1) algorithm which selects two random healthy hosts and
   // picks the host which has fewer active requests.
   // MAGLEV: This algorithm implements consistent hashing to backends. Maglev
@@ -384,9 +386,9 @@ message BackendService {
   // information. Must be set to GRPC when the backend service is referenced by
   // a URL map that is bound to target gRPC proxy.
   // GRPC: gRPC (available for Traffic Director).
-  // HTTP: 
+  // HTTP:
   // HTTP2: HTTP/2 with SSL.
-  // HTTPS: 
+  // HTTPS:
   // SSL: TCP proxying with SSL.
   // TCP: TCP proxying or TCP pass-through.
   // UDP: UDP.
@@ -467,7 +469,8 @@ message BackendServiceCdnPolicy {
   // Bypass the cache when the specified request headers are matched - e.g.
   // Pragma or Authorization headers. Up to 5 headers can be specified. The
   // cache is bypassed for all cdnPolicy.cacheMode settings.
-  repeated BackendServiceCdnPolicyBypassCacheOnRequestHeader bypass_cache_on_request_headers = 1;
+  repeated BackendServiceCdnPolicyBypassCacheOnRequestHeader
+      bypass_cache_on_request_headers = 1;
 
   // The CacheKeyPolicy for this CdnPolicy.
   optional CacheKeyPolicy cache_key_policy = 2;
@@ -492,7 +495,7 @@ message BackendServiceCdnPolicy {
   // FORCE_CACHE_ALL: Cache all content, ignoring any "private", "no-store" or
   // "no-cache" directives in Cache-Control response headers. Warning: this may
   // result in Cloud CDN caching private, per-user (user identifiable) content.
-  // INVALID_CACHE_MODE: 
+  // INVALID_CACHE_MODE:
   // USE_ORIGIN_HEADERS: Requires the origin to set valid caching headers to
   // cache content. Responses without these headers will not be cached at
   // Google's edge, and will require a full trip to the origin on every request,
@@ -554,7 +557,8 @@ message BackendServiceCdnPolicy {
   // take care to specify a cache TTL for all response codes that you wish to
   // cache. Cloud CDN will not apply any default negative caching when a policy
   // exists.
-  repeated BackendServiceCdnPolicyNegativeCachingPolicy negative_caching_policy = 8;
+  repeated BackendServiceCdnPolicyNegativeCachingPolicy
+      negative_caching_policy = 8;
 
   // If true then Cloud CDN will combine multiple concurrent cache fill requests
   // into a small number of requests to the origin.
@@ -625,9 +629,9 @@ message BackendServiceConnectionTrackingPolicy {
   // Balancing](https://cloud.google.com/load-balancing/docs/network/networklb-backend-service#connection-persistence)
   // and [Connection Persistence for Internal TCP/UDP Load
   // Balancing](https://cloud.google.com/load-balancing/docs/internal#connection-persistence).
-  // ALWAYS_PERSIST: 
-  // DEFAULT_FOR_PROTOCOL: 
-  // NEVER_PERSIST: 
+  // ALWAYS_PERSIST:
+  // DEFAULT_FOR_PROTOCOL:
+  // NEVER_PERSIST:
   optional string connection_persistence_on_unhealthy_backends = 1;
 
   // Enable Strong Session Affinity for Network Load Balancing. This option is
@@ -652,9 +656,9 @@ message BackendServiceConnectionTrackingPolicy {
   // Balancing](https://cloud.google.com/load-balancing/docs/network/networklb-backend-service#tracking-mode)
   // and [Tracking Mode for Internal TCP/UDP Load
   // Balancing](https://cloud.google.com/load-balancing/docs/internal#tracking-mode).
-  // INVALID_TRACKING_MODE: 
-  // PER_CONNECTION: 
-  // PER_SESSION: 
+  // INVALID_TRACKING_MODE:
+  // PER_CONNECTION:
+  // PER_SESSION:
   optional string tracking_mode = 4;
 }
 
@@ -824,7 +828,7 @@ message BackendServiceList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -838,7 +842,8 @@ message BackendServiceList {
 // Container for either a built-in LB policy supported by gRPC or Envoy or a
 // custom one implemented by the end user.
 message BackendServiceLocalityLoadBalancingPolicyConfig {
-  optional BackendServiceLocalityLoadBalancingPolicyConfigCustomPolicy custom_policy = 1;
+  optional BackendServiceLocalityLoadBalancingPolicyConfigCustomPolicy
+      custom_policy = 1;
 
   optional BackendServiceLocalityLoadBalancingPolicyConfigPolicy policy = 2;
 }
@@ -867,7 +872,7 @@ message BackendServiceLocalityLoadBalancingPolicyConfigPolicy {
   // these values, see the description of localityLbPolicy. Do not specify the
   // same policy more than once for a backend. If you do, the configuration is
   // rejected.
-  // INVALID_LB_POLICY: 
+  // INVALID_LB_POLICY:
   // LEAST_REQUEST: An O(1) algorithm which selects two random healthy hosts and
   // picks the host which has fewer active requests.
   // MAGLEV: This algorithm implements consistent hashing to backends. Maglev

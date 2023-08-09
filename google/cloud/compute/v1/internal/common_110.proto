@@ -123,8 +123,8 @@ message Snapshot {
   optional CustomerEncryptionKey snapshot_encryption_key = 19;
 
   // Indicates the type of the snapshot.
-  // ARCHIVE: 
-  // STANDARD: 
+  // ARCHIVE:
+  // STANDARD:
   optional string snapshot_type = 20;
 
   // The source disk used to create this snapshot.
@@ -165,8 +165,8 @@ message Snapshot {
   // is being adjusted as a result of shared storage reallocation. This status
   // can either be UPDATING, meaning the size of the snapshot is being updated,
   // or UP_TO_DATE, meaning the size of the snapshot is up-to-date.
-  // UPDATING: 
-  // UP_TO_DATE: 
+  // UPDATING:
+  // UP_TO_DATE:
   optional string storage_bytes_status = 28;
 
   // Cloud Storage bucket storage location of the snapshot (regional or

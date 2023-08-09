@@ -103,7 +103,7 @@ message TargetHttpsProxy {
   // quic-override is set to NONE, Google manages whether QUIC is used. - When
   // quic-override is set to ENABLE, the load balancer uses QUIC when possible.
   // - When quic-override is set to DISABLE, the load balancer doesn't use QUIC.
-  // - If the quic-override flag is not specified, NONE is implied. 
+  // - If the quic-override flag is not specified, NONE is implied.
   // DISABLE: The load balancer will not attempt to negotiate QUIC with clients.
   // ENABLE: The load balancer will attempt to negotiate QUIC with clients.
   // NONE: No overrides to the default QUIC policy. This option is implicit if
@@ -143,7 +143,7 @@ message TargetHttpsProxy {
   // the mapping from URL to the BackendService. For example, the following are
   // all valid URLs for specifying a URL map: -
   // https://www.googleapis.compute/v1/projects/project/global/urlMaps/ url-map
-  // - projects/project/global/urlMaps/url-map - global/urlMaps/url-map 
+  // - projects/project/global/urlMaps/url-map - global/urlMaps/url-map
   optional string url_map = 16;
 }
 
@@ -243,7 +243,7 @@ message TargetHttpsProxyList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.

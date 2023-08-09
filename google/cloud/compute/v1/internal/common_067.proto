@@ -34,7 +34,8 @@ message InterconnectRemoteLocation {
   // [Output Only] Subset of fields from InterconnectAttachment's
   // |configurationConstraints| field that apply to all attachments for this
   // remote location.
-  optional InterconnectAttachmentConfigurationConstraints attachment_configuration_constraints = 2;
+  optional InterconnectAttachmentConfigurationConstraints
+      attachment_configuration_constraints = 2;
 
   // [Output Only] Metropolitan area designator that indicates which city an
   // interconnect is located. For example: "Chicago, IL", "Amsterdam,
@@ -47,12 +48,12 @@ message InterconnectRemoteLocation {
 
   // [Output Only] Continent for this location, which can take one of the
   // following values: - AFRICA - ASIA_PAC - EUROPE - NORTH_AMERICA -
-  // SOUTH_AMERICA 
-  // AFRICA: 
-  // ASIA_PAC: 
-  // EUROPE: 
-  // NORTH_AMERICA: 
-  // SOUTH_AMERICA: 
+  // SOUTH_AMERICA
+  // AFRICA:
+  // ASIA_PAC:
+  // EUROPE:
+  // NORTH_AMERICA:
+  // SOUTH_AMERICA:
   optional string continent = 5;
 
   // [Output Only] Creation timestamp in RFC3339 text format.
@@ -104,7 +105,8 @@ message InterconnectRemoteLocation {
   optional string peeringdb_facility_id = 16;
 
   // [Output Only] Permitted connections.
-  repeated InterconnectRemoteLocationPermittedConnections permitted_connections = 17;
+  repeated InterconnectRemoteLocationPermittedConnections
+      permitted_connections = 17;
 
   // [Output Only] Indicates the service provider present at the remote
   // location. Example values: "Amazon Web Services", "Microsoft Azure".
@@ -117,7 +119,7 @@ message InterconnectRemoteLocation {
   // one of the following values: - CLOSED: The InterconnectRemoteLocation is
   // closed and is unavailable for provisioning new Cross-Cloud Interconnects. -
   // AVAILABLE: The InterconnectRemoteLocation is available for provisioning new
-  // Cross-Cloud Interconnects. 
+  // Cross-Cloud Interconnects.
   // AVAILABLE: The InterconnectRemoteLocation is available for provisioning new
   // Cross-Cloud Interconnects.
   // CLOSED: The InterconnectRemoteLocation is closed for provisioning new
@@ -162,8 +164,9 @@ message InterconnectRemoteLocationConstraints {
   // requires /30 subnets. This range specifies the values supported by both
   // cloud providers. Interconnect currently supports /29 and /30 IPv4 subnet
   // lengths. If a remote cloud has no constraint on IPv4 subnet length, the
-  // range would thus be {min: 29, max: 30}. 
-  optional InterconnectRemoteLocationConstraintsSubnetLengthRange subnet_length_range = 3;
+  // range would thus be {min: 29, max: 30}.
+  optional InterconnectRemoteLocationConstraintsSubnetLengthRange
+      subnet_length_range = 3;
 }
 
 message InterconnectRemoteLocationConstraintsSubnetLengthRange {
@@ -270,7 +273,7 @@ message InterconnectRemoteLocationList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.

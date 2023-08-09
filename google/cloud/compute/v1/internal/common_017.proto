@@ -41,9 +41,9 @@ message Commitment {
   // Category LICENSE specifies commitments composed of software licenses,
   // listed in licenseResources. Note that only MACHINE commitments should have
   // a Type specified.
-  // CATEGORY_UNSPECIFIED: 
-  // LICENSE: 
-  // MACHINE: 
+  // CATEGORY_UNSPECIFIED:
+  // LICENSE:
+  // MACHINE:
   optional string category = 2;
 
   // [Output Only] Creation timestamp in RFC3339 text format.
@@ -82,9 +82,9 @@ message Commitment {
   // The plan for this commitment, which determines duration and discount rate.
   // The currently supported plans are TWELVE_MONTH (1 year), and
   // THIRTY_SIX_MONTH (3 years).
-  // INVALID: 
-  // THIRTY_SIX_MONTH: 
-  // TWELVE_MONTH: 
+  // INVALID:
+  // THIRTY_SIX_MONTH:
+  // TWELVE_MONTH:
   optional string plan = 11;
 
   // [Output Only] URL of the region where this commitment may be used.
@@ -109,12 +109,12 @@ message Commitment {
   // [Output Only] Status of the commitment with regards to eventual expiration
   // (each commitment has an end date defined). One of the following values:
   // NOT_YET_ACTIVE, ACTIVE, EXPIRED.
-  // ACTIVE: 
+  // ACTIVE:
   // CANCELLED: Deprecate CANCELED status. Will use separate status to
   // differentiate cancel by mergeCud or manual cancellation.
-  // CREATING: 
-  // EXPIRED: 
-  // NOT_YET_ACTIVE: 
+  // CREATING:
+  // EXPIRED:
+  // NOT_YET_ACTIVE:
   optional string status = 18;
 
   // [Output Only] An optional, human-readable explanation of the status.
@@ -124,19 +124,19 @@ message Commitment {
   // resources. Type MEMORY_OPTIMIZED specifies a commitment that will only
   // apply to memory optimized machines. Type ACCELERATOR_OPTIMIZED specifies a
   // commitment that will only apply to accelerator optimized machines.
-  // ACCELERATOR_OPTIMIZED: 
-  // COMPUTE_OPTIMIZED: 
-  // COMPUTE_OPTIMIZED_C2D: 
-  // COMPUTE_OPTIMIZED_C3: 
-  // GENERAL_PURPOSE: 
-  // GENERAL_PURPOSE_E2: 
-  // GENERAL_PURPOSE_N2: 
-  // GENERAL_PURPOSE_N2D: 
-  // GENERAL_PURPOSE_T2D: 
-  // GRAPHICS_OPTIMIZED: 
-  // MEMORY_OPTIMIZED: 
-  // MEMORY_OPTIMIZED_M3: 
-  // TYPE_UNSPECIFIED: 
+  // ACCELERATOR_OPTIMIZED:
+  // COMPUTE_OPTIMIZED:
+  // COMPUTE_OPTIMIZED_C2D:
+  // COMPUTE_OPTIMIZED_C3:
+  // GENERAL_PURPOSE:
+  // GENERAL_PURPOSE_E2:
+  // GENERAL_PURPOSE_N2:
+  // GENERAL_PURPOSE_N2D:
+  // GENERAL_PURPOSE_T2D:
+  // GRAPHICS_OPTIMIZED:
+  // MEMORY_OPTIMIZED:
+  // MEMORY_OPTIMIZED_M3:
+  // TYPE_UNSPECIFIED:
   optional string type = 20;
 }
 
@@ -238,7 +238,7 @@ message CommitmentAggregatedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -345,7 +345,7 @@ message CommitmentList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -434,7 +434,7 @@ message CommitmentsScopedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -473,10 +473,10 @@ message ResourceCommitment {
 
   // Type of resource for which this commitment applies. Possible values are
   // VCPU, MEMORY, LOCAL_SSD, and ACCELERATOR.
-  // ACCELERATOR: 
-  // LOCAL_SSD: 
-  // MEMORY: 
-  // UNSPECIFIED: 
-  // VCPU: 
+  // ACCELERATOR:
+  // LOCAL_SSD:
+  // MEMORY:
+  // UNSPECIFIED:
+  // VCPU:
   optional string type = 3;
 }

@@ -44,7 +44,7 @@ message MetadataFilter {
   // filterLabels and contributes toward the overall metadataFilter match.
   // Supported values are: - MATCH_ANY: at least one of the filterLabels must
   // have a matching label in the provided metadata. - MATCH_ALL: all
-  // filterLabels must have matching labels in the provided metadata. 
+  // filterLabels must have matching labels in the provided metadata.
   // MATCH_ALL: Specifies that all filterLabels must match for the
   // metadataFilter to be considered a match.
   // MATCH_ANY: Specifies that any filterLabel must match for the metadataFilter

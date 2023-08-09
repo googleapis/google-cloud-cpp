@@ -33,7 +33,7 @@ message BulkInsertDiskResource {
   // https://www.googleapis.com/compute/v1/projects/project/regions/region
   // /resourcePolicies/resourcePolicy -
   // projects/project/regions/region/resourcePolicies/resourcePolicy -
-  // regions/region/resourcePolicies/resourcePolicy 
+  // regions/region/resourcePolicies/resourcePolicy
   optional string source_consistency_group_policy = 1;
 }
 
@@ -202,7 +202,7 @@ message Disk {
   // https://www.googleapis.com/compute/v1/projects/project/regions/region
   // /disks/disk - projects/project/zones/zone/disks/disk -
   // projects/project/regions/region/disks/disk - zones/zone/disks/disk -
-  // regions/region/disks/disk 
+  // regions/region/disks/disk
   optional string source_disk = 26;
 
   // [Output Only] The unique ID of the disk used to create this disk. This
@@ -223,7 +223,7 @@ message Disk {
   // following format: global/images/my-custom-image You can also specify a
   // custom image by its image family, which returns the latest version of the
   // image in that family. Replace the image name with family/family-name:
-  // global/images/family/my-image-family 
+  // global/images/family/my-image-family
   optional string source_image = 28;
 
   // The customer-supplied encryption key of the source image. Required if the
@@ -241,7 +241,7 @@ message Disk {
   // partial or full URL to the resource. For example, the following are valid
   // values: - https://www.googleapis.com/compute/v1/projects/project
   // /global/snapshots/snapshot - projects/project/global/snapshots/snapshot -
-  // global/snapshots/snapshot 
+  // global/snapshots/snapshot
   optional string source_snapshot = 31;
 
   // The customer-supplied encryption key of the source snapshot. Required if
@@ -266,7 +266,7 @@ message Disk {
   // [Output Only] The status of disk creation. - CREATING: Disk is
   // provisioning. - RESTORING: Source data is being copied into the disk. -
   // FAILED: Disk creation failed. - READY: Disk is ready for use. - DELETING:
-  // Disk is deleting. 
+  // Disk is deleting.
   // CREATING: Disk is provisioning
   // DELETING: Disk is deleting.
   // FAILED: Disk creation failed.
@@ -303,7 +303,7 @@ message DiskAsyncReplication {
   // following are valid values: -
   // https://www.googleapis.com/compute/v1/projects/project/zones/zone
   // /disks/disk - projects/project/zones/zone/disks/disk -
-  // zones/zone/disks/disk 
+  // zones/zone/disks/disk
   optional string disk = 3;
 
   // [Output Only] The unique ID of the other disk asynchronously replicated to
@@ -414,7 +414,7 @@ message DiskList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -438,14 +438,15 @@ message DiskResourceStatus {
   optional DiskResourceStatusAsyncReplicationStatus async_primary_disk = 1;
 
   // Key: disk, value: AsyncReplicationStatus message
-  map<string, DiskResourceStatusAsyncReplicationStatus> async_secondary_disks = 2;
+  map<string, DiskResourceStatusAsyncReplicationStatus> async_secondary_disks =
+      2;
 }
 
 message DiskResourceStatusAsyncReplicationStatus {
   // ACTIVE: Replication is active.
   // CREATED: Secondary disk is created and is waiting for replication to start.
   // STARTING: Replication is starting.
-  // STATE_UNSPECIFIED: 
+  // STATE_UNSPECIFIED:
   // STOPPED: Replication is stopped.
   // STOPPING: Replication is stopping.
   optional string state = 1;
@@ -460,6 +461,6 @@ message DisksStopGroupAsyncReplicationResource {
   // https://www.googleapis.com/compute/v1/projects/project/regions/region
   // /resourcePolicies/resourcePolicy -
   // projects/project/regions/region/resourcePolicies/resourcePolicy -
-  // regions/region/resourcePolicies/resourcePolicy 
+  // regions/region/resourcePolicies/resourcePolicy
   optional string resource_policy = 1;
 }

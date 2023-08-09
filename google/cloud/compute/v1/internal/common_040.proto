@@ -63,13 +63,13 @@ message ForwardingRule {
   // protocols are different for different load balancing products as described
   // in [Load balancing
   // features](https://cloud.google.com/load-balancing/docs/features#protocols_from_the_load_balancer_to_the_backends).
-  // AH: 
-  // ESP: 
-  // ICMP: 
-  // L3_DEFAULT: 
-  // SCTP: 
-  // TCP: 
-  // UDP: 
+  // AH:
+  // ESP:
+  // ICMP:
+  // L3_DEFAULT:
+  // SCTP:
+  // TCP:
+  // UDP:
   optional string ip_protocol = 2;
 
   // This field can only be used: - If IPProtocol is one of TCP, UDP, or SCTP. -
@@ -127,9 +127,9 @@ message ForwardingRule {
 
   // The IP Version that will be used by this forwarding rule. Valid options are
   // IPV4 or IPV6.
-  // IPV4: 
-  // IPV6: 
-  // UNSPECIFIED_VERSION: 
+  // IPV4:
+  // IPV6:
+  // UNSPECIFIED_VERSION:
   optional string ip_version = 11;
 
   // Indicates whether or not this load balancer can be used as a collector for
@@ -159,12 +159,12 @@ message ForwardingRule {
 
   // Specifies the forwarding rule type. For more information about forwarding
   // rules, refer to Forwarding rule concepts.
-  // EXTERNAL: 
-  // EXTERNAL_MANAGED: 
-  // INTERNAL: 
-  // INTERNAL_MANAGED: 
-  // INTERNAL_SELF_MANAGED: 
-  // INVALID: 
+  // EXTERNAL:
+  // EXTERNAL_MANAGED:
+  // INTERNAL:
+  // INTERNAL_MANAGED:
+  // INTERNAL_SELF_MANAGED:
+  // INVALID:
   optional string load_balancing_scheme = 16;
 
   // Opaque filter criteria used by load balancer to restrict routing
@@ -266,7 +266,7 @@ message ForwardingRule {
   // traffic.
   // PENDING: The connection is pending acceptance by the producer.
   // REJECTED: The connection has been rejected by the producer.
-  // STATUS_UNSPECIFIED: 
+  // STATUS_UNSPECIFIED:
   optional string psc_connection_status = 25;
 
   // [Output Only] URL of the region where the regional forwarding rule resides.
@@ -280,7 +280,8 @@ message ForwardingRule {
 
   // Service Directory resources to register this forwarding rule with.
   // Currently, only supports a single Service Directory resource.
-  repeated ForwardingRuleServiceDirectoryRegistration service_directory_registrations = 28;
+  repeated ForwardingRuleServiceDirectoryRegistration
+      service_directory_registrations = 28;
 
   // An optional prefix to the service name for this Forwarding Rule. If
   // specified, the prefix is the first label of the fully qualified service
@@ -322,7 +323,7 @@ message ForwardingRule {
   // Google APIs, provide the name of a supported Google API bundle: - vpc-sc -
   // APIs that support VPC Service Controls. - all-apis - All supported Google
   // APIs. - For Private Service Connect forwarding rules that forward traffic
-  // to managed services, the target must be a service attachment. 
+  // to managed services, the target must be a service attachment.
   optional string target = 33;
 }
 
@@ -421,7 +422,7 @@ message ForwardingRuleList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.

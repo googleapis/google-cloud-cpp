@@ -66,7 +66,8 @@ message PublicAdvertisedPrefix {
 
   // [Output Only] The list of public delegated prefixes that exist for this
   // public advertised prefix.
-  repeated PublicAdvertisedPrefixPublicDelegatedPrefix public_delegated_prefixs = 9;
+  repeated PublicAdvertisedPrefixPublicDelegatedPrefix
+      public_delegated_prefixs = 9;
 
   // [Output Only] Server-defined URL for the resource.
   optional string self_link = 10;
@@ -80,7 +81,7 @@ message PublicAdvertisedPrefix {
   // `REVERSE_DNS_LOOKUP_FAILED`: Reverse DNS lookup failed. -
   // `PREFIX_CONFIGURATION_IN_PROGRESS`: The prefix is being configured. -
   // `PREFIX_CONFIGURATION_COMPLETE`: The prefix is fully configured. -
-  // `PREFIX_REMOVAL_IN_PROGRESS`: The prefix is being removed. 
+  // `PREFIX_REMOVAL_IN_PROGRESS`: The prefix is being removed.
   // INITIAL: RPKI validation is complete.
   // PREFIX_CONFIGURATION_COMPLETE: The prefix is fully configured.
   // PREFIX_CONFIGURATION_IN_PROGRESS: The prefix is being configured.
@@ -186,7 +187,7 @@ message PublicAdvertisedPrefixList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
