@@ -87,7 +87,7 @@ function spanner_emulator::start() {
   fi
 
   # The tests typically run in a Docker container, where the ports are largely
-  # free; when using in manual tests, you can set EMULATOR_PORT.
+  # free; when using in manual tests, you can set SPANNER_EMULATOR_HOST.
   rm -f emulator.log
   "${SPANNER_EMULATOR_CMD}" --host_port "localhost:${emulator_port}" >emulator.log 2>&1 </dev/null &
   SPANNER_EMULATOR_PID=$!
@@ -111,15 +111,21 @@ function spanner_emulator::start() {
     return 1
   fi
 
-  # The tests typically run in a Docker container, where the ports are largely
-  # free; when using in manual tests, you can set REST_EMULATOR_PORT.
-  rm -f http_emulator.log
-  # Leverage the previously determined emulator_port to avoid collision.
   local http_emulator_port=$((emulator_port + 1))
+  if [[ $# -ge 2 ]]; then
+    http_emulator_port=$2
+  fi
   local grpc_emulator_port=$((http_emulator_port + 1))
+  if [[ $# -ge 3 ]]; then
+    grpc_emulator_port=$3
+  fi
+
+  # The tests typically run in a Docker container, where the ports are largely
+  # free; when using in manual tests, you can set SPANNER_EMULATOR_REST_HOST.
+  rm -f http_emulator.log
   "${SPANNER_HTTP_EMULATOR_CMD}" --hostname "localhost" \
     --grpc_port "${grpc_emulator_port}" --http_port "${http_emulator_port}" \
-    >http_emulator.log 2>&1 </dev/null &
+    --copy_emulator_stdout=true >http_emulator.log 2>&1 </dev/null &
   SPANNER_HTTP_EMULATOR_PID=$!
 
   http_emulator_port="$(spanner_emulator::internal::read_http_emulator_port http_emulator.log)"
