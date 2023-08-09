@@ -66,9 +66,10 @@ AsyncConnectionImpl::AsyncReadObjectRange(
     return make_ready_future(std::move(response));
   }
 
-  auto context_factory = [request = std::move(request)]() {
+  auto context_factory = [options = internal::CurrentOptions(),
+                          request = std::move(request)]() {
     auto context = std::make_shared<grpc::ClientContext>();
-    ApplyQueryParameters(*context, request);
+    ApplyQueryParameters(*context, options, request);
     return context;
   };
   auto const& current = internal::CurrentOptions();
@@ -91,11 +92,12 @@ AsyncConnectionImpl::AsyncComposeObject(
   auto const idempotency = idempotency_policy()->IsIdempotent(request)
                                ? Idempotency::kIdempotent
                                : Idempotency::kNonIdempotent;
-  auto call = [stub = stub_, request = std::move(request)](
+  auto call = [stub = stub_, options = internal::CurrentOptions(),
+               request = std::move(request)](
                   CompletionQueue& cq,
                   std::shared_ptr<grpc::ClientContext> context,
                   google::storage::v2::ComposeObjectRequest const& proto) {
-    ApplyQueryParameters(*context, request);
+    ApplyQueryParameters(*context, options, request);
     return stub->AsyncComposeObject(cq, std::move(context), proto);
   };
   auto const& current = internal::CurrentOptions();
@@ -117,10 +119,11 @@ future<Status> AsyncConnectionImpl::AsyncDeleteObject(
                                : Idempotency::kNonIdempotent;
   return google::cloud::internal::AsyncRetryLoop(
       retry_policy(), backoff_policy(), idempotency, cq_,
-      [stub = stub_, request = std::move(request)](
+      [stub = stub_, options = internal::CurrentOptions(),
+       request = std::move(request)](
           CompletionQueue& cq, std::shared_ptr<grpc::ClientContext> context,
           google::storage::v2::DeleteObjectRequest const& proto) {
-        ApplyQueryParameters(*context, request);
+        ApplyQueryParameters(*context, options, request);
         return stub->AsyncDeleteObject(cq, std::move(context), proto);
       },
       proto, __func__);
@@ -137,11 +140,12 @@ future<StatusOr<std::string>> AsyncConnectionImpl::AsyncStartResumableWrite(
   auto const idempotency = Idempotency::kIdempotent;
   return google::cloud::internal::AsyncRetryLoop(
              retry_policy(), backoff_policy(), idempotency, cq_,
-             [stub = stub_, request = std::move(request)](
+             [stub = stub_, options = internal::CurrentOptions(),
+              request = std::move(request)](
                  CompletionQueue& cq,
                  std::shared_ptr<grpc::ClientContext> context,
                  google::storage::v2::StartResumableWriteRequest const& proto) {
-               ApplyQueryParameters(*context, request);
+               ApplyQueryParameters(*context, options, request);
                return stub->AsyncStartResumableWrite(cq, std::move(context),
                                                      proto);
              },

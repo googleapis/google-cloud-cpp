@@ -58,6 +58,8 @@ class GrpcClientTest : public ::testing::Test {
   ValidateMetadataFixture validate_metadata_fixture_;
 };
 
+auto constexpr kIdempotencyTokenHeader = "x-goog-gcs-idempotency-token";
+
 Status PermanentError() {
   return Status(StatusCode::kPermissionDenied, "uh-oh");
 }
@@ -66,9 +68,16 @@ google::cloud::Options TestOptions() {
   return Options{}.set<UnifiedCredentialsOption>(MakeInsecureCredentials());
 }
 
-std::shared_ptr<GrpcClient> CreateTestClient(
+rest_internal::RestContext TestContext() {
+  return rest_internal::RestContext(TestOptions())
+      .AddHeader(kIdempotencyTokenHeader, "test-token-1234");
+}
+
+std::unique_ptr<GrpcClient> CreateTestClient(
     std::shared_ptr<storage_internal::StorageStub> stub) {
-  return GrpcClient::CreateMock(std::move(stub), TestOptions());
+  std::shared_ptr<google::cloud::internal::MinimalIamCredentialsStub> unused;
+  return std::make_unique<GrpcClient>(std::move(stub), /*iam=*/unused,
+                                      TestOptions());
 }
 
 TEST(DefaultOptionsGrpc, DefaultOptionsGrpcChannelCount) {
@@ -149,7 +158,9 @@ TEST_F(GrpcClientTest, QueryResumableUpload) {
         return PermanentError();
       });
   auto client = CreateTestClient(mock);
+  auto context = rest_internal::RestContext(TestOptions());
   auto response = client->QueryResumableUpload(
+      context, TestOptions(),
       storage::internal::QueryResumableUploadRequest("test-only-upload-id")
           .set_multiple_options(Fields("field1,field2"),
                                 QuotaUser("test-quota-user")));
@@ -166,13 +177,16 @@ TEST_F(GrpcClientTest, DeleteResumableUpload) {
             auto metadata = GetMetadata(context);
             EXPECT_THAT(metadata,
                         UnorderedElementsAre(
+                            Pair(kIdempotencyTokenHeader, "test-token-1234"),
                             Pair("x-goog-quota-user", "test-quota-user"),
                             Pair("x-goog-fieldmask", "field1,field2")));
             EXPECT_THAT(request.upload_id(), "test-only-upload-id");
             return PermanentError();
           });
   auto client = CreateTestClient(mock);
+  auto context = TestContext();
   auto response = client->DeleteResumableUpload(
+      context, TestOptions(),
       storage::internal::DeleteResumableUploadRequest("test-only-upload-id")
           .set_multiple_options(Fields("field1,field2"),
                                 QuotaUser("test-quota-user")));
@@ -197,7 +211,9 @@ TEST_F(GrpcClientTest, UploadChunk) {
     return stream;
   });
   auto client = CreateTestClient(mock);
+  auto context = rest_internal::RestContext(TestOptions());
   auto response = client->UploadChunk(
+      context, TestOptions(),
       storage::internal::UploadChunkRequest(
           "projects/_/buckets/test-bucket/test-upload-id", 0, {},
           CreateNullHashFunction())
@@ -209,20 +225,24 @@ TEST_F(GrpcClientTest, UploadChunk) {
 TEST_F(GrpcClientTest, CreateBucket) {
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, CreateBucket)
-      .WillOnce([this](
-                    grpc::ClientContext& context,
-                    google::storage::v2::CreateBucketRequest const& request) {
-        auto metadata = GetMetadata(context);
-        EXPECT_THAT(metadata, UnorderedElementsAre(
-                                  Pair("x-goog-quota-user", "test-quota-user"),
-                                  Pair("x-goog-fieldmask", "field1,field2")));
-        EXPECT_THAT(request.parent(), "projects/_");
-        EXPECT_THAT(request.bucket_id(), "test-bucket");
-        EXPECT_THAT(request.bucket().project(), "projects/test-project");
-        return PermanentError();
-      });
+      .WillOnce(
+          [this](grpc::ClientContext& context,
+                 google::storage::v2::CreateBucketRequest const& request) {
+            auto metadata = GetMetadata(context);
+            EXPECT_THAT(metadata,
+                        UnorderedElementsAre(
+                            Pair(kIdempotencyTokenHeader, "test-token-1234"),
+                            Pair("x-goog-quota-user", "test-quota-user"),
+                            Pair("x-goog-fieldmask", "field1,field2")));
+            EXPECT_THAT(request.parent(), "projects/_");
+            EXPECT_THAT(request.bucket_id(), "test-bucket");
+            EXPECT_THAT(request.bucket().project(), "projects/test-project");
+            return PermanentError();
+          });
   auto client = CreateTestClient(mock);
+  auto context = TestContext();
   auto response = client->CreateBucket(
+      context, TestOptions(),
       storage::internal::CreateBucketRequest(
           "test-project", BucketMetadata().set_name("test-bucket"))
           .set_multiple_options(Fields("field1,field2"),
@@ -241,7 +261,9 @@ TEST_F(GrpcClientTest, CreateBucketAlreadyExists) {
     EXPECT_CALL(*mock, CreateBucket)
         .WillOnce(Return(Status(code, "bucket already exists")));
     auto client = CreateTestClient(mock);
+    auto context = TestContext();
     auto response = client->CreateBucket(
+        context, TestOptions(),
         storage::internal::CreateBucketRequest(
             "test-project", BucketMetadata().set_name("test-bucket"))
             .set_multiple_options(Fields("field1,field2"),
@@ -257,14 +279,18 @@ TEST_F(GrpcClientTest, GetBucket) {
       .WillOnce([this](grpc::ClientContext& context,
                        google::storage::v2::GetBucketRequest const& request) {
         auto metadata = GetMetadata(context);
-        EXPECT_THAT(metadata, UnorderedElementsAre(
-                                  Pair("x-goog-quota-user", "test-quota-user"),
-                                  Pair("x-goog-fieldmask", "field1,field2")));
+        EXPECT_THAT(metadata,
+                    UnorderedElementsAre(
+                        Pair(kIdempotencyTokenHeader, "test-token-1234"),
+                        Pair("x-goog-quota-user", "test-quota-user"),
+                        Pair("x-goog-fieldmask", "field1,field2")));
         EXPECT_THAT(request.name(), "projects/_/buckets/test-bucket");
         return PermanentError();
       });
   auto client = CreateTestClient(mock);
+  auto context = TestContext();
   auto response = client->GetBucketMetadata(
+      context, TestOptions(),
       storage::internal::GetBucketMetadataRequest("test-bucket")
           .set_multiple_options(Fields("field1,field2"),
                                 QuotaUser("test-quota-user")));
@@ -274,18 +300,22 @@ TEST_F(GrpcClientTest, GetBucket) {
 TEST_F(GrpcClientTest, DeleteBucket) {
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, DeleteBucket)
-      .WillOnce([this](
-                    grpc::ClientContext& context,
-                    google::storage::v2::DeleteBucketRequest const& request) {
-        auto metadata = GetMetadata(context);
-        EXPECT_THAT(metadata, UnorderedElementsAre(
-                                  Pair("x-goog-quota-user", "test-quota-user"),
-                                  Pair("x-goog-fieldmask", "field1,field2")));
-        EXPECT_THAT(request.name(), "projects/_/buckets/test-bucket");
-        return PermanentError();
-      });
+      .WillOnce(
+          [this](grpc::ClientContext& context,
+                 google::storage::v2::DeleteBucketRequest const& request) {
+            auto metadata = GetMetadata(context);
+            EXPECT_THAT(metadata,
+                        UnorderedElementsAre(
+                            Pair(kIdempotencyTokenHeader, "test-token-1234"),
+                            Pair("x-goog-quota-user", "test-quota-user"),
+                            Pair("x-goog-fieldmask", "field1,field2")));
+            EXPECT_THAT(request.name(), "projects/_/buckets/test-bucket");
+            return PermanentError();
+          });
   auto client = CreateTestClient(mock);
+  auto context = TestContext();
   auto response = client->DeleteBucket(
+      context, TestOptions(),
       storage::internal::DeleteBucketRequest("test-bucket")
           .set_multiple_options(Fields("field1,field2"),
                                 QuotaUser("test-quota-user")));
@@ -298,14 +328,18 @@ TEST_F(GrpcClientTest, ListBuckets) {
       .WillOnce([this](grpc::ClientContext& context,
                        google::storage::v2::ListBucketsRequest const& request) {
         auto metadata = GetMetadata(context);
-        EXPECT_THAT(metadata, UnorderedElementsAre(
-                                  Pair("x-goog-quota-user", "test-quota-user"),
-                                  Pair("x-goog-fieldmask", "field1,field2")));
+        EXPECT_THAT(metadata,
+                    UnorderedElementsAre(
+                        Pair(kIdempotencyTokenHeader, "test-token-1234"),
+                        Pair("x-goog-quota-user", "test-quota-user"),
+                        Pair("x-goog-fieldmask", "field1,field2")));
         EXPECT_THAT(request.parent(), "projects/test-project");
         return PermanentError();
       });
   auto client = CreateTestClient(mock);
+  auto context = TestContext();
   auto response = client->ListBuckets(
+      context, TestOptions(),
       storage::internal::ListBucketsRequest("test-project")
           .set_multiple_options(Fields("field1,field2"),
                                 QuotaUser("test-quota-user")));
@@ -321,12 +355,15 @@ TEST_F(GrpcClientTest, LockBucketRetentionPolicy) {
             auto metadata = GetMetadata(context);
             EXPECT_THAT(metadata,
                         UnorderedElementsAre(
+                            Pair(kIdempotencyTokenHeader, "test-token-1234"),
                             Pair("x-goog-quota-user", "test-quota-user"),
                             Pair("x-goog-fieldmask", "field1,field2")));
             return PermanentError();
           });
   auto client = CreateTestClient(mock);
+  auto context = TestContext();
   auto response = client->LockBucketRetentionPolicy(
+      context, TestOptions(),
       storage::internal::LockBucketRetentionPolicyRequest("test-bucket",
                                                           /*metageneration=*/7)
           .set_multiple_options(Fields("field1,field2"),
@@ -341,14 +378,18 @@ TEST_F(GrpcClientTest, UpdateBucket) {
                     grpc::ClientContext& context,
                     google::storage::v2::UpdateBucketRequest const& request) {
         auto metadata = GetMetadata(context);
-        EXPECT_THAT(metadata, UnorderedElementsAre(
-                                  Pair("x-goog-quota-user", "test-quota-user"),
-                                  Pair("x-goog-fieldmask", "field1,field2")));
+        EXPECT_THAT(metadata,
+                    UnorderedElementsAre(
+                        Pair(kIdempotencyTokenHeader, "test-token-1234"),
+                        Pair("x-goog-quota-user", "test-quota-user"),
+                        Pair("x-goog-fieldmask", "field1,field2")));
         EXPECT_THAT(request.bucket().name(), "projects/_/buckets/test-bucket");
         return PermanentError();
       });
   auto client = CreateTestClient(mock);
+  auto context = TestContext();
   auto response = client->UpdateBucket(
+      context, TestOptions(),
       storage::internal::UpdateBucketRequest(
           BucketMetadata{}.set_name("test-bucket"))
           .set_multiple_options(Fields("field1,field2"),
@@ -363,14 +404,18 @@ TEST_F(GrpcClientTest, PatchBucket) {
                     grpc::ClientContext& context,
                     google::storage::v2::UpdateBucketRequest const& request) {
         auto metadata = GetMetadata(context);
-        EXPECT_THAT(metadata, UnorderedElementsAre(
-                                  Pair("x-goog-quota-user", "test-quota-user"),
-                                  Pair("x-goog-fieldmask", "field1,field2")));
+        EXPECT_THAT(metadata,
+                    UnorderedElementsAre(
+                        Pair(kIdempotencyTokenHeader, "test-token-1234"),
+                        Pair("x-goog-quota-user", "test-quota-user"),
+                        Pair("x-goog-fieldmask", "field1,field2")));
         EXPECT_THAT(request.bucket().name(), "projects/_/buckets/test-bucket");
         return PermanentError();
       });
   auto client = CreateTestClient(mock);
+  auto context = TestContext();
   auto response = client->PatchBucket(
+      context, TestOptions(),
       storage::internal::PatchBucketRequest(
           "test-bucket",
           storage::BucketMetadataPatchBuilder{}.SetLabel("l0", "v0"))
@@ -385,14 +430,18 @@ TEST_F(GrpcClientTest, GetNativeBucketIamPolicy) {
       .WillOnce([this](grpc::ClientContext& context,
                        google::iam::v1::GetIamPolicyRequest const& request) {
         auto metadata = GetMetadata(context);
-        EXPECT_THAT(metadata, UnorderedElementsAre(
-                                  Pair("x-goog-quota-user", "test-quota-user"),
-                                  Pair("x-goog-fieldmask", "field1,field2")));
+        EXPECT_THAT(metadata,
+                    UnorderedElementsAre(
+                        Pair(kIdempotencyTokenHeader, "test-token-1234"),
+                        Pair("x-goog-quota-user", "test-quota-user"),
+                        Pair("x-goog-fieldmask", "field1,field2")));
         EXPECT_THAT(request.resource(), "projects/_/buckets/test-bucket");
         return PermanentError();
       });
   auto client = CreateTestClient(mock);
+  auto context = TestContext();
   auto response = client->GetNativeBucketIamPolicy(
+      context, TestOptions(),
       storage::internal::GetBucketIamPolicyRequest("test-bucket")
           .set_multiple_options(Fields("field1,field2"),
                                 QuotaUser("test-quota-user")));
@@ -405,14 +454,18 @@ TEST_F(GrpcClientTest, SetNativeBucketIamPolicy) {
       .WillOnce([this](grpc::ClientContext& context,
                        google::iam::v1::SetIamPolicyRequest const& request) {
         auto metadata = GetMetadata(context);
-        EXPECT_THAT(metadata, UnorderedElementsAre(
-                                  Pair("x-goog-quota-user", "test-quota-user"),
-                                  Pair("x-goog-fieldmask", "field1,field2")));
+        EXPECT_THAT(metadata,
+                    UnorderedElementsAre(
+                        Pair(kIdempotencyTokenHeader, "test-token-1234"),
+                        Pair("x-goog-quota-user", "test-quota-user"),
+                        Pair("x-goog-fieldmask", "field1,field2")));
         EXPECT_THAT(request.resource(), "projects/_/buckets/test-bucket");
         return PermanentError();
       });
   auto client = CreateTestClient(mock);
+  auto context = TestContext();
   auto response = client->SetNativeBucketIamPolicy(
+      context, TestOptions(),
       storage::internal::SetNativeBucketIamPolicyRequest(
           "test-bucket", storage::NativeIamPolicy(/*bindings=*/{}, /*etag=*/{}))
           .set_multiple_options(Fields("field1,field2"),
@@ -423,18 +476,22 @@ TEST_F(GrpcClientTest, SetNativeBucketIamPolicy) {
 TEST_F(GrpcClientTest, TestBucketIamPermissions) {
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, TestIamPermissions)
-      .WillOnce([this](
-                    grpc::ClientContext& context,
-                    google::iam::v1::TestIamPermissionsRequest const& request) {
-        auto metadata = GetMetadata(context);
-        EXPECT_THAT(metadata, UnorderedElementsAre(
-                                  Pair("x-goog-quota-user", "test-quota-user"),
-                                  Pair("x-goog-fieldmask", "field1,field2")));
-        EXPECT_THAT(request.resource(), "projects/_/buckets/test-bucket");
-        return PermanentError();
-      });
+      .WillOnce(
+          [this](grpc::ClientContext& context,
+                 google::iam::v1::TestIamPermissionsRequest const& request) {
+            auto metadata = GetMetadata(context);
+            EXPECT_THAT(metadata,
+                        UnorderedElementsAre(
+                            Pair(kIdempotencyTokenHeader, "test-token-1234"),
+                            Pair("x-goog-quota-user", "test-quota-user"),
+                            Pair("x-goog-fieldmask", "field1,field2")));
+            EXPECT_THAT(request.resource(), "projects/_/buckets/test-bucket");
+            return PermanentError();
+          });
   auto client = CreateTestClient(mock);
+  auto context = TestContext();
   auto response = client->TestBucketIamPermissions(
+      context, TestOptions(),
       storage::internal::TestBucketIamPermissionsRequest(
           "test-bucket", {"test.permission.1", "test.permission.2"})
           .set_multiple_options(Fields("field1,field2"),
@@ -448,6 +505,7 @@ TEST_F(GrpcClientTest, InsertObjectMedia) {
     auto metadata = GetMetadata(*context);
     EXPECT_THAT(metadata,
                 UnorderedElementsAre(
+                    Pair(kIdempotencyTokenHeader, "test-token-1234"),
                     Pair("x-goog-quota-user", "test-quota-user"),
                     // Map JSON names to the `resource` subobject
                     Pair("x-goog-fieldmask", "resource(field1,field2)"),
@@ -460,7 +518,9 @@ TEST_F(GrpcClientTest, InsertObjectMedia) {
     return stream;
   });
   auto client = CreateTestClient(mock);
+  auto context = TestContext();
   auto response = client->InsertObjectMedia(
+      context, TestOptions(),
       storage::internal::InsertObjectMediaRequest(
           "test-bucket", "test-object", "How vexingly quick daft zebras jump!")
           .set_multiple_options(Fields("field1,field2"),
@@ -476,6 +536,7 @@ TEST_F(GrpcClientTest, CopyObject) {
         auto metadata = GetMetadata(context);
         EXPECT_THAT(metadata,
                     UnorderedElementsAre(
+                        Pair(kIdempotencyTokenHeader, "test-token-1234"),
                         Pair("x-goog-quota-user", "test-quota-user"),
                         // Map JSON names to the `resource` subobject
                         Pair("x-goog-fieldmask", "resource(field1,field2)")));
@@ -488,7 +549,9 @@ TEST_F(GrpcClientTest, CopyObject) {
         return PermanentError();
       });
   auto client = CreateTestClient(mock);
+  auto context = TestContext();
   auto response = client->CopyObject(
+      context, TestOptions(),
       storage::internal::CopyObjectRequest("test-source-bucket",
                                            "test-source-object", "test-bucket",
                                            "test-object")
@@ -505,6 +568,7 @@ TEST_F(GrpcClientTest, CopyObjectTooLarge) {
         auto metadata = GetMetadata(context);
         EXPECT_THAT(metadata,
                     UnorderedElementsAre(
+                        Pair(kIdempotencyTokenHeader, "test-token-1234"),
                         Pair("x-goog-quota-user", "test-quota-user"),
                         // Map JSON names to the `resource` subobject
                         Pair("x-goog-fieldmask", "resource(field1,field2)")));
@@ -520,7 +584,9 @@ TEST_F(GrpcClientTest, CopyObjectTooLarge) {
         return response;
       });
   auto client = CreateTestClient(mock);
+  auto context = TestContext();
   auto response = client->CopyObject(
+      context, TestOptions(),
       storage::internal::CopyObjectRequest("test-source-bucket",
                                            "test-source-object", "test-bucket",
                                            "test-object")
@@ -535,15 +601,19 @@ TEST_F(GrpcClientTest, GetObjectMetadata) {
       .WillOnce([this](grpc::ClientContext& context,
                        v2::GetObjectRequest const& request) {
         auto metadata = GetMetadata(context);
-        EXPECT_THAT(metadata, UnorderedElementsAre(
-                                  Pair("x-goog-quota-user", "test-quota-user"),
-                                  Pair("x-goog-fieldmask", "field1,field2")));
+        EXPECT_THAT(metadata,
+                    UnorderedElementsAre(
+                        Pair(kIdempotencyTokenHeader, "test-token-1234"),
+                        Pair("x-goog-quota-user", "test-quota-user"),
+                        Pair("x-goog-fieldmask", "field1,field2")));
         EXPECT_THAT(request.bucket(), "projects/_/buckets/test-bucket");
         EXPECT_THAT(request.object(), "test-object");
         return PermanentError();
       });
   auto client = CreateTestClient(mock);
+  auto context = TestContext();
   auto response = client->GetObjectMetadata(
+      context, TestOptions(),
       storage::internal::GetObjectMetadataRequest("test-bucket", "test-object")
           .set_multiple_options(Fields("field1,field2"),
                                 QuotaUser("test-quota-user")));
@@ -555,15 +625,19 @@ TEST_F(GrpcClientTest, ReadObject) {
   EXPECT_CALL(*mock, ReadObject)
       .WillOnce([this](auto context, v2::ReadObjectRequest const& request) {
         auto metadata = GetMetadata(*context);
-        EXPECT_THAT(metadata, UnorderedElementsAre(
-                                  Pair("x-goog-quota-user", "test-quota-user"),
-                                  Pair("x-goog-fieldmask", "field1,field2")));
+        EXPECT_THAT(metadata,
+                    UnorderedElementsAre(
+                        Pair(kIdempotencyTokenHeader, "test-token-1234"),
+                        Pair("x-goog-quota-user", "test-quota-user"),
+                        Pair("x-goog-fieldmask", "field1,field2")));
         EXPECT_THAT(request.bucket(), "projects/_/buckets/test-bucket");
         EXPECT_THAT(request.object(), "test-object");
         return std::make_unique<storage::testing::MockObjectMediaStream>();
       });
   auto client = CreateTestClient(mock);
+  auto context = TestContext();
   auto stream = client->ReadObject(
+      context, TestOptions(),
       storage::internal::ReadObjectRangeRequest("test-bucket", "test-object")
           .set_multiple_options(Fields("field1,field2"),
                                 QuotaUser("test-quota-user")));
@@ -575,14 +649,18 @@ TEST_F(GrpcClientTest, ListObjects) {
       .WillOnce([this](grpc::ClientContext& context,
                        v2::ListObjectsRequest const& request) {
         auto metadata = GetMetadata(context);
-        EXPECT_THAT(metadata, UnorderedElementsAre(
-                                  Pair("x-goog-quota-user", "test-quota-user"),
-                                  Pair("x-goog-fieldmask", "field1,field2")));
+        EXPECT_THAT(metadata,
+                    UnorderedElementsAre(
+                        Pair(kIdempotencyTokenHeader, "test-token-1234"),
+                        Pair("x-goog-quota-user", "test-quota-user"),
+                        Pair("x-goog-fieldmask", "field1,field2")));
         EXPECT_THAT(request.parent(), "projects/_/buckets/test-bucket");
         return PermanentError();
       });
   auto client = CreateTestClient(mock);
+  auto context = TestContext();
   auto response = client->ListObjects(
+      context, TestOptions(),
       storage::internal::ListObjectsRequest("test-bucket")
           .set_multiple_options(Fields("field1,field2"),
                                 QuotaUser("test-quota-user")));
@@ -592,19 +670,23 @@ TEST_F(GrpcClientTest, ListObjects) {
 TEST_F(GrpcClientTest, DeleteObject) {
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, DeleteObject)
-      .WillOnce([this](
-                    grpc::ClientContext& context,
-                    google::storage::v2::DeleteObjectRequest const& request) {
-        auto metadata = GetMetadata(context);
-        EXPECT_THAT(metadata, UnorderedElementsAre(
-                                  Pair("x-goog-quota-user", "test-quota-user"),
-                                  Pair("x-goog-fieldmask", "field1,field2")));
-        EXPECT_THAT(request.bucket(), "projects/_/buckets/test-bucket");
-        EXPECT_THAT(request.object(), "test-object");
-        return PermanentError();
-      });
+      .WillOnce(
+          [this](grpc::ClientContext& context,
+                 google::storage::v2::DeleteObjectRequest const& request) {
+            auto metadata = GetMetadata(context);
+            EXPECT_THAT(metadata,
+                        UnorderedElementsAre(
+                            Pair(kIdempotencyTokenHeader, "test-token-1234"),
+                            Pair("x-goog-quota-user", "test-quota-user"),
+                            Pair("x-goog-fieldmask", "field1,field2")));
+            EXPECT_THAT(request.bucket(), "projects/_/buckets/test-bucket");
+            EXPECT_THAT(request.object(), "test-object");
+            return PermanentError();
+          });
   auto client = CreateTestClient(mock);
+  auto context = TestContext();
   auto response = client->DeleteObject(
+      context, TestOptions(),
       storage::internal::DeleteObjectRequest("test-bucket", "test-object")
           .set_multiple_options(Fields("field1,field2"),
                                 QuotaUser("test-quota-user")));
@@ -614,20 +696,24 @@ TEST_F(GrpcClientTest, DeleteObject) {
 TEST_F(GrpcClientTest, UpdateObject) {
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, UpdateObject)
-      .WillOnce([this](
-                    grpc::ClientContext& context,
-                    google::storage::v2::UpdateObjectRequest const& request) {
-        auto metadata = GetMetadata(context);
-        EXPECT_THAT(metadata, UnorderedElementsAre(
-                                  Pair("x-goog-quota-user", "test-quota-user"),
-                                  Pair("x-goog-fieldmask", "field1,field2")));
-        EXPECT_THAT(request.object().bucket(),
-                    "projects/_/buckets/test-bucket");
-        EXPECT_THAT(request.object().name(), "test-object");
-        return PermanentError();
-      });
-  auto client = GrpcClient::CreateMock(mock);
+      .WillOnce(
+          [this](grpc::ClientContext& context,
+                 google::storage::v2::UpdateObjectRequest const& request) {
+            auto metadata = GetMetadata(context);
+            EXPECT_THAT(metadata,
+                        UnorderedElementsAre(
+                            Pair(kIdempotencyTokenHeader, "test-token-1234"),
+                            Pair("x-goog-quota-user", "test-quota-user"),
+                            Pair("x-goog-fieldmask", "field1,field2")));
+            EXPECT_THAT(request.object().bucket(),
+                        "projects/_/buckets/test-bucket");
+            EXPECT_THAT(request.object().name(), "test-object");
+            return PermanentError();
+          });
+  auto client = CreateTestClient(mock);
+  auto context = TestContext();
   auto response = client->UpdateObject(
+      context, TestOptions(),
       storage::internal::UpdateObjectRequest(
           "test-bucket", "test-object",
           // Typically, the metadata is first read from the
@@ -645,16 +731,20 @@ TEST_F(GrpcClientTest, PatchObject) {
       .WillOnce([this](grpc::ClientContext& context,
                        v2::UpdateObjectRequest const& request) {
         auto metadata = GetMetadata(context);
-        EXPECT_THAT(metadata, UnorderedElementsAre(
-                                  Pair("x-goog-quota-user", "test-quota-user"),
-                                  Pair("x-goog-fieldmask", "field1,field2")));
+        EXPECT_THAT(metadata,
+                    UnorderedElementsAre(
+                        Pair(kIdempotencyTokenHeader, "test-token-1234"),
+                        Pair("x-goog-quota-user", "test-quota-user"),
+                        Pair("x-goog-fieldmask", "field1,field2")));
         EXPECT_THAT(request.object().bucket(),
                     "projects/_/buckets/test-source-bucket");
         EXPECT_THAT(request.object().name(), "test-source-object");
         return PermanentError();
       });
   auto client = CreateTestClient(mock);
+  auto context = TestContext();
   auto response = client->PatchObject(
+      context, TestOptions(),
       storage::internal::PatchObjectRequest(
           "test-source-bucket", "test-source-object",
           storage::ObjectMetadataPatchBuilder{}.SetCacheControl("no-cache"))
@@ -669,16 +759,20 @@ TEST_F(GrpcClientTest, ComposeObject) {
       .WillOnce([this](grpc::ClientContext& context,
                        v2::ComposeObjectRequest const& request) {
         auto metadata = GetMetadata(context);
-        EXPECT_THAT(metadata, UnorderedElementsAre(
-                                  Pair("x-goog-quota-user", "test-quota-user"),
-                                  Pair("x-goog-fieldmask", "field1,field2")));
+        EXPECT_THAT(metadata,
+                    UnorderedElementsAre(
+                        Pair(kIdempotencyTokenHeader, "test-token-1234"),
+                        Pair("x-goog-quota-user", "test-quota-user"),
+                        Pair("x-goog-fieldmask", "field1,field2")));
         EXPECT_THAT(request.destination().bucket(),
                     "projects/_/buckets/test-source-bucket");
         EXPECT_THAT(request.destination().name(), "test-source-object");
         return PermanentError();
       });
   auto client = CreateTestClient(mock);
+  auto context = TestContext();
   auto response = client->ComposeObject(
+      context, TestOptions(),
       storage::internal::ComposeObjectRequest("test-source-bucket", {},
                                               "test-source-object")
           .set_multiple_options(Fields("field1,field2"),
@@ -694,6 +788,7 @@ TEST_F(GrpcClientTest, RewriteObject) {
         auto metadata = GetMetadata(context);
         EXPECT_THAT(metadata,
                     UnorderedElementsAre(
+                        Pair(kIdempotencyTokenHeader, "test-token-1234"),
                         Pair("x-goog-quota-user", "test-quota-user"),
                         // Map JSON names to the `resource` subobject
                         Pair("x-goog-fieldmask", "resource(field1,field2)")));
@@ -706,7 +801,9 @@ TEST_F(GrpcClientTest, RewriteObject) {
         return PermanentError();
       });
   auto client = CreateTestClient(mock);
+  auto context = TestContext();
   auto response = client->RewriteObject(
+      context, TestOptions(),
       storage::internal::RewriteObjectRequest(
           "test-source-bucket", "test-source-object", "test-bucket",
           "test-object", "test-token")
@@ -723,6 +820,7 @@ TEST_F(GrpcClientTest, CreateResumableUpload) {
         auto metadata = GetMetadata(context);
         EXPECT_THAT(metadata,
                     UnorderedElementsAre(
+                        Pair(kIdempotencyTokenHeader, "test-token-1234"),
                         Pair("x-goog-quota-user", "test-quota-user"),
                         // Map the JSON field names to the `resource` subobject
                         Pair("x-goog-fieldmask", "resource(field1,field2)")));
@@ -733,7 +831,9 @@ TEST_F(GrpcClientTest, CreateResumableUpload) {
         return PermanentError();
       });
   auto client = CreateTestClient(mock);
+  auto context = TestContext();
   auto response = client->CreateResumableUpload(
+      context, TestOptions(),
       storage::internal::ResumableUploadRequest("test-bucket", "test-object")
           .set_multiple_options(Fields("field1,field2"),
                                 QuotaUser("test-quota-user")));
@@ -746,14 +846,18 @@ TEST_F(GrpcClientTest, GetServiceAccount) {
       .WillOnce([this](grpc::ClientContext& context,
                        v2::GetServiceAccountRequest const& request) {
         auto metadata = GetMetadata(context);
-        EXPECT_THAT(metadata, UnorderedElementsAre(
-                                  Pair("x-goog-quota-user", "test-quota-user"),
-                                  Pair("x-goog-fieldmask", "field1,field2")));
+        EXPECT_THAT(metadata,
+                    UnorderedElementsAre(
+                        Pair(kIdempotencyTokenHeader, "test-token-1234"),
+                        Pair("x-goog-quota-user", "test-quota-user"),
+                        Pair("x-goog-fieldmask", "field1,field2")));
         EXPECT_THAT(request.project(), "projects/test-project-id");
         return PermanentError();
       });
   auto client = CreateTestClient(mock);
+  auto context = TestContext();
   auto response = client->GetServiceAccount(
+      context, TestOptions(),
       storage::internal::GetProjectServiceAccountRequest("test-project-id")
           .set_multiple_options(Fields("field1,field2"),
                                 QuotaUser("test-quota-user")));
@@ -766,14 +870,18 @@ TEST_F(GrpcClientTest, CreateHmacKey) {
       .WillOnce([this](grpc::ClientContext& context,
                        v2::CreateHmacKeyRequest const& request) {
         auto metadata = GetMetadata(context);
-        EXPECT_THAT(metadata, UnorderedElementsAre(
-                                  Pair("x-goog-quota-user", "test-quota-user"),
-                                  Pair("x-goog-fieldmask", "field1,field2")));
+        EXPECT_THAT(metadata,
+                    UnorderedElementsAre(
+                        Pair(kIdempotencyTokenHeader, "test-token-1234"),
+                        Pair("x-goog-quota-user", "test-quota-user"),
+                        Pair("x-goog-fieldmask", "field1,field2")));
         EXPECT_THAT(request.project(), "projects/test-project-id");
         return PermanentError();
       });
   auto client = CreateTestClient(mock);
+  auto context = TestContext();
   auto response = client->CreateHmacKey(
+      context, TestOptions(),
       storage::internal::CreateHmacKeyRequest("test-project-id",
                                               "test-service-account-email")
           .set_multiple_options(Fields("field1,field2"),
@@ -787,14 +895,18 @@ TEST_F(GrpcClientTest, DeleteHmacKey) {
       .WillOnce([this](grpc::ClientContext& context,
                        v2::DeleteHmacKeyRequest const& request) {
         auto metadata = GetMetadata(context);
-        EXPECT_THAT(metadata, UnorderedElementsAre(
-                                  Pair("x-goog-quota-user", "test-quota-user"),
-                                  Pair("x-goog-fieldmask", "field1,field2")));
+        EXPECT_THAT(metadata,
+                    UnorderedElementsAre(
+                        Pair(kIdempotencyTokenHeader, "test-token-1234"),
+                        Pair("x-goog-quota-user", "test-quota-user"),
+                        Pair("x-goog-fieldmask", "field1,field2")));
         EXPECT_THAT(request.project(), "projects/test-project-id");
         return PermanentError();
       });
   auto client = CreateTestClient(mock);
+  auto context = TestContext();
   auto response = client->DeleteHmacKey(
+      context, TestOptions(),
       storage::internal::DeleteHmacKeyRequest("test-project-id",
                                               "test-access-id")
           .set_multiple_options(Fields("field1,field2"),
@@ -808,14 +920,18 @@ TEST_F(GrpcClientTest, GetHmacKey) {
       .WillOnce([this](grpc::ClientContext& context,
                        v2::GetHmacKeyRequest const& request) {
         auto metadata = GetMetadata(context);
-        EXPECT_THAT(metadata, UnorderedElementsAre(
-                                  Pair("x-goog-quota-user", "test-quota-user"),
-                                  Pair("x-goog-fieldmask", "field1,field2")));
+        EXPECT_THAT(metadata,
+                    UnorderedElementsAre(
+                        Pair(kIdempotencyTokenHeader, "test-token-1234"),
+                        Pair("x-goog-quota-user", "test-quota-user"),
+                        Pair("x-goog-fieldmask", "field1,field2")));
         EXPECT_THAT(request.project(), "projects/test-project-id");
         return PermanentError();
       });
   auto client = CreateTestClient(mock);
+  auto context = TestContext();
   auto response = client->GetHmacKey(
+      context, TestOptions(),
       storage::internal::GetHmacKeyRequest("test-project-id", "test-access-id")
           .set_multiple_options(Fields("field1,field2"),
                                 QuotaUser("test-quota-user")));
@@ -828,14 +944,18 @@ TEST_F(GrpcClientTest, ListHmacKeys) {
       .WillOnce([this](grpc::ClientContext& context,
                        v2::ListHmacKeysRequest const& request) {
         auto metadata = GetMetadata(context);
-        EXPECT_THAT(metadata, UnorderedElementsAre(
-                                  Pair("x-goog-quota-user", "test-quota-user"),
-                                  Pair("x-goog-fieldmask", "field1,field2")));
+        EXPECT_THAT(metadata,
+                    UnorderedElementsAre(
+                        Pair(kIdempotencyTokenHeader, "test-token-1234"),
+                        Pair("x-goog-quota-user", "test-quota-user"),
+                        Pair("x-goog-fieldmask", "field1,field2")));
         EXPECT_THAT(request.project(), "projects/test-project-id");
         return PermanentError();
       });
   auto client = CreateTestClient(mock);
+  auto context = TestContext();
   auto response = client->ListHmacKeys(
+      context, TestOptions(),
       storage::internal::ListHmacKeysRequest("test-project-id")
           .set_multiple_options(Fields("field1,field2"),
                                 QuotaUser("test-quota-user")));
@@ -848,14 +968,18 @@ TEST_F(GrpcClientTest, UpdateHmacKey) {
       .WillOnce([this](grpc::ClientContext& context,
                        v2::UpdateHmacKeyRequest const& request) {
         auto metadata = GetMetadata(context);
-        EXPECT_THAT(metadata, UnorderedElementsAre(
-                                  Pair("x-goog-quota-user", "test-quota-user"),
-                                  Pair("x-goog-fieldmask", "field1,field2")));
+        EXPECT_THAT(metadata,
+                    UnorderedElementsAre(
+                        Pair(kIdempotencyTokenHeader, "test-token-1234"),
+                        Pair("x-goog-quota-user", "test-quota-user"),
+                        Pair("x-goog-fieldmask", "field1,field2")));
         EXPECT_THAT(request.hmac_key().project(), "projects/test-project-id");
         return PermanentError();
       });
   auto client = CreateTestClient(mock);
+  auto context = TestContext();
   auto response = client->UpdateHmacKey(
+      context, TestOptions(),
       storage::internal::UpdateHmacKeyRequest(
           "test-project-id", "test-access-id",
           storage::HmacKeyMetadata().set_state(
@@ -871,14 +995,18 @@ TEST_F(GrpcClientTest, ListNotificationConfigs) {
       .WillOnce([this](grpc::ClientContext& context,
                        v2::ListNotificationConfigsRequest const& request) {
         auto metadata = GetMetadata(context);
-        EXPECT_THAT(metadata, UnorderedElementsAre(
-                                  Pair("x-goog-quota-user", "test-quota-user"),
-                                  Pair("x-goog-fieldmask", "field1,field2")));
+        EXPECT_THAT(metadata,
+                    UnorderedElementsAre(
+                        Pair(kIdempotencyTokenHeader, "test-token-1234"),
+                        Pair("x-goog-quota-user", "test-quota-user"),
+                        Pair("x-goog-fieldmask", "field1,field2")));
         EXPECT_THAT(request.parent(), "projects/_/buckets/test-bucket-name");
         return PermanentError();
       });
   auto client = CreateTestClient(mock);
+  auto context = TestContext();
   auto response = client->ListNotifications(
+      context, TestOptions(),
       storage::internal::ListNotificationsRequest("test-bucket-name")
           .set_multiple_options(Fields("field1,field2"),
                                 QuotaUser("test-quota-user")));
@@ -891,14 +1019,18 @@ TEST_F(GrpcClientTest, CreateNotificationConfig) {
       .WillOnce([this](grpc::ClientContext& context,
                        v2::CreateNotificationConfigRequest const& request) {
         auto metadata = GetMetadata(context);
-        EXPECT_THAT(metadata, UnorderedElementsAre(
-                                  Pair("x-goog-quota-user", "test-quota-user"),
-                                  Pair("x-goog-fieldmask", "field1,field2")));
+        EXPECT_THAT(metadata,
+                    UnorderedElementsAre(
+                        Pair(kIdempotencyTokenHeader, "test-token-1234"),
+                        Pair("x-goog-quota-user", "test-quota-user"),
+                        Pair("x-goog-fieldmask", "field1,field2")));
         EXPECT_THAT(request.parent(), "projects/_/buckets/test-bucket-name");
         return PermanentError();
       });
   auto client = CreateTestClient(mock);
+  auto context = TestContext();
   auto response = client->CreateNotification(
+      context, TestOptions(),
       storage::internal::CreateNotificationRequest(
           "test-bucket-name", storage::NotificationMetadata())
           .set_multiple_options(Fields("field1,field2"),
@@ -912,16 +1044,20 @@ TEST_F(GrpcClientTest, GetNotificationConfig) {
       .WillOnce([this](grpc::ClientContext& context,
                        v2::GetNotificationConfigRequest const& request) {
         auto metadata = GetMetadata(context);
-        EXPECT_THAT(metadata, UnorderedElementsAre(
-                                  Pair("x-goog-quota-user", "test-quota-user"),
-                                  Pair("x-goog-fieldmask", "field1,field2")));
+        EXPECT_THAT(metadata,
+                    UnorderedElementsAre(
+                        Pair(kIdempotencyTokenHeader, "test-token-1234"),
+                        Pair("x-goog-quota-user", "test-quota-user"),
+                        Pair("x-goog-fieldmask", "field1,field2")));
         EXPECT_THAT(request.name(),
                     "projects/_/buckets/test-bucket-name/notificationConfigs/"
                     "test-notification-id");
         return PermanentError();
       });
   auto client = CreateTestClient(mock);
+  auto context = TestContext();
   auto response = client->GetNotification(
+      context, TestOptions(),
       storage::internal::GetNotificationRequest("test-bucket-name",
                                                 "test-notification-id")
           .set_multiple_options(Fields("field1,field2"),
@@ -935,16 +1071,20 @@ TEST_F(GrpcClientTest, DeleteNotificationConfig) {
       .WillOnce([this](grpc::ClientContext& context,
                        v2::DeleteNotificationConfigRequest const& request) {
         auto metadata = GetMetadata(context);
-        EXPECT_THAT(metadata, UnorderedElementsAre(
-                                  Pair("x-goog-quota-user", "test-quota-user"),
-                                  Pair("x-goog-fieldmask", "field1,field2")));
+        EXPECT_THAT(metadata,
+                    UnorderedElementsAre(
+                        Pair(kIdempotencyTokenHeader, "test-token-1234"),
+                        Pair("x-goog-quota-user", "test-quota-user"),
+                        Pair("x-goog-fieldmask", "field1,field2")));
         EXPECT_THAT(request.name(),
                     "projects/_/buckets/test-bucket-name/notificationConfigs/"
                     "test-notification-id");
         return PermanentError();
       });
   auto client = CreateTestClient(mock);
+  auto context = TestContext();
   auto response = client->DeleteNotification(
+      context, TestOptions(),
       storage::internal::DeleteNotificationRequest("test-bucket-name",
                                                    "test-notification-id")
           .set_multiple_options(Fields("field1,field2"),

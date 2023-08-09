@@ -25,7 +25,7 @@ namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 HybridClient::HybridClient(Options const& options)
-    : grpc_(GrpcClient::Create(DefaultOptionsGrpc(options))),
+    : grpc_(std::make_unique<GrpcClient>(DefaultOptionsGrpc(options))),
       rest_(std::make_unique<storage::internal::RestClient>(
           storage::internal::DefaultOptionsWithCredentials(options))) {}
 
@@ -93,9 +93,9 @@ StatusOr<storage::BucketMetadata> HybridClient::LockBucketRetentionPolicy(
 }
 
 StatusOr<storage::ObjectMetadata> HybridClient::InsertObjectMedia(
-    rest_internal::RestContext&, Options const&,
+    rest_internal::RestContext& context, Options const& options,
     storage::internal::InsertObjectMediaRequest const& request) {
-  return grpc_->InsertObjectMedia(request);
+  return grpc_->InsertObjectMedia(context, options, request);
 }
 
 StatusOr<storage::ObjectMetadata> HybridClient::CopyObject(
@@ -112,9 +112,9 @@ StatusOr<storage::ObjectMetadata> HybridClient::GetObjectMetadata(
 
 StatusOr<std::unique_ptr<storage::internal::ObjectReadSource>>
 HybridClient::ReadObject(
-    rest_internal::RestContext&, Options const&,
+    rest_internal::RestContext& context, Options const& options,
     storage::internal::ReadObjectRangeRequest const& request) {
-  return grpc_->ReadObject(request);
+  return grpc_->ReadObject(context, options, request);
 }
 
 StatusOr<storage::internal::ListObjectsResponse> HybridClient::ListObjects(
@@ -155,16 +155,16 @@ StatusOr<storage::internal::RewriteObjectResponse> HybridClient::RewriteObject(
 
 StatusOr<storage::internal::CreateResumableUploadResponse>
 HybridClient::CreateResumableUpload(
-    rest_internal::RestContext&, Options const&,
+    rest_internal::RestContext& context, Options const& options,
     storage::internal::ResumableUploadRequest const& request) {
-  return grpc_->CreateResumableUpload(request);
+  return grpc_->CreateResumableUpload(context, options, request);
 }
 
 StatusOr<storage::internal::QueryResumableUploadResponse>
 HybridClient::QueryResumableUpload(
-    rest_internal::RestContext&, Options const&,
+    rest_internal::RestContext& context, Options const& options,
     storage::internal::QueryResumableUploadRequest const& request) {
-  return grpc_->QueryResumableUpload(request);
+  return grpc_->QueryResumableUpload(context, options, request);
 }
 
 StatusOr<storage::internal::EmptyResponse> HybridClient::DeleteResumableUpload(
@@ -173,14 +173,14 @@ StatusOr<storage::internal::EmptyResponse> HybridClient::DeleteResumableUpload(
   if (absl::StartsWith(request.upload_session_url(), "https://")) {
     return rest_->DeleteResumableUpload(context, options, request);
   }
-  return grpc_->DeleteResumableUpload(request);
+  return grpc_->DeleteResumableUpload(context, options, request);
 }
 
 StatusOr<storage::internal::QueryResumableUploadResponse>
 HybridClient::UploadChunk(
-    rest_internal::RestContext&, Options const&,
+    rest_internal::RestContext& context, Options const& options,
     storage::internal::UploadChunkRequest const& request) {
-  return grpc_->UploadChunk(request);
+  return grpc_->UploadChunk(context, options, request);
 }
 
 StatusOr<storage::internal::ListBucketAclResponse> HybridClient::ListBucketAcl(

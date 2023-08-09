@@ -15,6 +15,7 @@
 #include "google/cloud/storage/internal/grpc/configure_client_context.h"
 #include "google/cloud/storage/internal/hash_function.h"
 #include "google/cloud/storage/internal/object_requests.h"
+#include "google/cloud/grpc_options.h"
 #include "google/cloud/testing_util/validate_metadata.h"
 #include <gmock/gmock.h>
 
@@ -44,34 +45,45 @@ class GrpcConfigureClientContext : public ::testing::Test {
   ValidateMetadataFixture validate_metadata_fixture_;
 };
 
+TEST_F(GrpcConfigureClientContext, AddIdempotencyToken) {
+  grpc::ClientContext ctx;
+  auto const context = rest_internal::RestContext{}.AddHeader(
+      "x-goog-gcs-idempotency-token", "token-123");
+  AddIdempotencyToken(ctx, context);
+  auto metadata = GetMetadata(ctx);
+  EXPECT_THAT(metadata,
+              Contains(Pair("x-goog-gcs-idempotency-token", "token-123")));
+}
+
 TEST_F(GrpcConfigureClientContext, ApplyQueryParametersEmpty) {
-  grpc::ClientContext context;
-  ApplyQueryParameters(context, storage::internal::ReadObjectRangeRequest(
-                                    "test-bucket", "test-object"));
-  auto metadata = GetMetadata(context);
+  grpc::ClientContext ctx;
+  ApplyQueryParameters(
+      ctx, Options{},
+      storage::internal::ReadObjectRangeRequest("test-bucket", "test-object"));
+  auto metadata = GetMetadata(ctx);
   EXPECT_THAT(metadata, IsEmpty());
 }
 
 TEST_F(GrpcConfigureClientContext, ApplyQueryParametersWithFields) {
-  grpc::ClientContext context;
+  grpc::ClientContext ctx;
   ApplyQueryParameters(
-      context,
+      ctx, Options{},
       storage::internal::ReadObjectRangeRequest("test-bucket", "test-object")
           .set_option(storage::Fields("bucket,name,generation,contentType")));
-  auto metadata = GetMetadata(context);
+  auto metadata = GetMetadata(ctx);
   EXPECT_THAT(metadata, Contains(Pair("x-goog-fieldmask",
                                       "bucket,name,generation,contentType")));
 }
 
 TEST_F(GrpcConfigureClientContext, ApplyQueryParametersWithFieldsAndPrefix) {
-  grpc::ClientContext context;
+  grpc::ClientContext ctx;
   ApplyQueryParameters(
-      context,
+      ctx, Options{},
       storage::internal::InsertObjectMediaRequest("test-bucket", "test-object",
                                                   "content")
           .set_option(storage::Fields("bucket,name,generation,contentType")),
       "resource");
-  auto metadata = GetMetadata(context);
+  auto metadata = GetMetadata(ctx);
   EXPECT_THAT(metadata,
               Contains(Pair("x-goog-fieldmask",
                             "resource(bucket,name,generation,contentType)")));
@@ -101,9 +113,9 @@ TEST_F(GrpcConfigureClientContext, ApplyQueryParametersQuotaUserAndUserIp) {
       return std::move(os).str();
     };
     SCOPED_TRACE(description());
-    grpc::ClientContext context;
-    ApplyQueryParameters(context, test.request);
-    auto metadata = GetMetadata(context);
+    grpc::ClientContext ctx;
+    ApplyQueryParameters(ctx, Options{}, test.request);
+    auto metadata = GetMetadata(ctx);
     EXPECT_THAT(metadata, Contains(Pair("x-goog-quota-user", test.expected)));
   }
 }
@@ -112,13 +124,13 @@ TEST_F(GrpcConfigureClientContext, ApplyQueryParametersGrpcOptions) {
   MockFunction<void(grpc::ClientContext&)> mock;
   EXPECT_CALL(mock, Call);
 
-  google::cloud::internal::OptionsSpan span(
-      Options{}.set<google::cloud::internal::GrpcSetupOption>(
-          mock.AsStdFunction()));
+  auto const options = Options{}.set<google::cloud::internal::GrpcSetupOption>(
+      mock.AsStdFunction());
 
-  grpc::ClientContext context;
-  ApplyQueryParameters(context, storage::internal::ReadObjectRangeRequest(
-                                    "test-bucket", "test-object"));
+  grpc::ClientContext ctx;
+  ApplyQueryParameters(
+      ctx, options,
+      storage::internal::ReadObjectRangeRequest("test-bucket", "test-object"));
 }
 
 TEST_F(GrpcConfigureClientContext, ApplyRoutingHeadersInsertObjectMedia) {

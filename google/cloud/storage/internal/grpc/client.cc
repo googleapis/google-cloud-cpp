@@ -182,7 +182,6 @@ CloseWriteObjectStream(std::chrono::milliseconds timeout,
 
 }  // namespace
 
-using ::google::cloud::internal::CurrentOptions;
 using ::google::cloud::internal::MakeBackgroundThreadsFactory;
 
 int DefaultGrpcNumChannels(std::string const& endpoint) {
@@ -240,29 +239,8 @@ Options DefaultOptionsGrpc(Options options) {
       std::move(options), Options{}.set<GrpcNumChannelsOption>(num_channels));
 }
 
-std::shared_ptr<GrpcClient> GrpcClient::Create(Options opts) {
-  // Cannot use std::make_shared<> as the constructor is private.
-  return std::shared_ptr<GrpcClient>(new GrpcClient(std::move(opts)));
-}
-
-std::shared_ptr<GrpcClient> GrpcClient::CreateMock(
-    std::shared_ptr<StorageStub> stub, Options opts) {
-  return CreateMock(std::move(stub), {}, std::move(opts));
-}
-
-std::shared_ptr<GrpcClient> GrpcClient::CreateMock(
-    std::shared_ptr<StorageStub> stub,
-    std::shared_ptr<google::cloud::internal::MinimalIamCredentialsStub> iam,
-    Options opts) {
-  // Cannot use std::make_shared<> as the constructor is private.
-  return std::shared_ptr<GrpcClient>(new GrpcClient(
-      std::move(stub), std::move(iam), DefaultOptionsGrpc(std::move(opts))));
-}
-
 GrpcClient::GrpcClient(Options opts)
     : options_(std::move(opts)),
-      backwards_compatibility_options_(
-          storage::internal::MakeBackwardsCompatibleClientOptions(options_)),
       background_(MakeBackgroundThreadsFactory(options_)()),
       iam_stub_(CreateStorageIamStub(background_->cq(), options_)) {
   auto p = CreateStorageStub(background_->cq(), options_);
@@ -275,35 +253,33 @@ GrpcClient::GrpcClient(
     std::shared_ptr<google::cloud::internal::MinimalIamCredentialsStub> iam,
     Options opts)
     : options_(std::move(opts)),
-      backwards_compatibility_options_(
-          storage::internal::MakeBackwardsCompatibleClientOptions(options_)),
       background_(MakeBackgroundThreadsFactory(options_)()),
       stub_(std::move(stub)),
       iam_stub_(std::move(iam)) {}
 
-storage::ClientOptions const& GrpcClient::client_options() const {
-  return backwards_compatibility_options_;
-}
-
 Options GrpcClient::options() const { return options_; }
 
 StatusOr<storage::internal::ListBucketsResponse> GrpcClient::ListBuckets(
+    rest_internal::RestContext& context, Options const& options,
     storage::internal::ListBucketsRequest const& request) {
   auto proto = ToProto(request);
-  grpc::ClientContext context;
-  ApplyQueryParameters(context, request);
-  auto response = stub_->ListBuckets(context, proto);
+  grpc::ClientContext ctx;
+  ApplyQueryParameters(ctx, options, request);
+  AddIdempotencyToken(ctx, context);
+  auto response = stub_->ListBuckets(ctx, proto);
   if (!response) return std::move(response).status();
   return FromProto(*response);
 }
 
 StatusOr<storage::BucketMetadata> GrpcClient::CreateBucket(
+    rest_internal::RestContext& context, Options const& options,
     storage::internal::CreateBucketRequest const& request) {
   auto proto = ToProto(request);
-  grpc::ClientContext context;
-  ApplyQueryParameters(context, request);
-  auto response = stub_->CreateBucket(context, proto);
-  if (response) return FromProto(*response, internal::CurrentOptions());
+  grpc::ClientContext ctx;
+  ApplyQueryParameters(ctx, options, request);
+  AddIdempotencyToken(ctx, context);
+  auto response = stub_->CreateBucket(ctx, proto);
+  if (response) return FromProto(*response, options);
   // GCS returns kFailedPrecondition when the bucket already exists. I filed
   // a bug to change this to kAborted, for consistency with JSON.  In either
   // case, the error is confusing for customers. We normalize it here, just
@@ -317,90 +293,104 @@ StatusOr<storage::BucketMetadata> GrpcClient::CreateBucket(
 }
 
 StatusOr<storage::BucketMetadata> GrpcClient::GetBucketMetadata(
+    rest_internal::RestContext& context, Options const& options,
     storage::internal::GetBucketMetadataRequest const& request) {
-  auto response = GetBucketMetadataImpl(request);
+  auto response = GetBucketMetadataImpl(context, options, request);
   if (!response) return std::move(response).status();
-  return FromProto(*response, CurrentOptions());
+  return FromProto(*response, options);
 }
 
 StatusOr<storage::internal::EmptyResponse> GrpcClient::DeleteBucket(
+    rest_internal::RestContext& context, Options const& options,
     storage::internal::DeleteBucketRequest const& request) {
   auto proto = ToProto(request);
-  grpc::ClientContext context;
-  ApplyQueryParameters(context, request);
-  auto status = stub_->DeleteBucket(context, proto);
+  grpc::ClientContext ctx;
+  ApplyQueryParameters(ctx, options, request);
+  AddIdempotencyToken(ctx, context);
+  auto status = stub_->DeleteBucket(ctx, proto);
   if (!status.ok()) return status;
   return storage::internal::EmptyResponse{};
 }
 
 StatusOr<storage::BucketMetadata> GrpcClient::UpdateBucket(
+    rest_internal::RestContext& context, Options const& options,
     storage::internal::UpdateBucketRequest const& request) {
   auto proto = ToProto(request);
-  grpc::ClientContext context;
-  ApplyQueryParameters(context, request);
-  auto response = stub_->UpdateBucket(context, proto);
+  grpc::ClientContext ctx;
+  ApplyQueryParameters(ctx, options, request);
+  AddIdempotencyToken(ctx, context);
+  auto response = stub_->UpdateBucket(ctx, proto);
   if (!response) return std::move(response).status();
-  return FromProto(*response, internal::CurrentOptions());
+  return FromProto(*response, options);
 }
 
 StatusOr<storage::BucketMetadata> GrpcClient::PatchBucket(
+    rest_internal::RestContext& context, Options const& options,
     storage::internal::PatchBucketRequest const& request) {
-  auto response = PatchBucketImpl(request);
+  auto response = PatchBucketImpl(context, options, request);
   if (!response) return std::move(response).status();
-  return FromProto(*response, CurrentOptions());
+  return FromProto(*response, options);
 }
 
 StatusOr<storage::NativeIamPolicy> GrpcClient::GetNativeBucketIamPolicy(
+    rest_internal::RestContext& context, Options const& options,
     storage::internal::GetBucketIamPolicyRequest const& request) {
   auto proto = ToProto(request);
-  grpc::ClientContext context;
-  ApplyQueryParameters(context, request);
-  auto response = stub_->GetIamPolicy(context, proto);
+  grpc::ClientContext ctx;
+  ApplyQueryParameters(ctx, options, request);
+  AddIdempotencyToken(ctx, context);
+  auto response = stub_->GetIamPolicy(ctx, proto);
   if (!response) return std::move(response).status();
   return FromProto(*response);
 }
 
 StatusOr<storage::NativeIamPolicy> GrpcClient::SetNativeBucketIamPolicy(
+    rest_internal::RestContext& context, Options const& options,
     storage::internal::SetNativeBucketIamPolicyRequest const& request) {
   auto proto = ToProto(request);
-  grpc::ClientContext context;
-  ApplyQueryParameters(context, request);
-  auto response = stub_->SetIamPolicy(context, proto);
+  grpc::ClientContext ctx;
+  ApplyQueryParameters(ctx, options, request);
+  AddIdempotencyToken(ctx, context);
+  auto response = stub_->SetIamPolicy(ctx, proto);
   if (!response) return std::move(response).status();
   return FromProto(*response);
 }
 
 StatusOr<storage::internal::TestBucketIamPermissionsResponse>
 GrpcClient::TestBucketIamPermissions(
+    rest_internal::RestContext& context, Options const& options,
     storage::internal::TestBucketIamPermissionsRequest const& request) {
   auto proto = ToProto(request);
-  grpc::ClientContext context;
-  ApplyQueryParameters(context, request);
-  auto response = stub_->TestIamPermissions(context, proto);
+  grpc::ClientContext ctx;
+  ApplyQueryParameters(ctx, options, request);
+  AddIdempotencyToken(ctx, context);
+  auto response = stub_->TestIamPermissions(ctx, proto);
   if (!response) return std::move(response).status();
   return FromProto(*response);
 }
 
 StatusOr<storage::BucketMetadata> GrpcClient::LockBucketRetentionPolicy(
+    rest_internal::RestContext& context, Options const& options,
     storage::internal::LockBucketRetentionPolicyRequest const& request) {
   auto proto = ToProto(request);
-  grpc::ClientContext context;
-  ApplyQueryParameters(context, request);
-  auto response = stub_->LockBucketRetentionPolicy(context, proto);
+  grpc::ClientContext ctx;
+  ApplyQueryParameters(ctx, options, request);
+  AddIdempotencyToken(ctx, context);
+  auto response = stub_->LockBucketRetentionPolicy(ctx, proto);
   if (!response) return std::move(response).status();
-  return FromProto(*response, CurrentOptions());
+  return FromProto(*response, options);
 }
 
 StatusOr<storage::ObjectMetadata> GrpcClient::InsertObjectMedia(
+    rest_internal::RestContext& context, Options const& options,
     storage::internal::InsertObjectMediaRequest const& request) {
   auto r = ToProto(request);
   if (!r) return std::move(r).status();
   auto proto_request = *std::move(r);
 
-  auto const& current = google::cloud::internal::CurrentOptions();
   auto timeout = ScaleStallTimeout(
-      current.get<storage::TransferStallTimeoutOption>(),
-      current.get<storage::TransferStallMinimumRateOption>(),
+      options.get<storage::TransferStallTimeoutOption>(),
+      options.get<storage::TransferStallMinimumRateOption>(),
       google::storage::v2::ServiceConstants::MAX_WRITE_CHUNK_BYTES);
 
   auto create_watchdog = [cq = background_->cq(), timeout]() mutable {
@@ -411,14 +401,15 @@ StatusOr<storage::ObjectMetadata> GrpcClient::InsertObjectMedia(
         [](auto f) { return f.get().ok(); });
   };
 
-  auto context = std::make_shared<grpc::ClientContext>();
+  auto ctx = std::make_shared<grpc::ClientContext>();
   // The REST response is just the object metadata (aka the "resource"). In the
   // gRPC response the object metadata is in a "resource" field. Passing an
   // extra prefix to ApplyQueryParameters sends the right
   // filtering instructions to the gRPC API.
-  ApplyQueryParameters(*context, request, "resource");
-  ApplyRoutingHeaders(*context, request);
-  auto stream = stub_->WriteObject(std::move(context));
+  ApplyQueryParameters(*ctx, options, request, "resource");
+  AddIdempotencyToken(*ctx, context);
+  ApplyRoutingHeaders(*ctx, request);
+  auto stream = stub_->WriteObject(std::move(ctx));
 
   auto splitter = SplitObjectWriteData<ContentType>(request.payload());
   std::int64_t offset = 0;
@@ -433,15 +424,15 @@ StatusOr<storage::ObjectMetadata> GrpcClient::InsertObjectMedia(
     request.hash_function().Update(offset, GetContent(data), data.crc32c());
     offset += GetContent(data).size();
 
-    auto options = grpc::WriteOptions{};
-    MaybeFinalize(proto_request, options, request, !splitter.Done());
+    auto wopts = grpc::WriteOptions{};
+    MaybeFinalize(proto_request, wopts, request, !splitter.Done());
 
     auto watchdog = create_watchdog().then([&stream](auto f) {
       if (!f.get()) return false;
       stream->Cancel();
       return true;
     });
-    auto success = stream->Write(proto_request, options);
+    auto success = stream->Write(proto_request, wopts);
     watchdog.cancel();
     if (watchdog.get()) {
       // The stream is cancelled by the watchdog. We still need to close it.
@@ -451,7 +442,7 @@ StatusOr<storage::ObjectMetadata> GrpcClient::InsertObjectMedia(
     }
     if (!success) {
       return HandleInsertObjectMediaError(timeout, create_watchdog,
-                                          std::move(stream), current);
+                                          std::move(stream), options);
     }
     // After the first message, clear the object specification and checksums,
     // there is no need to resend it.
@@ -460,36 +451,40 @@ StatusOr<storage::ObjectMetadata> GrpcClient::InsertObjectMedia(
     proto_request.clear_object_checksums();
   } while (!splitter.Done());
   auto response = CloseWriteObjectStream(timeout, create_watchdog,
-                                         std::move(stream), current);
+                                         std::move(stream), options);
   if (!response) return std::move(response).status();
   if (response->payload) return std::move(*response->payload);
   return storage::ObjectMetadata{};
 }
 
 StatusOr<storage::ObjectMetadata> GrpcClient::CopyObject(
+    rest_internal::RestContext& context, Options const& options,
     storage::internal::CopyObjectRequest const& request) {
   auto proto = ToProto(request);
-  grpc::ClientContext context;
-  ApplyQueryParameters(context, request, "resource");
-  auto response = stub_->RewriteObject(context, *proto);
+  grpc::ClientContext ctx;
+  ApplyQueryParameters(ctx, options, request, "resource");
+  AddIdempotencyToken(ctx, context);
+  auto response = stub_->RewriteObject(ctx, *proto);
   if (!response) return std::move(response).status();
   if (!response->done()) {
     return Status(
         StatusCode::kOutOfRange,
         "Object too large, use RewriteObject() instead of CopyObject()");
   }
-  return FromProto(response->resource(), CurrentOptions());
+  return FromProto(response->resource(), options);
 }
 
 StatusOr<storage::ObjectMetadata> GrpcClient::GetObjectMetadata(
+    rest_internal::RestContext& context, Options const& options,
     storage::internal::GetObjectMetadataRequest const& request) {
-  auto response = GetObjectMetadataImpl(request);
+  auto response = GetObjectMetadataImpl(context, options, request);
   if (!response) return std::move(response).status();
-  return FromProto(*response, CurrentOptions());
+  return FromProto(*response, options);
 }
 
 StatusOr<std::unique_ptr<storage::internal::ObjectReadSource>>
 GrpcClient::ReadObject(
+    rest_internal::RestContext& context, Options const& options,
     storage::internal::ReadObjectRangeRequest const& request) {
   // With the REST API this condition was detected by the server as an error,
   // generally we prefer the server to detect errors because its answers are
@@ -502,11 +497,12 @@ GrpcClient::ReadObject(
         StatusCode::kOutOfRange,
         "ReadLast(0) is invalid in REST and produces incorrect output in gRPC");
   }
-  auto context = std::make_shared<grpc::ClientContext>();
-  ApplyQueryParameters(*context, request);
+  auto ctx = std::make_shared<grpc::ClientContext>();
+  ApplyQueryParameters(*ctx, options, request);
+  AddIdempotencyToken(*ctx, context);
   auto proto_request = ToProto(request);
   if (!proto_request) return std::move(proto_request).status();
-  auto stream = stub_->ReadObject(std::move(context), *proto_request);
+  auto stream = stub_->ReadObject(std::move(ctx), *proto_request);
 
   // The default timer source is a no-op. It does not set a timer, and always
   // returns an indication that the timer expired.  The GrpcObjectReadSource
@@ -514,8 +510,7 @@ GrpcClient::ReadObject(
   GrpcObjectReadSource::TimerSource timer_source = [] {
     return make_ready_future(false);
   };
-  auto const timeout =
-      CurrentOptions().get<storage::DownloadStallTimeoutOption>();
+  auto const timeout = options.get<storage::DownloadStallTimeoutOption>();
   if (timeout != std::chrono::seconds(0)) {
     // Change to an active timer.
     timer_source = [timeout, cq = background_->cq()]() mutable {
@@ -530,79 +525,91 @@ GrpcClient::ReadObject(
 }
 
 StatusOr<storage::internal::ListObjectsResponse> GrpcClient::ListObjects(
+    rest_internal::RestContext& context, Options const& options,
     storage::internal::ListObjectsRequest const& request) {
   auto proto = ToProto(request);
-  grpc::ClientContext context;
-  ApplyQueryParameters(context, request);
-  auto response = stub_->ListObjects(context, proto);
+  grpc::ClientContext ctx;
+  ApplyQueryParameters(ctx, options, request);
+  AddIdempotencyToken(ctx, context);
+  auto response = stub_->ListObjects(ctx, proto);
   if (!response) return std::move(response).status();
-  return FromProto(*response, CurrentOptions());
+  return FromProto(*response, options);
 }
 
 StatusOr<storage::internal::EmptyResponse> GrpcClient::DeleteObject(
+    rest_internal::RestContext& context, Options const& options,
     storage::internal::DeleteObjectRequest const& request) {
   auto proto = ToProto(request);
-  grpc::ClientContext context;
-  ApplyQueryParameters(context, request);
-  auto response = stub_->DeleteObject(context, proto);
+  grpc::ClientContext ctx;
+  ApplyQueryParameters(ctx, options, request);
+  AddIdempotencyToken(ctx, context);
+  auto response = stub_->DeleteObject(ctx, proto);
   if (!response.ok()) return response;
   return storage::internal::EmptyResponse{};
 }
 
 StatusOr<storage::ObjectMetadata> GrpcClient::UpdateObject(
+    rest_internal::RestContext& context, Options const& options,
     storage::internal::UpdateObjectRequest const& request) {
   auto proto = ToProto(request);
   if (!proto) return std::move(proto).status();
-  grpc::ClientContext context;
-  ApplyQueryParameters(context, request);
-  auto response = stub_->UpdateObject(context, *proto);
+  grpc::ClientContext ctx;
+  ApplyQueryParameters(ctx, options, request);
+  AddIdempotencyToken(ctx, context);
+  auto response = stub_->UpdateObject(ctx, *proto);
   if (!response) return std::move(response).status();
-  return FromProto(*response, CurrentOptions());
+  return FromProto(*response, options);
 }
 
 StatusOr<storage::ObjectMetadata> GrpcClient::PatchObject(
+    rest_internal::RestContext& context, Options const& options,
     storage::internal::PatchObjectRequest const& request) {
-  auto response = PatchObjectImpl(request);
+  auto response = PatchObjectImpl(context, options, request);
   if (!response) return std::move(response).status();
-  return FromProto(*response, CurrentOptions());
+  return FromProto(*response, options);
 }
 
 StatusOr<storage::ObjectMetadata> GrpcClient::ComposeObject(
+    rest_internal::RestContext& context, Options const& options,
     storage::internal::ComposeObjectRequest const& request) {
   auto proto = ToProto(request);
   if (!proto) return std::move(proto).status();
-  grpc::ClientContext context;
-  ApplyQueryParameters(context, request);
-  auto response = stub_->ComposeObject(context, *proto);
+  grpc::ClientContext ctx;
+  ApplyQueryParameters(ctx, options, request);
+  AddIdempotencyToken(ctx, context);
+  auto response = stub_->ComposeObject(ctx, *proto);
   if (!response) return std::move(response).status();
-  return FromProto(*response, CurrentOptions());
+  return FromProto(*response, options);
 }
 
 StatusOr<storage::internal::RewriteObjectResponse> GrpcClient::RewriteObject(
+    rest_internal::RestContext& context, Options const& options,
     storage::internal::RewriteObjectRequest const& request) {
   auto proto = ToProto(request);
   if (!proto) return std::move(proto).status();
-  grpc::ClientContext context;
-  ApplyQueryParameters(context, request, "resource");
-  auto response = stub_->RewriteObject(context, *proto);
+  grpc::ClientContext ctx;
+  ApplyQueryParameters(ctx, options, request, "resource");
+  AddIdempotencyToken(ctx, context);
+  auto response = stub_->RewriteObject(ctx, *proto);
   if (!response) return std::move(response).status();
-  return FromProto(*response, CurrentOptions());
+  return FromProto(*response, options);
 }
 
 StatusOr<storage::internal::CreateResumableUploadResponse>
 GrpcClient::CreateResumableUpload(
+    rest_internal::RestContext& context, Options const& options,
     storage::internal::ResumableUploadRequest const& request) {
   auto proto_request = ToProto(request);
   if (!proto_request) return std::move(proto_request).status();
 
-  grpc::ClientContext context;
-  ApplyQueryParameters(context, request, "resource");
-  auto const timeout =
-      CurrentOptions().get<storage::TransferStallTimeoutOption>();
+  grpc::ClientContext ctx;
+  ApplyQueryParameters(ctx, options, request, "resource");
+  AddIdempotencyToken(ctx, context);
+  auto const timeout = options.get<storage::TransferStallTimeoutOption>();
   if (timeout.count() != 0) {
-    context.set_deadline(std::chrono::system_clock::now() + timeout);
+    ctx.set_deadline(std::chrono::system_clock::now() + timeout);
   }
-  auto response = stub_->StartResumableWrite(context, *proto_request);
+  auto response = stub_->StartResumableWrite(ctx, *proto_request);
   if (!response.ok()) return std::move(response).status();
 
   return storage::internal::CreateResumableUploadResponse{
@@ -611,42 +618,45 @@ GrpcClient::CreateResumableUpload(
 
 StatusOr<storage::internal::QueryResumableUploadResponse>
 GrpcClient::QueryResumableUpload(
+    rest_internal::RestContext& context, Options const& options,
     storage::internal::QueryResumableUploadRequest const& request) {
-  grpc::ClientContext context;
-  ApplyQueryParameters(context, request, "resource");
-  auto const timeout =
-      CurrentOptions().get<storage::TransferStallTimeoutOption>();
+  grpc::ClientContext ctx;
+  ApplyQueryParameters(ctx, options, request, "resource");
+  AddIdempotencyToken(ctx, context);
+  auto const timeout = options.get<storage::TransferStallTimeoutOption>();
   if (timeout.count() != 0) {
-    context.set_deadline(std::chrono::system_clock::now() + timeout);
+    ctx.set_deadline(std::chrono::system_clock::now() + timeout);
   }
-  auto response = stub_->QueryWriteStatus(context, ToProto(request));
+  auto response = stub_->QueryWriteStatus(ctx, ToProto(request));
   if (!response) return std::move(response).status();
-  return FromProto(*response, CurrentOptions());
+  return FromProto(*response, options);
 }
 
 StatusOr<storage::internal::EmptyResponse> GrpcClient::DeleteResumableUpload(
+    rest_internal::RestContext& context, Options const& options,
     storage::internal::DeleteResumableUploadRequest const& request) {
-  grpc::ClientContext context;
-  ApplyQueryParameters(context, request, "");
-  auto const timeout =
-      CurrentOptions().get<storage::TransferStallTimeoutOption>();
+  grpc::ClientContext ctx;
+  ApplyQueryParameters(ctx, options, request, "");
+  AddIdempotencyToken(ctx, context);
+  auto const timeout = options.get<storage::TransferStallTimeoutOption>();
   if (timeout.count() != 0) {
-    context.set_deadline(std::chrono::system_clock::now() + timeout);
+    ctx.set_deadline(std::chrono::system_clock::now() + timeout);
   }
-  auto response = stub_->CancelResumableWrite(context, ToProto(request));
+  auto response = stub_->CancelResumableWrite(ctx, ToProto(request));
   if (!response) return std::move(response).status();
   return storage::internal::EmptyResponse{};
 }
 
 StatusOr<storage::internal::QueryResumableUploadResponse>
-GrpcClient::UploadChunk(storage::internal::UploadChunkRequest const& request) {
+GrpcClient::UploadChunk(rest_internal::RestContext& context,
+                        Options const& options,
+                        storage::internal::UploadChunkRequest const& request) {
   auto proto_request = google::storage::v2::WriteObjectRequest{};
   proto_request.set_upload_id(request.upload_session_url());
 
-  auto const& current = google::cloud::internal::CurrentOptions();
   auto const timeout = ScaleStallTimeout(
-      current.get<storage::TransferStallTimeoutOption>(),
-      current.get<storage::TransferStallMinimumRateOption>(),
+      options.get<storage::TransferStallTimeoutOption>(),
+      options.get<storage::TransferStallMinimumRateOption>(),
       google::storage::v2::ServiceConstants::MAX_WRITE_CHUNK_BYTES);
 
   auto create_watchdog = [cq = background_->cq(), timeout]() mutable {
@@ -657,14 +667,15 @@ GrpcClient::UploadChunk(storage::internal::UploadChunkRequest const& request) {
         [](auto f) { return f.get().ok(); });
   };
 
-  auto context = std::make_shared<grpc::ClientContext>();
+  auto ctx = std::make_shared<grpc::ClientContext>();
   // The REST response is just the object metadata (aka the "resource"). In the
   // gRPC response the object metadata is in a "resource" field. Passing an
   // extra prefix to ApplyQueryParameters sends the right
   // filtering instructions to the gRPC API.
-  ApplyQueryParameters(*context, request, "resource");
-  ApplyRoutingHeaders(*context, request);
-  auto stream = stub_->WriteObject(std::move(context));
+  ApplyQueryParameters(*ctx, options, request, "resource");
+  AddIdempotencyToken(*ctx, context);
+  ApplyRoutingHeaders(*ctx, request);
+  auto stream = stub_->WriteObject(std::move(ctx));
 
   auto splitter = SplitObjectWriteData<ContentType>(request.payload());
   auto offset = request.offset();
@@ -679,15 +690,15 @@ GrpcClient::UploadChunk(storage::internal::UploadChunkRequest const& request) {
     request.hash_function().Update(offset, GetContent(data), data.crc32c());
     offset += GetContent(data).size();
 
-    auto options = grpc::WriteOptions();
-    MaybeFinalize(proto_request, options, request, !splitter.Done());
+    auto wopts = grpc::WriteOptions();
+    MaybeFinalize(proto_request, wopts, request, !splitter.Done());
 
     auto watchdog = create_watchdog().then([&stream](auto f) {
       if (!f.get()) return false;
       stream->Cancel();
       return true;
     });
-    auto success = stream->Write(proto_request, options);
+    auto success = stream->Write(proto_request, wopts);
     watchdog.cancel();
     if (watchdog.get()) {
       // The stream is cancelled by the watchdog. We still need to close it.
@@ -697,7 +708,7 @@ GrpcClient::UploadChunk(storage::internal::UploadChunkRequest const& request) {
     }
     if (!success) {
       return HandleUploadChunkError(timeout, create_watchdog, std::move(stream),
-                                    current);
+                                    options);
     }
     // After the first message, clear the object specification and checksums,
     // there is no need to resend it.
@@ -706,16 +717,17 @@ GrpcClient::UploadChunk(storage::internal::UploadChunkRequest const& request) {
     proto_request.clear_object_checksums();
   } while (!splitter.Done());
   return CloseWriteObjectStream(timeout, create_watchdog, std::move(stream),
-                                current);
+                                options);
 }
 
 StatusOr<storage::internal::ListBucketAclResponse> GrpcClient::ListBucketAcl(
+    rest_internal::RestContext& context, Options const& options,
     storage::internal::ListBucketAclRequest const& request) {
   auto get_request =
       storage::internal::GetBucketMetadataRequest(request.bucket_name());
   request.ForEachOption(CopyCommonOptions(get_request));
   get_request.set_option(storage::Projection("full"));
-  auto get = GetBucketMetadata(get_request);
+  auto get = GetBucketMetadata(context, options, get_request);
   if (!get) return std::move(get).status();
   storage::internal::ListBucketAclResponse response;
   response.items = get->acl();
@@ -723,19 +735,21 @@ StatusOr<storage::internal::ListBucketAclResponse> GrpcClient::ListBucketAcl(
 }
 
 StatusOr<storage::BucketAccessControl> GrpcClient::GetBucketAcl(
+    rest_internal::RestContext& context, Options const& options,
     storage::internal::GetBucketAclRequest const& request) {
   auto get_request =
       storage::internal::GetBucketMetadataRequest(request.bucket_name());
   request.ForEachOption(CopyCommonOptions(get_request));
   get_request.set_option(storage::Projection("full"));
-  auto get = GetBucketMetadataImpl(get_request);
+  auto get = GetBucketMetadataImpl(context, options, get_request);
   auto const bucket_self_link =
-      SyntheticSelfLinkBucket(CurrentOptions(), request.bucket_name());
+      SyntheticSelfLinkBucket(options, request.bucket_name());
   return FindBucketAccessControl(std::move(get), request.entity(),
                                  bucket_self_link);
 }
 
 StatusOr<storage::BucketAccessControl> GrpcClient::CreateBucketAcl(
+    rest_internal::RestContext&, Options const& options,
     storage::internal::CreateBucketAclRequest const& request) {
   auto get_request =
       storage::internal::GetBucketMetadataRequest(request.bucket_name());
@@ -746,13 +760,14 @@ StatusOr<storage::BucketAccessControl> GrpcClient::CreateBucketAcl(
     return UpsertAcl(std::move(acl), request.entity(), request.role());
   };
   auto const bucket_self_link =
-      SyntheticSelfLinkBucket(CurrentOptions(), request.bucket_name());
+      SyntheticSelfLinkBucket(options, request.bucket_name());
   return FindBucketAccessControl(
-      ModifyBucketAccessControl(get_request, updater), request.entity(),
-      bucket_self_link);
+      ModifyBucketAccessControl(options, get_request, updater),
+      request.entity(), bucket_self_link);
 }
 
 StatusOr<storage::internal::EmptyResponse> GrpcClient::DeleteBucketAcl(
+    rest_internal::RestContext&, Options const& options,
     storage::internal::DeleteBucketAclRequest const& request) {
   auto get_request =
       storage::internal::GetBucketMetadataRequest(request.bucket_name());
@@ -775,12 +790,13 @@ StatusOr<storage::internal::EmptyResponse> GrpcClient::DeleteBucketAcl(
     acl.erase(i, acl.end());
     return acl;
   };
-  auto response = ModifyBucketAccessControl(get_request, updater);
+  auto response = ModifyBucketAccessControl(options, get_request, updater);
   if (!response) return std::move(response).status();
   return storage::internal::EmptyResponse{};
 }
 
 StatusOr<storage::BucketAccessControl> GrpcClient::UpdateBucketAcl(
+    rest_internal::RestContext&, Options const& options,
     storage::internal::UpdateBucketAclRequest const& request) {
   auto get_request =
       storage::internal::GetBucketMetadataRequest(request.bucket_name());
@@ -791,13 +807,14 @@ StatusOr<storage::BucketAccessControl> GrpcClient::UpdateBucketAcl(
     return UpsertAcl(std::move(acl), request.entity(), request.role());
   };
   auto const bucket_self_link =
-      SyntheticSelfLinkBucket(CurrentOptions(), request.bucket_name());
+      SyntheticSelfLinkBucket(options, request.bucket_name());
   return FindBucketAccessControl(
-      ModifyBucketAccessControl(get_request, updater), request.entity(),
-      bucket_self_link);
+      ModifyBucketAccessControl(options, get_request, updater),
+      request.entity(), bucket_self_link);
 }
 
 StatusOr<storage::BucketAccessControl> GrpcClient::PatchBucketAcl(
+    rest_internal::RestContext&, Options const& options,
     storage::internal::PatchBucketAclRequest const& request) {
   auto get_request =
       storage::internal::GetBucketMetadataRequest(request.bucket_name());
@@ -807,19 +824,20 @@ StatusOr<storage::BucketAccessControl> GrpcClient::PatchBucketAcl(
     return UpsertAcl(std::move(acl), request.entity(), Role(request.patch()));
   };
   auto const bucket_self_link =
-      SyntheticSelfLinkBucket(CurrentOptions(), request.bucket_name());
+      SyntheticSelfLinkBucket(options, request.bucket_name());
   return FindBucketAccessControl(
-      ModifyBucketAccessControl(get_request, updater), request.entity(),
-      bucket_self_link);
+      ModifyBucketAccessControl(options, get_request, updater),
+      request.entity(), bucket_self_link);
 }
 
 StatusOr<storage::internal::ListObjectAclResponse> GrpcClient::ListObjectAcl(
+    rest_internal::RestContext& context, Options const& options,
     storage::internal::ListObjectAclRequest const& request) {
   auto get_request = storage::internal::GetObjectMetadataRequest(
       request.bucket_name(), request.object_name());
   request.ForEachOption(CopyCommonOptions(get_request));
   get_request.set_option(storage::Projection("full"));
-  auto get = GetObjectMetadata(get_request);
+  auto get = GetObjectMetadata(context, options, get_request);
   if (!get) return std::move(get).status();
   storage::internal::ListObjectAclResponse response;
   response.items = get->acl();
@@ -827,6 +845,7 @@ StatusOr<storage::internal::ListObjectAclResponse> GrpcClient::ListObjectAcl(
 }
 
 StatusOr<storage::ObjectAccessControl> GrpcClient::CreateObjectAcl(
+    rest_internal::RestContext&, Options const& options,
     storage::internal::CreateObjectAclRequest const& request) {
   auto get_request = storage::internal::GetObjectMetadataRequest(
       request.bucket_name(), request.object_name());
@@ -836,13 +855,14 @@ StatusOr<storage::ObjectAccessControl> GrpcClient::CreateObjectAcl(
     return UpsertAcl(std::move(acl), request.entity(), request.role());
   };
   auto const object_self_link = SyntheticSelfLinkObject(
-      CurrentOptions(), request.bucket_name(), request.object_name());
+      options, request.bucket_name(), request.object_name());
   return FindObjectAccessControl(
-      ModifyObjectAccessControl(get_request, updater), request.entity(),
-      object_self_link);
+      ModifyObjectAccessControl(options, get_request, updater),
+      request.entity(), object_self_link);
 }
 
 StatusOr<storage::internal::EmptyResponse> GrpcClient::DeleteObjectAcl(
+    rest_internal::RestContext&, Options const& options,
     storage::internal::DeleteObjectAclRequest const& request) {
   auto get_request = storage::internal::GetObjectMetadataRequest(
       request.bucket_name(), request.object_name());
@@ -864,25 +884,27 @@ StatusOr<storage::internal::EmptyResponse> GrpcClient::DeleteObjectAcl(
     acl.erase(i, acl.end());
     return acl;
   };
-  auto response = ModifyObjectAccessControl(get_request, updater);
+  auto response = ModifyObjectAccessControl(options, get_request, updater);
   if (!response) return std::move(response).status();
   return storage::internal::EmptyResponse{};
 }
 
 StatusOr<storage::ObjectAccessControl> GrpcClient::GetObjectAcl(
+    rest_internal::RestContext& context, Options const& options,
     storage::internal::GetObjectAclRequest const& request) {
   auto get_request = storage::internal::GetObjectMetadataRequest(
       request.bucket_name(), request.object_name());
   request.ForEachOption(CopyCommonOptions(get_request));
   get_request.set_option(storage::Projection("full"));
-  auto get = GetObjectMetadataImpl(get_request);
+  auto get = GetObjectMetadataImpl(context, options, get_request);
   auto const object_self_link = SyntheticSelfLinkObject(
-      CurrentOptions(), request.bucket_name(), request.object_name());
+      options, request.bucket_name(), request.object_name());
   return FindObjectAccessControl(std::move(get), request.entity(),
                                  object_self_link);
 }
 
 StatusOr<storage::ObjectAccessControl> GrpcClient::UpdateObjectAcl(
+    rest_internal::RestContext&, Options const& options,
     storage::internal::UpdateObjectAclRequest const& request) {
   auto get_request = storage::internal::GetObjectMetadataRequest(
       request.bucket_name(), request.object_name());
@@ -892,13 +914,14 @@ StatusOr<storage::ObjectAccessControl> GrpcClient::UpdateObjectAcl(
     return UpsertAcl(std::move(acl), request.entity(), request.role());
   };
   auto const object_self_link = SyntheticSelfLinkObject(
-      CurrentOptions(), request.bucket_name(), request.object_name());
+      options, request.bucket_name(), request.object_name());
   return FindObjectAccessControl(
-      ModifyObjectAccessControl(get_request, updater), request.entity(),
-      object_self_link);
+      ModifyObjectAccessControl(options, get_request, updater),
+      request.entity(), object_self_link);
 }
 
 StatusOr<storage::ObjectAccessControl> GrpcClient::PatchObjectAcl(
+    rest_internal::RestContext&, Options const& options,
     storage::internal::PatchObjectAclRequest const& request) {
   auto get_request = storage::internal::GetObjectMetadataRequest(
       request.bucket_name(), request.object_name());
@@ -908,20 +931,21 @@ StatusOr<storage::ObjectAccessControl> GrpcClient::PatchObjectAcl(
     return UpsertAcl(std::move(acl), request.entity(), Role(request.patch()));
   };
   auto const object_self_link = SyntheticSelfLinkObject(
-      CurrentOptions(), request.bucket_name(), request.object_name());
+      options, request.bucket_name(), request.object_name());
   return FindObjectAccessControl(
-      ModifyObjectAccessControl(get_request, updater), request.entity(),
-      object_self_link);
+      ModifyObjectAccessControl(options, get_request, updater),
+      request.entity(), object_self_link);
 }
 
 StatusOr<storage::internal::ListDefaultObjectAclResponse>
 GrpcClient::ListDefaultObjectAcl(
+    rest_internal::RestContext& context, Options const& options,
     storage::internal::ListDefaultObjectAclRequest const& request) {
   auto get_request =
       storage::internal::GetBucketMetadataRequest(request.bucket_name());
   request.ForEachOption(CopyCommonOptions(get_request));
   get_request.set_option(storage::Projection("full"));
-  auto get = GetBucketMetadata(get_request);
+  auto get = GetBucketMetadata(context, options, get_request);
   if (!get) return std::move(get).status();
   storage::internal::ListDefaultObjectAclResponse response;
   response.items = get->default_acl();
@@ -929,6 +953,7 @@ GrpcClient::ListDefaultObjectAcl(
 }
 
 StatusOr<storage::ObjectAccessControl> GrpcClient::CreateDefaultObjectAcl(
+    rest_internal::RestContext&, Options const& options,
     storage::internal::CreateDefaultObjectAclRequest const& request) {
   auto get_request =
       storage::internal::GetBucketMetadataRequest(request.bucket_name());
@@ -938,10 +963,12 @@ StatusOr<storage::ObjectAccessControl> GrpcClient::CreateDefaultObjectAcl(
     return UpsertAcl(std::move(acl), request.entity(), request.role());
   };
   return FindDefaultObjectAccessControl(
-      ModifyDefaultAccessControl(get_request, updater), request.entity());
+      ModifyDefaultAccessControl(options, get_request, updater),
+      request.entity());
 }
 
 StatusOr<storage::internal::EmptyResponse> GrpcClient::DeleteDefaultObjectAcl(
+    rest_internal::RestContext&, Options const& options,
     storage::internal::DeleteDefaultObjectAclRequest const& request) {
   auto get_request =
       storage::internal::GetBucketMetadataRequest(request.bucket_name());
@@ -963,22 +990,24 @@ StatusOr<storage::internal::EmptyResponse> GrpcClient::DeleteDefaultObjectAcl(
     acl.erase(i, acl.end());
     return acl;
   };
-  auto response = ModifyDefaultAccessControl(get_request, updater);
+  auto response = ModifyDefaultAccessControl(options, get_request, updater);
   if (!response) return std::move(response).status();
   return storage::internal::EmptyResponse{};
 }
 
 StatusOr<storage::ObjectAccessControl> GrpcClient::GetDefaultObjectAcl(
+    rest_internal::RestContext& context, Options const& options,
     storage::internal::GetDefaultObjectAclRequest const& request) {
   auto get_request =
       storage::internal::GetBucketMetadataRequest(request.bucket_name());
   request.ForEachOption(CopyCommonOptions(get_request));
   get_request.set_option(storage::Projection("full"));
-  auto get = GetBucketMetadataImpl(get_request);
+  auto get = GetBucketMetadataImpl(context, options, get_request);
   return FindDefaultObjectAccessControl(std::move(get), request.entity());
 }
 
 StatusOr<storage::ObjectAccessControl> GrpcClient::UpdateDefaultObjectAcl(
+    rest_internal::RestContext&, Options const& options,
     storage::internal::UpdateDefaultObjectAclRequest const& request) {
   auto get_request =
       storage::internal::GetBucketMetadataRequest(request.bucket_name());
@@ -988,10 +1017,12 @@ StatusOr<storage::ObjectAccessControl> GrpcClient::UpdateDefaultObjectAcl(
     return UpsertAcl(std::move(acl), request.entity(), request.role());
   };
   return FindDefaultObjectAccessControl(
-      ModifyDefaultAccessControl(get_request, updater), request.entity());
+      ModifyDefaultAccessControl(options, get_request, updater),
+      request.entity());
 }
 
 StatusOr<storage::ObjectAccessControl> GrpcClient::PatchDefaultObjectAcl(
+    rest_internal::RestContext&, Options const& options,
     storage::internal::PatchDefaultObjectAclRequest const& request) {
   auto get_request =
       storage::internal::GetBucketMetadataRequest(request.bucket_name());
@@ -1001,117 +1032,140 @@ StatusOr<storage::ObjectAccessControl> GrpcClient::PatchDefaultObjectAcl(
     return UpsertAcl(std::move(acl), request.entity(), Role(request.patch()));
   };
   return FindDefaultObjectAccessControl(
-      ModifyDefaultAccessControl(get_request, updater), request.entity());
+      ModifyDefaultAccessControl(options, get_request, updater),
+      request.entity());
 }
 
 StatusOr<storage::ServiceAccount> GrpcClient::GetServiceAccount(
+    rest_internal::RestContext& context, Options const& options,
     storage::internal::GetProjectServiceAccountRequest const& request) {
   auto proto = ToProto(request);
-  grpc::ClientContext context;
-  ApplyQueryParameters(context, request);
-  auto response = stub_->GetServiceAccount(context, proto);
+  grpc::ClientContext ctx;
+  ApplyQueryParameters(ctx, options, request);
+  AddIdempotencyToken(ctx, context);
+  auto response = stub_->GetServiceAccount(ctx, proto);
   if (!response) return std::move(response).status();
   return FromProto(*response);
 }
 
 StatusOr<storage::internal::ListHmacKeysResponse> GrpcClient::ListHmacKeys(
+    rest_internal::RestContext& context, Options const& options,
     storage::internal::ListHmacKeysRequest const& request) {
   auto proto = ToProto(request);
-  grpc::ClientContext context;
-  ApplyQueryParameters(context, request);
-  auto response = stub_->ListHmacKeys(context, proto);
+  grpc::ClientContext ctx;
+  ApplyQueryParameters(ctx, options, request);
+  AddIdempotencyToken(ctx, context);
+  auto response = stub_->ListHmacKeys(ctx, proto);
   if (!response) return std::move(response).status();
   return FromProto(*response);
 }
 
 StatusOr<storage::internal::CreateHmacKeyResponse> GrpcClient::CreateHmacKey(
+    rest_internal::RestContext& context, Options const& options,
     storage::internal::CreateHmacKeyRequest const& request) {
   auto proto = ToProto(request);
-  grpc::ClientContext context;
-  ApplyQueryParameters(context, request);
-  auto response = stub_->CreateHmacKey(context, proto);
+  grpc::ClientContext ctx;
+  ApplyQueryParameters(ctx, options, request);
+  AddIdempotencyToken(ctx, context);
+  auto response = stub_->CreateHmacKey(ctx, proto);
   if (!response) return std::move(response).status();
   return FromProto(*response);
 }
 
 StatusOr<storage::internal::EmptyResponse> GrpcClient::DeleteHmacKey(
+    rest_internal::RestContext& context, Options const& options,
     storage::internal::DeleteHmacKeyRequest const& request) {
   auto proto = ToProto(request);
-  grpc::ClientContext context;
-  ApplyQueryParameters(context, request);
-  auto response = stub_->DeleteHmacKey(context, proto);
+  grpc::ClientContext ctx;
+  ApplyQueryParameters(ctx, options, request);
+  AddIdempotencyToken(ctx, context);
+  auto response = stub_->DeleteHmacKey(ctx, proto);
   if (!response.ok()) return response;
   return storage::internal::EmptyResponse{};
 }
 
 StatusOr<storage::HmacKeyMetadata> GrpcClient::GetHmacKey(
+    rest_internal::RestContext& context, Options const& options,
     storage::internal::GetHmacKeyRequest const& request) {
   auto proto = ToProto(request);
-  grpc::ClientContext context;
-  ApplyQueryParameters(context, request);
-  auto response = stub_->GetHmacKey(context, proto);
+  grpc::ClientContext ctx;
+  ApplyQueryParameters(ctx, options, request);
+  AddIdempotencyToken(ctx, context);
+  auto response = stub_->GetHmacKey(ctx, proto);
   if (!response) return std::move(response).status();
   return FromProto(*response);
 }
 
 StatusOr<storage::HmacKeyMetadata> GrpcClient::UpdateHmacKey(
+    rest_internal::RestContext& context, Options const& options,
     storage::internal::UpdateHmacKeyRequest const& request) {
   auto proto = ToProto(request);
-  grpc::ClientContext context;
-  ApplyQueryParameters(context, request);
-  auto response = stub_->UpdateHmacKey(context, proto);
+  grpc::ClientContext ctx;
+  ApplyQueryParameters(ctx, options, request);
+  AddIdempotencyToken(ctx, context);
+  auto response = stub_->UpdateHmacKey(ctx, proto);
   if (!response) return std::move(response).status();
   return FromProto(*response);
 }
 
 StatusOr<storage::internal::SignBlobResponse> GrpcClient::SignBlob(
+    rest_internal::RestContext& context, Options const&,
     storage::internal::SignBlobRequest const& request) {
   auto proto = ToProto(request);
-  grpc::ClientContext context;
+  grpc::ClientContext ctx;
   // This request does not have any options that require using
-  //     ApplyQueryParameters(context, request)
-  auto response = iam_stub_->SignBlob(context, proto);
+  //     ApplyQueryParameters(ctx, options, request);
+  AddIdempotencyToken(ctx, context);
+  auto response = iam_stub_->SignBlob(ctx, proto);
   if (!response) return std::move(response).status();
   return FromProto(*response);
 }
 
 StatusOr<storage::internal::ListNotificationsResponse>
 GrpcClient::ListNotifications(
+    rest_internal::RestContext& context, Options const& options,
     storage::internal::ListNotificationsRequest const& request) {
   auto proto = ToProto(request);
-  grpc::ClientContext context;
-  ApplyQueryParameters(context, request);
-  auto response = stub_->ListNotificationConfigs(context, proto);
+  grpc::ClientContext ctx;
+  ApplyQueryParameters(ctx, options, request);
+  AddIdempotencyToken(ctx, context);
+  auto response = stub_->ListNotificationConfigs(ctx, proto);
   if (!response) return std::move(response).status();
   return FromProto(*response);
 }
 
 StatusOr<storage::NotificationMetadata> GrpcClient::CreateNotification(
+    rest_internal::RestContext& context, Options const& options,
     storage::internal::CreateNotificationRequest const& request) {
   auto proto = ToProto(request);
-  grpc::ClientContext context;
-  ApplyQueryParameters(context, request);
-  auto response = stub_->CreateNotificationConfig(context, proto);
+  grpc::ClientContext ctx;
+  ApplyQueryParameters(ctx, options, request);
+  AddIdempotencyToken(ctx, context);
+  auto response = stub_->CreateNotificationConfig(ctx, proto);
   if (!response) return std::move(response).status();
   return FromProto(*response);
 }
 
 StatusOr<storage::NotificationMetadata> GrpcClient::GetNotification(
+    rest_internal::RestContext& context, Options const& options,
     storage::internal::GetNotificationRequest const& request) {
   auto proto = ToProto(request);
-  grpc::ClientContext context;
-  ApplyQueryParameters(context, request);
-  auto response = stub_->GetNotificationConfig(context, proto);
+  grpc::ClientContext ctx;
+  ApplyQueryParameters(ctx, options, request);
+  AddIdempotencyToken(ctx, context);
+  auto response = stub_->GetNotificationConfig(ctx, proto);
   if (!response) return std::move(response).status();
   return FromProto(*response);
 }
 
 StatusOr<storage::internal::EmptyResponse> GrpcClient::DeleteNotification(
+    rest_internal::RestContext& context, Options const& options,
     storage::internal::DeleteNotificationRequest const& request) {
   auto proto = ToProto(request);
-  grpc::ClientContext context;
-  ApplyQueryParameters(context, request);
-  auto response = stub_->DeleteNotificationConfig(context, proto);
+  grpc::ClientContext ctx;
+  ApplyQueryParameters(ctx, options, request);
+  AddIdempotencyToken(ctx, context);
+  auto response = stub_->DeleteNotificationConfig(ctx, proto);
   if (!response.ok()) return response;
   return storage::internal::EmptyResponse{};
 }
@@ -1121,49 +1175,59 @@ std::vector<std::string> GrpcClient::InspectStackStructure() const {
 }
 
 StatusOr<google::storage::v2::Bucket> GrpcClient::GetBucketMetadataImpl(
+    rest_internal::RestContext& context, Options const& options,
     storage::internal::GetBucketMetadataRequest const& request) {
   auto proto = ToProto(request);
-  grpc::ClientContext context;
-  ApplyQueryParameters(context, request);
-  return stub_->GetBucket(context, proto);
+  grpc::ClientContext ctx;
+  ApplyQueryParameters(ctx, options, request);
+  AddIdempotencyToken(ctx, context);
+  return stub_->GetBucket(ctx, proto);
 }
 
 StatusOr<google::storage::v2::Bucket> GrpcClient::PatchBucketImpl(
+    rest_internal::RestContext& context, Options const& options,
     storage::internal::PatchBucketRequest const& request) {
   auto proto = ToProto(request);
   if (!proto) return std::move(proto).status();
-  grpc::ClientContext context;
-  ApplyQueryParameters(context, request);
-  return stub_->UpdateBucket(context, *proto);
+  grpc::ClientContext ctx;
+  ApplyQueryParameters(ctx, options, request);
+  AddIdempotencyToken(ctx, context);
+  return stub_->UpdateBucket(ctx, *proto);
 }
 
 StatusOr<google::storage::v2::Object> GrpcClient::GetObjectMetadataImpl(
+    rest_internal::RestContext& context, Options const& options,
     storage::internal::GetObjectMetadataRequest const& request) {
   auto proto = ToProto(request);
-  grpc::ClientContext context;
-  ApplyQueryParameters(context, request);
-  return stub_->GetObject(context, proto);
+  grpc::ClientContext ctx;
+  ApplyQueryParameters(ctx, options, request);
+  AddIdempotencyToken(ctx, context);
+  return stub_->GetObject(ctx, proto);
 }
 
 StatusOr<google::storage::v2::Object> GrpcClient::PatchObjectImpl(
+    rest_internal::RestContext& context, Options const& options,
     storage::internal::PatchObjectRequest const& request) {
   auto proto = ToProto(request);
   if (!proto) return std::move(proto).status();
-  grpc::ClientContext context;
-  ApplyQueryParameters(context, request);
-  return stub_->UpdateObject(context, *proto);
+  grpc::ClientContext ctx;
+  ApplyQueryParameters(ctx, options, request);
+  AddIdempotencyToken(ctx, context);
+  return stub_->UpdateObject(ctx, *proto);
 }
 
 StatusOr<google::storage::v2::Bucket> GrpcClient::ModifyBucketAccessControl(
+    Options const& options,
     storage::internal::GetBucketMetadataRequest const& request,
     BucketAclUpdater const& updater) {
-  auto response = GetBucketMetadataImpl(request);
+  auto context = rest_internal::RestContext{};
+  auto response = GetBucketMetadataImpl(context, options, request);
   if (!response) return std::move(response).status();
   auto acl = updater(std::move(*response->mutable_acl()));
   if (!acl) return std::move(acl).status();
 
   auto const bucket_self_link =
-      SyntheticSelfLinkBucket(CurrentOptions(), request.bucket_name());
+      SyntheticSelfLinkBucket(options, request.bucket_name());
   std::vector<storage::BucketAccessControl> updated(acl->size());
   std::transform(acl->begin(), acl->end(), updated.begin(),
                  [&request, &bucket_self_link](auto const& p) {
@@ -1175,7 +1239,7 @@ StatusOr<google::storage::v2::Bucket> GrpcClient::ModifyBucketAccessControl(
   request.ForEachOption(CopyCommonOptions(patch_request));
   patch_request.set_option(
       storage::IfMetagenerationMatch(response->metageneration()));
-  auto patch = PatchBucketImpl(patch_request);
+  auto patch = PatchBucketImpl(context, options, patch_request);
   // Retry on failed preconditions
   if (patch.status().code() == StatusCode::kFailedPrecondition) {
     return Status(
@@ -1187,16 +1251,18 @@ StatusOr<google::storage::v2::Bucket> GrpcClient::ModifyBucketAccessControl(
 }
 
 StatusOr<google::storage::v2::Object> GrpcClient::ModifyObjectAccessControl(
+    Options const& options,
     storage::internal::GetObjectMetadataRequest const& request,
     ObjectAclUpdater const& updater) {
-  auto response = GetObjectMetadataImpl(request);
+  auto context = rest_internal::RestContext{};
+  auto response = GetObjectMetadataImpl(context, options, request);
   if (!response) return std::move(response).status();
   auto acl = updater(std::move(*response->mutable_acl()));
   if (!acl) return std::move(acl).status();
 
   std::vector<storage::ObjectAccessControl> updated(acl->size());
   auto const object_self_link = SyntheticSelfLinkObject(
-      CurrentOptions(), request.bucket_name(), request.object_name());
+      options, request.bucket_name(), request.object_name());
   std::transform(acl->begin(), acl->end(), updated.begin(), [&](auto const& p) {
     return FromProto(p, request.bucket_name(), response->name(),
                      response->generation(), object_self_link);
@@ -1208,7 +1274,7 @@ StatusOr<google::storage::v2::Object> GrpcClient::ModifyObjectAccessControl(
   patch_request.set_multiple_options(
       storage::Generation(response->generation()),
       storage::IfMetagenerationMatch(response->metageneration()));
-  auto patch = PatchObjectImpl(patch_request);
+  auto patch = PatchObjectImpl(context, options, patch_request);
   // Retry on failed preconditions
   if (patch.status().code() == StatusCode::kFailedPrecondition) {
     return Status(
@@ -1220,9 +1286,11 @@ StatusOr<google::storage::v2::Object> GrpcClient::ModifyObjectAccessControl(
 }
 
 StatusOr<google::storage::v2::Bucket> GrpcClient::ModifyDefaultAccessControl(
+    Options const& options,
     storage::internal::GetBucketMetadataRequest const& request,
     DefaultObjectAclUpdater const& updater) {
-  auto response = GetBucketMetadataImpl(request);
+  auto context = rest_internal::RestContext{};
+  auto response = GetBucketMetadataImpl(context, options, request);
   if (!response) return std::move(response).status();
   auto acl = updater(std::move(*response->mutable_default_object_acl()));
   if (!acl) return std::move(acl).status();
@@ -1238,7 +1306,7 @@ StatusOr<google::storage::v2::Bucket> GrpcClient::ModifyDefaultAccessControl(
   request.ForEachOption(CopyCommonOptions(patch_request));
   patch_request.set_option(
       storage::IfMetagenerationMatch(response->metageneration()));
-  auto patch = PatchBucketImpl(patch_request);
+  auto patch = PatchBucketImpl(context, options, patch_request);
   // Retry on failed preconditions
   if (patch.status().code() == StatusCode::kFailedPrecondition) {
     return Status(

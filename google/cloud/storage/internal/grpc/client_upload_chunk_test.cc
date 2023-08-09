@@ -66,14 +66,18 @@ TEST(GrpcClientUploadChunkTest, StallTimeoutWrite) {
           make_status_or(std::chrono::system_clock::now())))));
   auto cq = CompletionQueue(mock_cq);
 
-  auto client = GrpcClient::CreateMock(
-      mock, Options{}
-                .set<TransferStallTimeoutOption>(expected)
-                .set<GrpcCompletionQueueOption>(cq));
+  std::shared_ptr<google::cloud::internal::MinimalIamCredentialsStub> unused;
+  auto client = std::make_unique<GrpcClient>(
+      mock, unused,
+      Options{}
+          .set<TransferStallTimeoutOption>(expected)
+          .set<GrpcCompletionQueueOption>(cq));
   google::cloud::internal::OptionsSpan const span(
       Options{}.set<TransferStallTimeoutOption>(expected));
   auto const payload = std::string(UploadChunkRequest::kChunkSizeQuantum, 'A');
+  auto context = rest_internal::RestContext{};
   auto response = client->UploadChunk(
+      context, client->options(),
       UploadChunkRequest("test-only-upload-id", /*offset=*/0,
                          {ConstBuffer{payload}}, CreateNullHashFunction()));
   EXPECT_THAT(response,
@@ -104,15 +108,19 @@ TEST(GrpcClientUploadChunkTest, StallTimeoutWritesDone) {
           make_status_or(std::chrono::system_clock::now())))));
   auto cq = CompletionQueue(mock_cq);
 
-  auto client = GrpcClient::CreateMock(
-      mock, Options{}
-                .set<TransferStallTimeoutOption>(expected)
-                .set<GrpcCompletionQueueOption>(cq));
+  std::shared_ptr<google::cloud::internal::MinimalIamCredentialsStub> unused;
+  auto client = std::make_unique<GrpcClient>(
+      mock, unused,
+      Options{}
+          .set<TransferStallTimeoutOption>(expected)
+          .set<GrpcCompletionQueueOption>(cq));
   google::cloud::internal::OptionsSpan const span(
       Options{}.set<TransferStallTimeoutOption>(expected));
   auto const payload = std::string(
       kExpectedWriteSize + UploadChunkRequest::kChunkSizeQuantum, 'A');
+  auto context = rest_internal::RestContext{};
   auto response = client->UploadChunk(
+      context, client->options(),
       UploadChunkRequest("test-only-upload-id", /*offset=*/0,
                          {ConstBuffer{payload}}, CreateNullHashFunction()));
   EXPECT_THAT(response,
@@ -146,15 +154,19 @@ TEST(GrpcClientUploadChunkTest, StallTimeoutClose) {
           make_status_or(std::chrono::system_clock::now())))));
   auto cq = CompletionQueue(mock_cq);
 
-  auto client = GrpcClient::CreateMock(
-      mock, Options{}
-                .set<TransferStallTimeoutOption>(expected)
-                .set<GrpcCompletionQueueOption>(cq));
+  std::shared_ptr<google::cloud::internal::MinimalIamCredentialsStub> unused;
+  auto client = std::make_unique<GrpcClient>(
+      mock, unused,
+      Options{}
+          .set<TransferStallTimeoutOption>(expected)
+          .set<GrpcCompletionQueueOption>(cq));
   google::cloud::internal::OptionsSpan const span(
       Options{}.set<TransferStallTimeoutOption>(expected));
   auto const payload = std::string(
       kExpectedWriteSize + UploadChunkRequest::kChunkSizeQuantum, 'A');
+  auto context = rest_internal::RestContext{};
   auto response = client->UploadChunk(
+      context, client->options(),
       UploadChunkRequest("test-only-upload-id", /*offset=*/0,
                          {ConstBuffer{payload}}, CreateNullHashFunction()));
   EXPECT_THAT(response,

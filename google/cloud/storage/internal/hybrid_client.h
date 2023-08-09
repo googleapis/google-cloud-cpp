@@ -16,7 +16,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_HYBRID_CLIENT_H
 
 #include "google/cloud/storage/internal/generic_stub.h"
-#include "google/cloud/storage/internal/generic_stub_adapter.h"
 #include "google/cloud/storage/version.h"
 #include <memory>
 #include <string>
@@ -213,7 +212,7 @@ class HybridClient : public GenericStub {
   std::vector<std::string> InspectStackStructure() const override;
 
  private:
-  std::shared_ptr<storage::internal::RawClient> grpc_;
+  std::shared_ptr<storage_internal::GenericStub> grpc_;
   std::unique_ptr<storage_internal::GenericStub> rest_;
 };
 

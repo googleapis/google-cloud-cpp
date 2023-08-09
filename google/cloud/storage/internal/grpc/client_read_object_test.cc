@@ -62,15 +62,15 @@ TEST(GrpcClientReadObjectTest, WithDefaultTimeout) {
   EXPECT_CALL(*mock_cq, MakeRelativeTimer).Times(0);
   auto cq = CompletionQueue(mock_cq);
 
-  auto client = GrpcClient::CreateMock(
-      mock,
+  std::shared_ptr<google::cloud::internal::MinimalIamCredentialsStub> iam;
+  auto client = std::make_unique<GrpcClient>(
+      mock, iam,
       Options{}
           .set<storage::DownloadStallTimeoutOption>(std::chrono::seconds(0))
           .set<GrpcCompletionQueueOption>(cq));
-  // Normally the span is created by `storage::Client`, but we bypass that code
-  // in this test.
-  google::cloud::internal::OptionsSpan const span(client->options());
+  auto context = rest_internal::RestContext{};
   auto stream = client->ReadObject(
+      context, client->options(),
       storage::internal::ReadObjectRangeRequest("test-bucket", "test-object"));
   ASSERT_STATUS_OK(stream);
   ASSERT_THAT(stream->get(), NotNull());
@@ -106,14 +106,15 @@ TEST(GrpcClientReadObjectTest, WithExplicitTimeout) {
           make_status_or(std::chrono::system_clock::now())))));
   auto cq = CompletionQueue(mock_cq);
 
-  auto client = GrpcClient::CreateMock(
-      mock, Options{}
-                .set<storage::DownloadStallTimeoutOption>(configured_timeout)
-                .set<GrpcCompletionQueueOption>(cq));
-  // Normally the span is created by `storage::Client`, but we bypass that code
-  // in this test.
-  google::cloud::internal::OptionsSpan const span(client->options());
+  std::shared_ptr<google::cloud::internal::MinimalIamCredentialsStub> iam;
+  auto client = std::make_unique<GrpcClient>(
+      mock, iam,
+      Options{}
+          .set<storage::DownloadStallTimeoutOption>(configured_timeout)
+          .set<GrpcCompletionQueueOption>(cq));
+  auto context = rest_internal::RestContext{};
   auto stream = client->ReadObject(
+      context, client->options(),
       storage::internal::ReadObjectRangeRequest("test-bucket", "test-object"));
   ASSERT_STATUS_OK(stream);
   ASSERT_THAT(stream->get(), NotNull());

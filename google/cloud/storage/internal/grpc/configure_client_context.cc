@@ -20,6 +20,19 @@ namespace cloud {
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+auto constexpr kIdempotencyTokenHeader = "x-goog-gcs-idempotency-token";
+
+void AddIdempotencyToken(grpc::ClientContext& ctx,
+                         rest_internal::RestContext const& context) {
+  auto const& headers = context.headers();
+  auto const l = headers.find(kIdempotencyTokenHeader);
+  if (l != headers.end()) {
+    for (auto const& v : l->second) {
+      ctx.AddMetadata(kIdempotencyTokenHeader, v);
+    }
+  }
+}
+
 void ApplyRoutingHeaders(
     grpc::ClientContext& context,
     storage::internal::InsertObjectMediaRequest const& request) {
