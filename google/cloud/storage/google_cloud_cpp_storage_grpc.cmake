@@ -87,8 +87,8 @@ else ()
         internal/grpc/stub.h
         internal/grpc/synthetic_self_link.cc
         internal/grpc/synthetic_self_link.h
-        internal/hybrid_client.cc
-        internal/hybrid_client.h
+        internal/hybrid_stub.cc
+        internal/hybrid_stub.h
         internal/storage_auth_decorator.cc
         internal/storage_auth_decorator.h
         internal/storage_logging_decorator.cc

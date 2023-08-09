@@ -14,7 +14,7 @@
 
 #include "google/cloud/storage/grpc_plugin.h"
 #include "google/cloud/storage/internal/grpc/stub.h"
-#include "google/cloud/storage/internal/hybrid_client.h"
+#include "google/cloud/storage/internal/hybrid_stub.h"
 #include "google/cloud/internal/getenv.h"
 
 namespace google {
@@ -35,7 +35,7 @@ google::cloud::storage::Client DefaultGrpcClient(Options opts) {
         opts, std::make_unique<storage_internal::GrpcStub>(opts));
   }
   return storage::internal::ClientImplDetails::CreateClient(
-      opts, std::make_unique<storage_internal::HybridClient>(opts));
+      opts, std::make_unique<storage_internal::HybridStub>(opts));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

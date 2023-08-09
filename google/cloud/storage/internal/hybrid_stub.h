@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_HYBRID_CLIENT_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_HYBRID_CLIENT_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_HYBRID_STUB_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_HYBRID_STUB_H
 
 #include "google/cloud/storage/internal/generic_stub.h"
 #include "google/cloud/storage/version.h"
@@ -25,10 +25,10 @@ namespace cloud {
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class HybridClient : public GenericStub {
+class HybridStub : public GenericStub {
  public:
-  explicit HybridClient(Options const& options);
-  ~HybridClient() override = default;
+  explicit HybridStub(Options const& options);
+  ~HybridStub() override = default;
 
   Options options() const override;
 
@@ -221,4 +221,4 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_HYBRID_CLIENT_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_HYBRID_STUB_H
