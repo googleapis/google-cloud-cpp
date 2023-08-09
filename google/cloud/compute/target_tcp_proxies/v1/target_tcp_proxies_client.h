@@ -109,7 +109,7 @@ class TargetTcpProxiesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.target_tcp_proxies.v1.AggregatedListTargetTcpProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L118}
-  /// [google.cloud.cpp.compute.v1.TargetTcpProxyAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_file_127.proto#L129}
+  /// [google.cloud.cpp.compute.v1.TargetTcpProxyAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_127.proto#L129}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TargetTcpProxyAggregatedList>
@@ -141,7 +141,7 @@ class TargetTcpProxiesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.target_tcp_proxies.v1.AggregatedListTargetTcpProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L118}
-  /// [google.cloud.cpp.compute.v1.TargetTcpProxyAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_file_127.proto#L129}
+  /// [google.cloud.cpp.compute.v1.TargetTcpProxyAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_127.proto#L129}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TargetTcpProxyAggregatedList>
@@ -243,7 +243,7 @@ class TargetTcpProxiesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.target_tcp_proxies.v1.GetTargetTcpProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L216}
-  /// [google.cloud.cpp.compute.v1.TargetTcpProxy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_file_128.proto#L28}
+  /// [google.cloud.cpp.compute.v1.TargetTcpProxy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_128.proto#L28}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TargetTcpProxy> GetTargetTcpProxies(
@@ -275,7 +275,7 @@ class TargetTcpProxiesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.target_tcp_proxies.v1.GetTargetTcpProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L216}
-  /// [google.cloud.cpp.compute.v1.TargetTcpProxy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_file_128.proto#L28}
+  /// [google.cloud.cpp.compute.v1.TargetTcpProxy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_128.proto#L28}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TargetTcpProxy> GetTargetTcpProxies(
@@ -388,7 +388,7 @@ class TargetTcpProxiesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.target_tcp_proxies.v1.ListTargetTcpProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L250}
-  /// [google.cloud.cpp.compute.v1.TargetTcpProxy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_file_128.proto#L28}
+  /// [google.cloud.cpp.compute.v1.TargetTcpProxy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_128.proto#L28}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::TargetTcpProxy>
@@ -429,7 +429,7 @@ class TargetTcpProxiesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.target_tcp_proxies.v1.ListTargetTcpProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L250}
-  /// [google.cloud.cpp.compute.v1.TargetTcpProxy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_file_128.proto#L28}
+  /// [google.cloud.cpp.compute.v1.TargetTcpProxy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_128.proto#L28}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::TargetTcpProxy>

@@ -181,7 +181,7 @@ class InterconnectsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.interconnects.v1.GetInterconnectsRequest]: @googleapis_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L153}
-  /// [google.cloud.cpp.compute.v1.Interconnect]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_file_063.proto#L27}
+  /// [google.cloud.cpp.compute.v1.Interconnect]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_063.proto#L27}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Interconnect> GetInterconnects(
@@ -214,7 +214,7 @@ class InterconnectsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.interconnects.v1.GetInterconnectsRequest]: @googleapis_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L153}
-  /// [google.cloud.cpp.compute.v1.Interconnect]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_file_063.proto#L27}
+  /// [google.cloud.cpp.compute.v1.Interconnect]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_063.proto#L27}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Interconnect> GetInterconnects(
@@ -243,7 +243,7 @@ class InterconnectsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.interconnects.v1.GetDiagnosticsRequest]: @googleapis_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L144}
-  /// [google.cloud.cpp.compute.v1.InterconnectsGetDiagnosticsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_file_063.proto#L480}
+  /// [google.cloud.cpp.compute.v1.InterconnectsGetDiagnosticsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_063.proto#L479}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::InterconnectsGetDiagnosticsResponse>
@@ -275,7 +275,7 @@ class InterconnectsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.interconnects.v1.GetDiagnosticsRequest]: @googleapis_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L144}
-  /// [google.cloud.cpp.compute.v1.InterconnectsGetDiagnosticsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_file_063.proto#L480}
+  /// [google.cloud.cpp.compute.v1.InterconnectsGetDiagnosticsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_063.proto#L479}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::InterconnectsGetDiagnosticsResponse>
@@ -387,7 +387,7 @@ class InterconnectsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.interconnects.v1.ListInterconnectsRequest]: @googleapis_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L187}
-  /// [google.cloud.cpp.compute.v1.Interconnect]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_file_063.proto#L27}
+  /// [google.cloud.cpp.compute.v1.Interconnect]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_063.proto#L27}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::Interconnect> ListInterconnects(
@@ -427,7 +427,7 @@ class InterconnectsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.interconnects.v1.ListInterconnectsRequest]: @googleapis_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L187}
-  /// [google.cloud.cpp.compute.v1.Interconnect]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_file_063.proto#L27}
+  /// [google.cloud.cpp.compute.v1.Interconnect]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_063.proto#L27}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::Interconnect> ListInterconnects(

@@ -112,7 +112,7 @@ class RegionInstanceGroupsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.region_instance_groups.v1.GetRegionInstanceGroupsRequest]: @googleapis_reference_link{google/cloud/compute/region_instance_groups/v1/region_instance_groups.proto#L88}
-  /// [google.cloud.cpp.compute.v1.InstanceGroup]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_file_058.proto#L34}
+  /// [google.cloud.cpp.compute.v1.InstanceGroup]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_058.proto#L34}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::InstanceGroup>
@@ -144,7 +144,7 @@ class RegionInstanceGroupsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.region_instance_groups.v1.GetRegionInstanceGroupsRequest]: @googleapis_reference_link{google/cloud/compute/region_instance_groups/v1/region_instance_groups.proto#L88}
-  /// [google.cloud.cpp.compute.v1.InstanceGroup]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_file_058.proto#L34}
+  /// [google.cloud.cpp.compute.v1.InstanceGroup]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_058.proto#L34}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::InstanceGroup>
@@ -183,7 +183,7 @@ class RegionInstanceGroupsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.region_instance_groups.v1.ListRegionInstanceGroupsRequest]: @googleapis_reference_link{google/cloud/compute/region_instance_groups/v1/region_instance_groups.proto#L177}
-  /// [google.cloud.cpp.compute.v1.InstanceGroup]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_file_058.proto#L34}
+  /// [google.cloud.cpp.compute.v1.InstanceGroup]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_058.proto#L34}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::InstanceGroup>
@@ -225,7 +225,7 @@ class RegionInstanceGroupsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.region_instance_groups.v1.ListRegionInstanceGroupsRequest]: @googleapis_reference_link{google/cloud/compute/region_instance_groups/v1/region_instance_groups.proto#L177}
-  /// [google.cloud.cpp.compute.v1.InstanceGroup]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_file_058.proto#L34}
+  /// [google.cloud.cpp.compute.v1.InstanceGroup]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_058.proto#L34}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::InstanceGroup>
@@ -269,7 +269,7 @@ class RegionInstanceGroupsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.region_instance_groups.v1.ListInstancesRequest]: @googleapis_reference_link{google/cloud/compute/region_instance_groups/v1/region_instance_groups.proto#L100}
-  /// [google.cloud.cpp.compute.v1.InstanceWithNamedPorts]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_file_058.proto#L95}
+  /// [google.cloud.cpp.compute.v1.InstanceWithNamedPorts]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_058.proto#L95}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::InstanceWithNamedPorts>
@@ -317,7 +317,7 @@ class RegionInstanceGroupsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.region_instance_groups.v1.ListInstancesRequest]: @googleapis_reference_link{google/cloud/compute/region_instance_groups/v1/region_instance_groups.proto#L100}
-  /// [google.cloud.cpp.compute.v1.InstanceWithNamedPorts]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_file_058.proto#L95}
+  /// [google.cloud.cpp.compute.v1.InstanceWithNamedPorts]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_058.proto#L95}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::InstanceWithNamedPorts>

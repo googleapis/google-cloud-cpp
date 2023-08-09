@@ -108,7 +108,7 @@ class ReservationsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.reservations.v1.AggregatedListReservationsRequest]: @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L153}
-  /// [google.cloud.cpp.compute.v1.ReservationAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_file_102.proto#L27}
+  /// [google.cloud.cpp.compute.v1.ReservationAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_102.proto#L27}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::ReservationAggregatedList>
@@ -139,7 +139,7 @@ class ReservationsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.reservations.v1.AggregatedListReservationsRequest]: @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L153}
-  /// [google.cloud.cpp.compute.v1.ReservationAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_file_102.proto#L27}
+  /// [google.cloud.cpp.compute.v1.ReservationAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_102.proto#L27}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::ReservationAggregatedList>
@@ -242,7 +242,7 @@ class ReservationsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.reservations.v1.GetReservationsRequest]: @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L272}
-  /// [google.cloud.cpp.compute.v1.Reservation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_file_005.proto#L106}
+  /// [google.cloud.cpp.compute.v1.Reservation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_005.proto#L102}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Reservation> GetReservations(
@@ -274,7 +274,7 @@ class ReservationsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.reservations.v1.GetReservationsRequest]: @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L272}
-  /// [google.cloud.cpp.compute.v1.Reservation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_file_005.proto#L106}
+  /// [google.cloud.cpp.compute.v1.Reservation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_005.proto#L102}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Reservation> GetReservations(
@@ -305,7 +305,7 @@ class ReservationsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.reservations.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L257}
-  /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_file_006.proto#L262}
+  /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_006.proto#L262}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
@@ -338,7 +338,7 @@ class ReservationsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.reservations.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L257}
-  /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_file_006.proto#L262}
+  /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_006.proto#L262}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
@@ -453,7 +453,7 @@ class ReservationsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.reservations.v1.ListReservationsRequest]: @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L315}
-  /// [google.cloud.cpp.compute.v1.Reservation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_file_005.proto#L106}
+  /// [google.cloud.cpp.compute.v1.Reservation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_005.proto#L102}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::Reservation> ListReservations(
@@ -494,7 +494,7 @@ class ReservationsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.reservations.v1.ListReservationsRequest]: @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L315}
-  /// [google.cloud.cpp.compute.v1.Reservation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_file_005.proto#L106}
+  /// [google.cloud.cpp.compute.v1.Reservation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_005.proto#L102}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::Reservation> ListReservations(
@@ -604,7 +604,7 @@ class ReservationsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.reservations.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L418}
-  /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_file_006.proto#L262}
+  /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_006.proto#L262}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
@@ -640,7 +640,7 @@ class ReservationsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.reservations.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L418}
-  /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_file_006.proto#L262}
+  /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_006.proto#L262}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
@@ -671,7 +671,7 @@ class ReservationsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.reservations.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L434}
-  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_file_130.proto#L30}
+  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_130.proto#L30}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
@@ -707,7 +707,7 @@ class ReservationsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.reservations.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L434}
-  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_file_130.proto#L30}
+  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_130.proto#L30}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>

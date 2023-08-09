@@ -24,9 +24,9 @@ package google.cloud.cpp.compute.target_tcp_proxies.v1;
 import "google/api/annotations.proto";
 import "google/api/client.proto";
 import "google/api/field_behavior.proto";
-import "google/cloud/compute/v1/internal/common_file_029.proto";
-import "google/cloud/compute/v1/internal/common_file_127.proto";
-import "google/cloud/compute/v1/internal/common_file_128.proto";
+import "google/cloud/compute/v1/internal/common_029.proto";
+import "google/cloud/compute/v1/internal/common_127.proto";
+import "google/cloud/compute/v1/internal/common_128.proto";
 import "google/cloud/extended_operations.proto";
 
 // Service for the targetTcpProxies resource.

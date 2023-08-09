@@ -404,7 +404,7 @@ class ProjectsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.projects.v1.GetProjectsRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L303}
-  /// [google.cloud.cpp.compute.v1.Project]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_file_024.proto#L60}
+  /// [google.cloud.cpp.compute.v1.Project]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_024.proto#L60}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Project> GetProjects(
@@ -441,7 +441,7 @@ class ProjectsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.projects.v1.GetProjectsRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L303}
-  /// [google.cloud.cpp.compute.v1.Project]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_file_024.proto#L60}
+  /// [google.cloud.cpp.compute.v1.Project]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_024.proto#L60}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Project> GetProjects(
@@ -470,7 +470,7 @@ class ProjectsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.projects.v1.GetXpnHostRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L309}
-  /// [google.cloud.cpp.compute.v1.Project]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_file_024.proto#L60}
+  /// [google.cloud.cpp.compute.v1.Project]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_024.proto#L60}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Project> GetXpnHost(
@@ -502,7 +502,7 @@ class ProjectsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.projects.v1.GetXpnHostRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L309}
-  /// [google.cloud.cpp.compute.v1.Project]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_file_024.proto#L60}
+  /// [google.cloud.cpp.compute.v1.Project]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_024.proto#L60}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Project> GetXpnHost(
@@ -531,7 +531,7 @@ class ProjectsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.projects.v1.GetXpnResourcesRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L315}
-  /// [google.cloud.cpp.compute.v1.ProjectsGetXpnResources]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_file_024.proto#L137}
+  /// [google.cloud.cpp.compute.v1.ProjectsGetXpnResources]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_024.proto#L137}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::ProjectsGetXpnResources>
@@ -563,7 +563,7 @@ class ProjectsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.projects.v1.GetXpnResourcesRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L315}
-  /// [google.cloud.cpp.compute.v1.ProjectsGetXpnResources]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_file_024.proto#L137}
+  /// [google.cloud.cpp.compute.v1.ProjectsGetXpnResources]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_024.proto#L137}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::ProjectsGetXpnResources>
@@ -602,7 +602,7 @@ class ProjectsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.projects.v1.ListXpnHostsRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L380}
-  /// [google.cloud.cpp.compute.v1.Project]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_file_024.proto#L60}
+  /// [google.cloud.cpp.compute.v1.Project]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_024.proto#L60}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::Project> ListXpnHosts(
@@ -645,7 +645,7 @@ class ProjectsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.projects.v1.ListXpnHostsRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L380}
-  /// [google.cloud.cpp.compute.v1.Project]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_file_024.proto#L60}
+  /// [google.cloud.cpp.compute.v1.Project]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_024.proto#L60}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::Project> ListXpnHosts(

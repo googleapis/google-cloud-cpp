@@ -86,9 +86,14 @@ void ApplyResourceLabelsToTypesHelper(std::string const& resource_name,
   }
 }
 
+std::string FormatFileResourceKey(std::set<std::string> const& resources) {
+  return absl::StrJoin(resources, ":");
+}
+
 void AddImportToFile(std::map<std::string, DiscoveryFile> const& common_files,
                      DiscoveryTypeVertex const& type, DiscoveryFile& file) {
-  auto iter = common_files.find(absl::StrJoin(type.needed_by_resource(), ""));
+  auto iter =
+      common_files.find(FormatFileResourceKey(type.needed_by_resource()));
   if (iter != common_files.end()) {
     if (file.relative_proto_path() != iter->second.relative_proto_path()) {
       file.AddImportPath(iter->second.relative_proto_path());
@@ -415,13 +420,14 @@ StatusOr<std::vector<DiscoveryFile>> AssignResourcesAndTypesToFiles(
   for (auto& kv : types) {
     if (!kv.second.IsSynthesizedRequestType()) {
       auto* type = &kv.second;
-      std::string resource_key = absl::StrJoin(type->needed_by_resource(), "");
+      std::string resource_key =
+          FormatFileResourceKey(type->needed_by_resource());
       auto iter = common_files_by_resource.find(resource_key);
       if (iter != common_files_by_resource.end()) {
         iter->second.AddType(type);
       } else {
         auto relative_proto_path = absl::StrFormat(
-            "google/cloud/%s/%s/internal/common_file_%03d.proto",
+            "google/cloud/%s/%s/internal/common_%03d.proto",
             document_properties.product_name, document_properties.version, i++);
         common_files_by_resource.emplace(
             resource_key,
@@ -442,7 +448,7 @@ StatusOr<std::vector<DiscoveryFile>> AssignResourcesAndTypesToFiles(
     for (auto* type : file.types()) {
       for (auto* needed_type : type->needs_type()) {
         std::string resource_key =
-            absl::StrJoin(needed_type->needed_by_resource(), "");
+            FormatFileResourceKey(needed_type->needed_by_resource());
         auto iter = common_files_by_resource.find(resource_key);
         if (iter == common_files_by_resource.end()) {
           return internal::InvalidArgumentError(

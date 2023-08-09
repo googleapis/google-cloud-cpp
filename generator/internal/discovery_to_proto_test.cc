@@ -1569,7 +1569,7 @@ TEST_F(AssignResourcesAndTypesToFilesTest,
   EXPECT_THAT((*result)[0].types(), IsEmpty());
   EXPECT_THAT((*result)[1].file_path(),
               Eq("output_path/google/cloud/product_name/"
-                 "version/internal/common_file_000.proto"));
+                 "version/internal/common_000.proto"));
   ASSERT_THAT((*result)[1].types().size(), Eq(1));
   EXPECT_THAT((*result)[1].types().front()->name(), Eq("Operation"));
 }
@@ -2228,17 +2228,6 @@ TEST_F(AssignResourcesAndTypesToFilesTest, ResourceAndCommonFilesWithImports) {
       resources, *types, document_properties, "output_path");
   ASSERT_STATUS_OK(files);
 
-  for (auto const& f : *files) {
-    std::cerr << "file: " << f.relative_proto_path() << "\n";
-    std::cerr << "  package: " << f.package_name() << "\n";
-    for (auto const& i : f.import_paths()) {
-      std::cerr << "  import: " << i << "\n";
-    }
-    for (auto const& t : f.types()) {
-      std::cerr << "  type: " << t->name() << "\n";
-    }
-  }
-
   //  The resulting set of proto files contains one file per resource as well as
   //  a minimal number of common files containing shared types that are
   //  imported. Package names are leveraged to allow us to discriminate when
@@ -2251,8 +2240,8 @@ TEST_F(AssignResourcesAndTypesToFilesTest, ResourceAndCommonFilesWithImports) {
   //    import: google/api/client.proto
   //    import: google/api/field_behavior.proto
   //    import: google/cloud/extended_operations.proto
-  //    import: google/cloud/product_name/version/internal/common_file_000.proto
-  //    import: google/cloud/product_name/version/internal/common_file_001.proto
+  //    import: google/cloud/product_name/version/internal/common_000.proto
+  //    import: google/cloud/product_name/version/internal/common_001.proto
   //    type: CreateSnapshotRequest
   //    type: DeleteDisksRequest
   //    type: GetDisksRequest
@@ -2263,15 +2252,15 @@ TEST_F(AssignResourcesAndTypesToFilesTest, ResourceAndCommonFilesWithImports) {
   //    import: google/api/annotations.proto
   //    import: google/api/client.proto
   //    import: google/api/field_behavior.proto
-  //    import: google/cloud/product_name/version/internal/common_file_001.proto
-  //    import: google/cloud/product_name/version/internal/common_file_002.proto
+  //    import: google/cloud/product_name/version/internal/common_001.proto
+  //    import: google/cloud/product_name/version/internal/common_002.proto
   //    import: google/protobuf/empty.proto
   //    type: EmptyResponseMethodRequest
   //    type: OtherCommonTypeMethodRequest
   //    type: TestIamPermissionsRequest
-  //  file: google/cloud/product_name/version/internal/common_file_000.proto
+  //  file: google/cloud/product_name/version/internal/common_000.proto
   //    package: google.cloud.cpp.product_name.version
-  //    import: google/cloud/product_name/version/internal/common_file_001.proto
+  //    import: google/cloud/product_name/version/internal/common_001.proto
   //    type: CustomerEncryptionKey
   //    type: Disk
   //    type: DiskAsyncReplication
@@ -2280,12 +2269,12 @@ TEST_F(AssignResourcesAndTypesToFilesTest, ResourceAndCommonFilesWithImports) {
   //    type: GuestOsFeature
   //    type: Operation
   //    type: Snapshot
-  //  file: google/cloud/product_name/version/internal/common_file_001.proto
+  //  file: google/cloud/product_name/version/internal/common_001.proto
   //    package: google.cloud.cpp.product_name.version
   //    type: LocalizedMessage
   //    type: TestPermissionsRequest
   //    type: TestPermissionsResponse
-  //  file: google/cloud/product_name/version/internal/common_file_002.proto
+  //  file: google/cloud/product_name/version/internal/common_002.proto
   //    package: google.cloud.cpp.product_name.version
   //    type: OtherCommonSchema
 
@@ -2299,11 +2288,11 @@ TEST_F(AssignResourcesAndTypesToFilesTest, ResourceAndCommonFilesWithImports) {
           file_path("google/cloud/product_name/foos/version/foos.proto"),
           file_path("google/cloud/product_name/disks/version/disks.proto"),
           file_path("google/cloud/product_name/version/internal/"
-                    "common_file_000.proto"),
+                    "common_000.proto"),
           file_path("google/cloud/product_name/version/internal/"
-                    "common_file_001.proto"),
+                    "common_001.proto"),
           file_path("google/cloud/product_name/version/internal/"
-                    "common_file_002.proto")));
+                    "common_002.proto")));
 
   auto type_named = [](std::string const& name) {
     return Pointee(Property(&DiscoveryTypeVertex::name, Eq(name)));

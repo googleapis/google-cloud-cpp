@@ -24,11 +24,11 @@ package google.cloud.cpp.compute.subnetworks.v1;
 import "google/api/annotations.proto";
 import "google/api/client.proto";
 import "google/api/field_behavior.proto";
-import "google/cloud/compute/v1/internal/common_file_006.proto";
-import "google/cloud/compute/v1/internal/common_file_029.proto";
-import "google/cloud/compute/v1/internal/common_file_099.proto";
-import "google/cloud/compute/v1/internal/common_file_117.proto";
-import "google/cloud/compute/v1/internal/common_file_130.proto";
+import "google/cloud/compute/v1/internal/common_006.proto";
+import "google/cloud/compute/v1/internal/common_029.proto";
+import "google/cloud/compute/v1/internal/common_099.proto";
+import "google/cloud/compute/v1/internal/common_117.proto";
+import "google/cloud/compute/v1/internal/common_130.proto";
 import "google/cloud/extended_operations.proto";
 
 // Service for the subnetworks resource.

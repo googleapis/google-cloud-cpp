@@ -332,7 +332,7 @@ class BackendBucketsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.backend_buckets.v1.GetBackendBucketsRequest]: @googleapis_reference_link{google/cloud/compute/backend_buckets/v1/backend_buckets.proto#L229}
-  /// [google.cloud.cpp.compute.v1.BackendBucket]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_file_010.proto#L27}
+  /// [google.cloud.cpp.compute.v1.BackendBucket]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_010.proto#L27}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::BackendBucket> GetBackendBuckets(
@@ -364,7 +364,7 @@ class BackendBucketsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.backend_buckets.v1.GetBackendBucketsRequest]: @googleapis_reference_link{google/cloud/compute/backend_buckets/v1/backend_buckets.proto#L229}
-  /// [google.cloud.cpp.compute.v1.BackendBucket]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_file_010.proto#L27}
+  /// [google.cloud.cpp.compute.v1.BackendBucket]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_010.proto#L27}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::BackendBucket> GetBackendBuckets(
@@ -477,7 +477,7 @@ class BackendBucketsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.backend_buckets.v1.ListBackendBucketsRequest]: @googleapis_reference_link{google/cloud/compute/backend_buckets/v1/backend_buckets.proto#L263}
-  /// [google.cloud.cpp.compute.v1.BackendBucket]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_file_010.proto#L27}
+  /// [google.cloud.cpp.compute.v1.BackendBucket]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_010.proto#L27}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::BackendBucket>
@@ -518,7 +518,7 @@ class BackendBucketsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.backend_buckets.v1.ListBackendBucketsRequest]: @googleapis_reference_link{google/cloud/compute/backend_buckets/v1/backend_buckets.proto#L263}
-  /// [google.cloud.cpp.compute.v1.BackendBucket]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_file_010.proto#L27}
+  /// [google.cloud.cpp.compute.v1.BackendBucket]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_010.proto#L27}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::BackendBucket>

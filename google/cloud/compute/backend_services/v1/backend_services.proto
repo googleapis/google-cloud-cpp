@@ -24,12 +24,12 @@ package google.cloud.cpp.compute.backend_services.v1;
 import "google/api/annotations.proto";
 import "google/api/client.proto";
 import "google/api/field_behavior.proto";
-import "google/cloud/compute/v1/internal/common_file_006.proto";
-import "google/cloud/compute/v1/internal/common_file_009.proto";
-import "google/cloud/compute/v1/internal/common_file_011.proto";
-import "google/cloud/compute/v1/internal/common_file_029.proto";
-import "google/cloud/compute/v1/internal/common_file_046.proto";
-import "google/cloud/compute/v1/internal/common_file_107.proto";
+import "google/cloud/compute/v1/internal/common_006.proto";
+import "google/cloud/compute/v1/internal/common_009.proto";
+import "google/cloud/compute/v1/internal/common_011.proto";
+import "google/cloud/compute/v1/internal/common_029.proto";
+import "google/cloud/compute/v1/internal/common_046.proto";
+import "google/cloud/compute/v1/internal/common_107.proto";
 import "google/cloud/extended_operations.proto";
 
 // Service for the backendServices resource.

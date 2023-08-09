@@ -74,7 +74,6 @@ class DiscoveryFile {
   std::string relative_proto_path_;
   std::string package_name_;
   std::set<std::string> import_paths_;
-  std::set<std::string> resource_labels_;
   std::vector<DiscoveryTypeVertex*> types_;
 };
 

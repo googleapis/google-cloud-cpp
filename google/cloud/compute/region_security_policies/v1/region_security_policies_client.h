@@ -189,7 +189,7 @@ class RegionSecurityPoliciesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.region_security_policies.v1.GetRegionSecurityPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L130}
-  /// [google.cloud.cpp.compute.v1.SecurityPolicy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_file_106.proto#L29}
+  /// [google.cloud.cpp.compute.v1.SecurityPolicy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_106.proto#L29}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::SecurityPolicy>
@@ -223,7 +223,7 @@ class RegionSecurityPoliciesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.region_security_policies.v1.GetRegionSecurityPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L130}
-  /// [google.cloud.cpp.compute.v1.SecurityPolicy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_file_106.proto#L29}
+  /// [google.cloud.cpp.compute.v1.SecurityPolicy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_106.proto#L29}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::SecurityPolicy>
@@ -341,7 +341,7 @@ class RegionSecurityPoliciesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.region_security_policies.v1.ListRegionSecurityPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L176}
-  /// [google.cloud.cpp.compute.v1.SecurityPolicy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_file_106.proto#L29}
+  /// [google.cloud.cpp.compute.v1.SecurityPolicy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_106.proto#L29}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::SecurityPolicy>
@@ -383,7 +383,7 @@ class RegionSecurityPoliciesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.region_security_policies.v1.ListRegionSecurityPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L176}
-  /// [google.cloud.cpp.compute.v1.SecurityPolicy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_file_106.proto#L29}
+  /// [google.cloud.cpp.compute.v1.SecurityPolicy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_106.proto#L29}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::SecurityPolicy>

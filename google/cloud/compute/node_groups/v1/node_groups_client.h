@@ -183,7 +183,7 @@ class NodeGroupsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.node_groups.v1.AggregatedListNodeGroupsRequest]: @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L237}
-  /// [google.cloud.cpp.compute.v1.NodeGroupAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_file_057.proto#L135}
+  /// [google.cloud.cpp.compute.v1.NodeGroupAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_057.proto#L135}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::NodeGroupAggregatedList>
@@ -215,7 +215,7 @@ class NodeGroupsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.node_groups.v1.AggregatedListNodeGroupsRequest]: @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L237}
-  /// [google.cloud.cpp.compute.v1.NodeGroupAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_file_057.proto#L135}
+  /// [google.cloud.cpp.compute.v1.NodeGroupAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_057.proto#L135}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::NodeGroupAggregatedList>
@@ -395,7 +395,7 @@ class NodeGroupsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.node_groups.v1.GetNodeGroupsRequest]: @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L391}
-  /// [google.cloud.cpp.compute.v1.NodeGroup]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_file_057.proto#L57}
+  /// [google.cloud.cpp.compute.v1.NodeGroup]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_057.proto#L57}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::NodeGroup> GetNodeGroups(
@@ -429,7 +429,7 @@ class NodeGroupsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.node_groups.v1.GetNodeGroupsRequest]: @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L391}
-  /// [google.cloud.cpp.compute.v1.NodeGroup]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_file_057.proto#L57}
+  /// [google.cloud.cpp.compute.v1.NodeGroup]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_057.proto#L57}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::NodeGroup> GetNodeGroups(
@@ -460,7 +460,7 @@ class NodeGroupsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.node_groups.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L376}
-  /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_file_006.proto#L262}
+  /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_006.proto#L262}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
@@ -493,7 +493,7 @@ class NodeGroupsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.node_groups.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L376}
-  /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_file_006.proto#L262}
+  /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_006.proto#L262}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
@@ -609,7 +609,7 @@ class NodeGroupsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.node_groups.v1.ListNodeGroupsRequest]: @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L437}
-  /// [google.cloud.cpp.compute.v1.NodeGroup]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_file_057.proto#L57}
+  /// [google.cloud.cpp.compute.v1.NodeGroup]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_057.proto#L57}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::NodeGroup> ListNodeGroups(
@@ -650,7 +650,7 @@ class NodeGroupsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.node_groups.v1.ListNodeGroupsRequest]: @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L437}
-  /// [google.cloud.cpp.compute.v1.NodeGroup]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_file_057.proto#L57}
+  /// [google.cloud.cpp.compute.v1.NodeGroup]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_057.proto#L57}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::NodeGroup> ListNodeGroups(
@@ -689,7 +689,7 @@ class NodeGroupsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.node_groups.v1.ListNodesRequest]: @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L505}
-  /// [google.cloud.cpp.compute.v1.NodeGroupNode]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_file_057.proto#L381}
+  /// [google.cloud.cpp.compute.v1.NodeGroupNode]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_057.proto#L381}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::NodeGroupNode> ListNodes(
@@ -730,7 +730,7 @@ class NodeGroupsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.node_groups.v1.ListNodesRequest]: @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L505}
-  /// [google.cloud.cpp.compute.v1.NodeGroupNode]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_file_057.proto#L381}
+  /// [google.cloud.cpp.compute.v1.NodeGroupNode]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_057.proto#L381}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::NodeGroupNode> ListNodes(
@@ -836,7 +836,7 @@ class NodeGroupsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.node_groups.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L610}
-  /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_file_006.proto#L262}
+  /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_006.proto#L262}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
@@ -872,7 +872,7 @@ class NodeGroupsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.node_groups.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L610}
-  /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_file_006.proto#L262}
+  /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_006.proto#L262}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
@@ -1058,7 +1058,7 @@ class NodeGroupsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.node_groups.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L697}
-  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_file_130.proto#L30}
+  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_130.proto#L30}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
@@ -1094,7 +1094,7 @@ class NodeGroupsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.node_groups.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L697}
-  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_file_130.proto#L30}
+  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_130.proto#L30}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
