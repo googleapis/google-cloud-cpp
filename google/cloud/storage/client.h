@@ -232,8 +232,8 @@ struct ClientImplDetails;
  *
  * By default, all operations are treated as idempotent. The client library
  * sends the `x-goog-gcs-idempotency-token` header with a unique value for
- * each group of retried RPCs. The service will not execute a request with the
- * same value for this header and send the previous response.
+ * each group of retried RPCs. If the service receives a request with a token
+ * that it has previously seen, it will simply resend the matching response.
  *
  * The application can override these policies when constructing objects of this
  * class. The documentation for the constructors show examples of this in
