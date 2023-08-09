@@ -56,8 +56,6 @@ else ()
         internal/grpc/buffer_read_object_data.h
         internal/grpc/channel_refresh.cc
         internal/grpc/channel_refresh.h
-        internal/grpc/client.cc
-        internal/grpc/client.h
         internal/grpc/configure_client_context.cc
         internal/grpc/configure_client_context.h
         internal/grpc/ctype_cord_workaround.h
@@ -85,6 +83,8 @@ else ()
         internal/grpc/sign_blob_request_parser.h
         internal/grpc/split_write_object_data.cc
         internal/grpc/split_write_object_data.h
+        internal/grpc/stub.cc
+        internal/grpc/stub.h
         internal/grpc/synthetic_self_link.cc
         internal/grpc/synthetic_self_link.h
         internal/hybrid_client.cc
@@ -197,12 +197,6 @@ if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
         internal/grpc/bucket_name_test.cc
         internal/grpc/bucket_request_parser_test.cc
         internal/grpc/buffer_read_object_data_test.cc
-        internal/grpc/client_acl_test.cc
-        internal/grpc/client_failures_test.cc
-        internal/grpc/client_insert_object_media_test.cc
-        internal/grpc/client_read_object_test.cc
-        internal/grpc/client_test.cc
-        internal/grpc/client_upload_chunk_test.cc
         internal/grpc/configure_client_context_test.cc
         internal/grpc/hmac_key_metadata_parser_test.cc
         internal/grpc/hmac_key_request_parser_test.cc
@@ -216,6 +210,12 @@ if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
         internal/grpc/service_account_parser_test.cc
         internal/grpc/sign_blob_request_parser_test.cc
         internal/grpc/split_write_object_data_test.cc
+        internal/grpc/stub_acl_test.cc
+        internal/grpc/stub_failures_test.cc
+        internal/grpc/stub_insert_object_media_test.cc
+        internal/grpc/stub_read_object_test.cc
+        internal/grpc/stub_test.cc
+        internal/grpc/stub_upload_chunk_test.cc
         internal/grpc/synthetic_self_link_test.cc
         internal/storage_stub_factory_test.cc)
 

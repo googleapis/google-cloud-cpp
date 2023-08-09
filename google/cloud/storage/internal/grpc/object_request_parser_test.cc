@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/grpc/object_request_parser.h"
-#include "google/cloud/storage/internal/grpc/client.h"
+#include "google/cloud/storage/internal/grpc/stub.h"
 #include "google/cloud/storage/internal/hash_function_impl.h"
 #include "google/cloud/storage/oauth2/google_credentials.h"
 #include "google/cloud/grpc_options.h"
@@ -320,7 +320,7 @@ TEST(GrpcObjectRequestParser, ReadObjectRangeRequestReadLastZero) {
   auto const actual = ToProto(req).value();
   EXPECT_THAT(actual, IsProtoEqual(expected));
 
-  auto client = std::make_unique<GrpcClient>(DefaultOptionsGrpc(
+  auto client = std::make_unique<GrpcStub>(DefaultOptionsGrpc(
       Options{}
           .set<GrpcCredentialOption>(grpc::InsecureChannelCredentials())
           .set<EndpointOption>("localhost:1")));

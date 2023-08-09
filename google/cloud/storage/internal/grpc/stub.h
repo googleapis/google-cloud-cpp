@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_GRPC_CLIENT_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_GRPC_CLIENT_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_GRPC_STUB_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_GRPC_STUB_H
 
 #include "google/cloud/storage/internal/generic_stub.h"
 #include "google/cloud/storage/version.h"
@@ -39,15 +39,15 @@ class StorageStub;
  */
 Options DefaultOptionsGrpc(Options = {});
 
-class GrpcClient : public GenericStub {
+class GrpcStub : public GenericStub {
  public:
-  explicit GrpcClient(Options opts);
-  explicit GrpcClient(
+  explicit GrpcStub(Options opts);
+  explicit GrpcStub(
       std::shared_ptr<storage_internal::StorageStub> stub,
       std::shared_ptr<google::cloud::internal::MinimalIamCredentialsStub> iam,
       Options opts);
 
-  ~GrpcClient() override = default;
+  ~GrpcStub() override = default;
 
   using WriteObjectStream = ::google::cloud::internal::StreamingWriteRpc<
       google::storage::v2::WriteObjectRequest,
@@ -298,4 +298,4 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_GRPC_CLIENT_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_GRPC_STUB_H

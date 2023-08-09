@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/storage/internal/grpc/client.h"
 #include "google/cloud/storage/internal/grpc/object_read_source.h"
+#include "google/cloud/storage/internal/grpc/stub.h"
 #include "google/cloud/storage/testing/mock_storage_stub.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/options.h"
@@ -63,7 +63,7 @@ TEST(GrpcClientReadObjectTest, WithDefaultTimeout) {
   auto cq = CompletionQueue(mock_cq);
 
   std::shared_ptr<google::cloud::internal::MinimalIamCredentialsStub> iam;
-  auto client = std::make_unique<GrpcClient>(
+  auto client = std::make_unique<GrpcStub>(
       mock, iam,
       Options{}
           .set<storage::DownloadStallTimeoutOption>(std::chrono::seconds(0))
@@ -107,7 +107,7 @@ TEST(GrpcClientReadObjectTest, WithExplicitTimeout) {
   auto cq = CompletionQueue(mock_cq);
 
   std::shared_ptr<google::cloud::internal::MinimalIamCredentialsStub> iam;
-  auto client = std::make_unique<GrpcClient>(
+  auto client = std::make_unique<GrpcStub>(
       mock, iam,
       Options{}
           .set<storage::DownloadStallTimeoutOption>(configured_timeout)
