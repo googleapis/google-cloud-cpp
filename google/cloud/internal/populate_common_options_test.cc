@@ -123,27 +123,21 @@ TEST(PopulateCommonOptions, UserProject) {
 }
 
 TEST(PopulateCommonOptions, OpenTelemetryTracing) {
-  using OTelOption = ::google::cloud::experimental::OpenTelemetryTracingOption;
-
   struct TestCase {
     absl::optional<std::string> env;
-    Options input;
-    bool has_option;
-    bool get_option;
+    bool value;
   };
   std::vector<TestCase> tests = {
-      {absl::nullopt, Options{}, false, false},
-      {absl::nullopt, Options{}.set<OTelOption>(false), true, false},
-      {absl::nullopt, Options{}.set<OTelOption>(true), true, true},
-      {"ON", Options{}, true, true},
-      {"ON", Options{}.set<OTelOption>(false), true, false},
-      {"ON", Options{}.set<OTelOption>(true), true, true},
+      {absl::nullopt, false},
+      {"ON", true},
   };
+  auto const input =
+      Options{}.set<experimental::OpenTelemetryTracingOption>(false);
   for (auto const& test : tests) {
     ScopedEnvironment env("GOOGLE_CLOUD_CPP_OPENTELEMETRY_TRACING", test.env);
-    auto options = PopulateCommonOptions(test.input, {}, {}, {}, {});
-    EXPECT_EQ(options.has<OTelOption>(), test.has_option);
-    EXPECT_EQ(options.get<OTelOption>(), test.get_option);
+    auto options = PopulateCommonOptions(input, {}, {}, {}, {});
+    EXPECT_EQ(options.get<experimental::OpenTelemetryTracingOption>(),
+              test.value);
   }
 }
 

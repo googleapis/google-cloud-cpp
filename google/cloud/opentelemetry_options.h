@@ -56,15 +56,13 @@ namespace experimental {
  * environment variable. If the environment variable is set, tracing with
  * OpenTelemetry is enabled.
  *
- * @note The environment variable is ignored when the option is explicitly
- * provided to `Make*Connection()`.
- *
  * @ingroup options
  *
  * [Cloud Trace]: https://cloud.google.com/trace
  * [gc-quickstart]:
  * https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/opentelemetry/quickstart
- * [gc-otel-docs]: https://googleapis.dev/cpp/google-cloud-opentelemetry/latest/
+ * [gc-otel-docs]:
+ * https://cloud.google.com/cpp/docs/reference/opentelemetry/latest
  * [opentelemetry]: https://opentelemetry.io/docs/instrumentation/cpp/
  * [tracer provider]:
  * https://opentelemetry.io/docs/concepts/signals/traces/#tracer-provider
