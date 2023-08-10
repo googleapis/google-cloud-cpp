@@ -22,7 +22,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 namespace {
 
-void AddErrorMetadata(ErrorInfo& ei, char const* location, char const* reason) {
+void AddErrorMetadata(ErrorInfo& ei, Status const& status, char const* location,
+                      char const* reason) {
+  AddMetadata(ei, "gcloud-cpp.retry.original-message", status.message());
   AddMetadata(ei, "gcloud-cpp.retry.function", location);
   AddMetadata(ei, "gcloud-cpp.retry.reason", reason);
 }
@@ -31,9 +33,10 @@ void AddOnEntry(ErrorInfo& ei, char const* value) {
   AddMetadata(ei, "gcloud-cpp.retry.on-entry", value);
 }
 
-ErrorInfoBuilder AddErrorMetadata(ErrorInfoBuilder b, char const* location,
-                                  char const* reason) {
+ErrorInfoBuilder AddErrorMetadata(ErrorInfoBuilder b, Status const& status,
+                                  char const* location, char const* reason) {
   return std::move(b)
+      .WithMetadata("gcloud-cpp.retry.original-message", status.message())
       .WithMetadata("gcloud-cpp.retry.function", location)
       .WithMetadata("gcloud-cpp.retry.reason", reason);
 }
@@ -43,7 +46,7 @@ ErrorInfoBuilder AddErrorMetadata(ErrorInfoBuilder b, char const* location,
 Status RetryLoopNonIdempotentError(Status status, char const* location) {
   if (status.ok()) return status;
   auto ei = status.error_info();
-  AddErrorMetadata(ei, location, "non-idempotent");
+  AddErrorMetadata(ei, status, location, "non-idempotent");
   auto message =
       absl::StrCat("Error in non-idempotent operation: ", status.message());
   return Status(status.code(), std::move(message), std::move(ei));
@@ -61,10 +64,11 @@ Status RetryLoopPermanentError(Status const& status, char const* location) {
   if (status.ok()) {
     return UnknownError(
         absl::StrCat("Retry policy treats kOk as permanent error"),
-        AddErrorMetadata(GCP_ERROR_INFO(), location, "permanent-error"));
+        AddErrorMetadata(GCP_ERROR_INFO(), status, location,
+                         "permanent-error"));
   }
   auto ei = status.error_info();
-  AddErrorMetadata(ei, location, "permanent-error");
+  AddErrorMetadata(ei, status, location, "permanent-error");
   auto message = absl::StrCat("Permanent error, with a last message of ",
                               status.message());
   return Status(status.code(), std::move(message), std::move(ei));
@@ -76,11 +80,12 @@ Status RetryLoopPolicyExhaustedError(Status const& status,
     // This indicates the retry loop never made a request.
     return DeadlineExceededError(
         absl::StrCat("Retry policy exhausted before first request attempt"),
-        AddErrorMetadata(GCP_ERROR_INFO(), location, "retry-policy-exhausted")
+        AddErrorMetadata(GCP_ERROR_INFO(), status, location,
+                         "retry-policy-exhausted")
             .WithMetadata("gcloud-cpp.retry.on-entry", "true"));
   }
   auto ei = status.error_info();
-  AddErrorMetadata(ei, location, "retry-policy-exhausted");
+  AddErrorMetadata(ei, status, location, "retry-policy-exhausted");
   AddOnEntry(ei, "false");
   auto message = absl::StrCat("Retry policy exhausted, with a last message of ",
                               status.message());
@@ -92,10 +97,10 @@ Status RetryLoopCancelled(Status const& status, char const* location) {
     // This indicates the retry loop never made a request.
     return CancelledError(
         absl::StrCat("Retry policy cancelled"),
-        AddErrorMetadata(GCP_ERROR_INFO(), location, "cancelled"));
+        AddErrorMetadata(GCP_ERROR_INFO(), status, location, "cancelled"));
   }
   auto ei = status.error_info();
-  AddErrorMetadata(ei, location, "cancelled");
+  AddErrorMetadata(ei, status, location, "cancelled");
   auto message = absl::StrCat("Retry loop cancelled, with a last message of ",
                               status.message());
   return Status(status.code(), std::move(message), std::move(ei));

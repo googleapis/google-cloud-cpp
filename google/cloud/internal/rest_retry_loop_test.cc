@@ -181,6 +181,8 @@ TEST(RestRetryLoopTest, TransientFailureNonIdempotent) {
   EXPECT_THAT(actual.status().message(), HasSubstr("try again"));
   auto const& metadata = actual.status().error_info().metadata();
   EXPECT_THAT(metadata,
+              Contains(Pair("gcloud-cpp.retry.original-message", "try again")));
+  EXPECT_THAT(metadata,
               Contains(Pair("gcloud-cpp.retry.reason", "non-idempotent")));
   EXPECT_THAT(metadata, Contains(Pair("gcloud-cpp.retry.function", __func__)));
 }
@@ -200,6 +202,8 @@ TEST(RestRetryLoopTest, PermanentFailureFailureIdempotent) {
   EXPECT_THAT(actual.status().message(), HasSubstr("uh oh"));
   auto const& metadata = actual.status().error_info().metadata();
   EXPECT_THAT(metadata,
+              Contains(Pair("gcloud-cpp.retry.original-message", "uh oh")));
+  EXPECT_THAT(metadata,
               Contains(Pair("gcloud-cpp.retry.reason", "permanent-error")));
   EXPECT_THAT(metadata, Contains(Pair("gcloud-cpp.retry.function", __func__)));
 }
@@ -218,6 +222,8 @@ TEST(RestRetryLoopTest, TooManyTransientFailuresIdempotent) {
   EXPECT_EQ(StatusCode::kUnavailable, actual.status().code());
   EXPECT_THAT(actual.status().message(), HasSubstr("try again"));
   auto const& metadata = actual.status().error_info().metadata();
+  EXPECT_THAT(metadata,
+              Contains(Pair("gcloud-cpp.retry.original-message", "try again")));
   EXPECT_THAT(metadata, Contains(Pair("gcloud-cpp.retry.reason",
                                       "retry-policy-exhausted")));
   EXPECT_THAT(metadata, Contains(Pair("gcloud-cpp.retry.on-entry", "false")));

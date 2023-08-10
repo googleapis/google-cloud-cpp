@@ -47,6 +47,8 @@ TEST(RetryLoopHelpers, RetryLoopNonIdempotentError) {
   EXPECT_THAT(actual.error_info().domain(), ei.domain());
   EXPECT_THAT(actual.error_info().metadata(), IsSupersetOf(ei.metadata()));
   EXPECT_THAT(actual.error_info().metadata(),
+              Contains(Pair("gcloud-cpp.retry.original-message", message)));
+  EXPECT_THAT(actual.error_info().metadata(),
               Contains(Pair("gcloud-cpp.retry.function", "SomeFunction")));
   EXPECT_THAT(actual.error_info().metadata(),
               Contains(Pair("gcloud-cpp.retry.reason", "non-idempotent")));
@@ -63,6 +65,8 @@ TEST(RetryLoopHelpers, RetryLoopPolicyErrorExhausted) {
   EXPECT_THAT(actual.error_info().reason(), ei.reason());
   EXPECT_THAT(actual.error_info().domain(), ei.domain());
   EXPECT_THAT(actual.error_info().metadata(), IsSupersetOf(ei.metadata()));
+  EXPECT_THAT(actual.error_info().metadata(),
+              Contains(Pair("gcloud-cpp.retry.original-message", message)));
   EXPECT_THAT(actual.error_info().metadata(),
               Contains(Pair("gcloud-cpp.retry.function", "SomeFunction")));
   EXPECT_THAT(
@@ -98,6 +102,8 @@ TEST(RetryLoopHelpers, RetryLoopPolicyErrorNotExhausted) {
   EXPECT_THAT(actual.error_info().domain(), ei.domain());
   EXPECT_THAT(actual.error_info().metadata(), IsSupersetOf(ei.metadata()));
   EXPECT_THAT(actual.error_info().metadata(),
+              Contains(Pair("gcloud-cpp.retry.original-message", message)));
+  EXPECT_THAT(actual.error_info().metadata(),
               Contains(Pair("gcloud-cpp.retry.function", "SomeFunction")));
   EXPECT_THAT(actual.error_info().metadata(),
               Contains(Pair("gcloud-cpp.retry.reason", "permanent-error")));
@@ -122,6 +128,8 @@ TEST(RetryLoopHelpers, RetryLoopErrorCancelled) {
   EXPECT_THAT(actual.error_info().reason(), ei.reason());
   EXPECT_THAT(actual.error_info().domain(), ei.domain());
   EXPECT_THAT(actual.error_info().metadata(), IsSupersetOf(ei.metadata()));
+  EXPECT_THAT(actual.error_info().metadata(),
+              Contains(Pair("gcloud-cpp.retry.original-message", message)));
   EXPECT_THAT(actual.error_info().metadata(),
               Contains(Pair("gcloud-cpp.retry.function", "SomeFunction")));
   EXPECT_THAT(actual.error_info().metadata(),
