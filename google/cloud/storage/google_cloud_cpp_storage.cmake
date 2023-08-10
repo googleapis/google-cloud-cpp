@@ -167,7 +167,6 @@ add_library(
     internal/policy_document_request.h
     internal/raw_client.cc
     internal/raw_client.h
-    internal/raw_client_wrapper_utils.h
     internal/request_project_id.cc
     internal/request_project_id.h
     internal/rest/object_read_source.cc
