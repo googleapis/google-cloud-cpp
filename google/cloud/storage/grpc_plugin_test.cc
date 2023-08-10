@@ -48,7 +48,7 @@ TEST(GrpcPluginTest, MetadataConfigCreatesGrpc) {
   auto impl = ClientImplDetails::GetRawClient(client);
   ASSERT_THAT(impl, NotNull());
   EXPECT_THAT(impl->InspectStackStructure(),
-              ElementsAre("GrpcClient", "StorageConnectionImpl"));
+              ElementsAre("GrpcStub", "StorageConnectionImpl"));
 }
 
 TEST(GrpcPluginTest, EnvironmentOverrides) {
@@ -62,7 +62,7 @@ TEST(GrpcPluginTest, EnvironmentOverrides) {
   auto impl = ClientImplDetails::GetRawClient(client);
   ASSERT_THAT(impl, NotNull());
   EXPECT_THAT(impl->InspectStackStructure(),
-              ElementsAre("RestClient", "StorageConnectionImpl"));
+              ElementsAre("RestStub", "StorageConnectionImpl"));
 }
 
 TEST(GrpcPluginTest, UnsetConfigCreatesMetadata) {
@@ -75,7 +75,7 @@ TEST(GrpcPluginTest, UnsetConfigCreatesMetadata) {
   auto impl = ClientImplDetails::GetRawClient(client);
   ASSERT_THAT(impl, NotNull());
   EXPECT_THAT(impl->InspectStackStructure(),
-              ElementsAre("GrpcClient", "StorageConnectionImpl"));
+              ElementsAre("GrpcStub", "StorageConnectionImpl"));
 }
 
 TEST(GrpcPluginTest, NoneConfigCreatesCurl) {
@@ -88,7 +88,7 @@ TEST(GrpcPluginTest, NoneConfigCreatesCurl) {
   auto impl = ClientImplDetails::GetRawClient(client);
   ASSERT_THAT(impl, NotNull());
   EXPECT_THAT(impl->InspectStackStructure(),
-              ElementsAre("RestClient", "StorageConnectionImpl"));
+              ElementsAre("RestStub", "StorageConnectionImpl"));
 }
 
 TEST(GrpcPluginTest, MediaConfigCreatesHybrid) {
@@ -101,7 +101,7 @@ TEST(GrpcPluginTest, MediaConfigCreatesHybrid) {
   auto impl = ClientImplDetails::GetRawClient(client);
   ASSERT_THAT(impl, NotNull());
   EXPECT_THAT(impl->InspectStackStructure(),
-              ElementsAre("GrpcClient", "RestClient", "HybridStub",
+              ElementsAre("GrpcStub", "RestStub", "HybridStub",
                           "StorageConnectionImpl"));
 }
 

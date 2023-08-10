@@ -203,7 +203,7 @@ TEST_F(ClientTest, DefaultDecoratorsRestClient) {
   auto const impl = ClientImplDetails::GetRawClient(tested);
   ASSERT_THAT(impl, NotNull());
   EXPECT_THAT(impl->InspectStackStructure(),
-              ElementsAre("RestClient", "StorageConnectionImpl"));
+              ElementsAre("RestStub", "StorageConnectionImpl"));
 }
 
 /// @test Verify the constructor creates the right set of RawClient decorations.

@@ -15,6 +15,7 @@
 #include "google/cloud/storage/client.h"
 #include "google/cloud/storage/internal/connection_impl.h"
 #include "google/cloud/storage/internal/curl/stub.h"
+#include "google/cloud/storage/internal/generic_stub_adapter.h"
 #include "google/cloud/storage/internal/logging_stub.h"
 #include "google/cloud/storage/internal/openssl_util.h"
 #include "google/cloud/storage/internal/rest/stub.h"
@@ -504,6 +505,17 @@ std::string CreateRandomPrefixName(std::string const& prefix) {
 }
 
 namespace internal {
+
+Client ClientImplDetails::CreateClient(
+    Options const& opts, std::unique_ptr<storage_internal::GenericStub> stub) {
+  return Client(Client::InternalOnlyNoDecorations{},
+                Client::CreateDefaultInternalClient(opts, std::move(stub)));
+}
+
+Client ClientImplDetails::CreateWithoutDecorations(
+    std::shared_ptr<internal::RawClient> c) {
+  return Client(Client::InternalOnlyNoDecorations{}, std::move(c));
+}
 
 ScopedDeleter::ScopedDeleter(
     std::function<Status(std::string, std::int64_t)> df)

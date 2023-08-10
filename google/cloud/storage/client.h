@@ -16,7 +16,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_CLIENT_H
 
 #include "google/cloud/storage/hmac_key_metadata.h"
-#include "google/cloud/storage/internal/generic_stub_adapter.h"
 #include "google/cloud/storage/internal/policy_document_request.h"
 #include "google/cloud/storage/internal/raw_client.h"
 #include "google/cloud/storage/internal/request_project_id.h"
@@ -3247,16 +3246,10 @@ struct ClientImplDetails {
   }
 
   static Client CreateClient(
-      Options const& opts,
-      std::unique_ptr<storage_internal::GenericStub> stub) {
-    return Client(Client::InternalOnlyNoDecorations{},
-                  Client::CreateDefaultInternalClient(opts, std::move(stub)));
-  }
+      Options const& opts, std::unique_ptr<storage_internal::GenericStub> stub);
 
   static Client CreateWithoutDecorations(
-      std::shared_ptr<internal::RawClient> c) {
-    return Client(Client::InternalOnlyNoDecorations{}, std::move(c));
-  }
+      std::shared_ptr<internal::RawClient> c);
 };
 
 // Just a wrapper to allow for using in `google::cloud::internal::apply`.
