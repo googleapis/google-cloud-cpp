@@ -227,12 +227,8 @@ struct ClientImplDetails;
  *
  * The default policies are to continue retrying for up to 15 minutes, and to
  * use truncated (at 5 minutes) exponential backoff, doubling the maximum
- * backoff period between retries.
- *
- * By default, all operations are treated as idempotent. The client library
- * sends the `x-goog-gcs-idempotency-token` header with a unique value for
- * each group of retried RPCs. If the service receives a request with a token
- * that it has previously seen, it will simply resend the matching response.
+ * backoff period between retries. Likewise, the idempotency policy is
+ * configured to retry all operations.
  *
  * The application can override these policies when constructing objects of this
  * class. The documentation for the constructors show examples of this in
@@ -312,6 +308,9 @@ class Client {
    *     `Projection`, and `UserProject`. `OverrideDefaultProject` is accepted,
    *     but has no effect.
    *
+   * @par Idempotency
+   * This is a read-only operation and is always idempotent.
+   *
    * @par Example
    * @snippet storage_bucket_samples.cc list buckets for project
    */
@@ -345,6 +344,9 @@ class Client {
    *     Valid types for this operation include `MaxResults`, `Prefix`,
    *     `Projection`, `UserProject`, and `OverrideDefaultProject`.
    *
+   * @par Idempotency
+   * This is a read-only operation and is always idempotent.
+   *
    * @par Example
    * @snippet storage_bucket_samples.cc list buckets
    */
@@ -374,6 +376,9 @@ class Client {
    *     Valid types for this operation include `PredefinedAcl`,
    *     `PredefinedDefaultObjectAcl`, `Projection`, `UserProject`,
    *     and `OverrideDefaultProject`.
+   *
+   * @par Idempotency
+   * This operation is always idempotent. It fails if the bucket already exists.
    *
    * @par Example
    * @snippet storage_bucket_samples.cc create bucket
@@ -415,6 +420,9 @@ class Client {
    *     `PredefinedDefaultObjectAcl`, `Projection`, and `UserProject`.
    *     `OverrideDefaultProject` is accepted, but has no effect.
    *
+   * @par Idempotency
+   * This operation is always idempotent. It fails if the bucket already exists.
+   *
    * @par Example
    * @snippet storage_bucket_samples.cc create bucket for project
    *
@@ -449,6 +457,9 @@ class Client {
    *     Valid types for this operation include `IfMetagenerationMatch`,
    *     `IfMetagenerationNotMatch`, `UserProject`, and `Projection`.
    *
+   * @par Idempotency
+   * This is a read-only operation and is always idempotent.
+   *
    * @par Example
    * @snippet storage_bucket_samples.cc get bucket metadata
    */
@@ -469,6 +480,10 @@ class Client {
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `IfMetagenerationMatch`,
    *     `IfMetagenerationNotMatch`, and `UserProject`.
+   *
+   * @par Idempotency
+   * This operation is only idempotent if restricted by pre-conditions, in this
+   * case, `IfMetagenerationMatch`.
    *
    * @par Example
    * @snippet storage_bucket_samples.cc delete bucket
@@ -498,6 +513,10 @@ class Client {
    *     Valid types for this operation include `IfMetagenerationMatch`,
    *     `IfMetagenerationNotMatch`, `PredefinedAcl`,
    *     `PredefinedDefaultObjectAcl`, `Projection`, and `UserProject`.
+   *
+   * @par Idempotency
+   * This operation is only idempotent if restricted by pre-conditions, in this
+   * case,`IfMetagenerationMatch`.
    *
    * @par Example
    * @snippet storage_bucket_samples.cc update bucket
@@ -545,6 +564,10 @@ class Client {
    *     `IfMetagenerationNotMatch`, `PredefinedAcl`,
    *     `PredefinedDefaultObjectAcl`, `Projection`, and `UserProject`.
    *
+   * @par Idempotency
+   * This operation is only idempotent if restricted by pre-conditions, in this
+   * case, `IfMetagenerationMatch`.
+   *
    * @par Example
    * @snippet storage_bucket_samples.cc patch bucket storage class
    *
@@ -586,6 +609,10 @@ class Client {
    *     Valid types for this operation include `IfMetagenerationMatch`,
    *     `IfMetagenerationNotMatch`, `PredefinedAcl`,
    *     `PredefinedDefaultObjectAcl`, `Projection`, and `UserProject`.
+   *
+   * @par Idempotency
+   * This operation is only idempotent if restricted by pre-conditions, in this
+   * case, `IfMetagenerationMatch`.
    *
    * @par Example
    * @snippet storage_bucket_samples.cc patch bucket storage class with builder
@@ -633,6 +660,9 @@ class Client {
    * @param bucket_name query metadata information about this bucket.
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `UserProject`.
+   *
+   * @par Idempotency
+   * This is a read-only operation and is always idempotent.
    *
    * @par Example
    * @snippet storage_bucket_iam_samples.cc native get bucket iam policy
@@ -683,6 +713,10 @@ class Client {
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `UserProject`.
    *
+   * @par Idempotency
+   * This operation is only idempotent if restricted by pre-conditions, in this
+   * case, `IfMetagenerationMatch`.
+   *
    * @par Example: adding a new member
    * @snippet storage_bucket_iam_samples.cc native add bucket iam member
    *
@@ -723,6 +757,9 @@ class Client {
    * @param permissions the list of permissions to check.
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `UserProject`.
+   *
+   * @par Idempotency
+   * This is a read-only operation and is always idempotent.
    *
    * @par Example
    * @snippet storage_bucket_iam_samples.cc test bucket iam permissions
@@ -766,6 +803,10 @@ class Client {
    *     current value.
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `UserProject`.
+   *
+   * @par Idempotency
+   * This operation is always idempotent because the `metageneration` parameter
+   * is always required, and it acts as a pre-condition on the operation.
    *
    * @par Example: lock the retention policy
    * @snippet storage_retention_policy_samples.cc lock retention policy
@@ -824,6 +865,10 @@ class Client {
    *     `IfGenerationNotMatch`, `IfMetagenerationMatch`,
    *     `IfMetagenerationNotMatch`, `KmsKeyName`, `MD5HashValue`,
    *     `PredefinedAcl`, `Projection`, `UserProject`, and `WithObjectMetadata`.
+   *
+   * @par Idempotency
+   * This operation is only idempotent if restricted by pre-conditions, in this
+   * case, `IfGenerationMatch`.
    *
    * @par Example
    * @snippet storage_object_samples.cc insert object
@@ -892,6 +937,10 @@ class Client {
    *     `IfSourceMetagenerationNotMatch`, `Projection`, `SourceGeneration`,
    *     `SourceEncryptionKey`, `UserProject`, and `WithObjectMetadata`.
    *
+   * @par Idempotency
+   * This operation is only idempotent if restricted by pre-conditions, in this
+   * case, `IfGenerationMatch`.
+   *
    * @par Example
    * @snippet storage_object_samples.cc copy object
    *
@@ -927,6 +976,9 @@ class Client {
    *     `IfGenerationMatch`, `IfGenerationNotMatch`, `IfMetagenerationMatch`,
    *     `IfMetagenerationNotMatch`, `Projection`, and `UserProject`.
    *
+   * @par Idempotency
+   * This is a read-only operation and is always idempotent.
+   *
    * @par Example
    * @snippet storage_object_samples.cc get object metadata
    */
@@ -949,6 +1001,9 @@ class Client {
    *     Valid types for this operation include `MaxResults`, `Prefix`,
    *     `Delimiter`, `IncludeTrailingDelimiter`, `StartOffset`, `EndOffset`,
    *     `Projection`, `UserProject`, and `Versions`.
+   *
+   * @par Idempotency
+   * This is a read-only operation and is always idempotent.
    *
    * @par Example
    * @snippet storage_object_samples.cc list objects
@@ -978,6 +1033,9 @@ class Client {
    *     `IfMetagenerationMatch`, `IfMetagenerationNotMatch`, `UserProject`,
    *     `Projection`, `Prefix`, `Delimiter`, `IncludeTrailingDelimiter`,
    *     `StartOffset`, `EndOffset`, and `Versions`.
+   *
+   * @par Idempotency
+   * This is a read-only operation and is always idempotent.
    *
    * @par Example
    * @snippet storage_object_samples.cc list objects and prefixes
@@ -1028,6 +1086,9 @@ class Client {
    *     `IfGenerationNotMatch`, `IfMetagenerationMatch`,
    *     `IfMetagenerationNotMatch`, `ReadFromOffset`, `ReadRange`, `ReadLast`,
    *     `UserProject`, and `AcceptEncoding`.
+   *
+   * @par Idempotency
+   * This is a read-only operation and is always idempotent.
    *
    * @par Example
    * @snippet storage_object_samples.cc read object
@@ -1106,6 +1167,10 @@ class Client {
    *   `UseResumableUploadSession`, `UserProject`, `WithObjectMetadata`,
    *   `UploadContentLength`, `AutoFinalize`, and `UploadBufferSize`.
    *
+   * @par Idempotency
+   * This operation is only idempotent if restricted by pre-conditions, in this
+   * case, `IfGenerationMatch`.
+   *
    * @par Example
    * @snippet storage_object_samples.cc write object
    *
@@ -1156,6 +1221,10 @@ class Client {
    *   `MD5HashValue`, `PredefinedAcl`, `Projection`, `UserProject`,
    *   `UploadFromOffset`, `UploadLimit` and `WithObjectMetadata`.
    *
+   * @par Idempotency
+   * This operation is only idempotent if restricted by pre-conditions, in this
+   * case, `IfGenerationMatch`.
+   *
    * @par Example
    * @snippet storage_object_file_transfer_samples.cc upload file
    *
@@ -1185,6 +1254,10 @@ class Client {
    * `ObjectWriteStream::resumable_session_id`.
    * @param options a list of optional query parameters and/or request headers.
    *   Valid types for this operation include `UserProject`.
+   *
+   * @par Idempotency
+   * This operation is always idempotent because it only acts on a specific
+   * `upload_session_url`.
    */
   template <typename... Options>
   Status DeleteResumableUpload(std::string const& upload_session_url,
@@ -1209,6 +1282,9 @@ class Client {
    *   `IfMetagenerationNotMatch`, `Generation`, `ReadFromOffset`, `ReadRange`,
    *   and `UserProject`.
    *
+   * @par Idempotency
+   * This is a read-only operation and is always idempotent.
+   *
    * @par Example
    * @snippet storage_object_file_transfer_samples.cc download file
    */
@@ -1232,6 +1308,11 @@ class Client {
    *     Valid types for this operation include `Generation`,
    *     `IfGenerationMatch`, `IfGenerationNotMatch`, `IfMetagenerationMatch`,
    *     `IfMetagenerationNotMatch`, and `UserProject`.
+   *
+   * @par Idempotency
+   * This operation is only idempotent if:
+   * - restricted by pre-conditions, in this case, `IfGenerationMatch`
+   * - or, if it applies to only one object version via `Generation`.
    *
    * @par Example
    * @snippet storage_object_samples.cc delete object
@@ -1260,6 +1341,10 @@ class Client {
    *     `IfGenerationMatch`, `IfGenerationNotMatch`, `IfMetagenerationMatch`,
    *     `IfMetagenerationNotMatch`, `PredefinedAcl`, `Projection`, and
    *     `UserProject`.
+   *
+   * @par Idempotency
+   * This operation is only idempotent if restricted by pre-conditions, in this
+   * case, `IfMetagenerationMatch`.
    *
    * @par Example
    * @snippet storage_object_samples.cc update object metadata
@@ -1296,6 +1381,10 @@ class Client {
    *     `IfMetagenerationNotMatch`, `PredefinedAcl`,
    *     `Projection`, and `UserProject`.
    *
+   * @par Idempotency
+   * This operation is only idempotent if restricted by pre-conditions, in this
+   * case, `IfMetagenerationMatch`.
+   *
    * @par Example
    * @snippet storage_object_samples.cc patch object delete metadata
    */
@@ -1330,6 +1419,10 @@ class Client {
    *     `IfMetagenerationNotMatch`, `PredefinedAcl`, `EncryptionKey`,
    *     `Projection`, and `UserProject`.
    *
+   * @par Idempotency
+   * This operation is only idempotent if restricted by pre-conditions, in this
+   * case, `IfMetagenerationMatch`.
+   *
    * @par Example
    * @snippet storage_object_samples.cc patch object content type
    */
@@ -1357,6 +1450,10 @@ class Client {
    *      `DestinationPredefinedAcl`, `EncryptionKey`, `IfGenerationMatch`,
    *      `IfMetagenerationMatch`, `KmsKeyName`, `UserProject`, and
    *      `WithObjectMetadata`.
+   *
+   * @par Idempotency
+   * This operation is only idempotent if restricted by pre-conditions, in this
+   * case, `IfGenerationMatch`.
    *
    * @par Example
    * @snippet storage_object_samples.cc compose object
@@ -1404,6 +1501,10 @@ class Client {
    *      `IfSourceMetagenerationMatch`, `IfSourceMetagenerationNotMatch`,
    *      `MaxBytesRewrittenPerCall`, `Projection`, `SourceEncryptionKey`,
    *      `SourceGeneration`, `UserProject`, and `WithObjectMetadata`.
+   *
+   * @par Idempotency
+   * This operation is only idempotent if restricted by pre-conditions, in this
+   * case, `IfGenerationMatch`.
    *
    * @par Example
    * @snippet storage_object_rewrite_samples.cc rewrite object non blocking
@@ -1456,6 +1557,10 @@ class Client {
    *      `MaxBytesRewrittenPerCall`, `Projection`, `SourceEncryptionKey`,
    *      `SourceGeneration`, `UserProject`, and `WithObjectMetadata`.
    *
+   * @par Idempotency
+   * This operation is only idempotent if restricted by pre-conditions, in this
+   * case, `IfGenerationMatch`.
+   *
    * @par Example
    * @snippet storage_object_rewrite_samples.cc rewrite object resume
    */
@@ -1505,6 +1610,10 @@ class Client {
    *      `SourceGeneration`, `UserProject`, and `WithObjectMetadata`.
    *
    * @return The metadata of the newly created object.
+   *
+   * @par Idempotency
+   * This operation is only idempotent if restricted by pre-conditions, in this
+   * case, `IfGenerationMatch`.
    *
    * @par Example
    * @snippet storage_object_rewrite_samples.cc rewrite object
@@ -1567,6 +1676,9 @@ class Client {
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `UserProject`.
    *
+   * @par Idempotency
+   * This is a read-only operation and is always idempotent.
+   *
    * @par Example
    * @snippet storage_bucket_acl_samples.cc list bucket acl
    */
@@ -1592,6 +1704,10 @@ class Client {
    * @param role the role of the entity.
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `UserProject`.
+   *
+   * @par Idempotency
+   * This operation is only idempotent if restricted by pre-conditions. There
+   * are no pre-conditions for this operation that can make it idempotent.
    *
    * @par Example
    * @snippet storage_bucket_acl_samples.cc create bucket acl
@@ -1621,6 +1737,10 @@ class Client {
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `UserProject`.
    *
+   * @par Idempotency
+   * This operation is only idempotent if restricted by pre-conditions. There
+   * are no pre-conditions for this operation that can make it idempotent.
+   *
    * @par Example
    * @snippet storage_bucket_acl_samples.cc delete bucket acl
    *
@@ -1644,6 +1764,9 @@ class Client {
    * @param entity the name of the entity to query.
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `UserProject`.
+   *
+   * @par Idempotency
+   * This is a read-only operation and is always idempotent.
    *
    * @par Example
    * @snippet storage_bucket_acl_samples.cc get bucket acl
@@ -1677,6 +1800,10 @@ class Client {
    *   will be modified by the server.
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `UserProject`.
+   *
+   * @par Idempotency
+   * This operation is only idempotent if restricted by pre-conditions. There
+   * are no pre-conditions for this operation that can make it idempotent.
    *
    * @par Example
    * @snippet storage_bucket_acl_samples.cc update bucket acl
@@ -1723,6 +1850,10 @@ class Client {
    *     Valid types for this operation include `UserProject`, and the standard
    *     options available to all operations.
    *
+   * @par Idempotency
+   * This operation is only idempotent if restricted by pre-conditions. There
+   * are no pre-conditions for this operation that can make it idempotent.
+   *
    * @par Example
    * @snippet storage_bucket_acl_samples.cc patch bucket acl
    *
@@ -1764,6 +1895,10 @@ class Client {
    * @param options a list of optional query parameters and/or request
    *     headers. Valid types for this operation include `Generation`,
    *     `UserProject`, `IfMatchEtag`, and `IfNoneMatchEtag`.
+   *
+   * @par Idempotency
+   * This operation is only idempotent if restricted by pre-conditions. There
+   * are no pre-conditions for this operation that can make it idempotent.
    *
    * @par Example
    * @snippet storage_bucket_acl_samples.cc patch bucket acl no-read
@@ -1817,6 +1952,9 @@ class Client {
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `Generation`, and `UserProject`.
    *
+   * @par Idempotency
+   * This is a read-only operation and is always idempotent.
+   *
    * @par Example
    * @snippet storage_object_acl_samples.cc list object acl
    */
@@ -1844,6 +1982,10 @@ class Client {
    * @param role the role of the entity.
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `Generation`, and `UserProject`.
+   *
+   * @par Idempotency
+   * This operation is only idempotent if restricted by pre-conditions. There
+   * are no pre-conditions for this operation that can make it idempotent.
    *
    * @par Example
    * @snippet storage_object_acl_samples.cc create object acl
@@ -1877,6 +2019,10 @@ class Client {
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `Generation`, and `UserProject`.
    *
+   * @par Idempotency
+   * This operation is only idempotent if restricted by pre-conditions. There
+   * are no pre-conditions for this operation that can make it idempotent.
+   *
    * @par Example
    * @snippet storage_object_acl_samples.cc delete object acl
    *
@@ -1902,6 +2048,9 @@ class Client {
    * @param entity the name of the entity added to the ACL.
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `Generation`, and `UserProject`.
+   *
+   * @par Idempotency
+   * This is a read-only operation and is always idempotent.
    *
    * @par Example
    * @snippet storage_object_acl_samples.cc print file acl for user
@@ -1937,6 +2086,10 @@ class Client {
    *   will be modified by the server.
    * @param options a list of optional query parameters and/or request
    *     Valid types for this operation include `Generation`, and `UserProject`.
+   *
+   * @par Idempotency
+   * This operation is only idempotent if restricted by pre-conditions. There
+   * are no pre-conditions for this operation that can make it idempotent.
    *
    * @par Example
    * @snippet storage_object_acl_samples.cc update object acl
@@ -1983,6 +2136,10 @@ class Client {
    *     headers. Valid types for this operation include `Generation`,
    *     `UserProject`, `IfMatchEtag`, and `IfNoneMatchEtag`.
    *
+   * @par Idempotency
+   * This operation is only idempotent if restricted by pre-conditions. There
+   * are no pre-conditions for this operation that can make it idempotent.
+   *
    * @par Example
    * @snippet storage_object_acl_samples.cc patch object acl
    *
@@ -2025,6 +2182,10 @@ class Client {
    * @param options a list of optional query parameters and/or request
    *     headers. Valid types for this operation include `Generation`,
    *     `UserProject`, `IfMatchEtag`, and `IfNoneMatchEtag`.
+   *
+   * @par Idempotency
+   * This operation is only idempotent if restricted by pre-conditions. There
+   * are no pre-conditions for this operation that can make it idempotent.
    *
    * @par Example
    * @snippet storage_object_acl_samples.cc patch object acl no-read
@@ -2076,6 +2237,9 @@ class Client {
    *     Valid types for this operation include `IfMetagenerationMatch`,
    *     `IfMetagenerationNotMatch` and `UserProject`.
    *
+   * @par Idempotency
+   * This is a read-only operation and is always idempotent.
+   *
    * @par Example
    * @snippet storage_default_object_acl_samples.cc list default object acl
    *
@@ -2107,6 +2271,10 @@ class Client {
    * @param role the role of the entity.
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `UserProject`.
+   *
+   * @par Idempotency
+   * This operation is only idempotent if restricted by pre-conditions. There
+   * are no pre-conditions for this operation that can make it idempotent.
    *
    * @par Example
    * @snippet storage_default_object_acl_samples.cc create default object acl
@@ -2140,6 +2308,10 @@ class Client {
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `UserProject`.
    *
+   * @par Idempotency
+   * This operation is only idempotent if restricted by pre-conditions. There
+   * are no pre-conditions for this operation that can make it idempotent.
+   *
    * @par Example
    * @snippet storage_default_object_acl_samples.cc delete default object acl
    *
@@ -2169,6 +2341,9 @@ class Client {
    * @param entity the name of the entity.
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `UserProject`.
+   *
+   * @par Idempotency
+   * This is a read-only operation and is always idempotent.
    *
    * @par Example
    * @snippet storage_default_object_acl_samples.cc get default object acl
@@ -2207,6 +2382,10 @@ class Client {
    *   will be modified by the server.
    * @param options a list of optional query parameters and/or request
    *     Valid types for this operation include `UserProject`.
+   *
+   * @par Idempotency
+   * This operation is only idempotent if restricted by pre-conditions. There
+   * are no pre-conditions for this operation that can make it idempotent.
    *
    * @par Example
    * @snippet storage_default_object_acl_samples.cc update default object acl
@@ -2254,6 +2433,10 @@ class Client {
    *     as the standard parameters, such as `IfMatchEtag`, and
    *     `IfNoneMatchEtag`.
    *
+   * @par Idempotency
+   * This operation is only idempotent if restricted by pre-conditions. There
+   * are no pre-conditions for this operation that can make it idempotent.
+   *
    * @par Example
    * @snippet storage_default_object_acl_samples.cc patch default object acl
    *
@@ -2298,6 +2481,10 @@ class Client {
    *     headers. Valid types for this operation include `UserProject`, as well
    *     as the standard parameters, such as `IfMatchEtag`, and
    *     `IfNoneMatchEtag`.
+   *
+   * @par Idempotency
+   * This operation is only idempotent if restricted by pre-conditions. There
+   * are no pre-conditions for this operation that can make it idempotent.
    *
    * @par Example
    * @snippet storage_default_object_acl_samples.cc patch no-read
@@ -2347,6 +2534,9 @@ class Client {
    *     Valid types for this operation include `UserProject`.
    *     `OverrideDefaultProject` is accepted, but has no effect.
    *
+   * @par Idempotency
+   * This is a read-only operation and is always idempotent.
+   *
    * @par Example
    * @snippet storage_service_account_samples.cc get service account for project
    *
@@ -2382,6 +2572,9 @@ class Client {
    *     Valid types for this operation include `UserProject`,
    *     and `OverrideDefaultProject`.
    *
+   * @par Idempotency
+   * This is a read-only operation and is always idempotent.
+   *
    * @par Example
    * @snippet storage_service_account_samples.cc get service account
    *
@@ -2412,6 +2605,9 @@ class Client {
    *     and `ServiceAccountFilter`.
    *
    * @return A range to iterate over the available HMAC keys.
+   *
+   * @par Idempotency
+   * This is a read-only operation and is always idempotent.
    *
    * @par Example
    * @snippet storage_service_account_samples.cc list hmac keys
@@ -2460,6 +2656,10 @@ class Client {
    *   secret (encoded as a base64 string). This is the only request that
    *   returns the secret.
    *
+   * @par Idempotency
+   * This operation is not idempotent. Retrying the operation will create a new
+   * key each time.
+   *
    * @par Example
    * @snippet storage_service_account_samples.cc create hmac key
    *
@@ -2502,6 +2702,10 @@ class Client {
    *
    * @return This operation returns the new HMAC key metadata.
    *
+   * @par Idempotency
+   * This operation is always idempotent. An access id identifies a single HMAC
+   * key, calling the operation multiple times can succeed only once.
+   *
    * @par Example
    * @snippet storage_service_account_samples.cc delete hmac key
    *
@@ -2536,6 +2740,9 @@ class Client {
    *     accepts `OverrideDefaultProject`.
    *
    * @return This operation returns the new HMAC key metadata.
+   *
+   * @par Idempotency
+   * This is a read-only operation and therefore it is always idempotent.
    *
    * @par Example
    * @snippet storage_service_account_samples.cc get hmac key
@@ -2575,6 +2782,10 @@ class Client {
    *     accepts `OverrideDefaultProject`.
    *
    * @return This operation returns the new HMAC key metadata.
+   *
+   * @par Idempotency
+   * This operation is only idempotent if the `etag` attribute in @p resource
+   * is set, or if the `IfMatchEtag` option is set.
    *
    * @par Example
    * @snippet storage_service_account_samples.cc update hmac key
@@ -2842,6 +3053,9 @@ class Client {
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `UserProject`.
    *
+   * @par Idempotency
+   * This is a read-only operation and is always idempotent.
+   *
    * @par Example
    * @snippet storage_notification_samples.cc list notifications
    */
@@ -2874,6 +3088,10 @@ class Client {
    *     as the list of event types, or any custom attributes.
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `UserProject`.
+   *
+   * @par Idempotency
+   * This operation is only idempotent if restricted by pre-conditions. There
+   * are no pre-conditions for this operation that can make it idempotent.
    *
    * @par Example
    * @snippet storage_notification_samples.cc create notification
@@ -2915,6 +3133,10 @@ class Client {
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `UserProject`.
    *
+   * @par Idempotency
+   * This operation is only idempotent if restricted by pre-conditions. There
+   * are no pre-conditions for this operation that can make it idempotent.
+   *
    * @par Example
    * @snippet storage_notification_samples.cc create notification
    *
@@ -2950,6 +3172,9 @@ class Client {
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `UserProject`.
    *
+   * @par Idempotency
+   * This is a read-only operation and is always idempotent.
+   *
    * @par Example
    * @snippet storage_notification_samples.cc get notification
    *
@@ -2982,6 +3207,11 @@ class Client {
    * @param notification_id the id of the notification config.
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `UserProject`.
+   *
+   * @par Idempotency
+   * This operation is always idempotent because it only acts on a specific
+   * `notification_id`, the state after calling this function multiple times is
+   * to delete that notification.  New notifications get different ids.
    *
    * @par Example
    * @snippet storage_notification_samples.cc delete notification
@@ -3438,6 +3668,11 @@ class ScopedDeleter {
  *     `EncryptionKey`, `IfGenerationMatch`, `IfMetagenerationMatch`
  *     `KmsKeyName`, `QuotaUser`, `UserIp`, `UserProject` and
  *     `WithObjectMetadata`.
+ *
+ * @par Idempotency
+ * This operation is not idempotent. While each request performed by this
+ * function is retried based on the client policies, the operation itself stops
+ * on the first request that fails.
  *
  * @par Example
  * @snippet storage_object_samples.cc compose object from many

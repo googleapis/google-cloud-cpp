@@ -44,7 +44,7 @@ TEST(StrictIdempotencyPolicyTest, GetBucketMetadata) {
 TEST(StrictIdempotencyPolicyTest, DeleteBucket) {
   StrictIdempotencyPolicy policy;
   internal::DeleteBucketRequest request("test-bucket-name");
-  EXPECT_TRUE(policy.IsIdempotent(request));
+  EXPECT_FALSE(policy.IsIdempotent(request));
 }
 
 TEST(StrictIdempotencyPolicyTest, DeleteBucketIfEtag) {
@@ -65,7 +65,7 @@ TEST(StrictIdempotencyPolicyTest, UpdateBucket) {
   StrictIdempotencyPolicy policy;
   internal::UpdateBucketRequest request(
       BucketMetadata().set_name("test-bucket-name"));
-  EXPECT_TRUE(policy.IsIdempotent(request));
+  EXPECT_FALSE(policy.IsIdempotent(request));
 }
 
 TEST(StrictIdempotencyPolicyTest, UpdateBucketIfEtag) {
@@ -88,7 +88,7 @@ TEST(StrictIdempotencyPolicyTest, PatchBucket) {
   StrictIdempotencyPolicy policy;
   internal::PatchBucketRequest request("test-bucket-name",
                                        BucketMetadataPatchBuilder());
-  EXPECT_TRUE(policy.IsIdempotent(request));
+  EXPECT_FALSE(policy.IsIdempotent(request));
 }
 
 TEST(StrictIdempotencyPolicyTest, PatchBucketIfEtag) {
@@ -117,7 +117,7 @@ TEST(StrictIdempotencyPolicyTest, SetNativeBucketIamPolicy) {
   StrictIdempotencyPolicy policy;
   internal::SetNativeBucketIamPolicyRequest request(
       "test-bucket-name", NativeIamPolicy(std::vector<NativeIamBinding>()));
-  EXPECT_TRUE(policy.IsIdempotent(request));
+  EXPECT_FALSE(policy.IsIdempotent(request));
 }
 
 TEST(StrictIdempotencyPolicyTest, SetNativeBucketIamPolicyIfEtag) {
@@ -138,7 +138,7 @@ TEST(StrictIdempotencyPolicyTest, InsertObjectMedia) {
   StrictIdempotencyPolicy policy;
   internal::InsertObjectMediaRequest request("test-bucket-name",
                                              "test-object-name", "test-data");
-  EXPECT_TRUE(policy.IsIdempotent(request));
+  EXPECT_FALSE(policy.IsIdempotent(request));
 }
 
 TEST(StrictIdempotencyPolicyTest, InsertObjectMediaIfGenerationMatch) {
@@ -154,7 +154,7 @@ TEST(StrictIdempotencyPolicyTest, CopyObject) {
   internal::CopyObjectRequest request("test-source-bucket",
                                       "test-source-object", "test-bucket-name",
                                       "test-object-name");
-  EXPECT_TRUE(policy.IsIdempotent(request));
+  EXPECT_FALSE(policy.IsIdempotent(request));
 }
 
 TEST(StrictIdempotencyPolicyTest, CopyObjectIfGenerationMatch) {
@@ -189,7 +189,7 @@ TEST(StrictIdempotencyPolicyTest, ListObjects) {
 TEST(StrictIdempotencyPolicyTest, DeleteObject) {
   StrictIdempotencyPolicy policy;
   internal::DeleteObjectRequest request("test-bucket-name", "test-object-name");
-  EXPECT_TRUE(policy.IsIdempotent(request));
+  EXPECT_FALSE(policy.IsIdempotent(request));
 }
 
 TEST(StrictIdempotencyPolicyTest, DeleteObjectIfGenerationMatch) {
@@ -210,7 +210,7 @@ TEST(StrictIdempotencyPolicyTest, UpdateObject) {
   StrictIdempotencyPolicy policy;
   internal::UpdateObjectRequest request("test-bucket-name", "test-object-name",
                                         ObjectMetadata());
-  EXPECT_TRUE(policy.IsIdempotent(request));
+  EXPECT_FALSE(policy.IsIdempotent(request));
 }
 
 TEST(StrictIdempotencyPolicyTest, UpdateObjectIfEtag) {
@@ -233,7 +233,7 @@ TEST(StrictIdempotencyPolicyTest, PatchObject) {
   StrictIdempotencyPolicy policy;
   internal::PatchObjectRequest request("test-bucket-name", "test-object-name",
                                        ObjectMetadataPatchBuilder());
-  EXPECT_TRUE(policy.IsIdempotent(request));
+  EXPECT_FALSE(policy.IsIdempotent(request));
 }
 
 TEST(StrictIdempotencyPolicyTest, PatchObjectIfEtag) {
@@ -257,7 +257,7 @@ TEST(StrictIdempotencyPolicyTest, ComposeObject) {
   internal::ComposeObjectRequest request(
       "test-bucket-name", {ComposeSourceObject{"source-1", {}, {}}},
       "test-object-name");
-  EXPECT_TRUE(policy.IsIdempotent(request));
+  EXPECT_FALSE(policy.IsIdempotent(request));
 }
 
 TEST(StrictIdempotencyPolicyTest, ComposeObjectIfGenerationMatch) {
@@ -274,7 +274,7 @@ TEST(StrictIdempotencyPolicyTest, RewriteObject) {
   internal::RewriteObjectRequest request(
       "test-source-bucket", "test-source-object", "test-bucket-name",
       "test-object-name", std::string{});
-  EXPECT_TRUE(policy.IsIdempotent(request));
+  EXPECT_FALSE(policy.IsIdempotent(request));
 }
 
 TEST(StrictIdempotencyPolicyTest, RewriteObjectIfGenerationMatch) {
@@ -296,7 +296,7 @@ TEST(StrictIdempotencyPolicyTest, CreateBucketAcl) {
   StrictIdempotencyPolicy policy;
   internal::CreateBucketAclRequest request("test-bucket-name",
                                            "test-entity-name", "READER");
-  EXPECT_TRUE(policy.IsIdempotent(request));
+  EXPECT_FALSE(policy.IsIdempotent(request));
 }
 
 TEST(StrictIdempotencyPolicyTest, CreateBucketAclIfMatchEtag) {
@@ -311,7 +311,7 @@ TEST(StrictIdempotencyPolicyTest, DeleteBucketAcl) {
   StrictIdempotencyPolicy policy;
   internal::DeleteBucketAclRequest request("test-bucket-name",
                                            "test-entity-name");
-  EXPECT_TRUE(policy.IsIdempotent(request));
+  EXPECT_FALSE(policy.IsIdempotent(request));
 }
 
 TEST(StrictIdempotencyPolicyTest, DeleteBucketAclIfMatchEtag) {
@@ -332,7 +332,7 @@ TEST(StrictIdempotencyPolicyTest, UpdateBucketAcl) {
   StrictIdempotencyPolicy policy;
   internal::UpdateBucketAclRequest request("test-bucket-name",
                                            "test-entity-name", "READER");
-  EXPECT_TRUE(policy.IsIdempotent(request));
+  EXPECT_FALSE(policy.IsIdempotent(request));
 }
 
 TEST(StrictIdempotencyPolicyTest, UpdateBucketAclIfMatchEtag) {
@@ -348,7 +348,7 @@ TEST(StrictIdempotencyPolicyTest, PatchBucketAcl) {
   internal::PatchBucketAclRequest request("test-bucket-name",
                                           "test-entity-name",
                                           BucketAccessControlPatchBuilder());
-  EXPECT_TRUE(policy.IsIdempotent(request));
+  EXPECT_FALSE(policy.IsIdempotent(request));
 }
 
 TEST(StrictIdempotencyPolicyTest, PatchBucketAclIfMatchEtag) {
@@ -371,7 +371,7 @@ TEST(StrictIdempotencyPolicyTest, CreateObjectAcl) {
   StrictIdempotencyPolicy policy;
   internal::CreateObjectAclRequest request(
       "test-bucket-name", "test-object-name", "test-entity-name", "READER");
-  EXPECT_TRUE(policy.IsIdempotent(request));
+  EXPECT_FALSE(policy.IsIdempotent(request));
 }
 
 TEST(StrictIdempotencyPolicyTest, CreateObjectAclIfMatchEtag) {
@@ -386,7 +386,7 @@ TEST(StrictIdempotencyPolicyTest, DeleteObjectAcl) {
   StrictIdempotencyPolicy policy;
   internal::DeleteObjectAclRequest request(
       "test-bucket-name", "test-object-name", "test-entity-name");
-  EXPECT_TRUE(policy.IsIdempotent(request));
+  EXPECT_FALSE(policy.IsIdempotent(request));
 }
 
 TEST(StrictIdempotencyPolicyTest, DeleteObjectAclIfMatchEtag) {
@@ -408,7 +408,7 @@ TEST(StrictIdempotencyPolicyTest, UpdateObjectAcl) {
   StrictIdempotencyPolicy policy;
   internal::UpdateObjectAclRequest request(
       "test-bucket-name", "test-object-name", "test-entity-name", "READER");
-  EXPECT_TRUE(policy.IsIdempotent(request));
+  EXPECT_FALSE(policy.IsIdempotent(request));
 }
 
 TEST(StrictIdempotencyPolicyTest, UpdateObjectAclIfMatchEtag) {
@@ -424,7 +424,7 @@ TEST(StrictIdempotencyPolicyTest, PatchObjectAcl) {
   internal::PatchObjectAclRequest request(
       "test-bucket-name", "test-object-name", "test-entity-name",
       ObjectAccessControlPatchBuilder());
-  EXPECT_TRUE(policy.IsIdempotent(request));
+  EXPECT_FALSE(policy.IsIdempotent(request));
 }
 
 TEST(StrictIdempotencyPolicyTest, PatchObjectAclIfMatchEtag) {
@@ -446,7 +446,7 @@ TEST(StrictIdempotencyPolicyTest, CreateDefaultObjectAcl) {
   StrictIdempotencyPolicy policy;
   internal::CreateDefaultObjectAclRequest request("test-bucket-name",
                                                   "test-entity-name", "READER");
-  EXPECT_TRUE(policy.IsIdempotent(request));
+  EXPECT_FALSE(policy.IsIdempotent(request));
 }
 
 TEST(StrictIdempotencyPolicyTest, CreateDefaultObjectAclIfMatchEtag) {
@@ -461,7 +461,7 @@ TEST(StrictIdempotencyPolicyTest, DeleteDefaultObjectAcl) {
   StrictIdempotencyPolicy policy;
   internal::DeleteDefaultObjectAclRequest request("test-bucket-name",
                                                   "test-entity-name");
-  EXPECT_TRUE(policy.IsIdempotent(request));
+  EXPECT_FALSE(policy.IsIdempotent(request));
 }
 
 TEST(StrictIdempotencyPolicyTest, DeleteDefaultObjectAclIfMatchEtag) {
@@ -483,7 +483,7 @@ TEST(StrictIdempotencyPolicyTest, UpdateDefaultObjectAcl) {
   StrictIdempotencyPolicy policy;
   internal::UpdateDefaultObjectAclRequest request("test-bucket-name",
                                                   "test-entity-name", "READER");
-  EXPECT_TRUE(policy.IsIdempotent(request));
+  EXPECT_FALSE(policy.IsIdempotent(request));
 }
 
 TEST(StrictIdempotencyPolicyTest, UpdateDefaultObjectAclIfMatchEtag) {
@@ -499,7 +499,7 @@ TEST(StrictIdempotencyPolicyTest, PatchDefaultObjectAcl) {
   internal::PatchDefaultObjectAclRequest request(
       "test-bucket-name", "test-entity-name",
       ObjectAccessControlPatchBuilder());
-  EXPECT_TRUE(policy.IsIdempotent(request));
+  EXPECT_FALSE(policy.IsIdempotent(request));
 }
 
 TEST(StrictIdempotencyPolicyTest, PatchDefaultObjectAclIfMatchEtag) {
@@ -527,7 +527,7 @@ TEST(StrictIdempotencyPolicyTest, CreateHmacKey) {
   StrictIdempotencyPolicy policy;
   internal::CreateHmacKeyRequest request("test-project-id",
                                          "test-service-account");
-  EXPECT_TRUE(policy.IsIdempotent(request));
+  EXPECT_FALSE(policy.IsIdempotent(request));
 }
 
 TEST(StrictIdempotencyPolicyTest, DeleteHmacKey) {
@@ -547,7 +547,7 @@ TEST(StrictIdempotencyPolicyTest, UpdateHmacKey) {
   internal::UpdateHmacKeyRequest request(
       "test-project-id", "test-access-id",
       HmacKeyMetadata().set_state("INACTIVE"));
-  EXPECT_TRUE(policy.IsIdempotent(request));
+  EXPECT_FALSE(policy.IsIdempotent(request));
 }
 
 TEST(StrictIdempotencyPolicyTest, UpdateHmacKeyWithEtag) {
@@ -604,7 +604,7 @@ TEST(StrictIdempotencyPolicyTest, ResumableUpload) {
   StrictIdempotencyPolicy policy;
   internal::ResumableUploadRequest request("test-bucket-name",
                                            "test-object-name");
-  EXPECT_TRUE(policy.IsIdempotent(request));
+  EXPECT_FALSE(policy.IsIdempotent(request));
 }
 
 TEST(StrictIdempotencyPolicyTest, ResumableUploadIfGenerationMatch) {
