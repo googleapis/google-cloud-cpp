@@ -1175,7 +1175,7 @@ StatusOr<EmptyResponse> RestStub::DeleteNotification(
 }
 
 std::vector<std::string> RestStub::InspectStackStructure() const {
-  return {"RestClient"};
+  return {"RestStub"};
 }
 
 }  // namespace internal

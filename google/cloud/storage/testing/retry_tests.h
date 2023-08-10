@@ -29,7 +29,7 @@ namespace storage {
 namespace testing {
 
 /**
- * Returns options used in the `RetryClient` tests.
+ * Returns options used in the `StorageConnectionImpl` tests.
  *
  * These options set the retry policy to accept at most 2 transient errors. The
  * backoff policy uses very short backoffs. This works well in unit tests. The
@@ -58,8 +58,8 @@ void CaptureIdempotencyToken(std::vector<std::string>& tokens,
 void CaptureAuthorityOption(std::vector<std::string>& authority,
                             rest_internal::RestContext const& context);
 
-/// Captures information to validate the RetryClient loops and return a
-/// transient error.
+/// Captures information to validate the StorageConnectionImpl loops and return
+/// a transient error.
 class MockRetryClientFunction {
  public:
   explicit MockRetryClientFunction(Status status);

@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/storage/internal/connection_impl.h"
 #include "google/cloud/storage/internal/object_requests.h"
-#include "google/cloud/storage/internal/retry_client.h"
 #include "google/cloud/storage/testing/canonical_errors.h"
 #include "google/cloud/storage/testing/mock_generic_stub.h"
 #include "google/cloud/storage/testing/retry_tests.h"
@@ -37,12 +37,13 @@ using ::google::cloud::storage::testing::canonical_errors::PermanentError;
 using ::google::cloud::storage::testing::canonical_errors::TransientError;
 using ::testing::IsEmpty;
 
-TEST(RetryClient, InsertObjectMediaTooManyFailures) {
+TEST(StorageConnectionImpl, InsertObjectMediaTooManyFailures) {
   auto transient = MockRetryClientFunction(TransientError());
   auto mock = std::make_unique<MockGenericStub>();
   EXPECT_CALL(*mock, options);
   EXPECT_CALL(*mock, InsertObjectMedia).Times(3).WillRepeatedly(transient);
-  auto client = RetryClient::Create(std::move(mock), RetryClientTestOptions());
+  auto client =
+      StorageConnectionImpl::Create(std::move(mock), RetryClientTestOptions());
   google::cloud::internal::OptionsSpan span(client->options());
   auto response =
       client->InsertObjectMedia(InsertObjectMediaRequest()).status();
@@ -51,12 +52,13 @@ TEST(RetryClient, InsertObjectMediaTooManyFailures) {
   EXPECT_THAT(transient.captured_authority_options(), RetryLoopUsesOptions());
 }
 
-TEST(RetryClient, InsertObjectMediaPermanentFailure) {
+TEST(StorageConnectionImpl, InsertObjectMediaPermanentFailure) {
   auto permanent = MockRetryClientFunction(PermanentError());
   auto mock = std::make_unique<MockGenericStub>();
   EXPECT_CALL(*mock, options);
   EXPECT_CALL(*mock, InsertObjectMedia).WillOnce(permanent);
-  auto client = RetryClient::Create(std::move(mock), RetryClientTestOptions());
+  auto client =
+      StorageConnectionImpl::Create(std::move(mock), RetryClientTestOptions());
   google::cloud::internal::OptionsSpan span(client->options());
   auto response =
       client->InsertObjectMedia(InsertObjectMediaRequest()).status();
@@ -65,12 +67,13 @@ TEST(RetryClient, InsertObjectMediaPermanentFailure) {
   EXPECT_THAT(permanent.captured_authority_options(), RetryLoopUsesOptions());
 }
 
-TEST(RetryClient, GetObjectMetadataTooManyFailures) {
+TEST(StorageConnectionImpl, GetObjectMetadataTooManyFailures) {
   auto transient = MockRetryClientFunction(TransientError());
   auto mock = std::make_unique<MockGenericStub>();
   EXPECT_CALL(*mock, options);
   EXPECT_CALL(*mock, GetObjectMetadata).Times(3).WillRepeatedly(transient);
-  auto client = RetryClient::Create(std::move(mock), RetryClientTestOptions());
+  auto client =
+      StorageConnectionImpl::Create(std::move(mock), RetryClientTestOptions());
   google::cloud::internal::OptionsSpan span(client->options());
   auto response =
       client->GetObjectMetadata(GetObjectMetadataRequest()).status();
@@ -79,12 +82,13 @@ TEST(RetryClient, GetObjectMetadataTooManyFailures) {
   EXPECT_THAT(transient.captured_authority_options(), RetryLoopUsesOptions());
 }
 
-TEST(RetryClient, GetObjectMetadataPermanentFailure) {
+TEST(StorageConnectionImpl, GetObjectMetadataPermanentFailure) {
   auto permanent = MockRetryClientFunction(PermanentError());
   auto mock = std::make_unique<MockGenericStub>();
   EXPECT_CALL(*mock, options);
   EXPECT_CALL(*mock, GetObjectMetadata).WillOnce(permanent);
-  auto client = RetryClient::Create(std::move(mock), RetryClientTestOptions());
+  auto client =
+      StorageConnectionImpl::Create(std::move(mock), RetryClientTestOptions());
   google::cloud::internal::OptionsSpan span(client->options());
   auto response =
       client->GetObjectMetadata(GetObjectMetadataRequest()).status();
@@ -93,12 +97,13 @@ TEST(RetryClient, GetObjectMetadataPermanentFailure) {
   EXPECT_THAT(permanent.captured_authority_options(), RetryLoopUsesOptions());
 }
 
-TEST(RetryClient, ListObjectsTooManyFailures) {
+TEST(StorageConnectionImpl, ListObjectsTooManyFailures) {
   auto transient = MockRetryClientFunction(TransientError());
   auto mock = std::make_unique<MockGenericStub>();
   EXPECT_CALL(*mock, options);
   EXPECT_CALL(*mock, ListObjects).Times(3).WillRepeatedly(transient);
-  auto client = RetryClient::Create(std::move(mock), RetryClientTestOptions());
+  auto client =
+      StorageConnectionImpl::Create(std::move(mock), RetryClientTestOptions());
   google::cloud::internal::OptionsSpan span(client->options());
   auto response = client->ListObjects(ListObjectsRequest()).status();
   EXPECT_THAT(response, StoppedOnTooManyTransients("ListObjects"));
@@ -106,12 +111,13 @@ TEST(RetryClient, ListObjectsTooManyFailures) {
   EXPECT_THAT(transient.captured_authority_options(), RetryLoopUsesOptions());
 }
 
-TEST(RetryClient, ListObjectsPermanentFailure) {
+TEST(StorageConnectionImpl, ListObjectsPermanentFailure) {
   auto permanent = MockRetryClientFunction(PermanentError());
   auto mock = std::make_unique<MockGenericStub>();
   EXPECT_CALL(*mock, options);
   EXPECT_CALL(*mock, ListObjects).WillOnce(permanent);
-  auto client = RetryClient::Create(std::move(mock), RetryClientTestOptions());
+  auto client =
+      StorageConnectionImpl::Create(std::move(mock), RetryClientTestOptions());
   google::cloud::internal::OptionsSpan span(client->options());
   auto response = client->ListObjects(ListObjectsRequest()).status();
   EXPECT_THAT(response, StoppedOnPermanentError("ListObjects"));
@@ -119,12 +125,13 @@ TEST(RetryClient, ListObjectsPermanentFailure) {
   EXPECT_THAT(permanent.captured_authority_options(), RetryLoopUsesOptions());
 }
 
-TEST(RetryClient, ReadObjectTooManyFailures) {
+TEST(StorageConnectionImpl, ReadObjectTooManyFailures) {
   auto transient = MockRetryClientFunction(TransientError());
   auto mock = std::make_unique<MockGenericStub>();
   EXPECT_CALL(*mock, options);
   EXPECT_CALL(*mock, ReadObject).Times(3).WillRepeatedly(transient);
-  auto client = RetryClient::Create(std::move(mock), RetryClientTestOptions());
+  auto client =
+      StorageConnectionImpl::Create(std::move(mock), RetryClientTestOptions());
   google::cloud::internal::OptionsSpan span(client->options());
   auto response = client->ReadObject(ReadObjectRangeRequest()).status();
   EXPECT_THAT(response, StoppedOnTooManyTransients("ReadObjectNotWrapped"));
@@ -132,12 +139,13 @@ TEST(RetryClient, ReadObjectTooManyFailures) {
   EXPECT_THAT(transient.captured_authority_options(), RetryLoopUsesOptions());
 }
 
-TEST(RetryClient, ReadObjectPermanentFailure) {
+TEST(StorageConnectionImpl, ReadObjectPermanentFailure) {
   auto permanent = MockRetryClientFunction(PermanentError());
   auto mock = std::make_unique<MockGenericStub>();
   EXPECT_CALL(*mock, options);
   EXPECT_CALL(*mock, ReadObject).WillOnce(permanent);
-  auto client = RetryClient::Create(std::move(mock), RetryClientTestOptions());
+  auto client =
+      StorageConnectionImpl::Create(std::move(mock), RetryClientTestOptions());
   google::cloud::internal::OptionsSpan span(client->options());
   auto response = client->ReadObject(ReadObjectRangeRequest()).status();
   EXPECT_THAT(response, StoppedOnPermanentError("ReadObjectNotWrapped"));
@@ -145,12 +153,13 @@ TEST(RetryClient, ReadObjectPermanentFailure) {
   EXPECT_THAT(permanent.captured_authority_options(), RetryLoopUsesOptions());
 }
 
-TEST(RetryClient, CreateResumableUploadTooManyFailures) {
+TEST(StorageConnectionImpl, CreateResumableUploadTooManyFailures) {
   auto transient = MockRetryClientFunction(TransientError());
   auto mock = std::make_unique<MockGenericStub>();
   EXPECT_CALL(*mock, options);
   EXPECT_CALL(*mock, CreateResumableUpload).Times(3).WillRepeatedly(transient);
-  auto client = RetryClient::Create(std::move(mock), RetryClientTestOptions());
+  auto client =
+      StorageConnectionImpl::Create(std::move(mock), RetryClientTestOptions());
   google::cloud::internal::OptionsSpan span(client->options());
   auto response =
       client->CreateResumableUpload(ResumableUploadRequest()).status();
@@ -159,12 +168,13 @@ TEST(RetryClient, CreateResumableUploadTooManyFailures) {
   EXPECT_THAT(transient.captured_authority_options(), RetryLoopUsesOptions());
 }
 
-TEST(RetryClient, CreateResumableUploadPermanentFailure) {
+TEST(StorageConnectionImpl, CreateResumableUploadPermanentFailure) {
   auto permanent = MockRetryClientFunction(PermanentError());
   auto mock = std::make_unique<MockGenericStub>();
   EXPECT_CALL(*mock, options);
   EXPECT_CALL(*mock, CreateResumableUpload).WillOnce(permanent);
-  auto client = RetryClient::Create(std::move(mock), RetryClientTestOptions());
+  auto client =
+      StorageConnectionImpl::Create(std::move(mock), RetryClientTestOptions());
   google::cloud::internal::OptionsSpan span(client->options());
   auto response =
       client->CreateResumableUpload(ResumableUploadRequest()).status();
@@ -173,12 +183,13 @@ TEST(RetryClient, CreateResumableUploadPermanentFailure) {
   EXPECT_THAT(permanent.captured_authority_options(), RetryLoopUsesOptions());
 }
 
-TEST(RetryClient, QueryResumableUploadTooManyFailures) {
+TEST(StorageConnectionImpl, QueryResumableUploadTooManyFailures) {
   auto transient = MockRetryClientFunction(TransientError());
   auto mock = std::make_unique<MockGenericStub>();
   EXPECT_CALL(*mock, options);
   EXPECT_CALL(*mock, QueryResumableUpload).Times(3).WillRepeatedly(transient);
-  auto client = RetryClient::Create(std::move(mock), RetryClientTestOptions());
+  auto client =
+      StorageConnectionImpl::Create(std::move(mock), RetryClientTestOptions());
   google::cloud::internal::OptionsSpan span(client->options());
   auto response =
       client->QueryResumableUpload(QueryResumableUploadRequest()).status();
@@ -187,12 +198,13 @@ TEST(RetryClient, QueryResumableUploadTooManyFailures) {
   EXPECT_THAT(transient.captured_authority_options(), RetryLoopUsesOptions());
 }
 
-TEST(RetryClient, QueryResumableUploadPermanentFailure) {
+TEST(StorageConnectionImpl, QueryResumableUploadPermanentFailure) {
   auto permanent = MockRetryClientFunction(PermanentError());
   auto mock = std::make_unique<MockGenericStub>();
   EXPECT_CALL(*mock, options);
   EXPECT_CALL(*mock, QueryResumableUpload).WillOnce(permanent);
-  auto client = RetryClient::Create(std::move(mock), RetryClientTestOptions());
+  auto client =
+      StorageConnectionImpl::Create(std::move(mock), RetryClientTestOptions());
   google::cloud::internal::OptionsSpan span(client->options());
   auto response =
       client->QueryResumableUpload(QueryResumableUploadRequest()).status();
@@ -201,12 +213,13 @@ TEST(RetryClient, QueryResumableUploadPermanentFailure) {
   EXPECT_THAT(permanent.captured_authority_options(), RetryLoopUsesOptions());
 }
 
-TEST(RetryClient, DeleteResumableUploadTooManyFailures) {
+TEST(StorageConnectionImpl, DeleteResumableUploadTooManyFailures) {
   auto transient = MockRetryClientFunction(TransientError());
   auto mock = std::make_unique<MockGenericStub>();
   EXPECT_CALL(*mock, options);
   EXPECT_CALL(*mock, DeleteResumableUpload).Times(3).WillRepeatedly(transient);
-  auto client = RetryClient::Create(std::move(mock), RetryClientTestOptions());
+  auto client =
+      StorageConnectionImpl::Create(std::move(mock), RetryClientTestOptions());
   google::cloud::internal::OptionsSpan span(client->options());
   auto response =
       client->DeleteResumableUpload(DeleteResumableUploadRequest()).status();
@@ -215,12 +228,13 @@ TEST(RetryClient, DeleteResumableUploadTooManyFailures) {
   EXPECT_THAT(transient.captured_authority_options(), RetryLoopUsesOptions());
 }
 
-TEST(RetryClient, DeleteResumableUploadPermanentFailure) {
+TEST(StorageConnectionImpl, DeleteResumableUploadPermanentFailure) {
   auto permanent = MockRetryClientFunction(PermanentError());
   auto mock = std::make_unique<MockGenericStub>();
   EXPECT_CALL(*mock, options);
   EXPECT_CALL(*mock, DeleteResumableUpload).WillOnce(permanent);
-  auto client = RetryClient::Create(std::move(mock), RetryClientTestOptions());
+  auto client =
+      StorageConnectionImpl::Create(std::move(mock), RetryClientTestOptions());
   google::cloud::internal::OptionsSpan span(client->options());
   auto response =
       client->DeleteResumableUpload(DeleteResumableUploadRequest()).status();
@@ -229,7 +243,7 @@ TEST(RetryClient, DeleteResumableUploadPermanentFailure) {
   EXPECT_THAT(permanent.captured_authority_options(), RetryLoopUsesOptions());
 }
 
-TEST(RetryClient, UploadChunkTooManyFailures) {
+TEST(StorageConnectionImpl, UploadChunkTooManyFailures) {
   auto transient = MockRetryClientFunction(TransientError());
   auto mock = std::make_unique<MockGenericStub>();
   EXPECT_CALL(*mock, options);
@@ -237,7 +251,8 @@ TEST(RetryClient, UploadChunkTooManyFailures) {
   EXPECT_CALL(*mock, QueryResumableUpload).WillRepeatedly([] {
     return QueryResumableUploadResponse{absl::nullopt, absl::nullopt};
   });
-  auto client = RetryClient::Create(std::move(mock), RetryClientTestOptions());
+  auto client =
+      StorageConnectionImpl::Create(std::move(mock), RetryClientTestOptions());
   google::cloud::internal::OptionsSpan span(client->options());
   auto request = UploadChunkRequest(/*upload_session_url=*/"unused",
                                     /*offset=*/0, /*payload=*/{{"test-data"}},
@@ -250,12 +265,13 @@ TEST(RetryClient, UploadChunkTooManyFailures) {
   EXPECT_THAT(transient.captured_authority_options(), RetryLoopUsesOptions());
 }
 
-TEST(RetryClient, UploadChunkPermanentFailure) {
+TEST(StorageConnectionImpl, UploadChunkPermanentFailure) {
   auto permanent = MockRetryClientFunction(PermanentError());
   auto mock = std::make_unique<MockGenericStub>();
   EXPECT_CALL(*mock, options);
   EXPECT_CALL(*mock, UploadChunk).WillOnce(permanent);
-  auto client = RetryClient::Create(std::move(mock), RetryClientTestOptions());
+  auto client =
+      StorageConnectionImpl::Create(std::move(mock), RetryClientTestOptions());
   google::cloud::internal::OptionsSpan span(client->options());
   auto request = UploadChunkRequest(/*upload_session_url=*/"unused",
                                     /*offset=*/0, /*payload=*/{{"test-data"}},
@@ -268,12 +284,13 @@ TEST(RetryClient, UploadChunkPermanentFailure) {
   EXPECT_THAT(permanent.captured_authority_options(), RetryLoopUsesOptions());
 }
 
-TEST(RetryClient, DeleteObjectTooManyFailures) {
+TEST(StorageConnectionImpl, DeleteObjectTooManyFailures) {
   auto transient = MockRetryClientFunction(TransientError());
   auto mock = std::make_unique<MockGenericStub>();
   EXPECT_CALL(*mock, options);
   EXPECT_CALL(*mock, DeleteObject).Times(3).WillRepeatedly(transient);
-  auto client = RetryClient::Create(std::move(mock), RetryClientTestOptions());
+  auto client =
+      StorageConnectionImpl::Create(std::move(mock), RetryClientTestOptions());
   google::cloud::internal::OptionsSpan span(client->options());
   auto response = client->DeleteObject(DeleteObjectRequest()).status();
   EXPECT_THAT(response, StoppedOnTooManyTransients("DeleteObject"));
@@ -281,12 +298,13 @@ TEST(RetryClient, DeleteObjectTooManyFailures) {
   EXPECT_THAT(transient.captured_authority_options(), RetryLoopUsesOptions());
 }
 
-TEST(RetryClient, DeleteObjectPermanentFailure) {
+TEST(StorageConnectionImpl, DeleteObjectPermanentFailure) {
   auto permanent = MockRetryClientFunction(PermanentError());
   auto mock = std::make_unique<MockGenericStub>();
   EXPECT_CALL(*mock, options);
   EXPECT_CALL(*mock, DeleteObject).WillOnce(permanent);
-  auto client = RetryClient::Create(std::move(mock), RetryClientTestOptions());
+  auto client =
+      StorageConnectionImpl::Create(std::move(mock), RetryClientTestOptions());
   google::cloud::internal::OptionsSpan span(client->options());
   auto response = client->DeleteObject(DeleteObjectRequest()).status();
   EXPECT_THAT(response, StoppedOnPermanentError("DeleteObject"));
@@ -294,12 +312,13 @@ TEST(RetryClient, DeleteObjectPermanentFailure) {
   EXPECT_THAT(permanent.captured_authority_options(), RetryLoopUsesOptions());
 }
 
-TEST(RetryClient, UpdateObjectTooManyFailures) {
+TEST(StorageConnectionImpl, UpdateObjectTooManyFailures) {
   auto transient = MockRetryClientFunction(TransientError());
   auto mock = std::make_unique<MockGenericStub>();
   EXPECT_CALL(*mock, options);
   EXPECT_CALL(*mock, UpdateObject).Times(3).WillRepeatedly(transient);
-  auto client = RetryClient::Create(std::move(mock), RetryClientTestOptions());
+  auto client =
+      StorageConnectionImpl::Create(std::move(mock), RetryClientTestOptions());
   google::cloud::internal::OptionsSpan span(client->options());
   auto response = client->UpdateObject(UpdateObjectRequest()).status();
   EXPECT_THAT(response, StoppedOnTooManyTransients("UpdateObject"));
@@ -307,12 +326,13 @@ TEST(RetryClient, UpdateObjectTooManyFailures) {
   EXPECT_THAT(transient.captured_authority_options(), RetryLoopUsesOptions());
 }
 
-TEST(RetryClient, UpdateObjectPermanentFailure) {
+TEST(StorageConnectionImpl, UpdateObjectPermanentFailure) {
   auto permanent = MockRetryClientFunction(PermanentError());
   auto mock = std::make_unique<MockGenericStub>();
   EXPECT_CALL(*mock, options);
   EXPECT_CALL(*mock, UpdateObject).WillOnce(permanent);
-  auto client = RetryClient::Create(std::move(mock), RetryClientTestOptions());
+  auto client =
+      StorageConnectionImpl::Create(std::move(mock), RetryClientTestOptions());
   google::cloud::internal::OptionsSpan span(client->options());
   auto response = client->UpdateObject(UpdateObjectRequest()).status();
   EXPECT_THAT(response, StoppedOnPermanentError("UpdateObject"));
@@ -320,12 +340,13 @@ TEST(RetryClient, UpdateObjectPermanentFailure) {
   EXPECT_THAT(permanent.captured_authority_options(), RetryLoopUsesOptions());
 }
 
-TEST(RetryClient, PatchObjectTooManyFailures) {
+TEST(StorageConnectionImpl, PatchObjectTooManyFailures) {
   auto transient = MockRetryClientFunction(TransientError());
   auto mock = std::make_unique<MockGenericStub>();
   EXPECT_CALL(*mock, options);
   EXPECT_CALL(*mock, PatchObject).Times(3).WillRepeatedly(transient);
-  auto client = RetryClient::Create(std::move(mock), RetryClientTestOptions());
+  auto client =
+      StorageConnectionImpl::Create(std::move(mock), RetryClientTestOptions());
   google::cloud::internal::OptionsSpan span(client->options());
   auto response = client->PatchObject(PatchObjectRequest()).status();
   EXPECT_THAT(response, StoppedOnTooManyTransients("PatchObject"));
@@ -333,12 +354,13 @@ TEST(RetryClient, PatchObjectTooManyFailures) {
   EXPECT_THAT(transient.captured_authority_options(), RetryLoopUsesOptions());
 }
 
-TEST(RetryClient, PatchObjectPermanentFailure) {
+TEST(StorageConnectionImpl, PatchObjectPermanentFailure) {
   auto permanent = MockRetryClientFunction(PermanentError());
   auto mock = std::make_unique<MockGenericStub>();
   EXPECT_CALL(*mock, options);
   EXPECT_CALL(*mock, PatchObject).WillOnce(permanent);
-  auto client = RetryClient::Create(std::move(mock), RetryClientTestOptions());
+  auto client =
+      StorageConnectionImpl::Create(std::move(mock), RetryClientTestOptions());
   google::cloud::internal::OptionsSpan span(client->options());
   auto response = client->PatchObject(PatchObjectRequest()).status();
   EXPECT_THAT(response, StoppedOnPermanentError("PatchObject"));

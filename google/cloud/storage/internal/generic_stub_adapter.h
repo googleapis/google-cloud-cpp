@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_GENERIC_STUB_ADAPTER_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_GENERIC_STUB_ADAPTER_H
 
+#include "google/cloud/storage/internal/generic_stub.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -32,7 +33,6 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-class GenericStub;
 
 /**
  * Adapts existing `storage::internal::RawClient` decorators to the

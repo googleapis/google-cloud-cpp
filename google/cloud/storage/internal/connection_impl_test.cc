@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/storage/internal/retry_client.h"
+#include "google/cloud/storage/internal/connection_impl.h"
 #include "google/cloud/storage/internal/tracing_client.h"
 #include "google/cloud/storage/options.h"
 #include "google/cloud/storage/testing/canonical_errors.h"
@@ -59,7 +59,7 @@ TEST(RetryClientTest, NonIdempotentErrorHandling) {
   EXPECT_CALL(*mock, DeleteObject)
       .WillOnce(Return(StatusOr<EmptyResponse>(TransientError())));
 
-  auto client = RetryClient::Create(std::move(mock));
+  auto client = StorageConnectionImpl::Create(std::move(mock));
   google::cloud::internal::OptionsSpan const span(
       BasicTestPolicies().set<IdempotencyPolicyOption>(
           StrictIdempotencyPolicy().clone()));
@@ -80,7 +80,7 @@ TEST(RetryClientTest, PermanentErrorHandling) {
       .WillOnce(Return(StatusOr<ObjectMetadata>(TransientError())))
       .WillOnce(Return(StatusOr<ObjectMetadata>(PermanentError())));
 
-  auto client = RetryClient::Create(std::move(mock));
+  auto client = StorageConnectionImpl::Create(std::move(mock));
   google::cloud::internal::OptionsSpan const span(BasicTestPolicies());
 
   StatusOr<ObjectMetadata> result = client->GetObjectMetadata(
@@ -96,7 +96,7 @@ TEST(RetryClientTest, TooManyTransientsHandling) {
   EXPECT_CALL(*mock, GetObjectMetadata)
       .WillRepeatedly(Return(StatusOr<ObjectMetadata>(TransientError())));
 
-  auto client = RetryClient::Create(std::move(mock));
+  auto client = StorageConnectionImpl::Create(std::move(mock));
   google::cloud::internal::OptionsSpan const span(BasicTestPolicies());
 
   StatusOr<ObjectMetadata> result = client->GetObjectMetadata(
@@ -108,7 +108,7 @@ TEST(RetryClientTest, TooManyTransientsHandling) {
 TEST(RetryClientTest, ExpiredRetryPolicy) {
   auto mock = std::make_unique<MockGenericStub>();
   EXPECT_CALL(*mock, options);  // Required in RetryClient::Create()
-  auto client = RetryClient::Create(std::move(mock));
+  auto client = StorageConnectionImpl::Create(std::move(mock));
   google::cloud::internal::OptionsSpan const span(
       BasicTestPolicies().set<RetryPolicyOption>(
           LimitedTimeRetryPolicy{std::chrono::milliseconds(0)}.clone()));
@@ -132,7 +132,7 @@ TEST(RetryClientTest, CreateResumableUploadHandlesTransient) {
       .WillOnce(Return(make_status_or(
           CreateResumableUploadResponse{"test-only-upload-id"})));
 
-  auto client = RetryClient::Create(std::move(mock));
+  auto client = StorageConnectionImpl::Create(std::move(mock));
   google::cloud::internal::OptionsSpan const span(
       BasicTestPolicies().set<IdempotencyPolicyOption>(
           AlwaysRetryIdempotencyPolicy().clone()));
@@ -155,7 +155,7 @@ TEST(RetryClientTest, QueryResumableUploadHandlesTransient) {
       .WillOnce(Return(make_status_or(QueryResumableUploadResponse{
           /*.committed_size=*/1234, /*.payload=*/absl::nullopt})));
 
-  auto client = RetryClient::Create(std::move(mock));
+  auto client = StorageConnectionImpl::Create(std::move(mock));
   google::cloud::internal::OptionsSpan const span(
       BasicTestPolicies().set<IdempotencyPolicyOption>(
           StrictIdempotencyPolicy().clone()));
@@ -197,7 +197,7 @@ TEST(RetryClientTest, UploadChunkHandleTransient) {
       .WillOnce(
           Return(QueryResumableUploadResponse{3 * quantum, absl::nullopt}));
 
-  auto client = RetryClient::Create(std::move(mock));
+  auto client = StorageConnectionImpl::Create(std::move(mock));
   google::cloud::internal::OptionsSpan const span(
       BasicTestPolicies().set<IdempotencyPolicyOption>(
           StrictIdempotencyPolicy().clone()));
@@ -242,7 +242,7 @@ TEST(RetryClientTest, UploadChunkAbortedMaybeIsTransient) {
       .Times(AtLeast(2))
       .WillRepeatedly(Return(QueryResumableUploadResponse{0, absl::nullopt}));
 
-  auto client = RetryClient::Create(std::move(mock));
+  auto client = StorageConnectionImpl::Create(std::move(mock));
   google::cloud::internal::OptionsSpan const span(
       BasicTestPolicies().set<IdempotencyPolicyOption>(
           StrictIdempotencyPolicy().clone()));
@@ -273,7 +273,7 @@ TEST(RetryClientTest, UploadChunkRestoreSession) {
         return QueryResumableUploadResponse{committed_size, absl::nullopt};
       });
 
-  auto client = RetryClient::Create(std::move(mock));
+  auto client = StorageConnectionImpl::Create(std::move(mock));
   google::cloud::internal::OptionsSpan const span(
       BasicTestPolicies().set<IdempotencyPolicyOption>(
           StrictIdempotencyPolicy().clone()));
@@ -332,7 +332,7 @@ TEST(RetryClientTest, UploadChunkHandleTransientPartialFailures) {
         return QueryResumableUploadResponse{3 * quantum, absl::nullopt};
       });
 
-  auto client = RetryClient::Create(std::move(mock));
+  auto client = StorageConnectionImpl::Create(std::move(mock));
   google::cloud::internal::OptionsSpan const span(
       BasicTestPolicies().set<IdempotencyPolicyOption>(
           StrictIdempotencyPolicy().clone()));
@@ -349,7 +349,7 @@ TEST(RetryClientTest, UploadChunkPermanentError) {
   EXPECT_CALL(*mock, options);  // Required in RetryClient::Create()
   EXPECT_CALL(*mock, UploadChunk).WillOnce(Return(PermanentError()));
 
-  auto client = RetryClient::Create(std::move(mock));
+  auto client = StorageConnectionImpl::Create(std::move(mock));
   google::cloud::internal::OptionsSpan const span(
       BasicTestPolicies().set<IdempotencyPolicyOption>(
           StrictIdempotencyPolicy().clone()));
@@ -371,7 +371,7 @@ TEST(RetryClientTest, UploadChunkPermanentErrorOnQuery) {
   EXPECT_CALL(*mock, UploadChunk).WillOnce(Return(TransientError()));
   EXPECT_CALL(*mock, QueryResumableUpload).WillOnce(Return(PermanentError()));
 
-  auto client = RetryClient::Create(std::move(mock));
+  auto client = StorageConnectionImpl::Create(std::move(mock));
   google::cloud::internal::OptionsSpan const span(
       BasicTestPolicies().set<IdempotencyPolicyOption>(
           StrictIdempotencyPolicy().clone()));
@@ -401,7 +401,7 @@ TEST(RetryClientTest, UploadChunkHandleRollback) {
       .WillOnce(Return(QueryResumableUploadResponse{hwm, absl::nullopt}))
       .WillOnce(Return(QueryResumableUploadResponse{rollback, absl::nullopt}));
 
-  auto client = RetryClient::Create(std::move(mock));
+  auto client = StorageConnectionImpl::Create(std::move(mock));
   google::cloud::internal::OptionsSpan const span(
       BasicTestPolicies().set<IdempotencyPolicyOption>(
           StrictIdempotencyPolicy().clone()));
@@ -433,7 +433,7 @@ TEST(RetryClientTest, UploadChunkHandleOvercommit) {
   EXPECT_CALL(*mock, UploadChunk)
       .WillOnce(Return(QueryResumableUploadResponse{excess, absl::nullopt}));
 
-  auto client = RetryClient::Create(std::move(mock));
+  auto client = StorageConnectionImpl::Create(std::move(mock));
   google::cloud::internal::OptionsSpan const span(
       BasicTestPolicies().set<IdempotencyPolicyOption>(
           StrictIdempotencyPolicy().clone()));
@@ -461,7 +461,7 @@ TEST(RetryClientTest, UploadChunkExhausted) {
       .Times(AtLeast(2))
       .WillRepeatedly(Return(QueryResumableUploadResponse{0, absl::nullopt}));
 
-  auto client = RetryClient::Create(std::move(mock));
+  auto client = StorageConnectionImpl::Create(std::move(mock));
   google::cloud::internal::OptionsSpan const span(
       BasicTestPolicies().set<IdempotencyPolicyOption>(
           StrictIdempotencyPolicy().clone()));
@@ -474,7 +474,7 @@ TEST(RetryClientTest, UploadChunkExhausted) {
 TEST(RetryClientTest, UploadChunkUploadChunkPolicyExhaustedOnStart) {
   auto mock = std::make_unique<MockGenericStub>();
   EXPECT_CALL(*mock, options);  // Required in RetryClient::Create()
-  auto client = RetryClient::Create(std::move(mock));
+  auto client = StorageConnectionImpl::Create(std::move(mock));
   google::cloud::internal::OptionsSpan const span(
       BasicTestPolicies()
           .set<RetryPolicyOption>(
@@ -513,7 +513,7 @@ TEST(RetryClientTest, UploadChunkMissingRangeHeaderInUpload) {
       .WillOnce(Return(QueryResumableUploadResponse{
           /*.committed_size=*/absl::nullopt, /*.payload=*/ObjectMetadata()}));
 
-  auto client = RetryClient::Create(std::move(mock));
+  auto client = StorageConnectionImpl::Create(std::move(mock));
   google::cloud::internal::OptionsSpan const span(
       BasicTestPolicies().set<IdempotencyPolicyOption>(
           StrictIdempotencyPolicy().clone()));
@@ -557,7 +557,7 @@ TEST(RetryClientTest, UploadChunkMissingRangeHeaderInQueryResumableUpload) {
           Return(QueryResumableUploadResponse{/*.committed_size=*/quantum,
                                               /*.payload=*/absl::nullopt}));
 
-  auto client = RetryClient::Create(std::move(mock));
+  auto client = StorageConnectionImpl::Create(std::move(mock));
   google::cloud::internal::OptionsSpan const span(
       BasicTestPolicies().set<IdempotencyPolicyOption>(
           StrictIdempotencyPolicy().clone()));
@@ -592,7 +592,7 @@ TEST(RetryClientTest, UploadFinalChunkQueryMissingPayloadTriggersRetry) {
       .WillOnce(
           Return(QueryResumableUploadResponse{quantum, ObjectMetadata()}));
 
-  auto client = RetryClient::Create(std::move(mock));
+  auto client = StorageConnectionImpl::Create(std::move(mock));
   google::cloud::internal::OptionsSpan const span(
       BasicTestPolicies().set<IdempotencyPolicyOption>(
           StrictIdempotencyPolicy().clone()));
@@ -623,7 +623,7 @@ TEST(RetryClientTest, UploadFinalChunkQueryTooManyMissingPayloads) {
       .WillRepeatedly(
           Return(QueryResumableUploadResponse{quantum, absl::nullopt}));
 
-  auto client = RetryClient::Create(std::move(mock));
+  auto client = StorageConnectionImpl::Create(std::move(mock));
   google::cloud::internal::OptionsSpan const span(
       BasicTestPolicies().set<IdempotencyPolicyOption>(
           StrictIdempotencyPolicy().clone()));
@@ -648,8 +648,8 @@ TEST(RetryClientTest, BackoffSpansSimple) {
   EXPECT_CALL(*mock, GetObjectMetadata)
       .WillRepeatedly(Return(TransientError()));
 
-  auto client =
-      storage_internal::MakeTracingClient(RetryClient::Create(std::move(mock)));
+  auto client = storage_internal::MakeTracingClient(
+      StorageConnectionImpl::Create(std::move(mock)));
   google::cloud::internal::OptionsSpan const span(
       EnableTracing(BasicTestPolicies()));
   auto response = client->GetObjectMetadata(GetObjectMetadataRequest());
@@ -676,8 +676,8 @@ TEST(RetryClientTest, BackoffSpansUploadChunk) {
       .WillOnce(Return(QueryResumableUploadResponse{0, absl::nullopt}));
   EXPECT_CALL(*mock, UploadChunk).WillOnce(Return(TransientError()));
 
-  auto client =
-      storage_internal::MakeTracingClient(RetryClient::Create(std::move(mock)));
+  auto client = storage_internal::MakeTracingClient(
+      StorageConnectionImpl::Create(std::move(mock)));
   google::cloud::internal::OptionsSpan const span(
       EnableTracing(BasicTestPolicies()));
 

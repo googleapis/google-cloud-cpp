@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/storage/internal/retry_client.h"
+#include "google/cloud/storage/internal/connection_impl.h"
 #include "google/cloud/storage/internal/retry_object_read_source.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/internal/rest_retry_loop.h"
@@ -130,26 +130,26 @@ auto constexpr kIdempotencyTokenHeader = "x-goog-gcs-idempotency-token";
 
 }  // namespace
 
-std::shared_ptr<RetryClient> RetryClient::Create(
+std::shared_ptr<StorageConnectionImpl> StorageConnectionImpl::Create(
     std::unique_ptr<storage_internal::GenericStub> stub, Options options) {
   // Cannot use `std::make_shared<>` because the constructor is private.
-  return std::shared_ptr<RetryClient>(
-      new RetryClient(std::move(stub), std::move(options)));
+  return std::shared_ptr<StorageConnectionImpl>(
+      new StorageConnectionImpl(std::move(stub), std::move(options)));
 }
 
-RetryClient::RetryClient(std::unique_ptr<storage_internal::GenericStub> stub,
-                         Options options)
+StorageConnectionImpl::StorageConnectionImpl(
+    std::unique_ptr<storage_internal::GenericStub> stub, Options options)
     : stub_(std::move(stub)),
       options_(MergeOptions(std::move(options), stub_->options())),
       client_options_(MakeBackwardsCompatibleClientOptions(options_)) {}
 
-ClientOptions const& RetryClient::client_options() const {
+ClientOptions const& StorageConnectionImpl::client_options() const {
   return client_options_;
 }
 
-Options RetryClient::options() const { return options_; }
+Options StorageConnectionImpl::options() const { return options_; }
 
-StatusOr<ListBucketsResponse> RetryClient::ListBuckets(
+StatusOr<ListBucketsResponse> StorageConnectionImpl::ListBuckets(
     ListBucketsRequest const& request) {
   auto const idempotency = current_idempotency_policy().IsIdempotent(request)
                                ? Idempotency::kIdempotent
@@ -165,7 +165,7 @@ StatusOr<ListBucketsResponse> RetryClient::ListBuckets(
       google::cloud::internal::CurrentOptions(), request, __func__);
 }
 
-StatusOr<BucketMetadata> RetryClient::CreateBucket(
+StatusOr<BucketMetadata> StorageConnectionImpl::CreateBucket(
     CreateBucketRequest const& request) {
   auto const idempotency = current_idempotency_policy().IsIdempotent(request)
                                ? Idempotency::kIdempotent
@@ -181,7 +181,7 @@ StatusOr<BucketMetadata> RetryClient::CreateBucket(
       google::cloud::internal::CurrentOptions(), request, __func__);
 }
 
-StatusOr<BucketMetadata> RetryClient::GetBucketMetadata(
+StatusOr<BucketMetadata> StorageConnectionImpl::GetBucketMetadata(
     GetBucketMetadataRequest const& request) {
   auto const idempotency = current_idempotency_policy().IsIdempotent(request)
                                ? Idempotency::kIdempotent
@@ -197,7 +197,7 @@ StatusOr<BucketMetadata> RetryClient::GetBucketMetadata(
       google::cloud::internal::CurrentOptions(), request, __func__);
 }
 
-StatusOr<EmptyResponse> RetryClient::DeleteBucket(
+StatusOr<EmptyResponse> StorageConnectionImpl::DeleteBucket(
     DeleteBucketRequest const& request) {
   auto idempotency = current_idempotency_policy().IsIdempotent(request)
                          ? Idempotency::kIdempotent
@@ -213,7 +213,7 @@ StatusOr<EmptyResponse> RetryClient::DeleteBucket(
       google::cloud::internal::CurrentOptions(), request, __func__);
 }
 
-StatusOr<BucketMetadata> RetryClient::UpdateBucket(
+StatusOr<BucketMetadata> StorageConnectionImpl::UpdateBucket(
     UpdateBucketRequest const& request) {
   auto const idempotency = current_idempotency_policy().IsIdempotent(request)
                                ? Idempotency::kIdempotent
@@ -229,7 +229,7 @@ StatusOr<BucketMetadata> RetryClient::UpdateBucket(
       google::cloud::internal::CurrentOptions(), request, __func__);
 }
 
-StatusOr<BucketMetadata> RetryClient::PatchBucket(
+StatusOr<BucketMetadata> StorageConnectionImpl::PatchBucket(
     PatchBucketRequest const& request) {
   auto const idempotency = current_idempotency_policy().IsIdempotent(request)
                                ? Idempotency::kIdempotent
@@ -245,7 +245,7 @@ StatusOr<BucketMetadata> RetryClient::PatchBucket(
       google::cloud::internal::CurrentOptions(), request, __func__);
 }
 
-StatusOr<NativeIamPolicy> RetryClient::GetNativeBucketIamPolicy(
+StatusOr<NativeIamPolicy> StorageConnectionImpl::GetNativeBucketIamPolicy(
     GetBucketIamPolicyRequest const& request) {
   auto const idempotency = current_idempotency_policy().IsIdempotent(request)
                                ? Idempotency::kIdempotent
@@ -261,7 +261,7 @@ StatusOr<NativeIamPolicy> RetryClient::GetNativeBucketIamPolicy(
       google::cloud::internal::CurrentOptions(), request, __func__);
 }
 
-StatusOr<NativeIamPolicy> RetryClient::SetNativeBucketIamPolicy(
+StatusOr<NativeIamPolicy> StorageConnectionImpl::SetNativeBucketIamPolicy(
     SetNativeBucketIamPolicyRequest const& request) {
   auto const idempotency = current_idempotency_policy().IsIdempotent(request)
                                ? Idempotency::kIdempotent
@@ -278,7 +278,7 @@ StatusOr<NativeIamPolicy> RetryClient::SetNativeBucketIamPolicy(
 }
 
 StatusOr<TestBucketIamPermissionsResponse>
-RetryClient::TestBucketIamPermissions(
+StorageConnectionImpl::TestBucketIamPermissions(
     TestBucketIamPermissionsRequest const& request) {
   auto const idempotency = current_idempotency_policy().IsIdempotent(request)
                                ? Idempotency::kIdempotent
@@ -294,7 +294,7 @@ RetryClient::TestBucketIamPermissions(
       google::cloud::internal::CurrentOptions(), request, __func__);
 }
 
-StatusOr<BucketMetadata> RetryClient::LockBucketRetentionPolicy(
+StatusOr<BucketMetadata> StorageConnectionImpl::LockBucketRetentionPolicy(
     LockBucketRetentionPolicyRequest const& request) {
   auto const idempotency = current_idempotency_policy().IsIdempotent(request)
                                ? Idempotency::kIdempotent
@@ -310,7 +310,7 @@ StatusOr<BucketMetadata> RetryClient::LockBucketRetentionPolicy(
       google::cloud::internal::CurrentOptions(), request, __func__);
 }
 
-StatusOr<ObjectMetadata> RetryClient::InsertObjectMedia(
+StatusOr<ObjectMetadata> StorageConnectionImpl::InsertObjectMedia(
     InsertObjectMediaRequest const& request) {
   auto const idempotency = current_idempotency_policy().IsIdempotent(request)
                                ? Idempotency::kIdempotent
@@ -326,7 +326,7 @@ StatusOr<ObjectMetadata> RetryClient::InsertObjectMedia(
       google::cloud::internal::CurrentOptions(), request, __func__);
 }
 
-StatusOr<ObjectMetadata> RetryClient::CopyObject(
+StatusOr<ObjectMetadata> StorageConnectionImpl::CopyObject(
     CopyObjectRequest const& request) {
   auto const idempotency = current_idempotency_policy().IsIdempotent(request)
                                ? Idempotency::kIdempotent
@@ -342,7 +342,7 @@ StatusOr<ObjectMetadata> RetryClient::CopyObject(
       google::cloud::internal::CurrentOptions(), request, __func__);
 }
 
-StatusOr<ObjectMetadata> RetryClient::GetObjectMetadata(
+StatusOr<ObjectMetadata> StorageConnectionImpl::GetObjectMetadata(
     GetObjectMetadataRequest const& request) {
   auto const idempotency = current_idempotency_policy().IsIdempotent(request)
                                ? Idempotency::kIdempotent
@@ -358,7 +358,8 @@ StatusOr<ObjectMetadata> RetryClient::GetObjectMetadata(
       google::cloud::internal::CurrentOptions(), request, __func__);
 }
 
-StatusOr<std::unique_ptr<ObjectReadSource>> RetryClient::ReadObjectNotWrapped(
+StatusOr<std::unique_ptr<ObjectReadSource>>
+StorageConnectionImpl::ReadObjectNotWrapped(
     ReadObjectRangeRequest const& request, RetryPolicy& retry_policy,
     BackoffPolicy& backoff_policy) {
   auto const idempotency = current_idempotency_policy().IsIdempotent(request)
@@ -375,7 +376,7 @@ StatusOr<std::unique_ptr<ObjectReadSource>> RetryClient::ReadObjectNotWrapped(
       google::cloud::internal::CurrentOptions(), request, __func__);
 }
 
-StatusOr<std::unique_ptr<ObjectReadSource>> RetryClient::ReadObject(
+StatusOr<std::unique_ptr<ObjectReadSource>> StorageConnectionImpl::ReadObject(
     ReadObjectRangeRequest const& request) {
   auto retry_policy = current_retry_policy();
   auto backoff_policy = current_backoff_policy();
@@ -389,7 +390,7 @@ StatusOr<std::unique_ptr<ObjectReadSource>> RetryClient::ReadObject(
       std::move(backoff_policy)));
 }
 
-StatusOr<ListObjectsResponse> RetryClient::ListObjects(
+StatusOr<ListObjectsResponse> StorageConnectionImpl::ListObjects(
     ListObjectsRequest const& request) {
   auto const idempotency = current_idempotency_policy().IsIdempotent(request)
                                ? Idempotency::kIdempotent
@@ -405,7 +406,7 @@ StatusOr<ListObjectsResponse> RetryClient::ListObjects(
       google::cloud::internal::CurrentOptions(), request, __func__);
 }
 
-StatusOr<EmptyResponse> RetryClient::DeleteObject(
+StatusOr<EmptyResponse> StorageConnectionImpl::DeleteObject(
     DeleteObjectRequest const& request) {
   auto const idempotency = current_idempotency_policy().IsIdempotent(request)
                                ? Idempotency::kIdempotent
@@ -421,7 +422,7 @@ StatusOr<EmptyResponse> RetryClient::DeleteObject(
       google::cloud::internal::CurrentOptions(), request, __func__);
 }
 
-StatusOr<ObjectMetadata> RetryClient::UpdateObject(
+StatusOr<ObjectMetadata> StorageConnectionImpl::UpdateObject(
     UpdateObjectRequest const& request) {
   auto const idempotency = current_idempotency_policy().IsIdempotent(request)
                                ? Idempotency::kIdempotent
@@ -437,7 +438,7 @@ StatusOr<ObjectMetadata> RetryClient::UpdateObject(
       google::cloud::internal::CurrentOptions(), request, __func__);
 }
 
-StatusOr<ObjectMetadata> RetryClient::PatchObject(
+StatusOr<ObjectMetadata> StorageConnectionImpl::PatchObject(
     PatchObjectRequest const& request) {
   auto const idempotency = current_idempotency_policy().IsIdempotent(request)
                                ? Idempotency::kIdempotent
@@ -453,7 +454,7 @@ StatusOr<ObjectMetadata> RetryClient::PatchObject(
       google::cloud::internal::CurrentOptions(), request, __func__);
 }
 
-StatusOr<ObjectMetadata> RetryClient::ComposeObject(
+StatusOr<ObjectMetadata> StorageConnectionImpl::ComposeObject(
     ComposeObjectRequest const& request) {
   auto const idempotency = current_idempotency_policy().IsIdempotent(request)
                                ? Idempotency::kIdempotent
@@ -469,7 +470,7 @@ StatusOr<ObjectMetadata> RetryClient::ComposeObject(
       google::cloud::internal::CurrentOptions(), request, __func__);
 }
 
-StatusOr<RewriteObjectResponse> RetryClient::RewriteObject(
+StatusOr<RewriteObjectResponse> StorageConnectionImpl::RewriteObject(
     RewriteObjectRequest const& request) {
   auto const idempotency = current_idempotency_policy().IsIdempotent(request)
                                ? Idempotency::kIdempotent
@@ -485,7 +486,8 @@ StatusOr<RewriteObjectResponse> RetryClient::RewriteObject(
       google::cloud::internal::CurrentOptions(), request, __func__);
 }
 
-StatusOr<CreateResumableUploadResponse> RetryClient::CreateResumableUpload(
+StatusOr<CreateResumableUploadResponse>
+StorageConnectionImpl::CreateResumableUpload(
     ResumableUploadRequest const& request) {
   auto const idempotency = current_idempotency_policy().IsIdempotent(request)
                                ? Idempotency::kIdempotent
@@ -501,7 +503,8 @@ StatusOr<CreateResumableUploadResponse> RetryClient::CreateResumableUpload(
       google::cloud::internal::CurrentOptions(), request, __func__);
 }
 
-StatusOr<QueryResumableUploadResponse> RetryClient::QueryResumableUpload(
+StatusOr<QueryResumableUploadResponse>
+StorageConnectionImpl::QueryResumableUpload(
     QueryResumableUploadRequest const& request) {
   auto const idempotency = Idempotency::kIdempotent;
   return RestRetryLoop(
@@ -515,7 +518,7 @@ StatusOr<QueryResumableUploadResponse> RetryClient::QueryResumableUpload(
       google::cloud::internal::CurrentOptions(), request, __func__);
 }
 
-StatusOr<EmptyResponse> RetryClient::DeleteResumableUpload(
+StatusOr<EmptyResponse> StorageConnectionImpl::DeleteResumableUpload(
     DeleteResumableUploadRequest const& request) {
   return RestRetryLoop(
       current_retry_policy(), current_backoff_policy(),
@@ -585,7 +588,7 @@ StatusOr<EmptyResponse> RetryClient::DeleteResumableUpload(
 // trying the ResetSession() operation until it succeeds, at which point we
 // can start the upload operations again.
 //
-StatusOr<QueryResumableUploadResponse> RetryClient::UploadChunk(
+StatusOr<QueryResumableUploadResponse> StorageConnectionImpl::UploadChunk(
     UploadChunkRequest const& request) {
   auto const& current = google::cloud::internal::CurrentOptions();
   auto sleeper = google::cloud::internal::MakeTracedSleeper(
@@ -699,7 +702,7 @@ StatusOr<QueryResumableUploadResponse> RetryClient::UploadChunk(
   return RetryError(last_status, *retry_policy, __func__);
 }
 
-StatusOr<ListBucketAclResponse> RetryClient::ListBucketAcl(
+StatusOr<ListBucketAclResponse> StorageConnectionImpl::ListBucketAcl(
     ListBucketAclRequest const& request) {
   auto const idempotency = current_idempotency_policy().IsIdempotent(request)
                                ? Idempotency::kIdempotent
@@ -715,7 +718,7 @@ StatusOr<ListBucketAclResponse> RetryClient::ListBucketAcl(
       google::cloud::internal::CurrentOptions(), request, __func__);
 }
 
-StatusOr<BucketAccessControl> RetryClient::GetBucketAcl(
+StatusOr<BucketAccessControl> StorageConnectionImpl::GetBucketAcl(
     GetBucketAclRequest const& request) {
   auto const idempotency = current_idempotency_policy().IsIdempotent(request)
                                ? Idempotency::kIdempotent
@@ -731,7 +734,7 @@ StatusOr<BucketAccessControl> RetryClient::GetBucketAcl(
       google::cloud::internal::CurrentOptions(), request, __func__);
 }
 
-StatusOr<BucketAccessControl> RetryClient::CreateBucketAcl(
+StatusOr<BucketAccessControl> StorageConnectionImpl::CreateBucketAcl(
     CreateBucketAclRequest const& request) {
   auto const idempotency = current_idempotency_policy().IsIdempotent(request)
                                ? Idempotency::kIdempotent
@@ -747,7 +750,7 @@ StatusOr<BucketAccessControl> RetryClient::CreateBucketAcl(
       google::cloud::internal::CurrentOptions(), request, __func__);
 }
 
-StatusOr<EmptyResponse> RetryClient::DeleteBucketAcl(
+StatusOr<EmptyResponse> StorageConnectionImpl::DeleteBucketAcl(
     DeleteBucketAclRequest const& request) {
   auto const idempotency = current_idempotency_policy().IsIdempotent(request)
                                ? Idempotency::kIdempotent
@@ -763,7 +766,7 @@ StatusOr<EmptyResponse> RetryClient::DeleteBucketAcl(
       google::cloud::internal::CurrentOptions(), request, __func__);
 }
 
-StatusOr<ListObjectAclResponse> RetryClient::ListObjectAcl(
+StatusOr<ListObjectAclResponse> StorageConnectionImpl::ListObjectAcl(
     ListObjectAclRequest const& request) {
   auto const idempotency = current_idempotency_policy().IsIdempotent(request)
                                ? Idempotency::kIdempotent
@@ -779,7 +782,7 @@ StatusOr<ListObjectAclResponse> RetryClient::ListObjectAcl(
       google::cloud::internal::CurrentOptions(), request, __func__);
 }
 
-StatusOr<BucketAccessControl> RetryClient::UpdateBucketAcl(
+StatusOr<BucketAccessControl> StorageConnectionImpl::UpdateBucketAcl(
     UpdateBucketAclRequest const& request) {
   auto const idempotency = current_idempotency_policy().IsIdempotent(request)
                                ? Idempotency::kIdempotent
@@ -795,7 +798,7 @@ StatusOr<BucketAccessControl> RetryClient::UpdateBucketAcl(
       google::cloud::internal::CurrentOptions(), request, __func__);
 }
 
-StatusOr<BucketAccessControl> RetryClient::PatchBucketAcl(
+StatusOr<BucketAccessControl> StorageConnectionImpl::PatchBucketAcl(
     PatchBucketAclRequest const& request) {
   auto const idempotency = current_idempotency_policy().IsIdempotent(request)
                                ? Idempotency::kIdempotent
@@ -811,7 +814,7 @@ StatusOr<BucketAccessControl> RetryClient::PatchBucketAcl(
       google::cloud::internal::CurrentOptions(), request, __func__);
 }
 
-StatusOr<ObjectAccessControl> RetryClient::CreateObjectAcl(
+StatusOr<ObjectAccessControl> StorageConnectionImpl::CreateObjectAcl(
     CreateObjectAclRequest const& request) {
   auto const idempotency = current_idempotency_policy().IsIdempotent(request)
                                ? Idempotency::kIdempotent
@@ -827,7 +830,7 @@ StatusOr<ObjectAccessControl> RetryClient::CreateObjectAcl(
       google::cloud::internal::CurrentOptions(), request, __func__);
 }
 
-StatusOr<EmptyResponse> RetryClient::DeleteObjectAcl(
+StatusOr<EmptyResponse> StorageConnectionImpl::DeleteObjectAcl(
     DeleteObjectAclRequest const& request) {
   auto const idempotency = current_idempotency_policy().IsIdempotent(request)
                                ? Idempotency::kIdempotent
@@ -843,7 +846,7 @@ StatusOr<EmptyResponse> RetryClient::DeleteObjectAcl(
       google::cloud::internal::CurrentOptions(), request, __func__);
 }
 
-StatusOr<ObjectAccessControl> RetryClient::GetObjectAcl(
+StatusOr<ObjectAccessControl> StorageConnectionImpl::GetObjectAcl(
     GetObjectAclRequest const& request) {
   auto const idempotency = current_idempotency_policy().IsIdempotent(request)
                                ? Idempotency::kIdempotent
@@ -859,7 +862,7 @@ StatusOr<ObjectAccessControl> RetryClient::GetObjectAcl(
       google::cloud::internal::CurrentOptions(), request, __func__);
 }
 
-StatusOr<ObjectAccessControl> RetryClient::UpdateObjectAcl(
+StatusOr<ObjectAccessControl> StorageConnectionImpl::UpdateObjectAcl(
     UpdateObjectAclRequest const& request) {
   auto const idempotency = current_idempotency_policy().IsIdempotent(request)
                                ? Idempotency::kIdempotent
@@ -875,7 +878,7 @@ StatusOr<ObjectAccessControl> RetryClient::UpdateObjectAcl(
       google::cloud::internal::CurrentOptions(), request, __func__);
 }
 
-StatusOr<ObjectAccessControl> RetryClient::PatchObjectAcl(
+StatusOr<ObjectAccessControl> StorageConnectionImpl::PatchObjectAcl(
     PatchObjectAclRequest const& request) {
   auto const idempotency = current_idempotency_policy().IsIdempotent(request)
                                ? Idempotency::kIdempotent
@@ -891,7 +894,8 @@ StatusOr<ObjectAccessControl> RetryClient::PatchObjectAcl(
       google::cloud::internal::CurrentOptions(), request, __func__);
 }
 
-StatusOr<ListDefaultObjectAclResponse> RetryClient::ListDefaultObjectAcl(
+StatusOr<ListDefaultObjectAclResponse>
+StorageConnectionImpl::ListDefaultObjectAcl(
     ListDefaultObjectAclRequest const& request) {
   auto const idempotency = current_idempotency_policy().IsIdempotent(request)
                                ? Idempotency::kIdempotent
@@ -907,7 +911,7 @@ StatusOr<ListDefaultObjectAclResponse> RetryClient::ListDefaultObjectAcl(
       google::cloud::internal::CurrentOptions(), request, __func__);
 }
 
-StatusOr<ObjectAccessControl> RetryClient::CreateDefaultObjectAcl(
+StatusOr<ObjectAccessControl> StorageConnectionImpl::CreateDefaultObjectAcl(
     CreateDefaultObjectAclRequest const& request) {
   auto const idempotency = current_idempotency_policy().IsIdempotent(request)
                                ? Idempotency::kIdempotent
@@ -923,7 +927,7 @@ StatusOr<ObjectAccessControl> RetryClient::CreateDefaultObjectAcl(
       google::cloud::internal::CurrentOptions(), request, __func__);
 }
 
-StatusOr<EmptyResponse> RetryClient::DeleteDefaultObjectAcl(
+StatusOr<EmptyResponse> StorageConnectionImpl::DeleteDefaultObjectAcl(
     DeleteDefaultObjectAclRequest const& request) {
   auto const idempotency = current_idempotency_policy().IsIdempotent(request)
                                ? Idempotency::kIdempotent
@@ -939,7 +943,7 @@ StatusOr<EmptyResponse> RetryClient::DeleteDefaultObjectAcl(
       google::cloud::internal::CurrentOptions(), request, __func__);
 }
 
-StatusOr<ObjectAccessControl> RetryClient::GetDefaultObjectAcl(
+StatusOr<ObjectAccessControl> StorageConnectionImpl::GetDefaultObjectAcl(
     GetDefaultObjectAclRequest const& request) {
   auto const idempotency = current_idempotency_policy().IsIdempotent(request)
                                ? Idempotency::kIdempotent
@@ -955,7 +959,7 @@ StatusOr<ObjectAccessControl> RetryClient::GetDefaultObjectAcl(
       google::cloud::internal::CurrentOptions(), request, __func__);
 }
 
-StatusOr<ObjectAccessControl> RetryClient::UpdateDefaultObjectAcl(
+StatusOr<ObjectAccessControl> StorageConnectionImpl::UpdateDefaultObjectAcl(
     UpdateDefaultObjectAclRequest const& request) {
   auto const idempotency = current_idempotency_policy().IsIdempotent(request)
                                ? Idempotency::kIdempotent
@@ -971,7 +975,7 @@ StatusOr<ObjectAccessControl> RetryClient::UpdateDefaultObjectAcl(
       google::cloud::internal::CurrentOptions(), request, __func__);
 }
 
-StatusOr<ObjectAccessControl> RetryClient::PatchDefaultObjectAcl(
+StatusOr<ObjectAccessControl> StorageConnectionImpl::PatchDefaultObjectAcl(
     PatchDefaultObjectAclRequest const& request) {
   auto const idempotency = current_idempotency_policy().IsIdempotent(request)
                                ? Idempotency::kIdempotent
@@ -987,7 +991,7 @@ StatusOr<ObjectAccessControl> RetryClient::PatchDefaultObjectAcl(
       google::cloud::internal::CurrentOptions(), request, __func__);
 }
 
-StatusOr<ServiceAccount> RetryClient::GetServiceAccount(
+StatusOr<ServiceAccount> StorageConnectionImpl::GetServiceAccount(
     GetProjectServiceAccountRequest const& request) {
   auto const idempotency = current_idempotency_policy().IsIdempotent(request)
                                ? Idempotency::kIdempotent
@@ -1003,7 +1007,7 @@ StatusOr<ServiceAccount> RetryClient::GetServiceAccount(
       google::cloud::internal::CurrentOptions(), request, __func__);
 }
 
-StatusOr<ListHmacKeysResponse> RetryClient::ListHmacKeys(
+StatusOr<ListHmacKeysResponse> StorageConnectionImpl::ListHmacKeys(
     ListHmacKeysRequest const& request) {
   auto const idempotency = current_idempotency_policy().IsIdempotent(request)
                                ? Idempotency::kIdempotent
@@ -1019,7 +1023,7 @@ StatusOr<ListHmacKeysResponse> RetryClient::ListHmacKeys(
       google::cloud::internal::CurrentOptions(), request, __func__);
 }
 
-StatusOr<CreateHmacKeyResponse> RetryClient::CreateHmacKey(
+StatusOr<CreateHmacKeyResponse> StorageConnectionImpl::CreateHmacKey(
     CreateHmacKeyRequest const& request) {
   auto const idempotency = current_idempotency_policy().IsIdempotent(request)
                                ? Idempotency::kIdempotent
@@ -1035,7 +1039,7 @@ StatusOr<CreateHmacKeyResponse> RetryClient::CreateHmacKey(
       google::cloud::internal::CurrentOptions(), request, __func__);
 }
 
-StatusOr<EmptyResponse> RetryClient::DeleteHmacKey(
+StatusOr<EmptyResponse> StorageConnectionImpl::DeleteHmacKey(
     DeleteHmacKeyRequest const& request) {
   auto const idempotency = current_idempotency_policy().IsIdempotent(request)
                                ? Idempotency::kIdempotent
@@ -1051,7 +1055,7 @@ StatusOr<EmptyResponse> RetryClient::DeleteHmacKey(
       google::cloud::internal::CurrentOptions(), request, __func__);
 }
 
-StatusOr<HmacKeyMetadata> RetryClient::GetHmacKey(
+StatusOr<HmacKeyMetadata> StorageConnectionImpl::GetHmacKey(
     GetHmacKeyRequest const& request) {
   auto const idempotency = current_idempotency_policy().IsIdempotent(request)
                                ? Idempotency::kIdempotent
@@ -1067,7 +1071,7 @@ StatusOr<HmacKeyMetadata> RetryClient::GetHmacKey(
       google::cloud::internal::CurrentOptions(), request, __func__);
 }
 
-StatusOr<HmacKeyMetadata> RetryClient::UpdateHmacKey(
+StatusOr<HmacKeyMetadata> StorageConnectionImpl::UpdateHmacKey(
     UpdateHmacKeyRequest const& request) {
   auto const idempotency = current_idempotency_policy().IsIdempotent(request)
                                ? Idempotency::kIdempotent
@@ -1083,7 +1087,7 @@ StatusOr<HmacKeyMetadata> RetryClient::UpdateHmacKey(
       google::cloud::internal::CurrentOptions(), request, __func__);
 }
 
-StatusOr<SignBlobResponse> RetryClient::SignBlob(
+StatusOr<SignBlobResponse> StorageConnectionImpl::SignBlob(
     SignBlobRequest const& request) {
   auto const idempotency = current_idempotency_policy().IsIdempotent(request)
                                ? Idempotency::kIdempotent
@@ -1099,7 +1103,7 @@ StatusOr<SignBlobResponse> RetryClient::SignBlob(
       google::cloud::internal::CurrentOptions(), request, __func__);
 }
 
-StatusOr<ListNotificationsResponse> RetryClient::ListNotifications(
+StatusOr<ListNotificationsResponse> StorageConnectionImpl::ListNotifications(
     ListNotificationsRequest const& request) {
   auto const idempotency = current_idempotency_policy().IsIdempotent(request)
                                ? Idempotency::kIdempotent
@@ -1115,7 +1119,7 @@ StatusOr<ListNotificationsResponse> RetryClient::ListNotifications(
       google::cloud::internal::CurrentOptions(), request, __func__);
 }
 
-StatusOr<NotificationMetadata> RetryClient::CreateNotification(
+StatusOr<NotificationMetadata> StorageConnectionImpl::CreateNotification(
     CreateNotificationRequest const& request) {
   auto const idempotency = current_idempotency_policy().IsIdempotent(request)
                                ? Idempotency::kIdempotent
@@ -1131,7 +1135,7 @@ StatusOr<NotificationMetadata> RetryClient::CreateNotification(
       google::cloud::internal::CurrentOptions(), request, __func__);
 }
 
-StatusOr<NotificationMetadata> RetryClient::GetNotification(
+StatusOr<NotificationMetadata> StorageConnectionImpl::GetNotification(
     GetNotificationRequest const& request) {
   auto const idempotency = current_idempotency_policy().IsIdempotent(request)
                                ? Idempotency::kIdempotent
@@ -1147,7 +1151,7 @@ StatusOr<NotificationMetadata> RetryClient::GetNotification(
       google::cloud::internal::CurrentOptions(), request, __func__);
 }
 
-StatusOr<EmptyResponse> RetryClient::DeleteNotification(
+StatusOr<EmptyResponse> StorageConnectionImpl::DeleteNotification(
     DeleteNotificationRequest const& request) {
   auto const idempotency = current_idempotency_policy().IsIdempotent(request)
                                ? Idempotency::kIdempotent
@@ -1163,25 +1167,25 @@ StatusOr<EmptyResponse> RetryClient::DeleteNotification(
       google::cloud::internal::CurrentOptions(), request, __func__);
 }
 
-std::vector<std::string> RetryClient::InspectStackStructure() const {
+std::vector<std::string> StorageConnectionImpl::InspectStackStructure() const {
   auto stack = stub_->InspectStackStructure();
-  stack.emplace_back("RetryClient");
+  stack.emplace_back("StorageConnectionImpl");
   return stack;
 }
 
-std::unique_ptr<RetryPolicy> RetryClient::current_retry_policy() {
+std::unique_ptr<RetryPolicy> StorageConnectionImpl::current_retry_policy() {
   return google::cloud::internal::CurrentOptions()
       .get<RetryPolicyOption>()
       ->clone();
 }
 
-std::unique_ptr<BackoffPolicy> RetryClient::current_backoff_policy() {
+std::unique_ptr<BackoffPolicy> StorageConnectionImpl::current_backoff_policy() {
   return google::cloud::internal::CurrentOptions()
       .get<BackoffPolicyOption>()
       ->clone();
 }
 
-IdempotencyPolicy& RetryClient::current_idempotency_policy() {
+IdempotencyPolicy& StorageConnectionImpl::current_idempotency_policy() {
   return *google::cloud::internal::CurrentOptions()
               .get<IdempotencyPolicyOption>();
 }

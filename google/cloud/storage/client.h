@@ -16,10 +16,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_CLIENT_H
 
 #include "google/cloud/storage/hmac_key_metadata.h"
-#include "google/cloud/storage/internal/generic_stub_adapter.h"
 #include "google/cloud/storage/internal/policy_document_request.h"
+#include "google/cloud/storage/internal/raw_client.h"
 #include "google/cloud/storage/internal/request_project_id.h"
-#include "google/cloud/storage/internal/retry_client.h"
 #include "google/cloud/storage/internal/signed_url_requests.h"
 #include "google/cloud/storage/internal/tuple_filter.h"
 #include "google/cloud/storage/list_buckets_reader.h"

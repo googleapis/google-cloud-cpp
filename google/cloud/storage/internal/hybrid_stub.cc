@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/hybrid_stub.h"
-#include "google/cloud/storage/internal/generic_stub_adapter.h"
 #include "google/cloud/storage/internal/grpc/stub.h"
 #include "google/cloud/storage/internal/rest/stub.h"
 #include "absl/strings/match.h"
