@@ -102,7 +102,7 @@ TEST(GrpcPluginTest, MediaConfigCreatesHybrid) {
   ASSERT_THAT(impl, NotNull());
   EXPECT_THAT(
       impl->InspectStackStructure(),
-      ElementsAre("GrpcClient", "RestClient", "HybridClient", "RetryClient"));
+      ElementsAre("GrpcClient", "RestClient", "HybridStub", "RetryClient"));
 }
 
 #include "google/cloud/internal/disable_deprecation_warnings.inc"
