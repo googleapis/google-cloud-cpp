@@ -99,7 +99,6 @@ google_cloud_cpp_storage_hdrs = [
     "internal/patch_builder_details.h",
     "internal/policy_document_request.h",
     "internal/raw_client.h",
-    "internal/raw_client_wrapper_utils.h",
     "internal/request_project_id.h",
     "internal/rest/object_read_source.h",
     "internal/rest/request_builder.h",
