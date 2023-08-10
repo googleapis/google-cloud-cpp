@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/storage/internal/curl/client.h"
+#include "google/cloud/storage/internal/curl/stub.h"
 #include "google/cloud/storage/internal/bucket_access_control_parser.h"
 #include "google/cloud/storage/internal/bucket_metadata_parser.h"
 #include "google/cloud/storage/internal/curl/request_builder.h"
@@ -120,10 +120,10 @@ std::string HostHeader(Options const& options, char const* service) {
   return {};
 }
 
-Status CurlClient::SetupBuilderCommon(CurlRequestBuilder& builder,
-                                      rest_internal::RestContext const& context,
-                                      Options const& options,
-                                      char const* method, char const* service) {
+Status CurlStub::SetupBuilderCommon(CurlRequestBuilder& builder,
+                                    rest_internal::RestContext const& context,
+                                    Options const& options, char const* method,
+                                    char const* service) {
   auto auth_header =
       options.get<Oauth2CredentialsOption>()->AuthorizationHeader();
   if (!auth_header) return AuthHeaderError(std::move(auth_header).status());
@@ -156,10 +156,10 @@ void SetupBuilderUserIp(CurlRequestBuilder& builder, Request const& request) {
 }
 
 template <typename Request>
-Status CurlClient::SetupBuilder(CurlRequestBuilder& builder,
-                                rest_internal::RestContext const& context,
-                                Options const& options, Request const& request,
-                                char const* method) {
+Status CurlStub::SetupBuilder(CurlRequestBuilder& builder,
+                              rest_internal::RestContext const& context,
+                              Options const& options, Request const& request,
+                              char const* method) {
   auto status = SetupBuilderCommon(builder, context, options, method);
   if (!status.ok()) return status;
   request.AddOptionsToHttpRequest(builder);
@@ -167,7 +167,7 @@ Status CurlClient::SetupBuilder(CurlRequestBuilder& builder,
   return Status();
 }
 
-CurlClient::CurlClient(google::cloud::Options options)
+CurlStub::CurlStub(google::cloud::Options options)
     : opts_(std::move(options)),
       x_goog_api_client_header_("x-goog-api-client: " + x_goog_api_client()),
       storage_endpoint_(JsonEndpoint(opts_)),
@@ -182,9 +182,9 @@ CurlClient::CurlClient(google::cloud::Options options)
   rest_internal::CurlInitializeOnce(opts_);
 }
 
-Options CurlClient::options() const { return opts_; }
+Options CurlStub::options() const { return opts_; }
 
-StatusOr<ListBucketsResponse> CurlClient::ListBuckets(
+StatusOr<ListBucketsResponse> CurlStub::ListBuckets(
     rest_internal::RestContext& context, Options const& options,
     ListBucketsRequest const& request) {
   CurlRequestBuilder builder(storage_endpoint_ + "/b", storage_factory_);
@@ -195,7 +195,7 @@ StatusOr<ListBucketsResponse> CurlClient::ListBuckets(
       std::move(builder).BuildRequest().MakeRequest(std::string{}));
 }
 
-StatusOr<BucketMetadata> CurlClient::CreateBucket(
+StatusOr<BucketMetadata> CurlStub::CreateBucket(
     rest_internal::RestContext& context, Options const& options,
     CreateBucketRequest const& request) {
   // Assume the bucket name is validated by the caller.
@@ -217,7 +217,7 @@ StatusOr<BucketMetadata> CurlClient::CreateBucket(
   return response;
 }
 
-StatusOr<BucketMetadata> CurlClient::GetBucketMetadata(
+StatusOr<BucketMetadata> CurlStub::GetBucketMetadata(
     rest_internal::RestContext& context, Options const& options,
     GetBucketMetadataRequest const& request) {
   // Assume the bucket name is validated by the caller.
@@ -229,7 +229,7 @@ StatusOr<BucketMetadata> CurlClient::GetBucketMetadata(
       std::move(builder).BuildRequest().MakeRequest(std::string{}));
 }
 
-StatusOr<EmptyResponse> CurlClient::DeleteBucket(
+StatusOr<EmptyResponse> CurlStub::DeleteBucket(
     rest_internal::RestContext& context, Options const& options,
     DeleteBucketRequest const& request) {
   // Assume the bucket name is validated by the caller.
@@ -241,7 +241,7 @@ StatusOr<EmptyResponse> CurlClient::DeleteBucket(
       std::move(builder).BuildRequest().MakeRequest(std::string{}));
 }
 
-StatusOr<BucketMetadata> CurlClient::UpdateBucket(
+StatusOr<BucketMetadata> CurlStub::UpdateBucket(
     rest_internal::RestContext& context, Options const& options,
     UpdateBucketRequest const& request) {
   // Assume the bucket name is validated by the caller.
@@ -254,7 +254,7 @@ StatusOr<BucketMetadata> CurlClient::UpdateBucket(
       std::move(builder).BuildRequest().MakeRequest(request.json_payload()));
 }
 
-StatusOr<BucketMetadata> CurlClient::PatchBucket(
+StatusOr<BucketMetadata> CurlStub::PatchBucket(
     rest_internal::RestContext& context, Options const& options,
     PatchBucketRequest const& request) {
   // Assume the bucket name is validated by the caller.
@@ -267,7 +267,7 @@ StatusOr<BucketMetadata> CurlClient::PatchBucket(
       std::move(builder).BuildRequest().MakeRequest(request.payload()));
 }
 
-StatusOr<NativeIamPolicy> CurlClient::GetNativeBucketIamPolicy(
+StatusOr<NativeIamPolicy> CurlStub::GetNativeBucketIamPolicy(
     rest_internal::RestContext& context, Options const& options,
     GetBucketIamPolicyRequest const& request) {
   CurlRequestBuilder builder(
@@ -283,7 +283,7 @@ StatusOr<NativeIamPolicy> CurlClient::GetNativeBucketIamPolicy(
   return NativeIamPolicy::CreateFromJson(response->payload);
 }
 
-StatusOr<NativeIamPolicy> CurlClient::SetNativeBucketIamPolicy(
+StatusOr<NativeIamPolicy> CurlStub::SetNativeBucketIamPolicy(
     rest_internal::RestContext& context, Options const& options,
     SetNativeBucketIamPolicyRequest const& request) {
   CurlRequestBuilder builder(
@@ -303,7 +303,7 @@ StatusOr<NativeIamPolicy> CurlClient::SetNativeBucketIamPolicy(
   return NativeIamPolicy::CreateFromJson(response->payload);
 }
 
-StatusOr<TestBucketIamPermissionsResponse> CurlClient::TestBucketIamPermissions(
+StatusOr<TestBucketIamPermissionsResponse> CurlStub::TestBucketIamPermissions(
     rest_internal::RestContext& context, Options const& options,
     TestBucketIamPermissionsRequest const& request) {
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
@@ -324,7 +324,7 @@ StatusOr<TestBucketIamPermissionsResponse> CurlClient::TestBucketIamPermissions(
   return TestBucketIamPermissionsResponse::FromHttpResponse(response->payload);
 }
 
-StatusOr<BucketMetadata> CurlClient::LockBucketRetentionPolicy(
+StatusOr<BucketMetadata> CurlStub::LockBucketRetentionPolicy(
     rest_internal::RestContext& context, Options const& options,
     LockBucketRetentionPolicyRequest const& request) {
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
@@ -339,7 +339,7 @@ StatusOr<BucketMetadata> CurlClient::LockBucketRetentionPolicy(
       std::move(builder).BuildRequest().MakeRequest(std::string{}));
 }
 
-StatusOr<ObjectMetadata> CurlClient::InsertObjectMedia(
+StatusOr<ObjectMetadata> CurlStub::InsertObjectMedia(
     rest_internal::RestContext& context, Options const& options,
     InsertObjectMediaRequest const& request) {
   // If the object metadata is specified, then we need to do a multipart upload.
@@ -361,7 +361,7 @@ StatusOr<ObjectMetadata> CurlClient::InsertObjectMedia(
   return InsertObjectMediaSimple(context, options, request);
 }
 
-StatusOr<ObjectMetadata> CurlClient::CopyObject(
+StatusOr<ObjectMetadata> CurlStub::CopyObject(
     rest_internal::RestContext& context, Options const& options,
     CopyObjectRequest const& request) {
   CurlRequestBuilder builder(
@@ -383,7 +383,7 @@ StatusOr<ObjectMetadata> CurlClient::CopyObject(
       std::move(builder).BuildRequest().MakeRequest(json_payload));
 }
 
-StatusOr<ObjectMetadata> CurlClient::GetObjectMetadata(
+StatusOr<ObjectMetadata> CurlStub::GetObjectMetadata(
     rest_internal::RestContext& context, Options const& options,
     GetObjectMetadataRequest const& request) {
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
@@ -395,7 +395,7 @@ StatusOr<ObjectMetadata> CurlClient::GetObjectMetadata(
       std::move(builder).BuildRequest().MakeRequest(std::string{}));
 }
 
-StatusOr<std::unique_ptr<ObjectReadSource>> CurlClient::ReadObject(
+StatusOr<std::unique_ptr<ObjectReadSource>> CurlStub::ReadObject(
     rest_internal::RestContext& context, Options const& options,
     ReadObjectRangeRequest const& request) {
   // Assume the bucket name is validated by the caller.
@@ -417,7 +417,7 @@ StatusOr<std::unique_ptr<ObjectReadSource>> CurlClient::ReadObject(
   return std::unique_ptr<ObjectReadSource>(*std::move(download));
 }
 
-StatusOr<ListObjectsResponse> CurlClient::ListObjects(
+StatusOr<ListObjectsResponse> CurlStub::ListObjects(
     rest_internal::RestContext& context, Options const& options,
     ListObjectsRequest const& request) {
   // Assume the bucket name is validated by the caller.
@@ -431,7 +431,7 @@ StatusOr<ListObjectsResponse> CurlClient::ListObjects(
       std::move(builder).BuildRequest().MakeRequest(std::string{}));
 }
 
-StatusOr<EmptyResponse> CurlClient::DeleteObject(
+StatusOr<EmptyResponse> CurlStub::DeleteObject(
     rest_internal::RestContext& context, Options const& options,
     DeleteObjectRequest const& request) {
   // Assume the bucket name is validated by the caller.
@@ -444,7 +444,7 @@ StatusOr<EmptyResponse> CurlClient::DeleteObject(
       std::move(builder).BuildRequest().MakeRequest(std::string{}));
 }
 
-StatusOr<ObjectMetadata> CurlClient::UpdateObject(
+StatusOr<ObjectMetadata> CurlStub::UpdateObject(
     rest_internal::RestContext& context, Options const& options,
     UpdateObjectRequest const& request) {
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
@@ -457,7 +457,7 @@ StatusOr<ObjectMetadata> CurlClient::UpdateObject(
       std::move(builder).BuildRequest().MakeRequest(request.json_payload()));
 }
 
-StatusOr<ObjectMetadata> CurlClient::PatchObject(
+StatusOr<ObjectMetadata> CurlStub::PatchObject(
     rest_internal::RestContext& context, Options const& options,
     PatchObjectRequest const& request) {
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
@@ -470,7 +470,7 @@ StatusOr<ObjectMetadata> CurlClient::PatchObject(
       std::move(builder).BuildRequest().MakeRequest(request.payload()));
 }
 
-StatusOr<ObjectMetadata> CurlClient::ComposeObject(
+StatusOr<ObjectMetadata> CurlStub::ComposeObject(
     rest_internal::RestContext& context, Options const& options,
     ComposeObjectRequest const& request) {
   CurlRequestBuilder builder(
@@ -484,7 +484,7 @@ StatusOr<ObjectMetadata> CurlClient::ComposeObject(
       std::move(builder).BuildRequest().MakeRequest(request.JsonPayload()));
 }
 
-StatusOr<RewriteObjectResponse> CurlClient::RewriteObject(
+StatusOr<RewriteObjectResponse> CurlStub::RewriteObject(
     rest_internal::RestContext& context, Options const& options,
     RewriteObjectRequest const& request) {
   CurlRequestBuilder builder(
@@ -517,7 +517,7 @@ StatusOr<RewriteObjectResponse> CurlClient::RewriteObject(
   return RewriteObjectResponse::FromHttpResponse(response->payload);
 }
 
-StatusOr<CreateResumableUploadResponse> CurlClient::CreateResumableUpload(
+StatusOr<CreateResumableUploadResponse> CurlStub::CreateResumableUpload(
     rest_internal::RestContext& context, Options const& options,
     ResumableUploadRequest const& request) {
   CurlRequestBuilder builder(
@@ -568,7 +568,7 @@ StatusOr<CreateResumableUploadResponse> CurlClient::CreateResumableUpload(
   return CreateResumableUploadResponse::FromHttpResponse(*std::move(response));
 }
 
-StatusOr<QueryResumableUploadResponse> CurlClient::QueryResumableUpload(
+StatusOr<QueryResumableUploadResponse> CurlStub::QueryResumableUpload(
     rest_internal::RestContext& context, Options const& options,
     QueryResumableUploadRequest const& request) {
   CurlRequestBuilder builder(request.upload_session_url(), upload_factory_);
@@ -586,7 +586,7 @@ StatusOr<QueryResumableUploadResponse> CurlClient::QueryResumableUpload(
   return AsStatus(*response);
 }
 
-StatusOr<EmptyResponse> CurlClient::DeleteResumableUpload(
+StatusOr<EmptyResponse> CurlStub::DeleteResumableUpload(
     rest_internal::RestContext& context, Options const& options,
     DeleteResumableUploadRequest const& request) {
   CurlRequestBuilder builder(request.upload_session_url(), upload_factory_);
@@ -603,7 +603,7 @@ StatusOr<EmptyResponse> CurlClient::DeleteResumableUpload(
   return EmptyResponse{};
 }
 
-StatusOr<QueryResumableUploadResponse> CurlClient::UploadChunk(
+StatusOr<QueryResumableUploadResponse> CurlStub::UploadChunk(
     rest_internal::RestContext& context, Options const& options,
     UploadChunkRequest const& request) {
   CurlRequestBuilder builder(request.upload_session_url(), upload_factory_);
@@ -633,7 +633,7 @@ StatusOr<QueryResumableUploadResponse> CurlClient::UploadChunk(
   return AsStatus(*response);
 }
 
-StatusOr<ListBucketAclResponse> CurlClient::ListBucketAcl(
+StatusOr<ListBucketAclResponse> CurlStub::ListBucketAcl(
     rest_internal::RestContext& context, Options const& options,
     ListBucketAclRequest const& request) {
   CurlRequestBuilder builder(
@@ -651,7 +651,7 @@ StatusOr<ListBucketAclResponse> CurlClient::ListBucketAcl(
   return internal::ListBucketAclResponse::FromHttpResponse(response->payload);
 }
 
-StatusOr<BucketAccessControl> CurlClient::GetBucketAcl(
+StatusOr<BucketAccessControl> CurlStub::GetBucketAcl(
     rest_internal::RestContext& context, Options const& options,
     GetBucketAclRequest const& request) {
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
@@ -663,7 +663,7 @@ StatusOr<BucketAccessControl> CurlClient::GetBucketAcl(
       std::move(builder).BuildRequest().MakeRequest(std::string{}));
 }
 
-StatusOr<BucketAccessControl> CurlClient::CreateBucketAcl(
+StatusOr<BucketAccessControl> CurlStub::CreateBucketAcl(
     rest_internal::RestContext& context, Options const& options,
     CreateBucketAclRequest const& request) {
   CurlRequestBuilder builder(
@@ -679,7 +679,7 @@ StatusOr<BucketAccessControl> CurlClient::CreateBucketAcl(
       std::move(builder).BuildRequest().MakeRequest(object.dump()));
 }
 
-StatusOr<EmptyResponse> CurlClient::DeleteBucketAcl(
+StatusOr<EmptyResponse> CurlStub::DeleteBucketAcl(
     rest_internal::RestContext& context, Options const& options,
     DeleteBucketAclRequest const& request) {
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
@@ -691,7 +691,7 @@ StatusOr<EmptyResponse> CurlClient::DeleteBucketAcl(
       std::move(builder).BuildRequest().MakeRequest(std::string{}));
 }
 
-StatusOr<BucketAccessControl> CurlClient::UpdateBucketAcl(
+StatusOr<BucketAccessControl> CurlStub::UpdateBucketAcl(
     rest_internal::RestContext& context, Options const& options,
     UpdateBucketAclRequest const& request) {
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
@@ -707,7 +707,7 @@ StatusOr<BucketAccessControl> CurlClient::UpdateBucketAcl(
       std::move(builder).BuildRequest().MakeRequest(patch.dump()));
 }
 
-StatusOr<BucketAccessControl> CurlClient::PatchBucketAcl(
+StatusOr<BucketAccessControl> CurlStub::PatchBucketAcl(
     rest_internal::RestContext& context, Options const& options,
     PatchBucketAclRequest const& request) {
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
@@ -720,7 +720,7 @@ StatusOr<BucketAccessControl> CurlClient::PatchBucketAcl(
       std::move(builder).BuildRequest().MakeRequest(request.payload()));
 }
 
-StatusOr<ListObjectAclResponse> CurlClient::ListObjectAcl(
+StatusOr<ListObjectAclResponse> CurlStub::ListObjectAcl(
     rest_internal::RestContext& context, Options const& options,
     ListObjectAclRequest const& request) {
   // Assume the bucket name is validated by the caller.
@@ -734,7 +734,7 @@ StatusOr<ListObjectAclResponse> CurlClient::ListObjectAcl(
       std::move(builder).BuildRequest().MakeRequest(std::string{}));
 }
 
-StatusOr<ObjectAccessControl> CurlClient::CreateObjectAcl(
+StatusOr<ObjectAccessControl> CurlStub::CreateObjectAcl(
     rest_internal::RestContext& context, Options const& options,
     CreateObjectAclRequest const& request) {
   CurlRequestBuilder builder(
@@ -751,7 +751,7 @@ StatusOr<ObjectAccessControl> CurlClient::CreateObjectAcl(
       std::move(builder).BuildRequest().MakeRequest(object.dump()));
 }
 
-StatusOr<EmptyResponse> CurlClient::DeleteObjectAcl(
+StatusOr<EmptyResponse> CurlStub::DeleteObjectAcl(
     rest_internal::RestContext& context, Options const& options,
     DeleteObjectAclRequest const& request) {
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
@@ -765,7 +765,7 @@ StatusOr<EmptyResponse> CurlClient::DeleteObjectAcl(
       std::move(builder).BuildRequest().MakeRequest(std::string{}));
 }
 
-StatusOr<ObjectAccessControl> CurlClient::GetObjectAcl(
+StatusOr<ObjectAccessControl> CurlStub::GetObjectAcl(
     rest_internal::RestContext& context, Options const& options,
     GetObjectAclRequest const& request) {
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
@@ -779,7 +779,7 @@ StatusOr<ObjectAccessControl> CurlClient::GetObjectAcl(
       std::move(builder).BuildRequest().MakeRequest(std::string{}));
 }
 
-StatusOr<ObjectAccessControl> CurlClient::UpdateObjectAcl(
+StatusOr<ObjectAccessControl> CurlStub::UpdateObjectAcl(
     rest_internal::RestContext& context, Options const& options,
     UpdateObjectAclRequest const& request) {
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
@@ -797,7 +797,7 @@ StatusOr<ObjectAccessControl> CurlClient::UpdateObjectAcl(
       std::move(builder).BuildRequest().MakeRequest(object.dump()));
 }
 
-StatusOr<ObjectAccessControl> CurlClient::PatchObjectAcl(
+StatusOr<ObjectAccessControl> CurlStub::PatchObjectAcl(
     rest_internal::RestContext& context, Options const& options,
     PatchObjectAclRequest const& request) {
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
@@ -812,7 +812,7 @@ StatusOr<ObjectAccessControl> CurlClient::PatchObjectAcl(
       std::move(builder).BuildRequest().MakeRequest(request.payload()));
 }
 
-StatusOr<ListDefaultObjectAclResponse> CurlClient::ListDefaultObjectAcl(
+StatusOr<ListDefaultObjectAclResponse> CurlStub::ListDefaultObjectAcl(
     rest_internal::RestContext& context, Options const& options,
     ListDefaultObjectAclRequest const& request) {
   // Assume the bucket name is validated by the caller.
@@ -825,7 +825,7 @@ StatusOr<ListDefaultObjectAclResponse> CurlClient::ListDefaultObjectAcl(
       std::move(builder).BuildRequest().MakeRequest(std::string{}));
 }
 
-StatusOr<ObjectAccessControl> CurlClient::CreateDefaultObjectAcl(
+StatusOr<ObjectAccessControl> CurlStub::CreateDefaultObjectAcl(
     rest_internal::RestContext& context, Options const& options,
     CreateDefaultObjectAclRequest const& request) {
   CurlRequestBuilder builder(
@@ -841,7 +841,7 @@ StatusOr<ObjectAccessControl> CurlClient::CreateDefaultObjectAcl(
       std::move(builder).BuildRequest().MakeRequest(object.dump()));
 }
 
-StatusOr<EmptyResponse> CurlClient::DeleteDefaultObjectAcl(
+StatusOr<EmptyResponse> CurlStub::DeleteDefaultObjectAcl(
     rest_internal::RestContext& context, Options const& options,
     DeleteDefaultObjectAclRequest const& request) {
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
@@ -854,7 +854,7 @@ StatusOr<EmptyResponse> CurlClient::DeleteDefaultObjectAcl(
       std::move(builder).BuildRequest().MakeRequest(std::string{}));
 }
 
-StatusOr<ObjectAccessControl> CurlClient::GetDefaultObjectAcl(
+StatusOr<ObjectAccessControl> CurlStub::GetDefaultObjectAcl(
     rest_internal::RestContext& context, Options const& options,
     GetDefaultObjectAclRequest const& request) {
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
@@ -867,7 +867,7 @@ StatusOr<ObjectAccessControl> CurlClient::GetDefaultObjectAcl(
       std::move(builder).BuildRequest().MakeRequest(std::string{}));
 }
 
-StatusOr<ObjectAccessControl> CurlClient::UpdateDefaultObjectAcl(
+StatusOr<ObjectAccessControl> CurlStub::UpdateDefaultObjectAcl(
     rest_internal::RestContext& context, Options const& options,
     UpdateDefaultObjectAclRequest const& request) {
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
@@ -884,7 +884,7 @@ StatusOr<ObjectAccessControl> CurlClient::UpdateDefaultObjectAcl(
       std::move(builder).BuildRequest().MakeRequest(object.dump()));
 }
 
-StatusOr<ObjectAccessControl> CurlClient::PatchDefaultObjectAcl(
+StatusOr<ObjectAccessControl> CurlStub::PatchDefaultObjectAcl(
     rest_internal::RestContext& context, Options const& options,
     PatchDefaultObjectAclRequest const& request) {
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
@@ -898,7 +898,7 @@ StatusOr<ObjectAccessControl> CurlClient::PatchDefaultObjectAcl(
       std::move(builder).BuildRequest().MakeRequest(request.payload()));
 }
 
-StatusOr<ServiceAccount> CurlClient::GetServiceAccount(
+StatusOr<ServiceAccount> CurlStub::GetServiceAccount(
     rest_internal::RestContext& context, Options const& options,
     GetProjectServiceAccountRequest const& request) {
   CurlRequestBuilder builder(storage_endpoint_ + "/projects/" +
@@ -910,7 +910,7 @@ StatusOr<ServiceAccount> CurlClient::GetServiceAccount(
       std::move(builder).BuildRequest().MakeRequest(std::string{}));
 }
 
-StatusOr<ListHmacKeysResponse> CurlClient::ListHmacKeys(
+StatusOr<ListHmacKeysResponse> CurlStub::ListHmacKeys(
     rest_internal::RestContext& context, Options const& options,
     ListHmacKeysRequest const& request) {
   CurlRequestBuilder builder(
@@ -922,7 +922,7 @@ StatusOr<ListHmacKeysResponse> CurlClient::ListHmacKeys(
       std::move(builder).BuildRequest().MakeRequest(std::string{}));
 }
 
-StatusOr<CreateHmacKeyResponse> CurlClient::CreateHmacKey(
+StatusOr<CreateHmacKeyResponse> CurlStub::CreateHmacKey(
     rest_internal::RestContext& context, Options const& options,
     CreateHmacKeyRequest const& request) {
   CurlRequestBuilder builder(
@@ -936,7 +936,7 @@ StatusOr<CreateHmacKeyResponse> CurlClient::CreateHmacKey(
       std::move(builder).BuildRequest().MakeRequest(std::string{}));
 }
 
-StatusOr<EmptyResponse> CurlClient::DeleteHmacKey(
+StatusOr<EmptyResponse> CurlStub::DeleteHmacKey(
     rest_internal::RestContext& context, Options const& options,
     DeleteHmacKeyRequest const& request) {
   CurlRequestBuilder builder(storage_endpoint_ + "/projects/" +
@@ -949,7 +949,7 @@ StatusOr<EmptyResponse> CurlClient::DeleteHmacKey(
       std::move(builder).BuildRequest().MakeRequest(std::string{}));
 }
 
-StatusOr<HmacKeyMetadata> CurlClient::GetHmacKey(
+StatusOr<HmacKeyMetadata> CurlStub::GetHmacKey(
     rest_internal::RestContext& context, Options const& options,
     GetHmacKeyRequest const& request) {
   CurlRequestBuilder builder(storage_endpoint_ + "/projects/" +
@@ -962,7 +962,7 @@ StatusOr<HmacKeyMetadata> CurlClient::GetHmacKey(
       std::move(builder).BuildRequest().MakeRequest(std::string{}));
 }
 
-StatusOr<HmacKeyMetadata> CurlClient::UpdateHmacKey(
+StatusOr<HmacKeyMetadata> CurlStub::UpdateHmacKey(
     rest_internal::RestContext& context, Options const& options,
     UpdateHmacKeyRequest const& request) {
   CurlRequestBuilder builder(storage_endpoint_ + "/projects/" +
@@ -983,7 +983,7 @@ StatusOr<HmacKeyMetadata> CurlClient::UpdateHmacKey(
       std::move(builder).BuildRequest().MakeRequest(payload.dump()));
 }
 
-StatusOr<SignBlobResponse> CurlClient::SignBlob(
+StatusOr<SignBlobResponse> CurlStub::SignBlob(
     rest_internal::RestContext& context, Options const& options,
     SignBlobRequest const& request) {
   CurlRequestBuilder builder(iam_endpoint_ + "/projects/-/serviceAccounts/" +
@@ -1002,7 +1002,7 @@ StatusOr<SignBlobResponse> CurlClient::SignBlob(
       std::move(builder).BuildRequest().MakeRequest(payload.dump()));
 }
 
-StatusOr<ListNotificationsResponse> CurlClient::ListNotifications(
+StatusOr<ListNotificationsResponse> CurlStub::ListNotifications(
     rest_internal::RestContext& context, Options const& options,
     ListNotificationsRequest const& request) {
   // Assume the bucket name is validated by the caller.
@@ -1015,7 +1015,7 @@ StatusOr<ListNotificationsResponse> CurlClient::ListNotifications(
       std::move(builder).BuildRequest().MakeRequest(std::string{}));
 }
 
-StatusOr<NotificationMetadata> CurlClient::CreateNotification(
+StatusOr<NotificationMetadata> CurlStub::CreateNotification(
     rest_internal::RestContext& context, Options const& options,
     CreateNotificationRequest const& request) {
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
@@ -1028,7 +1028,7 @@ StatusOr<NotificationMetadata> CurlClient::CreateNotification(
       std::move(builder).BuildRequest().MakeRequest(request.json_payload()));
 }
 
-StatusOr<NotificationMetadata> CurlClient::GetNotification(
+StatusOr<NotificationMetadata> CurlStub::GetNotification(
     rest_internal::RestContext& context, Options const& options,
     GetNotificationRequest const& request) {
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
@@ -1041,7 +1041,7 @@ StatusOr<NotificationMetadata> CurlClient::GetNotification(
       std::move(builder).BuildRequest().MakeRequest(std::string{}));
 }
 
-StatusOr<EmptyResponse> CurlClient::DeleteNotification(
+StatusOr<EmptyResponse> CurlStub::DeleteNotification(
     rest_internal::RestContext& context, Options const& options,
     DeleteNotificationRequest const& request) {
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
@@ -1054,11 +1054,11 @@ StatusOr<EmptyResponse> CurlClient::DeleteNotification(
       std::move(builder).BuildRequest().MakeRequest(std::string{}));
 }
 
-std::vector<std::string> CurlClient::InspectStackStructure() const {
-  return {"CurlClient"};
+std::vector<std::string> CurlStub::InspectStackStructure() const {
+  return {"CurlStub"};
 }
 
-StatusOr<ObjectMetadata> CurlClient::InsertObjectMediaMultipart(
+StatusOr<ObjectMetadata> CurlStub::InsertObjectMediaMultipart(
     rest_internal::RestContext& context, Options const& options,
     InsertObjectMediaRequest const& request) {
   // To perform a multipart upload we need to separate the parts as described
@@ -1123,12 +1123,12 @@ StatusOr<ObjectMetadata> CurlClient::InsertObjectMediaMultipart(
       std::move(builder).BuildRequest().MakeRequest(contents));
 }
 
-std::string CurlClient::MakeBoundary() {
+std::string CurlStub::MakeBoundary() {
   std::unique_lock<std::mutex> lk(mu_);
   return GenerateMessageBoundaryCandidate(generator_);
 }
 
-StatusOr<ObjectMetadata> CurlClient::InsertObjectMediaSimple(
+StatusOr<ObjectMetadata> CurlStub::InsertObjectMediaSimple(
     rest_internal::RestContext& context, Options const& options,
     InsertObjectMediaRequest const& request) {
   CurlRequestBuilder builder(

@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/storage/client.h"
-#include "google/cloud/storage/internal/curl/client.h"
 #include "google/cloud/storage/internal/curl/handle.h"
+#include "google/cloud/storage/internal/curl/stub.h"
 #include "google/cloud/storage/internal/openssl_util.h"
 #include "google/cloud/storage/internal/rest/stub.h"
 #include "google/cloud/storage/internal/tracing_client.h"
@@ -74,7 +74,7 @@ std::shared_ptr<internal::RawClient> Client::CreateDefaultInternalClient(
         opts, std::make_unique<internal::RestStub>(opts));
   }
   return CreateDefaultInternalClient(
-      opts, std::make_unique<internal::CurlClient>(opts));
+      opts, std::make_unique<internal::CurlStub>(opts));
 }
 
 StatusOr<Client> Client::CreateDefaultClient() { return Client(Options{}); }
