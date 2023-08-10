@@ -102,7 +102,7 @@ auto RestRetryLoop(std::unique_ptr<RetryPolicy> retry_policy,
                                                 Request const&> {
   std::function<void(std::chrono::milliseconds)> sleeper =
       [](std::chrono::milliseconds p) { std::this_thread::sleep_for(p); };
-  sleeper = internal::MakeTracedSleeper(std::move(sleeper));
+  sleeper = internal::MakeTracedSleeper(options, std::move(sleeper));
   return RestRetryLoopImpl(*retry_policy, *backoff_policy, idempotency,
                            std::forward<Functor>(functor), options, request,
                            location, std::move(sleeper));
@@ -121,8 +121,8 @@ auto RestRetryLoop(std::unique_ptr<RetryPolicy> retry_policy,
     -> google::cloud::internal::invoke_result_t<Functor, RestContext&,
                                                 Request const&> {
   return RestRetryLoop(std::move(retry_policy), std::move(backoff_policy),
-                       idempotency, std::forward<Functor>(functor), Options{},
-                       request, location);
+                       idempotency, std::forward<Functor>(functor),
+                       internal::CurrentOptions(), request, location);
 }
 
 /// @copydoc RestRetryLoopImpl
@@ -139,7 +139,7 @@ auto RestRetryLoop(RetryPolicy& retry_policy, BackoffPolicy& backoff_policy,
                                                 Request const&> {
   std::function<void(std::chrono::milliseconds)> sleeper =
       [](std::chrono::milliseconds p) { std::this_thread::sleep_for(p); };
-  sleeper = internal::MakeTracedSleeper(std::move(sleeper));
+  sleeper = internal::MakeTracedSleeper(options, std::move(sleeper));
   return RestRetryLoopImpl(retry_policy, backoff_policy, idempotency,
                            std::forward<Functor>(functor), options, request,
                            location, std::move(sleeper));
@@ -157,8 +157,8 @@ auto RestRetryLoop(RetryPolicy& retry_policy, BackoffPolicy& backoff_policy,
     -> google::cloud::internal::invoke_result_t<Functor, RestContext&,
                                                 Request const&> {
   return RestRetryLoop(retry_policy, backoff_policy, idempotency,
-                       std::forward<Functor>(functor), Options{}, request,
-                       location);
+                       std::forward<Functor>(functor),
+                       internal::CurrentOptions(), request, location);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

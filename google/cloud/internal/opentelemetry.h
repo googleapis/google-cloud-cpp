@@ -134,6 +134,7 @@ bool TracingEnabled(Options const& options);
 
 /// Wraps the sleeper in a span, if tracing is enabled.
 std::function<void(std::chrono::milliseconds)> MakeTracedSleeper(
+    Options const& options,
     std::function<void(std::chrono::milliseconds)> const& sleeper);
 
 /// Adds an attribute to the active span, if tracing is enabled.

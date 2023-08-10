@@ -252,7 +252,22 @@ using ::testing::Each;
 using ::testing::IsEmpty;
 using ::testing::SizeIs;
 
-TEST(RestRetryLoopTest, TracingEnabled) {
+TEST(RestRetryLoopTest, TracingEnabledExplicitOptions) {
+  auto span_catcher = testing_util::InstallSpanCatcher();
+  auto const options = EnableTracing(Options{});
+
+  StatusOr<int> actual = RestRetryLoop(
+      TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kIdempotent,
+      [](RestContext&, int) {
+        return StatusOr<int>(internal::UnavailableError("try again"));
+      },
+      options, /*request=*/42, /*location=*/"error message");
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(spans, AllOf(SizeIs(kNumRetries), Each(SpanNamed("Backoff"))));
+}
+
+TEST(RestRetryLoopTest, TracingEnabledImplicitOptions) {
   auto span_catcher = testing_util::InstallSpanCatcher();
   internal::OptionsSpan o(EnableTracing(Options{}));
 
@@ -261,7 +276,7 @@ TEST(RestRetryLoopTest, TracingEnabled) {
       [](RestContext&, int) {
         return StatusOr<int>(internal::UnavailableError("try again"));
       },
-      Options{}, /*request=*/42, /*location=*/"error message");
+      /*request=*/42, /*location=*/"error message");
 
   auto spans = span_catcher->GetSpans();
   EXPECT_THAT(spans, AllOf(SizeIs(kNumRetries), Each(SpanNamed("Backoff"))));

@@ -86,9 +86,10 @@ bool TracingEnabled(Options const&) { return false; }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::function<void(std::chrono::milliseconds)> MakeTracedSleeper(
+    Options const& options,
     std::function<void(std::chrono::milliseconds)> const& sleeper) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-  if (TracingEnabled(CurrentOptions())) {
+  if (TracingEnabled(options)) {
     return [=](std::chrono::milliseconds p) {
       auto span = MakeSpan("Backoff");
       sleeper(p);
@@ -96,6 +97,7 @@ std::function<void(std::chrono::milliseconds)> MakeTracedSleeper(
     };
   }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  (void)options;
   return sleeper;
 }
 
