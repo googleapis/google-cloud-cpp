@@ -74,11 +74,59 @@ void GrpcClientWithProject(std::string project_id) {
 }
 //! [grpc-client-with-project]
 
+//! [report-transport]
+void GrpcReportTransport(std::string const& config,
+                         std::string const& bucket_name) {
+  namespace g = ::google::cloud;
+  namespace gcs = ::google::cloud::storage;
+  auto constexpr kText = R"""(Hello World!)""";
+  auto constexpr kObjectName = "hello-world.txt";
+
+  auto client = gcs::Client();
+  if (config == "GRPC") {
+    client = google::cloud::storage_experimental::DefaultGrpcClient();
+  } else if (config == "DP") {
+    // Some documentation calls this `DirectPath`
+    client = google::cloud::storage_experimental::DefaultGrpcClient(
+        g::Options{}.set<g::EndpointOption>(
+            "google-c2p:///storage.googleapis.com"));
+  }
+
+  // Reports the transport used for a transfer
+  auto transport = [](auto const& headers) -> std::string {
+    auto l = headers.find(":curl-peer");
+    if (l != headers.end()) return "HTTP";
+    l = headers.lower_bound(":grpc-context-peer");
+    if (l == headers.end()) return "UNKNOWN";
+    auto const& peer = l->second;
+    if (peer.rfind("ipv6:[2001:4860:8040:", 0) == 0) return "DP";
+    if (peer.rfind("ipv4:34.126.", 0) == 0) return "DP";
+    return "GRPC";
+  };
+
+  auto os = client.WriteObject(bucket_name, kObjectName);
+  os << kText;
+  os.Close();
+  auto object = os.metadata();
+  if (!object) throw std::move(object).status();
+  std::cout << "Object successfully uploaded using the "
+            << transport(os.headers()) << " transport\n";
+
+  auto is = client.ReadObject(bucket_name, kObjectName,
+                              gcs::Generation(object->generation()));
+  std::string const actual(std::istreambuf_iterator<char>{is}, {});
+  if (is.bad()) throw google::cloud::Status(is.status());
+  std::cout << "Object successfully downloaded using the "
+            << transport(is.headers()) << " transport\n";
+}
+//! [report-transport]
+
 #else
 
 void GrpcReadWrite(std::string const&) {}
 void GrpcClientWithDP() {}
 void GrpcClientWithProject(std::string const&) {}
+void GrpcReportTransport(std::string const&, std::string const&) {}
 
 #endif  // GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
 
@@ -101,6 +149,13 @@ void GrpcClientWithProjectCommand(std::vector<std::string> argv) {
   GrpcClientWithProject(argv[0]);
 }
 
+void GrpcReportTransportCommand(std::vector<std::string> argv) {
+  if (argv.size() != 2 || argv[0] == "--help") {
+    throw examples::Usage("grpc-report-transport <config> <project-id>");
+  }
+  GrpcReportTransport(argv[0], argv[1]);
+}
+
 void AutoRun(std::vector<std::string> const& argv) {
   if (!argv.empty()) throw examples::Usage{"auto"};
   examples::CheckEnvironmentVariablesAreSet({
@@ -120,8 +175,11 @@ void AutoRun(std::vector<std::string> const& argv) {
   std::cout << "Running GrpcClientWithDP() example" << std::endl;
   GrpcClientWithDPCommand({});
 
-  std::cout << "Running GrpcClientWithProject() example" << std::endl;
-  GrpcClientWithProjectCommand({project_id});
+  std::cout << "Running GrpcReportTransport() example [1]" << std::endl;
+  GrpcReportTransportCommand({"HTTP", bucket_name});
+
+  std::cout << "Running GrpcReportTransport() example" << std::endl;
+  GrpcReportTransportCommand({"GRPC", bucket_name});
 }
 
 }  // namespace
@@ -131,6 +189,7 @@ int main(int argc, char* argv[]) {
       {"grpc-read-write", GrpcReadWriteCommand},
       {"grpc-client-with-dp", GrpcClientWithDPCommand},
       {"grpc-client-with-project", GrpcClientWithProjectCommand},
+      {"grpc-report-transport", GrpcReportTransportCommand},
       {"auto", AutoRun},
   });
   return example.Run(argc, argv);
