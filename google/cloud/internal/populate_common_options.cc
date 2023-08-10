@@ -16,6 +16,7 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/user_agent_prefix.h"
+#include "google/cloud/opentelemetry_options.h"
 #include "absl/strings/str_split.h"
 
 namespace google {
@@ -31,13 +32,13 @@ Options PopulateCommonOptions(Options opts, std::string const& endpoint_env_var,
     opts.set<EndpointOption>(default_endpoint);
   }
   if (!endpoint_env_var.empty()) {
-    auto e = internal::GetEnv(endpoint_env_var.c_str());
+    auto e = GetEnv(endpoint_env_var.c_str());
     if (e && !e->empty()) {
       opts.set<EndpointOption>(*std::move(e));
     }
   }
   if (!emulator_env_var.empty()) {
-    auto e = internal::GetEnv(emulator_env_var.c_str());
+    auto e = GetEnv(emulator_env_var.c_str());
     if (e && !e->empty()) {
       opts.set<EndpointOption>(*std::move(e));
     }
@@ -47,7 +48,7 @@ Options PopulateCommonOptions(Options opts, std::string const& endpoint_env_var,
     opts.set<AuthorityOption>(std::move(default_endpoint));
   }
   if (!authority_env_var.empty()) {
-    auto e = internal::GetEnv(authority_env_var.c_str());
+    auto e = GetEnv(authority_env_var.c_str());
     if (e && !e->empty()) {
       opts.set<AuthorityOption>(*std::move(e));
     }
@@ -58,8 +59,12 @@ Options PopulateCommonOptions(Options opts, std::string const& endpoint_env_var,
     opts.set<UserProjectOption>(*std::move(e));
   }
 
+  e = GetEnv("GOOGLE_CLOUD_CPP_OPENTELEMETRY_TRACING");
+  if (e && !e->empty()) {
+    opts.set<experimental::OpenTelemetryTracingOption>(true);
+  }
   if (!opts.has<TracingComponentsOption>()) {
-    opts.set<TracingComponentsOption>(internal::DefaultTracingComponents());
+    opts.set<TracingComponentsOption>(DefaultTracingComponents());
   }
 
   auto& products = opts.lookup<UserAgentProductsOption>();
@@ -69,8 +74,7 @@ Options PopulateCommonOptions(Options opts, std::string const& endpoint_env_var,
 }
 
 std::set<std::string> DefaultTracingComponents() {
-  auto tracing =
-      google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_ENABLE_TRACING");
+  auto tracing = GetEnv("GOOGLE_CLOUD_CPP_ENABLE_TRACING");
   if (!tracing.has_value()) return {};
   return absl::StrSplit(*tracing, ',');
 }
