@@ -59,7 +59,19 @@ std::unique_ptr<BackoffPolicy> TestBackoffPolicy() {
       .clone();
 }
 
-TEST(RetryLoopTest, Success) {
+TEST(RetryLoopTest, SuccessExplicitOptions) {
+  StatusOr<int> actual = RetryLoop(
+      TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kIdempotent,
+      [](grpc::ClientContext&, Options const& options, int request) {
+        EXPECT_EQ(options.get<StringOption>(), "Success");
+        return StatusOr<int>(2 * request);
+      },
+      Options{}.set<StringOption>("Success"), 42, "error message");
+  EXPECT_STATUS_OK(actual);
+  EXPECT_EQ(84, *actual);
+}
+
+TEST(RetryLoopTest, SuccessImplicitOptions) {
   OptionsSpan span(Options{}.set<StringOption>("Success"));
   StatusOr<int> actual = RetryLoop(
       TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kIdempotent,
@@ -75,35 +87,33 @@ TEST(RetryLoopTest, Success) {
 
 TEST(RetryLoopTest, TransientThenSuccess) {
   int counter = 0;
-  OptionsSpan span(Options{}.set<StringOption>("TransientThenSuccess"));
   StatusOr<int> actual = RetryLoop(
       TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kIdempotent,
-      [&counter](grpc::ClientContext&, int request) {
-        EXPECT_EQ(CurrentOptions().get<StringOption>(), "TransientThenSuccess");
+      [&counter](grpc::ClientContext&, Options const& options, int request) {
+        EXPECT_EQ(options.get<StringOption>(), "TransientThenSuccess");
         if (++counter < 3) {
           return StatusOr<int>(Status(StatusCode::kUnavailable, "try again"));
         }
         return StatusOr<int>(2 * request);
       },
-      42, "error message");
-  OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
+      Options{}.set<StringOption>("TransientThenSuccess"), 42, "error message");
   EXPECT_STATUS_OK(actual);
   EXPECT_EQ(84, *actual);
 }
 
 TEST(RetryLoopTest, ReturnJustStatus) {
   int counter = 0;
-  OptionsSpan span(Options{}.set<StringOption>("ReturnJustStatus"));
   Status actual = RetryLoop(
       TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kIdempotent,
-      [&counter](grpc::ClientContext&, int) {
-        EXPECT_EQ(CurrentOptions().get<StringOption>(), "ReturnJustStatus");
+      [&counter](grpc::ClientContext&, Options const& options, int) {
+        EXPECT_EQ(options.get<StringOption>(), "ReturnJustStatus");
         if (++counter <= 3) {
           return Status(StatusCode::kResourceExhausted, "slow-down");
         }
         return Status();
       },
-      42, "error message");
+      Options{}.set<StringOption>("ReturnJustStatus"),
+      /*request=*/42, "error message");
   OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
   EXPECT_STATUS_OK(actual);
 }
@@ -124,18 +134,19 @@ TEST(RetryLoopTest, UsesBackoffPolicy) {
 
   int counter = 0;
   std::vector<ms> sleep_for;
-  OptionsSpan span(Options{}.set<StringOption>("UsesBackoffPolicy"));
   auto retry_policy = TestRetryPolicy();
   StatusOr<int> actual = RetryLoopImpl(
       *retry_policy, *mock, Idempotency::kIdempotent,
-      [&counter](grpc::ClientContext&, int request) {
-        EXPECT_EQ(CurrentOptions().get<StringOption>(), "UsesBackoffPolicy");
+      [&counter](grpc::ClientContext&, Options const& options, int request) {
+        EXPECT_EQ(options.get<StringOption>(), "UsesBackoffPolicy");
         if (++counter <= 3) {
           return StatusOr<int>(Status(StatusCode::kUnavailable, "try again"));
         }
         return StatusOr<int>(2 * request);
       },
-      42, "error message", [&sleep_for](ms p) { sleep_for.push_back(p); });
+      Options{}.set<StringOption>("UsesBackoffPolicy"),
+      /*request=*/42, "error message",
+      [&sleep_for](ms p) { sleep_for.push_back(p); });
   OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
   EXPECT_STATUS_OK(actual);
   EXPECT_EQ(84, *actual);
@@ -144,16 +155,14 @@ TEST(RetryLoopTest, UsesBackoffPolicy) {
 }
 
 TEST(RetryLoopTest, TransientFailureNonIdempotent) {
-  OptionsSpan span(
-      Options{}.set<StringOption>("TransientFailureNonIdempotent"));
   StatusOr<int> actual = RetryLoop(
       TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kNonIdempotent,
-      [](grpc::ClientContext&, int) {
-        EXPECT_EQ(CurrentOptions().get<StringOption>(),
-                  "TransientFailureNonIdempotent");
+      [](grpc::ClientContext&, Options const& options, int) {
+        EXPECT_EQ(options.get<StringOption>(), "TransientFailureNonIdempotent");
         return StatusOr<int>(Status(StatusCode::kUnavailable, "try again"));
       },
-      42, __func__);
+      Options{}.set<StringOption>("TransientFailureNonIdempotent"),
+      /*request=*/42, __func__);
   OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
   EXPECT_EQ(StatusCode::kUnavailable, actual.status().code());
   EXPECT_THAT(actual.status().message(), HasSubstr("try again"));
@@ -164,16 +173,15 @@ TEST(RetryLoopTest, TransientFailureNonIdempotent) {
 }
 
 TEST(RetryLoopTest, PermanentFailureFailureIdempotent) {
-  OptionsSpan span(
-      Options{}.set<StringOption>("PermanentFailureFailureIdempotent"));
   StatusOr<int> actual = RetryLoop(
       TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kIdempotent,
-      [](grpc::ClientContext&, int) {
-        EXPECT_EQ(CurrentOptions().get<StringOption>(),
+      [](grpc::ClientContext&, Options const& options, int) {
+        EXPECT_EQ(options.get<StringOption>(),
                   "PermanentFailureFailureIdempotent");
         return StatusOr<int>(Status(StatusCode::kPermissionDenied, "uh oh"));
       },
-      42, __func__);
+      Options{}.set<StringOption>("PermanentFailureFailureIdempotent"),
+      /*request=*/42, __func__);
   OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
   EXPECT_EQ(StatusCode::kPermissionDenied, actual.status().code());
   EXPECT_THAT(actual.status().message(), HasSubstr("uh oh"));
@@ -184,16 +192,14 @@ TEST(RetryLoopTest, PermanentFailureFailureIdempotent) {
 }
 
 TEST(RetryLoopTest, TooManyTransientFailuresIdempotent) {
-  OptionsSpan span(
-      Options{}.set<StringOption>("TransientFailureNonIdempotent"));
   StatusOr<int> actual = RetryLoop(
       TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kIdempotent,
-      [](grpc::ClientContext&, int) {
-        EXPECT_EQ(CurrentOptions().get<StringOption>(),
-                  "TransientFailureNonIdempotent");
+      [](grpc::ClientContext&, Options const& options, int) {
+        EXPECT_EQ(options.get<StringOption>(), "TransientFailureNonIdempotent");
         return StatusOr<int>(Status(StatusCode::kUnavailable, "try again"));
       },
-      42, __func__);
+      Options{}.set<StringOption>("TransientFailureNonIdempotent"),
+      /*request=*/42, __func__);
   OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
   EXPECT_EQ(StatusCode::kUnavailable, actual.status().code());
   EXPECT_THAT(actual.status().message(), HasSubstr("try again"));
@@ -205,18 +211,17 @@ TEST(RetryLoopTest, TooManyTransientFailuresIdempotent) {
 }
 
 TEST(RetryLoopTest, ExhaustedOnStart) {
-  internal::OptionsSpan span(Options{}.set<StringOption>("ExhaustedOnStart"));
   auto retry_policy = internal::LimitedTimeRetryPolicy<TestRetryablePolicy>(
       std::chrono::seconds(0));
   ASSERT_TRUE(retry_policy.IsExhausted());
   StatusOr<int> actual = RetryLoop(
       retry_policy.clone(), TestBackoffPolicy(), Idempotency::kIdempotent,
-      [](grpc::ClientContext&, int) {
-        EXPECT_EQ(internal::CurrentOptions().get<StringOption>(),
-                  "ExhaustedOnStart");
+      [](grpc::ClientContext&, Options const& options, int) {
+        EXPECT_EQ(options.get<StringOption>(), "ExhaustedOnStart");
         return StatusOr<int>(Status(StatusCode::kUnavailable, "try again"));
       },
-      42, __func__);
+      /*options=*/Options{}.set<StringOption>("ExhaustedOnStart"),
+      /*request=*/42, __func__);
   internal::OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
   EXPECT_THAT(actual, StatusIs(StatusCode::kDeadlineExceeded));
   auto const& metadata = actual.status().error_info().metadata();
@@ -230,20 +235,20 @@ TEST(RetryLoopTest, ConfigureContext) {
   auto setup = [](grpc::ClientContext& context) {
     context.set_compression_algorithm(GRPC_COMPRESS_DEFLATE);
   };
-  OptionsSpan span(Options{}
-                       .set<StringOption>("ConfigureContext")
-                       .set<internal::GrpcSetupOption>(setup));
 
   StatusOr<int> actual = RetryLoop(
       TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kIdempotent,
-      [](grpc::ClientContext& context, int) {
-        EXPECT_EQ(CurrentOptions().get<StringOption>(), "ConfigureContext");
+      [](grpc::ClientContext& context, Options const& options, int) {
+        EXPECT_EQ(options.get<StringOption>(), "ConfigureContext");
         // Ensure that our options have taken affect on the ClientContext
         // before we start using it.
         EXPECT_EQ(GRPC_COMPRESS_DEFLATE, context.compression_algorithm());
         return StatusOr<int>(0);
       },
-      0, "error message");
+      Options{}
+          .set<StringOption>("ConfigureContext")
+          .set<internal::GrpcSetupOption>(setup),
+      /*request=*/0, "error message");
 }
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -257,14 +262,13 @@ using ::testing::SizeIs;
 
 TEST(RetryLoopTest, TracingEnabled) {
   auto span_catcher = testing_util::InstallSpanCatcher();
-  OptionsSpan o(EnableTracing(Options{}));
 
   StatusOr<int> actual = RetryLoop(
       TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kIdempotent,
-      [](grpc::ClientContext&, int) {
+      [](grpc::ClientContext&, Options const&, int) {
         return StatusOr<int>(UnavailableError("try again"));
       },
-      0, "error message");
+      /*options=*/EnableTracing(Options{}), /*request=*/0, "error message");
 
   auto spans = span_catcher->GetSpans();
   EXPECT_THAT(spans, AllOf(SizeIs(kNumRetries), Each(SpanNamed("Backoff"))));
@@ -272,12 +276,13 @@ TEST(RetryLoopTest, TracingEnabled) {
 
 TEST(RetryLoopTest, TracingDisabled) {
   auto span_catcher = testing_util::InstallSpanCatcher();
-  OptionsSpan o(DisableTracing(Options{}));
 
   StatusOr<int> actual = RetryLoop(
       TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kIdempotent,
-      [](grpc::ClientContext&, int) { return StatusOr<int>(0); }, 0,
-      "error message");
+      [](grpc::ClientContext&, Options const&, int) {
+        return StatusOr<int>(0);
+      },
+      /*options=*/DisableTracing(Options{}), /*request=*/0, "error message");
 
   auto spans = span_catcher->GetSpans();
   EXPECT_THAT(spans, IsEmpty());
