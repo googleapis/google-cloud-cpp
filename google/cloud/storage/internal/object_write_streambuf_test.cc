@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/object_write_streambuf.h"
+#include "google/cloud/storage/internal/connection_impl.h"
 #include "google/cloud/storage/object_metadata.h"
 #include "google/cloud/storage/testing/mock_client.h"
 #include "google/cloud/storage/testing/mock_generic_stub.h"
@@ -424,7 +425,7 @@ TEST(ObjectWriteStreambufTest, Regression8868) {
   auto mock = std::make_unique<testing::MockGenericStub>();
   ::testing::InSequence sequence;
   // Simulate an upload chunk that has some kind of transient error.
-  EXPECT_CALL(*mock, options);  // Called from RetryClient::Create()
+  EXPECT_CALL(*mock, options);  // Called from StorageConnectionImpl::Create()
   EXPECT_CALL(*mock, UploadChunk)
       .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")));
   // This should trigger a `QueryResumableUpload()`, simulate the case where
@@ -437,7 +438,7 @@ TEST(ObjectWriteStreambufTest, Regression8868) {
           Return(QueryResumableUploadResponse{quantum, ObjectMetadata()}));
 
   using us = std::chrono::microseconds;
-  auto retry = RetryClient::Create(std::move(mock));
+  auto retry = StorageConnectionImpl::Create(std::move(mock));
   google::cloud::internal::OptionsSpan const span(
       Options{}
           .set<Oauth2CredentialsOption>(oauth2::CreateAnonymousCredentials())
@@ -463,7 +464,7 @@ TEST(ObjectWriteStreambufTest, Regression8868) {
   // Before the fixes for #8868 this second call (which is legal, though maybe
   // a bit silly) would crash.  Basically the class assumed that the final
   // UploadChunk() would always return an error or a full payload.  That is now
-  // guaranteed by the RetryClient.
+  // guaranteed by the StorageConnectionImpl.
   close = streambuf.Close();
   ASSERT_STATUS_OK(close);
   EXPECT_FALSE(streambuf.IsOpen());

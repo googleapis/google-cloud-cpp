@@ -12,7 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/storage/internal/retry_client.h"
+#include "google/cloud/storage/retry_policy.h"
+#include "google/cloud/storage/internal/http_response.h"
 #include <gmock/gmock.h>
 
 namespace google {

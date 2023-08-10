@@ -35,8 +35,8 @@ std::uint64_t InitialOffset(OffsetDirection const& offset_direction,
 }
 
 RetryObjectReadSource::RetryObjectReadSource(
-    std::shared_ptr<RetryClient> client, ReadObjectRangeRequest request,
-    std::unique_ptr<ObjectReadSource> child,
+    std::shared_ptr<StorageConnectionImpl> client,
+    ReadObjectRangeRequest request, std::unique_ptr<ObjectReadSource> child,
     std::unique_ptr<RetryPolicy> retry_policy,
     std::unique_ptr<BackoffPolicy> backoff_policy)
     : client_(std::move(client)),

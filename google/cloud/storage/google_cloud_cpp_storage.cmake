@@ -79,6 +79,8 @@ add_library(
     internal/complex_option.h
     internal/compute_engine_util.cc
     internal/compute_engine_util.h
+    internal/connection_impl.cc
+    internal/connection_impl.h
     internal/const_buffer.cc
     internal/const_buffer.h
     internal/crc32c.cc
@@ -175,8 +177,6 @@ add_library(
     internal/rest/request_builder.h
     internal/rest/stub.cc
     internal/rest/stub.h
-    internal/retry_client.cc
-    internal/retry_client.h
     internal/retry_object_read_source.cc
     internal/retry_object_read_source.h
     internal/service_account_parser.cc
@@ -483,6 +483,16 @@ if (BUILD_TESTING)
         internal/bucket_requests_test.cc
         internal/complex_option_test.cc
         internal/compute_engine_util_test.cc
+        internal/connection_impl_bucket_acl_test.cc
+        internal/connection_impl_bucket_test.cc
+        internal/connection_impl_default_object_acl_test.cc
+        internal/connection_impl_notifications_test.cc
+        internal/connection_impl_object_acl_test.cc
+        internal/connection_impl_object_copy_test.cc
+        internal/connection_impl_object_test.cc
+        internal/connection_impl_service_account_test.cc
+        internal/connection_impl_sign_blob_test.cc
+        internal/connection_impl_test.cc
         internal/const_buffer_test.cc
         internal/crc32c_test.cc
         internal/curl/download_request_test.cc
@@ -513,16 +523,6 @@ if (BUILD_TESTING)
         internal/rest/object_read_source_test.cc
         internal/rest/request_builder_test.cc
         internal/rest/stub_test.cc
-        internal/retry_client_bucket_acl_test.cc
-        internal/retry_client_bucket_test.cc
-        internal/retry_client_default_object_acl_test.cc
-        internal/retry_client_notifications_test.cc
-        internal/retry_client_object_acl_test.cc
-        internal/retry_client_object_copy_test.cc
-        internal/retry_client_object_test.cc
-        internal/retry_client_service_account_test.cc
-        internal/retry_client_sign_blob_test.cc
-        internal/retry_client_test.cc
         internal/retry_object_read_source_test.cc
         internal/service_account_requests_test.cc
         internal/sign_blob_requests_test.cc

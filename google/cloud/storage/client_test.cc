@@ -168,7 +168,7 @@ TEST_F(ClientTest, DefaultDecoratorsCurlClient) {
   auto const impl = ClientImplDetails::GetRawClient(tested);
   ASSERT_THAT(impl, NotNull());
   EXPECT_THAT(impl->InspectStackStructure(),
-              ElementsAre("CurlStub", "RetryClient"));
+              ElementsAre("CurlStub", "StorageConnectionImpl"));
 }
 
 /// @test Verify the constructor creates the right set of RawClient decorations.
@@ -185,7 +185,7 @@ TEST_F(ClientTest, LoggingDecoratorsCurlClient) {
   auto const impl = ClientImplDetails::GetRawClient(tested);
   ASSERT_THAT(impl, NotNull());
   EXPECT_THAT(impl->InspectStackStructure(),
-              ElementsAre("CurlStub", "LoggingStub", "RetryClient"));
+              ElementsAre("CurlStub", "LoggingStub", "StorageConnectionImpl"));
 }
 
 /// @test Verify the constructor creates the right set of RawClient decorations.
@@ -203,7 +203,7 @@ TEST_F(ClientTest, DefaultDecoratorsRestClient) {
   auto const impl = ClientImplDetails::GetRawClient(tested);
   ASSERT_THAT(impl, NotNull());
   EXPECT_THAT(impl->InspectStackStructure(),
-              ElementsAre("RestClient", "RetryClient"));
+              ElementsAre("RestClient", "StorageConnectionImpl"));
 }
 
 /// @test Verify the constructor creates the right set of RawClient decorations.
@@ -223,7 +223,7 @@ TEST_F(ClientTest, LoggingDecoratorsRestClient) {
   auto const impl = ClientImplDetails::GetRawClient(tested);
   ASSERT_THAT(impl, NotNull());
   EXPECT_THAT(impl->InspectStackStructure(),
-              ElementsAre("RestClient", "LoggingStub", "RetryClient"));
+              ElementsAre("RestStub", "LoggingStub", "StorageConnectionImpl"));
 }
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -246,9 +246,9 @@ TEST_F(ClientTest, OTelEnableTracing) {
   auto const impl = ClientImplDetails::GetRawClient(tested);
   ASSERT_THAT(impl, NotNull());
 
-  EXPECT_THAT(
-      impl->InspectStackStructure(),
-      ElementsAre("RestClient", "LoggingStub", "RetryClient", "TracingClient"));
+  EXPECT_THAT(impl->InspectStackStructure(),
+              ElementsAre("RestStub", "LoggingStub", "StorageConnectionImpl",
+                          "TracingClient"));
 }
 
 TEST_F(ClientTest, OTelDisableTracing) {
@@ -268,7 +268,7 @@ TEST_F(ClientTest, OTelDisableTracing) {
   ASSERT_THAT(impl, NotNull());
 
   EXPECT_THAT(impl->InspectStackStructure(),
-              ElementsAre("RestClient", "LoggingStub", "RetryClient"));
+              ElementsAre("RestStub", "LoggingStub", "StorageConnectionImpl"));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
