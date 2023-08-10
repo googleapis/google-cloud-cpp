@@ -79,6 +79,8 @@ add_library(
     internal/complex_option.h
     internal/compute_engine_util.cc
     internal/compute_engine_util.h
+    internal/connection_factory.cc
+    internal/connection_factory.h
     internal/const_buffer.cc
     internal/const_buffer.h
     internal/crc32c.cc
@@ -110,6 +112,8 @@ add_library(
     internal/generic_stub.h
     internal/generic_stub_adapter.cc
     internal/generic_stub_adapter.h
+    internal/generic_stub_factory.cc
+    internal/generic_stub_factory.h
     internal/hash_function.cc
     internal/hash_function.h
     internal/hash_function_impl.cc
