@@ -56,7 +56,7 @@ class Client {
 void MyApplicationCode() { MakeSpan("otel-samples"); }
 
 void BasicTracing(std::vector<std::string> const& argv) {
-  //! [otel-basic-tracing]
+  //! [otel-basic-tracing] [START trace_exporter_basic_tracing]
   namespace gc = ::google::cloud;
   [](std::string project_id) {
     auto project = gc::Project(std::move(project_id));
@@ -64,12 +64,12 @@ void BasicTracing(std::vector<std::string> const& argv) {
 
     MyApplicationCode();
   }
-  //! [otel-basic-tracing]
+  //! [otel-basic-tracing] [END trace_exporter_basic_tracing]
   (argv.at(0));
 }
 
 void BasicTracingRate(std::vector<std::string> const& argv) {
-  //! [otel-basic-tracing-rate]
+  //! [otel-basic-tracing-rate] [START trace_exporter_basic_tracing_rate]
   namespace gc = ::google::cloud;
   [](std::string project_id) {
     auto project = gc::Project(std::move(project_id));
@@ -78,12 +78,13 @@ void BasicTracingRate(std::vector<std::string> const& argv) {
 
     MyApplicationCode();
   }
-  //! [otel-basic-tracing-rate]
+  //! [otel-basic-tracing-rate] [END trace_exporter_basic_tracing_rate]
   (argv.at(0));
 }
 
 void InstrumentedApplication(std::vector<std::string> const& argv) {
   //! [otel-instrumented-application]
+  //! [START trace_exporter_instrumented_application]
   // For more details on the OpenTelemetry code in this sample, see:
   //     https://opentelemetry.io/docs/instrumentation/cpp/manual/
   namespace gc = ::google::cloud;
@@ -117,12 +118,14 @@ void InstrumentedApplication(std::vector<std::string> const& argv) {
     my_function();
     my_function();
   }
+  //! [END trace_exporter_instrumented_application]
   //! [otel-instrumented-application]
   (argv.at(0));
 }
 
 void CustomTracerProvider(std::vector<std::string> const& argv) {
   //! [otel-custom-tracer-provider]
+  //! [START trace_exporter_custom_tracer_provider]
   namespace gc = ::google::cloud;
   using ::opentelemetry::trace::Scope;
   [](std::string project_id) {
@@ -152,6 +155,7 @@ void CustomTracerProvider(std::vector<std::string> const& argv) {
         opentelemetry::nostd::shared_ptr<
             opentelemetry::trace::TracerProvider>());
   }
+  //! [END trace_exporter_custom_tracer_provider]
   //! [otel-custom-tracer-provider]
   (argv.at(0));
 }
