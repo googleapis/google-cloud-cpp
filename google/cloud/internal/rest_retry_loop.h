@@ -49,8 +49,6 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * @param options the google::cloud::Options in effect for this call. Typically
  *     the `*ConnectionImpl` class will get these from
  *     `google::cloud::internal::CurrentOptions`.
- * @param rpc_state contains stateful data used for the request, previous Stubs
- *     in the stack can set timeouts and metadata through this.
  * @param request the parameters for the request.
  * @param location a string to annotate any error returned by this function.
  * @tparam Functor the type of @p functor.
