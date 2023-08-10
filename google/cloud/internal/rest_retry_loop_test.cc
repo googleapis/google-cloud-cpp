@@ -276,7 +276,7 @@ TEST(RestRetryLoopTest, TracingEnabledImplicitOptions) {
       [](RestContext&, int) {
         return StatusOr<int>(internal::UnavailableError("try again"));
       },
-       /*request=*/42, /*location=*/"error message");
+      /*request=*/42, /*location=*/"error message");
 
   auto spans = span_catcher->GetSpans();
   EXPECT_THAT(spans, AllOf(SizeIs(kNumRetries), Each(SpanNamed("Backoff"))));
