@@ -99,8 +99,8 @@ void GrpcReportTransport(std::string const& config,
     l = headers.lower_bound(":grpc-context-peer");
     if (l == headers.end()) return "UNKNOWN";
     auto const& peer = l->second;
-    if (peer.rfind("ipv6:[2001:4860:8040:", 0) == 0) return "DP";
-    if (peer.rfind("ipv4:34.126.", 0) == 0) return "DP";
+    if (peer.rfind("ipv6:[2001:4860:8040:", 0) == 0) return "DP";  //! NOLINT
+    if (peer.rfind("ipv4:34.126.", 0) == 0) return "DP";           //! NOLINT
     return "GRPC";
   };
 
