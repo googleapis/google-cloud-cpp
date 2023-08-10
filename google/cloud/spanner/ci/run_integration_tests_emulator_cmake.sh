@@ -38,7 +38,7 @@ ctest_args=("$@")
 cd "${CMAKE_BINARY_DIR}"
 
 # Starts the emulator and arranges to kill it.
-spanner_emulator::start
+spanner_emulator::start 8787
 trap spanner_emulator::kill EXIT
 
 ctest -R "^spanner_" "${ctest_args[@]}"
