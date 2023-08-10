@@ -97,6 +97,7 @@ std::function<void(std::chrono::milliseconds)> MakeTracedSleeper(
     };
   }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  (void)options;
   return sleeper;
 }
 

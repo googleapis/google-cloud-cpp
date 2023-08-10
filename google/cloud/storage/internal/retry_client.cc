@@ -587,7 +587,9 @@ StatusOr<EmptyResponse> RetryClient::DeleteResumableUpload(
 //
 StatusOr<QueryResumableUploadResponse> RetryClient::UploadChunk(
     UploadChunkRequest const& request) {
+  auto const& current = google::cloud::internal::CurrentOptions();
   auto sleeper = google::cloud::internal::MakeTracedSleeper(
+      current,
       [](std::chrono::milliseconds d) { std::this_thread::sleep_for(d); });
   auto last_status =
       Status(StatusCode::kDeadlineExceeded,
@@ -602,7 +604,6 @@ StatusOr<QueryResumableUploadResponse> RetryClient::UploadChunk(
   using Action =
       std::function<StatusOr<QueryResumableUploadResponse>(std::uint64_t)>;
 
-  auto const& current = google::cloud::internal::CurrentOptions();
   int upload_count = 0;
   auto upload = Action(
       [&upload_count, &current, &request, this](std::uint64_t committed_size) {
