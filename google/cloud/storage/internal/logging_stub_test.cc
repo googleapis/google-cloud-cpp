@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/storage/internal/logging_client.h"
+#include "google/cloud/storage/internal/logging_stub.h"
 #include "google/cloud/storage/internal/bucket_metadata_parser.h"
 #include "google/cloud/storage/internal/object_metadata_parser.h"
 #include "google/cloud/storage/testing/canonical_errors.h"
@@ -41,7 +41,7 @@ class MockLogBackend : public google::cloud::LogBackend {
   // For the purposes of testing we just need one of the member functions.
 };
 
-class LoggingClientTest : public ::testing::Test {
+class LoggingStubTest : public ::testing::Test {
  protected:
   void SetUp() override {
     log_backend_ = std::make_shared<MockLogBackend>();
@@ -58,7 +58,7 @@ class LoggingClientTest : public ::testing::Test {
   long log_backend_id_ = 0;  // NOLINT(google-runtime-int)
 };
 
-TEST_F(LoggingClientTest, GetBucketMetadata) {
+TEST_F(LoggingStubTest, GetBucketMetadata) {
   std::string text = R"""({
       "kind": "storage#bucket",
       "id": "my-bucket",
@@ -86,13 +86,13 @@ TEST_F(LoggingClientTest, GetBucketMetadata) {
         EXPECT_THAT(lr.message, HasSubstr("my-bucket"));
       });
 
-  LoggingClient client(std::move(mock));
+  LoggingStub client(std::move(mock));
   rest_internal::RestContext context;
   client.GetBucketMetadata(context, Options{},
                            GetBucketMetadataRequest("my-bucket"));
 }
 
-TEST_F(LoggingClientTest, GetBucketMetadataWithError) {
+TEST_F(LoggingStubTest, GetBucketMetadataWithError) {
   auto mock = std::make_unique<MockGenericStub>();
   EXPECT_CALL(*mock, GetBucketMetadata)
       .WillOnce(Return(StatusOr<BucketMetadata>(TransientError())));
@@ -110,13 +110,13 @@ TEST_F(LoggingClientTest, GetBucketMetadataWithError) {
         EXPECT_THAT(lr.message, HasSubstr("status={"));
       });
 
-  LoggingClient client(std::move(mock));
+  LoggingStub client(std::move(mock));
   rest_internal::RestContext context;
   client.GetBucketMetadata(context, Options{},
                            GetBucketMetadataRequest("my-bucket"));
 }
 
-TEST_F(LoggingClientTest, InsertObjectMedia) {
+TEST_F(LoggingStubTest, InsertObjectMedia) {
   std::string text = R"""({
       "bucket": "foo-bar",
       "metageneration": "4",
@@ -145,14 +145,14 @@ TEST_F(LoggingClientTest, InsertObjectMedia) {
         EXPECT_THAT(lr.message, HasSubstr("baz"));
       });
 
-  LoggingClient client(std::move(mock));
+  LoggingStub client(std::move(mock));
   rest_internal::RestContext context;
   client.InsertObjectMedia(
       context, Options{},
       InsertObjectMediaRequest("foo-bar", "baz", "the contents"));
 }
 
-TEST_F(LoggingClientTest, ListBuckets) {
+TEST_F(LoggingStubTest, ListBuckets) {
   std::vector<BucketMetadata> items = {
       internal::BucketMetadataParser::FromString(
           R"""({
@@ -195,12 +195,12 @@ TEST_F(LoggingClientTest, ListBuckets) {
         EXPECT_THAT(lr.message, HasSubstr("CN"));
       });
 
-  LoggingClient client(std::move(mock));
+  LoggingStub client(std::move(mock));
   rest_internal::RestContext context;
   client.ListBuckets(context, Options{}, ListBucketsRequest("my-bucket"));
 }
 
-TEST_F(LoggingClientTest, ListObjects) {
+TEST_F(LoggingStubTest, ListObjects) {
   std::vector<ObjectMetadata> items = {
       internal::ObjectMetadataParser::FromString(
           R""({"name": "response-object-o1"})"")
@@ -231,7 +231,7 @@ TEST_F(LoggingClientTest, ListObjects) {
         EXPECT_THAT(lr.message, HasSubstr("response-object-o2"));
       });
 
-  LoggingClient client(std::move(mock));
+  LoggingStub client(std::move(mock));
   rest_internal::RestContext context;
   client.ListObjects(context, Options{}, ListObjectsRequest("my-bucket"));
 }
