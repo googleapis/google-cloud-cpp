@@ -462,7 +462,7 @@ run the examples included with the libraries.
 
 ### Building with Bazel
 
-This library requires Bazel >= 5.4. From the top-level directory, run the usual
+This library requires Bazel >= 6.0. From the top-level directory, run the usual
 commands.
 
 ```shell
@@ -494,7 +494,7 @@ The binary artifacts, such as examples, will be placed in `cmake-out/`.
   [Foundational C++ Support Matrix][support-matrix].
   - Language Version (>= C++14).
   - Operating Systems: Windows, macOS, and Linux.
-  - Build Systems: Bazel (>= 5.4), CMake (>= 3.10).
+  - Build Systems: Bazel (>= 6.0), CMake (>= 3.10).
   - Compilers: GCC (>= 7.3), Clang (>= 6.0), MSVC (>= 2019), Apple Clang (>=
     12).
 - This project uses dependencies described in

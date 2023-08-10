@@ -117,6 +117,12 @@ the APIs in these libraries are stable, and are ready for production use.
 
 - [Datastore](/google/cloud/datastore/README.md)
 
+### Other Changes
+
+**Bazel Testing**: from v2.15.0 we will only test with Bazel >= 6.0.0. We do not
+consider this a breaking change, as Bazel 5.x has been in maintenance mode for
+several months.
+
 ## v2.14.0 - 2023-08
 
 ### New Libraries
