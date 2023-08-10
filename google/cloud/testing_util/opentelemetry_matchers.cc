@@ -180,11 +180,13 @@ std::shared_ptr<MockTextMapPropagator> InstallMockPropagator() {
 }
 
 Options EnableTracing(Options options) {
-  return options.set<experimental::OpenTelemetryTracingOption>(true);
+  options.set<experimental::OpenTelemetryTracingOption>(true);
+  return options;
 }
 
 Options DisableTracing(Options options) {
-  return options.set<experimental::OpenTelemetryTracingOption>(false);
+  options.set<experimental::OpenTelemetryTracingOption>(false);
+  return options;
 }
 
 }  // namespace testing_util
