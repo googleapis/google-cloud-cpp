@@ -46,6 +46,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *     retried even on transient errors.
  * @param functor the operation to retry, typically a lambda that encapsulates
  *     both the Stub and the function to call.
+ * @param options the google::cloud::Options in effect for this call. Typically
+ *     the `*ConnectionImpl` class will get these from
+ *     `google::cloud::internal::CurrentOptions`.
  * @param rpc_state contains stateful data used for the request, previous Stubs
  *     in the stack can set timeouts and metadata through this.
  * @param request the parameters for the request.
@@ -57,21 +60,21 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * @return the result of the first successful call to @p functor, or a
  *     `google::cloud::Status` that indicates the final error for this request.
  */
-template <
-    typename Functor, typename Request, typename Sleeper,
-    typename std::enable_if<google::cloud::internal::is_invocable<
-                                Functor, RestContext&, Request const&>::value,
-                            int>::type = 0>
+template <typename Functor, typename Request, typename Sleeper,
+          typename std::enable_if<
+              google::cloud::internal::is_invocable<
+                  Functor, RestContext&, Options const&, Request const&>::value,
+              int>::type = 0>
 auto RestRetryLoopImpl(RetryPolicy& retry_policy, BackoffPolicy& backoff_policy,
                        Idempotency idempotency, Functor&& functor,
                        Options const& options, Request const& request,
                        char const* location, Sleeper sleeper)
-    -> google::cloud::internal::invoke_result_t<Functor, RestContext&,
-                                                Request const&> {
+    -> google::cloud::internal::invoke_result_t<
+        Functor, RestContext&, Options const&, Request const&> {
   auto last_status = Status{};
   while (!retry_policy.IsExhausted()) {
     RestContext rest_context(options);
-    auto result = functor(rest_context, request);
+    auto result = functor(rest_context, options, request);
     if (result.ok()) return result;
     last_status = internal::GetResultStatus(std::move(result));
     if (idempotency == Idempotency::kNonIdempotent) {
@@ -88,18 +91,18 @@ auto RestRetryLoopImpl(RetryPolicy& retry_policy, BackoffPolicy& backoff_policy,
 }
 
 /// @copydoc RestRetryLoopImpl
-template <
-    typename Functor, typename Request,
-    typename std::enable_if<google::cloud::internal::is_invocable<
-                                Functor, RestContext&, Request const&>::value,
-                            int>::type = 0>
+template <typename Functor, typename Request,
+          typename std::enable_if<
+              google::cloud::internal::is_invocable<
+                  Functor, RestContext&, Options const&, Request const&>::value,
+              int>::type = 0>
 auto RestRetryLoop(std::unique_ptr<RetryPolicy> retry_policy,
                    std::unique_ptr<BackoffPolicy> backoff_policy,
                    Idempotency idempotency, Functor&& functor,
                    Options const& options, Request const& request,
                    char const* location)
-    -> google::cloud::internal::invoke_result_t<Functor, RestContext&,
-                                                Request const&> {
+    -> google::cloud::internal::invoke_result_t<
+        Functor, RestContext&, Options const&, Request const&> {
   std::function<void(std::chrono::milliseconds)> sleeper =
       [](std::chrono::milliseconds p) { std::this_thread::sleep_for(p); };
   sleeper = internal::MakeTracedSleeper(options, std::move(sleeper));
@@ -109,6 +112,48 @@ auto RestRetryLoop(std::unique_ptr<RetryPolicy> retry_policy,
 }
 
 /// @copydoc RestRetryLoopImpl
+template <typename Functor, typename Request,
+          typename std::enable_if<
+              google::cloud::internal::is_invocable<
+                  Functor, RestContext&, Options const&, Request const&>::value,
+              int>::type = 0>
+auto RestRetryLoop(RetryPolicy& retry_policy, BackoffPolicy& backoff_policy,
+                   Idempotency idempotency, Functor&& functor,
+                   Options const& options, Request const& request,
+                   char const* location)
+    -> google::cloud::internal::invoke_result_t<
+        Functor, RestContext&, Options const&, Request const&> {
+  std::function<void(std::chrono::milliseconds)> sleeper =
+      [](std::chrono::milliseconds p) { std::this_thread::sleep_for(p); };
+  sleeper = internal::MakeTracedSleeper(options, std::move(sleeper));
+  return RestRetryLoopImpl(retry_policy, backoff_policy, idempotency,
+                           std::forward<Functor>(functor), options, request,
+                           location, std::move(sleeper));
+}
+
+// TODO(#12359) - remove the variants not using Options
+/// @copydoc RestRetryLoopImpl
+template <
+    typename Functor, typename Request,
+    typename std::enable_if<google::cloud::internal::is_invocable<
+                                Functor, RestContext&, Request const&>::value,
+                            int>::type = 0>
+auto RestRetryLoop(RetryPolicy& retry_policy, BackoffPolicy& backoff_policy,
+                   Idempotency idempotency, Functor&& functor,
+                   Request const& request, char const* location)
+    -> google::cloud::internal::invoke_result_t<Functor, RestContext&,
+                                                Request const&> {
+  auto with_options = [&functor](RestContext& context, Options const&,
+                                 Request const& request) {
+    return functor(context, request);
+  };
+  auto const& current = google::cloud::internal::CurrentOptions();
+  return RestRetryLoop(retry_policy, backoff_policy, idempotency,
+                       std::move(with_options), current, request, location);
+}
+
+// TODO(#12359) - remove the variants not using Options
+/// @copydoc RestRetryLoopImpl
 template <
     typename Functor, typename Request,
     typename std::enable_if<google::cloud::internal::is_invocable<
@@ -120,45 +165,8 @@ auto RestRetryLoop(std::unique_ptr<RetryPolicy> retry_policy,
                    Request const& request, char const* location)
     -> google::cloud::internal::invoke_result_t<Functor, RestContext&,
                                                 Request const&> {
-  return RestRetryLoop(std::move(retry_policy), std::move(backoff_policy),
-                       idempotency, std::forward<Functor>(functor),
-                       internal::CurrentOptions(), request, location);
-}
-
-/// @copydoc RestRetryLoopImpl
-template <
-    typename Functor, typename Request,
-    typename std::enable_if<google::cloud::internal::is_invocable<
-                                Functor, RestContext&, Request const&>::value,
-                            int>::type = 0>
-auto RestRetryLoop(RetryPolicy& retry_policy, BackoffPolicy& backoff_policy,
-                   Idempotency idempotency, Functor&& functor,
-                   Options const& options, Request const& request,
-                   char const* location)
-    -> google::cloud::internal::invoke_result_t<Functor, RestContext&,
-                                                Request const&> {
-  std::function<void(std::chrono::milliseconds)> sleeper =
-      [](std::chrono::milliseconds p) { std::this_thread::sleep_for(p); };
-  sleeper = internal::MakeTracedSleeper(options, std::move(sleeper));
-  return RestRetryLoopImpl(retry_policy, backoff_policy, idempotency,
-                           std::forward<Functor>(functor), options, request,
-                           location, std::move(sleeper));
-}
-
-/// @copydoc RestRetryLoopImpl
-template <
-    typename Functor, typename Request,
-    typename std::enable_if<google::cloud::internal::is_invocable<
-                                Functor, RestContext&, Request const&>::value,
-                            int>::type = 0>
-auto RestRetryLoop(RetryPolicy& retry_policy, BackoffPolicy& backoff_policy,
-                   Idempotency idempotency, Functor&& functor,
-                   Request const& request, char const* location)
-    -> google::cloud::internal::invoke_result_t<Functor, RestContext&,
-                                                Request const&> {
-  return RestRetryLoop(retry_policy, backoff_policy, idempotency,
-                       std::forward<Functor>(functor),
-                       internal::CurrentOptions(), request, location);
+  return RestRetryLoop(*retry_policy, *backoff_policy, idempotency,
+                       std::forward<Functor>(functor), request, location);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
