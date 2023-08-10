@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/storage/internal/logging_client.h"
+#include "google/cloud/storage/internal/logging_stub.h"
 #include "google/cloud/internal/invoke_result.h"
 #include "google/cloud/log.h"
 
@@ -47,13 +47,12 @@ auto LogWrapper(Functor&& functor,
 
 }  // namespace
 
-LoggingClient::LoggingClient(
-    std::unique_ptr<storage_internal::GenericStub> stub)
+LoggingStub::LoggingStub(std::unique_ptr<storage_internal::GenericStub> stub)
     : stub_(std::move(stub)) {}
 
-Options LoggingClient::options() const { return stub_->options(); }
+Options LoggingStub::options() const { return stub_->options(); }
 
-StatusOr<ListBucketsResponse> LoggingClient::ListBuckets(
+StatusOr<ListBucketsResponse> LoggingStub::ListBuckets(
     rest_internal::RestContext& context, Options const& options,
     ListBucketsRequest const& request) {
   return LogWrapper(
@@ -63,7 +62,7 @@ StatusOr<ListBucketsResponse> LoggingClient::ListBuckets(
       context, options, request, __func__);
 }
 
-StatusOr<BucketMetadata> LoggingClient::CreateBucket(
+StatusOr<BucketMetadata> LoggingStub::CreateBucket(
     rest_internal::RestContext& context, Options const& options,
     CreateBucketRequest const& request) {
   return LogWrapper(
@@ -73,7 +72,7 @@ StatusOr<BucketMetadata> LoggingClient::CreateBucket(
       context, options, request, __func__);
 }
 
-StatusOr<BucketMetadata> LoggingClient::GetBucketMetadata(
+StatusOr<BucketMetadata> LoggingStub::GetBucketMetadata(
     rest_internal::RestContext& context, Options const& options,
     GetBucketMetadataRequest const& request) {
   return LogWrapper(
@@ -83,7 +82,7 @@ StatusOr<BucketMetadata> LoggingClient::GetBucketMetadata(
       context, options, request, __func__);
 }
 
-StatusOr<EmptyResponse> LoggingClient::DeleteBucket(
+StatusOr<EmptyResponse> LoggingStub::DeleteBucket(
     rest_internal::RestContext& context, Options const& options,
     DeleteBucketRequest const& request) {
   return LogWrapper(
@@ -93,7 +92,7 @@ StatusOr<EmptyResponse> LoggingClient::DeleteBucket(
       context, options, request, __func__);
 }
 
-StatusOr<BucketMetadata> LoggingClient::UpdateBucket(
+StatusOr<BucketMetadata> LoggingStub::UpdateBucket(
     rest_internal::RestContext& context, Options const& options,
     UpdateBucketRequest const& request) {
   return LogWrapper(
@@ -103,7 +102,7 @@ StatusOr<BucketMetadata> LoggingClient::UpdateBucket(
       context, options, request, __func__);
 }
 
-StatusOr<BucketMetadata> LoggingClient::PatchBucket(
+StatusOr<BucketMetadata> LoggingStub::PatchBucket(
     rest_internal::RestContext& context, Options const& options,
     PatchBucketRequest const& request) {
   return LogWrapper(
@@ -113,7 +112,7 @@ StatusOr<BucketMetadata> LoggingClient::PatchBucket(
       context, options, request, __func__);
 }
 
-StatusOr<NativeIamPolicy> LoggingClient::GetNativeBucketIamPolicy(
+StatusOr<NativeIamPolicy> LoggingStub::GetNativeBucketIamPolicy(
     rest_internal::RestContext& context, Options const& options,
     GetBucketIamPolicyRequest const& request) {
   return LogWrapper(
@@ -123,7 +122,7 @@ StatusOr<NativeIamPolicy> LoggingClient::GetNativeBucketIamPolicy(
       context, options, request, __func__);
 }
 
-StatusOr<NativeIamPolicy> LoggingClient::SetNativeBucketIamPolicy(
+StatusOr<NativeIamPolicy> LoggingStub::SetNativeBucketIamPolicy(
     rest_internal::RestContext& context, Options const& options,
     SetNativeBucketIamPolicyRequest const& request) {
   return LogWrapper(
@@ -134,7 +133,7 @@ StatusOr<NativeIamPolicy> LoggingClient::SetNativeBucketIamPolicy(
 }
 
 StatusOr<TestBucketIamPermissionsResponse>
-LoggingClient::TestBucketIamPermissions(
+LoggingStub::TestBucketIamPermissions(
     rest_internal::RestContext& context, Options const& options,
     TestBucketIamPermissionsRequest const& request) {
   return LogWrapper(
@@ -144,7 +143,7 @@ LoggingClient::TestBucketIamPermissions(
       context, options, request, __func__);
 }
 
-StatusOr<BucketMetadata> LoggingClient::LockBucketRetentionPolicy(
+StatusOr<BucketMetadata> LoggingStub::LockBucketRetentionPolicy(
     rest_internal::RestContext& context, Options const& options,
     LockBucketRetentionPolicyRequest const& request) {
   return LogWrapper(
@@ -154,7 +153,7 @@ StatusOr<BucketMetadata> LoggingClient::LockBucketRetentionPolicy(
       context, options, request, __func__);
 }
 
-StatusOr<ObjectMetadata> LoggingClient::InsertObjectMedia(
+StatusOr<ObjectMetadata> LoggingStub::InsertObjectMedia(
     rest_internal::RestContext& context, Options const& options,
     InsertObjectMediaRequest const& request) {
   return LogWrapper(
@@ -164,7 +163,7 @@ StatusOr<ObjectMetadata> LoggingClient::InsertObjectMedia(
       context, options, request, __func__);
 }
 
-StatusOr<ObjectMetadata> LoggingClient::CopyObject(
+StatusOr<ObjectMetadata> LoggingStub::CopyObject(
     rest_internal::RestContext& context, Options const& options,
     CopyObjectRequest const& request) {
   return LogWrapper(
@@ -174,7 +173,7 @@ StatusOr<ObjectMetadata> LoggingClient::CopyObject(
       context, options, request, __func__);
 }
 
-StatusOr<ObjectMetadata> LoggingClient::GetObjectMetadata(
+StatusOr<ObjectMetadata> LoggingStub::GetObjectMetadata(
     rest_internal::RestContext& context, Options const& options,
     GetObjectMetadataRequest const& request) {
   return LogWrapper(
@@ -184,14 +183,14 @@ StatusOr<ObjectMetadata> LoggingClient::GetObjectMetadata(
       context, options, request, __func__);
 }
 
-StatusOr<std::unique_ptr<ObjectReadSource>> LoggingClient::ReadObject(
+StatusOr<std::unique_ptr<ObjectReadSource>> LoggingStub::ReadObject(
     rest_internal::RestContext& context, Options const& options,
     ReadObjectRangeRequest const& request) {
   GCP_LOG(INFO) << __func__ << "() << " << request;
   return stub_->ReadObject(context, options, request);
 }
 
-StatusOr<ListObjectsResponse> LoggingClient::ListObjects(
+StatusOr<ListObjectsResponse> LoggingStub::ListObjects(
     rest_internal::RestContext& context, Options const& options,
     ListObjectsRequest const& request) {
   return LogWrapper(
@@ -201,7 +200,7 @@ StatusOr<ListObjectsResponse> LoggingClient::ListObjects(
       context, options, request, __func__);
 }
 
-StatusOr<EmptyResponse> LoggingClient::DeleteObject(
+StatusOr<EmptyResponse> LoggingStub::DeleteObject(
     rest_internal::RestContext& context, Options const& options,
     DeleteObjectRequest const& request) {
   return LogWrapper(
@@ -211,7 +210,7 @@ StatusOr<EmptyResponse> LoggingClient::DeleteObject(
       context, options, request, __func__);
 }
 
-StatusOr<ObjectMetadata> LoggingClient::UpdateObject(
+StatusOr<ObjectMetadata> LoggingStub::UpdateObject(
     rest_internal::RestContext& context, Options const& options,
     UpdateObjectRequest const& request) {
   return LogWrapper(
@@ -221,7 +220,7 @@ StatusOr<ObjectMetadata> LoggingClient::UpdateObject(
       context, options, request, __func__);
 }
 
-StatusOr<ObjectMetadata> LoggingClient::PatchObject(
+StatusOr<ObjectMetadata> LoggingStub::PatchObject(
     rest_internal::RestContext& context, Options const& options,
     PatchObjectRequest const& request) {
   return LogWrapper(
@@ -231,7 +230,7 @@ StatusOr<ObjectMetadata> LoggingClient::PatchObject(
       context, options, request, __func__);
 }
 
-StatusOr<ObjectMetadata> LoggingClient::ComposeObject(
+StatusOr<ObjectMetadata> LoggingStub::ComposeObject(
     rest_internal::RestContext& context, Options const& options,
     ComposeObjectRequest const& request) {
   return LogWrapper(
@@ -241,7 +240,7 @@ StatusOr<ObjectMetadata> LoggingClient::ComposeObject(
       context, options, request, __func__);
 }
 
-StatusOr<RewriteObjectResponse> LoggingClient::RewriteObject(
+StatusOr<RewriteObjectResponse> LoggingStub::RewriteObject(
     rest_internal::RestContext& context, Options const& options,
     RewriteObjectRequest const& request) {
   return LogWrapper(
@@ -251,7 +250,7 @@ StatusOr<RewriteObjectResponse> LoggingClient::RewriteObject(
       context, options, request, __func__);
 }
 
-StatusOr<CreateResumableUploadResponse> LoggingClient::CreateResumableUpload(
+StatusOr<CreateResumableUploadResponse> LoggingStub::CreateResumableUpload(
     rest_internal::RestContext& context, Options const& options,
     ResumableUploadRequest const& request) {
   return LogWrapper(
@@ -261,7 +260,7 @@ StatusOr<CreateResumableUploadResponse> LoggingClient::CreateResumableUpload(
       context, options, request, __func__);
 }
 
-StatusOr<QueryResumableUploadResponse> LoggingClient::QueryResumableUpload(
+StatusOr<QueryResumableUploadResponse> LoggingStub::QueryResumableUpload(
     rest_internal::RestContext& context, Options const& options,
     QueryResumableUploadRequest const& request) {
   return LogWrapper(
@@ -271,7 +270,7 @@ StatusOr<QueryResumableUploadResponse> LoggingClient::QueryResumableUpload(
       context, options, request, __func__);
 }
 
-StatusOr<EmptyResponse> LoggingClient::DeleteResumableUpload(
+StatusOr<EmptyResponse> LoggingStub::DeleteResumableUpload(
     rest_internal::RestContext& context, Options const& options,
     DeleteResumableUploadRequest const& request) {
   return LogWrapper(
@@ -281,7 +280,7 @@ StatusOr<EmptyResponse> LoggingClient::DeleteResumableUpload(
       context, options, request, __func__);
 }
 
-StatusOr<QueryResumableUploadResponse> LoggingClient::UploadChunk(
+StatusOr<QueryResumableUploadResponse> LoggingStub::UploadChunk(
     rest_internal::RestContext& context, Options const& options,
     UploadChunkRequest const& request) {
   return LogWrapper(
@@ -291,7 +290,7 @@ StatusOr<QueryResumableUploadResponse> LoggingClient::UploadChunk(
       context, options, request, __func__);
 }
 
-StatusOr<ListBucketAclResponse> LoggingClient::ListBucketAcl(
+StatusOr<ListBucketAclResponse> LoggingStub::ListBucketAcl(
     rest_internal::RestContext& context, Options const& options,
     ListBucketAclRequest const& request) {
   return LogWrapper(
@@ -301,7 +300,7 @@ StatusOr<ListBucketAclResponse> LoggingClient::ListBucketAcl(
       context, options, request, __func__);
 }
 
-StatusOr<BucketAccessControl> LoggingClient::GetBucketAcl(
+StatusOr<BucketAccessControl> LoggingStub::GetBucketAcl(
     rest_internal::RestContext& context, Options const& options,
     GetBucketAclRequest const& request) {
   return LogWrapper(
@@ -311,7 +310,7 @@ StatusOr<BucketAccessControl> LoggingClient::GetBucketAcl(
       context, options, request, __func__);
 }
 
-StatusOr<BucketAccessControl> LoggingClient::CreateBucketAcl(
+StatusOr<BucketAccessControl> LoggingStub::CreateBucketAcl(
     rest_internal::RestContext& context, Options const& options,
     CreateBucketAclRequest const& request) {
   return LogWrapper(
@@ -321,7 +320,7 @@ StatusOr<BucketAccessControl> LoggingClient::CreateBucketAcl(
       context, options, request, __func__);
 }
 
-StatusOr<EmptyResponse> LoggingClient::DeleteBucketAcl(
+StatusOr<EmptyResponse> LoggingStub::DeleteBucketAcl(
     rest_internal::RestContext& context, Options const& options,
     DeleteBucketAclRequest const& request) {
   return LogWrapper(
@@ -331,7 +330,7 @@ StatusOr<EmptyResponse> LoggingClient::DeleteBucketAcl(
       context, options, request, __func__);
 }
 
-StatusOr<BucketAccessControl> LoggingClient::UpdateBucketAcl(
+StatusOr<BucketAccessControl> LoggingStub::UpdateBucketAcl(
     rest_internal::RestContext& context, Options const& options,
     UpdateBucketAclRequest const& request) {
   return LogWrapper(
@@ -341,7 +340,7 @@ StatusOr<BucketAccessControl> LoggingClient::UpdateBucketAcl(
       context, options, request, __func__);
 }
 
-StatusOr<BucketAccessControl> LoggingClient::PatchBucketAcl(
+StatusOr<BucketAccessControl> LoggingStub::PatchBucketAcl(
     rest_internal::RestContext& context, Options const& options,
     PatchBucketAclRequest const& request) {
   return LogWrapper(
@@ -351,7 +350,7 @@ StatusOr<BucketAccessControl> LoggingClient::PatchBucketAcl(
       context, options, request, __func__);
 }
 
-StatusOr<ListObjectAclResponse> LoggingClient::ListObjectAcl(
+StatusOr<ListObjectAclResponse> LoggingStub::ListObjectAcl(
     rest_internal::RestContext& context, Options const& options,
     ListObjectAclRequest const& request) {
   return LogWrapper(
@@ -361,7 +360,7 @@ StatusOr<ListObjectAclResponse> LoggingClient::ListObjectAcl(
       context, options, request, __func__);
 }
 
-StatusOr<ObjectAccessControl> LoggingClient::CreateObjectAcl(
+StatusOr<ObjectAccessControl> LoggingStub::CreateObjectAcl(
     rest_internal::RestContext& context, Options const& options,
     CreateObjectAclRequest const& request) {
   return LogWrapper(
@@ -371,7 +370,7 @@ StatusOr<ObjectAccessControl> LoggingClient::CreateObjectAcl(
       context, options, request, __func__);
 }
 
-StatusOr<EmptyResponse> LoggingClient::DeleteObjectAcl(
+StatusOr<EmptyResponse> LoggingStub::DeleteObjectAcl(
     rest_internal::RestContext& context, Options const& options,
     DeleteObjectAclRequest const& request) {
   return LogWrapper(
@@ -381,7 +380,7 @@ StatusOr<EmptyResponse> LoggingClient::DeleteObjectAcl(
       context, options, request, __func__);
 }
 
-StatusOr<ObjectAccessControl> LoggingClient::GetObjectAcl(
+StatusOr<ObjectAccessControl> LoggingStub::GetObjectAcl(
     rest_internal::RestContext& context, Options const& options,
     GetObjectAclRequest const& request) {
   return LogWrapper(
@@ -391,7 +390,7 @@ StatusOr<ObjectAccessControl> LoggingClient::GetObjectAcl(
       context, options, request, __func__);
 }
 
-StatusOr<ObjectAccessControl> LoggingClient::UpdateObjectAcl(
+StatusOr<ObjectAccessControl> LoggingStub::UpdateObjectAcl(
     rest_internal::RestContext& context, Options const& options,
     UpdateObjectAclRequest const& request) {
   return LogWrapper(
@@ -401,7 +400,7 @@ StatusOr<ObjectAccessControl> LoggingClient::UpdateObjectAcl(
       context, options, request, __func__);
 }
 
-StatusOr<ObjectAccessControl> LoggingClient::PatchObjectAcl(
+StatusOr<ObjectAccessControl> LoggingStub::PatchObjectAcl(
     rest_internal::RestContext& context, Options const& options,
     PatchObjectAclRequest const& request) {
   return LogWrapper(
@@ -411,7 +410,7 @@ StatusOr<ObjectAccessControl> LoggingClient::PatchObjectAcl(
       context, options, request, __func__);
 }
 
-StatusOr<ListDefaultObjectAclResponse> LoggingClient::ListDefaultObjectAcl(
+StatusOr<ListDefaultObjectAclResponse> LoggingStub::ListDefaultObjectAcl(
     rest_internal::RestContext& context, Options const& options,
     ListDefaultObjectAclRequest const& request) {
   return LogWrapper(
@@ -421,7 +420,7 @@ StatusOr<ListDefaultObjectAclResponse> LoggingClient::ListDefaultObjectAcl(
       context, options, request, __func__);
 }
 
-StatusOr<ObjectAccessControl> LoggingClient::CreateDefaultObjectAcl(
+StatusOr<ObjectAccessControl> LoggingStub::CreateDefaultObjectAcl(
     rest_internal::RestContext& context, Options const& options,
     CreateDefaultObjectAclRequest const& request) {
   return LogWrapper(
@@ -431,7 +430,7 @@ StatusOr<ObjectAccessControl> LoggingClient::CreateDefaultObjectAcl(
       context, options, request, __func__);
 }
 
-StatusOr<EmptyResponse> LoggingClient::DeleteDefaultObjectAcl(
+StatusOr<EmptyResponse> LoggingStub::DeleteDefaultObjectAcl(
     rest_internal::RestContext& context, Options const& options,
     DeleteDefaultObjectAclRequest const& request) {
   return LogWrapper(
@@ -441,7 +440,7 @@ StatusOr<EmptyResponse> LoggingClient::DeleteDefaultObjectAcl(
       context, options, request, __func__);
 }
 
-StatusOr<ObjectAccessControl> LoggingClient::GetDefaultObjectAcl(
+StatusOr<ObjectAccessControl> LoggingStub::GetDefaultObjectAcl(
     rest_internal::RestContext& context, Options const& options,
     GetDefaultObjectAclRequest const& request) {
   return LogWrapper(
@@ -451,7 +450,7 @@ StatusOr<ObjectAccessControl> LoggingClient::GetDefaultObjectAcl(
       context, options, request, __func__);
 }
 
-StatusOr<ObjectAccessControl> LoggingClient::UpdateDefaultObjectAcl(
+StatusOr<ObjectAccessControl> LoggingStub::UpdateDefaultObjectAcl(
     rest_internal::RestContext& context, Options const& options,
     UpdateDefaultObjectAclRequest const& request) {
   return LogWrapper(
@@ -461,7 +460,7 @@ StatusOr<ObjectAccessControl> LoggingClient::UpdateDefaultObjectAcl(
       context, options, request, __func__);
 }
 
-StatusOr<ObjectAccessControl> LoggingClient::PatchDefaultObjectAcl(
+StatusOr<ObjectAccessControl> LoggingStub::PatchDefaultObjectAcl(
     rest_internal::RestContext& context, Options const& options,
     PatchDefaultObjectAclRequest const& request) {
   return LogWrapper(
@@ -471,7 +470,7 @@ StatusOr<ObjectAccessControl> LoggingClient::PatchDefaultObjectAcl(
       context, options, request, __func__);
 }
 
-StatusOr<ServiceAccount> LoggingClient::GetServiceAccount(
+StatusOr<ServiceAccount> LoggingStub::GetServiceAccount(
     rest_internal::RestContext& context, Options const& options,
     GetProjectServiceAccountRequest const& request) {
   return LogWrapper(
@@ -481,7 +480,7 @@ StatusOr<ServiceAccount> LoggingClient::GetServiceAccount(
       context, options, request, __func__);
 }
 
-StatusOr<ListHmacKeysResponse> LoggingClient::ListHmacKeys(
+StatusOr<ListHmacKeysResponse> LoggingStub::ListHmacKeys(
     rest_internal::RestContext& context, Options const& options,
     ListHmacKeysRequest const& request) {
   return LogWrapper(
@@ -491,7 +490,7 @@ StatusOr<ListHmacKeysResponse> LoggingClient::ListHmacKeys(
       context, options, request, __func__);
 }
 
-StatusOr<CreateHmacKeyResponse> LoggingClient::CreateHmacKey(
+StatusOr<CreateHmacKeyResponse> LoggingStub::CreateHmacKey(
     rest_internal::RestContext& context, Options const& options,
     CreateHmacKeyRequest const& request) {
   return LogWrapper(
@@ -501,7 +500,7 @@ StatusOr<CreateHmacKeyResponse> LoggingClient::CreateHmacKey(
       context, options, request, __func__);
 }
 
-StatusOr<EmptyResponse> LoggingClient::DeleteHmacKey(
+StatusOr<EmptyResponse> LoggingStub::DeleteHmacKey(
     rest_internal::RestContext& context, Options const& options,
     DeleteHmacKeyRequest const& request) {
   return LogWrapper(
@@ -511,7 +510,7 @@ StatusOr<EmptyResponse> LoggingClient::DeleteHmacKey(
       context, options, request, __func__);
 }
 
-StatusOr<HmacKeyMetadata> LoggingClient::GetHmacKey(
+StatusOr<HmacKeyMetadata> LoggingStub::GetHmacKey(
     rest_internal::RestContext& context, Options const& options,
     GetHmacKeyRequest const& request) {
   return LogWrapper(
@@ -521,7 +520,7 @@ StatusOr<HmacKeyMetadata> LoggingClient::GetHmacKey(
       context, options, request, __func__);
 }
 
-StatusOr<HmacKeyMetadata> LoggingClient::UpdateHmacKey(
+StatusOr<HmacKeyMetadata> LoggingStub::UpdateHmacKey(
     rest_internal::RestContext& context, Options const& options,
     UpdateHmacKeyRequest const& request) {
   return LogWrapper(
@@ -531,7 +530,7 @@ StatusOr<HmacKeyMetadata> LoggingClient::UpdateHmacKey(
       context, options, request, __func__);
 }
 
-StatusOr<SignBlobResponse> LoggingClient::SignBlob(
+StatusOr<SignBlobResponse> LoggingStub::SignBlob(
     rest_internal::RestContext& context, Options const& options,
     SignBlobRequest const& request) {
   return LogWrapper(
@@ -541,7 +540,7 @@ StatusOr<SignBlobResponse> LoggingClient::SignBlob(
       context, options, request, __func__);
 }
 
-StatusOr<ListNotificationsResponse> LoggingClient::ListNotifications(
+StatusOr<ListNotificationsResponse> LoggingStub::ListNotifications(
     rest_internal::RestContext& context, Options const& options,
     ListNotificationsRequest const& request) {
   return LogWrapper(
@@ -551,7 +550,7 @@ StatusOr<ListNotificationsResponse> LoggingClient::ListNotifications(
       context, options, request, __func__);
 }
 
-StatusOr<NotificationMetadata> LoggingClient::CreateNotification(
+StatusOr<NotificationMetadata> LoggingStub::CreateNotification(
     rest_internal::RestContext& context, Options const& options,
     CreateNotificationRequest const& request) {
   return LogWrapper(
@@ -561,7 +560,7 @@ StatusOr<NotificationMetadata> LoggingClient::CreateNotification(
       context, options, request, __func__);
 }
 
-StatusOr<NotificationMetadata> LoggingClient::GetNotification(
+StatusOr<NotificationMetadata> LoggingStub::GetNotification(
     rest_internal::RestContext& context, Options const& options,
     GetNotificationRequest const& request) {
   return LogWrapper(
@@ -571,7 +570,7 @@ StatusOr<NotificationMetadata> LoggingClient::GetNotification(
       context, options, request, __func__);
 }
 
-StatusOr<EmptyResponse> LoggingClient::DeleteNotification(
+StatusOr<EmptyResponse> LoggingStub::DeleteNotification(
     rest_internal::RestContext& context, Options const& options,
     DeleteNotificationRequest const& request) {
   return LogWrapper(
@@ -581,9 +580,9 @@ StatusOr<EmptyResponse> LoggingClient::DeleteNotification(
       context, options, request, __func__);
 }
 
-std::vector<std::string> LoggingClient::InspectStackStructure() const {
+std::vector<std::string> LoggingStub::InspectStackStructure() const {
   auto stack = stub_->InspectStackStructure();
-  stack.emplace_back("LoggingClient");
+  stack.emplace_back("LoggingStub");
   return stack;
 }
 

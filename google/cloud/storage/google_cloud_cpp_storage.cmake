@@ -132,8 +132,8 @@ add_library(
     internal/invocation_id_generator.h
     internal/lifecycle_rule_parser.cc
     internal/lifecycle_rule_parser.h
-    internal/logging_client.cc
-    internal/logging_client.h
+    internal/logging_stub.cc
+    internal/logging_stub.h
     internal/make_jwt_assertion.cc
     internal/make_jwt_assertion.h
     internal/metadata_parser.cc
@@ -498,7 +498,7 @@ if (BUILD_TESTING)
         internal/http_response_test.cc
         internal/impersonate_service_account_credentials_test.cc
         internal/invocation_id_generator_test.cc
-        internal/logging_client_test.cc
+        internal/logging_stub_test.cc
         internal/make_jwt_assertion_test.cc
         internal/metadata_parser_test.cc
         internal/notification_requests_test.cc

@@ -185,7 +185,7 @@ TEST_F(ClientTest, LoggingDecoratorsCurlClient) {
   auto const impl = ClientImplDetails::GetRawClient(tested);
   ASSERT_THAT(impl, NotNull());
   EXPECT_THAT(impl->InspectStackStructure(),
-              ElementsAre("CurlStub", "LoggingClient", "RetryClient"));
+              ElementsAre("CurlStub", "LoggingStub", "RetryClient"));
 }
 
 /// @test Verify the constructor creates the right set of RawClient decorations.
@@ -223,7 +223,7 @@ TEST_F(ClientTest, LoggingDecoratorsRestClient) {
   auto const impl = ClientImplDetails::GetRawClient(tested);
   ASSERT_THAT(impl, NotNull());
   EXPECT_THAT(impl->InspectStackStructure(),
-              ElementsAre("RestClient", "LoggingClient", "RetryClient"));
+              ElementsAre("RestClient", "LoggingStub", "RetryClient"));
 }
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -246,9 +246,9 @@ TEST_F(ClientTest, OTelEnableTracing) {
   auto const impl = ClientImplDetails::GetRawClient(tested);
   ASSERT_THAT(impl, NotNull());
 
-  EXPECT_THAT(impl->InspectStackStructure(),
-              ElementsAre("RestClient", "LoggingClient", "RetryClient",
-                          "TracingClient"));
+  EXPECT_THAT(
+      impl->InspectStackStructure(),
+      ElementsAre("RestClient", "LoggingStub", "RetryClient", "TracingClient"));
 }
 
 TEST_F(ClientTest, OTelDisableTracing) {
@@ -268,7 +268,7 @@ TEST_F(ClientTest, OTelDisableTracing) {
   ASSERT_THAT(impl, NotNull());
 
   EXPECT_THAT(impl->InspectStackStructure(),
-              ElementsAre("RestClient", "LoggingClient", "RetryClient"));
+              ElementsAre("RestClient", "LoggingStub", "RetryClient"));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

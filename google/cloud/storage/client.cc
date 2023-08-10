@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/storage/client.h"
-#include "google/cloud/storage/internal/curl/handle.h"
 #include "google/cloud/storage/internal/curl/stub.h"
+#include "google/cloud/storage/internal/logging_stub.h"
 #include "google/cloud/storage/internal/openssl_util.h"
 #include "google/cloud/storage/internal/rest/stub.h"
 #include "google/cloud/storage/internal/tracing_client.h"
@@ -51,7 +51,7 @@ std::shared_ptr<internal::RawClient> Client::CreateDefaultInternalClient(
                               Contains(tracing_components, "rpc");
 
   if (enable_logging) {
-    stub = std::make_unique<internal::LoggingClient>(std::move(stub));
+    stub = std::make_unique<internal::LoggingStub>(std::move(stub));
   }
   std::shared_ptr<internal::RawClient> client =
       internal::RetryClient::Create(std::move(stub), opts);

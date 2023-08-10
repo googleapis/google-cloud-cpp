@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_LOGGING_CLIENT_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_LOGGING_CLIENT_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_LOGGING_STUB_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_LOGGING_STUB_H
 
 #include "google/cloud/storage/internal/generic_stub.h"
 #include "google/cloud/storage/version.h"
@@ -27,10 +27,10 @@ namespace internal {
 /**
  * A decorator for `RawClient` that logs each operation.
  */
-class LoggingClient : public storage_internal::GenericStub {
+class LoggingStub : public storage_internal::GenericStub {
  public:
-  explicit LoggingClient(std::unique_ptr<storage_internal::GenericStub> stub);
-  ~LoggingClient() override = default;
+  explicit LoggingStub(std::unique_ptr<storage_internal::GenericStub> stub);
+  ~LoggingStub() override = default;
 
   Options options() const override;
 
@@ -213,4 +213,4 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_LOGGING_CLIENT_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_LOGGING_STUB_H
