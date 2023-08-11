@@ -3291,15 +3291,16 @@ class Client {
       " Please file a bug at https://github.com/googleapis/google-cloud-cpp"
       " if you have a use-case not covered by these.")
 #endif  // _MSC_VER
-  // NOLINTNEXTLINE(performance-unnecessary-value-param)
-  explicit Client(std::shared_ptr<internal::RawClient> client,
+  explicit Client(std::shared_ptr<internal::RawClient> const& client,
                   Policies&&... policies)
       : Client(InternalOnly{},
                internal::ApplyPolicies(
                    internal::DefaultOptions(
                        client->client_options().credentials(), {}),
                    std::forward<Policies>(policies)...),
-               std::move(client)) {
+               // We cannot std::move() because it is also used in the previous
+               // parameter.
+               client) {
   }
 
   /// Define a tag to disable automatic decorations of the RawClient.
