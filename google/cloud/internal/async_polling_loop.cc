@@ -107,9 +107,8 @@ class AsyncPollingLoopImpl
     GCP_LOG(DEBUG) << location_ << "() polling loop waiting "
                    << duration.count() << "ms";
     auto self = shared_from_this();
-    TracedAsyncBackoff(cq_, duration).then([self](TimerResult f) {
-      self->OnTimer(std::move(f));
-    });
+    TracedAsyncBackoff(cq_, CurrentOptions(), duration)
+        .then([self](TimerResult f) { self->OnTimer(std::move(f)); });
   }
 
   void OnTimer(TimerResult f) {

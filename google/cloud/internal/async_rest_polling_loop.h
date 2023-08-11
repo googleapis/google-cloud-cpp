@@ -281,9 +281,8 @@ class AsyncRestPollingLoopImpl
     GCP_LOG(DEBUG) << location_ << "() polling loop waiting "
                    << duration.count() << "ms";
     auto self = this->shared_from_this();
-    internal::TracedAsyncBackoff(cq_, duration).then([self](TimerResult f) {
-      self->OnTimer(std::move(f));
-    });
+    internal::TracedAsyncBackoff(cq_, internal::CurrentOptions(), duration)
+        .then([self](TimerResult f) { self->OnTimer(std::move(f)); });
   }
 
   void OnTimer(TimerResult f) {
