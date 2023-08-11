@@ -90,7 +90,8 @@ void AsyncRowSampler::OnFinish(Status status) {
 
   samples_.clear();
   auto self = this->shared_from_this();
-  internal::TracedAsyncBackoff(cq_, backoff_policy_->OnCompletion())
+  internal::TracedAsyncBackoff(cq_, internal::CurrentOptions(),
+                               backoff_policy_->OnCompletion())
       .then([self](TimerFuture result) {
         if (result.get()) {
           self->StartIteration();

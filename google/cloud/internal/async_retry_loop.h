@@ -246,7 +246,8 @@ class AsyncRetryLoopImpl
     auto state = StartOperation();
     if (state.cancelled) return;
     SetPending(state.operation,
-               TracedAsyncBackoff(cq_, backoff_policy_->OnCompletion())
+               TracedAsyncBackoff(cq_, call_context_.options,
+                                  backoff_policy_->OnCompletion())
                    .then([self](future<TimerArgType> f) {
                      self->OnBackoff(f.get());
                    }));

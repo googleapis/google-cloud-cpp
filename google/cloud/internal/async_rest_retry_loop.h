@@ -247,11 +247,12 @@ class AsyncRestRetryLoopImpl
     auto self = this->shared_from_this();
     auto state = StartOperation();
     if (state.cancelled) return;
-    SetPending(state.operation, internal::TracedAsyncBackoff(
-                                    cq_, backoff_policy_->OnCompletion())
-                                    .then([self](future<TimerArgType> f) {
-                                      self->OnBackoff(f.get());
-                                    }));
+    SetPending(state.operation,
+               internal::TracedAsyncBackoff(cq_, call_context_.options,
+                                            backoff_policy_->OnCompletion())
+                   .then([self](future<TimerArgType> f) {
+                     self->OnBackoff(f.get());
+                   }));
   }
 
   void OnAttempt(T result) {
