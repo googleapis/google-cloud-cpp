@@ -37,11 +37,16 @@ namespace internal {
  * enabled, it also contains the parent span that encompasses the client call.
  */
 struct CallContext {
+  explicit CallContext(Options o) : options(std::move(o)) {}
+  // TODO(#12359) - maybe this can be removed once the explicit options cleanup
+  //     is done.
+  CallContext() : CallContext(CurrentOptions()) {}
+
+  Options options;
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> span =
       opentelemetry::trace::Tracer::GetCurrentSpan();
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-  Options options = CurrentOptions();
 };
 
 /**
@@ -51,13 +56,15 @@ struct CallContext {
  */
 class ScopedCallContext {
  public:
-  // clang-format off
-  explicit ScopedCallContext(CallContext call_context) :
+  explicit ScopedCallContext(CallContext call_context)
+      : options_span_(std::move(call_context.options))
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-      span_(std::move(call_context.span)),
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-      options_(std::move(call_context.options)) {}
+        // clang-format off
+        , otel_scope_(std::move(call_context.span))
   // clang-format on
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  {
+  }
 
   // `ScopedCallContext` should not be copied/moved.
   ScopedCallContext(ScopedCallContext const&) = delete;
@@ -70,12 +77,10 @@ class ScopedCallContext {
   static void* operator new[](std::size_t) = delete;
 
  private:
+  OptionsSpan options_span_;
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-  using ScopedSpan = opentelemetry::trace::Scope;
-  ScopedSpan span_;
+  opentelemetry::trace::Scope otel_scope_;
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-  using ScopedOptions = OptionsSpan;
-  ScopedOptions options_;
 };
 
 }  // namespace internal

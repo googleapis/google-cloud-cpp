@@ -183,7 +183,8 @@ class AsyncRestRetryLoopImpl
         cq_(std::move(cq)),
         functor_(std::forward<Functor>(functor)),
         request_(std::move(request)),
-        location_(location) {}
+        location_(location),
+        call_context_(internal::CurrentOptions()) {}
 
   AsyncRestRetryLoopImpl(AsyncRestRetryLoopImpl const&) = delete;
   AsyncRestRetryLoopImpl(AsyncRestRetryLoopImpl&&) = delete;
