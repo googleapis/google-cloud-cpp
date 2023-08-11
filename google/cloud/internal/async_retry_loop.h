@@ -183,7 +183,8 @@ class AsyncRetryLoopImpl
         cq_(std::move(cq)),
         functor_(std::forward<Functor>(functor)),
         request_(std::move(request)),
-        location_(location) {}
+        location_(location),
+        call_context_(CurrentOptions()) {}
 
   using ReturnType = ::google::cloud::internal::invoke_result_t<
       Functor, google::cloud::CompletionQueue&,
