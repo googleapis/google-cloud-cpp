@@ -108,8 +108,9 @@ void GrpcReportTransportCommand(std::vector<std::string> argv) {
     throw examples::Usage("grpc-report-transport <config> <project-id>");
   }
   auto client = [&] {
-    namespace g = ::google::cloud;
     namespace gcs = ::google::cloud::storage;
+#if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
+    namespace g = ::google::cloud;
     if (argv[0] == "GRPC") {
       return google::cloud::storage_experimental::DefaultGrpcClient();
     }
@@ -119,6 +120,7 @@ void GrpcReportTransportCommand(std::vector<std::string> argv) {
           g::Options{}.set<g::EndpointOption>(
               "google-c2p:///storage.googleapis.com"));
     }
+#endif  // GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
     return gcs::Client();
   }();
 
