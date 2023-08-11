@@ -610,8 +610,8 @@ TEST(AsyncRetryLoopTest, TracedBackoff) {
       [&](auto, auto, auto const&, auto) {
         return sequencer.PushBack().then(
             [](auto) { return StatusOr<int>(UnavailableError("try again")); });
-      }, EnableTracing(Options{}),
-      42, "error message");
+      },
+      EnableTracing(Options{}), 42, "error message");
 
   OptionsSpan overlay(Options{});
   for (auto i = 0; i != kMaxRetries + 1; ++i) {
