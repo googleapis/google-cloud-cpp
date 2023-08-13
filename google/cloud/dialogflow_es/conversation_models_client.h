@@ -669,8 +669,7 @@ class ConversationModelsClient {
   /// Creates evaluation of a conversation model.
   ///
   /// @param parent  Required. The conversation model resource name. Format:
-  ///  `projects/<Project ID>/locations/<Location
-  ///  ID>/conversationModels/<Conversation Model ID>`
+  ///  `projects/<Project ID>/locations/<Location ID>/conversationModels/<Conversation Model ID>`
   /// @param conversation_model_evaluation  Required. The conversation model evaluation to be created.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.

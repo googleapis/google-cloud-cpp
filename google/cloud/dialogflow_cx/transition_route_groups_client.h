@@ -60,7 +60,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// such a copy when using this class from multiple threads.
 ///
 /// [google.cloud.dialogflow.cx.v3.TransitionRouteGroup]:
-/// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/transition_route_group.proto#L112}
+/// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/transition_route_group.proto#L129}
 ///
 class TransitionRouteGroupsClient {
  public:
@@ -96,8 +96,8 @@ class TransitionRouteGroupsClient {
   /// Returns the list of all transition route groups in the specified flow.
   ///
   /// @param parent  Required. The flow to list all transition route groups for.
-  ///  Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent
-  ///  ID>/flows/<Flow ID>`.
+  ///  Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/flows/<Flow ID>`
+  ///  or `projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [StreamRange](@ref google::cloud::StreamRange)
@@ -121,8 +121,8 @@ class TransitionRouteGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.ListTransitionRouteGroupsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/transition_route_group.proto#L136}
-  /// [google.cloud.dialogflow.cx.v3.TransitionRouteGroup]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/transition_route_group.proto#L112}
+  /// [google.cloud.dialogflow.cx.v3.ListTransitionRouteGroupsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/transition_route_group.proto#L157}
+  /// [google.cloud.dialogflow.cx.v3.TransitionRouteGroup]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/transition_route_group.proto#L129}
   ///
   // clang-format on
   StreamRange<google::cloud::dialogflow::cx::v3::TransitionRouteGroup>
@@ -161,8 +161,8 @@ class TransitionRouteGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.ListTransitionRouteGroupsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/transition_route_group.proto#L136}
-  /// [google.cloud.dialogflow.cx.v3.TransitionRouteGroup]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/transition_route_group.proto#L112}
+  /// [google.cloud.dialogflow.cx.v3.ListTransitionRouteGroupsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/transition_route_group.proto#L157}
+  /// [google.cloud.dialogflow.cx.v3.TransitionRouteGroup]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/transition_route_group.proto#L129}
   ///
   // clang-format on
   StreamRange<google::cloud::dialogflow::cx::v3::TransitionRouteGroup>
@@ -178,8 +178,8 @@ class TransitionRouteGroupsClient {
   ///
   /// @param name  Required. The name of the
   ///  [TransitionRouteGroup][google.cloud.dialogflow.cx.v3.TransitionRouteGroup].
-  ///  Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent
-  ///  ID>/flows/<Flow ID>/transitionRouteGroups/<Transition Route Group ID>`.
+  ///  Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/flows/<Flow ID>/transitionRouteGroups/<Transition Route Group ID>`
+  ///  or `projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/transitionRouteGroups/<Transition Route Group ID>`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -194,8 +194,8 @@ class TransitionRouteGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.GetTransitionRouteGroupRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/transition_route_group.proto#L186}
-  /// [google.cloud.dialogflow.cx.v3.TransitionRouteGroup]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/transition_route_group.proto#L112}
+  /// [google.cloud.dialogflow.cx.v3.GetTransitionRouteGroupRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/transition_route_group.proto#L208}
+  /// [google.cloud.dialogflow.cx.v3.TransitionRouteGroup]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/transition_route_group.proto#L129}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::TransitionRouteGroup>
@@ -226,8 +226,8 @@ class TransitionRouteGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.GetTransitionRouteGroupRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/transition_route_group.proto#L186}
-  /// [google.cloud.dialogflow.cx.v3.TransitionRouteGroup]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/transition_route_group.proto#L112}
+  /// [google.cloud.dialogflow.cx.v3.GetTransitionRouteGroupRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/transition_route_group.proto#L208}
+  /// [google.cloud.dialogflow.cx.v3.TransitionRouteGroup]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/transition_route_group.proto#L129}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::TransitionRouteGroup>
@@ -248,8 +248,9 @@ class TransitionRouteGroupsClient {
   ///
   /// @param parent  Required. The flow to create an
   ///  [TransitionRouteGroup][google.cloud.dialogflow.cx.v3.TransitionRouteGroup]
-  ///  for. Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent
-  ///  ID>/flows/<Flow ID>`.
+  ///  for. Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/flows/<Flow ID>`
+  ///  or `projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>`
+  ///  for agent-level groups.
   /// @param transition_route_group  Required. The transition route group to create.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -265,8 +266,8 @@ class TransitionRouteGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.CreateTransitionRouteGroupRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/transition_route_group.proto#L215}
-  /// [google.cloud.dialogflow.cx.v3.TransitionRouteGroup]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/transition_route_group.proto#L112}
+  /// [google.cloud.dialogflow.cx.v3.CreateTransitionRouteGroupRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/transition_route_group.proto#L239}
+  /// [google.cloud.dialogflow.cx.v3.TransitionRouteGroup]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/transition_route_group.proto#L129}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::TransitionRouteGroup>
@@ -306,8 +307,8 @@ class TransitionRouteGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.CreateTransitionRouteGroupRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/transition_route_group.proto#L215}
-  /// [google.cloud.dialogflow.cx.v3.TransitionRouteGroup]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/transition_route_group.proto#L112}
+  /// [google.cloud.dialogflow.cx.v3.CreateTransitionRouteGroupRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/transition_route_group.proto#L239}
+  /// [google.cloud.dialogflow.cx.v3.TransitionRouteGroup]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/transition_route_group.proto#L129}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::TransitionRouteGroup>
@@ -341,8 +342,8 @@ class TransitionRouteGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.TransitionRouteGroup]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/transition_route_group.proto#L112}
-  /// [google.cloud.dialogflow.cx.v3.UpdateTransitionRouteGroupRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/transition_route_group.proto#L247}
+  /// [google.cloud.dialogflow.cx.v3.TransitionRouteGroup]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/transition_route_group.proto#L129}
+  /// [google.cloud.dialogflow.cx.v3.UpdateTransitionRouteGroupRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/transition_route_group.proto#L273}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::TransitionRouteGroup>
@@ -380,8 +381,8 @@ class TransitionRouteGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.TransitionRouteGroup]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/transition_route_group.proto#L112}
-  /// [google.cloud.dialogflow.cx.v3.UpdateTransitionRouteGroupRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/transition_route_group.proto#L247}
+  /// [google.cloud.dialogflow.cx.v3.TransitionRouteGroup]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/transition_route_group.proto#L129}
+  /// [google.cloud.dialogflow.cx.v3.UpdateTransitionRouteGroupRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/transition_route_group.proto#L273}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::TransitionRouteGroup>
@@ -401,11 +402,7 @@ class TransitionRouteGroupsClient {
   ///
   /// @param name  Required. The name of the
   ///  [TransitionRouteGroup][google.cloud.dialogflow.cx.v3.TransitionRouteGroup]
-  ///  to delete. Format:
-  ///  @n
-  ///  @code
-  ///  projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/flows/<Flow ID>/transitionRouteGroups/<Transition Route Group ID>
-  ///  @endcode
+  ///  to delete. Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/flows/<Flow ID>/transitionRouteGroups/<Transition Route Group ID>` or `projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/transitionRouteGroups/<Transition Route Group ID>`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [`Status`] object. If the request failed, the
@@ -418,8 +415,8 @@ class TransitionRouteGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.DeleteTransitionRouteGroupRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/transition_route_group.proto#L271}
-  /// [google.cloud.dialogflow.cx.v3.TransitionRouteGroup]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/transition_route_group.proto#L112}
+  /// [google.cloud.dialogflow.cx.v3.DeleteTransitionRouteGroupRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/transition_route_group.proto#L297}
+  /// [google.cloud.dialogflow.cx.v3.TransitionRouteGroup]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/transition_route_group.proto#L129}
   ///
   // clang-format on
   Status DeleteTransitionRouteGroup(std::string const& name, Options opts = {});
@@ -451,8 +448,8 @@ class TransitionRouteGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.DeleteTransitionRouteGroupRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/transition_route_group.proto#L271}
-  /// [google.cloud.dialogflow.cx.v3.TransitionRouteGroup]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/transition_route_group.proto#L112}
+  /// [google.cloud.dialogflow.cx.v3.DeleteTransitionRouteGroupRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/transition_route_group.proto#L297}
+  /// [google.cloud.dialogflow.cx.v3.TransitionRouteGroup]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/transition_route_group.proto#L129}
   ///
   // clang-format on
   Status DeleteTransitionRouteGroup(

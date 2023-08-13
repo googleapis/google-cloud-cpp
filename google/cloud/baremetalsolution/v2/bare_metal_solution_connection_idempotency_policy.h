@@ -47,6 +47,10 @@ class BareMetalSolutionConnectionIdempotencyPolicy {
       google::cloud::baremetalsolution::v2::UpdateInstanceRequest const&
           request);
 
+  virtual google::cloud::Idempotency RenameInstance(
+      google::cloud::baremetalsolution::v2::RenameInstanceRequest const&
+          request);
+
   virtual google::cloud::Idempotency ResetInstance(
       google::cloud::baremetalsolution::v2::ResetInstanceRequest const&
           request);
@@ -58,8 +62,25 @@ class BareMetalSolutionConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency StopInstance(
       google::cloud::baremetalsolution::v2::StopInstanceRequest const& request);
 
+  virtual google::cloud::Idempotency EnableInteractiveSerialConsole(
+      google::cloud::baremetalsolution::v2::
+          EnableInteractiveSerialConsoleRequest const& request);
+
+  virtual google::cloud::Idempotency DisableInteractiveSerialConsole(
+      google::cloud::baremetalsolution::v2::
+          DisableInteractiveSerialConsoleRequest const& request);
+
   virtual google::cloud::Idempotency DetachLun(
       google::cloud::baremetalsolution::v2::DetachLunRequest const& request);
+
+  virtual google::cloud::Idempotency ListSSHKeys(
+      google::cloud::baremetalsolution::v2::ListSSHKeysRequest request);
+
+  virtual google::cloud::Idempotency CreateSSHKey(
+      google::cloud::baremetalsolution::v2::CreateSSHKeyRequest const& request);
+
+  virtual google::cloud::Idempotency DeleteSSHKey(
+      google::cloud::baremetalsolution::v2::DeleteSSHKeyRequest const& request);
 
   virtual google::cloud::Idempotency ListVolumes(
       google::cloud::baremetalsolution::v2::ListVolumesRequest request);
@@ -69,6 +90,12 @@ class BareMetalSolutionConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency UpdateVolume(
       google::cloud::baremetalsolution::v2::UpdateVolumeRequest const& request);
+
+  virtual google::cloud::Idempotency RenameVolume(
+      google::cloud::baremetalsolution::v2::RenameVolumeRequest const& request);
+
+  virtual google::cloud::Idempotency EvictVolume(
+      google::cloud::baremetalsolution::v2::EvictVolumeRequest const& request);
 
   virtual google::cloud::Idempotency ResizeVolume(
       google::cloud::baremetalsolution::v2::ResizeVolumeRequest const& request);
@@ -87,11 +114,33 @@ class BareMetalSolutionConnectionIdempotencyPolicy {
       google::cloud::baremetalsolution::v2::UpdateNetworkRequest const&
           request);
 
+  virtual google::cloud::Idempotency CreateVolumeSnapshot(
+      google::cloud::baremetalsolution::v2::CreateVolumeSnapshotRequest const&
+          request);
+
+  virtual google::cloud::Idempotency RestoreVolumeSnapshot(
+      google::cloud::baremetalsolution::v2::RestoreVolumeSnapshotRequest const&
+          request);
+
+  virtual google::cloud::Idempotency DeleteVolumeSnapshot(
+      google::cloud::baremetalsolution::v2::DeleteVolumeSnapshotRequest const&
+          request);
+
+  virtual google::cloud::Idempotency GetVolumeSnapshot(
+      google::cloud::baremetalsolution::v2::GetVolumeSnapshotRequest const&
+          request);
+
+  virtual google::cloud::Idempotency ListVolumeSnapshots(
+      google::cloud::baremetalsolution::v2::ListVolumeSnapshotsRequest request);
+
   virtual google::cloud::Idempotency GetLun(
       google::cloud::baremetalsolution::v2::GetLunRequest const& request);
 
   virtual google::cloud::Idempotency ListLuns(
       google::cloud::baremetalsolution::v2::ListLunsRequest request);
+
+  virtual google::cloud::Idempotency EvictLun(
+      google::cloud::baremetalsolution::v2::EvictLunRequest const& request);
 
   virtual google::cloud::Idempotency GetNfsShare(
       google::cloud::baremetalsolution::v2::GetNfsShareRequest const& request);
@@ -102,6 +151,45 @@ class BareMetalSolutionConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency UpdateNfsShare(
       google::cloud::baremetalsolution::v2::UpdateNfsShareRequest const&
           request);
+
+  virtual google::cloud::Idempotency CreateNfsShare(
+      google::cloud::baremetalsolution::v2::CreateNfsShareRequest const&
+          request);
+
+  virtual google::cloud::Idempotency RenameNfsShare(
+      google::cloud::baremetalsolution::v2::RenameNfsShareRequest const&
+          request);
+
+  virtual google::cloud::Idempotency DeleteNfsShare(
+      google::cloud::baremetalsolution::v2::DeleteNfsShareRequest const&
+          request);
+
+  virtual google::cloud::Idempotency ListProvisioningQuotas(
+      google::cloud::baremetalsolution::v2::ListProvisioningQuotasRequest
+          request);
+
+  virtual google::cloud::Idempotency SubmitProvisioningConfig(
+      google::cloud::baremetalsolution::v2::
+          SubmitProvisioningConfigRequest const& request);
+
+  virtual google::cloud::Idempotency GetProvisioningConfig(
+      google::cloud::baremetalsolution::v2::GetProvisioningConfigRequest const&
+          request);
+
+  virtual google::cloud::Idempotency CreateProvisioningConfig(
+      google::cloud::baremetalsolution::v2::
+          CreateProvisioningConfigRequest const& request);
+
+  virtual google::cloud::Idempotency UpdateProvisioningConfig(
+      google::cloud::baremetalsolution::v2::
+          UpdateProvisioningConfigRequest const& request);
+
+  virtual google::cloud::Idempotency RenameNetwork(
+      google::cloud::baremetalsolution::v2::RenameNetworkRequest const&
+          request);
+
+  virtual google::cloud::Idempotency ListOSImages(
+      google::cloud::baremetalsolution::v2::ListOSImagesRequest request);
 };
 
 std::unique_ptr<BareMetalSolutionConnectionIdempotencyPolicy>

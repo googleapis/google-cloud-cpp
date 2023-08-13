@@ -232,8 +232,8 @@ class SessionsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.StreamingDetectIntentRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/session.proto#L416}
-  /// [google.cloud.dialogflow.v2.StreamingDetectIntentResponse]: @googleapis_reference_link{google/cloud/dialogflow/v2/session.proto#L568}
+  /// [google.cloud.dialogflow.v2.StreamingDetectIntentRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/session.proto#L423}
+  /// [google.cloud.dialogflow.v2.StreamingDetectIntentResponse]: @googleapis_reference_link{google/cloud/dialogflow/v2/session.proto#L575}
   ///
   // clang-format on
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<

@@ -167,8 +167,7 @@ class ChangelogsClient {
   /// Retrieves the specified Changelog.
   ///
   /// @param name  Required. The name of the changelog to get.
-  ///  Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent
-  ///  ID>/changelogs/<Changelog ID>`.
+  ///  Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/changelogs/<Changelog ID>`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type

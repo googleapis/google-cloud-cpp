@@ -93,8 +93,7 @@ class ParticipantsClient {
   /// Creates a new participant in a conversation.
   ///
   /// @param parent  Required. Resource identifier of the conversation adding the participant.
-  ///  Format: `projects/<Project ID>/locations/<Location
-  ///  ID>/conversations/<Conversation ID>`.
+  ///  Format: `projects/<Project ID>/locations/<Location ID>/conversations/<Conversation ID>`.
   /// @param participant  Required. The participant to create.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -216,8 +215,7 @@ class ParticipantsClient {
   /// Returns the list of all participants in the specified conversation.
   ///
   /// @param parent  Required. The conversation to list all participants from.
-  ///  Format: `projects/<Project ID>/locations/<Location
-  ///  ID>/conversations/<Conversation ID>`.
+  ///  Format: `projects/<Project ID>/locations/<Location ID>/conversations/<Conversation ID>`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [StreamRange](@ref google::cloud::StreamRange)
@@ -359,8 +357,7 @@ class ParticipantsClient {
   /// environments](https://cloud.google.com/dialogflow/es/docs/agents-versions).
   ///
   /// @param participant  Required. The name of the participant this text comes from.
-  ///  Format: `projects/<Project ID>/locations/<Location
-  ///  ID>/conversations/<Conversation ID>/participants/<Participant ID>`.
+  ///  Format: `projects/<Project ID>/locations/<Location ID>/conversations/<Conversation ID>/participants/<Participant ID>`.
   /// @param text_input  The natural language text to be processed.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -395,8 +392,7 @@ class ParticipantsClient {
   /// environments](https://cloud.google.com/dialogflow/es/docs/agents-versions).
   ///
   /// @param participant  Required. The name of the participant this text comes from.
-  ///  Format: `projects/<Project ID>/locations/<Location
-  ///  ID>/conversations/<Conversation ID>/participants/<Participant ID>`.
+  ///  Format: `projects/<Project ID>/locations/<Location ID>/conversations/<Conversation ID>/participants/<Participant ID>`.
   /// @param event_input  An input event to send to Dialogflow.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -510,8 +506,7 @@ class ParticipantsClient {
   /// messages.
   ///
   /// @param parent  Required. The name of the participant to fetch suggestion for.
-  ///  Format: `projects/<Project ID>/locations/<Location
-  ///  ID>/conversations/<Conversation ID>/participants/<Participant ID>`.
+  ///  Format: `projects/<Project ID>/locations/<Location ID>/conversations/<Conversation ID>/participants/<Participant ID>`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -573,8 +568,7 @@ class ParticipantsClient {
   /// messages.
   ///
   /// @param parent  Required. The name of the participant to fetch suggestion for.
-  ///  Format: `projects/<Project ID>/locations/<Location
-  ///  ID>/conversations/<Conversation ID>/participants/<Participant ID>`.
+  ///  Format: `projects/<Project ID>/locations/<Location ID>/conversations/<Conversation ID>/participants/<Participant ID>`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -636,8 +630,7 @@ class ParticipantsClient {
   /// messages.
   ///
   /// @param parent  Required. The name of the participant to fetch suggestion for.
-  ///  Format: `projects/<Project ID>/locations/<Location
-  ///  ID>/conversations/<Conversation ID>/participants/<Participant ID>`.
+  ///  Format: `projects/<Project ID>/locations/<Location ID>/conversations/<Conversation ID>/participants/<Participant ID>`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type

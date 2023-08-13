@@ -178,8 +178,7 @@ class ExperimentsClient {
   ///
   /// @param name  Required. The name of the
   ///  [Environment][google.cloud.dialogflow.cx.v3.Environment]. Format:
-  ///  `projects/<Project ID>/locations/<Location ID>/agents/<Agent
-  ///  ID>/environments/<Environment ID>/experiments/<Experiment ID>`.
+  ///  `projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/environments/<Environment ID>/experiments/<Experiment ID>`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -241,8 +240,7 @@ class ExperimentsClient {
   ///
   /// @param parent  Required. The [Agent][google.cloud.dialogflow.cx.v3.Agent] to create an
   ///  [Environment][google.cloud.dialogflow.cx.v3.Environment] for. Format:
-  ///  `projects/<Project ID>/locations/<Location ID>/agents/<Agent
-  ///  ID>/environments/<Environment ID>`.
+  ///  `projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/environments/<Environment ID>`.
   /// @param experiment  Required. The experiment to create.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -369,8 +367,7 @@ class ExperimentsClient {
   ///
   /// @param name  Required. The name of the
   ///  [Environment][google.cloud.dialogflow.cx.v3.Environment] to delete. Format:
-  ///  `projects/<Project ID>/locations/<Location ID>/agents/<Agent
-  ///  ID>/environments/<Environment ID>/experiments/<Experiment ID>`.
+  ///  `projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/environments/<Environment ID>/experiments/<Experiment ID>`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [`Status`] object. If the request failed, the
@@ -427,8 +424,7 @@ class ExperimentsClient {
   /// changes the state of experiment from PENDING to RUNNING.
   ///
   /// @param name  Required. Resource name of the experiment to start.
-  ///  Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent
-  ///  ID>/environments/<Environment ID>/experiments/<Experiment ID>`.
+  ///  Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/environments/<Environment ID>/experiments/<Experiment ID>`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -490,8 +486,7 @@ class ExperimentsClient {
   /// This rpc only changes the state of experiment from RUNNING to DONE.
   ///
   /// @param name  Required. Resource name of the experiment to stop.
-  ///  Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent
-  ///  ID>/environments/<Environment ID>/experiments/<Experiment ID>`.
+  ///  Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/environments/<Environment ID>/experiments/<Experiment ID>`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type

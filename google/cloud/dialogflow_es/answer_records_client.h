@@ -94,8 +94,7 @@ class AnswerRecordsClient {
   /// chronological order.
   ///
   /// @param parent  Required. The project to list all answer records for in reverse
-  ///  chronological order. Format: `projects/<Project ID>/locations/<Location
-  ///  ID>`.
+  ///  chronological order. Format: `projects/<Project ID>/locations/<Location ID>`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [StreamRange](@ref google::cloud::StreamRange)

@@ -224,8 +224,7 @@ class TestCasesClient {
   /// Gets a test case.
   ///
   /// @param name  Required. The name of the testcase.
-  ///  Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent
-  ///  ID>/testCases/<TestCase ID>`.
+  ///  Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/testCases/<TestCase ID>`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -725,8 +724,7 @@ class TestCasesClient {
   /// Gets a test case result.
   ///
   /// @param name  Required. The name of the testcase.
-  ///  Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent
-  ///  ID>/testCases/<TestCase ID>/results/<TestCaseResult ID>`.
+  ///  Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/testCases/<TestCase ID>/results/<TestCaseResult ID>`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type

@@ -95,8 +95,7 @@ class EnvironmentsClient {
   /// [Agent][google.cloud.dialogflow.cx.v3.Agent].
   ///
   /// @param parent  Required. The [Agent][google.cloud.dialogflow.cx.v3.Agent] to list all
-  ///  environments for. Format: `projects/<Project ID>/locations/<Location
-  ///  ID>/agents/<Agent ID>`.
+  ///  environments for. Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [StreamRange](@ref google::cloud::StreamRange)
@@ -176,8 +175,7 @@ class EnvironmentsClient {
   ///
   /// @param name  Required. The name of the
   ///  [Environment][google.cloud.dialogflow.cx.v3.Environment]. Format:
-  ///  `projects/<Project ID>/locations/<Location ID>/agents/<Agent
-  ///  ID>/environments/<Environment ID>`.
+  ///  `projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/environments/<Environment ID>`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -428,8 +426,7 @@ class EnvironmentsClient {
   ///
   /// @param name  Required. The name of the
   ///  [Environment][google.cloud.dialogflow.cx.v3.Environment] to delete. Format:
-  ///  `projects/<Project ID>/locations/<Location ID>/agents/<Agent
-  ///  ID>/environments/<Environment ID>`.
+  ///  `projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/environments/<Environment ID>`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [`Status`] object. If the request failed, the

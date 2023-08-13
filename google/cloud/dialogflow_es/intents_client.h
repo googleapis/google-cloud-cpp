@@ -96,8 +96,7 @@ class IntentsClient {
   ///  @n
   ///  Alternatively, you can specify the environment to list intents for.
   ///  Format: `projects/<Project ID>/agent/environments/<Environment ID>`
-  ///  or `projects/<Project ID>/locations/<Location
-  ///  ID>/agent/environments/<Environment ID>`.
+  ///  or `projects/<Project ID>/locations/<Location ID>/agent/environments/<Environment ID>`.
   ///  Note: training phrases of the intents will not be returned for non-draft
   ///  environment.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -140,8 +139,7 @@ class IntentsClient {
   ///  @n
   ///  Alternatively, you can specify the environment to list intents for.
   ///  Format: `projects/<Project ID>/agent/environments/<Environment ID>`
-  ///  or `projects/<Project ID>/locations/<Location
-  ///  ID>/agent/environments/<Environment ID>`.
+  ///  or `projects/<Project ID>/locations/<Location ID>/agent/environments/<Environment ID>`.
   ///  Note: training phrases of the intents will not be returned for non-draft
   ///  environment.
   /// @param language_code  Optional. The language used to access language-specific data.
