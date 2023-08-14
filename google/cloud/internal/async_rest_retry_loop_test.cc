@@ -119,7 +119,7 @@ class AsyncRestRetryLoopCancelTest : public ::testing::Test {
   AsyncSequencer<Status> sequencer_;
 };
 
-TEST(AsyncRestRetryLoopTest, Success) {
+TEST(AsyncRestRetryLoopTest, SuccessWithImplicitOptions) {
   EXPECT_EQ(internal::CurrentOptions().get<TestOption>(), "");
   internal::OptionsSpan span(Options{}.set<TestOption>("Success"));
   EXPECT_EQ(internal::CurrentOptions().get<TestOption>(), "Success");
@@ -139,26 +139,39 @@ TEST(AsyncRestRetryLoopTest, Success) {
   EXPECT_EQ(84, *actual);
 }
 
-TEST(AsyncRestRetryLoopTest, TransientThenSuccess) {
-  int counter = 0;
-  EXPECT_EQ(internal::CurrentOptions().get<TestOption>(), "");
-  internal::OptionsSpan span(Options{}.set<TestOption>("TransientThenSuccess"));
-  EXPECT_EQ(internal::CurrentOptions().get<TestOption>(),
-            "TransientThenSuccess");
+TEST(AsyncRestRetryLoopTest, SuccessWithExplicitOptions) {
   AutomaticallyCreatedRestBackgroundThreads background;
   auto pending = AsyncRestRetryLoop(
       TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kIdempotent,
       background.cq(),
-      [&](CompletionQueue&, std::unique_ptr<RestContext>, int request) {
-        EXPECT_EQ(internal::CurrentOptions().get<TestOption>(),
-                  "TransientThenSuccess");
+      [](CompletionQueue&, std::unique_ptr<RestContext>, Options const& options,
+         int request) -> future<StatusOr<int>> {
+        EXPECT_EQ(options.get<TestOption>(), "Success");
+        return make_ready_future(StatusOr<int>(2 * request));
+      },
+      Options{}.set<TestOption>("Success"), 42, "error message");
+  internal::OptionsSpan overlay(Options{}.set<TestOption>("uh-oh"));
+  StatusOr<int> actual = pending.get();
+  ASSERT_THAT(actual.status(), IsOk());
+  EXPECT_EQ(84, *actual);
+}
+
+TEST(AsyncRestRetryLoopTest, TransientThenSuccess) {
+  int counter = 0;
+  AutomaticallyCreatedRestBackgroundThreads background;
+  auto pending = AsyncRestRetryLoop(
+      TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kIdempotent,
+      background.cq(),
+      [&](CompletionQueue&, std::unique_ptr<RestContext>,
+          Options const& options, int request) {
+        EXPECT_EQ(options.get<TestOption>(), "TransientThenSuccess");
         if (++counter < 3) {
           return make_ready_future(
               StatusOr<int>(Status(StatusCode::kUnavailable, "try again")));
         }
         return make_ready_future(StatusOr<int>(2 * request));
       },
-      42, "error message");
+      Options{}.set<TestOption>("TransientThenSuccess"), 42, "error message");
   internal::OptionsSpan overlay(Options{}.set<TestOption>("uh-oh"));
   StatusOr<int> actual = pending.get();
   ASSERT_THAT(actual.status(), IsOk());
@@ -167,23 +180,20 @@ TEST(AsyncRestRetryLoopTest, TransientThenSuccess) {
 
 TEST(AsyncRestRetryLoopTest, ReturnJustStatus) {
   int counter = 0;
-  EXPECT_EQ(internal::CurrentOptions().get<TestOption>(), "");
-  internal::OptionsSpan span(Options{}.set<TestOption>("ReturnJustStatus"));
-  EXPECT_EQ(internal::CurrentOptions().get<TestOption>(), "ReturnJustStatus");
   AutomaticallyCreatedRestBackgroundThreads background;
   auto pending = AsyncRestRetryLoop(
       TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kIdempotent,
       background.cq(),
-      [&](CompletionQueue&, std::unique_ptr<RestContext>, int) {
-        EXPECT_EQ(internal::CurrentOptions().get<TestOption>(),
-                  "ReturnJustStatus");
+      [&](CompletionQueue&, std::unique_ptr<RestContext>,
+          Options const& options, int) {
+        EXPECT_EQ(options.get<TestOption>(), "ReturnJustStatus");
         if (++counter <= 3) {
           return make_ready_future(
               Status(StatusCode::kResourceExhausted, "slow-down"));
         }
         return make_ready_future(Status());
       },
-      42, "error message");
+      Options{}.set<TestOption>("ReturnJustStatus"), 42, "error message");
   internal::OptionsSpan overlay(Options{}.set<TestOption>("uh-oh"));
   Status actual = pending.get();
   ASSERT_THAT(actual, IsOk());
@@ -216,23 +226,20 @@ TEST(AsyncRestRetryLoopTest, UsesBackoffPolicy) {
   });
 
   int counter = 0;
-  EXPECT_EQ(internal::CurrentOptions().get<TestOption>(), "");
-  internal::OptionsSpan span(Options{}.set<TestOption>("UsesBackoffPolicy"));
-  EXPECT_EQ(internal::CurrentOptions().get<TestOption>(), "UsesBackoffPolicy");
   AutomaticallyCreatedRestBackgroundThreads background;
   auto pending = AsyncRestRetryLoop(
       TestRetryPolicy(), std::move(mock), Idempotency::kIdempotent,
       background.cq(),
-      [&](CompletionQueue&, std::unique_ptr<RestContext>, int request) {
-        EXPECT_EQ(internal::CurrentOptions().get<TestOption>(),
-                  "UsesBackoffPolicy");
+      [&](CompletionQueue&, std::unique_ptr<RestContext>,
+          Options const& options, int request) {
+        EXPECT_EQ(options.get<TestOption>(), "UsesBackoffPolicy");
         if (++counter <= 3) {
           return make_ready_future(
               StatusOr<int>(Status(StatusCode::kUnavailable, "try again")));
         }
         return make_ready_future(StatusOr<int>(2 * request));
       },
-      42, "error message");
+      Options{}.set<TestOption>("UsesBackoffPolicy"), 42, "error message");
   internal::OptionsSpan overlay(Options{}.set<TestOption>("uh-oh"));
   StatusOr<int> actual = pending.get();
   ASSERT_THAT(actual.status(), IsOk());
@@ -240,22 +247,18 @@ TEST(AsyncRestRetryLoopTest, UsesBackoffPolicy) {
 }
 
 TEST(AsyncRestRetryLoopTest, TransientFailureNonIdempotent) {
-  EXPECT_EQ(internal::CurrentOptions().get<TestOption>(), "");
-  internal::OptionsSpan span(
-      Options{}.set<TestOption>("TransientFailureNonIdempotent"));
-  EXPECT_EQ(internal::CurrentOptions().get<TestOption>(),
-            "TransientFailureNonIdempotent");
   AutomaticallyCreatedRestBackgroundThreads background;
   auto pending = AsyncRestRetryLoop(
       TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kNonIdempotent,
       background.cq(),
-      [](CompletionQueue&, std::unique_ptr<RestContext>, int) {
-        EXPECT_EQ(internal::CurrentOptions().get<TestOption>(),
-                  "TransientFailureNonIdempotent");
+      [](CompletionQueue&, std::unique_ptr<RestContext>, Options const& options,
+         int) {
+        EXPECT_EQ(options.get<TestOption>(), "TransientFailureNonIdempotent");
         return make_ready_future(StatusOr<int>(
             Status(StatusCode::kUnavailable, "test-message-try-again")));
       },
-      42, "test-location");
+      Options{}.set<TestOption>("TransientFailureNonIdempotent"), 42,
+      "test-location");
   internal::OptionsSpan overlay(Options{}.set<TestOption>("uh-oh"));
   StatusOr<int> actual = pending.get();
   EXPECT_THAT(actual, StatusIs(StatusCode::kUnavailable,
@@ -270,22 +273,18 @@ TEST(AsyncRestRetryLoopTest, TransientFailureNonIdempotent) {
 }
 
 TEST(AsyncRestRetryLoopTest, PermanentFailureIdempotent) {
-  EXPECT_EQ(internal::CurrentOptions().get<TestOption>(), "");
-  internal::OptionsSpan span(
-      Options{}.set<TestOption>("PermanentFailureIdempotent"));
-  EXPECT_EQ(internal::CurrentOptions().get<TestOption>(),
-            "PermanentFailureIdempotent");
   AutomaticallyCreatedRestBackgroundThreads background;
   auto pending = AsyncRestRetryLoop(
       TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kIdempotent,
       background.cq(),
-      [](CompletionQueue&, std::unique_ptr<RestContext>, int) {
-        EXPECT_EQ(internal::CurrentOptions().get<TestOption>(),
-                  "PermanentFailureIdempotent");
+      [](CompletionQueue&, std::unique_ptr<RestContext>, Options const& options,
+         int) {
+        EXPECT_EQ(options.get<TestOption>(), "PermanentFailureIdempotent");
         return make_ready_future(StatusOr<int>(
             Status(StatusCode::kPermissionDenied, "test-message-uh-oh")));
       },
-      42, "test-location");
+      Options{}.set<TestOption>("PermanentFailureIdempotent"), 42,
+      "test-location");
   internal::OptionsSpan overlay(Options{}.set<TestOption>("uh-oh"));
   StatusOr<int> actual = pending.get();
   EXPECT_THAT(actual, StatusIs(StatusCode::kPermissionDenied,
@@ -300,22 +299,19 @@ TEST(AsyncRestRetryLoopTest, PermanentFailureIdempotent) {
 }
 
 TEST(AsyncRestRetryLoopTest, TooManyTransientFailuresIdempotent) {
-  EXPECT_EQ(internal::CurrentOptions().get<TestOption>(), "");
-  internal::OptionsSpan span(
-      Options{}.set<TestOption>("TooManyTransientFailuresIdempotent"));
-  EXPECT_EQ(internal::CurrentOptions().get<TestOption>(),
-            "TooManyTransientFailuresIdempotent");
   AutomaticallyCreatedRestBackgroundThreads background;
   auto pending = AsyncRestRetryLoop(
       TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kIdempotent,
       background.cq(),
-      [](CompletionQueue&, std::unique_ptr<RestContext>, int) {
-        EXPECT_EQ(internal::CurrentOptions().get<TestOption>(),
+      [](CompletionQueue&, std::unique_ptr<RestContext>, Options const& options,
+         int) {
+        EXPECT_EQ(options.get<TestOption>(),
                   "TooManyTransientFailuresIdempotent");
         return make_ready_future(StatusOr<int>(
             Status(StatusCode::kUnavailable, "test-message-try-again")));
       },
-      42, "test-location");
+      Options{}.set<TestOption>("TooManyTransientFailuresIdempotent"), 42,
+      "test-location");
   internal::OptionsSpan overlay(Options{}.set<TestOption>("uh-oh"));
   StatusOr<int> actual = pending.get();
   EXPECT_THAT(actual, StatusIs(StatusCode::kUnavailable,
@@ -332,23 +328,18 @@ TEST(AsyncRestRetryLoopTest, TooManyTransientFailuresIdempotent) {
 
 TEST(AsyncRestRetryLoopTest, ExhaustedDuringBackoff) {
   using ms = std::chrono::milliseconds;
-  EXPECT_EQ(internal::CurrentOptions().get<TestOption>(), "");
-  internal::OptionsSpan span(
-      Options{}.set<TestOption>("ExhaustedDuringBackoff"));
-  EXPECT_EQ(internal::CurrentOptions().get<TestOption>(),
-            "ExhaustedDuringBackoff");
   AutomaticallyCreatedRestBackgroundThreads background;
   auto pending = AsyncRestRetryLoop(
       internal::LimitedErrorCountRetryPolicy<TestRetryablePolicy>(0).clone(),
       ExponentialBackoffPolicy(ms(0), ms(0), 2.0).clone(),
       Idempotency::kIdempotent, background.cq(),
-      [](CompletionQueue&, std::unique_ptr<RestContext>, int) {
-        EXPECT_EQ(internal::CurrentOptions().get<TestOption>(),
-                  "ExhaustedDuringBackoff");
+      [](CompletionQueue&, std::unique_ptr<RestContext>, Options const& options,
+         int) {
+        EXPECT_EQ(options.get<TestOption>(), "ExhaustedDuringBackoff");
         return make_ready_future(StatusOr<int>(
             Status(StatusCode::kUnavailable, "test-message-try-again")));
       },
-      42, "test-location");
+      Options{}.set<TestOption>("ExhaustedDuringBackoff"), 42, "test-location");
   internal::OptionsSpan overlay(Options{}.set<TestOption>("uh-oh"));
   StatusOr<int> actual = pending.get();
   EXPECT_THAT(actual, StatusIs(StatusCode::kUnavailable,
@@ -372,11 +363,11 @@ TEST(AsyncRestRetryLoopTest, ExhaustedBeforeStart) {
       AsyncRestRetryLoop(
           std::unique_ptr<RetryPolicyWithSetup>(std::move(mock)),
           TestBackoffPolicy(), Idempotency::kIdempotent, background.cq(),
-          [](CompletionQueue&, std::unique_ptr<RestContext>, int) {
+          [](CompletionQueue&, std::unique_ptr<RestContext>, auto const&, int) {
             return make_ready_future(StatusOr<int>(
                 Status(StatusCode::kUnavailable, "test-message-try-again")));
           },
-          42, "test-location")
+          Options{}, 42, "test-location")
           .get();
   EXPECT_THAT(actual, StatusIs(StatusCode::kDeadlineExceeded));
   auto const& metadata = actual.status().error_info().metadata();
@@ -400,28 +391,24 @@ TEST(AsyncRestRetryLoopTest, SetsTimeout) {
       .WillRepeatedly(Return(true));
   EXPECT_CALL(*mock, IsPermanentFailure).WillRepeatedly(Return(false));
 
-  EXPECT_EQ(internal::CurrentOptions().get<TestOption>(), "");
-  internal::OptionsSpan span(Options{}.set<TestOption>("SetsTimeout"));
-  EXPECT_EQ(internal::CurrentOptions().get<TestOption>(), "SetsTimeout");
   AutomaticallyCreatedRestBackgroundThreads background;
 
   auto pending = AsyncRestRetryLoop(
       std::unique_ptr<RetryPolicyWithSetup>(std::move(mock)),
       TestBackoffPolicy(), Idempotency::kIdempotent, background.cq(),
-      [&](CompletionQueue&, std::unique_ptr<RestContext>, int /*request*/) {
-        EXPECT_EQ(internal::CurrentOptions().get<TestOption>(), "SetsTimeout");
+      [&](CompletionQueue&, std::unique_ptr<RestContext>,
+          Options const& options, int /*request*/) {
+        EXPECT_EQ(options.get<TestOption>(), "SetsTimeout");
         return make_ready_future(
             StatusOr<int>(Status(StatusCode::kUnavailable, "try again")));
       },
-      42, "error message");
+      Options{}.set<TestOption>("SetsTimeout"), 42, "error message");
   internal::OptionsSpan overlay(Options{}.set<TestOption>("uh-oh"));
   StatusOr<int> actual = pending.get();
   ASSERT_THAT(actual.status(), StatusIs(StatusCode::kUnavailable));
 }
 
 TEST(AsyncRestRetryLoopTest, CallOptionsDuringCancel) {
-  internal::OptionsSpan span(
-      Options{}.set<TestOption>("CallOptionsDuringCancel"));
   promise<StatusOr<int>> p([] {
     EXPECT_EQ(internal::CurrentOptions().get<TestOption>(),
               "CallOptionsDuringCancel");
@@ -430,7 +417,9 @@ TEST(AsyncRestRetryLoopTest, CallOptionsDuringCancel) {
   AutomaticallyCreatedRestBackgroundThreads background;
   auto pending = AsyncRestRetryLoop(
       TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kIdempotent,
-      background.cq(), [&p](auto&, auto, auto) { return p.get_future(); }, 42,
+      background.cq(),
+      [&p](auto&, auto, auto const&, auto) { return p.get_future(); },
+      Options{}.set<TestOption>("CallOptionsDuringCancel"), 42,
       "error message");
 
   internal::OptionsSpan overlay(Options{}.set<TestOption>("uh-oh"));
@@ -446,10 +435,9 @@ TEST_F(AsyncRestRetryLoopCancelTest, CancelAndSuccess) {
   google::cloud::CompletionQueue cq(mock);
   future<StatusOr<int>> actual = AsyncRestRetryLoop(
       TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kIdempotent, cq,
-      [this](CompletionQueue&, std::unique_ptr<RestContext>, int x) {
-        return SimulateRequest(x);
-      },
-      42, "test-location");
+      [this](CompletionQueue&, std::unique_ptr<RestContext>, Options const&,
+             int x) { return SimulateRequest(x); },
+      Options{}, 42, "test-location");
 
   // First simulate a regular request that results in a transient failure.
   auto p = WaitForRequest();
@@ -477,10 +465,9 @@ TEST_F(AsyncRestRetryLoopCancelTest, CancelWithFailure) {
   CompletionQueue cq(mock);
   future<StatusOr<int>> actual = AsyncRestRetryLoop(
       TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kIdempotent, cq,
-      [this](CompletionQueue&, std::unique_ptr<RestContext>, int x) {
-        return SimulateRequest(x);
-      },
-      42, "test-location");
+      [this](CompletionQueue&, std::unique_ptr<RestContext>, Options const&,
+             int x) { return SimulateRequest(x); },
+      Options{}, 42, "test-location");
 
   // First simulate a regular request.
   auto p = WaitForRequest();
@@ -512,10 +499,9 @@ TEST_F(AsyncRestRetryLoopCancelTest, CancelDuringTimer) {
   CompletionQueue cq(mock);
   future<StatusOr<int>> actual = AsyncRestRetryLoop(
       TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kIdempotent, cq,
-      [this](CompletionQueue&, std::unique_ptr<RestContext>, int x) {
-        return SimulateRequest(x);
-      },
-      42, "test-location");
+      [this](CompletionQueue&, std::unique_ptr<RestContext>, Options const&,
+             int x) { return SimulateRequest(x); },
+      Options{}, 42, "test-location");
 
   // First simulate a regular request.
   auto p = WaitForRequest();
@@ -549,10 +535,9 @@ TEST_F(AsyncRestRetryLoopCancelTest, ShutdownDuringTimer) {
   CompletionQueue cq(mock);
   future<StatusOr<int>> actual = AsyncRestRetryLoop(
       TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kIdempotent, cq,
-      [this](CompletionQueue&, std::unique_ptr<RestContext>, int x) {
-        return SimulateRequest(x);
-      },
-      42, "test-location");
+      [this](CompletionQueue&, std::unique_ptr<RestContext>, Options const&,
+             int x) { return SimulateRequest(x); },
+      Options{}, 42, "test-location");
 
   // First simulate a regular request.
   auto p = WaitForRequest();
@@ -589,17 +574,24 @@ using ::testing::SizeIs;
 TEST(AsyncRestRetryLoopTest, TracedBackoff) {
   auto span_catcher = testing_util::InstallSpanCatcher();
 
-  internal::OptionsSpan o(EnableTracing(Options{}));
+  AsyncSequencer<bool> sequencer;
+
   AutomaticallyCreatedRestBackgroundThreads background;
-  (void)AsyncRestRetryLoop(
+  auto actual = AsyncRestRetryLoop(
       TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kIdempotent,
       background.cq(),
-      [&](auto, auto, auto) {
-        return make_ready_future<StatusOr<int>>(
-            internal::UnavailableError("try again"));
+      [&](auto, auto, auto const&, auto) {
+        return sequencer.PushBack().then([](auto) {
+          return StatusOr<int>(internal::UnavailableError("try again"));
+        });
       },
-      42, "error message")
-      .get();
+      EnableTracing(Options{}), 42, "error message");
+
+  internal::OptionsSpan overlay(Options{});
+  for (auto i = 0; i != kMaxRetries + 1; ++i) {
+    sequencer.PopFront().set_value(true);
+  }
+  EXPECT_THAT(actual.get(), StatusIs(StatusCode::kUnavailable));
 
   auto spans = span_catcher->GetSpans();
   EXPECT_THAT(spans,
@@ -612,17 +604,16 @@ TEST(AsyncRestRetryLoopTest, CallSpanActiveThroughout) {
   AsyncSequencer<StatusOr<int>> sequencer;
   auto span = internal::MakeSpan("span");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::OptionsSpan o(EnableTracing(Options{}));
 
   AutomaticallyCreatedRestBackgroundThreads background;
   future<StatusOr<int>> actual = AsyncRestRetryLoop(
       TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kIdempotent,
       background.cq(),
-      [&](auto, auto, auto) {
+      [&](auto, auto, auto const&, auto) {
         EXPECT_THAT(span, IsActive());
         return sequencer.PushBack();
       },
-      42, "error message");
+      EnableTracing(Options{}), 42, "error message");
 
   sequencer.PopFront().set_value(internal::UnavailableError("try again"));
   sequencer.PopFront().set_value(0);
@@ -635,15 +626,15 @@ TEST(AsyncRestRetryLoopTest, CallSpanActiveDuringCancel) {
 
   auto span = internal::MakeSpan("span");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::OptionsSpan o(EnableTracing(Options{}));
 
   promise<StatusOr<int>> p([&] { EXPECT_THAT(span, IsActive()); });
 
   AutomaticallyCreatedRestBackgroundThreads background;
   future<StatusOr<int>> actual = AsyncRestRetryLoop(
       TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kIdempotent,
-      background.cq(), [&](auto, auto, auto) { return p.get_future(); }, 42,
-      "error message");
+      background.cq(),
+      [&](auto, auto, auto const&, auto) { return p.get_future(); },
+      EnableTracing(Options{}), 42, "error message");
 
   auto overlay = opentelemetry::trace::Scope(internal::MakeSpan("overlay"));
   actual.cancel();
