@@ -2311,6 +2311,13 @@ service {
   retryable_status_codes: ["kUnavailable"]
 }
 
+service {
+  service_proto_path: "google/cloud/language/v2/language_service.proto"
+  product_path: "google/cloud/language/v2"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # Logging
 service {
   service_proto_path: "google/logging/v2/logging.proto"
