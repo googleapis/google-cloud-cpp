@@ -3291,16 +3291,19 @@ class Client {
       " Please file a bug at https://github.com/googleapis/google-cloud-cpp"
       " if you have a use-case not covered by these.")
 #endif  // _MSC_VER
-  // NOLINTNEXTLINE(performance-unnecessary-value-param)
-  explicit Client(std::shared_ptr<internal::RawClient> client,
+  // We cannot `std::move(client)` because it is used twice in the delegated
+  // constructor parameters. And we cannot just use `RawClient const&` because
+  // we do hold on to the `std::shared_ptr<>`.
+  explicit Client(std::shared_ptr<internal::RawClient> const& client,
                   Policies&&... policies)
-      : Client(InternalOnlyNoDecorations{},
-               CreateDefaultInternalClient(
-                   internal::ApplyPolicies(
-                       internal::DefaultOptions(
-                           client->client_options().credentials(), {}),
-                       std::forward<Policies>(policies)...),
-                   client)) {
+      : Client(InternalOnly{},
+               internal::ApplyPolicies(
+                   internal::DefaultOptions(
+                       client->client_options().credentials(), {}),
+                   std::forward<Policies>(policies)...),
+               // We cannot std::move() because it is also used in the previous
+               // parameter.
+               client) {
   }
 
   /// Define a tag to disable automatic decorations of the RawClient.
@@ -3334,17 +3337,15 @@ class Client {
   struct InternalOnly {};
   struct InternalOnlyNoDecorations {};
 
-  Client(InternalOnly, Options const& opts)
-      : raw_client_(CreateDefaultInternalClient(opts)) {}
-  Client(InternalOnlyNoDecorations, std::shared_ptr<internal::RawClient> c)
-      : raw_client_(std::move(c)) {}
-
-  static std::shared_ptr<internal::RawClient> CreateDefaultInternalClient(
-      Options const& opts, std::unique_ptr<storage_internal::GenericStub> stub);
-  static std::shared_ptr<internal::RawClient> CreateDefaultInternalClient(
-      Options const& opts, std::shared_ptr<internal::RawClient> client);
-  static std::shared_ptr<internal::RawClient> CreateDefaultInternalClient(
-      Options const& opts);
+  /// Assume @p connection is fully initialized and decorated as needed.
+  Client(InternalOnlyNoDecorations,
+         std::shared_ptr<internal::RawClient> connection)
+      : raw_client_(std::move(connection)) {}
+  /// Apply all decorators to @p connection, based on @p opts.
+  Client(InternalOnly, Options const& opts,
+         std::shared_ptr<internal::RawClient> connection);
+  /// Create a connection from @p opts, applying all decorators if needed.
+  Client(InternalOnly, Options const& opts);
 
   ObjectReadStream ReadObjectImpl(
       internal::ReadObjectRangeRequest const& request);
@@ -3467,25 +3468,20 @@ struct ClientImplDetails {
     return client.UploadStreamResumable(source, request);
   }
 
-  template <typename... Policies>
-  static Client CreateClient(std::shared_ptr<internal::RawClient> c,
-                             Policies&&... p) {
-    auto opts =
-        internal::ApplyPolicies(c->options(), std::forward<Policies>(p)...);
-    return Client(Client::InternalOnlyNoDecorations{},
-                  Client::CreateDefaultInternalClient(opts, std::move(c)));
-  }
-
-  static Client CreateClient(
-      Options const& opts,
-      std::unique_ptr<storage_internal::GenericStub> stub) {
-    return Client(Client::InternalOnlyNoDecorations{},
-                  Client::CreateDefaultInternalClient(opts, std::move(stub)));
-  }
-
   static Client CreateWithoutDecorations(
       std::shared_ptr<internal::RawClient> c) {
     return Client(Client::InternalOnlyNoDecorations{}, std::move(c));
+  }
+
+  static Client CreateWithDecorations(Options const& opts,
+                                      std::shared_ptr<RawClient> client);
+
+  template <typename... Policies>
+  // NOLINTNEXTLINE(performance-unnecessary-value-param)
+  static Client CreateClient(std::shared_ptr<RawClient> c, Policies&&... p) {
+    auto opts =
+        internal::ApplyPolicies(c->options(), std::forward<Policies>(p)...);
+    return CreateWithDecorations(opts, std::move(c));
   }
 };
 

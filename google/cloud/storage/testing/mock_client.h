@@ -191,14 +191,13 @@ class MockStreambuf : public internal::ObjectWriteStreambuf {
 /**
  * Create a client configured to use the given mock.
  *
- * Unless you specifically need to mock the behavior of retries, prefer
- * `UndecoratedClientFromMock()`.
+ * @deprecated Unless you specifically need to mock the behavior of retries,
+ *    prefer `UndecoratedClientFromMock()`.
  */
 template <typename... Policies>
-Client ClientFromMock(std::shared_ptr<MockClient> const& mock,
-                      Policies&&... p) {
+Client ClientFromMock(std::shared_ptr<MockClient> mock, Policies&&... p) {
   return internal::ClientImplDetails::CreateClient(
-      mock, std::forward<Policies>(p)...);
+      std::move(mock), std::forward<Policies>(p)...);
 }
 
 /**
