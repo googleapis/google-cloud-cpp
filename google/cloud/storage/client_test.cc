@@ -248,7 +248,7 @@ TEST_F(ClientTest, OTelEnableTracing) {
 
   EXPECT_THAT(impl->InspectStackStructure(),
               ElementsAre("RestStub", "LoggingStub", "StorageConnectionImpl",
-                          "TracingClient"));
+                          "TracingConnection"));
 }
 
 TEST_F(ClientTest, OTelDisableTracing) {

@@ -15,7 +15,6 @@
 #include "google/cloud/storage/client.h"
 #include "google/cloud/storage/internal/connection_factory.h"
 #include "google/cloud/storage/internal/openssl_util.h"
-#include "google/cloud/storage/internal/tracing_client.h"
 #include "google/cloud/storage/oauth2/service_account_credentials.h"
 #include "google/cloud/internal/curl_options.h"
 #include "google/cloud/internal/filesystem.h"
