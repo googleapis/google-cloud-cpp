@@ -77,8 +77,13 @@ class MockOperation : public internal::AsyncGrpcOperation {
 
 /// @test A regression test for #5141
 TEST(CompletionQueueTest, TimerCancel) {
-  // There are a lot of magical numbers in this test, there were tuned to #5141
-  // 99 out of 100 times on my workstation.
+  // The magic numbers in this test (number of iterations, thread, etc.) were
+  // originally tuned to repro #5141 in 99 out of 100 runs using the
+  // workstations available at the time.  Since then, the number of iterations
+  // was reduced. The higher number was making the test too long with a the new,
+  // more deterministic albeit slower implementation of gRPC C++ Alarms. The new
+  // implementation expires the alarm in a I/O thread vs. sometimes using the
+  // thread scheduling the alarm.  We expect a repro in 10 out of 100 runs.
   CompletionQueue cq;
   std::vector<std::thread> runners;
   std::generate_n(std::back_inserter(runners), 4, [&cq] {
