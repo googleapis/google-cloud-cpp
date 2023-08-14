@@ -39,7 +39,7 @@ google::cloud::storage::Client DefaultGrpcClient(Options opts) {
     return std::make_unique<storage_internal::HybridStub>(opts);
   }();
   return storage::internal::ClientImplDetails::CreateWithoutDecorations(
-      MakeStorageConnection(opts, std::move(stub)));
+      MakeStorageConnection(std::move(opts), std::move(stub)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

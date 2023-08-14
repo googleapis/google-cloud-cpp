@@ -43,7 +43,7 @@ std::shared_ptr<storage::internal::RawClient> DecorateConnection(
  * the GCS+gRPC plugin. This plugin needs to create its own stubs and then
  * wrap them with all the decorators, including the `*Connection`. We also want
  * to make the plugin compile-time and link-time optional, so we cannot simply
- * initialize this stus in the usual `MakeStorageConnection(Options)` function.
+ * initialize this stub in the usual `MakeStorageConnection(Options)` function.
  */
 std::shared_ptr<storage::internal::RawClient> MakeStorageConnection(
     Options const& opts, std::unique_ptr<GenericStub> stub);

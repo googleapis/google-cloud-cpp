@@ -3291,6 +3291,9 @@ class Client {
       " Please file a bug at https://github.com/googleapis/google-cloud-cpp"
       " if you have a use-case not covered by these.")
 #endif  // _MSC_VER
+  // We cannot `std::move(client)` because it is used twice in the delegated
+  // constructor parameters. And we cannot just use `RawClient const&` because
+  // we do hold on to the `std::shared_ptr<>`.
   explicit Client(std::shared_ptr<internal::RawClient> const& client,
                   Policies&&... policies)
       : Client(InternalOnly{},
