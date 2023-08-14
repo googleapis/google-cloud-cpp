@@ -11,6 +11,11 @@ For example, this will override the default endpoint for `language_v1::LanguageS
 
 @snippet language_client_samples.cc set-client-endpoint
 
+Follow these links to find examples for other \c *Client classes:
+
+- [\c language_v1::LanguageServiceClient](@ref language_v1::LanguageServiceClient-endpoint-snippet)
+- [\c language_v2::LanguageServiceClient](@ref language_v2::LanguageServiceClient-endpoint-snippet)
+
 <!-- inject-endpoint-snippet-end -->
 
 */
@@ -20,6 +25,12 @@ For example, this will override the default endpoint for `language_v1::LanguageS
 /*! @page language_v1::LanguageServiceClient-endpoint-snippet Override language_v1::LanguageServiceClient Endpoint Configuration
 
 @snippet google/cloud/language/v1/samples/language_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page language_v2::LanguageServiceClient-endpoint-snippet Override language_v2::LanguageServiceClient Endpoint Configuration
+
+@snippet google/cloud/language/v2/samples/language_client_samples.cc set-client-endpoint
 
 */
 // <!-- inject-endpoint-pages-end -->

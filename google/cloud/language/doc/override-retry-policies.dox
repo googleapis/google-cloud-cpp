@@ -1,5 +1,4 @@
 /*!
-
 @page language-override-retry Override Retry, Backoff, and Idempotency Policies
 
 When it is safe to do so, the library automatically retries requests that fail
@@ -77,6 +76,11 @@ This assumes you have created a custom idempotency policy. Such as:
 @snippet language_client_samples.cc custom-idempotency-policy
 
 
+Follow these links to find examples for other \c *Client classes:
+
+- [\c language_v1::LanguageServiceClient](@ref language_v1::LanguageServiceClient-retry-snippet)
+- [\c language_v2::LanguageServiceClient](@ref language_v2::LanguageServiceClient-retry-snippet)
+
 <!-- inject-retry-snippet-end -->
 
 @section language-override-retry-more-information More Information
@@ -100,6 +104,18 @@ This shows how to override the retry policies for language_v1::LanguageServiceCl
 Assuming you have created a custom idempotency policy. Such as:
 
 @snippet google/cloud/language/v1/samples/language_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page language_v2::LanguageServiceClient-retry-snippet Override language_v2::LanguageServiceClient Retry Policies
+
+This shows how to override the retry policies for language_v2::LanguageServiceClient:
+
+@snippet google/cloud/language/v2/samples/language_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/language/v2/samples/language_client_samples.cc custom-idempotency-policy
 
 */
 // <!-- inject-retry-pages-end -->

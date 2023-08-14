@@ -7,7 +7,8 @@ a service that provides natural language understanding technologies, such as
 sentiment analysis, entity recognition, entity sentiment analysis, and other
 text annotations.
 
-While this library is **GA**, please note Google Cloud C++ client libraries do **not** follow [Semantic Versioning](https://semver.org/).
+While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
+[Semantic Versioning](https://semver.org/).
 
 @tableofcontents{HTML:2}
 
@@ -22,12 +23,18 @@ which should give you a taste of the Cloud Natural Language API C++ client libra
 ## Main classes
 
 <!-- inject-client-list-start -->
-The main class in this library is
-[`language_v1::LanguageServiceClient`](@ref google::cloud::language_v1::LanguageServiceClient). All RPCs are exposed
-as member functions of this class. Other classes provide helpers, configuration
-parameters, and infrastructure to mock
-[`language_v1::LanguageServiceClient`](@ref google::cloud::language_v1::LanguageServiceClient) when testing your
+This library offers multiple `*Client` classes, which are listed below. Each one
+of these classes exposes all the RPCs for a service as member functions of the
+class. This library groups multiple services because they are part of the same
+product or are often used together. A typical example may be the administrative
+and data plane operations for a single product.
+
+The library also has other classes that provide helpers, configuration
+parameters, and infrastructure to mock the `*Client` classes when testing your
 application.
+
+- [\c language_v1::LanguageServiceClient](@ref google::cloud::language_v1::LanguageServiceClient)
+- [\c language_v2::LanguageServiceClient](@ref google::cloud::language_v2::LanguageServiceClient)
 <!-- inject-client-list-end -->
 
 ## More Information
@@ -39,7 +46,8 @@ application.
   authentication credentials used by the library.
 - @ref language-override-retry - describes how to change the default retry
   policies.
-- @ref language-env - describes environment variables that can configure the behavior of the library.
+- @ref language-env - describes environment variables that can configure the
+  behavior of the library.
 
 [cloud-service-docs]: https://cloud.google.com/natural-language
 
