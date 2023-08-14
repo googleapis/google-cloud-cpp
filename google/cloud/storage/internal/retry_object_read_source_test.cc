@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/storage/client.h"
+#include "google/cloud/storage/internal/connection_impl.h"
 #include "google/cloud/storage/retry_policy.h"
 #include "google/cloud/storage/testing/canonical_errors.h"
 #include "google/cloud/storage/testing/mock_client.h"
@@ -89,7 +89,7 @@ TEST(RetryObjectReadSourceTest, NoFailures) {
     return std::unique_ptr<ObjectReadSource>(std::move(source));
   });
 
-  auto client = RetryClient::Create(std::move(mock));
+  auto client = StorageConnectionImpl::Create(std::move(mock));
   google::cloud::internal::OptionsSpan const span(BasicTestPolicies());
 
   auto source = client->ReadObject(ReadObjectRangeRequest{});
@@ -103,7 +103,7 @@ TEST(RetryObjectReadSourceTest, PermanentFailureOnSessionCreation) {
   EXPECT_CALL(*mock, options);  // Required in RetryClient::Create()
   EXPECT_CALL(*mock, ReadObject).WillOnce(Return(PermanentError()));
 
-  auto client = RetryClient::Create(std::move(mock));
+  auto client = StorageConnectionImpl::Create(std::move(mock));
   google::cloud::internal::OptionsSpan const span(BasicTestPolicies());
 
   auto source = client->ReadObject(ReadObjectRangeRequest{});
@@ -119,7 +119,7 @@ TEST(RetryObjectReadSourceTest, TransientFailuresExhaustOnSessionCreation) {
     return TransientError();
   });
 
-  auto client = RetryClient::Create(std::move(mock));
+  auto client = StorageConnectionImpl::Create(std::move(mock));
   google::cloud::internal::OptionsSpan const span(BasicTestPolicies());
 
   auto source = client->ReadObject(ReadObjectRangeRequest{});
@@ -140,7 +140,7 @@ TEST(RetryObjectReadSourceTest, SessionCreationRecoversFromTransientFailures) {
         return std::unique_ptr<ObjectReadSource>(std::move(source));
       });
 
-  auto client = RetryClient::Create(std::move(mock));
+  auto client = StorageConnectionImpl::Create(std::move(mock));
   google::cloud::internal::OptionsSpan const span(BasicTestPolicies());
 
   auto source = client->ReadObject(ReadObjectRangeRequest{});
@@ -160,7 +160,7 @@ TEST(RetryObjectReadSourceTest, PermanentReadFailure) {
     return std::unique_ptr<ObjectReadSource>(std::move(source));
   });
 
-  auto client = RetryClient::Create(std::move(mock));
+  auto client = StorageConnectionImpl::Create(std::move(mock));
   google::cloud::internal::OptionsSpan const span(BasicTestPolicies());
 
   auto source = client->ReadObject(ReadObjectRangeRequest{});
@@ -205,7 +205,7 @@ TEST(RetryObjectReadSourceTest, BackoffPolicyResetOnSuccess) {
     ++num_backoff_policy_called;
     return std::chrono::milliseconds(0);
   });
-  auto client = RetryClient::Create(std::move(mock));
+  auto client = StorageConnectionImpl::Create(std::move(mock));
   google::cloud::internal::OptionsSpan const span(
       BasicTestPolicies().set<BackoffPolicyOption>(
           backoff_policy_mock.clone()));
@@ -255,7 +255,7 @@ TEST(RetryObjectReadSourceTest, RetryPolicyExhaustedOnResetSession) {
       .WillOnce([] { return TransientError(); })
       .WillOnce([] { return TransientError(); });
 
-  auto client = RetryClient::Create(std::move(mock));
+  auto client = StorageConnectionImpl::Create(std::move(mock));
   google::cloud::internal::OptionsSpan const span(BasicTestPolicies());
 
   auto source = client->ReadObject(ReadObjectRangeRequest{});
@@ -290,7 +290,7 @@ TEST(RetryObjectReadSourceTest, TransientFailureWithReadLastOption) {
         return std::unique_ptr<ObjectReadSource>(std::move(source));
       });
 
-  auto client = RetryClient::Create(std::move(mock));
+  auto client = StorageConnectionImpl::Create(std::move(mock));
   google::cloud::internal::OptionsSpan const span(BasicTestPolicies());
 
   ReadObjectRangeRequest req("test_bucket", "test_object");
@@ -327,7 +327,7 @@ TEST(RetryObjectReadSourceTest, TransientFailureWithGeneration) {
         return std::unique_ptr<ObjectReadSource>(std::move(source));
       });
 
-  auto client = RetryClient::Create(std::move(mock));
+  auto client = StorageConnectionImpl::Create(std::move(mock));
   google::cloud::internal::OptionsSpan const span(BasicTestPolicies());
 
   ReadObjectRangeRequest req("test_bucket", "test_object");
@@ -414,7 +414,7 @@ TEST(RetryObjectReadSourceTest, DiscardDataForDecompressiveTranscoding) {
         return std::unique_ptr<ObjectReadSource>(std::move(source));
       });
 
-  auto client = RetryClient::Create(std::move(mock));
+  auto client = StorageConnectionImpl::Create(std::move(mock));
   google::cloud::internal::OptionsSpan const span(
       BasicTestPolicies().set<RetryPolicyOption>(
           LimitedErrorCountRetryPolicy(10).clone()));

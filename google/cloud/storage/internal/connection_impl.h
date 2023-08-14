@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_RETRY_CLIENT_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_RETRY_CLIENT_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_CONNECTION_IMPL_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_CONNECTION_IMPL_H
 
 #include "google/cloud/storage/idempotency_policy.h"
 #include "google/cloud/storage/internal/generic_stub.h"
@@ -31,14 +31,15 @@ namespace internal {
 /**
  * Decorates a `RawClient` to retry each operation.
  */
-class RetryClient : public RawClient,
-                    public std::enable_shared_from_this<RetryClient> {
+class StorageConnectionImpl
+    : public RawClient,
+      public std::enable_shared_from_this<StorageConnectionImpl> {
  public:
-  static std::shared_ptr<RetryClient> Create(
+  static std::shared_ptr<StorageConnectionImpl> Create(
       std::unique_ptr<storage_internal::GenericStub> stub,
       Options options = {});
 
-  ~RetryClient() override = default;
+  ~StorageConnectionImpl() override = default;
 
   ClientOptions const& client_options() const override;
   Options options() const override;
@@ -158,8 +159,8 @@ class RetryClient : public RawClient,
   std::vector<std::string> InspectStackStructure() const override;
 
  private:
-  explicit RetryClient(std::unique_ptr<storage_internal::GenericStub> stub,
-                       Options options);
+  explicit StorageConnectionImpl(
+      std::unique_ptr<storage_internal::GenericStub> stub, Options options);
 
   static std::unique_ptr<RetryPolicy> current_retry_policy();
   static std::unique_ptr<BackoffPolicy> current_backoff_policy();
@@ -181,4 +182,4 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_RETRY_CLIENT_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_CONNECTION_IMPL_H

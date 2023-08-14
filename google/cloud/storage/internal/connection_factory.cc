@@ -13,9 +13,9 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/connection_factory.h"
+#include "google/cloud/storage/internal/connection_impl.h"
 #include "google/cloud/storage/internal/generic_stub_adapter.h"
 #include "google/cloud/storage/internal/generic_stub_factory.h"
-#include "google/cloud/storage/internal/retry_client.h"
 #include "google/cloud/storage/internal/tracing_client.h"
 #include "google/cloud/internal/opentelemetry.h"
 
@@ -34,7 +34,7 @@ std::shared_ptr<storage::internal::RawClient> DecorateConnection(
 std::shared_ptr<storage::internal::RawClient> MakeStorageConnection(
     Options const& opts, std::unique_ptr<storage_internal::GenericStub> stub) {
   std::shared_ptr<storage::internal::RawClient> connection =
-      storage::internal::RetryClient::Create(std::move(stub), opts);
+      storage::internal::StorageConnectionImpl::Create(std::move(stub), opts);
   if (google::cloud::internal::TracingEnabled(opts)) {
     connection = storage_internal::MakeTracingClient(std::move(connection));
   }

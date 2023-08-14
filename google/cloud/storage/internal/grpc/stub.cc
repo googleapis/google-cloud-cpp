@@ -1170,7 +1170,7 @@ StatusOr<storage::internal::EmptyResponse> GrpcStub::DeleteNotification(
 }
 
 std::vector<std::string> GrpcStub::InspectStackStructure() const {
-  return {"GrpcClient"};
+  return {"GrpcStub"};
 }
 
 StatusOr<google::storage::v2::Bucket> GrpcStub::GetBucketMetadataImpl(
