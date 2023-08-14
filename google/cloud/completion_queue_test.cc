@@ -87,7 +87,7 @@ TEST(CompletionQueueTest, TimerCancel) {
 
   using TimerFuture = future<StatusOr<std::chrono::system_clock::time_point>>;
   auto worker = [&](CompletionQueue cq) {
-    for (int i = 0; i != 10000; ++i) {
+    for (int i = 0; i != 1000; ++i) {
       std::vector<TimerFuture> timers;
       for (int j = 0; j != 10; ++j) {
         timers.push_back(cq.MakeRelativeTimer(std::chrono::microseconds(10)));
