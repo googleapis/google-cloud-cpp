@@ -92,8 +92,7 @@ class VersionsClient {
   /// [Flow][google.cloud.dialogflow.cx.v3.Flow].
   ///
   /// @param parent  Required. The [Flow][google.cloud.dialogflow.cx.v3.Flow] to list all
-  ///  versions for. Format: `projects/<Project ID>/locations/<Location
-  ///  ID>/agents/<Agent ID>/flows/<Flow ID>`.
+  ///  versions for. Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/flows/<Flow ID>`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [StreamRange](@ref google::cloud::StreamRange)
@@ -117,7 +116,7 @@ class VersionsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.Flow]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L251}
+  /// [google.cloud.dialogflow.cx.v3.Flow]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L252}
   /// [google.cloud.dialogflow.cx.v3.ListVersionsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L195}
   /// [google.cloud.dialogflow.cx.v3.Version]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L148}
   ///
@@ -159,7 +158,7 @@ class VersionsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.Flow]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L251}
+  /// [google.cloud.dialogflow.cx.v3.Flow]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L252}
   /// [google.cloud.dialogflow.cx.v3.ListVersionsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L195}
   /// [google.cloud.dialogflow.cx.v3.Version]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L148}
   ///
@@ -173,8 +172,7 @@ class VersionsClient {
   /// Retrieves the specified [Version][google.cloud.dialogflow.cx.v3.Version].
   ///
   /// @param name  Required. The name of the [Version][google.cloud.dialogflow.cx.v3.Version].
-  ///  Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent
-  ///  ID>/flows/<Flow ID>/versions/<Version ID>`.
+  ///  Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/flows/<Flow ID>/versions/<Version ID>`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -243,8 +241,7 @@ class VersionsClient {
   ///
   /// @param parent  Required. The [Flow][google.cloud.dialogflow.cx.v3.Flow] to create an
   ///  [Version][google.cloud.dialogflow.cx.v3.Version] for. Format:
-  ///  `projects/<Project ID>/locations/<Location ID>/agents/<Agent
-  ///  ID>/flows/<Flow ID>`.
+  ///  `projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/flows/<Flow ID>`.
   /// @param version  Required. The version to create.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -268,7 +265,7 @@ class VersionsClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dialogflow.cx.v3.CreateVersionOperationMetadata]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L138}
   /// [google.cloud.dialogflow.cx.v3.CreateVersionRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L243}
-  /// [google.cloud.dialogflow.cx.v3.Flow]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L251}
+  /// [google.cloud.dialogflow.cx.v3.Flow]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L252}
   /// [google.cloud.dialogflow.cx.v3.Version]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L148}
   ///
   // clang-format on
@@ -318,7 +315,7 @@ class VersionsClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dialogflow.cx.v3.CreateVersionOperationMetadata]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L138}
   /// [google.cloud.dialogflow.cx.v3.CreateVersionRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L243}
-  /// [google.cloud.dialogflow.cx.v3.Flow]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L251}
+  /// [google.cloud.dialogflow.cx.v3.Flow]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L252}
   /// [google.cloud.dialogflow.cx.v3.Version]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L148}
   ///
   // clang-format on
@@ -392,8 +389,7 @@ class VersionsClient {
   /// Deletes the specified [Version][google.cloud.dialogflow.cx.v3.Version].
   ///
   /// @param name  Required. The name of the [Version][google.cloud.dialogflow.cx.v3.Version]
-  ///  to delete. Format: `projects/<Project ID>/locations/<Location
-  ///  ID>/agents/<Agent ID>/flows/<Flow ID>/versions/<Version ID>`.
+  ///  to delete. Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/flows/<Flow ID>/versions/<Version ID>`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [`Status`] object. If the request failed, the
@@ -456,8 +452,7 @@ class VersionsClient {
   ///   message](https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#empty)
   ///
   /// @param name  Required. The [Version][google.cloud.dialogflow.cx.v3.Version] to be loaded
-  ///  to draft flow. Format: `projects/<Project ID>/locations/<Location
-  ///  ID>/agents/<Agent ID>/flows/<Flow ID>/versions/<Version ID>`.
+  ///  to draft flow. Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/flows/<Flow ID>/versions/<Version ID>`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return A [`future`] that becomes satisfied when the LRO

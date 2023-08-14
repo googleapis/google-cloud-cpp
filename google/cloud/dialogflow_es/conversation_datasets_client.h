@@ -193,8 +193,7 @@ class ConversationDatasetsClient {
   /// Retrieves the specified conversation dataset.
   ///
   /// @param name  Required. The conversation dataset to retrieve. Format:
-  ///  `projects/<Project ID>/locations/<Location
-  ///  ID>/conversationDatasets/<Conversation Dataset ID>`
+  ///  `projects/<Project ID>/locations/<Location ID>/conversationDatasets/<Conversation Dataset ID>`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -344,8 +343,7 @@ class ConversationDatasetsClient {
   ///   message](https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#empty)
   ///
   /// @param name  Required. The conversation dataset to delete. Format:
-  ///  `projects/<Project ID>/locations/<Location
-  ///  ID>/conversationDatasets/<Conversation Dataset ID>`
+  ///  `projects/<Project ID>/locations/<Location ID>/conversationDatasets/<Conversation Dataset ID>`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return A [`future`] that becomes satisfied when the LRO

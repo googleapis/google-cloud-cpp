@@ -72,6 +72,18 @@ BareMetalSolutionLogging::AsyncUpdateInstance(
       cq, std::move(context), request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::baremetalsolution::v2::Instance>
+BareMetalSolutionLogging::RenameInstance(
+    grpc::ClientContext& context,
+    google::cloud::baremetalsolution::v2::RenameInstanceRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::baremetalsolution::v2::RenameInstanceRequest const&
+                 request) { return child_->RenameInstance(context, request); },
+      context, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 BareMetalSolutionLogging::AsyncResetInstance(
     google::cloud::CompletionQueue& cq,
@@ -118,6 +130,40 @@ BareMetalSolutionLogging::AsyncStopInstance(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+BareMetalSolutionLogging::AsyncEnableInteractiveSerialConsole(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::baremetalsolution::v2::
+        EnableInteractiveSerialConsoleRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::baremetalsolution::v2::
+                 EnableInteractiveSerialConsoleRequest const& request) {
+        return child_->AsyncEnableInteractiveSerialConsole(
+            cq, std::move(context), request);
+      },
+      cq, std::move(context), request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+BareMetalSolutionLogging::AsyncDisableInteractiveSerialConsole(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::baremetalsolution::v2::
+        DisableInteractiveSerialConsoleRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::baremetalsolution::v2::
+                 DisableInteractiveSerialConsoleRequest const& request) {
+        return child_->AsyncDisableInteractiveSerialConsole(
+            cq, std::move(context), request);
+      },
+      cq, std::move(context), request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
 BareMetalSolutionLogging::AsyncDetachLun(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
@@ -130,6 +176,38 @@ BareMetalSolutionLogging::AsyncDetachLun(
         return child_->AsyncDetachLun(cq, std::move(context), request);
       },
       cq, std::move(context), request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::baremetalsolution::v2::ListSSHKeysResponse>
+BareMetalSolutionLogging::ListSSHKeys(
+    grpc::ClientContext& context,
+    google::cloud::baremetalsolution::v2::ListSSHKeysRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::baremetalsolution::v2::ListSSHKeysRequest const&
+                 request) { return child_->ListSSHKeys(context, request); },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::baremetalsolution::v2::SSHKey>
+BareMetalSolutionLogging::CreateSSHKey(
+    grpc::ClientContext& context,
+    google::cloud::baremetalsolution::v2::CreateSSHKeyRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::baremetalsolution::v2::CreateSSHKeyRequest const&
+                 request) { return child_->CreateSSHKey(context, request); },
+      context, request, __func__, tracing_options_);
+}
+
+Status BareMetalSolutionLogging::DeleteSSHKey(
+    grpc::ClientContext& context,
+    google::cloud::baremetalsolution::v2::DeleteSSHKeyRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::baremetalsolution::v2::DeleteSSHKeyRequest const&
+                 request) { return child_->DeleteSSHKey(context, request); },
+      context, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::ListVolumesResponse>
@@ -165,6 +243,32 @@ BareMetalSolutionLogging::AsyncUpdateVolume(
              google::cloud::baremetalsolution::v2::UpdateVolumeRequest const&
                  request) {
         return child_->AsyncUpdateVolume(cq, std::move(context), request);
+      },
+      cq, std::move(context), request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::baremetalsolution::v2::Volume>
+BareMetalSolutionLogging::RenameVolume(
+    grpc::ClientContext& context,
+    google::cloud::baremetalsolution::v2::RenameVolumeRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::baremetalsolution::v2::RenameVolumeRequest const&
+                 request) { return child_->RenameVolume(context, request); },
+      context, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+BareMetalSolutionLogging::AsyncEvictVolume(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::baremetalsolution::v2::EvictVolumeRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::baremetalsolution::v2::EvictVolumeRequest const&
+                 request) {
+        return child_->AsyncEvictVolume(cq, std::move(context), request);
       },
       cq, std::move(context), request, __func__, tracing_options_);
 }
@@ -234,6 +338,77 @@ BareMetalSolutionLogging::AsyncUpdateNetwork(
       cq, std::move(context), request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::baremetalsolution::v2::VolumeSnapshot>
+BareMetalSolutionLogging::CreateVolumeSnapshot(
+    grpc::ClientContext& context,
+    google::cloud::baremetalsolution::v2::CreateVolumeSnapshotRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::baremetalsolution::v2::
+                 CreateVolumeSnapshotRequest const& request) {
+        return child_->CreateVolumeSnapshot(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+BareMetalSolutionLogging::AsyncRestoreVolumeSnapshot(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::baremetalsolution::v2::RestoreVolumeSnapshotRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::baremetalsolution::v2::
+                 RestoreVolumeSnapshotRequest const& request) {
+        return child_->AsyncRestoreVolumeSnapshot(cq, std::move(context),
+                                                  request);
+      },
+      cq, std::move(context), request, __func__, tracing_options_);
+}
+
+Status BareMetalSolutionLogging::DeleteVolumeSnapshot(
+    grpc::ClientContext& context,
+    google::cloud::baremetalsolution::v2::DeleteVolumeSnapshotRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::baremetalsolution::v2::
+                 DeleteVolumeSnapshotRequest const& request) {
+        return child_->DeleteVolumeSnapshot(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::baremetalsolution::v2::VolumeSnapshot>
+BareMetalSolutionLogging::GetVolumeSnapshot(
+    grpc::ClientContext& context,
+    google::cloud::baremetalsolution::v2::GetVolumeSnapshotRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context,
+          google::cloud::baremetalsolution::v2::GetVolumeSnapshotRequest const&
+              request) { return child_->GetVolumeSnapshot(context, request); },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::baremetalsolution::v2::ListVolumeSnapshotsResponse>
+BareMetalSolutionLogging::ListVolumeSnapshots(
+    grpc::ClientContext& context,
+    google::cloud::baremetalsolution::v2::ListVolumeSnapshotsRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::baremetalsolution::v2::
+                 ListVolumeSnapshotsRequest const& request) {
+        return child_->ListVolumeSnapshots(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::baremetalsolution::v2::Lun>
 BareMetalSolutionLogging::GetLun(
     grpc::ClientContext& context,
@@ -256,6 +431,21 @@ BareMetalSolutionLogging::ListLuns(
              google::cloud::baremetalsolution::v2::ListLunsRequest const&
                  request) { return child_->ListLuns(context, request); },
       context, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+BareMetalSolutionLogging::AsyncEvictLun(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::baremetalsolution::v2::EvictLunRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::baremetalsolution::v2::EvictLunRequest const&
+                 request) {
+        return child_->AsyncEvictLun(cq, std::move(context), request);
+      },
+      cq, std::move(context), request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::NfsShare>
@@ -294,6 +484,142 @@ BareMetalSolutionLogging::AsyncUpdateNfsShare(
         return child_->AsyncUpdateNfsShare(cq, std::move(context), request);
       },
       cq, std::move(context), request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+BareMetalSolutionLogging::AsyncCreateNfsShare(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::baremetalsolution::v2::CreateNfsShareRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::baremetalsolution::v2::CreateNfsShareRequest const&
+                 request) {
+        return child_->AsyncCreateNfsShare(cq, std::move(context), request);
+      },
+      cq, std::move(context), request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::baremetalsolution::v2::NfsShare>
+BareMetalSolutionLogging::RenameNfsShare(
+    grpc::ClientContext& context,
+    google::cloud::baremetalsolution::v2::RenameNfsShareRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::baremetalsolution::v2::RenameNfsShareRequest const&
+                 request) { return child_->RenameNfsShare(context, request); },
+      context, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+BareMetalSolutionLogging::AsyncDeleteNfsShare(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::baremetalsolution::v2::DeleteNfsShareRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::baremetalsolution::v2::DeleteNfsShareRequest const&
+                 request) {
+        return child_->AsyncDeleteNfsShare(cq, std::move(context), request);
+      },
+      cq, std::move(context), request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::baremetalsolution::v2::ListProvisioningQuotasResponse>
+BareMetalSolutionLogging::ListProvisioningQuotas(
+    grpc::ClientContext& context,
+    google::cloud::baremetalsolution::v2::ListProvisioningQuotasRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::baremetalsolution::v2::
+                 ListProvisioningQuotasRequest const& request) {
+        return child_->ListProvisioningQuotas(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::baremetalsolution::v2::SubmitProvisioningConfigResponse>
+BareMetalSolutionLogging::SubmitProvisioningConfig(
+    grpc::ClientContext& context,
+    google::cloud::baremetalsolution::v2::SubmitProvisioningConfigRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::baremetalsolution::v2::
+                 SubmitProvisioningConfigRequest const& request) {
+        return child_->SubmitProvisioningConfig(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::baremetalsolution::v2::ProvisioningConfig>
+BareMetalSolutionLogging::GetProvisioningConfig(
+    grpc::ClientContext& context,
+    google::cloud::baremetalsolution::v2::GetProvisioningConfigRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::baremetalsolution::v2::
+                 GetProvisioningConfigRequest const& request) {
+        return child_->GetProvisioningConfig(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::baremetalsolution::v2::ProvisioningConfig>
+BareMetalSolutionLogging::CreateProvisioningConfig(
+    grpc::ClientContext& context,
+    google::cloud::baremetalsolution::v2::CreateProvisioningConfigRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::baremetalsolution::v2::
+                 CreateProvisioningConfigRequest const& request) {
+        return child_->CreateProvisioningConfig(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::baremetalsolution::v2::ProvisioningConfig>
+BareMetalSolutionLogging::UpdateProvisioningConfig(
+    grpc::ClientContext& context,
+    google::cloud::baremetalsolution::v2::UpdateProvisioningConfigRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::baremetalsolution::v2::
+                 UpdateProvisioningConfigRequest const& request) {
+        return child_->UpdateProvisioningConfig(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::baremetalsolution::v2::Network>
+BareMetalSolutionLogging::RenameNetwork(
+    grpc::ClientContext& context,
+    google::cloud::baremetalsolution::v2::RenameNetworkRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::baremetalsolution::v2::RenameNetworkRequest const&
+                 request) { return child_->RenameNetwork(context, request); },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::baremetalsolution::v2::ListOSImagesResponse>
+BareMetalSolutionLogging::ListOSImages(
+    grpc::ClientContext& context,
+    google::cloud::baremetalsolution::v2::ListOSImagesRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::baremetalsolution::v2::ListOSImagesRequest const&
+                 request) { return child_->ListOSImages(context, request); },
+      context, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

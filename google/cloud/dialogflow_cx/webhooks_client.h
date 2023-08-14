@@ -167,8 +167,7 @@ class WebhooksClient {
   /// Retrieves the specified webhook.
   ///
   /// @param name  Required. The name of the webhook.
-  ///  Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent
-  ///  ID>/webhooks/<Webhook ID>`.
+  ///  Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/webhooks/<Webhook ID>`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -350,8 +349,7 @@ class WebhooksClient {
   /// Deletes the specified webhook.
   ///
   /// @param name  Required. The name of the webhook to delete.
-  ///  Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent
-  ///  ID>/webhooks/<Webhook ID>`.
+  ///  Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/webhooks/<Webhook ID>`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [`Status`] object. If the request failed, the

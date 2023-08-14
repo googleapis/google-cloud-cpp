@@ -56,6 +56,11 @@ class BareMetalSolutionLogging : public BareMetalSolutionStub {
       google::cloud::baremetalsolution::v2::UpdateInstanceRequest const&
           request) override;
 
+  StatusOr<google::cloud::baremetalsolution::v2::Instance> RenameInstance(
+      grpc::ClientContext& context,
+      google::cloud::baremetalsolution::v2::RenameInstanceRequest const&
+          request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncResetInstance(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -74,10 +79,39 @@ class BareMetalSolutionLogging : public BareMetalSolutionStub {
       google::cloud::baremetalsolution::v2::StopInstanceRequest const& request)
       override;
 
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncEnableInteractiveSerialConsole(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::baremetalsolution::v2::
+          EnableInteractiveSerialConsoleRequest const& request) override;
+
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncDisableInteractiveSerialConsole(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::baremetalsolution::v2::
+          DisableInteractiveSerialConsoleRequest const& request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncDetachLun(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::baremetalsolution::v2::DetachLunRequest const& request)
+      override;
+
+  StatusOr<google::cloud::baremetalsolution::v2::ListSSHKeysResponse>
+  ListSSHKeys(grpc::ClientContext& context,
+              google::cloud::baremetalsolution::v2::ListSSHKeysRequest const&
+                  request) override;
+
+  StatusOr<google::cloud::baremetalsolution::v2::SSHKey> CreateSSHKey(
+      grpc::ClientContext& context,
+      google::cloud::baremetalsolution::v2::CreateSSHKeyRequest const& request)
+      override;
+
+  Status DeleteSSHKey(
+      grpc::ClientContext& context,
+      google::cloud::baremetalsolution::v2::DeleteSSHKeyRequest const& request)
       override;
 
   StatusOr<google::cloud::baremetalsolution::v2::ListVolumesResponse>
@@ -94,6 +128,17 @@ class BareMetalSolutionLogging : public BareMetalSolutionStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::baremetalsolution::v2::UpdateVolumeRequest const& request)
+      override;
+
+  StatusOr<google::cloud::baremetalsolution::v2::Volume> RenameVolume(
+      grpc::ClientContext& context,
+      google::cloud::baremetalsolution::v2::RenameVolumeRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncEvictVolume(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::baremetalsolution::v2::EvictVolumeRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncResizeVolume(
@@ -124,6 +169,35 @@ class BareMetalSolutionLogging : public BareMetalSolutionStub {
       google::cloud::baremetalsolution::v2::UpdateNetworkRequest const& request)
       override;
 
+  StatusOr<google::cloud::baremetalsolution::v2::VolumeSnapshot>
+  CreateVolumeSnapshot(
+      grpc::ClientContext& context,
+      google::cloud::baremetalsolution::v2::CreateVolumeSnapshotRequest const&
+          request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncRestoreVolumeSnapshot(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::baremetalsolution::v2::RestoreVolumeSnapshotRequest const&
+          request) override;
+
+  Status DeleteVolumeSnapshot(
+      grpc::ClientContext& context,
+      google::cloud::baremetalsolution::v2::DeleteVolumeSnapshotRequest const&
+          request) override;
+
+  StatusOr<google::cloud::baremetalsolution::v2::VolumeSnapshot>
+  GetVolumeSnapshot(
+      grpc::ClientContext& context,
+      google::cloud::baremetalsolution::v2::GetVolumeSnapshotRequest const&
+          request) override;
+
+  StatusOr<google::cloud::baremetalsolution::v2::ListVolumeSnapshotsResponse>
+  ListVolumeSnapshots(
+      grpc::ClientContext& context,
+      google::cloud::baremetalsolution::v2::ListVolumeSnapshotsRequest const&
+          request) override;
+
   StatusOr<google::cloud::baremetalsolution::v2::Lun> GetLun(
       grpc::ClientContext& context,
       google::cloud::baremetalsolution::v2::GetLunRequest const& request)
@@ -132,6 +206,12 @@ class BareMetalSolutionLogging : public BareMetalSolutionStub {
   StatusOr<google::cloud::baremetalsolution::v2::ListLunsResponse> ListLuns(
       grpc::ClientContext& context,
       google::cloud::baremetalsolution::v2::ListLunsRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncEvictLun(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::baremetalsolution::v2::EvictLunRequest const& request)
       override;
 
   StatusOr<google::cloud::baremetalsolution::v2::NfsShare> GetNfsShare(
@@ -150,6 +230,64 @@ class BareMetalSolutionLogging : public BareMetalSolutionStub {
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::baremetalsolution::v2::UpdateNfsShareRequest const&
           request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncCreateNfsShare(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::baremetalsolution::v2::CreateNfsShareRequest const&
+          request) override;
+
+  StatusOr<google::cloud::baremetalsolution::v2::NfsShare> RenameNfsShare(
+      grpc::ClientContext& context,
+      google::cloud::baremetalsolution::v2::RenameNfsShareRequest const&
+          request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncDeleteNfsShare(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::baremetalsolution::v2::DeleteNfsShareRequest const&
+          request) override;
+
+  StatusOr<google::cloud::baremetalsolution::v2::ListProvisioningQuotasResponse>
+  ListProvisioningQuotas(
+      grpc::ClientContext& context,
+      google::cloud::baremetalsolution::v2::ListProvisioningQuotasRequest const&
+          request) override;
+
+  StatusOr<
+      google::cloud::baremetalsolution::v2::SubmitProvisioningConfigResponse>
+  SubmitProvisioningConfig(
+      grpc::ClientContext& context,
+      google::cloud::baremetalsolution::v2::
+          SubmitProvisioningConfigRequest const& request) override;
+
+  StatusOr<google::cloud::baremetalsolution::v2::ProvisioningConfig>
+  GetProvisioningConfig(
+      grpc::ClientContext& context,
+      google::cloud::baremetalsolution::v2::GetProvisioningConfigRequest const&
+          request) override;
+
+  StatusOr<google::cloud::baremetalsolution::v2::ProvisioningConfig>
+  CreateProvisioningConfig(
+      grpc::ClientContext& context,
+      google::cloud::baremetalsolution::v2::
+          CreateProvisioningConfigRequest const& request) override;
+
+  StatusOr<google::cloud::baremetalsolution::v2::ProvisioningConfig>
+  UpdateProvisioningConfig(
+      grpc::ClientContext& context,
+      google::cloud::baremetalsolution::v2::
+          UpdateProvisioningConfigRequest const& request) override;
+
+  StatusOr<google::cloud::baremetalsolution::v2::Network> RenameNetwork(
+      grpc::ClientContext& context,
+      google::cloud::baremetalsolution::v2::RenameNetworkRequest const& request)
+      override;
+
+  StatusOr<google::cloud::baremetalsolution::v2::ListOSImagesResponse>
+  ListOSImages(grpc::ClientContext& context,
+               google::cloud::baremetalsolution::v2::ListOSImagesRequest const&
+                   request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,

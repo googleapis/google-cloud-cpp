@@ -266,18 +266,6 @@ auto constexpr kDialogflowCXSessionIdCpp = R"""(
  projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/environments/<Environment ID>/sessions/<Session ID>
  @endcode)""";
 
-auto constexpr kDialogflowCXTransitionRouteGroupIdProto = R"""(
- to delete. Format: `projects/<Project ID>/locations/<Location
- ID>/agents/<Agent ID>/flows/<Flow ID>/transitionRouteGroups/<Transition
- Route Group ID>`.)""";
-
-auto constexpr kDialogflowCXTransitionRouteGroupIdCpp = R"""(
- to delete. Format:
-
- @code
- projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/flows/<Flow ID>/transitionRouteGroups/<Transition Route Group ID>
- @endcode)""";
-
 auto constexpr kDialogflowCXEntityTypeIdProto = R"""(
  Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent
  ID>/sessions/<Session ID>/entityTypes/<Entity Type ID>` or
@@ -388,9 +376,11 @@ ParameterCommentSubstitution substitutions[] = {
     {kDialogflowCXEnvironmentIdProto1, kDialogflowCXEnvironmentIdCpp1},
     {kDialogflowCXEnvironmentIdProto2, kDialogflowCXEnvironmentIdCpp2},
     {kDialogflowCXSessionIdProto, kDialogflowCXSessionIdCpp},
-    {kDialogflowCXTransitionRouteGroupIdProto,
-     kDialogflowCXTransitionRouteGroupIdCpp},
     {kDialogflowCXEntityTypeIdProto, kDialogflowCXEntityTypeIdCpp},
+    {"<Agent\n ID>", "<Agent ID>"},
+    {"<Location\n ID>", "<Location ID>"},
+    {"<Transition\n Route Group ID>", "<Transition Route Group ID>"},
+    {"<Agent ID>.", "<Agent ID>`."},  // missing close quote
 
     // From dialogflow/v2.
     {kDialogflowESSessionIdProto, kDialogflowESSessionIdCpp},

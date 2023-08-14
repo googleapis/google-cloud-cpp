@@ -161,8 +161,7 @@ class SecuritySettingsServiceClient {
   /// returned settings may be stale by up to 1 minute.
   ///
   /// @param name  Required. Resource name of the settings.
-  ///  Format: `projects/<Project ID>/locations/<Location
-  ///  ID>/securitySettings/<security settings ID>`.
+  ///  Format: `projects/<Project ID>/locations/<Location ID>/securitySettings/<security settings ID>`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -373,8 +372,7 @@ class SecuritySettingsServiceClient {
   ///
   /// @param name  Required. The name of the
   ///  [SecuritySettings][google.cloud.dialogflow.cx.v3.SecuritySettings] to
-  ///  delete. Format: `projects/<Project ID>/locations/<Location
-  ///  ID>/securitySettings/<Security Settings ID>`.
+  ///  delete. Format: `projects/<Project ID>/locations/<Location ID>/securitySettings/<Security Settings ID>`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [`Status`] object. If the request failed, the

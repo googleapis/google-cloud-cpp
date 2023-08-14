@@ -122,8 +122,8 @@ class BareMetalSolutionClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.baremetalsolution.v2.Instance]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L35}
-  /// [google.cloud.baremetalsolution.v2.ListInstancesRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L136}
+  /// [google.cloud.baremetalsolution.v2.Instance]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L37}
+  /// [google.cloud.baremetalsolution.v2.ListInstancesRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L165}
   ///
   // clang-format on
   StreamRange<google::cloud::baremetalsolution::v2::Instance> ListInstances(
@@ -162,8 +162,8 @@ class BareMetalSolutionClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.baremetalsolution.v2.Instance]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L35}
-  /// [google.cloud.baremetalsolution.v2.ListInstancesRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L136}
+  /// [google.cloud.baremetalsolution.v2.Instance]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L37}
+  /// [google.cloud.baremetalsolution.v2.ListInstancesRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L165}
   ///
   // clang-format on
   StreamRange<google::cloud::baremetalsolution::v2::Instance> ListInstances(
@@ -189,8 +189,8 @@ class BareMetalSolutionClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.baremetalsolution.v2.GetInstanceRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L125}
-  /// [google.cloud.baremetalsolution.v2.Instance]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L35}
+  /// [google.cloud.baremetalsolution.v2.GetInstanceRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L154}
+  /// [google.cloud.baremetalsolution.v2.Instance]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L37}
   ///
   // clang-format on
   StatusOr<google::cloud::baremetalsolution::v2::Instance> GetInstance(
@@ -220,8 +220,8 @@ class BareMetalSolutionClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.baremetalsolution.v2.GetInstanceRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L125}
-  /// [google.cloud.baremetalsolution.v2.Instance]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L35}
+  /// [google.cloud.baremetalsolution.v2.GetInstanceRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L154}
+  /// [google.cloud.baremetalsolution.v2.Instance]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L37}
   ///
   // clang-format on
   StatusOr<google::cloud::baremetalsolution::v2::Instance> GetInstance(
@@ -261,8 +261,8 @@ class BareMetalSolutionClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.baremetalsolution.v2.Instance]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L35}
-  /// [google.cloud.baremetalsolution.v2.UpdateInstanceRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L169}
+  /// [google.cloud.baremetalsolution.v2.Instance]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L37}
+  /// [google.cloud.baremetalsolution.v2.UpdateInstanceRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L198}
   ///
   // clang-format on
   future<StatusOr<google::cloud::baremetalsolution::v2::Instance>>
@@ -300,13 +300,77 @@ class BareMetalSolutionClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.baremetalsolution.v2.Instance]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L35}
-  /// [google.cloud.baremetalsolution.v2.UpdateInstanceRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L169}
+  /// [google.cloud.baremetalsolution.v2.Instance]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L37}
+  /// [google.cloud.baremetalsolution.v2.UpdateInstanceRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L198}
   ///
   // clang-format on
   future<StatusOr<google::cloud::baremetalsolution::v2::Instance>>
   UpdateInstance(
       google::cloud::baremetalsolution::v2::UpdateInstanceRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// RenameInstance sets a new name for an instance.
+  /// Use with caution, previous names become immediately invalidated.
+  ///
+  /// @param name  Required. The `name` field is used to identify the instance.
+  ///  Format: projects/{project}/locations/{location}/instances/{instance}
+  /// @param new_instance_id  Required. The new `id` of the instance.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.baremetalsolution.v2.Instance])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.baremetalsolution.v2.Instance]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L37}
+  /// [google.cloud.baremetalsolution.v2.RenameInstanceRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L214}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::baremetalsolution::v2::Instance> RenameInstance(
+      std::string const& name, std::string const& new_instance_id,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// RenameInstance sets a new name for an instance.
+  /// Use with caution, previous names become immediately invalidated.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.baremetalsolution.v2.RenameInstanceRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.baremetalsolution.v2.Instance])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.baremetalsolution.v2.Instance]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L37}
+  /// [google.cloud.baremetalsolution.v2.RenameInstanceRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L214}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::baremetalsolution::v2::Instance> RenameInstance(
+      google::cloud::baremetalsolution::v2::RenameInstanceRequest const&
           request,
       Options opts = {});
 
@@ -336,8 +400,8 @@ class BareMetalSolutionClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.baremetalsolution.v2.ResetInstanceRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L185}
-  /// [google.cloud.baremetalsolution.v2.ResetInstanceResponse]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/baremetalsolution.proto#L288}
+  /// [google.cloud.baremetalsolution.v2.ResetInstanceRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L229}
+  /// [google.cloud.baremetalsolution.v2.ResetInstanceResponse]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L240}
   ///
   // clang-format on
   future<StatusOr<google::cloud::baremetalsolution::v2::ResetInstanceResponse>>
@@ -374,8 +438,8 @@ class BareMetalSolutionClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.baremetalsolution.v2.ResetInstanceRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L185}
-  /// [google.cloud.baremetalsolution.v2.ResetInstanceResponse]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/baremetalsolution.proto#L288}
+  /// [google.cloud.baremetalsolution.v2.ResetInstanceRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L229}
+  /// [google.cloud.baremetalsolution.v2.ResetInstanceResponse]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L240}
   ///
   // clang-format on
   future<StatusOr<google::cloud::baremetalsolution::v2::ResetInstanceResponse>>
@@ -408,8 +472,8 @@ class BareMetalSolutionClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.baremetalsolution.v2.StartInstanceRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L196}
-  /// [google.cloud.baremetalsolution.v2.StartInstanceResponse]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L285}
+  /// [google.cloud.baremetalsolution.v2.StartInstanceRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L243}
+  /// [google.cloud.baremetalsolution.v2.StartInstanceResponse]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L254}
   ///
   // clang-format on
   future<StatusOr<google::cloud::baremetalsolution::v2::StartInstanceResponse>>
@@ -445,8 +509,8 @@ class BareMetalSolutionClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.baremetalsolution.v2.StartInstanceRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L196}
-  /// [google.cloud.baremetalsolution.v2.StartInstanceResponse]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L285}
+  /// [google.cloud.baremetalsolution.v2.StartInstanceRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L243}
+  /// [google.cloud.baremetalsolution.v2.StartInstanceResponse]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L254}
   ///
   // clang-format on
   future<StatusOr<google::cloud::baremetalsolution::v2::StartInstanceResponse>>
@@ -479,8 +543,8 @@ class BareMetalSolutionClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.baremetalsolution.v2.StopInstanceRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L207}
-  /// [google.cloud.baremetalsolution.v2.StopInstanceResponse]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L288}
+  /// [google.cloud.baremetalsolution.v2.StopInstanceRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L257}
+  /// [google.cloud.baremetalsolution.v2.StopInstanceResponse]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L268}
   ///
   // clang-format on
   future<StatusOr<google::cloud::baremetalsolution::v2::StopInstanceResponse>>
@@ -516,13 +580,161 @@ class BareMetalSolutionClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.baremetalsolution.v2.StopInstanceRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L207}
-  /// [google.cloud.baremetalsolution.v2.StopInstanceResponse]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L288}
+  /// [google.cloud.baremetalsolution.v2.StopInstanceRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L257}
+  /// [google.cloud.baremetalsolution.v2.StopInstanceResponse]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L268}
   ///
   // clang-format on
   future<StatusOr<google::cloud::baremetalsolution::v2::StopInstanceResponse>>
   StopInstance(
       google::cloud::baremetalsolution::v2::StopInstanceRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Enable the interactive serial console feature on an instance.
+  ///
+  /// @param name  Required. Name of the resource.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.baremetalsolution.v2.EnableInteractiveSerialConsoleResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.baremetalsolution.v2.EnableInteractiveSerialConsoleRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L271}
+  /// [google.cloud.baremetalsolution.v2.EnableInteractiveSerialConsoleResponse]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L282}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::baremetalsolution::v2::
+                      EnableInteractiveSerialConsoleResponse>>
+  EnableInteractiveSerialConsole(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Enable the interactive serial console feature on an instance.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.baremetalsolution.v2.EnableInteractiveSerialConsoleRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.baremetalsolution.v2.EnableInteractiveSerialConsoleResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.baremetalsolution.v2.EnableInteractiveSerialConsoleRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L271}
+  /// [google.cloud.baremetalsolution.v2.EnableInteractiveSerialConsoleResponse]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L282}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::baremetalsolution::v2::
+                      EnableInteractiveSerialConsoleResponse>>
+  EnableInteractiveSerialConsole(
+      google::cloud::baremetalsolution::v2::
+          EnableInteractiveSerialConsoleRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Disable the interactive serial console feature on an instance.
+  ///
+  /// @param name  Required. Name of the resource.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.baremetalsolution.v2.DisableInteractiveSerialConsoleResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.baremetalsolution.v2.DisableInteractiveSerialConsoleRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L285}
+  /// [google.cloud.baremetalsolution.v2.DisableInteractiveSerialConsoleResponse]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L296}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::baremetalsolution::v2::
+                      DisableInteractiveSerialConsoleResponse>>
+  DisableInteractiveSerialConsole(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Disable the interactive serial console feature on an instance.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.baremetalsolution.v2.DisableInteractiveSerialConsoleRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.baremetalsolution.v2.DisableInteractiveSerialConsoleResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.baremetalsolution.v2.DisableInteractiveSerialConsoleRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L285}
+  /// [google.cloud.baremetalsolution.v2.DisableInteractiveSerialConsoleResponse]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L296}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::baremetalsolution::v2::
+                      DisableInteractiveSerialConsoleResponse>>
+  DisableInteractiveSerialConsole(
+      google::cloud::baremetalsolution::v2::
+          DisableInteractiveSerialConsoleRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -551,8 +763,8 @@ class BareMetalSolutionClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.baremetalsolution.v2.DetachLunRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L218}
-  /// [google.cloud.baremetalsolution.v2.Instance]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L35}
+  /// [google.cloud.baremetalsolution.v2.DetachLunRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L299}
+  /// [google.cloud.baremetalsolution.v2.Instance]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L37}
   ///
   // clang-format on
   future<StatusOr<google::cloud::baremetalsolution::v2::Instance>> DetachLun(
@@ -588,12 +800,211 @@ class BareMetalSolutionClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.baremetalsolution.v2.DetachLunRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L218}
-  /// [google.cloud.baremetalsolution.v2.Instance]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L35}
+  /// [google.cloud.baremetalsolution.v2.DetachLunRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L299}
+  /// [google.cloud.baremetalsolution.v2.Instance]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L37}
   ///
   // clang-format on
   future<StatusOr<google::cloud::baremetalsolution::v2::Instance>> DetachLun(
       google::cloud::baremetalsolution::v2::DetachLunRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists the public SSH keys registered for the specified project.
+  /// These SSH keys are used only for the interactive serial console feature.
+  ///
+  /// @param parent  Required. The parent containing the SSH keys.
+  ///  Currently, the only valid value for the location is "global".
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.baremetalsolution.v2.SSHKey], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.baremetalsolution.v2.ListSSHKeysRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/ssh_key.proto#L46}
+  /// [google.cloud.baremetalsolution.v2.SSHKey]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/ssh_key.proto#L31}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::baremetalsolution::v2::SSHKey> ListSSHKeys(
+      std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists the public SSH keys registered for the specified project.
+  /// These SSH keys are used only for the interactive serial console feature.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.baremetalsolution.v2.ListSSHKeysRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.baremetalsolution.v2.SSHKey], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.baremetalsolution.v2.ListSSHKeysRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/ssh_key.proto#L46}
+  /// [google.cloud.baremetalsolution.v2.SSHKey]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/ssh_key.proto#L31}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::baremetalsolution::v2::SSHKey> ListSSHKeys(
+      google::cloud::baremetalsolution::v2::ListSSHKeysRequest request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Register a public SSH key in the specified project for use with the
+  /// interactive serial console feature.
+  ///
+  /// @param parent  Required. The parent containing the SSH keys.
+  /// @param ssh_key  Required. The SSH key to register.
+  /// @param ssh_key_id  Required. The ID to use for the key, which will become the final component
+  ///  of the key's resource name.
+  ///  @n
+  ///  This value must match the regex:
+  ///    [a-zA-Z0-9@.\-_]{1,64}
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.baremetalsolution.v2.SSHKey])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.baremetalsolution.v2.CreateSSHKeyRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/ssh_key.proto#L74}
+  /// [google.cloud.baremetalsolution.v2.SSHKey]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/ssh_key.proto#L31}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::baremetalsolution::v2::SSHKey> CreateSSHKey(
+      std::string const& parent,
+      google::cloud::baremetalsolution::v2::SSHKey const& ssh_key,
+      std::string const& ssh_key_id, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Register a public SSH key in the specified project for use with the
+  /// interactive serial console feature.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.baremetalsolution.v2.CreateSSHKeyRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.baremetalsolution.v2.SSHKey])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.baremetalsolution.v2.CreateSSHKeyRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/ssh_key.proto#L74}
+  /// [google.cloud.baremetalsolution.v2.SSHKey]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/ssh_key.proto#L31}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::baremetalsolution::v2::SSHKey> CreateSSHKey(
+      google::cloud::baremetalsolution::v2::CreateSSHKeyRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a public SSH key registered in the specified project.
+  ///
+  /// @param name  Required. The name of the SSH key to delete.
+  ///  Currently, the only valid value for the location is "global".
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.baremetalsolution.v2.DeleteSSHKeyRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/ssh_key.proto#L95}
+  ///
+  // clang-format on
+  Status DeleteSSHKey(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a public SSH key registered in the specified project.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.baremetalsolution.v2.DeleteSSHKeyRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.baremetalsolution.v2.DeleteSSHKeyRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/ssh_key.proto#L95}
+  ///
+  // clang-format on
+  Status DeleteSSHKey(
+      google::cloud::baremetalsolution::v2::DeleteSSHKeyRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -624,8 +1035,8 @@ class BareMetalSolutionClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.baremetalsolution.v2.ListVolumesRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/volume.proto#L169}
-  /// [google.cloud.baremetalsolution.v2.Volume]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/volume.proto#L32}
+  /// [google.cloud.baremetalsolution.v2.ListVolumesRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/volume.proto#L247}
+  /// [google.cloud.baremetalsolution.v2.Volume]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/volume.proto#L34}
   ///
   // clang-format on
   StreamRange<google::cloud::baremetalsolution::v2::Volume> ListVolumes(
@@ -664,8 +1075,8 @@ class BareMetalSolutionClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.baremetalsolution.v2.ListVolumesRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/volume.proto#L169}
-  /// [google.cloud.baremetalsolution.v2.Volume]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/volume.proto#L32}
+  /// [google.cloud.baremetalsolution.v2.ListVolumesRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/volume.proto#L247}
+  /// [google.cloud.baremetalsolution.v2.Volume]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/volume.proto#L34}
   ///
   // clang-format on
   StreamRange<google::cloud::baremetalsolution::v2::Volume> ListVolumes(
@@ -691,8 +1102,8 @@ class BareMetalSolutionClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.baremetalsolution.v2.GetVolumeRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/volume.proto#L158}
-  /// [google.cloud.baremetalsolution.v2.Volume]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/volume.proto#L32}
+  /// [google.cloud.baremetalsolution.v2.GetVolumeRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/volume.proto#L236}
+  /// [google.cloud.baremetalsolution.v2.Volume]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/volume.proto#L34}
   ///
   // clang-format on
   StatusOr<google::cloud::baremetalsolution::v2::Volume> GetVolume(
@@ -722,8 +1133,8 @@ class BareMetalSolutionClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.baremetalsolution.v2.GetVolumeRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/volume.proto#L158}
-  /// [google.cloud.baremetalsolution.v2.Volume]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/volume.proto#L32}
+  /// [google.cloud.baremetalsolution.v2.GetVolumeRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/volume.proto#L236}
+  /// [google.cloud.baremetalsolution.v2.Volume]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/volume.proto#L34}
   ///
   // clang-format on
   StatusOr<google::cloud::baremetalsolution::v2::Volume> GetVolume(
@@ -740,11 +1151,7 @@ class BareMetalSolutionClient {
   ///  Format: projects/{project}/locations/{location}/volumes/{volume}
   /// @param update_mask  The list of fields to update.
   ///  The only currently supported fields are:
-  ///    `snapshot_auto_delete_behavior`
-  ///    `snapshot_schedule_policy_name`
   ///    'labels'
-  ///    'snapshot_enabled'
-  ///    'snapshot_reservation_detail.reserved_space_percent'
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return A [`future`] that becomes satisfied when the LRO
@@ -765,8 +1172,8 @@ class BareMetalSolutionClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.baremetalsolution.v2.UpdateVolumeRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/volume.proto#L202}
-  /// [google.cloud.baremetalsolution.v2.Volume]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/volume.proto#L32}
+  /// [google.cloud.baremetalsolution.v2.UpdateVolumeRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/volume.proto#L280}
+  /// [google.cloud.baremetalsolution.v2.Volume]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/volume.proto#L34}
   ///
   // clang-format on
   future<StatusOr<google::cloud::baremetalsolution::v2::Volume>> UpdateVolume(
@@ -803,12 +1210,148 @@ class BareMetalSolutionClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.baremetalsolution.v2.UpdateVolumeRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/volume.proto#L202}
-  /// [google.cloud.baremetalsolution.v2.Volume]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/volume.proto#L32}
+  /// [google.cloud.baremetalsolution.v2.UpdateVolumeRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/volume.proto#L280}
+  /// [google.cloud.baremetalsolution.v2.Volume]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/volume.proto#L34}
   ///
   // clang-format on
   future<StatusOr<google::cloud::baremetalsolution::v2::Volume>> UpdateVolume(
       google::cloud::baremetalsolution::v2::UpdateVolumeRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// RenameVolume sets a new name for a volume.
+  /// Use with caution, previous names become immediately invalidated.
+  ///
+  /// @param name  Required. The `name` field is used to identify the volume.
+  ///  Format: projects/{project}/locations/{location}/volumes/{volume}
+  /// @param new_volume_id  Required. The new `id` of the volume.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.baremetalsolution.v2.Volume])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.baremetalsolution.v2.RenameVolumeRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/volume.proto#L294}
+  /// [google.cloud.baremetalsolution.v2.Volume]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/volume.proto#L34}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::baremetalsolution::v2::Volume> RenameVolume(
+      std::string const& name, std::string const& new_volume_id,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// RenameVolume sets a new name for a volume.
+  /// Use with caution, previous names become immediately invalidated.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.baremetalsolution.v2.RenameVolumeRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.baremetalsolution.v2.Volume])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.baremetalsolution.v2.RenameVolumeRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/volume.proto#L294}
+  /// [google.cloud.baremetalsolution.v2.Volume]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/volume.proto#L34}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::baremetalsolution::v2::Volume> RenameVolume(
+      google::cloud::baremetalsolution::v2::RenameVolumeRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Skips volume's cooloff and deletes it now.
+  /// Volume must be in cooloff state.
+  ///
+  /// @param name  Required. The name of the Volume.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.baremetalsolution.v2.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.baremetalsolution.v2.EvictVolumeRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/volume.proto#L309}
+  /// [google.cloud.baremetalsolution.v2.OperationMetadata]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/common.proto#L31}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::baremetalsolution::v2::OperationMetadata>>
+  EvictVolume(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Skips volume's cooloff and deletes it now.
+  /// Volume must be in cooloff state.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.baremetalsolution.v2.EvictVolumeRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.baremetalsolution.v2.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.baremetalsolution.v2.EvictVolumeRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/volume.proto#L309}
+  /// [google.cloud.baremetalsolution.v2.OperationMetadata]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/common.proto#L31}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::baremetalsolution::v2::OperationMetadata>>
+  EvictVolume(
+      google::cloud::baremetalsolution::v2::EvictVolumeRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -837,8 +1380,8 @@ class BareMetalSolutionClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.baremetalsolution.v2.ResizeVolumeRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/volume.proto#L220}
-  /// [google.cloud.baremetalsolution.v2.Volume]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/volume.proto#L32}
+  /// [google.cloud.baremetalsolution.v2.ResizeVolumeRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/volume.proto#L320}
+  /// [google.cloud.baremetalsolution.v2.Volume]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/volume.proto#L34}
   ///
   // clang-format on
   future<StatusOr<google::cloud::baremetalsolution::v2::Volume>> ResizeVolume(
@@ -874,8 +1417,8 @@ class BareMetalSolutionClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.baremetalsolution.v2.ResizeVolumeRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/volume.proto#L220}
-  /// [google.cloud.baremetalsolution.v2.Volume]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/volume.proto#L32}
+  /// [google.cloud.baremetalsolution.v2.ResizeVolumeRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/volume.proto#L320}
+  /// [google.cloud.baremetalsolution.v2.Volume]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/volume.proto#L34}
   ///
   // clang-format on
   future<StatusOr<google::cloud::baremetalsolution::v2::Volume>> ResizeVolume(
@@ -910,8 +1453,8 @@ class BareMetalSolutionClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.baremetalsolution.v2.ListNetworksRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/network.proto#L214}
-  /// [google.cloud.baremetalsolution.v2.Network]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/network.proto#L32}
+  /// [google.cloud.baremetalsolution.v2.ListNetworksRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/network.proto#L259}
+  /// [google.cloud.baremetalsolution.v2.Network]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/network.proto#L36}
   ///
   // clang-format on
   StreamRange<google::cloud::baremetalsolution::v2::Network> ListNetworks(
@@ -950,8 +1493,8 @@ class BareMetalSolutionClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.baremetalsolution.v2.ListNetworksRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/network.proto#L214}
-  /// [google.cloud.baremetalsolution.v2.Network]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/network.proto#L32}
+  /// [google.cloud.baremetalsolution.v2.ListNetworksRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/network.proto#L259}
+  /// [google.cloud.baremetalsolution.v2.Network]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/network.proto#L36}
   ///
   // clang-format on
   StreamRange<google::cloud::baremetalsolution::v2::Network> ListNetworks(
@@ -978,8 +1521,8 @@ class BareMetalSolutionClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.baremetalsolution.v2.ListNetworkUsageRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/network.proto#L270}
-  /// [google.cloud.baremetalsolution.v2.ListNetworkUsageResponse]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/network.proto#L281}
+  /// [google.cloud.baremetalsolution.v2.ListNetworkUsageRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/network.proto#L315}
+  /// [google.cloud.baremetalsolution.v2.ListNetworkUsageResponse]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/network.proto#L326}
   ///
   // clang-format on
   StatusOr<google::cloud::baremetalsolution::v2::ListNetworkUsageResponse>
@@ -1010,8 +1553,8 @@ class BareMetalSolutionClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.baremetalsolution.v2.ListNetworkUsageRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/network.proto#L270}
-  /// [google.cloud.baremetalsolution.v2.ListNetworkUsageResponse]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/network.proto#L281}
+  /// [google.cloud.baremetalsolution.v2.ListNetworkUsageRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/network.proto#L315}
+  /// [google.cloud.baremetalsolution.v2.ListNetworkUsageResponse]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/network.proto#L326}
   ///
   // clang-format on
   StatusOr<google::cloud::baremetalsolution::v2::ListNetworkUsageResponse>
@@ -1039,8 +1582,8 @@ class BareMetalSolutionClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.baremetalsolution.v2.GetNetworkRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/network.proto#L203}
-  /// [google.cloud.baremetalsolution.v2.Network]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/network.proto#L32}
+  /// [google.cloud.baremetalsolution.v2.GetNetworkRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/network.proto#L248}
+  /// [google.cloud.baremetalsolution.v2.Network]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/network.proto#L36}
   ///
   // clang-format on
   StatusOr<google::cloud::baremetalsolution::v2::Network> GetNetwork(
@@ -1070,8 +1613,8 @@ class BareMetalSolutionClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.baremetalsolution.v2.GetNetworkRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/network.proto#L203}
-  /// [google.cloud.baremetalsolution.v2.Network]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/network.proto#L32}
+  /// [google.cloud.baremetalsolution.v2.GetNetworkRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/network.proto#L248}
+  /// [google.cloud.baremetalsolution.v2.Network]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/network.proto#L36}
   ///
   // clang-format on
   StatusOr<google::cloud::baremetalsolution::v2::Network> GetNetwork(
@@ -1088,7 +1631,7 @@ class BareMetalSolutionClient {
   ///  Format: projects/{project}/locations/{location}/networks/{network}
   /// @param update_mask  The list of fields to update.
   ///  The only currently supported fields are:
-  ///    `labels`, `reservations`
+  ///    `labels`, `reservations`, `vrf.vlan_attachments`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return A [`future`] that becomes satisfied when the LRO
@@ -1109,8 +1652,8 @@ class BareMetalSolutionClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.baremetalsolution.v2.Network]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/network.proto#L32}
-  /// [google.cloud.baremetalsolution.v2.UpdateNetworkRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/network.proto#L247}
+  /// [google.cloud.baremetalsolution.v2.Network]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/network.proto#L36}
+  /// [google.cloud.baremetalsolution.v2.UpdateNetworkRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/network.proto#L292}
   ///
   // clang-format on
   future<StatusOr<google::cloud::baremetalsolution::v2::Network>> UpdateNetwork(
@@ -1147,12 +1690,351 @@ class BareMetalSolutionClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.baremetalsolution.v2.Network]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/network.proto#L32}
-  /// [google.cloud.baremetalsolution.v2.UpdateNetworkRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/network.proto#L247}
+  /// [google.cloud.baremetalsolution.v2.Network]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/network.proto#L36}
+  /// [google.cloud.baremetalsolution.v2.UpdateNetworkRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/network.proto#L292}
   ///
   // clang-format on
   future<StatusOr<google::cloud::baremetalsolution::v2::Network>> UpdateNetwork(
       google::cloud::baremetalsolution::v2::UpdateNetworkRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Takes a snapshot of a boot volume.
+  /// Returns INVALID_ARGUMENT if called for a non-boot volume.
+  ///
+  /// @param parent  Required. The volume to snapshot.
+  /// @param volume_snapshot  Required. The snapshot to create.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.baremetalsolution.v2.VolumeSnapshot])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.baremetalsolution.v2.CreateVolumeSnapshotRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/volume_snapshot.proto#L129}
+  /// [google.cloud.baremetalsolution.v2.VolumeSnapshot]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/volume_snapshot.proto#L32}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::baremetalsolution::v2::VolumeSnapshot>
+  CreateVolumeSnapshot(
+      std::string const& parent,
+      google::cloud::baremetalsolution::v2::VolumeSnapshot const&
+          volume_snapshot,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Takes a snapshot of a boot volume.
+  /// Returns INVALID_ARGUMENT if called for a non-boot volume.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.baremetalsolution.v2.CreateVolumeSnapshotRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.baremetalsolution.v2.VolumeSnapshot])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.baremetalsolution.v2.CreateVolumeSnapshotRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/volume_snapshot.proto#L129}
+  /// [google.cloud.baremetalsolution.v2.VolumeSnapshot]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/volume_snapshot.proto#L32}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::baremetalsolution::v2::VolumeSnapshot>
+  CreateVolumeSnapshot(
+      google::cloud::baremetalsolution::v2::CreateVolumeSnapshotRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Uses the specified snapshot to restore its parent volume.
+  /// Returns INVALID_ARGUMENT if called for a non-boot volume.
+  ///
+  /// @param volume_snapshot  Required. Name of the snapshot which will be used to restore its parent
+  ///  volume.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.baremetalsolution.v2.VolumeSnapshot] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.baremetalsolution.v2.RestoreVolumeSnapshotRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/volume_snapshot.proto#L143}
+  /// [google.cloud.baremetalsolution.v2.VolumeSnapshot]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/volume_snapshot.proto#L32}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::baremetalsolution::v2::VolumeSnapshot>>
+  RestoreVolumeSnapshot(std::string const& volume_snapshot, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Uses the specified snapshot to restore its parent volume.
+  /// Returns INVALID_ARGUMENT if called for a non-boot volume.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.baremetalsolution.v2.RestoreVolumeSnapshotRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.baremetalsolution.v2.VolumeSnapshot] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.baremetalsolution.v2.RestoreVolumeSnapshotRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/volume_snapshot.proto#L143}
+  /// [google.cloud.baremetalsolution.v2.VolumeSnapshot]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/volume_snapshot.proto#L32}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::baremetalsolution::v2::VolumeSnapshot>>
+  RestoreVolumeSnapshot(
+      google::cloud::baremetalsolution::v2::RestoreVolumeSnapshotRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a volume snapshot.
+  /// Returns INVALID_ARGUMENT if called for a non-boot volume.
+  ///
+  /// @param name  Required. The name of the snapshot to delete.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.baremetalsolution.v2.DeleteVolumeSnapshotRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/volume_snapshot.proto#L118}
+  ///
+  // clang-format on
+  Status DeleteVolumeSnapshot(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a volume snapshot.
+  /// Returns INVALID_ARGUMENT if called for a non-boot volume.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.baremetalsolution.v2.DeleteVolumeSnapshotRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.baremetalsolution.v2.DeleteVolumeSnapshotRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/volume_snapshot.proto#L118}
+  ///
+  // clang-format on
+  Status DeleteVolumeSnapshot(
+      google::cloud::baremetalsolution::v2::DeleteVolumeSnapshotRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Returns the specified snapshot resource.
+  /// Returns INVALID_ARGUMENT if called for a non-boot volume.
+  ///
+  /// @param name  Required. The name of the snapshot.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.baremetalsolution.v2.VolumeSnapshot])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.baremetalsolution.v2.GetVolumeSnapshotRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/volume_snapshot.proto#L77}
+  /// [google.cloud.baremetalsolution.v2.VolumeSnapshot]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/volume_snapshot.proto#L32}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::baremetalsolution::v2::VolumeSnapshot>
+  GetVolumeSnapshot(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Returns the specified snapshot resource.
+  /// Returns INVALID_ARGUMENT if called for a non-boot volume.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.baremetalsolution.v2.GetVolumeSnapshotRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.baremetalsolution.v2.VolumeSnapshot])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.baremetalsolution.v2.GetVolumeSnapshotRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/volume_snapshot.proto#L77}
+  /// [google.cloud.baremetalsolution.v2.VolumeSnapshot]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/volume_snapshot.proto#L32}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::baremetalsolution::v2::VolumeSnapshot>
+  GetVolumeSnapshot(
+      google::cloud::baremetalsolution::v2::GetVolumeSnapshotRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Retrieves the list of snapshots for the specified volume.
+  /// Returns a response with an empty list of snapshots if called
+  /// for a non-boot volume.
+  ///
+  /// @param parent  Required. Parent value for ListVolumesRequest.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.baremetalsolution.v2.VolumeSnapshot], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.baremetalsolution.v2.ListVolumeSnapshotsRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/volume_snapshot.proto#L88}
+  /// [google.cloud.baremetalsolution.v2.VolumeSnapshot]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/volume_snapshot.proto#L32}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::baremetalsolution::v2::VolumeSnapshot>
+  ListVolumeSnapshots(std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Retrieves the list of snapshots for the specified volume.
+  /// Returns a response with an empty list of snapshots if called
+  /// for a non-boot volume.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.baremetalsolution.v2.ListVolumeSnapshotsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.baremetalsolution.v2.VolumeSnapshot], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.baremetalsolution.v2.ListVolumeSnapshotsRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/volume_snapshot.proto#L88}
+  /// [google.cloud.baremetalsolution.v2.VolumeSnapshot]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/volume_snapshot.proto#L32}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::baremetalsolution::v2::VolumeSnapshot>
+  ListVolumeSnapshots(
+      google::cloud::baremetalsolution::v2::ListVolumeSnapshotsRequest request,
       Options opts = {});
 
   // clang-format off
@@ -1174,8 +2056,8 @@ class BareMetalSolutionClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.baremetalsolution.v2.GetLunRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/lun.proto#L111}
-  /// [google.cloud.baremetalsolution.v2.Lun]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/lun.proto#L31}
+  /// [google.cloud.baremetalsolution.v2.GetLunRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/lun.proto#L128}
+  /// [google.cloud.baremetalsolution.v2.Lun]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/lun.proto#L32}
   ///
   // clang-format on
   StatusOr<google::cloud::baremetalsolution::v2::Lun> GetLun(
@@ -1205,8 +2087,8 @@ class BareMetalSolutionClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.baremetalsolution.v2.GetLunRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/lun.proto#L111}
-  /// [google.cloud.baremetalsolution.v2.Lun]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/lun.proto#L31}
+  /// [google.cloud.baremetalsolution.v2.GetLunRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/lun.proto#L128}
+  /// [google.cloud.baremetalsolution.v2.Lun]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/lun.proto#L32}
   ///
   // clang-format on
   StatusOr<google::cloud::baremetalsolution::v2::Lun> GetLun(
@@ -1241,8 +2123,8 @@ class BareMetalSolutionClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.baremetalsolution.v2.ListLunsRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/lun.proto#L122}
-  /// [google.cloud.baremetalsolution.v2.Lun]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/lun.proto#L31}
+  /// [google.cloud.baremetalsolution.v2.ListLunsRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/lun.proto#L139}
+  /// [google.cloud.baremetalsolution.v2.Lun]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/lun.proto#L32}
   ///
   // clang-format on
   StreamRange<google::cloud::baremetalsolution::v2::Lun> ListLuns(
@@ -1281,13 +2163,85 @@ class BareMetalSolutionClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.baremetalsolution.v2.ListLunsRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/lun.proto#L122}
-  /// [google.cloud.baremetalsolution.v2.Lun]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/lun.proto#L31}
+  /// [google.cloud.baremetalsolution.v2.ListLunsRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/lun.proto#L139}
+  /// [google.cloud.baremetalsolution.v2.Lun]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/lun.proto#L32}
   ///
   // clang-format on
   StreamRange<google::cloud::baremetalsolution::v2::Lun> ListLuns(
       google::cloud::baremetalsolution::v2::ListLunsRequest request,
       Options opts = {});
+
+  // clang-format off
+  ///
+  /// Skips lun's cooloff and deletes it now.
+  /// Lun must be in cooloff state.
+  ///
+  /// @param name  Required. The name of the lun.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.baremetalsolution.v2.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.baremetalsolution.v2.EvictLunRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/lun.proto#L169}
+  /// [google.cloud.baremetalsolution.v2.OperationMetadata]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/common.proto#L31}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::baremetalsolution::v2::OperationMetadata>>
+  EvictLun(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Skips lun's cooloff and deletes it now.
+  /// Lun must be in cooloff state.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.baremetalsolution.v2.EvictLunRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.baremetalsolution.v2.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.baremetalsolution.v2.EvictLunRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/lun.proto#L169}
+  /// [google.cloud.baremetalsolution.v2.OperationMetadata]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/common.proto#L31}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::baremetalsolution::v2::OperationMetadata>>
+  EvictLun(google::cloud::baremetalsolution::v2::EvictLunRequest const& request,
+           Options opts = {});
 
   // clang-format off
   ///
@@ -1308,7 +2262,7 @@ class BareMetalSolutionClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.baremetalsolution.v2.GetNfsShareRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/nfs_share.proto#L109}
+  /// [google.cloud.baremetalsolution.v2.GetNfsShareRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/nfs_share.proto#L151}
   /// [google.cloud.baremetalsolution.v2.NfsShare]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/nfs_share.proto#L32}
   ///
   // clang-format on
@@ -1339,7 +2293,7 @@ class BareMetalSolutionClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.baremetalsolution.v2.GetNfsShareRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/nfs_share.proto#L109}
+  /// [google.cloud.baremetalsolution.v2.GetNfsShareRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/nfs_share.proto#L151}
   /// [google.cloud.baremetalsolution.v2.NfsShare]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/nfs_share.proto#L32}
   ///
   // clang-format on
@@ -1375,7 +2329,7 @@ class BareMetalSolutionClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.baremetalsolution.v2.ListNfsSharesRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/nfs_share.proto#L120}
+  /// [google.cloud.baremetalsolution.v2.ListNfsSharesRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/nfs_share.proto#L162}
   /// [google.cloud.baremetalsolution.v2.NfsShare]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/nfs_share.proto#L32}
   ///
   // clang-format on
@@ -1415,7 +2369,7 @@ class BareMetalSolutionClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.baremetalsolution.v2.ListNfsSharesRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/nfs_share.proto#L120}
+  /// [google.cloud.baremetalsolution.v2.ListNfsSharesRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/nfs_share.proto#L162}
   /// [google.cloud.baremetalsolution.v2.NfsShare]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/nfs_share.proto#L32}
   ///
   // clang-format on
@@ -1434,6 +2388,7 @@ class BareMetalSolutionClient {
   /// @param update_mask  The list of fields to update.
   ///  The only currently supported fields are:
   ///    `labels`
+  ///    `allowed_clients`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return A [`future`] that becomes satisfied when the LRO
@@ -1455,7 +2410,7 @@ class BareMetalSolutionClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.baremetalsolution.v2.NfsShare]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/nfs_share.proto#L32}
-  /// [google.cloud.baremetalsolution.v2.UpdateNfsShareRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/nfs_share.proto#L153}
+  /// [google.cloud.baremetalsolution.v2.UpdateNfsShareRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/nfs_share.proto#L195}
   ///
   // clang-format on
   future<StatusOr<google::cloud::baremetalsolution::v2::NfsShare>>
@@ -1494,13 +2449,697 @@ class BareMetalSolutionClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.baremetalsolution.v2.NfsShare]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/nfs_share.proto#L32}
-  /// [google.cloud.baremetalsolution.v2.UpdateNfsShareRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/nfs_share.proto#L153}
+  /// [google.cloud.baremetalsolution.v2.UpdateNfsShareRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/nfs_share.proto#L195}
   ///
   // clang-format on
   future<StatusOr<google::cloud::baremetalsolution::v2::NfsShare>>
   UpdateNfsShare(
       google::cloud::baremetalsolution::v2::UpdateNfsShareRequest const&
           request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Create an NFS share.
+  ///
+  /// @param parent  Required. The parent project and location.
+  /// @param nfs_share  Required. The NfsShare to create.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.baremetalsolution.v2.NfsShare] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.baremetalsolution.v2.CreateNfsShareRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/nfs_share.proto#L225}
+  /// [google.cloud.baremetalsolution.v2.NfsShare]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/nfs_share.proto#L32}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::baremetalsolution::v2::NfsShare>>
+  CreateNfsShare(
+      std::string const& parent,
+      google::cloud::baremetalsolution::v2::NfsShare const& nfs_share,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Create an NFS share.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.baremetalsolution.v2.CreateNfsShareRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.baremetalsolution.v2.NfsShare] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.baremetalsolution.v2.CreateNfsShareRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/nfs_share.proto#L225}
+  /// [google.cloud.baremetalsolution.v2.NfsShare]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/nfs_share.proto#L32}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::baremetalsolution::v2::NfsShare>>
+  CreateNfsShare(
+      google::cloud::baremetalsolution::v2::CreateNfsShareRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// RenameNfsShare sets a new name for an nfsshare.
+  /// Use with caution, previous names become immediately invalidated.
+  ///
+  /// @param name  Required. The `name` field is used to identify the nfsshare.
+  ///  Format: projects/{project}/locations/{location}/nfsshares/{nfsshare}
+  /// @param new_nfsshare_id  Required. The new `id` of the nfsshare.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.baremetalsolution.v2.NfsShare])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.baremetalsolution.v2.NfsShare]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/nfs_share.proto#L32}
+  /// [google.cloud.baremetalsolution.v2.RenameNfsShareRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/nfs_share.proto#L210}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::baremetalsolution::v2::NfsShare> RenameNfsShare(
+      std::string const& name, std::string const& new_nfsshare_id,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// RenameNfsShare sets a new name for an nfsshare.
+  /// Use with caution, previous names become immediately invalidated.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.baremetalsolution.v2.RenameNfsShareRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.baremetalsolution.v2.NfsShare])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.baremetalsolution.v2.NfsShare]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/nfs_share.proto#L32}
+  /// [google.cloud.baremetalsolution.v2.RenameNfsShareRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/nfs_share.proto#L210}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::baremetalsolution::v2::NfsShare> RenameNfsShare(
+      google::cloud::baremetalsolution::v2::RenameNfsShareRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Delete an NFS share. The underlying volume is automatically deleted.
+  ///
+  /// @param name  Required. The name of the NFS share to delete.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.baremetalsolution.v2.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.baremetalsolution.v2.DeleteNfsShareRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/nfs_share.proto#L239}
+  /// [google.cloud.baremetalsolution.v2.OperationMetadata]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/common.proto#L31}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::baremetalsolution::v2::OperationMetadata>>
+  DeleteNfsShare(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Delete an NFS share. The underlying volume is automatically deleted.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.baremetalsolution.v2.DeleteNfsShareRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.baremetalsolution.v2.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.baremetalsolution.v2.DeleteNfsShareRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/nfs_share.proto#L239}
+  /// [google.cloud.baremetalsolution.v2.OperationMetadata]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/common.proto#L31}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::baremetalsolution::v2::OperationMetadata>>
+  DeleteNfsShare(
+      google::cloud::baremetalsolution::v2::DeleteNfsShareRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// List the budget details to provision resources on a given project.
+  ///
+  /// @param parent  Required. Parent value for ListProvisioningQuotasRequest.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.baremetalsolution.v2.ProvisioningQuota], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.baremetalsolution.v2.ListProvisioningQuotasRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/provisioning.proto#L202}
+  /// [google.cloud.baremetalsolution.v2.ProvisioningQuota]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/provisioning.proto#L146}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::baremetalsolution::v2::ProvisioningQuota>
+  ListProvisioningQuotas(std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// List the budget details to provision resources on a given project.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.baremetalsolution.v2.ListProvisioningQuotasRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.baremetalsolution.v2.ProvisioningQuota], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.baremetalsolution.v2.ListProvisioningQuotasRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/provisioning.proto#L202}
+  /// [google.cloud.baremetalsolution.v2.ProvisioningQuota]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/provisioning.proto#L146}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::baremetalsolution::v2::ProvisioningQuota>
+  ListProvisioningQuotas(
+      google::cloud::baremetalsolution::v2::ListProvisioningQuotasRequest
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Submit a provisiong configuration for a given project.
+  ///
+  /// @param parent  Required. The parent project and location containing the
+  ///  ProvisioningConfig.
+  /// @param provisioning_config  Required. The ProvisioningConfig to create.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.baremetalsolution.v2.SubmitProvisioningConfigResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.baremetalsolution.v2.SubmitProvisioningConfigRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/provisioning.proto#L120}
+  /// [google.cloud.baremetalsolution.v2.SubmitProvisioningConfigResponse]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/provisioning.proto#L140}
+  ///
+  // clang-format on
+  StatusOr<
+      google::cloud::baremetalsolution::v2::SubmitProvisioningConfigResponse>
+  SubmitProvisioningConfig(
+      std::string const& parent,
+      google::cloud::baremetalsolution::v2::ProvisioningConfig const&
+          provisioning_config,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Submit a provisiong configuration for a given project.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.baremetalsolution.v2.SubmitProvisioningConfigRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.baremetalsolution.v2.SubmitProvisioningConfigResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.baremetalsolution.v2.SubmitProvisioningConfigRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/provisioning.proto#L120}
+  /// [google.cloud.baremetalsolution.v2.SubmitProvisioningConfigResponse]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/provisioning.proto#L140}
+  ///
+  // clang-format on
+  StatusOr<
+      google::cloud::baremetalsolution::v2::SubmitProvisioningConfigResponse>
+  SubmitProvisioningConfig(google::cloud::baremetalsolution::v2::
+                               SubmitProvisioningConfigRequest const& request,
+                           Options opts = {});
+
+  // clang-format off
+  ///
+  /// Get ProvisioningConfig by name.
+  ///
+  /// @param name  Required. Name of the ProvisioningConfig.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.baremetalsolution.v2.ProvisioningConfig])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.baremetalsolution.v2.GetProvisioningConfigRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/provisioning.proto#L565}
+  /// [google.cloud.baremetalsolution.v2.ProvisioningConfig]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/provisioning.proto#L35}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::baremetalsolution::v2::ProvisioningConfig>
+  GetProvisioningConfig(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Get ProvisioningConfig by name.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.baremetalsolution.v2.GetProvisioningConfigRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.baremetalsolution.v2.ProvisioningConfig])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.baremetalsolution.v2.GetProvisioningConfigRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/provisioning.proto#L565}
+  /// [google.cloud.baremetalsolution.v2.ProvisioningConfig]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/provisioning.proto#L35}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::baremetalsolution::v2::ProvisioningConfig>
+  GetProvisioningConfig(
+      google::cloud::baremetalsolution::v2::GetProvisioningConfigRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Create new ProvisioningConfig.
+  ///
+  /// @param parent  Required. The parent project and location containing the
+  ///  ProvisioningConfig.
+  /// @param provisioning_config  Required. The ProvisioningConfig to create.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.baremetalsolution.v2.ProvisioningConfig])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.baremetalsolution.v2.CreateProvisioningConfigRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/provisioning.proto#L576}
+  /// [google.cloud.baremetalsolution.v2.ProvisioningConfig]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/provisioning.proto#L35}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::baremetalsolution::v2::ProvisioningConfig>
+  CreateProvisioningConfig(
+      std::string const& parent,
+      google::cloud::baremetalsolution::v2::ProvisioningConfig const&
+          provisioning_config,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Create new ProvisioningConfig.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.baremetalsolution.v2.CreateProvisioningConfigRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.baremetalsolution.v2.ProvisioningConfig])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.baremetalsolution.v2.CreateProvisioningConfigRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/provisioning.proto#L576}
+  /// [google.cloud.baremetalsolution.v2.ProvisioningConfig]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/provisioning.proto#L35}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::baremetalsolution::v2::ProvisioningConfig>
+  CreateProvisioningConfig(google::cloud::baremetalsolution::v2::
+                               CreateProvisioningConfigRequest const& request,
+                           Options opts = {});
+
+  // clang-format off
+  ///
+  /// Update existing ProvisioningConfig.
+  ///
+  /// @param provisioning_config  Required. The ProvisioningConfig to update.
+  /// @param update_mask  Required. The list of fields to update.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.baremetalsolution.v2.ProvisioningConfig])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.baremetalsolution.v2.ProvisioningConfig]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/provisioning.proto#L35}
+  /// [google.cloud.baremetalsolution.v2.UpdateProvisioningConfigRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/provisioning.proto#L596}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::baremetalsolution::v2::ProvisioningConfig>
+  UpdateProvisioningConfig(
+      google::cloud::baremetalsolution::v2::ProvisioningConfig const&
+          provisioning_config,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Update existing ProvisioningConfig.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.baremetalsolution.v2.UpdateProvisioningConfigRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.baremetalsolution.v2.ProvisioningConfig])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.baremetalsolution.v2.ProvisioningConfig]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/provisioning.proto#L35}
+  /// [google.cloud.baremetalsolution.v2.UpdateProvisioningConfigRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/provisioning.proto#L596}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::baremetalsolution::v2::ProvisioningConfig>
+  UpdateProvisioningConfig(google::cloud::baremetalsolution::v2::
+                               UpdateProvisioningConfigRequest const& request,
+                           Options opts = {});
+
+  // clang-format off
+  ///
+  /// RenameNetwork sets a new name for a network.
+  /// Use with caution, previous names become immediately invalidated.
+  ///
+  /// @param name  Required. The `name` field is used to identify the network.
+  ///  Format: projects/{project}/locations/{location}/networks/{network}
+  /// @param new_network_id  Required. The new `id` of the network.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.baremetalsolution.v2.Network])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.baremetalsolution.v2.Network]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/network.proto#L36}
+  /// [google.cloud.baremetalsolution.v2.RenameNetworkRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/network.proto#L349}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::baremetalsolution::v2::Network> RenameNetwork(
+      std::string const& name, std::string const& new_network_id,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// RenameNetwork sets a new name for a network.
+  /// Use with caution, previous names become immediately invalidated.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.baremetalsolution.v2.RenameNetworkRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.baremetalsolution.v2.Network])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.baremetalsolution.v2.Network]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/network.proto#L36}
+  /// [google.cloud.baremetalsolution.v2.RenameNetworkRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/network.proto#L349}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::baremetalsolution::v2::Network> RenameNetwork(
+      google::cloud::baremetalsolution::v2::RenameNetworkRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Retrieves the list of OS images which are currently approved.
+  ///
+  /// @param parent  Required. Parent value for ListProvisioningQuotasRequest.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.baremetalsolution.v2.OSImage], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.baremetalsolution.v2.ListOSImagesRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/osimage.proto#L58}
+  /// [google.cloud.baremetalsolution.v2.OSImage]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/osimage.proto#L31}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::baremetalsolution::v2::OSImage> ListOSImages(
+      std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Retrieves the list of OS images which are currently approved.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.baremetalsolution.v2.ListOSImagesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.baremetalsolution.v2.OSImage], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.baremetalsolution.v2.ListOSImagesRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/osimage.proto#L58}
+  /// [google.cloud.baremetalsolution.v2.OSImage]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/osimage.proto#L31}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::baremetalsolution::v2::OSImage> ListOSImages(
+      google::cloud::baremetalsolution::v2::ListOSImagesRequest request,
       Options opts = {});
 
  private:

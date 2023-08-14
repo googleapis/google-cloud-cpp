@@ -178,8 +178,7 @@ class DeploymentsClient {
   ///
   /// @param name  Required. The name of the
   ///  [Deployment][google.cloud.dialogflow.cx.v3.Deployment]. Format:
-  ///  `projects/<Project ID>/locations/<Location ID>/agents/<Agent
-  ///  ID>/environments/<Environment ID>/deployments/<Deployment ID>`.
+  ///  `projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/environments/<Environment ID>/deployments/<Deployment ID>`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type

@@ -170,8 +170,7 @@ class KnowledgeBasesClient {
   /// Retrieves the specified knowledge base.
   ///
   /// @param name  Required. The name of the knowledge base to retrieve.
-  ///  Format `projects/<Project ID>/locations/<Location
-  ///  ID>/knowledgeBases/<Knowledge Base ID>`.
+  ///  Format `projects/<Project ID>/locations/<Location ID>/knowledgeBases/<Knowledge Base ID>`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -292,8 +291,7 @@ class KnowledgeBasesClient {
   /// Deletes the specified knowledge base.
   ///
   /// @param name  Required. The name of the knowledge base to delete.
-  ///  Format: `projects/<Project ID>/locations/<Location
-  ///  ID>/knowledgeBases/<Knowledge Base ID>`.
+  ///  Format: `projects/<Project ID>/locations/<Location ID>/knowledgeBases/<Knowledge Base ID>`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [`Status`] object. If the request failed, the

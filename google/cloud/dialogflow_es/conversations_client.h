@@ -339,8 +339,7 @@ class ConversationsClient {
   /// from the database after 30 days.
   ///
   /// @param name  Required. Resource identifier of the conversation to close.
-  ///  Format: `projects/<Project ID>/locations/<Location
-  ///  ID>/conversations/<Conversation ID>`.
+  ///  Format: `projects/<Project ID>/locations/<Location ID>/conversations/<Conversation ID>`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -404,8 +403,7 @@ class ConversationsClient {
   /// [first item's create_time of previous request]` and empty page_token.
   ///
   /// @param parent  Required. The name of the conversation to list messages for.
-  ///  Format: `projects/<Project ID>/locations/<Location
-  ///  ID>/conversations/<Conversation ID>`
+  ///  Format: `projects/<Project ID>/locations/<Location ID>/conversations/<Conversation ID>`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [StreamRange](@ref google::cloud::StreamRange)
@@ -488,8 +486,7 @@ class ConversationsClient {
   /// request.
   ///
   /// @param conversation  Required. The conversation to fetch suggestion for.
-  ///  Format: `projects/<Project ID>/locations/<Location
-  ///  ID>/conversations/<Conversation ID>`.
+  ///  Format: `projects/<Project ID>/locations/<Location ID>/conversations/<Conversation ID>`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -573,8 +570,8 @@ class ConversationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.GenerateStatelessSummaryRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation.proto#L482}
-  /// [google.cloud.dialogflow.v2.GenerateStatelessSummaryResponse]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation.proto#L530}
+  /// [google.cloud.dialogflow.v2.GenerateStatelessSummaryRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation.proto#L486}
+  /// [google.cloud.dialogflow.v2.GenerateStatelessSummaryResponse]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation.proto#L534}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::v2::GenerateStatelessSummaryResponse>

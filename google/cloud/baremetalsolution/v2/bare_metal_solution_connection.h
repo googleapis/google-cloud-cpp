@@ -199,6 +199,11 @@ class BareMetalSolutionConnection {
       google::cloud::baremetalsolution::v2::UpdateInstanceRequest const&
           request);
 
+  virtual StatusOr<google::cloud::baremetalsolution::v2::Instance>
+  RenameInstance(
+      google::cloud::baremetalsolution::v2::RenameInstanceRequest const&
+          request);
+
   virtual future<
       StatusOr<google::cloud::baremetalsolution::v2::ResetInstanceResponse>>
   ResetInstance(
@@ -216,9 +221,30 @@ class BareMetalSolutionConnection {
   StopInstance(
       google::cloud::baremetalsolution::v2::StopInstanceRequest const& request);
 
+  virtual future<StatusOr<google::cloud::baremetalsolution::v2::
+                              EnableInteractiveSerialConsoleResponse>>
+  EnableInteractiveSerialConsole(
+      google::cloud::baremetalsolution::v2::
+          EnableInteractiveSerialConsoleRequest const& request);
+
+  virtual future<StatusOr<google::cloud::baremetalsolution::v2::
+                              DisableInteractiveSerialConsoleResponse>>
+  DisableInteractiveSerialConsole(
+      google::cloud::baremetalsolution::v2::
+          DisableInteractiveSerialConsoleRequest const& request);
+
   virtual future<StatusOr<google::cloud::baremetalsolution::v2::Instance>>
   DetachLun(
       google::cloud::baremetalsolution::v2::DetachLunRequest const& request);
+
+  virtual StreamRange<google::cloud::baremetalsolution::v2::SSHKey> ListSSHKeys(
+      google::cloud::baremetalsolution::v2::ListSSHKeysRequest request);
+
+  virtual StatusOr<google::cloud::baremetalsolution::v2::SSHKey> CreateSSHKey(
+      google::cloud::baremetalsolution::v2::CreateSSHKeyRequest const& request);
+
+  virtual Status DeleteSSHKey(
+      google::cloud::baremetalsolution::v2::DeleteSSHKeyRequest const& request);
 
   virtual StreamRange<google::cloud::baremetalsolution::v2::Volume> ListVolumes(
       google::cloud::baremetalsolution::v2::ListVolumesRequest request);
@@ -229,6 +255,14 @@ class BareMetalSolutionConnection {
   virtual future<StatusOr<google::cloud::baremetalsolution::v2::Volume>>
   UpdateVolume(
       google::cloud::baremetalsolution::v2::UpdateVolumeRequest const& request);
+
+  virtual StatusOr<google::cloud::baremetalsolution::v2::Volume> RenameVolume(
+      google::cloud::baremetalsolution::v2::RenameVolumeRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::baremetalsolution::v2::OperationMetadata>>
+  EvictVolume(
+      google::cloud::baremetalsolution::v2::EvictVolumeRequest const& request);
 
   virtual future<StatusOr<google::cloud::baremetalsolution::v2::Volume>>
   ResizeVolume(
@@ -252,11 +286,39 @@ class BareMetalSolutionConnection {
       google::cloud::baremetalsolution::v2::UpdateNetworkRequest const&
           request);
 
+  virtual StatusOr<google::cloud::baremetalsolution::v2::VolumeSnapshot>
+  CreateVolumeSnapshot(
+      google::cloud::baremetalsolution::v2::CreateVolumeSnapshotRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::baremetalsolution::v2::VolumeSnapshot>>
+  RestoreVolumeSnapshot(
+      google::cloud::baremetalsolution::v2::RestoreVolumeSnapshotRequest const&
+          request);
+
+  virtual Status DeleteVolumeSnapshot(
+      google::cloud::baremetalsolution::v2::DeleteVolumeSnapshotRequest const&
+          request);
+
+  virtual StatusOr<google::cloud::baremetalsolution::v2::VolumeSnapshot>
+  GetVolumeSnapshot(
+      google::cloud::baremetalsolution::v2::GetVolumeSnapshotRequest const&
+          request);
+
+  virtual StreamRange<google::cloud::baremetalsolution::v2::VolumeSnapshot>
+  ListVolumeSnapshots(
+      google::cloud::baremetalsolution::v2::ListVolumeSnapshotsRequest request);
+
   virtual StatusOr<google::cloud::baremetalsolution::v2::Lun> GetLun(
       google::cloud::baremetalsolution::v2::GetLunRequest const& request);
 
   virtual StreamRange<google::cloud::baremetalsolution::v2::Lun> ListLuns(
       google::cloud::baremetalsolution::v2::ListLunsRequest request);
+
+  virtual future<
+      StatusOr<google::cloud::baremetalsolution::v2::OperationMetadata>>
+  EvictLun(
+      google::cloud::baremetalsolution::v2::EvictLunRequest const& request);
 
   virtual StatusOr<google::cloud::baremetalsolution::v2::NfsShare> GetNfsShare(
       google::cloud::baremetalsolution::v2::GetNfsShareRequest const& request);
@@ -269,6 +331,53 @@ class BareMetalSolutionConnection {
   UpdateNfsShare(
       google::cloud::baremetalsolution::v2::UpdateNfsShareRequest const&
           request);
+
+  virtual future<StatusOr<google::cloud::baremetalsolution::v2::NfsShare>>
+  CreateNfsShare(
+      google::cloud::baremetalsolution::v2::CreateNfsShareRequest const&
+          request);
+
+  virtual StatusOr<google::cloud::baremetalsolution::v2::NfsShare>
+  RenameNfsShare(
+      google::cloud::baremetalsolution::v2::RenameNfsShareRequest const&
+          request);
+
+  virtual future<
+      StatusOr<google::cloud::baremetalsolution::v2::OperationMetadata>>
+  DeleteNfsShare(
+      google::cloud::baremetalsolution::v2::DeleteNfsShareRequest const&
+          request);
+
+  virtual StreamRange<google::cloud::baremetalsolution::v2::ProvisioningQuota>
+  ListProvisioningQuotas(
+      google::cloud::baremetalsolution::v2::ListProvisioningQuotasRequest
+          request);
+
+  virtual StatusOr<
+      google::cloud::baremetalsolution::v2::SubmitProvisioningConfigResponse>
+  SubmitProvisioningConfig(google::cloud::baremetalsolution::v2::
+                               SubmitProvisioningConfigRequest const& request);
+
+  virtual StatusOr<google::cloud::baremetalsolution::v2::ProvisioningConfig>
+  GetProvisioningConfig(
+      google::cloud::baremetalsolution::v2::GetProvisioningConfigRequest const&
+          request);
+
+  virtual StatusOr<google::cloud::baremetalsolution::v2::ProvisioningConfig>
+  CreateProvisioningConfig(google::cloud::baremetalsolution::v2::
+                               CreateProvisioningConfigRequest const& request);
+
+  virtual StatusOr<google::cloud::baremetalsolution::v2::ProvisioningConfig>
+  UpdateProvisioningConfig(google::cloud::baremetalsolution::v2::
+                               UpdateProvisioningConfigRequest const& request);
+
+  virtual StatusOr<google::cloud::baremetalsolution::v2::Network> RenameNetwork(
+      google::cloud::baremetalsolution::v2::RenameNetworkRequest const&
+          request);
+
+  virtual StreamRange<google::cloud::baremetalsolution::v2::OSImage>
+  ListOSImages(
+      google::cloud::baremetalsolution::v2::ListOSImagesRequest request);
 };
 
 /**

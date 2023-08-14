@@ -90,8 +90,7 @@ class PagesClient {
   /// Returns the list of all pages in the specified flow.
   ///
   /// @param parent  Required. The flow to list all pages for.
-  ///  Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent
-  ///  ID>/flows/<Flow ID>`.
+  ///  Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/flows/<Flow ID>`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [StreamRange](@ref google::cloud::StreamRange)
@@ -115,7 +114,7 @@ class PagesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.ListPagesRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/page.proto#L405}
+  /// [google.cloud.dialogflow.cx.v3.ListPagesRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/page.proto#L408}
   /// [google.cloud.dialogflow.cx.v3.Page]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/page.proto#L115}
   ///
   // clang-format on
@@ -155,7 +154,7 @@ class PagesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.ListPagesRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/page.proto#L405}
+  /// [google.cloud.dialogflow.cx.v3.ListPagesRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/page.proto#L408}
   /// [google.cloud.dialogflow.cx.v3.Page]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/page.proto#L115}
   ///
   // clang-format on
@@ -168,8 +167,7 @@ class PagesClient {
   /// Retrieves the specified page.
   ///
   /// @param name  Required. The name of the page.
-  ///  Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent
-  ///  ID>/flows/<Flow ID>/pages/<Page ID>`.
+  ///  Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/flows/<Flow ID>/pages/<Page ID>`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -184,7 +182,7 @@ class PagesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.GetPageRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/page.proto#L461}
+  /// [google.cloud.dialogflow.cx.v3.GetPageRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/page.proto#L464}
   /// [google.cloud.dialogflow.cx.v3.Page]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/page.proto#L115}
   ///
   // clang-format on
@@ -215,7 +213,7 @@ class PagesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.GetPageRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/page.proto#L461}
+  /// [google.cloud.dialogflow.cx.v3.GetPageRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/page.proto#L464}
   /// [google.cloud.dialogflow.cx.v3.Page]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/page.proto#L115}
   ///
   // clang-format on
@@ -232,8 +230,7 @@ class PagesClient {
   /// documentation](https://cloud.google.com/dialogflow/cx/docs/concept/training).
   ///
   /// @param parent  Required. The flow to create a page for.
-  ///  Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent
-  ///  ID>/flows/<Flow ID>`.
+  ///  Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/flows/<Flow ID>`.
   /// @param page  Required. The page to create.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -249,7 +246,7 @@ class PagesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.CreatePageRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/page.proto#L496}
+  /// [google.cloud.dialogflow.cx.v3.CreatePageRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/page.proto#L499}
   /// [google.cloud.dialogflow.cx.v3.Page]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/page.proto#L115}
   ///
   // clang-format on
@@ -285,7 +282,7 @@ class PagesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.CreatePageRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/page.proto#L496}
+  /// [google.cloud.dialogflow.cx.v3.CreatePageRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/page.proto#L499}
   /// [google.cloud.dialogflow.cx.v3.Page]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/page.proto#L115}
   ///
   // clang-format on
@@ -319,7 +316,7 @@ class PagesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dialogflow.cx.v3.Page]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/page.proto#L115}
-  /// [google.cloud.dialogflow.cx.v3.UpdatePageRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/page.proto#L535}
+  /// [google.cloud.dialogflow.cx.v3.UpdatePageRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/page.proto#L538}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::Page> UpdatePage(
@@ -355,7 +352,7 @@ class PagesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dialogflow.cx.v3.Page]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/page.proto#L115}
-  /// [google.cloud.dialogflow.cx.v3.UpdatePageRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/page.proto#L535}
+  /// [google.cloud.dialogflow.cx.v3.UpdatePageRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/page.proto#L538}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::Page> UpdatePage(
@@ -371,8 +368,7 @@ class PagesClient {
   /// documentation](https://cloud.google.com/dialogflow/cx/docs/concept/training).
   ///
   /// @param name  Required. The name of the page to delete.
-  ///  Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent
-  ///  ID>/Flows/<flow ID>/pages/<Page ID>`.
+  ///  Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/Flows/<flow ID>/pages/<Page ID>`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [`Status`] object. If the request failed, the
@@ -385,7 +381,7 @@ class PagesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.DeletePageRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/page.proto#L568}
+  /// [google.cloud.dialogflow.cx.v3.DeletePageRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/page.proto#L571}
   ///
   // clang-format on
   Status DeletePage(std::string const& name, Options opts = {});
@@ -416,7 +412,7 @@ class PagesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.DeletePageRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/page.proto#L568}
+  /// [google.cloud.dialogflow.cx.v3.DeletePageRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/page.proto#L571}
   ///
   // clang-format on
   Status DeletePage(

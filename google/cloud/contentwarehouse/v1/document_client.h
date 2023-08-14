@@ -504,7 +504,7 @@ class DocumentServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.contentwarehouse.v1.FetchAclRequest]: @googleapis_reference_link{google/cloud/contentwarehouse/v1/document_service_request.proto#L299}
-  /// [google.cloud.contentwarehouse.v1.FetchAclResponse]: @googleapis_reference_link{google/cloud/contentwarehouse/v1/document_service.proto#L254}
+  /// [google.cloud.contentwarehouse.v1.FetchAclResponse]: @googleapis_reference_link{google/cloud/contentwarehouse/v1/document_service.proto#L258}
   ///
   // clang-format on
   StatusOr<google::cloud::contentwarehouse::v1::FetchAclResponse> FetchAcl(
@@ -537,7 +537,7 @@ class DocumentServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.contentwarehouse.v1.FetchAclRequest]: @googleapis_reference_link{google/cloud/contentwarehouse/v1/document_service_request.proto#L299}
-  /// [google.cloud.contentwarehouse.v1.FetchAclResponse]: @googleapis_reference_link{google/cloud/contentwarehouse/v1/document_service.proto#L254}
+  /// [google.cloud.contentwarehouse.v1.FetchAclResponse]: @googleapis_reference_link{google/cloud/contentwarehouse/v1/document_service.proto#L258}
   ///
   // clang-format on
   StatusOr<google::cloud::contentwarehouse::v1::FetchAclResponse> FetchAcl(
@@ -589,7 +589,7 @@ class DocumentServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.contentwarehouse.v1.SetAclRequest]: @googleapis_reference_link{google/cloud/contentwarehouse/v1/document_service_request.proto#L318}
-  /// [google.cloud.contentwarehouse.v1.SetAclResponse]: @googleapis_reference_link{google/cloud/contentwarehouse/v1/document_service.proto#L264}
+  /// [google.cloud.contentwarehouse.v1.SetAclResponse]: @googleapis_reference_link{google/cloud/contentwarehouse/v1/document_service.proto#L268}
   ///
   // clang-format on
   StatusOr<google::cloud::contentwarehouse::v1::SetAclResponse> SetAcl(
@@ -622,7 +622,7 @@ class DocumentServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.contentwarehouse.v1.SetAclRequest]: @googleapis_reference_link{google/cloud/contentwarehouse/v1/document_service_request.proto#L318}
-  /// [google.cloud.contentwarehouse.v1.SetAclResponse]: @googleapis_reference_link{google/cloud/contentwarehouse/v1/document_service.proto#L264}
+  /// [google.cloud.contentwarehouse.v1.SetAclResponse]: @googleapis_reference_link{google/cloud/contentwarehouse/v1/document_service.proto#L268}
   ///
   // clang-format on
   StatusOr<google::cloud::contentwarehouse::v1::SetAclResponse> SetAcl(

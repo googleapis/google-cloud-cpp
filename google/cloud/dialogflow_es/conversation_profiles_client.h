@@ -174,8 +174,7 @@ class ConversationProfilesClient {
   /// Retrieves the specified conversation profile.
   ///
   /// @param name  Required. The resource name of the conversation profile.
-  ///  Format: `projects/<Project ID>/locations/<Location
-  ///  ID>/conversationProfiles/<Conversation Profile ID>`.
+  ///  Format: `projects/<Project ID>/locations/<Location ID>/conversationProfiles/<Conversation Profile ID>`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -390,8 +389,7 @@ class ConversationProfilesClient {
   /// Deletes the specified conversation profile.
   ///
   /// @param name  Required. The name of the conversation profile to delete.
-  ///  Format: `projects/<Project ID>/locations/<Location
-  ///  ID>/conversationProfiles/<Conversation Profile ID>`.
+  ///  Format: `projects/<Project ID>/locations/<Location ID>/conversationProfiles/<Conversation Profile ID>`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [`Status`] object. If the request failed, the
@@ -461,8 +459,7 @@ class ConversationProfilesClient {
   /// before sending such request, otherwise the request will be rejected.
   ///
   /// @param conversation_profile  Required. The Conversation Profile to add or update the suggestion feature
-  ///  config. Format: `projects/<Project ID>/locations/<Location
-  ///  ID>/conversationProfiles/<Conversation Profile ID>`.
+  ///  config. Format: `projects/<Project ID>/locations/<Location ID>/conversationProfiles/<Conversation Profile ID>`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return A [`future`] that becomes satisfied when the LRO
@@ -514,8 +511,7 @@ class ConversationProfilesClient {
   /// before sending such request, otherwise the request will be rejected.
   ///
   /// @param conversation_profile  Required. The Conversation Profile to add or update the suggestion feature
-  ///  config. Format: `projects/<Project ID>/locations/<Location
-  ///  ID>/conversationProfiles/<Conversation Profile ID>`.
+  ///  config. Format: `projects/<Project ID>/locations/<Location ID>/conversationProfiles/<Conversation Profile ID>`.
   /// @param participant_role  Required. The participant role to add or update the suggestion feature
   ///  config. Only HUMAN_AGENT or END_USER can be used.
   /// @param suggestion_feature_config  Required. The suggestion feature config to add or update.
@@ -625,8 +621,7 @@ class ConversationProfilesClient {
   /// [ConversationProfile][google.cloud.dialogflow.v2.ConversationProfile]
   ///
   /// @param conversation_profile  Required. The Conversation Profile to add or update the suggestion feature
-  ///  config. Format: `projects/<Project ID>/locations/<Location
-  ///  ID>/conversationProfiles/<Conversation Profile ID>`.
+  ///  config. Format: `projects/<Project ID>/locations/<Location ID>/conversationProfiles/<Conversation Profile ID>`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return A [`future`] that becomes satisfied when the LRO
@@ -671,8 +666,7 @@ class ConversationProfilesClient {
   /// [ConversationProfile][google.cloud.dialogflow.v2.ConversationProfile]
   ///
   /// @param conversation_profile  Required. The Conversation Profile to add or update the suggestion feature
-  ///  config. Format: `projects/<Project ID>/locations/<Location
-  ///  ID>/conversationProfiles/<Conversation Profile ID>`.
+  ///  config. Format: `projects/<Project ID>/locations/<Location ID>/conversationProfiles/<Conversation Profile ID>`.
   /// @param participant_role  Required. The participant role to remove the suggestion feature
   ///  config. Only HUMAN_AGENT or END_USER can be used.
   /// @param suggestion_feature_type  Required. The type of the suggestion feature to remove.

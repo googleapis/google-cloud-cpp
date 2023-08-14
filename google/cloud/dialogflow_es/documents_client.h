@@ -93,8 +93,7 @@ class DocumentsClient {
   /// Returns the list of all documents of the knowledge base.
   ///
   /// @param parent  Required. The knowledge base to list all documents for.
-  ///  Format: `projects/<Project ID>/locations/<Location
-  ///  ID>/knowledgeBases/<Knowledge Base ID>`.
+  ///  Format: `projects/<Project ID>/locations/<Location ID>/knowledgeBases/<Knowledge Base ID>`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [StreamRange](@ref google::cloud::StreamRange)
@@ -171,8 +170,7 @@ class DocumentsClient {
   /// Retrieves the specified document.
   ///
   /// @param name  Required. The name of the document to retrieve.
-  ///  Format `projects/<Project ID>/locations/<Location
-  ///  ID>/knowledgeBases/<Knowledge Base ID>/documents/<Document ID>`.
+  ///  Format `projects/<Project ID>/locations/<Location ID>/knowledgeBases/<Knowledge Base ID>/documents/<Document ID>`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -239,8 +237,7 @@ class DocumentsClient {
   /// - `response`: [Document][google.cloud.dialogflow.v2.Document]
   ///
   /// @param parent  Required. The knowledge base to create a document for.
-  ///  Format: `projects/<Project ID>/locations/<Location
-  ///  ID>/knowledgeBases/<Knowledge Base ID>`.
+  ///  Format: `projects/<Project ID>/locations/<Location ID>/knowledgeBases/<Knowledge Base ID>`.
   /// @param document  Required. The document to create.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -384,8 +381,7 @@ class DocumentsClient {
   ///   message](https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#empty)
   ///
   /// @param name  Required. The name of the document to delete.
-  ///  Format: `projects/<Project ID>/locations/<Location
-  ///  ID>/knowledgeBases/<Knowledge Base ID>/documents/<Document ID>`.
+  ///  Format: `projects/<Project ID>/locations/<Location ID>/knowledgeBases/<Knowledge Base ID>/documents/<Document ID>`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return A [`future`] that becomes satisfied when the LRO
@@ -572,8 +568,7 @@ class DocumentsClient {
   /// only use `projects.knowledgeBases.documents`.
   ///
   /// @param name  Required. The name of the document to reload.
-  ///  Format: `projects/<Project ID>/locations/<Location
-  ///  ID>/knowledgeBases/<Knowledge Base ID>/documents/<Document ID>`
+  ///  Format: `projects/<Project ID>/locations/<Location ID>/knowledgeBases/<Knowledge Base ID>/documents/<Document ID>`
   /// @param content_uri  Optional. The path of gcs source file for reloading document content. For
   ///  now, only gcs uri is supported.
   ///  @n
