@@ -24,16 +24,16 @@ namespace cloud {
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<storage::internal::RawClient> DecorateConnection(
+std::shared_ptr<storage::internal::StorageConnection> DecorateConnection(
     Options const& opts,
-    std::shared_ptr<storage::internal::RawClient> connection) {
+    std::shared_ptr<storage::internal::StorageConnection> connection) {
   auto stub = MakeGenericStubAdapter(std::move(connection));
   return MakeStorageConnection(opts, std::move(stub));
 }
 
-std::shared_ptr<storage::internal::RawClient> MakeStorageConnection(
+std::shared_ptr<storage::internal::StorageConnection> MakeStorageConnection(
     Options const& opts, std::unique_ptr<storage_internal::GenericStub> stub) {
-  std::shared_ptr<storage::internal::RawClient> connection =
+  std::shared_ptr<storage::internal::StorageConnection> connection =
       storage::internal::StorageConnectionImpl::Create(std::move(stub), opts);
   if (google::cloud::internal::TracingEnabled(opts)) {
     connection = storage_internal::MakeTracingClient(std::move(connection));
@@ -41,7 +41,7 @@ std::shared_ptr<storage::internal::RawClient> MakeStorageConnection(
   return connection;
 }
 
-std::shared_ptr<storage::internal::RawClient> MakeStorageConnection(
+std::shared_ptr<storage::internal::StorageConnection> MakeStorageConnection(
     Options const& opts) {
   return MakeStorageConnection(opts, MakeDefaultStorageStub(opts));
 }

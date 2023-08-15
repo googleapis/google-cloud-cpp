@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/object_stream.h"
-#include "google/cloud/storage/internal/raw_client.h"
+#include "google/cloud/storage/internal/storage_connection.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 

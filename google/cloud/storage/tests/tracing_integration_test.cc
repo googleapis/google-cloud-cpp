@@ -61,7 +61,7 @@ class TracingIntegrationTest
   std::string bucket_name_;
 };
 
-TEST_F(TracingIntegrationTest, RawClient) {
+TEST_F(TracingIntegrationTest, StorageConnection) {
   auto client =
       Client(Options{}.set<TracingComponentsOption>({"raw-client", "http"}));
 

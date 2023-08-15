@@ -15,7 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_TRACING_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_TRACING_CONNECTION_H
 
-#include "google/cloud/storage/internal/raw_client.h"
+#include "google/cloud/storage/internal/storage_connection.h"
 #include "google/cloud/storage/version.h"
 #include <memory>
 
@@ -26,9 +26,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-class TracingConnection : public storage::internal::RawClient {
+class TracingConnection : public storage::internal::StorageConnection {
  public:
-  explicit TracingConnection(std::shared_ptr<RawClient> impl);
+  explicit TracingConnection(std::shared_ptr<StorageConnection> impl);
   ~TracingConnection() override = default;
 
   storage::ClientOptions const& client_options() const override;
@@ -161,13 +161,13 @@ class TracingConnection : public storage::internal::RawClient {
   std::vector<std::string> InspectStackStructure() const override;
 
  private:
-  std::shared_ptr<RawClient> impl_;
+  std::shared_ptr<StorageConnection> impl_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-std::shared_ptr<storage::internal::RawClient> MakeTracingClient(
-    std::shared_ptr<storage::internal::RawClient> impl);
+std::shared_ptr<storage::internal::StorageConnection> MakeTracingClient(
+    std::shared_ptr<storage::internal::StorageConnection> impl);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal

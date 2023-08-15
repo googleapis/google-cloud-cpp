@@ -16,7 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_TESTING_MOCK_CLIENT_H
 
 #include "google/cloud/storage/client.h"
-#include "google/cloud/storage/internal/raw_client.h"
+#include "google/cloud/storage/internal/storage_connection.h"
 #include <gmock/gmock.h>
 #include <string>
 
@@ -25,7 +25,7 @@ namespace cloud {
 namespace storage {
 namespace testing {
 
-class MockClient : public google::cloud::storage::internal::RawClient {
+class MockClient : public google::cloud::storage::internal::StorageConnection {
  public:
   MockClient()
       : client_options_(

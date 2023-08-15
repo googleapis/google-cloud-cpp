@@ -18,7 +18,7 @@
 #include "google/cloud/storage/idempotency_policy.h"
 #include "google/cloud/storage/internal/generic_stub.h"
 #include "google/cloud/storage/internal/invocation_id_generator.h"
-#include "google/cloud/storage/internal/raw_client.h"
+#include "google/cloud/storage/internal/storage_connection.h"
 #include "google/cloud/storage/retry_policy.h"
 #include "google/cloud/storage/version.h"
 #include <string>
@@ -29,10 +29,10 @@ namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 /**
- * Decorates a `RawClient` to retry each operation.
+ * Decorates a `StorageConnection` to retry each operation.
  */
 class StorageConnectionImpl
-    : public RawClient,
+    : public StorageConnection,
       public std::enable_shared_from_this<StorageConnectionImpl> {
  public:
   static std::shared_ptr<StorageConnectionImpl> Create(

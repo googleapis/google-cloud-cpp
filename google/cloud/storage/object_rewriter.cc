@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/object_rewriter.h"
-#include "google/cloud/storage/internal/raw_client.h"
+#include "google/cloud/storage/internal/storage_connection.h"
 #include "google/cloud/internal/throw_delegate.h"
 
 namespace google {
@@ -21,9 +21,10 @@ namespace cloud {
 namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-ObjectRewriter::ObjectRewriter(std::shared_ptr<internal::RawClient> client,
-                               internal::RewriteObjectRequest request)
-    : client_(std::move(client)),
+ObjectRewriter::ObjectRewriter(
+    std::shared_ptr<internal::StorageConnection> connection,
+    internal::RewriteObjectRequest request)
+    : connection_(std::move(connection)),
       request_(std::move(request)),
       progress_{0, 0, false},
       options_(google::cloud::internal::CurrentOptions()) {}
@@ -31,7 +32,7 @@ ObjectRewriter::ObjectRewriter(std::shared_ptr<internal::RawClient> client,
 StatusOr<RewriteProgress> ObjectRewriter::Iterate() {
   google::cloud::internal::OptionsSpan span(options_);
   StatusOr<internal::RewriteObjectResponse> response =
-      client_->RewriteObject(request_);
+      connection_->RewriteObject(request_);
   if (!response.ok()) {
     progress_.done = true;
     last_error_ = std::move(response).status();

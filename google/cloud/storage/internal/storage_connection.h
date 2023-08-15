@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_RAW_CLIENT_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_RAW_CLIENT_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_STORAGE_CONNECTION_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_STORAGE_CONNECTION_H
 
 #include "google/cloud/storage/bucket_metadata.h"
 #include "google/cloud/storage/client_options.h"
@@ -49,9 +49,9 @@ class ObjectReadStreambuf;
 /**
  * Defines the interface used to communicate with Google Cloud Storage.
  */
-class RawClient {
+class StorageConnection {
  public:
-  virtual ~RawClient() = default;
+  virtual ~StorageConnection() = default;
 
   virtual ClientOptions const& client_options() const = 0;
 
@@ -186,6 +186,16 @@ class RawClient {
   virtual std::vector<std::string> InspectStackStructure() const;
 };
 
+/**
+ * An alias for backwards compatibility.
+ *
+ * There is reason to believe that customers may have used `internal::RawClient`
+ * in their unit tests. We provide a backwards compatibility alias to ease the
+ * transition.
+ */
+using RawClient [[deprecated("Prefer using internal::StorageConnection")]] =
+    StorageConnection;
+
 struct CreateOrResumeResponse {
   std::string upload_id;
   std::uint64_t committed_size;
@@ -193,7 +203,7 @@ struct CreateOrResumeResponse {
 };
 
 StatusOr<CreateOrResumeResponse> CreateOrResume(
-    RawClient& client, ResumableUploadRequest const& request);
+    StorageConnection& connection, ResumableUploadRequest const& request);
 
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
@@ -201,4 +211,4 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_RAW_CLIENT_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_STORAGE_CONNECTION_H
