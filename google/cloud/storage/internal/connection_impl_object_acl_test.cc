@@ -28,9 +28,9 @@ namespace {
 
 using ::google::cloud::storage::testing::MockGenericStub;
 using ::google::cloud::storage::testing::MockRetryClientFunction;
-using ::google::cloud::storage::testing::RetryClientTestOptions;
 using ::google::cloud::storage::testing::RetryLoopUsesOptions;
 using ::google::cloud::storage::testing::RetryLoopUsesSingleToken;
+using ::google::cloud::storage::testing::RetryTestOptions;
 using ::google::cloud::storage::testing::StoppedOnPermanentError;
 using ::google::cloud::storage::testing::StoppedOnTooManyTransients;
 using ::google::cloud::storage::testing::canonical_errors::PermanentError;
@@ -42,7 +42,7 @@ TEST(StorageConnectionImpl, ListObjectAclTooManyFailures) {
   EXPECT_CALL(*mock, options);
   EXPECT_CALL(*mock, ListObjectAcl).Times(3).WillRepeatedly(transient);
   auto client =
-      StorageConnectionImpl::Create(std::move(mock), RetryClientTestOptions());
+      StorageConnectionImpl::Create(std::move(mock), RetryTestOptions());
   google::cloud::internal::OptionsSpan span(client->options());
   auto response = client->ListObjectAcl(ListObjectAclRequest()).status();
   EXPECT_THAT(response, StoppedOnTooManyTransients("ListObjectAcl"));
@@ -56,7 +56,7 @@ TEST(StorageConnectionImpl, ListObjectAclPermanentFailure) {
   EXPECT_CALL(*mock, options);
   EXPECT_CALL(*mock, ListObjectAcl).WillOnce(permanent);
   auto client =
-      StorageConnectionImpl::Create(std::move(mock), RetryClientTestOptions());
+      StorageConnectionImpl::Create(std::move(mock), RetryTestOptions());
   google::cloud::internal::OptionsSpan span(client->options());
   auto response = client->ListObjectAcl(ListObjectAclRequest()).status();
   EXPECT_THAT(response, StoppedOnPermanentError("ListObjectAcl"));
@@ -70,7 +70,7 @@ TEST(StorageConnectionImpl, CreateObjectAclTooManyFailures) {
   EXPECT_CALL(*mock, options);
   EXPECT_CALL(*mock, CreateObjectAcl).Times(3).WillRepeatedly(transient);
   auto client =
-      StorageConnectionImpl::Create(std::move(mock), RetryClientTestOptions());
+      StorageConnectionImpl::Create(std::move(mock), RetryTestOptions());
   google::cloud::internal::OptionsSpan span(client->options());
   auto response = client->CreateObjectAcl(CreateObjectAclRequest()).status();
   EXPECT_THAT(response, StoppedOnTooManyTransients("CreateObjectAcl"));
@@ -84,7 +84,7 @@ TEST(StorageConnectionImpl, CreateObjectAclPermanentFailure) {
   EXPECT_CALL(*mock, options);
   EXPECT_CALL(*mock, CreateObjectAcl).WillOnce(permanent);
   auto client =
-      StorageConnectionImpl::Create(std::move(mock), RetryClientTestOptions());
+      StorageConnectionImpl::Create(std::move(mock), RetryTestOptions());
   google::cloud::internal::OptionsSpan span(client->options());
   auto response = client->CreateObjectAcl(CreateObjectAclRequest()).status();
   EXPECT_THAT(response, StoppedOnPermanentError("CreateObjectAcl"));
@@ -98,7 +98,7 @@ TEST(StorageConnectionImpl, DeleteObjectAclTooManyFailures) {
   EXPECT_CALL(*mock, options);
   EXPECT_CALL(*mock, DeleteObjectAcl).Times(3).WillRepeatedly(transient);
   auto client =
-      StorageConnectionImpl::Create(std::move(mock), RetryClientTestOptions());
+      StorageConnectionImpl::Create(std::move(mock), RetryTestOptions());
   google::cloud::internal::OptionsSpan span(client->options());
   auto response = client->DeleteObjectAcl(DeleteObjectAclRequest()).status();
   EXPECT_THAT(response, StoppedOnTooManyTransients("DeleteObjectAcl"));
@@ -112,7 +112,7 @@ TEST(StorageConnectionImpl, DeleteObjectAclPermanentFailure) {
   EXPECT_CALL(*mock, options);
   EXPECT_CALL(*mock, DeleteObjectAcl).WillOnce(permanent);
   auto client =
-      StorageConnectionImpl::Create(std::move(mock), RetryClientTestOptions());
+      StorageConnectionImpl::Create(std::move(mock), RetryTestOptions());
   google::cloud::internal::OptionsSpan span(client->options());
   auto response = client->DeleteObjectAcl(DeleteObjectAclRequest()).status();
   EXPECT_THAT(response, StoppedOnPermanentError("DeleteObjectAcl"));
@@ -126,7 +126,7 @@ TEST(StorageConnectionImpl, GetObjectAclTooManyFailures) {
   EXPECT_CALL(*mock, options);
   EXPECT_CALL(*mock, GetObjectAcl).Times(3).WillRepeatedly(transient);
   auto client =
-      StorageConnectionImpl::Create(std::move(mock), RetryClientTestOptions());
+      StorageConnectionImpl::Create(std::move(mock), RetryTestOptions());
   google::cloud::internal::OptionsSpan span(client->options());
   auto response = client->GetObjectAcl(GetObjectAclRequest()).status();
   EXPECT_THAT(response, StoppedOnTooManyTransients("GetObjectAcl"));
@@ -140,7 +140,7 @@ TEST(StorageConnectionImpl, GetObjectAclPermanentFailure) {
   EXPECT_CALL(*mock, options);
   EXPECT_CALL(*mock, GetObjectAcl).WillOnce(permanent);
   auto client =
-      StorageConnectionImpl::Create(std::move(mock), RetryClientTestOptions());
+      StorageConnectionImpl::Create(std::move(mock), RetryTestOptions());
   google::cloud::internal::OptionsSpan span(client->options());
   auto response = client->GetObjectAcl(GetObjectAclRequest()).status();
   EXPECT_THAT(response, StoppedOnPermanentError("GetObjectAcl"));
@@ -154,7 +154,7 @@ TEST(StorageConnectionImpl, UpdateObjectAclTooManyFailures) {
   EXPECT_CALL(*mock, options);
   EXPECT_CALL(*mock, UpdateObjectAcl).Times(3).WillRepeatedly(transient);
   auto client =
-      StorageConnectionImpl::Create(std::move(mock), RetryClientTestOptions());
+      StorageConnectionImpl::Create(std::move(mock), RetryTestOptions());
   google::cloud::internal::OptionsSpan span(client->options());
   auto response = client->UpdateObjectAcl(UpdateObjectAclRequest()).status();
   EXPECT_THAT(response, StoppedOnTooManyTransients("UpdateObjectAcl"));
@@ -168,7 +168,7 @@ TEST(StorageConnectionImpl, UpdateObjectAclPermanentFailure) {
   EXPECT_CALL(*mock, options);
   EXPECT_CALL(*mock, UpdateObjectAcl).WillOnce(permanent);
   auto client =
-      StorageConnectionImpl::Create(std::move(mock), RetryClientTestOptions());
+      StorageConnectionImpl::Create(std::move(mock), RetryTestOptions());
   google::cloud::internal::OptionsSpan span(client->options());
   auto response = client->UpdateObjectAcl(UpdateObjectAclRequest()).status();
   EXPECT_THAT(response, StoppedOnPermanentError("UpdateObjectAcl"));
@@ -182,7 +182,7 @@ TEST(StorageConnectionImpl, PatchObjectAclTooManyFailures) {
   EXPECT_CALL(*mock, options);
   EXPECT_CALL(*mock, PatchObjectAcl).Times(3).WillRepeatedly(transient);
   auto client =
-      StorageConnectionImpl::Create(std::move(mock), RetryClientTestOptions());
+      StorageConnectionImpl::Create(std::move(mock), RetryTestOptions());
   google::cloud::internal::OptionsSpan span(client->options());
   auto response = client->PatchObjectAcl(PatchObjectAclRequest()).status();
   EXPECT_THAT(response, StoppedOnTooManyTransients("PatchObjectAcl"));
@@ -196,7 +196,7 @@ TEST(StorageConnectionImpl, PatchObjectAclPermanentFailure) {
   EXPECT_CALL(*mock, options);
   EXPECT_CALL(*mock, PatchObjectAcl).WillOnce(permanent);
   auto client =
-      StorageConnectionImpl::Create(std::move(mock), RetryClientTestOptions());
+      StorageConnectionImpl::Create(std::move(mock), RetryTestOptions());
   google::cloud::internal::OptionsSpan span(client->options());
   auto response = client->PatchObjectAcl(PatchObjectAclRequest()).status();
   EXPECT_THAT(response, StoppedOnPermanentError("PatchObjectAcl"));

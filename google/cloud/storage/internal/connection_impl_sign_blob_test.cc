@@ -28,9 +28,9 @@ namespace {
 
 using ::google::cloud::storage::testing::MockGenericStub;
 using ::google::cloud::storage::testing::MockRetryClientFunction;
-using ::google::cloud::storage::testing::RetryClientTestOptions;
 using ::google::cloud::storage::testing::RetryLoopUsesOptions;
 using ::google::cloud::storage::testing::RetryLoopUsesSingleToken;
+using ::google::cloud::storage::testing::RetryTestOptions;
 using ::google::cloud::storage::testing::StoppedOnPermanentError;
 using ::google::cloud::storage::testing::StoppedOnTooManyTransients;
 using ::google::cloud::storage::testing::canonical_errors::PermanentError;
@@ -42,7 +42,7 @@ TEST(StorageConnectionImpl, SignBlobTooManyFailures) {
   EXPECT_CALL(*mock, options);
   EXPECT_CALL(*mock, SignBlob).Times(3).WillRepeatedly(transient);
   auto client =
-      StorageConnectionImpl::Create(std::move(mock), RetryClientTestOptions());
+      StorageConnectionImpl::Create(std::move(mock), RetryTestOptions());
   google::cloud::internal::OptionsSpan span(client->options());
   auto response = client->SignBlob(SignBlobRequest()).status();
   EXPECT_THAT(response, StoppedOnTooManyTransients("SignBlob"));
@@ -56,7 +56,7 @@ TEST(StorageConnectionImpl, SignBlobPermanentFailure) {
   EXPECT_CALL(*mock, options);
   EXPECT_CALL(*mock, SignBlob).WillOnce(permanent);
   auto client =
-      StorageConnectionImpl::Create(std::move(mock), RetryClientTestOptions());
+      StorageConnectionImpl::Create(std::move(mock), RetryTestOptions());
   google::cloud::internal::OptionsSpan span(client->options());
   auto response = client->SignBlob(SignBlobRequest()).status();
   EXPECT_THAT(response, StoppedOnPermanentError("SignBlob"));

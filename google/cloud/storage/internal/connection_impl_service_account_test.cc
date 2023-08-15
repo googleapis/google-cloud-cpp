@@ -28,9 +28,9 @@ namespace {
 
 using ::google::cloud::storage::testing::MockGenericStub;
 using ::google::cloud::storage::testing::MockRetryClientFunction;
-using ::google::cloud::storage::testing::RetryClientTestOptions;
 using ::google::cloud::storage::testing::RetryLoopUsesOptions;
 using ::google::cloud::storage::testing::RetryLoopUsesSingleToken;
+using ::google::cloud::storage::testing::RetryTestOptions;
 using ::google::cloud::storage::testing::StoppedOnPermanentError;
 using ::google::cloud::storage::testing::StoppedOnTooManyTransients;
 using ::google::cloud::storage::testing::canonical_errors::PermanentError;
@@ -42,7 +42,7 @@ TEST(StorageConnectionImpl, GetServiceAccountTooManyFailures) {
   EXPECT_CALL(*mock, options);
   EXPECT_CALL(*mock, GetServiceAccount).Times(3).WillRepeatedly(transient);
   auto client =
-      StorageConnectionImpl::Create(std::move(mock), RetryClientTestOptions());
+      StorageConnectionImpl::Create(std::move(mock), RetryTestOptions());
   google::cloud::internal::OptionsSpan span(client->options());
   auto response =
       client->GetServiceAccount(GetProjectServiceAccountRequest()).status();
@@ -57,7 +57,7 @@ TEST(StorageConnectionImpl, GetServiceAccountPermanentFailure) {
   EXPECT_CALL(*mock, options);
   EXPECT_CALL(*mock, GetServiceAccount).WillOnce(permanent);
   auto client =
-      StorageConnectionImpl::Create(std::move(mock), RetryClientTestOptions());
+      StorageConnectionImpl::Create(std::move(mock), RetryTestOptions());
   google::cloud::internal::OptionsSpan span(client->options());
   auto response =
       client->GetServiceAccount(GetProjectServiceAccountRequest()).status();
@@ -72,7 +72,7 @@ TEST(StorageConnectionImpl, ListHmacKeysTooManyFailures) {
   EXPECT_CALL(*mock, options);
   EXPECT_CALL(*mock, ListHmacKeys).Times(3).WillRepeatedly(transient);
   auto client =
-      StorageConnectionImpl::Create(std::move(mock), RetryClientTestOptions());
+      StorageConnectionImpl::Create(std::move(mock), RetryTestOptions());
   google::cloud::internal::OptionsSpan span(client->options());
   auto response = client->ListHmacKeys(ListHmacKeysRequest()).status();
   EXPECT_THAT(response, StoppedOnTooManyTransients("ListHmacKeys"));
@@ -86,7 +86,7 @@ TEST(StorageConnectionImpl, ListHmacKeysPermanentFailure) {
   EXPECT_CALL(*mock, options);
   EXPECT_CALL(*mock, ListHmacKeys).WillOnce(permanent);
   auto client =
-      StorageConnectionImpl::Create(std::move(mock), RetryClientTestOptions());
+      StorageConnectionImpl::Create(std::move(mock), RetryTestOptions());
   google::cloud::internal::OptionsSpan span(client->options());
   auto response = client->ListHmacKeys(ListHmacKeysRequest()).status();
   EXPECT_THAT(response, StoppedOnPermanentError("ListHmacKeys"));
@@ -100,7 +100,7 @@ TEST(StorageConnectionImpl, CreateHmacKeyTooManyFailures) {
   EXPECT_CALL(*mock, options);
   EXPECT_CALL(*mock, CreateHmacKey).Times(3).WillRepeatedly(transient);
   auto client =
-      StorageConnectionImpl::Create(std::move(mock), RetryClientTestOptions());
+      StorageConnectionImpl::Create(std::move(mock), RetryTestOptions());
   google::cloud::internal::OptionsSpan span(client->options());
   auto response = client->CreateHmacKey(CreateHmacKeyRequest()).status();
   EXPECT_THAT(response, StoppedOnTooManyTransients("CreateHmacKey"));
@@ -114,7 +114,7 @@ TEST(StorageConnectionImpl, CreateHmacKeyPermanentFailure) {
   EXPECT_CALL(*mock, options);
   EXPECT_CALL(*mock, CreateHmacKey).WillOnce(permanent);
   auto client =
-      StorageConnectionImpl::Create(std::move(mock), RetryClientTestOptions());
+      StorageConnectionImpl::Create(std::move(mock), RetryTestOptions());
   google::cloud::internal::OptionsSpan span(client->options());
   auto response = client->CreateHmacKey(CreateHmacKeyRequest()).status();
   EXPECT_THAT(response, StoppedOnPermanentError("CreateHmacKey"));
@@ -128,7 +128,7 @@ TEST(StorageConnectionImpl, DeleteHmacKeyTooManyFailures) {
   EXPECT_CALL(*mock, options);
   EXPECT_CALL(*mock, DeleteHmacKey).Times(3).WillRepeatedly(transient);
   auto client =
-      StorageConnectionImpl::Create(std::move(mock), RetryClientTestOptions());
+      StorageConnectionImpl::Create(std::move(mock), RetryTestOptions());
   google::cloud::internal::OptionsSpan span(client->options());
   auto response = client->DeleteHmacKey(DeleteHmacKeyRequest()).status();
   EXPECT_THAT(response, StoppedOnTooManyTransients("DeleteHmacKey"));
@@ -142,7 +142,7 @@ TEST(StorageConnectionImpl, DeleteHmacKeyPermanentFailure) {
   EXPECT_CALL(*mock, options);
   EXPECT_CALL(*mock, DeleteHmacKey).WillOnce(permanent);
   auto client =
-      StorageConnectionImpl::Create(std::move(mock), RetryClientTestOptions());
+      StorageConnectionImpl::Create(std::move(mock), RetryTestOptions());
   google::cloud::internal::OptionsSpan span(client->options());
   auto response = client->DeleteHmacKey(DeleteHmacKeyRequest()).status();
   EXPECT_THAT(response, StoppedOnPermanentError("DeleteHmacKey"));
@@ -156,7 +156,7 @@ TEST(StorageConnectionImpl, GetHmacKeyTooManyFailures) {
   EXPECT_CALL(*mock, options);
   EXPECT_CALL(*mock, GetHmacKey).Times(3).WillRepeatedly(transient);
   auto client =
-      StorageConnectionImpl::Create(std::move(mock), RetryClientTestOptions());
+      StorageConnectionImpl::Create(std::move(mock), RetryTestOptions());
   google::cloud::internal::OptionsSpan span(client->options());
   auto response = client->GetHmacKey(GetHmacKeyRequest()).status();
   EXPECT_THAT(response, StoppedOnTooManyTransients("GetHmacKey"));
@@ -170,7 +170,7 @@ TEST(StorageConnectionImpl, GetHmacKeyPermanentFailure) {
   EXPECT_CALL(*mock, options);
   EXPECT_CALL(*mock, GetHmacKey).WillOnce(permanent);
   auto client =
-      StorageConnectionImpl::Create(std::move(mock), RetryClientTestOptions());
+      StorageConnectionImpl::Create(std::move(mock), RetryTestOptions());
   google::cloud::internal::OptionsSpan span(client->options());
   auto response = client->GetHmacKey(GetHmacKeyRequest()).status();
   EXPECT_THAT(response, StoppedOnPermanentError("GetHmacKey"));
@@ -184,7 +184,7 @@ TEST(StorageConnectionImpl, UpdateHmacKeyTooManyFailures) {
   EXPECT_CALL(*mock, options);
   EXPECT_CALL(*mock, UpdateHmacKey).Times(3).WillRepeatedly(transient);
   auto client =
-      StorageConnectionImpl::Create(std::move(mock), RetryClientTestOptions());
+      StorageConnectionImpl::Create(std::move(mock), RetryTestOptions());
   google::cloud::internal::OptionsSpan span(client->options());
   auto response = client->UpdateHmacKey(UpdateHmacKeyRequest()).status();
   EXPECT_THAT(response, StoppedOnTooManyTransients("UpdateHmacKey"));
@@ -198,7 +198,7 @@ TEST(StorageConnectionImpl, UpdateHmacKeyPermanentFailure) {
   EXPECT_CALL(*mock, options);
   EXPECT_CALL(*mock, UpdateHmacKey).WillOnce(permanent);
   auto client =
-      StorageConnectionImpl::Create(std::move(mock), RetryClientTestOptions());
+      StorageConnectionImpl::Create(std::move(mock), RetryTestOptions());
   google::cloud::internal::OptionsSpan span(client->options());
   auto response = client->UpdateHmacKey(UpdateHmacKeyRequest()).status();
   EXPECT_THAT(response, StoppedOnPermanentError("UpdateHmacKey"));

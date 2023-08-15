@@ -35,7 +35,7 @@ namespace testing {
  * backoff policy uses very short backoffs. This works well in unit tests. The
  * idempotency policy retries all operations.
  */
-Options RetryClientTestOptions();
+Options RetryTestOptions();
 
 /// Validates the `Status` produced in a "too many transients" test.
 ::testing::Matcher<Status> StoppedOnTooManyTransients(char const* api_name);
