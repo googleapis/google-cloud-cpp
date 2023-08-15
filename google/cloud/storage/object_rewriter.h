@@ -15,7 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_OBJECT_REWRITER_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_OBJECT_REWRITER_H
 
-#include "google/cloud/storage/internal/raw_client.h"
+#include "google/cloud/storage/internal/storage_connection.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/internal/invoke_result.h"
 #include <string>
@@ -48,7 +48,7 @@ struct RewriteProgress {
  */
 class ObjectRewriter {
  public:
-  ObjectRewriter(std::shared_ptr<internal::RawClient> client,
+  ObjectRewriter(std::shared_ptr<internal::StorageConnection> connection,
                  internal::RewriteObjectRequest request);
 
   /**
@@ -129,7 +129,7 @@ class ObjectRewriter {
   std::string const& token() const { return request_.rewrite_token(); }
 
  private:
-  std::shared_ptr<internal::RawClient> client_;
+  std::shared_ptr<internal::StorageConnection> connection_;
   internal::RewriteObjectRequest request_;
   RewriteProgress progress_;
   ObjectMetadata result_;

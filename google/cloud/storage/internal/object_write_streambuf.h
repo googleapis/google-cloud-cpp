@@ -18,7 +18,7 @@
 #include "google/cloud/storage/auto_finalize.h"
 #include "google/cloud/storage/internal/hash_function.h"
 #include "google/cloud/storage/internal/hash_validator.h"
-#include "google/cloud/storage/internal/raw_client.h"
+#include "google/cloud/storage/internal/storage_connection.h"
 #include "google/cloud/storage/version.h"
 #include <iostream>
 #include <memory>
@@ -43,7 +43,7 @@ class ObjectWriteStreambuf : public std::basic_streambuf<char> {
 
   explicit ObjectWriteStreambuf(Status status);
 
-  ObjectWriteStreambuf(std::shared_ptr<RawClient> client,
+  ObjectWriteStreambuf(std::shared_ptr<StorageConnection> connection,
                        ResumableUploadRequest request, std::string upload_id,
                        std::uint64_t committed_size,
                        absl::optional<ObjectMetadata> metadata,
@@ -107,7 +107,7 @@ class ObjectWriteStreambuf : public std::basic_streambuf<char> {
 
   void UpdatePutArea();
 
-  std::shared_ptr<RawClient> client_;
+  std::shared_ptr<StorageConnection> connection_;
   ResumableUploadRequest request_;
   Status last_status_;
   std::string upload_id_;

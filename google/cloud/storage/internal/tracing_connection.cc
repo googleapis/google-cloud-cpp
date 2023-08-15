@@ -22,7 +22,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-TracingConnection::TracingConnection(std::shared_ptr<RawClient> impl)
+TracingConnection::TracingConnection(std::shared_ptr<StorageConnection> impl)
     : impl_(std::move(impl)) {}
 
 storage::ClientOptions const& TracingConnection::client_options() const {
@@ -437,15 +437,15 @@ std::vector<std::string> TracingConnection::InspectStackStructure() const {
   return stack;
 }
 
-std::shared_ptr<storage::internal::RawClient> MakeTracingClient(
-    std::shared_ptr<storage::internal::RawClient> impl) {
+std::shared_ptr<storage::internal::StorageConnection> MakeTracingClient(
+    std::shared_ptr<storage::internal::StorageConnection> impl) {
   return std::make_shared<TracingConnection>(std::move(impl));
 }
 
 #else
 
-std::shared_ptr<storage::internal::RawClient> MakeTracingClient(
-    std::shared_ptr<storage::internal::RawClient> impl) {
+std::shared_ptr<storage::internal::StorageConnection> MakeTracingClient(
+    std::shared_ptr<storage::internal::StorageConnection> impl) {
   return impl;
 }
 

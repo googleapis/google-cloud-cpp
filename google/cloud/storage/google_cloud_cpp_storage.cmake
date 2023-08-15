@@ -171,8 +171,6 @@ add_library(
     internal/patch_builder_details.h
     internal/policy_document_request.cc
     internal/policy_document_request.h
-    internal/raw_client.cc
-    internal/raw_client.h
     internal/request_project_id.cc
     internal/request_project_id.h
     internal/rest/object_read_source.cc
@@ -191,6 +189,8 @@ add_library(
     internal/sign_blob_requests.h
     internal/signed_url_requests.cc
     internal/signed_url_requests.h
+    internal/storage_connection.cc
+    internal/storage_connection.h
     internal/tracing_connection.cc
     internal/tracing_connection.h
     internal/tuple_filter.h

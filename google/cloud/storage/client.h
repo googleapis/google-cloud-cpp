@@ -17,9 +17,9 @@
 
 #include "google/cloud/storage/hmac_key_metadata.h"
 #include "google/cloud/storage/internal/policy_document_request.h"
-#include "google/cloud/storage/internal/raw_client.h"
 #include "google/cloud/storage/internal/request_project_id.h"
 #include "google/cloud/storage/internal/signed_url_requests.h"
+#include "google/cloud/storage/internal/storage_connection.h"
 #include "google/cloud/storage/internal/tuple_filter.h"
 #include "google/cloud/storage/list_buckets_reader.h"
 #include "google/cloud/storage/list_hmac_keys_reader.h"
@@ -281,7 +281,7 @@ class Client {
   /// @name Equality
   ///@{
   friend bool operator==(Client const& a, Client const& b) {
-    return a.raw_client_ == b.raw_client_;
+    return a.connection_ == b.connection_;
   }
   friend bool operator!=(Client const& a, Client const& b) { return !(a == b); }
   ///@}
@@ -320,7 +320,7 @@ class Client {
         SpanOptions(std::forward<Options>(options)...));
     internal::ListBucketsRequest request(project_id);
     request.set_multiple_options(std::forward<Options>(options)...);
-    auto& client = raw_client_;
+    auto& client = connection_;
     return google::cloud::internal::MakePaginationRange<ListBucketsReader>(
         request,
         [client](internal::ListBucketsRequest const& r) {
@@ -404,7 +404,7 @@ class Client {
     internal::CreateBucketRequest request(*std::move(project_id),
                                           std::move(metadata));
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->CreateBucket(request);
+    return connection_->CreateBucket(request);
   }
 
   /**
@@ -445,7 +445,7 @@ class Client {
     internal::CreateBucketRequest request(std::move(project_id),
                                           std::move(metadata));
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->CreateBucket(request);
+    return connection_->CreateBucket(request);
   }
 
   /**
@@ -469,7 +469,7 @@ class Client {
         SpanOptions(std::forward<Options>(options)...));
     internal::GetBucketMetadataRequest request(bucket_name);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->GetBucketMetadata(request);
+    return connection_->GetBucketMetadata(request);
   }
 
   /**
@@ -493,7 +493,7 @@ class Client {
         SpanOptions(std::forward<Options>(options)...));
     internal::DeleteBucketRequest request(bucket_name);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->DeleteBucket(request).status();
+    return connection_->DeleteBucket(request).status();
   }
 
   /**
@@ -538,7 +538,7 @@ class Client {
     metadata.set_name(std::move(bucket_name));
     internal::UpdateBucketRequest request(std::move(metadata));
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->UpdateBucket(request);
+    return connection_->UpdateBucket(request);
   }
 
   /**
@@ -589,7 +589,7 @@ class Client {
     internal::PatchBucketRequest request(std::move(bucket_name), original,
                                          updated);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->PatchBucket(request);
+    return connection_->PatchBucket(request);
   }
 
   /**
@@ -633,7 +633,7 @@ class Client {
         SpanOptions(std::forward<Options>(options)...));
     internal::PatchBucketRequest request(std::move(bucket_name), builder);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->PatchBucket(request);
+    return connection_->PatchBucket(request);
   }
 
   /**
@@ -676,7 +676,7 @@ class Client {
         SpanOptions(std::forward<Options>(options)...));
     internal::GetBucketIamPolicyRequest request(bucket_name);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->GetNativeBucketIamPolicy(request);
+    return connection_->GetNativeBucketIamPolicy(request);
   }
 
   /**
@@ -733,7 +733,7 @@ class Client {
         SpanOptions(std::forward<Options>(options)...));
     internal::SetNativeBucketIamPolicyRequest request(bucket_name, iam_policy);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->SetNativeBucketIamPolicy(request);
+    return connection_->SetNativeBucketIamPolicy(request);
   }
 
   /**
@@ -772,7 +772,7 @@ class Client {
     internal::TestBucketIamPermissionsRequest request(std::move(bucket_name),
                                                       std::move(permissions));
     request.set_multiple_options(std::forward<Options>(options)...);
-    auto result = raw_client_->TestBucketIamPermissions(request);
+    auto result = connection_->TestBucketIamPermissions(request);
     if (!result) {
       return std::move(result).status();
     }
@@ -834,7 +834,7 @@ class Client {
     internal::LockBucketRetentionPolicyRequest request(bucket_name,
                                                        metageneration);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->LockBucketRetentionPolicy(request);
+    return connection_->LockBucketRetentionPolicy(request);
   }
   ///@}
 
@@ -885,7 +885,7 @@ class Client {
     internal::InsertObjectMediaRequest request(bucket_name, object_name,
                                                contents);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->InsertObjectMedia(request);
+    return connection_->InsertObjectMedia(request);
   }
 
   /// @overload InsertObject(std::string const& bucket_name, std::string const& object_name, absl::string_view contents, Options&&... options)
@@ -962,7 +962,7 @@ class Client {
         std::move(source_bucket_name), std::move(source_object_name),
         std::move(destination_bucket_name), std::move(destination_object_name));
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->CopyObject(request);
+    return connection_->CopyObject(request);
   }
 
   /**
@@ -989,7 +989,7 @@ class Client {
         SpanOptions(std::forward<Options>(options)...));
     internal::GetObjectMetadataRequest request(bucket_name, object_name);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->GetObjectMetadata(request);
+    return connection_->GetObjectMetadata(request);
   }
 
   /**
@@ -1014,7 +1014,7 @@ class Client {
         SpanOptions(std::forward<Options>(options)...));
     internal::ListObjectsRequest request(bucket_name);
     request.set_multiple_options(std::forward<Options>(options)...);
-    auto& client = raw_client_;
+    auto& client = connection_;
     return google::cloud::internal::MakePaginationRange<ListObjectsReader>(
         request,
         [client](internal::ListObjectsRequest const& r) {
@@ -1049,7 +1049,7 @@ class Client {
     return google::cloud::internal::MakePaginationRange<
         ListObjectsAndPrefixesReader>(
         request,
-        [client = raw_client_](internal::ListObjectsRequest const& r) {
+        [client = connection_](internal::ListObjectsRequest const& r) {
           return client->ListObjects(r);
         },
         [](internal::ListObjectsResponse r) {
@@ -1265,7 +1265,7 @@ class Client {
         SpanOptions(std::forward<Options>(options)...));
     internal::DeleteResumableUploadRequest request(upload_session_url);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->DeleteResumableUpload(request).status();
+    return connection_->DeleteResumableUpload(request).status();
   }
 
   /**
@@ -1323,7 +1323,7 @@ class Client {
         SpanOptions(std::forward<Options>(options)...));
     internal::DeleteObjectRequest request(bucket_name, object_name);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->DeleteObject(request).status();
+    return connection_->DeleteObject(request).status();
   }
 
   /**
@@ -1358,7 +1358,7 @@ class Client {
     internal::UpdateObjectRequest request(
         std::move(bucket_name), std::move(object_name), std::move(metadata));
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->UpdateObject(request);
+    return connection_->UpdateObject(request);
   }
 
   /**
@@ -1398,7 +1398,7 @@ class Client {
     internal::PatchObjectRequest request(
         std::move(bucket_name), std::move(object_name), original, updated);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->PatchObject(request);
+    return connection_->PatchObject(request);
   }
 
   /**
@@ -1434,7 +1434,7 @@ class Client {
     internal::PatchObjectRequest request(std::move(bucket_name),
                                          std::move(object_name), builder);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->PatchObject(request);
+    return connection_->PatchObject(request);
   }
 
   /**
@@ -1470,7 +1470,7 @@ class Client {
                                            std::move(source_objects),
                                            std::move(destination_object_name));
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->ComposeObject(request);
+    return connection_->ComposeObject(request);
   }
 
   /**
@@ -1577,7 +1577,7 @@ class Client {
         std::move(destination_bucket_name), std::move(destination_object_name),
         std::move(rewrite_token));
     request.set_multiple_options(std::forward<Options>(options)...);
-    return ObjectRewriter(raw_client_, std::move(request));
+    return ObjectRewriter(connection_, std::move(request));
   }
 
   /**
@@ -1688,7 +1688,7 @@ class Client {
         SpanOptions(std::forward<Options>(options)...));
     internal::ListBucketAclRequest request(bucket_name);
     request.set_multiple_options(std::forward<Options>(options)...);
-    auto items = raw_client_->ListBucketAcl(request);
+    auto items = connection_->ListBucketAcl(request);
     if (!items) {
       return std::move(items).status();
     }
@@ -1725,7 +1725,7 @@ class Client {
         SpanOptions(std::forward<Options>(options)...));
     internal::CreateBucketAclRequest request(bucket_name, entity, role);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->CreateBucketAcl(request);
+    return connection_->CreateBucketAcl(request);
   }
 
   /**
@@ -1753,7 +1753,7 @@ class Client {
         SpanOptions(std::forward<Options>(options)...));
     internal::DeleteBucketAclRequest request(bucket_name, entity);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->DeleteBucketAcl(request).status();
+    return connection_->DeleteBucketAcl(request).status();
   }
 
   /**
@@ -1781,7 +1781,7 @@ class Client {
         SpanOptions(std::forward<Options>(options)...));
     internal::GetBucketAclRequest request(bucket_name, entity);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->GetBucketAcl(request);
+    return connection_->GetBucketAcl(request);
   }
 
   /**
@@ -1823,7 +1823,7 @@ class Client {
     internal::UpdateBucketAclRequest request(bucket_name, acl.entity(),
                                              acl.role());
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->UpdateBucketAcl(request);
+    return connection_->UpdateBucketAcl(request);
   }
 
   /**
@@ -1871,7 +1871,7 @@ class Client {
     internal::PatchBucketAclRequest request(bucket_name, entity, original_acl,
                                             new_acl);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->PatchBucketAcl(request);
+    return connection_->PatchBucketAcl(request);
   }
 
   /**
@@ -1915,7 +1915,7 @@ class Client {
         SpanOptions(std::forward<Options>(options)...));
     internal::PatchBucketAclRequest request(bucket_name, entity, builder);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->PatchBucketAcl(request);
+    return connection_->PatchBucketAcl(request);
   }
   ///@}
 
@@ -1965,7 +1965,7 @@ class Client {
         SpanOptions(std::forward<Options>(options)...));
     internal::ListObjectAclRequest request(bucket_name, object_name);
     request.set_multiple_options(std::forward<Options>(options)...);
-    auto result = raw_client_->ListObjectAcl(request);
+    auto result = connection_->ListObjectAcl(request);
     if (!result) {
       return std::move(result).status();
     }
@@ -2005,7 +2005,7 @@ class Client {
     internal::CreateObjectAclRequest request(bucket_name, object_name, entity,
                                              role);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->CreateObjectAcl(request);
+    return connection_->CreateObjectAcl(request);
   }
 
   /**
@@ -2036,7 +2036,7 @@ class Client {
         SpanOptions(std::forward<Options>(options)...));
     internal::DeleteObjectAclRequest request(bucket_name, object_name, entity);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->DeleteObjectAcl(request).status();
+    return connection_->DeleteObjectAcl(request).status();
   }
 
   /**
@@ -2066,7 +2066,7 @@ class Client {
         SpanOptions(std::forward<Options>(options)...));
     internal::GetObjectAclRequest request(bucket_name, object_name, entity);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->GetObjectAcl(request);
+    return connection_->GetObjectAcl(request);
   }
 
   /**
@@ -2108,7 +2108,7 @@ class Client {
     internal::UpdateObjectAclRequest request(bucket_name, object_name,
                                              acl.entity(), acl.role());
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->UpdateObjectAcl(request);
+    return connection_->UpdateObjectAcl(request);
   }
 
   /**
@@ -2157,7 +2157,7 @@ class Client {
     internal::PatchObjectAclRequest request(bucket_name, object_name, entity,
                                             original_acl, new_acl);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->PatchObjectAcl(request);
+    return connection_->PatchObjectAcl(request);
   }
 
   /**
@@ -2204,7 +2204,7 @@ class Client {
     internal::PatchObjectAclRequest request(bucket_name, object_name, entity,
                                             builder);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->PatchObjectAcl(request);
+    return connection_->PatchObjectAcl(request);
   }
   ///@}
 
@@ -2252,7 +2252,7 @@ class Client {
         SpanOptions(std::forward<Options>(options)...));
     internal::ListDefaultObjectAclRequest request(bucket_name);
     request.set_multiple_options(std::forward<Options>(options)...);
-    auto response = raw_client_->ListDefaultObjectAcl(request);
+    auto response = connection_->ListDefaultObjectAcl(request);
     if (!response) {
       return std::move(response).status();
     }
@@ -2293,7 +2293,7 @@ class Client {
         SpanOptions(std::forward<Options>(options)...));
     internal::CreateDefaultObjectAclRequest request(bucket_name, entity, role);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->CreateDefaultObjectAcl(request);
+    return connection_->CreateDefaultObjectAcl(request);
   }
 
   /**
@@ -2327,7 +2327,7 @@ class Client {
         SpanOptions(std::forward<Options>(options)...));
     internal::DeleteDefaultObjectAclRequest request(bucket_name, entity);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->DeleteDefaultObjectAcl(request).status();
+    return connection_->DeleteDefaultObjectAcl(request).status();
   }
 
   /**
@@ -2360,7 +2360,7 @@ class Client {
         SpanOptions(std::forward<Options>(options)...));
     internal::GetDefaultObjectAclRequest request(bucket_name, entity);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->GetDefaultObjectAcl(request);
+    return connection_->GetDefaultObjectAcl(request);
   }
 
   /**
@@ -2405,7 +2405,7 @@ class Client {
     internal::UpdateDefaultObjectAclRequest request(bucket_name, acl.entity(),
                                                     acl.role());
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->UpdateDefaultObjectAcl(request);
+    return connection_->UpdateDefaultObjectAcl(request);
   }
 
   /**
@@ -2456,7 +2456,7 @@ class Client {
     internal::PatchDefaultObjectAclRequest request(bucket_name, entity,
                                                    original_acl, new_acl);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->PatchDefaultObjectAcl(request);
+    return connection_->PatchDefaultObjectAcl(request);
   }
 
   /**
@@ -2504,7 +2504,7 @@ class Client {
     internal::PatchDefaultObjectAclRequest request(bucket_name, entity,
                                                    builder);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->PatchDefaultObjectAcl(request);
+    return connection_->PatchDefaultObjectAcl(request);
   }
   ///@}
 
@@ -2549,7 +2549,7 @@ class Client {
         SpanOptions(std::forward<Options>(options)...));
     internal::GetProjectServiceAccountRequest request(project_id);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->GetServiceAccount(request);
+    return connection_->GetServiceAccount(request);
   }
 
   /**
@@ -2589,7 +2589,7 @@ class Client {
     google::cloud::internal::OptionsSpan const span(std::move(opts));
     internal::GetProjectServiceAccountRequest request(*std::move(project_id));
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->GetServiceAccount(request);
+    return connection_->GetServiceAccount(request);
   }
 
   /**
@@ -2636,7 +2636,7 @@ class Client {
     request.set_multiple_options(std::forward<Options>(options)...);
     return google::cloud::internal::MakePaginationRange<ListHmacKeysReader>(
         request,
-        [stub = raw_client_](internal::ListHmacKeysRequest const& r) {
+        [stub = connection_](internal::ListHmacKeysRequest const& r) {
           return stub->ListHmacKeys(r);
         },
         [](internal::ListHmacKeysResponse r) { return std::move(r.items); });
@@ -2684,7 +2684,7 @@ class Client {
     internal::CreateHmacKeyRequest request(*std::move(project_id),
                                            std::move(service_account));
     request.set_multiple_options(std::forward<Options>(options)...);
-    auto result = raw_client_->CreateHmacKey(request);
+    auto result = connection_->CreateHmacKey(request);
     if (!result) return std::move(result).status();
     return std::make_pair(std::move(result->metadata),
                           std::move(result->secret));
@@ -2726,7 +2726,7 @@ class Client {
     internal::DeleteHmacKeyRequest request(*std::move(project_id),
                                            std::move(access_id));
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->DeleteHmacKey(request).status();
+    return connection_->DeleteHmacKey(request).status();
   }
 
   /**
@@ -2765,7 +2765,7 @@ class Client {
     internal::GetHmacKeyRequest request(*std::move(project_id),
                                         std::move(access_id));
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->GetHmacKey(request);
+    return connection_->GetHmacKey(request);
   }
 
   /**
@@ -2809,7 +2809,7 @@ class Client {
     internal::UpdateHmacKeyRequest request(
         *std::move(project_id), std::move(access_id), std::move(resource));
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->UpdateHmacKey(request);
+    return connection_->UpdateHmacKey(request);
   }
   ///@}
 
@@ -3065,7 +3065,7 @@ class Client {
         SpanOptions(std::forward<Options>(options)...));
     internal::ListNotificationsRequest request(bucket_name);
     request.set_multiple_options(std::forward<Options>(options)...);
-    auto result = raw_client_->ListNotifications(request);
+    auto result = connection_->ListNotifications(request);
     if (!result) {
       return std::move(result).status();
     }
@@ -3155,7 +3155,7 @@ class Client {
     metadata.set_topic(topic_name).set_payload_format(payload_format);
     internal::CreateNotificationRequest request(bucket_name, metadata);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->CreateNotification(request);
+    return connection_->CreateNotification(request);
   }
 
   /**
@@ -3191,7 +3191,7 @@ class Client {
         SpanOptions(std::forward<Options>(options)...));
     internal::GetNotificationRequest request(bucket_name, notification_id);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return raw_client_->GetNotification(request);
+    return connection_->GetNotification(request);
   }
 
   /**
@@ -3229,7 +3229,7 @@ class Client {
         SpanOptions(std::forward<Options>(options)...));
     internal::DeleteNotificationRequest request(bucket_name, notification_id);
     request.set_multiple_options(std::forward<Options>(options)...);
-    return std::move(raw_client_->DeleteNotification(request)).status();
+    return std::move(connection_->DeleteNotification(request)).status();
   }
   ///@}
 
@@ -3290,42 +3290,44 @@ class Client {
       " Please file a bug at https://github.com/googleapis/google-cloud-cpp"
       " if you have a use-case not covered by these.")
 #endif  // _MSC_VER
-  // We cannot `std::move(client)` because it is used twice in the delegated
-  // constructor parameters. And we cannot just use `RawClient const&` because
-  // we do hold on to the `std::shared_ptr<>`.
-  explicit Client(std::shared_ptr<internal::RawClient> const& client,
-                  Policies&&... policies)
+  // We cannot `std::move(connection)` because it is used twice in the delegated
+  // constructor parameters. And we cannot just use `StorageConnection const&`
+  // because we do hold on to the `std::shared_ptr<>`.
+  explicit Client(
+      std::shared_ptr<internal::StorageConnection> const& connection,
+      Policies&&... policies)
       : Client(InternalOnly{},
                internal::ApplyPolicies(
                    internal::DefaultOptions(
-                       client->client_options().credentials(), {}),
+                       connection->client_options().credentials(), {}),
                    std::forward<Policies>(policies)...),
                // We cannot std::move() because it is also used in the previous
                // parameter.
-               client) {
+               connection) {
   }
 
-  /// Define a tag to disable automatic decorations of the RawClient.
+  /// Define a tag to disable automatic decorations of the StorageConnection.
   struct NoDecorations {};
 
-  /// Builds a client with a specific RawClient, without decorations.
+  /// Builds a client with a specific StorageConnection, without decorations.
   /// @deprecated This was intended only for test code, applications should not
   /// use it.
   GOOGLE_CLOUD_CPP_DEPRECATED(
       "applications should not need this."
       " Please file a bug at https://github.com/googleapis/google-cloud-cpp"
       " if you do.")
-  explicit Client(std::shared_ptr<internal::RawClient> client, NoDecorations)
-      : Client(InternalOnlyNoDecorations{}, std::move(client)) {}
+  explicit Client(std::shared_ptr<internal::StorageConnection> connection,
+                  NoDecorations)
+      : Client(InternalOnlyNoDecorations{}, std::move(connection)) {}
 
-  /// Access the underlying `RawClient`.
+  /// Access the underlying `StorageConnection`.
   /// @deprecated Only intended for implementors, do not use.
   GOOGLE_CLOUD_CPP_DEPRECATED(
       "applications should not need this."
       " Please file a bug at https://github.com/googleapis/google-cloud-cpp"
       " if you do.")
-  std::shared_ptr<internal::RawClient> raw_client() const {
-    return raw_client_;
+  std::shared_ptr<internal::StorageConnection> raw_client() const {
+    return connection_;
   }
 
  private:
@@ -3338,11 +3340,11 @@ class Client {
 
   /// Assume @p connection is fully initialized and decorated as needed.
   Client(InternalOnlyNoDecorations,
-         std::shared_ptr<internal::RawClient> connection)
-      : raw_client_(std::move(connection)) {}
+         std::shared_ptr<internal::StorageConnection> connection)
+      : connection_(std::move(connection)) {}
   /// Apply all decorators to @p connection, based on @p opts.
   Client(InternalOnly, Options const& opts,
-         std::shared_ptr<internal::RawClient> connection);
+         std::shared_ptr<internal::StorageConnection> connection);
   /// Create a connection from @p opts, applying all decorators if needed.
   Client(InternalOnly, Options const& opts);
 
@@ -3355,7 +3357,7 @@ class Client {
   template <typename... RequestOptions>
   google::cloud::Options SpanOptions(RequestOptions&&... o) const {
     return google::cloud::internal::GroupOptions(
-        raw_client_->options(), std::forward<RequestOptions>(o)...);
+        connection_->options(), std::forward<RequestOptions>(o)...);
   }
 
   // The version of UploadFile() where UseResumableUploadSession is one of the
@@ -3434,7 +3436,7 @@ class Client {
   StatusOr<PolicyDocumentV4Result> SignPolicyDocumentV4(
       internal::PolicyDocumentV4Request request);
 
-  std::shared_ptr<internal::RawClient> raw_client_;
+  std::shared_ptr<internal::StorageConnection> connection_;
 };
 
 /**
@@ -3457,8 +3459,8 @@ std::string CreateRandomPrefixName(std::string const& prefix = "");
 
 namespace internal {
 struct ClientImplDetails {
-  static std::shared_ptr<RawClient> GetRawClient(Client& c) {
-    return c.raw_client_;
+  static std::shared_ptr<StorageConnection> GetConnection(Client& c) {
+    return c.connection_;
   }
 
   static StatusOr<ObjectMetadata> UploadStreamResumable(
@@ -3468,16 +3470,17 @@ struct ClientImplDetails {
   }
 
   static Client CreateWithoutDecorations(
-      std::shared_ptr<internal::RawClient> c) {
+      std::shared_ptr<internal::StorageConnection> c) {
     return Client(Client::InternalOnlyNoDecorations{}, std::move(c));
   }
 
-  static Client CreateWithDecorations(Options const& opts,
-                                      std::shared_ptr<RawClient> client);
+  static Client CreateWithDecorations(
+      Options const& opts, std::shared_ptr<StorageConnection> connection);
 
   template <typename... Policies>
   // NOLINTNEXTLINE(performance-unnecessary-value-param)
-  static Client CreateClient(std::shared_ptr<RawClient> c, Policies&&... p) {
+  static Client CreateClient(std::shared_ptr<StorageConnection> c,
+                             Policies&&... p) {
     auto opts =
         internal::ApplyPolicies(c->options(), std::forward<Policies>(p)...);
     return CreateWithDecorations(opts, std::move(c));

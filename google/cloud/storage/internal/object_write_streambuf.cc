@@ -35,13 +35,13 @@ ObjectWriteStreambuf::ObjectWriteStreambuf(Status status)
 }
 
 ObjectWriteStreambuf::ObjectWriteStreambuf(
-    std::shared_ptr<RawClient> client, ResumableUploadRequest request,
-    std::string upload_id, std::uint64_t committed_size,
-    absl::optional<ObjectMetadata> metadata, std::size_t max_buffer_size,
-    std::unique_ptr<HashFunction> hash_function, HashValues known_hashes,
-    std::unique_ptr<HashValidator> hash_validator,
+    std::shared_ptr<StorageConnection> connection,
+    ResumableUploadRequest request, std::string upload_id,
+    std::uint64_t committed_size, absl::optional<ObjectMetadata> metadata,
+    std::size_t max_buffer_size, std::unique_ptr<HashFunction> hash_function,
+    HashValues known_hashes, std::unique_ptr<HashValidator> hash_validator,
     AutoFinalizeConfig auto_finalize)
-    : client_(std::move(client)),
+    : connection_(std::move(connection)),
       request_(std::move(request)),
       upload_id_(std::move(upload_id)),
       committed_size_(committed_size),
@@ -147,7 +147,7 @@ void ObjectWriteStreambuf::FlushFinal() {
                                            hash_function_, known_hashes_);
   request_.ForEachOption(internal::CopyCommonOptions(upload_request));
   OptionsSpan const span(span_options_);
-  auto response = client_->UploadChunk(upload_request);
+  auto response = connection_->UploadChunk(upload_request);
   if (!response) {
     last_status_ = std::move(response).status();
     return;
@@ -199,7 +199,7 @@ void ObjectWriteStreambuf::FlushRoundChunk(ConstBufferSequence buffers) {
       UploadChunkRequest(upload_id_, committed_size_, payload, hash_function_);
   request_.ForEachOption(internal::CopyCommonOptions(upload_request));
   OptionsSpan const span(span_options_);
-  auto response = client_->UploadChunk(upload_request);
+  auto response = connection_->UploadChunk(upload_request);
   if (!response) {
     // Upload failures are irrecoverable because the internal buffer is opaque
     // to the caller, so there is no way to know what byte range to specify

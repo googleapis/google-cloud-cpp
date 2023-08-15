@@ -38,7 +38,7 @@ enum OffsetDirection { kFromBeginning, kFromEnd };
  */
 class RetryObjectReadSource : public ObjectReadSource {
  public:
-  RetryObjectReadSource(std::shared_ptr<StorageConnectionImpl> client,
+  RetryObjectReadSource(std::shared_ptr<StorageConnectionImpl> connection,
                         ReadObjectRangeRequest request,
                         std::unique_ptr<ObjectReadSource> child,
                         std::unique_ptr<RetryPolicy> retry_policy,
@@ -54,7 +54,7 @@ class RetryObjectReadSource : public ObjectReadSource {
   StatusOr<std::unique_ptr<ObjectReadSource>> ReadDiscard(
       std::unique_ptr<ObjectReadSource> child, std::int64_t count) const;
 
-  std::shared_ptr<StorageConnectionImpl> client_;
+  std::shared_ptr<StorageConnectionImpl> connection_;
   ReadObjectRangeRequest request_;
   std::unique_ptr<ObjectReadSource> child_;
   absl::optional<std::int64_t> generation_;

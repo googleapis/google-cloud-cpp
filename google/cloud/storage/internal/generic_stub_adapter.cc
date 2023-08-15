@@ -14,7 +14,7 @@
 
 #include "google/cloud/storage/internal/generic_stub_adapter.h"
 #include "google/cloud/storage/internal/generic_stub.h"
-#include "google/cloud/storage/internal/raw_client.h"
+#include "google/cloud/storage/internal/storage_connection.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -27,7 +27,7 @@ namespace {
 class GenericStubAdapter : public GenericStub {
  public:
   explicit GenericStubAdapter(
-      std::shared_ptr<storage::internal::RawClient> impl)
+      std::shared_ptr<storage::internal::StorageConnection> impl)
       : impl_(std::move(impl)) {}
   ~GenericStubAdapter() noexcept override = default;
 
@@ -324,13 +324,13 @@ class GenericStubAdapter : public GenericStub {
   }
 
  private:
-  std::shared_ptr<storage::internal::RawClient> impl_;
+  std::shared_ptr<storage::internal::StorageConnection> impl_;
 };
 
 }  // namespace
 
 std::unique_ptr<GenericStub> MakeGenericStubAdapter(
-    std::shared_ptr<storage::internal::RawClient> impl) {
+    std::shared_ptr<storage::internal::StorageConnection> impl) {
   return std::make_unique<GenericStubAdapter>(std::move(impl));
 }
 

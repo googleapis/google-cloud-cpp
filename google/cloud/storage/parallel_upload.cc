@@ -25,14 +25,18 @@ namespace internal {
 
 class ParallelObjectWriteStreambuf : public ObjectWriteStreambuf {
  public:
-  ParallelObjectWriteStreambuf(
-      std::shared_ptr<ParallelUploadStateImpl> state, std::size_t stream_idx,
-      std::shared_ptr<RawClient> client, ResumableUploadRequest const& request,
-      std::string upload_id, std::uint64_t committed_size,
-      absl::optional<ObjectMetadata> metadata, std::size_t max_buffer_size)
+  ParallelObjectWriteStreambuf(std::shared_ptr<ParallelUploadStateImpl> state,
+                               std::size_t stream_idx,
+                               std::shared_ptr<StorageConnection> connection,
+                               ResumableUploadRequest const& request,
+                               std::string upload_id,
+                               std::uint64_t committed_size,
+                               absl::optional<ObjectMetadata> metadata,
+                               std::size_t max_buffer_size)
       : ObjectWriteStreambuf(
-            std::move(client), request, std::move(upload_id), committed_size,
-            std::move(metadata), max_buffer_size, CreateHashFunction(request),
+            std::move(connection), request, std::move(upload_id),
+            committed_size, std::move(metadata), max_buffer_size,
+            CreateHashFunction(request),
             internal::HashValues{
                 request.GetOption<Crc32cChecksumValue>().value_or(""),
                 request.GetOption<MD5HashValue>().value_or(""),
@@ -74,11 +78,11 @@ ParallelUploadStateImpl::~ParallelUploadStateImpl() {
 }
 
 StatusOr<ObjectWriteStream> ParallelUploadStateImpl::CreateStream(
-    std::shared_ptr<RawClient> raw_client,
+    std::shared_ptr<StorageConnection> connection,
     ResumableUploadRequest const& request) {
   // Normally this is done by `storage::Client`, but here we are bypassing it:
-  google::cloud::internal::OptionsSpan const span(raw_client->options());
-  auto create = internal::CreateOrResume(*raw_client, request);
+  google::cloud::internal::OptionsSpan const span(connection->options());
+  auto create = internal::CreateOrResume(*connection, request);
 
   std::unique_lock<std::mutex> lk(mu_);
   if (!create) {
@@ -93,11 +97,11 @@ StatusOr<ObjectWriteStream> ParallelUploadStateImpl::CreateStream(
       StreamInfo{request.object_name(), create->upload_id, {}, false});
   assert(idx < streams_.size());
   lk.unlock();
+  auto const buffer_size = connection->options().get<UploadBufferSizeOption>();
   return ObjectWriteStream(std::make_unique<ParallelObjectWriteStreambuf>(
-      shared_from_this(), idx, std::move(raw_client), request,
+      shared_from_this(), idx, std::move(connection), request,
       std::move(create->upload_id), create->committed_size,
-      std::move(create->metadata),
-      raw_client->options().get<UploadBufferSizeOption>()));
+      std::move(create->metadata), buffer_size));
 }
 
 std::string ParallelUploadPersistentState::ToString() const {

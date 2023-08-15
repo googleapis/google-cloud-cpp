@@ -159,7 +159,7 @@ class ParallelUploadStateImpl
   ~ParallelUploadStateImpl();
 
   StatusOr<ObjectWriteStream> CreateStream(
-      std::shared_ptr<RawClient> raw_client,
+      std::shared_ptr<StorageConnection> connection,
       ResumableUploadRequest const& request);
 
   void AllStreamsFinished(std::unique_lock<std::mutex>& lk);
@@ -708,7 +708,7 @@ NonResumableParallelUploadState::Create(Client client,
     google::cloud::internal::apply(SetOptionsApplyHelper(request),
                                    upload_options);
     auto stream = internal_state->CreateStream(
-        internal::ClientImplDetails::GetRawClient(client), request);
+        internal::ClientImplDetails::GetConnection(client), request);
     if (!stream) {
       return stream.status();
     }
@@ -814,7 +814,7 @@ StatusOr<ResumableParallelUploadState> ResumableParallelUploadState::CreateNew(
     google::cloud::internal::apply(SetOptionsApplyHelper(request),
                                    upload_options);
     auto stream = internal_state->CreateStream(
-        internal::ClientImplDetails::GetRawClient(client), request);
+        internal::ClientImplDetails::GetConnection(client), request);
     if (!stream) {
       return stream.status();
     }
@@ -923,7 +923,7 @@ StatusOr<ResumableParallelUploadState> ResumableParallelUploadState::Resume(
                        std::make_tuple(UseResumableUploadSession(
                            std::move(stream_desc.resumable_session_id)))));
     auto stream = internal_state->CreateStream(
-        internal::ClientImplDetails::GetRawClient(client), request);
+        internal::ClientImplDetails::GetConnection(client), request);
     if (!stream) {
       internal_state->AllowFinishing();
       return stream.status();
@@ -1116,7 +1116,7 @@ struct CreateParallelUploadShards {
     // Everything ready - we've got the shared state and the files open, let's
     // prepare the returned objects.
     auto upload_buffer_size =
-        google::cloud::storage::internal::ClientImplDetails::GetRawClient(
+        google::cloud::storage::internal::ClientImplDetails::GetConnection(
             client)
             ->options()
             .get<UploadBufferSizeOption>();

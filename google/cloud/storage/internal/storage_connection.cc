@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/storage/internal/raw_client.h"
+#include "google/cloud/storage/internal/storage_connection.h"
 
 namespace google {
 namespace cloud {
@@ -20,20 +20,22 @@ namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
-std::vector<std::string> RawClient::InspectStackStructure() const { return {}; }
+std::vector<std::string> StorageConnection::InspectStackStructure() const {
+  return {};
+}
 
 StatusOr<CreateOrResumeResponse> CreateOrResume(
-    RawClient& client, ResumableUploadRequest const& request) {
+    StorageConnection& connection, ResumableUploadRequest const& request) {
   auto session_id = request.GetOption<UseResumableUploadSession>().value_or("");
   if (session_id.empty()) {
-    auto create = client.CreateResumableUpload(request);
+    auto create = connection.CreateResumableUpload(request);
     if (!create) return std::move(create).status();
     return CreateOrResumeResponse{std::move(create->upload_id), 0,
                                   absl::nullopt};
   }
 
   auto query = internal::QueryResumableUploadRequest(session_id);
-  auto response = client.QueryResumableUpload(query);
+  auto response = connection.QueryResumableUpload(query);
   if (!response) return std::move(response).status();
   return CreateOrResumeResponse{std::move(session_id),
                                 response->committed_size.value_or(0),
