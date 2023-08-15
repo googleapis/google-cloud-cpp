@@ -569,6 +569,10 @@
 ./include/google/cloud/confidentialcomputing/v1
 ./include/google/cloud/confidentialcomputing/v1/internal
 ./include/google/cloud/confidentialcomputing/v1/mocks
+./include/google/cloud/config
+./include/google/cloud/config/v1
+./include/google/cloud/config/v1/internal
+./include/google/cloud/config/v1/mocks
 ./include/google/cloud/connectors
 ./include/google/cloud/connectors/mocks
 ./include/google/cloud/connectors/v1
@@ -1164,6 +1168,7 @@
 ./lib64/cmake/google_cloud_cpp_composer
 ./lib64/cmake/google_cloud_cpp_compute
 ./lib64/cmake/google_cloud_cpp_confidentialcomputing
+./lib64/cmake/google_cloud_cpp_config
 ./lib64/cmake/google_cloud_cpp_connectors
 ./lib64/cmake/google_cloud_cpp_contactcenterinsights
 ./lib64/cmake/google_cloud_cpp_container

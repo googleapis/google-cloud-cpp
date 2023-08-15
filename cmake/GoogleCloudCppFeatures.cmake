@@ -66,6 +66,7 @@ set(GOOGLE_CLOUD_CPP_GA_LIBRARIES
     "commerce"
     "composer"
     "confidentialcomputing"
+    "config"
     "connectors"
     "contactcenterinsights"
     "container"
