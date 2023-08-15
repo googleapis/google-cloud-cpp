@@ -27,8 +27,7 @@ export CXX=clang++
 export CTCACHE_DIR=~/.cache/ctcache
 
 mapfile -t cmake_args < <(cmake::common_args)
-read -r ENABLED_FEATURES < <(features::list_full_cmake)
-readonly ENABLED_FEATURES
+readonly ENABLED_FEATURES="compute"
 
 # See https://github.com/matus-chochlik/ctcache for docs about the clang-tidy-cache
 # Note: we use C++14 for this build because we don't want tidy suggestions that
