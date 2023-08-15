@@ -16,7 +16,6 @@
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/tracing_options.h"
-#include <google/bigtable/v2/bigtable.grpc.pb.h>
 #include <google/protobuf/duration.pb.h>
 #include <google/protobuf/text_format.h>
 #include <google/protobuf/timestamp.pb.h>
@@ -24,8 +23,6 @@
 #include <google/rpc/status.pb.h>
 #include <google/spanner/v1/mutation.pb.h>
 #include <gmock/gmock.h>
-
-namespace btproto = ::google::bigtable::v2;
 
 namespace google {
 namespace cloud {
@@ -276,69 +273,6 @@ TEST(LogWrapper, FutureStatusWithTestContextAndCQ) {
                              HasSubstr(" >> response=" + status_as_string))));
   EXPECT_THAT(log_lines, Contains(AllOf(HasSubstr("in-test("),
                                         HasSubstr(" >> future_status="))));
-}
-
-/// @test the overload for functions returning Status
-TEST(LogWrapper, StatusValue) {
-  auto mock = [](grpc::ClientContext*, btproto::MutateRowRequest const&,
-                 btproto::MutateRowResponse*) { return grpc::Status(); };
-
-  testing_util::ScopedLog log;
-  grpc::ClientContext context;
-  btproto::MutateRowRequest request;
-  btproto::MutateRowResponse response;
-  auto const r = LogWrapper(mock, &context, request, &response, "in-test", {});
-  EXPECT_TRUE(r.ok());
-
-  auto const log_lines = log.ExtractLines();
-
-  EXPECT_THAT(log_lines,
-              Contains(AllOf(HasSubstr("in-test("), HasSubstr(" << "))));
-}
-
-/// @test the overload for functions returning erroneous Status
-TEST(LogWrapper, StatusValueError) {
-  auto status = grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh-oh");
-  auto mock = [&status](grpc::ClientContext*, btproto::MutateRowRequest const&,
-                        btproto::MutateRowResponse*) { return status; };
-
-  testing_util::ScopedLog log;
-  grpc::ClientContext context;
-  btproto::MutateRowRequest request;
-  btproto::MutateRowResponse response;
-  auto const r = LogWrapper(mock, &context, request, &response, "in-test", {});
-  EXPECT_EQ(r.error_code(), status.error_code());
-  EXPECT_EQ(r.error_message(), status.error_message());
-
-  std::ostringstream os;
-  os << status.error_message();
-  auto status_as_string = std::move(os).str();
-
-  auto const log_lines = log.ExtractLines();
-
-  EXPECT_THAT(log_lines,
-              Contains(AllOf(HasSubstr("in-test("), HasSubstr(" << "))));
-  EXPECT_THAT(log_lines,
-              Contains(AllOf(HasSubstr("in-test("), HasSubstr(" >> status="),
-                             HasSubstr(status_as_string))));
-}
-
-/// @test the overload for functions returning ClientReaderInterface
-TEST(LogWrapper, UniquePointerClientReaderInterface) {
-  auto mock = [](grpc::ClientContext*, btproto::ReadRowsRequest const&) {
-    return std::unique_ptr<
-        grpc::ClientReaderInterface<btproto::ReadRowsResponse>>{};
-  };
-
-  testing_util::ScopedLog log;
-  grpc::ClientContext context;
-  btproto::ReadRowsRequest request;
-  LogWrapper(mock, &context, request, "in-test", {});
-
-  auto const log_lines = log.ExtractLines();
-
-  EXPECT_THAT(log_lines,
-              Contains(AllOf(HasSubstr("in-test("), HasSubstr(" << "))));
 }
 
 }  // namespace
