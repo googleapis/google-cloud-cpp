@@ -81,7 +81,6 @@ GOOGLE_CLOUD_CPP_GA_LIBRARIES = [
     "iam",
     "iap",
     "ids",
-    "iot",
     "kms",
     "language",
     "logging",
