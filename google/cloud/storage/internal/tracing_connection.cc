@@ -168,7 +168,8 @@ StatusOr<storage::ObjectMetadata> TracingConnection::ComposeObject(
   return internal::EndSpan(*span, impl_->ComposeObject(request));
 }
 
-StatusOr<storage::internal::RewriteObjectResponse> TracingConnection::RewriteObject(
+StatusOr<storage::internal::RewriteObjectResponse>
+TracingConnection::RewriteObject(
     storage::internal::RewriteObjectRequest const& request) {
   auto span = internal::MakeSpan("storage::Client::RewriteObject");
   auto scope = opentelemetry::trace::Scope(span);
@@ -195,7 +196,8 @@ TracingConnection::QueryResumableUpload(
   return internal::EndSpan(*span, impl_->QueryResumableUpload(request));
 }
 
-StatusOr<storage::internal::EmptyResponse> TracingConnection::DeleteResumableUpload(
+StatusOr<storage::internal::EmptyResponse>
+TracingConnection::DeleteResumableUpload(
     storage::internal::DeleteResumableUploadRequest const& request) {
   auto span = internal::MakeSpan("storage::Client::DeleteResumableUpload");
   auto scope = opentelemetry::trace::Scope(span);
@@ -211,7 +213,8 @@ TracingConnection::UploadChunk(
   return internal::EndSpan(*span, impl_->UploadChunk(request));
 }
 
-StatusOr<storage::internal::ListBucketAclResponse> TracingConnection::ListBucketAcl(
+StatusOr<storage::internal::ListBucketAclResponse>
+TracingConnection::ListBucketAcl(
     storage::internal::ListBucketAclRequest const& request) {
   // TODO(#11395) - use a internal::MakeTracedStreamRange in storage::Client
   auto span = internal::MakeSpan("storage::Client::ListBucketAcl");
@@ -254,7 +257,8 @@ StatusOr<storage::BucketAccessControl> TracingConnection::PatchBucketAcl(
   return internal::EndSpan(*span, impl_->PatchBucketAcl(request));
 }
 
-StatusOr<storage::internal::ListObjectAclResponse> TracingConnection::ListObjectAcl(
+StatusOr<storage::internal::ListObjectAclResponse>
+TracingConnection::ListObjectAcl(
     storage::internal::ListObjectAclRequest const& request) {
   // TODO(#11395) - use a internal::MakeTracedStreamRange in storage::Client
   auto span = internal::MakeSpan("storage::Client::ListObjectAcl");
@@ -306,7 +310,8 @@ TracingConnection::ListDefaultObjectAcl(
   return internal::EndSpan(*span, impl_->ListDefaultObjectAcl(request));
 }
 
-StatusOr<storage::ObjectAccessControl> TracingConnection::CreateDefaultObjectAcl(
+StatusOr<storage::ObjectAccessControl>
+TracingConnection::CreateDefaultObjectAcl(
     storage::internal::CreateDefaultObjectAclRequest const& request) {
   auto span = internal::MakeSpan("storage::Client::CreateDefaultObjectAcl");
   auto scope = opentelemetry::trace::Scope(span);
@@ -328,7 +333,8 @@ StatusOr<storage::ObjectAccessControl> TracingConnection::GetDefaultObjectAcl(
   return internal::EndSpan(*span, impl_->GetDefaultObjectAcl(request));
 }
 
-StatusOr<storage::ObjectAccessControl> TracingConnection::UpdateDefaultObjectAcl(
+StatusOr<storage::ObjectAccessControl>
+TracingConnection::UpdateDefaultObjectAcl(
     storage::internal::UpdateDefaultObjectAclRequest const& request) {
   auto span = internal::MakeSpan("storage::Client::UpdateDefaultObjectAcl");
   auto scope = opentelemetry::trace::Scope(span);
@@ -349,7 +355,8 @@ StatusOr<storage::ServiceAccount> TracingConnection::GetServiceAccount(
   return internal::EndSpan(*span, impl_->GetServiceAccount(request));
 }
 
-StatusOr<storage::internal::ListHmacKeysResponse> TracingConnection::ListHmacKeys(
+StatusOr<storage::internal::ListHmacKeysResponse>
+TracingConnection::ListHmacKeys(
     storage::internal::ListHmacKeysRequest const& request) {
   // TODO(#11395) - use a internal::MakeTracedStreamRange in storage::Client
   auto span = internal::MakeSpan("storage::Client::ListHmacKeys");
@@ -357,7 +364,8 @@ StatusOr<storage::internal::ListHmacKeysResponse> TracingConnection::ListHmacKey
   return internal::EndSpan(*span, impl_->ListHmacKeys(request));
 }
 
-StatusOr<storage::internal::CreateHmacKeyResponse> TracingConnection::CreateHmacKey(
+StatusOr<storage::internal::CreateHmacKeyResponse>
+TracingConnection::CreateHmacKey(
     storage::internal::CreateHmacKeyRequest const& request) {
   auto span = internal::MakeSpan("storage::Client::CreateHmacKey");
   auto scope = opentelemetry::trace::Scope(span);
@@ -415,7 +423,8 @@ StatusOr<storage::NotificationMetadata> TracingConnection::GetNotification(
   return internal::EndSpan(*span, impl_->GetNotification(request));
 }
 
-StatusOr<storage::internal::EmptyResponse> TracingConnection::DeleteNotification(
+StatusOr<storage::internal::EmptyResponse>
+TracingConnection::DeleteNotification(
     storage::internal::DeleteNotificationRequest const& request) {
   auto span = internal::MakeSpan("storage::Client::DeleteNotification");
   auto scope = opentelemetry::trace::Scope(span);
