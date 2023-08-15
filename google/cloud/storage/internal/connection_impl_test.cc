@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/connection_impl.h"
-#include "google/cloud/storage/internal/tracing_client.h"
+#include "google/cloud/storage/internal/tracing_connection.h"
 #include "google/cloud/storage/options.h"
 #include "google/cloud/storage/testing/canonical_errors.h"
 #include "google/cloud/storage/testing/mock_generic_stub.h"

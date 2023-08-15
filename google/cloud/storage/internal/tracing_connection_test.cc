@@ -14,7 +14,7 @@
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-#include "google/cloud/storage/internal/tracing_client.h"
+#include "google/cloud/storage/internal/tracing_connection.h"
 #include "google/cloud/storage/testing/canonical_errors.h"
 #include "google/cloud/storage/testing/mock_client.h"
 #include "google/cloud/log.h"
@@ -50,7 +50,7 @@ TEST(TracingClientTest, Options) {
 
   auto mock = std::make_shared<MockClient>();
   EXPECT_CALL(*mock, options).WillOnce(Return(Options{}.set<TestOption>(42)));
-  auto under_test = TracingClient(mock);
+  auto under_test = TracingConnection(mock);
   auto const options = under_test.options();
   EXPECT_EQ(42, options.get<TestOption>());
 }
@@ -62,7 +62,7 @@ TEST(TracingClientTest, ListBuckets) {
     EXPECT_TRUE(ThereIsAnActiveSpan());
     return PermanentError();
   });
-  auto under_test = TracingClient(mock);
+  auto under_test = TracingConnection(mock);
   auto actual = under_test.ListBuckets(storage::internal::ListBucketsRequest());
   auto const code = PermanentError().code();
   auto const msg = PermanentError().message();
@@ -83,7 +83,7 @@ TEST(TracingClientTest, CreateBucket) {
     EXPECT_TRUE(ThereIsAnActiveSpan());
     return PermanentError();
   });
-  auto under_test = TracingClient(mock);
+  auto under_test = TracingConnection(mock);
   auto actual =
       under_test.CreateBucket(storage::internal::CreateBucketRequest());
   auto const code = PermanentError().code();
@@ -105,7 +105,7 @@ TEST(TracingClientTest, GetBucketMetadata) {
     EXPECT_TRUE(ThereIsAnActiveSpan());
     return PermanentError();
   });
-  auto under_test = TracingClient(mock);
+  auto under_test = TracingConnection(mock);
   auto actual = under_test.GetBucketMetadata(
       storage::internal::GetBucketMetadataRequest());
   auto const code = PermanentError().code();
@@ -127,7 +127,7 @@ TEST(TracingClientTest, DeleteBucket) {
     EXPECT_TRUE(ThereIsAnActiveSpan());
     return PermanentError();
   });
-  auto under_test = TracingClient(mock);
+  auto under_test = TracingConnection(mock);
   auto actual =
       under_test.DeleteBucket(storage::internal::DeleteBucketRequest());
   auto const code = PermanentError().code();
@@ -149,7 +149,7 @@ TEST(TracingClientTest, UpdateBucket) {
     EXPECT_TRUE(ThereIsAnActiveSpan());
     return PermanentError();
   });
-  auto under_test = TracingClient(mock);
+  auto under_test = TracingConnection(mock);
   auto actual =
       under_test.UpdateBucket(storage::internal::UpdateBucketRequest());
   auto const code = PermanentError().code();
@@ -171,7 +171,7 @@ TEST(TracingClientTest, PatchBucket) {
     EXPECT_TRUE(ThereIsAnActiveSpan());
     return PermanentError();
   });
-  auto under_test = TracingClient(mock);
+  auto under_test = TracingConnection(mock);
   auto actual = under_test.PatchBucket(storage::internal::PatchBucketRequest());
   auto const code = PermanentError().code();
   auto const msg = PermanentError().message();
@@ -192,7 +192,7 @@ TEST(TracingClientTest, GetNativeBucketIamPolicy) {
     EXPECT_TRUE(ThereIsAnActiveSpan());
     return PermanentError();
   });
-  auto under_test = TracingClient(mock);
+  auto under_test = TracingConnection(mock);
   auto actual = under_test.GetNativeBucketIamPolicy(
       storage::internal::GetBucketIamPolicyRequest());
   auto const code = PermanentError().code();
@@ -214,7 +214,7 @@ TEST(TracingClientTest, SetNativeBucketIamPolicy) {
     EXPECT_TRUE(ThereIsAnActiveSpan());
     return PermanentError();
   });
-  auto under_test = TracingClient(mock);
+  auto under_test = TracingConnection(mock);
   auto actual = under_test.SetNativeBucketIamPolicy(
       storage::internal::SetNativeBucketIamPolicyRequest(
           "test-bucket",
@@ -238,7 +238,7 @@ TEST(TracingClientTest, TestBucketIamPermissions) {
     EXPECT_TRUE(ThereIsAnActiveSpan());
     return PermanentError();
   });
-  auto under_test = TracingClient(mock);
+  auto under_test = TracingConnection(mock);
   auto actual = under_test.TestBucketIamPermissions(
       storage::internal::TestBucketIamPermissionsRequest());
   auto const code = PermanentError().code();
@@ -260,7 +260,7 @@ TEST(TracingClientTest, LockBucketRetentionPolicy) {
     EXPECT_TRUE(ThereIsAnActiveSpan());
     return PermanentError();
   });
-  auto under_test = TracingClient(mock);
+  auto under_test = TracingConnection(mock);
   auto actual = under_test.LockBucketRetentionPolicy(
       storage::internal::LockBucketRetentionPolicyRequest());
   auto const code = PermanentError().code();
@@ -282,7 +282,7 @@ TEST(TracingClientTest, InsertObjectMedia) {
     EXPECT_TRUE(ThereIsAnActiveSpan());
     return PermanentError();
   });
-  auto under_test = TracingClient(mock);
+  auto under_test = TracingConnection(mock);
   auto actual = under_test.InsertObjectMedia(
       storage::internal::InsertObjectMediaRequest());
   auto const code = PermanentError().code();
@@ -304,7 +304,7 @@ TEST(TracingClientTest, CopyObject) {
     EXPECT_TRUE(ThereIsAnActiveSpan());
     return PermanentError();
   });
-  auto under_test = TracingClient(mock);
+  auto under_test = TracingConnection(mock);
   auto actual = under_test.CopyObject(storage::internal::CopyObjectRequest());
   auto const code = PermanentError().code();
   auto const msg = PermanentError().message();
@@ -325,7 +325,7 @@ TEST(TracingClientTest, GetObjectMetadata) {
     EXPECT_TRUE(ThereIsAnActiveSpan());
     return PermanentError();
   });
-  auto under_test = TracingClient(mock);
+  auto under_test = TracingConnection(mock);
   auto actual = under_test.GetObjectMetadata(
       storage::internal::GetObjectMetadataRequest());
   auto const code = PermanentError().code();
@@ -347,7 +347,7 @@ TEST(TracingClientTest, ReadObject) {
     EXPECT_TRUE(ThereIsAnActiveSpan());
     return PermanentError();
   });
-  auto under_test = TracingClient(mock);
+  auto under_test = TracingConnection(mock);
   auto actual =
       under_test.ReadObject(storage::internal::ReadObjectRangeRequest());
   auto const code = PermanentError().code();
@@ -369,7 +369,7 @@ TEST(TracingClientTest, ListObjects) {
     EXPECT_TRUE(ThereIsAnActiveSpan());
     return PermanentError();
   });
-  auto under_test = TracingClient(mock);
+  auto under_test = TracingConnection(mock);
   auto actual = under_test.ListObjects(storage::internal::ListObjectsRequest());
   auto const code = PermanentError().code();
   auto const msg = PermanentError().message();
@@ -390,7 +390,7 @@ TEST(TracingClientTest, DeleteObject) {
     EXPECT_TRUE(ThereIsAnActiveSpan());
     return PermanentError();
   });
-  auto under_test = TracingClient(mock);
+  auto under_test = TracingConnection(mock);
   auto actual =
       under_test.DeleteObject(storage::internal::DeleteObjectRequest());
   auto const code = PermanentError().code();
@@ -412,7 +412,7 @@ TEST(TracingClientTest, UpdateObject) {
     EXPECT_TRUE(ThereIsAnActiveSpan());
     return PermanentError();
   });
-  auto under_test = TracingClient(mock);
+  auto under_test = TracingConnection(mock);
   auto actual =
       under_test.UpdateObject(storage::internal::UpdateObjectRequest());
   auto const code = PermanentError().code();
@@ -434,7 +434,7 @@ TEST(TracingClientTest, PatchObject) {
     EXPECT_TRUE(ThereIsAnActiveSpan());
     return PermanentError();
   });
-  auto under_test = TracingClient(mock);
+  auto under_test = TracingConnection(mock);
   auto actual = under_test.PatchObject(storage::internal::PatchObjectRequest());
   auto const code = PermanentError().code();
   auto const msg = PermanentError().message();
@@ -455,7 +455,7 @@ TEST(TracingClientTest, ComposeObject) {
     EXPECT_TRUE(ThereIsAnActiveSpan());
     return PermanentError();
   });
-  auto under_test = TracingClient(mock);
+  auto under_test = TracingConnection(mock);
   auto actual =
       under_test.ComposeObject(storage::internal::ComposeObjectRequest());
   auto const code = PermanentError().code();
@@ -477,7 +477,7 @@ TEST(TracingClientTest, RewriteObject) {
     EXPECT_TRUE(ThereIsAnActiveSpan());
     return PermanentError();
   });
-  auto under_test = TracingClient(mock);
+  auto under_test = TracingConnection(mock);
   auto actual =
       under_test.RewriteObject(storage::internal::RewriteObjectRequest());
   auto const code = PermanentError().code();
@@ -499,7 +499,7 @@ TEST(TracingClientTest, CreateResumableUpload) {
     EXPECT_TRUE(ThereIsAnActiveSpan());
     return PermanentError();
   });
-  auto under_test = TracingClient(mock);
+  auto under_test = TracingConnection(mock);
   auto actual = under_test.CreateResumableUpload(
       storage::internal::ResumableUploadRequest());
   auto const code = PermanentError().code();
@@ -522,7 +522,7 @@ TEST(TracingClientTest, QueryResumableUpload) {
     EXPECT_TRUE(ThereIsAnActiveSpan());
     return PermanentError();
   });
-  auto under_test = TracingClient(mock);
+  auto under_test = TracingConnection(mock);
   auto actual = under_test.QueryResumableUpload(
       storage::internal::QueryResumableUploadRequest());
   auto const code = PermanentError().code();
@@ -545,7 +545,7 @@ TEST(TracingClientTest, DeleteResumableUpload) {
     EXPECT_TRUE(ThereIsAnActiveSpan());
     return PermanentError();
   });
-  auto under_test = TracingClient(mock);
+  auto under_test = TracingConnection(mock);
   auto actual = under_test.DeleteResumableUpload(
       storage::internal::DeleteResumableUploadRequest());
   auto const code = PermanentError().code();
@@ -567,7 +567,7 @@ TEST(TracingClientTest, UploadChunk) {
     EXPECT_TRUE(ThereIsAnActiveSpan());
     return PermanentError();
   });
-  auto under_test = TracingClient(mock);
+  auto under_test = TracingConnection(mock);
   auto actual = under_test.UploadChunk(storage::internal::UploadChunkRequest());
   auto const code = PermanentError().code();
   auto const msg = PermanentError().message();
@@ -588,7 +588,7 @@ TEST(TracingClientTest, ListBucketAcl) {
     EXPECT_TRUE(ThereIsAnActiveSpan());
     return PermanentError();
   });
-  auto under_test = TracingClient(mock);
+  auto under_test = TracingConnection(mock);
   auto actual =
       under_test.ListBucketAcl(storage::internal::ListBucketAclRequest());
   auto const code = PermanentError().code();
@@ -610,7 +610,7 @@ TEST(TracingClientTest, CreateBucketAcl) {
     EXPECT_TRUE(ThereIsAnActiveSpan());
     return PermanentError();
   });
-  auto under_test = TracingClient(mock);
+  auto under_test = TracingConnection(mock);
   auto actual =
       under_test.CreateBucketAcl(storage::internal::CreateBucketAclRequest());
   auto const code = PermanentError().code();
@@ -632,7 +632,7 @@ TEST(TracingClientTest, DeleteBucketAcl) {
     EXPECT_TRUE(ThereIsAnActiveSpan());
     return PermanentError();
   });
-  auto under_test = TracingClient(mock);
+  auto under_test = TracingConnection(mock);
   auto actual =
       under_test.DeleteBucketAcl(storage::internal::DeleteBucketAclRequest());
   auto const code = PermanentError().code();
@@ -654,7 +654,7 @@ TEST(TracingClientTest, GetBucketAcl) {
     EXPECT_TRUE(ThereIsAnActiveSpan());
     return PermanentError();
   });
-  auto under_test = TracingClient(mock);
+  auto under_test = TracingConnection(mock);
   auto actual =
       under_test.GetBucketAcl(storage::internal::GetBucketAclRequest());
   auto const code = PermanentError().code();
@@ -676,7 +676,7 @@ TEST(TracingClientTest, UpdateBucketAcl) {
     EXPECT_TRUE(ThereIsAnActiveSpan());
     return PermanentError();
   });
-  auto under_test = TracingClient(mock);
+  auto under_test = TracingConnection(mock);
   auto actual =
       under_test.UpdateBucketAcl(storage::internal::UpdateBucketAclRequest());
   auto const code = PermanentError().code();
@@ -698,7 +698,7 @@ TEST(TracingClientTest, PatchBucketAcl) {
     EXPECT_TRUE(ThereIsAnActiveSpan());
     return PermanentError();
   });
-  auto under_test = TracingClient(mock);
+  auto under_test = TracingConnection(mock);
   auto actual =
       under_test.PatchBucketAcl(storage::internal::PatchBucketAclRequest(
           "test-bucket-name", "test-entity",
@@ -722,7 +722,7 @@ TEST(TracingClientTest, ListObjectAcl) {
     EXPECT_TRUE(ThereIsAnActiveSpan());
     return PermanentError();
   });
-  auto under_test = TracingClient(mock);
+  auto under_test = TracingConnection(mock);
   auto actual =
       under_test.ListObjectAcl(storage::internal::ListObjectAclRequest());
   auto const code = PermanentError().code();
@@ -744,7 +744,7 @@ TEST(TracingClientTest, CreateObjectAcl) {
     EXPECT_TRUE(ThereIsAnActiveSpan());
     return PermanentError();
   });
-  auto under_test = TracingClient(mock);
+  auto under_test = TracingConnection(mock);
   auto actual =
       under_test.CreateObjectAcl(storage::internal::CreateObjectAclRequest());
   auto const code = PermanentError().code();
@@ -766,7 +766,7 @@ TEST(TracingClientTest, DeleteObjectAcl) {
     EXPECT_TRUE(ThereIsAnActiveSpan());
     return PermanentError();
   });
-  auto under_test = TracingClient(mock);
+  auto under_test = TracingConnection(mock);
   auto actual =
       under_test.DeleteObjectAcl(storage::internal::DeleteObjectAclRequest());
   auto const code = PermanentError().code();
@@ -788,7 +788,7 @@ TEST(TracingClientTest, GetObjectAcl) {
     EXPECT_TRUE(ThereIsAnActiveSpan());
     return PermanentError();
   });
-  auto under_test = TracingClient(mock);
+  auto under_test = TracingConnection(mock);
   auto actual =
       under_test.GetObjectAcl(storage::internal::GetObjectAclRequest());
   auto const code = PermanentError().code();
@@ -810,7 +810,7 @@ TEST(TracingClientTest, UpdateObjectAcl) {
     EXPECT_TRUE(ThereIsAnActiveSpan());
     return PermanentError();
   });
-  auto under_test = TracingClient(mock);
+  auto under_test = TracingConnection(mock);
   auto actual =
       under_test.UpdateObjectAcl(storage::internal::UpdateObjectAclRequest());
   auto const code = PermanentError().code();
@@ -832,7 +832,7 @@ TEST(TracingClientTest, PatchObjectAcl) {
     EXPECT_TRUE(ThereIsAnActiveSpan());
     return PermanentError();
   });
-  auto under_test = TracingClient(mock);
+  auto under_test = TracingConnection(mock);
   auto actual =
       under_test.PatchObjectAcl(storage::internal::PatchObjectAclRequest(
           "test-bucket-name", "test-object-name", "test-entity",
@@ -856,7 +856,7 @@ TEST(TracingClientTest, ListDefaultObjectAcl) {
     EXPECT_TRUE(ThereIsAnActiveSpan());
     return PermanentError();
   });
-  auto under_test = TracingClient(mock);
+  auto under_test = TracingConnection(mock);
   auto actual = under_test.ListDefaultObjectAcl(
       storage::internal::ListDefaultObjectAclRequest());
   auto const code = PermanentError().code();
@@ -878,7 +878,7 @@ TEST(TracingClientTest, CreateDefaultObjectAcl) {
     EXPECT_TRUE(ThereIsAnActiveSpan());
     return PermanentError();
   });
-  auto under_test = TracingClient(mock);
+  auto under_test = TracingConnection(mock);
   auto actual = under_test.CreateDefaultObjectAcl(
       storage::internal::CreateDefaultObjectAclRequest());
   auto const code = PermanentError().code();
@@ -900,7 +900,7 @@ TEST(TracingClientTest, DeleteDefaultObjectAcl) {
     EXPECT_TRUE(ThereIsAnActiveSpan());
     return PermanentError();
   });
-  auto under_test = TracingClient(mock);
+  auto under_test = TracingConnection(mock);
   auto actual = under_test.DeleteDefaultObjectAcl(
       storage::internal::DeleteDefaultObjectAclRequest());
   auto const code = PermanentError().code();
@@ -922,7 +922,7 @@ TEST(TracingClientTest, GetDefaultObjectAcl) {
     EXPECT_TRUE(ThereIsAnActiveSpan());
     return PermanentError();
   });
-  auto under_test = TracingClient(mock);
+  auto under_test = TracingConnection(mock);
   auto actual = under_test.GetDefaultObjectAcl(
       storage::internal::GetDefaultObjectAclRequest());
   auto const code = PermanentError().code();
@@ -944,7 +944,7 @@ TEST(TracingClientTest, UpdateDefaultObjectAcl) {
     EXPECT_TRUE(ThereIsAnActiveSpan());
     return PermanentError();
   });
-  auto under_test = TracingClient(mock);
+  auto under_test = TracingConnection(mock);
   auto actual = under_test.UpdateDefaultObjectAcl(
       storage::internal::UpdateDefaultObjectAclRequest());
   auto const code = PermanentError().code();
@@ -966,7 +966,7 @@ TEST(TracingClientTest, PatchDefaultObjectAcl) {
     EXPECT_TRUE(ThereIsAnActiveSpan());
     return PermanentError();
   });
-  auto under_test = TracingClient(mock);
+  auto under_test = TracingConnection(mock);
   auto actual = under_test.PatchDefaultObjectAcl(
       storage::internal::PatchDefaultObjectAclRequest(
           "test-bucket-name", "test-entity",
@@ -990,7 +990,7 @@ TEST(TracingClientTest, GetServiceAccount) {
     EXPECT_TRUE(ThereIsAnActiveSpan());
     return PermanentError();
   });
-  auto under_test = TracingClient(mock);
+  auto under_test = TracingConnection(mock);
   auto actual = under_test.GetServiceAccount(
       storage::internal::GetProjectServiceAccountRequest());
   auto const code = PermanentError().code();
@@ -1012,7 +1012,7 @@ TEST(TracingClientTest, ListHmacKeys) {
     EXPECT_TRUE(ThereIsAnActiveSpan());
     return PermanentError();
   });
-  auto under_test = TracingClient(mock);
+  auto under_test = TracingConnection(mock);
   auto actual = under_test.ListHmacKeys(
       storage::internal::ListHmacKeysRequest("test-project-id"));
   auto const code = PermanentError().code();
@@ -1034,7 +1034,7 @@ TEST(TracingClientTest, CreateHmacKey) {
     EXPECT_TRUE(ThereIsAnActiveSpan());
     return PermanentError();
   });
-  auto under_test = TracingClient(mock);
+  auto under_test = TracingConnection(mock);
   auto actual =
       under_test.CreateHmacKey(storage::internal::CreateHmacKeyRequest());
   auto const code = PermanentError().code();
@@ -1056,7 +1056,7 @@ TEST(TracingClientTest, DeleteHmacKey) {
     EXPECT_TRUE(ThereIsAnActiveSpan());
     return PermanentError();
   });
-  auto under_test = TracingClient(mock);
+  auto under_test = TracingConnection(mock);
   auto actual =
       under_test.DeleteHmacKey(storage::internal::DeleteHmacKeyRequest(
           "test-project-id", "test-access-id"));
@@ -1079,7 +1079,7 @@ TEST(TracingClientTest, GetHmacKey) {
     EXPECT_TRUE(ThereIsAnActiveSpan());
     return PermanentError();
   });
-  auto under_test = TracingClient(mock);
+  auto under_test = TracingConnection(mock);
   auto actual = under_test.GetHmacKey(storage::internal::GetHmacKeyRequest(
       "test-project-id", "test-access-id"));
   auto const code = PermanentError().code();
@@ -1101,7 +1101,7 @@ TEST(TracingClientTest, UpdateHmacKey) {
     EXPECT_TRUE(ThereIsAnActiveSpan());
     return PermanentError();
   });
-  auto under_test = TracingClient(mock);
+  auto under_test = TracingConnection(mock);
   auto actual =
       under_test.UpdateHmacKey(storage::internal::UpdateHmacKeyRequest(
           "test-project-id", "test-access-id", storage::HmacKeyMetadata()));
@@ -1124,7 +1124,7 @@ TEST(TracingClientTest, SignBlob) {
     EXPECT_TRUE(ThereIsAnActiveSpan());
     return PermanentError();
   });
-  auto under_test = TracingClient(mock);
+  auto under_test = TracingConnection(mock);
   auto actual = under_test.SignBlob(storage::internal::SignBlobRequest(
       "test-service-account", "test-encoded-blob", {}));
   auto const code = PermanentError().code();
@@ -1146,7 +1146,7 @@ TEST(TracingClientTest, ListNotifications) {
     EXPECT_TRUE(ThereIsAnActiveSpan());
     return PermanentError();
   });
-  auto under_test = TracingClient(mock);
+  auto under_test = TracingConnection(mock);
   auto actual = under_test.ListNotifications(
       storage::internal::ListNotificationsRequest());
   auto const code = PermanentError().code();
@@ -1168,7 +1168,7 @@ TEST(TracingClientTest, CreateNotification) {
     EXPECT_TRUE(ThereIsAnActiveSpan());
     return PermanentError();
   });
-  auto under_test = TracingClient(mock);
+  auto under_test = TracingConnection(mock);
   auto actual = under_test.CreateNotification(
       storage::internal::CreateNotificationRequest());
   auto const code = PermanentError().code();
@@ -1190,7 +1190,7 @@ TEST(TracingClientTest, GetNotification) {
     EXPECT_TRUE(ThereIsAnActiveSpan());
     return PermanentError();
   });
-  auto under_test = TracingClient(mock);
+  auto under_test = TracingConnection(mock);
   auto actual =
       under_test.GetNotification(storage::internal::GetNotificationRequest());
   auto const code = PermanentError().code();
@@ -1212,7 +1212,7 @@ TEST(TracingClientTest, DeleteNotification) {
     EXPECT_TRUE(ThereIsAnActiveSpan());
     return PermanentError();
   });
-  auto under_test = TracingClient(mock);
+  auto under_test = TracingConnection(mock);
   auto actual = under_test.DeleteNotification(
       storage::internal::DeleteNotificationRequest());
   auto const code = PermanentError().code();
