@@ -79,47 +79,6 @@ TEST(LogWrapper, StatusDetails) {
   EXPECT_THAT(s, HasSubstr(resource_info.description()));
 }
 
-/// @test the overload for functions returning FutureStatusOr
-TEST(LogWrapper, FutureStatusOrValue) {
-  auto mock = [](google::spanner::v1::Mutation m) {
-    return make_ready_future(make_status_or(std::move(m)));
-  };
-
-  testing_util::ScopedLog log;
-
-  LogWrapper(mock, MakeMutation(), "in-test", {});
-
-  auto const log_lines = log.ExtractLines();
-  EXPECT_THAT(log_lines,
-              Contains(AllOf(HasSubstr("in-test("), HasSubstr(" << "))));
-  EXPECT_THAT(log_lines, Contains(AllOf(HasSubstr("in-test("),
-                                        HasSubstr(" >> response="))));
-  EXPECT_THAT(log_lines, Contains(AllOf(HasSubstr("in-test("),
-                                        HasSubstr(" >> future_status="))));
-}
-
-/// @test the overload for functions returning FutureStatusOr
-TEST(LogWrapper, FutureStatusOrError) {
-  auto mock = [](google::spanner::v1::Mutation const&) {
-    return make_ready_future(StatusOr<google::spanner::v1::Mutation>(
-        Status(StatusCode::kPermissionDenied, "uh-oh")));
-  };
-
-  testing_util::ScopedLog log;
-
-  LogWrapper(mock, MakeMutation(), "in-test", {});
-
-  auto const log_lines = log.ExtractLines();
-  EXPECT_THAT(log_lines,
-              Contains(AllOf(HasSubstr("in-test("), HasSubstr(" << "))));
-  EXPECT_THAT(log_lines,
-              Contains(AllOf(HasSubstr("in-test("), HasSubstr(" >> status="))));
-  EXPECT_THAT(log_lines,
-              Contains(AllOf(HasSubstr("in-test("), HasSubstr("uh-oh"))));
-  EXPECT_THAT(log_lines, Contains(AllOf(HasSubstr("in-test("),
-                                        HasSubstr(" >> future_status="))));
-}
-
 /// @test the overload for functions returning FutureStatusOr and using
 /// CompletionQueue as input
 TEST(LogWrapper, FutureStatusOrValueWithContextAndCQ) {
