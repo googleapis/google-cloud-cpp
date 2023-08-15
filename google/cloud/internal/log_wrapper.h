@@ -279,55 +279,6 @@ Result LogWrapper(Functor&& functor, google::cloud::CompletionQueue& cq,
   });
 }
 
-template <typename Functor, typename Request, typename Response,
-          typename Result = google::cloud::internal::invoke_result_t<
-              Functor, grpc::ClientContext*, Request const&, Response*>,
-          typename std::enable_if<std::is_same<Result, grpc::Status>::value,
-                                  int>::type = 0>
-Result LogWrapper(Functor&& functor, grpc::ClientContext* context,
-                  Request const& request, Response* response, char const* where,
-                  TracingOptions const& options) {
-  GCP_LOG(DEBUG) << where << "() << " << DebugString(request, options);
-  auto status = functor(context, request, response);
-  if (!status.ok()) {
-    GCP_LOG(DEBUG) << where << "() >> status="
-                   << DebugString(MakeStatusFromRpcError(status), options);
-  } else {
-    GCP_LOG(DEBUG) << where
-                   << "() >> response=" << DebugString(*response, options);
-  }
-  return status;
-}
-
-template <typename Functor, typename Request,
-          typename Result = google::cloud::internal::invoke_result_t<
-              Functor, grpc::ClientContext*, Request const&>,
-          typename std::enable_if<IsUniquePtr<Result>::value, int>::type = 0>
-Result LogWrapper(Functor&& functor, grpc::ClientContext* context,
-                  Request const& request, char const* where,
-                  TracingOptions const& options) {
-  GCP_LOG(DEBUG) << where << "() << " << DebugString(request, options);
-  auto response = functor(context, request);
-  GCP_LOG(DEBUG) << where << "() >> " << (response ? "not null" : "null")
-                 << " stream";
-  return response;
-}
-
-template <
-    typename Functor, typename Request,
-    typename Result = google::cloud::internal::invoke_result_t<
-        Functor, grpc::ClientContext*, Request const&, grpc::CompletionQueue*>,
-    typename std::enable_if<IsUniquePtr<Result>::value, int>::type = 0>
-Result LogWrapper(Functor&& functor, grpc::ClientContext* context,
-                  Request const& request, grpc::CompletionQueue* cq,
-                  char const* where, TracingOptions const& options) {
-  GCP_LOG(DEBUG) << where << "() << " << DebugString(request, options);
-  auto response = functor(context, request, cq);
-  GCP_LOG(DEBUG) << where << "() >> " << (response ? "not null" : "null")
-                 << " async response reader";
-  return response;
-}
-
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
