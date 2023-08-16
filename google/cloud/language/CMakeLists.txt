@@ -24,7 +24,7 @@ set(DOXYGEN_EXAMPLE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/quickstart")
 
 unset(mocks_globs)
 unset(source_globs)
-set(service_dirs "" "v1/")
+set(service_dirs "" "v1/" "v2/")
 foreach (dir IN LISTS service_dirs)
     string(REPLACE "/" "_" ns "${dir}")
     list(APPEND source_globs "${dir}*.h" "${dir}*.cc" "${dir}internal/*")
@@ -112,7 +112,8 @@ target_include_directories(
 target_compile_options(google_cloud_cpp_language_mocks
                        INTERFACE ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
-if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
+include(CTest)
+if (BUILD_TESTING)
     add_executable(language_quickstart "quickstart/quickstart.cc")
     target_link_libraries(language_quickstart
                           PRIVATE google-cloud-cpp::language)

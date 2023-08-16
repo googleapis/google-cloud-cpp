@@ -747,6 +747,9 @@
 ./include/google/cloud/language/v1
 ./include/google/cloud/language/v1/internal
 ./include/google/cloud/language/v1/mocks
+./include/google/cloud/language/v2
+./include/google/cloud/language/v2/internal
+./include/google/cloud/language/v2/mocks
 ./include/google/cloud/logging
 ./include/google/cloud/logging/mocks
 ./include/google/cloud/logging/v2

@@ -15,13 +15,10 @@ to get started using this client library in a larger project. The following
 "Hello World" program is used in this quickstart, and should give you a taste of
 this library.
 
-For detailed instructions on how to build and install this library, see the
-top-level [README](/README.md#building-and-installing).
-
 <!-- inject-quickstart-start -->
 
 ```cc
-#include "google/cloud/language/v1/language_client.h"
+#include "google/cloud/language/v2/language_client.h"
 #include <iostream>
 
 auto constexpr kText = R"""(
@@ -35,20 +32,20 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
-  namespace language = ::google::cloud::language_v1;
+  namespace language = ::google::cloud::language_v2;
   auto client = language::LanguageServiceClient(
       language::MakeLanguageServiceConnection());
 
-  google::cloud::language::v1::Document document;
-  document.set_type(google::cloud::language::v1::Document::PLAIN_TEXT);
+  google::cloud::language::v2::Document document;
+  document.set_type(google::cloud::language::v2::Document::PLAIN_TEXT);
   document.set_content(kText);
-  document.set_language("en-US");
+  document.set_language_code("en-US");
 
   auto response = client.AnalyzeEntities(document);
   if (!response) throw std::move(response).status();
 
   for (auto const& entity : response->entities()) {
-    if (entity.type() != google::cloud::language::v1::Entity::NUMBER) continue;
+    if (entity.type() != google::cloud::language::v2::Entity::NUMBER) continue;
     std::cout << entity.DebugString() << "\n";
   }
 

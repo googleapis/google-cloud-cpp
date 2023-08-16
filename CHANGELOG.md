@@ -122,6 +122,10 @@ the APIs in these libraries are stable, and are ready for production use.
 The Cloud IoT Core service has been [shutdown][cloud-iot-shutdown]. We removed
 the corresponding C++ client library as it is no longer usable.
 
+### [Natural Language AI](/google/cloud/language/README.md)
+
+The library has been expanded to include the v2 service.
+
 ### Other Changes
 
 **Bazel Testing**: from v2.15.0 we will only test with Bazel >= 6.0.0. We do not
