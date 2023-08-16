@@ -28,9 +28,9 @@ namespace {
 
 using ::google::cloud::storage::testing::MockGenericStub;
 using ::google::cloud::storage::testing::MockRetryClientFunction;
-using ::google::cloud::storage::testing::RetryClientTestOptions;
 using ::google::cloud::storage::testing::RetryLoopUsesOptions;
 using ::google::cloud::storage::testing::RetryLoopUsesSingleToken;
+using ::google::cloud::storage::testing::RetryTestOptions;
 using ::google::cloud::storage::testing::StoppedOnPermanentError;
 using ::google::cloud::storage::testing::StoppedOnTooManyTransients;
 using ::google::cloud::storage::testing::canonical_errors::PermanentError;
@@ -42,7 +42,7 @@ TEST(StorageConnectionImpl, ListNotificationTooManyFailures) {
   EXPECT_CALL(*mock, options);
   EXPECT_CALL(*mock, ListNotifications).Times(3).WillRepeatedly(transient);
   auto client =
-      StorageConnectionImpl::Create(std::move(mock), RetryClientTestOptions());
+      StorageConnectionImpl::Create(std::move(mock), RetryTestOptions());
   google::cloud::internal::OptionsSpan span(client->options());
   auto response =
       client->ListNotifications(ListNotificationsRequest()).status();
@@ -57,7 +57,7 @@ TEST(StorageConnectionImpl, ListNotificationPermanentFailure) {
   EXPECT_CALL(*mock, options);
   EXPECT_CALL(*mock, ListNotifications).WillOnce(permanent);
   auto client =
-      StorageConnectionImpl::Create(std::move(mock), RetryClientTestOptions());
+      StorageConnectionImpl::Create(std::move(mock), RetryTestOptions());
   google::cloud::internal::OptionsSpan span(client->options());
   auto response =
       client->ListNotifications(ListNotificationsRequest()).status();
@@ -72,7 +72,7 @@ TEST(StorageConnectionImpl, CreateNotificationTooManyFailures) {
   EXPECT_CALL(*mock, options);
   EXPECT_CALL(*mock, CreateNotification).Times(3).WillRepeatedly(transient);
   auto client =
-      StorageConnectionImpl::Create(std::move(mock), RetryClientTestOptions());
+      StorageConnectionImpl::Create(std::move(mock), RetryTestOptions());
   google::cloud::internal::OptionsSpan span(client->options());
   auto response =
       client->CreateNotification(CreateNotificationRequest()).status();
@@ -87,7 +87,7 @@ TEST(StorageConnectionImpl, CreateNotificationPermanentFailure) {
   EXPECT_CALL(*mock, options);
   EXPECT_CALL(*mock, CreateNotification).WillOnce(permanent);
   auto client =
-      StorageConnectionImpl::Create(std::move(mock), RetryClientTestOptions());
+      StorageConnectionImpl::Create(std::move(mock), RetryTestOptions());
   google::cloud::internal::OptionsSpan span(client->options());
   auto response =
       client->CreateNotification(CreateNotificationRequest()).status();
@@ -102,7 +102,7 @@ TEST(StorageConnectionImpl, DeleteNotificationTooManyFailures) {
   EXPECT_CALL(*mock, options);
   EXPECT_CALL(*mock, DeleteNotification).Times(3).WillRepeatedly(transient);
   auto client =
-      StorageConnectionImpl::Create(std::move(mock), RetryClientTestOptions());
+      StorageConnectionImpl::Create(std::move(mock), RetryTestOptions());
   google::cloud::internal::OptionsSpan span(client->options());
   auto response =
       client->DeleteNotification(DeleteNotificationRequest()).status();
@@ -117,7 +117,7 @@ TEST(StorageConnectionImpl, DeleteNotificationPermanentFailure) {
   EXPECT_CALL(*mock, options);
   EXPECT_CALL(*mock, DeleteNotification).WillOnce(permanent);
   auto client =
-      StorageConnectionImpl::Create(std::move(mock), RetryClientTestOptions());
+      StorageConnectionImpl::Create(std::move(mock), RetryTestOptions());
   google::cloud::internal::OptionsSpan span(client->options());
   auto response =
       client->DeleteNotification(DeleteNotificationRequest()).status();
@@ -132,7 +132,7 @@ TEST(StorageConnectionImpl, GetNotificationTooManyFailures) {
   EXPECT_CALL(*mock, options);
   EXPECT_CALL(*mock, GetNotification).Times(3).WillRepeatedly(transient);
   auto client =
-      StorageConnectionImpl::Create(std::move(mock), RetryClientTestOptions());
+      StorageConnectionImpl::Create(std::move(mock), RetryTestOptions());
   google::cloud::internal::OptionsSpan span(client->options());
   auto response = client->GetNotification(GetNotificationRequest()).status();
   EXPECT_THAT(response, StoppedOnTooManyTransients("GetNotification"));
@@ -146,7 +146,7 @@ TEST(StorageConnectionImpl, GetNotificationPermanentFailure) {
   EXPECT_CALL(*mock, options);
   EXPECT_CALL(*mock, GetNotification).WillOnce(permanent);
   auto client =
-      StorageConnectionImpl::Create(std::move(mock), RetryClientTestOptions());
+      StorageConnectionImpl::Create(std::move(mock), RetryTestOptions());
   google::cloud::internal::OptionsSpan span(client->options());
   auto response = client->GetNotification(GetNotificationRequest()).status();
   EXPECT_THAT(response, StoppedOnPermanentError("GetNotification"));
