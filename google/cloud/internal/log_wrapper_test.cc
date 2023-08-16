@@ -129,7 +129,7 @@ TEST(LogWrapper, FutureStatusWithContextAndCQ) {
               Contains(AllOf(HasSubstr("in-test("), HasSubstr(" << "))));
   EXPECT_THAT(log_lines,
               Contains(AllOf(HasSubstr("in-test("),
-                             HasSubstr(" >> response=" + status_as_string))));
+                             HasSubstr(" >> status=" + status_as_string))));
   EXPECT_THAT(log_lines, Contains(AllOf(HasSubstr("in-test("),
                                         HasSubstr(" >> future_status="))));
 }
@@ -206,7 +206,7 @@ TEST(LogWrapper, FutureStatusWithTestContextAndCQ) {
               Contains(AllOf(HasSubstr("in-test("), HasSubstr(" << "))));
   EXPECT_THAT(log_lines,
               Contains(AllOf(HasSubstr("in-test("),
-                             HasSubstr(" >> response=" + status_as_string))));
+                             HasSubstr(" >> status=" + status_as_string))));
   EXPECT_THAT(log_lines, Contains(AllOf(HasSubstr("in-test("),
                                         HasSubstr(" >> future_status="))));
 }

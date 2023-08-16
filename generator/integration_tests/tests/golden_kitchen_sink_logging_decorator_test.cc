@@ -199,7 +199,7 @@ TEST_F(LoggingDecoratorTest, StreamingReadRpcNoRpcStreams) {
 
   auto const log_lines = log_.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("StreamingRead(")));
-  EXPECT_THAT(log_lines, Contains(HasSubstr("null stream")));
+  EXPECT_THAT(log_lines, Contains(HasSubstr(">> not null")));
   EXPECT_THAT(log_lines, Not(Contains(StartsWith("Read("))));
 }
 
@@ -215,7 +215,7 @@ TEST_F(LoggingDecoratorTest, StreamingReadRpcWithRpcStreams) {
 
   auto const log_lines = log_.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("StreamingRead(")));
-  EXPECT_THAT(log_lines, Contains(HasSubstr("null stream")));
+  EXPECT_THAT(log_lines, Contains(HasSubstr(">> not null")));
   EXPECT_THAT(log_lines, Contains(StartsWith("Read(")));
 }
 

@@ -83,6 +83,7 @@ add_library(
     internal/grpc_request_metadata.h
     internal/grpc_service_account_authentication.cc
     internal/grpc_service_account_authentication.h
+    internal/log_wrapper.cc
     internal/log_wrapper.h
     internal/minimal_iam_credentials_stub.cc
     internal/minimal_iam_credentials_stub.h
