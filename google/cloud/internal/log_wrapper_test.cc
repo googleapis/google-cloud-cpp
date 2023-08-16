@@ -19,8 +19,6 @@
 #include <google/protobuf/duration.pb.h>
 #include <google/protobuf/text_format.h>
 #include <google/protobuf/timestamp.pb.h>
-#include <google/rpc/error_details.pb.h>
-#include <google/rpc/status.pb.h>
 #include <google/spanner/v1/mutation.pb.h>
 #include <gmock/gmock.h>
 
@@ -56,27 +54,6 @@ google::spanner::v1::Mutation MakeMutation() {
   google::spanner::v1::Mutation mutation;
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(kText, &mutation));
   return mutation;
-}
-
-TEST(LogWrapper, StatusDetails) {
-  google::rpc::ResourceInfo resource_info;
-  resource_info.set_resource_type(
-      "type.googleapis.com/google.cloud.service.v1.Resource");
-  resource_info.set_resource_name("projects/project/resources/resource");
-  resource_info.set_description("Resource does not exist.");
-
-  google::rpc::Status proto;
-  proto.set_code(grpc::StatusCode::NOT_FOUND);
-  proto.set_message("Resource not found");
-  proto.add_details()->PackFrom(resource_info);
-
-  TracingOptions tracing_options;
-  auto s = DebugString(MakeStatusFromRpcError(proto), tracing_options);
-  EXPECT_THAT(s, HasSubstr("NOT_FOUND: Resource not found"));
-  EXPECT_THAT(s, HasSubstr(" + google.rpc.ResourceInfo {"));
-  EXPECT_THAT(s, HasSubstr(resource_info.resource_type()));
-  EXPECT_THAT(s, HasSubstr(resource_info.resource_name()));
-  EXPECT_THAT(s, HasSubstr(resource_info.description()));
 }
 
 /// @test the overload for functions returning FutureStatusOr and using

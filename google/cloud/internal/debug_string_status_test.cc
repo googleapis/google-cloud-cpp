@@ -45,6 +45,27 @@ TEST(DebugStringStatus, Basic) {
   EXPECT_THAT(actual, HasSubstr("it is immutable"));
 }
 
+TEST(DebugStringStatus, WithDetails) {
+  google::rpc::ResourceInfo resource_info;
+  resource_info.set_resource_type(
+      "type.googleapis.com/google.cloud.service.v1.Resource");
+  resource_info.set_resource_name("projects/project/resources/resource");
+  resource_info.set_description("Resource does not exist.");
+
+  google::rpc::Status proto;
+  proto.set_code(grpc::StatusCode::NOT_FOUND);
+  proto.set_message("Resource not found");
+  proto.add_details()->PackFrom(resource_info);
+
+  TracingOptions tracing_options;
+  auto s = DebugString(MakeStatusFromRpcError(proto), tracing_options);
+  EXPECT_THAT(s, HasSubstr("NOT_FOUND: Resource not found"));
+  EXPECT_THAT(s, HasSubstr(" + google.rpc.ResourceInfo {"));
+  EXPECT_THAT(s, HasSubstr(resource_info.resource_type()));
+  EXPECT_THAT(s, HasSubstr(resource_info.resource_name()));
+  EXPECT_THAT(s, HasSubstr(resource_info.description()));
+}
+
 }  // namespace
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
