@@ -175,7 +175,7 @@ class AsyncRestRetryLoopImpl
   AsyncRestRetryLoopImpl(std::unique_ptr<RetryPolicyType> retry_policy,
                          std::unique_ptr<BackoffPolicy> backoff_policy,
                          Idempotency idempotency, CompletionQueue cq,
-                         Functor&& functor, Request request,
+                         Functor&& functor, Options options, Request request,
                          char const* location)
       : retry_policy_(std::move(retry_policy)),
         backoff_policy_(std::move(backoff_policy)),
@@ -184,7 +184,7 @@ class AsyncRestRetryLoopImpl
         functor_(std::forward<Functor>(functor)),
         request_(std::move(request)),
         location_(location),
-        call_context_(internal::CurrentOptions()) {}
+        call_context_(std::move(options)) {}
 
   AsyncRestRetryLoopImpl(AsyncRestRetryLoopImpl const&) = delete;
   AsyncRestRetryLoopImpl(AsyncRestRetryLoopImpl&&) = delete;
@@ -194,7 +194,8 @@ class AsyncRestRetryLoopImpl
   ~AsyncRestRetryLoopImpl() = default;
 
   using ReturnType = ::google::cloud::internal::invoke_result_t<
-      Functor, CompletionQueue&, std::unique_ptr<RestContext>, Request const&>;
+      Functor, CompletionQueue&, std::unique_ptr<RestContext>, Options const&,
+      Request const&>;
   using T = typename FutureValueType<ReturnType>::value_type;
 
   future<T> Start() {
@@ -239,7 +240,8 @@ class AsyncRestRetryLoopImpl
     auto state = StartOperation();
     if (state.cancelled) return;
     SetPending(state.operation,
-               functor_(cq_, std::make_unique<RestContext>(), request_)
+               functor_(cq_, std::make_unique<RestContext>(),
+                        call_context_.options, request_)
                    .then([self](future<T> f) { self->OnAttempt(f.get()); }));
   }
 
@@ -351,6 +353,32 @@ template <typename Functor, typename Request, typename RetryPolicyType,
           typename std::enable_if<
               google::cloud::internal::is_invocable<
                   Functor, CompletionQueue&, std::unique_ptr<RestContext>,
+                  Options const&, Request const&>::value,
+              int>::type = 0>
+auto AsyncRestRetryLoop(std::unique_ptr<RetryPolicyType> retry_policy,
+                        std::unique_ptr<BackoffPolicy> backoff_policy,
+                        Idempotency idempotency, CompletionQueue cq,
+                        Functor&& functor, Options options, Request request,
+                        char const* location)
+    -> google::cloud::internal::invoke_result_t<
+        Functor, CompletionQueue&, std::unique_ptr<RestContext>, Options const&,
+        Request const&> {
+  auto loop = std::make_shared<
+      AsyncRestRetryLoopImpl<Functor, Request, RetryPolicyType>>(
+      std::move(retry_policy), std::move(backoff_policy), idempotency,
+      std::move(cq), std::forward<Functor>(functor), std::move(options),
+      std::move(request), location);
+  return loop->Start();
+}
+
+// TODO(#12359) - remove the overload without an `Options const&` parameter.
+/**
+ * Create the right AsyncRestRetryLoopImpl object and start the retry loop.
+ */
+template <typename Functor, typename Request, typename RetryPolicyType,
+          typename std::enable_if<
+              google::cloud::internal::is_invocable<
+                  Functor, CompletionQueue&, std::unique_ptr<RestContext>,
                   Request const&>::value,
               int>::type = 0>
 auto AsyncRestRetryLoop(std::unique_ptr<RetryPolicyType> retry_policy,
@@ -361,12 +389,15 @@ auto AsyncRestRetryLoop(std::unique_ptr<RetryPolicyType> retry_policy,
     -> google::cloud::internal::invoke_result_t<Functor, CompletionQueue&,
                                                 std::unique_ptr<RestContext>,
                                                 Request const&> {
-  auto loop = std::make_shared<
-      AsyncRestRetryLoopImpl<Functor, Request, RetryPolicyType>>(
-      std::move(retry_policy), std::move(backoff_policy), idempotency,
-      std::move(cq), std::forward<Functor>(functor), std::move(request),
-      location);
-  return loop->Start();
+  auto wrapper = [functor = std::forward<Functor>(functor)](
+                     CompletionQueue& cq, std::unique_ptr<RestContext> context,
+                     Options const&, Request const& request) {
+    return functor(cq, std::move(context), request);
+  };
+  return AsyncRestRetryLoop(std::move(retry_policy), std::move(backoff_policy),
+                            idempotency, std::move(cq), std::move(wrapper),
+                            internal::CurrentOptions(), std::move(request),
+                            location);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

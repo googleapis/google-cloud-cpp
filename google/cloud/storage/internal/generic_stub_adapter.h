@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_GENERIC_STUB_ADAPTER_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_GENERIC_STUB_ADAPTER_H
 
+#include "google/cloud/storage/internal/generic_stub.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -24,7 +25,7 @@ namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
-class RawClient;
+class StorageConnection;
 
 }
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
@@ -32,19 +33,18 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-class GenericStub;
 
 /**
- * Adapts existing `storage::internal::RawClient` decorators to the
+ * Adapts existing `storage::internal::StorageConnection` decorators to the
  * `GenericStub` interface.
  *
  * This function should be short-lived, as we transition some decorators
- * `storage::internal::RawClient` to `storage::GenericStub`. The PRs are going
- * to be large as it is, this adapter will let us change one class at a time
- * without being cruel to the reviewers.
+ * `storage::internal::StorageConnection` to `storage::GenericStub`. The PRs are
+ * going to be large as it is, this adapter will let us change one class at a
+ * time without being cruel to the reviewers.
  */
 std::unique_ptr<GenericStub> MakeGenericStubAdapter(
-    std::shared_ptr<storage::internal::RawClient>);
+    std::shared_ptr<storage::internal::StorageConnection>);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal

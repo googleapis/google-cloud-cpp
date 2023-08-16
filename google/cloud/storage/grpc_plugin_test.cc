@@ -45,10 +45,10 @@ TEST(GrpcPluginTest, MetadataConfigCreatesGrpc) {
       ScopedEnvironment("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG", absl::nullopt);
   auto client =
       DefaultGrpcClient(TestOptions().set<GrpcPluginOption>("metadata"));
-  auto impl = ClientImplDetails::GetRawClient(client);
+  auto impl = ClientImplDetails::GetConnection(client);
   ASSERT_THAT(impl, NotNull());
   EXPECT_THAT(impl->InspectStackStructure(),
-              ElementsAre("GrpcClient", "RetryClient"));
+              ElementsAre("GrpcStub", "StorageConnectionImpl"));
 }
 
 TEST(GrpcPluginTest, EnvironmentOverrides) {
@@ -59,10 +59,10 @@ TEST(GrpcPluginTest, EnvironmentOverrides) {
       ScopedEnvironment("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG", "none");
   auto client =
       DefaultGrpcClient(TestOptions().set<GrpcPluginOption>("metadata"));
-  auto impl = ClientImplDetails::GetRawClient(client);
+  auto impl = ClientImplDetails::GetConnection(client);
   ASSERT_THAT(impl, NotNull());
   EXPECT_THAT(impl->InspectStackStructure(),
-              ElementsAre("RestClient", "RetryClient"));
+              ElementsAre("RestStub", "StorageConnectionImpl"));
 }
 
 TEST(GrpcPluginTest, UnsetConfigCreatesMetadata) {
@@ -72,10 +72,10 @@ TEST(GrpcPluginTest, UnsetConfigCreatesMetadata) {
   auto config =
       ScopedEnvironment("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG", absl::nullopt);
   auto client = DefaultGrpcClient(TestOptions());
-  auto impl = ClientImplDetails::GetRawClient(client);
+  auto impl = ClientImplDetails::GetConnection(client);
   ASSERT_THAT(impl, NotNull());
   EXPECT_THAT(impl->InspectStackStructure(),
-              ElementsAre("GrpcClient", "RetryClient"));
+              ElementsAre("GrpcStub", "StorageConnectionImpl"));
 }
 
 TEST(GrpcPluginTest, NoneConfigCreatesCurl) {
@@ -85,10 +85,10 @@ TEST(GrpcPluginTest, NoneConfigCreatesCurl) {
   auto config =
       ScopedEnvironment("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG", absl::nullopt);
   auto client = DefaultGrpcClient(TestOptions().set<GrpcPluginOption>("none"));
-  auto impl = ClientImplDetails::GetRawClient(client);
+  auto impl = ClientImplDetails::GetConnection(client);
   ASSERT_THAT(impl, NotNull());
   EXPECT_THAT(impl->InspectStackStructure(),
-              ElementsAre("RestClient", "RetryClient"));
+              ElementsAre("RestStub", "StorageConnectionImpl"));
 }
 
 TEST(GrpcPluginTest, MediaConfigCreatesHybrid) {
@@ -98,11 +98,11 @@ TEST(GrpcPluginTest, MediaConfigCreatesHybrid) {
   auto config =
       ScopedEnvironment("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG", absl::nullopt);
   auto client = DefaultGrpcClient(TestOptions().set<GrpcPluginOption>("media"));
-  auto impl = ClientImplDetails::GetRawClient(client);
+  auto impl = ClientImplDetails::GetConnection(client);
   ASSERT_THAT(impl, NotNull());
-  EXPECT_THAT(
-      impl->InspectStackStructure(),
-      ElementsAre("GrpcClient", "RestClient", "HybridStub", "RetryClient"));
+  EXPECT_THAT(impl->InspectStackStructure(),
+              ElementsAre("GrpcStub", "RestStub", "HybridStub",
+                          "StorageConnectionImpl"));
 }
 
 #include "google/cloud/internal/disable_deprecation_warnings.inc"

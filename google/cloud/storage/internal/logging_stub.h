@@ -25,7 +25,7 @@ namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 /**
- * A decorator for `RawClient` that logs each operation.
+ * A decorator for `StorageConnection` that logs each operation.
  */
 class LoggingStub : public storage_internal::GenericStub {
  public:

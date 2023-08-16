@@ -79,6 +79,10 @@ add_library(
     internal/complex_option.h
     internal/compute_engine_util.cc
     internal/compute_engine_util.h
+    internal/connection_factory.cc
+    internal/connection_factory.h
+    internal/connection_impl.cc
+    internal/connection_impl.h
     internal/const_buffer.cc
     internal/const_buffer.h
     internal/crc32c.cc
@@ -110,6 +114,8 @@ add_library(
     internal/generic_stub.h
     internal/generic_stub_adapter.cc
     internal/generic_stub_adapter.h
+    internal/generic_stub_factory.cc
+    internal/generic_stub_factory.h
     internal/hash_function.cc
     internal/hash_function.h
     internal/hash_function_impl.cc
@@ -165,8 +171,6 @@ add_library(
     internal/patch_builder_details.h
     internal/policy_document_request.cc
     internal/policy_document_request.h
-    internal/raw_client.cc
-    internal/raw_client.h
     internal/request_project_id.cc
     internal/request_project_id.h
     internal/rest/object_read_source.cc
@@ -175,8 +179,6 @@ add_library(
     internal/rest/request_builder.h
     internal/rest/stub.cc
     internal/rest/stub.h
-    internal/retry_client.cc
-    internal/retry_client.h
     internal/retry_object_read_source.cc
     internal/retry_object_read_source.h
     internal/service_account_parser.cc
@@ -187,8 +189,10 @@ add_library(
     internal/sign_blob_requests.h
     internal/signed_url_requests.cc
     internal/signed_url_requests.h
-    internal/tracing_client.cc
-    internal/tracing_client.h
+    internal/storage_connection.cc
+    internal/storage_connection.h
+    internal/tracing_connection.cc
+    internal/tracing_connection.h
     internal/tuple_filter.h
     internal/unified_rest_credentials.cc
     internal/unified_rest_credentials.h
@@ -483,6 +487,16 @@ if (BUILD_TESTING)
         internal/bucket_requests_test.cc
         internal/complex_option_test.cc
         internal/compute_engine_util_test.cc
+        internal/connection_impl_bucket_acl_test.cc
+        internal/connection_impl_bucket_test.cc
+        internal/connection_impl_default_object_acl_test.cc
+        internal/connection_impl_notifications_test.cc
+        internal/connection_impl_object_acl_test.cc
+        internal/connection_impl_object_copy_test.cc
+        internal/connection_impl_object_test.cc
+        internal/connection_impl_service_account_test.cc
+        internal/connection_impl_sign_blob_test.cc
+        internal/connection_impl_test.cc
         internal/const_buffer_test.cc
         internal/crc32c_test.cc
         internal/curl/download_request_test.cc
@@ -513,21 +527,11 @@ if (BUILD_TESTING)
         internal/rest/object_read_source_test.cc
         internal/rest/request_builder_test.cc
         internal/rest/stub_test.cc
-        internal/retry_client_bucket_acl_test.cc
-        internal/retry_client_bucket_test.cc
-        internal/retry_client_default_object_acl_test.cc
-        internal/retry_client_notifications_test.cc
-        internal/retry_client_object_acl_test.cc
-        internal/retry_client_object_copy_test.cc
-        internal/retry_client_object_test.cc
-        internal/retry_client_service_account_test.cc
-        internal/retry_client_sign_blob_test.cc
-        internal/retry_client_test.cc
         internal/retry_object_read_source_test.cc
         internal/service_account_requests_test.cc
         internal/sign_blob_requests_test.cc
         internal/signed_url_requests_test.cc
-        internal/tracing_client_test.cc
+        internal/tracing_connection_test.cc
         internal/tuple_filter_test.cc
         internal/unified_rest_credentials_test.cc
         internal/xml_node_test.cc

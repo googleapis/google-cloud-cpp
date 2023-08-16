@@ -13,13 +13,9 @@
 // limitations under the License.
 
 #include "google/cloud/storage/client.h"
-#include "google/cloud/storage/internal/curl/stub.h"
-#include "google/cloud/storage/internal/logging_stub.h"
+#include "google/cloud/storage/internal/connection_factory.h"
 #include "google/cloud/storage/internal/openssl_util.h"
-#include "google/cloud/storage/internal/rest/stub.h"
-#include "google/cloud/storage/internal/tracing_client.h"
 #include "google/cloud/storage/oauth2/service_account_credentials.h"
-#include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/curl_options.h"
 #include "google/cloud/internal/filesystem.h"
 #include "google/cloud/internal/make_status.h"
@@ -38,50 +34,28 @@ static_assert(std::is_copy_constructible<storage::Client>::value,
 static_assert(std::is_copy_assignable<storage::Client>::value,
               "storage::Client must be assignable");
 
+// This is the constructor used by most applications. We apply the default
+// options, and then call the constructor that creates a connection.
 Client::Client(Options opts)
-    : Client(Client::InternalOnlyNoDecorations{},
-             Client::CreateDefaultInternalClient(
-                 internal::DefaultOptionsWithCredentials(std::move(opts)))) {}
+    : Client(InternalOnly{},
+             internal::DefaultOptionsWithCredentials(std::move(opts))) {}
 
-std::shared_ptr<internal::RawClient> Client::CreateDefaultInternalClient(
-    Options const& opts, std::unique_ptr<storage_internal::GenericStub> stub) {
-  using ::google::cloud::internal::Contains;
-  auto const& tracing_components = opts.get<TracingComponentsOption>();
-  auto const enable_logging = Contains(tracing_components, "raw-client") ||
-                              Contains(tracing_components, "rpc");
+/// Apply all decorators to @p connection, based on @p opts.
+Client::Client(InternalOnly, Options const& opts,
+               std::shared_ptr<internal::StorageConnection> connection)
+    : Client(InternalOnlyNoDecorations{}, storage_internal::DecorateConnection(
+                                              opts, std::move(connection))) {}
 
-  if (enable_logging) {
-    stub = std::make_unique<internal::LoggingStub>(std::move(stub));
-  }
-  std::shared_ptr<internal::RawClient> client =
-      internal::RetryClient::Create(std::move(stub), opts);
-  if (google::cloud::internal::TracingEnabled(opts)) {
-    client = storage_internal::MakeTracingClient(std::move(client));
-  }
-  return client;
-}
-
-std::shared_ptr<internal::RawClient> Client::CreateDefaultInternalClient(
-    Options const& opts, std::shared_ptr<internal::RawClient> client) {
-  return CreateDefaultInternalClient(
-      opts, storage_internal::MakeGenericStubAdapter(std::move(client)));
-}
-
-std::shared_ptr<internal::RawClient> Client::CreateDefaultInternalClient(
-    Options const& opts) {
-  if (opts.get<internal::UseRestClientOption>()) {
-    return CreateDefaultInternalClient(
-        opts, std::make_unique<internal::RestStub>(opts));
-  }
-  return CreateDefaultInternalClient(
-      opts, std::make_unique<internal::CurlStub>(opts));
-}
+/// Create a connection from @p opts, applying all decorators if needed.
+Client::Client(InternalOnly, Options const& opts)
+    : Client(InternalOnlyNoDecorations{},
+             storage_internal::MakeStorageConnection(opts)) {}
 
 StatusOr<Client> Client::CreateDefaultClient() { return Client(Options{}); }
 
 ObjectReadStream Client::ReadObjectImpl(
     internal::ReadObjectRangeRequest const& request) {
-  auto source = raw_client_->ReadObject(request);
+  auto source = connection_->ReadObject(request);
   if (!source) {
     ObjectReadStream error_stream(
         std::make_unique<internal::ObjectReadStreambuf>(
@@ -106,7 +80,7 @@ ObjectReadStream Client::ReadObjectImpl(
 
 ObjectWriteStream Client::WriteObjectImpl(
     internal::ResumableUploadRequest const& request) {
-  auto response = internal::CreateOrResume(*raw_client_, request);
+  auto response = internal::CreateOrResume(*connection_, request);
   if (!response) {
     ObjectWriteStream error_stream(
         std::make_unique<internal::ObjectWriteStreambuf>(
@@ -119,7 +93,7 @@ ObjectWriteStream Client::WriteObjectImpl(
   auto const buffer_size = request.GetOption<UploadBufferSize>().value_or(
       current.get<UploadBufferSizeOption>());
   return ObjectWriteStream(std::make_unique<internal::ObjectWriteStreambuf>(
-      raw_client_, request, std::move(response->upload_id),
+      connection_, request, std::move(response->upload_id),
       response->committed_size, std::move(response->metadata), buffer_size,
       internal::CreateHashFunction(request),
       internal::HashValues{
@@ -183,7 +157,7 @@ StatusOr<ObjectMetadata> Client::UploadFileSimple(
   is.close();
   request.set_payload(payload);
 
-  return raw_client_->InsertObjectMedia(request);
+  return connection_->InsertObjectMedia(request);
 }
 
 StatusOr<ObjectMetadata> Client::UploadFileResumable(
@@ -239,7 +213,7 @@ integrity checks using the DisableMD5Hash() and DisableCrc32cChecksum() options.
 StatusOr<ObjectMetadata> Client::UploadStreamResumable(
     std::istream& source,
     internal::ResumableUploadRequest const& request) const {
-  auto response = internal::CreateOrResume(*raw_client_, request);
+  auto response = internal::CreateOrResume(*connection_, request);
   if (!response) return std::move(response).status();
 
   if (response->metadata.has_value()) return *std::move(response->metadata);
@@ -293,7 +267,7 @@ StatusOr<ObjectMetadata> Client::UploadStreamResumable(
                                           internal::HashValues{});
     }();
     request.ForEachOption(internal::CopyCommonOptions(upload_request));
-    auto upload = raw_client_->UploadChunk(upload_request);
+    auto upload = connection_->UploadChunk(upload_request);
     if (!upload) return std::move(upload).status();
     if (upload->payload.has_value()) return *std::move(upload->payload);
     auto const actual_committed_size = upload->committed_size.value_or(0);
@@ -361,12 +335,12 @@ std::string Client::SigningEmail(SigningAccount const& signing_account) const {
   if (signing_account.has_value()) {
     return signing_account.value();
   }
-  return raw_client_->client_options().credentials()->AccountEmail();
+  return connection_->client_options().credentials()->AccountEmail();
 }
 
 StatusOr<Client::SignBlobResponseRaw> Client::SignBlobImpl(
     SigningAccount const& signing_account, std::string const& string_to_sign) {
-  auto credentials = raw_client_->client_options().credentials();
+  auto credentials = connection_->client_options().credentials();
 
   // First try to sign locally.
   auto signed_blob = credentials->SignBlob(signing_account, string_to_sign);
@@ -390,7 +364,7 @@ StatusOr<Client::SignBlobResponseRaw> Client::SignBlobImpl(
   }
   internal::SignBlobRequest sign_request(
       std::move(signing_email), internal::Base64Encode(string_to_sign), {});
-  auto response = raw_client_->SignBlob(sign_request);
+  auto response = connection_->SignBlob(sign_request);
   if (!response) return response.status();
   auto decoded = internal::Base64Decode(response->signed_blob);
   if (!decoded) return std::move(decoded).status();
@@ -503,6 +477,13 @@ std::string CreateRandomPrefixName(std::string const& prefix) {
 }
 
 namespace internal {
+
+Client ClientImplDetails::CreateWithDecorations(
+    Options const& opts, std::shared_ptr<StorageConnection> connection) {
+  return Client(
+      Client::InternalOnlyNoDecorations{},
+      storage_internal::DecorateConnection(opts, std::move(connection)));
+}
 
 ScopedDeleter::ScopedDeleter(
     std::function<Status(std::string, std::int64_t)> df)

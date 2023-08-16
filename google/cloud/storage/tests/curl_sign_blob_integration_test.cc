@@ -50,9 +50,9 @@ TEST_F(CurlSignBlobIntegrationTest, Simple) {
 
   // This is normally done by `storage::Client`, but we are bypassing it as part
   // of this test.
-  auto raw_client = internal::ClientImplDetails::GetRawClient(*client);
-  google::cloud::internal::OptionsSpan const span(raw_client->options());
-  StatusOr<SignBlobResponse> response = raw_client->SignBlob(request);
+  auto connection = internal::ClientImplDetails::GetConnection(*client);
+  google::cloud::internal::OptionsSpan const span(connection->options());
+  StatusOr<SignBlobResponse> response = connection->SignBlob(request);
   ASSERT_STATUS_OK(response);
 
   EXPECT_FALSE(response->key_id.empty());

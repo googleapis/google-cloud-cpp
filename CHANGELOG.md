@@ -117,6 +117,11 @@ the APIs in these libraries are stable, and are ready for production use.
 
 - [Datastore](/google/cloud/datastore/README.md)
 
+### Cloud IoT
+
+The Cloud IoT Core service has been [shutdown][cloud-iot-shutdown]. We removed
+the corresponding C++ client library as it is no longer usable.
+
 ### [Natural Language AI](/google/cloud/language/README.md)
 
 The library has been expanded to include the v2 service.
@@ -4255,6 +4260,7 @@ releases. The relevant notes are:
 [cloud bigtable admin api]: https://cloud.google.com/bigtable/docs/reference/admin/rpc
 [cloud tasks]: /google/cloud/tasks/README.md
 [cloud-debugger-deprecated]: https://cloud.google.com/debugger/docs/deprecations
+[cloud-iot-shutdown]: https://cloud.google.com/iot/docs/release-notes#August_16_2022
 [cloud-run-jobs]: https://cloud.google.com/run/docs/managing/job-executions
 [dataproc-node-groups]: https://cloud.google.com/dataproc/docs/guides/node-groups/dataproc-driver-node-groups
 [functions-v2]: https://cloud.google.com/functions/docs/concepts/version-comparison

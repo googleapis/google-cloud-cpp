@@ -13,6 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/storage/grpc_plugin.h"
+#include "google/cloud/storage/internal/connection_factory.h"
+#include "google/cloud/storage/internal/generic_stub_factory.h"
 #include "google/cloud/storage/internal/grpc/stub.h"
 #include "google/cloud/storage/internal/hybrid_stub.h"
 #include "google/cloud/internal/getenv.h"
@@ -29,13 +31,15 @@ google::cloud::storage::Client DefaultGrpcClient(Options opts) {
   if (config == "none") {
     return google::cloud::storage::Client(std::move(opts));
   }
-  if (config == "metadata" || config.empty()) {
-    opts = google::cloud::storage_internal::DefaultOptionsGrpc(std::move(opts));
-    return storage::internal::ClientImplDetails::CreateClient(
-        opts, std::make_unique<storage_internal::GrpcStub>(opts));
-  }
-  return storage::internal::ClientImplDetails::CreateClient(
-      opts, std::make_unique<storage_internal::HybridStub>(opts));
+  auto stub = [&]() -> std::unique_ptr<storage_internal::GenericStub> {
+    if (config == "metadata" || config.empty()) {
+      opts = google::cloud::storage_internal::DefaultOptionsGrpc(opts);
+      return std::make_unique<storage_internal::GrpcStub>(opts);
+    }
+    return std::make_unique<storage_internal::HybridStub>(opts);
+  }();
+  return storage::internal::ClientImplDetails::CreateWithoutDecorations(
+      MakeStorageConnection(std::move(opts), std::move(stub)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

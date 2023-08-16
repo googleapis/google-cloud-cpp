@@ -91,20 +91,6 @@ Result LogWrapper(Functor&& functor, Context& context, Request const& request,
 
 template <typename Functor, typename Request,
           typename Result = google::cloud::internal::invoke_result_t<
-              Functor, grpc::ClientContext&, Request const&>,
-          typename std::enable_if<IsUniquePtr<Result>::value, int>::type = 0>
-Result LogWrapper(Functor&& functor, grpc::ClientContext& context,
-                  Request const& request, char const* where,
-                  TracingOptions const& options) {
-  GCP_LOG(DEBUG) << where << "() << " << DebugString(request, options);
-  auto response = functor(context, request);
-  GCP_LOG(DEBUG) << where << "() >> " << (response ? "not null" : "null")
-                 << " stream";
-  return response;
-}
-
-template <typename Functor, typename Request,
-          typename Result = google::cloud::internal::invoke_result_t<
               Functor, std::shared_ptr<grpc::ClientContext>, Request const&>,
           typename std::enable_if<IsUniquePtr<Result>::value, int>::type = 0>
 Result LogWrapper(Functor&& functor,
@@ -130,37 +116,6 @@ Result LogWrapper(Functor&& functor, grpc::ClientContext& context,
   GCP_LOG(DEBUG) << where << "() >> " << (response ? "not null" : "null")
                  << " async response reader";
   return response;
-}
-
-template <
-    typename Functor, typename Request,
-    typename Result =
-        google::cloud::internal::invoke_result_t<Functor, Request>,
-    typename std::enable_if<IsFutureStatusOr<Result>::value, int>::type = 0>
-Result LogWrapper(Functor&& functor, Request request, char const* where,
-                  TracingOptions const& options) {
-  // Because this is an asynchronous request we need a unique identifier so
-  // applications can match the request and response in the log.
-  auto prefix = std::string(where) + "(" + RequestIdForLogging() + ")";
-  GCP_LOG(DEBUG) << prefix << " << " << DebugString(request, options);
-  auto response = functor(std::move(request));
-  // Ideally we would have an ID to match the request with the asynchronous
-  // response, but for functions with this signature there is nothing that comes
-  // to mind.
-  GCP_LOG(DEBUG) << prefix << " >> future_status="
-                 << DebugFutureStatus(
-                        response.wait_for(std::chrono::microseconds(0)));
-  return response.then([prefix, options](decltype(response) f) {
-    auto response = f.get();
-    if (!response) {
-      GCP_LOG(DEBUG) << prefix << " >> status="
-                     << DebugString(response.status(), options);
-    } else {
-      GCP_LOG(DEBUG) << prefix
-                     << " >> response=" << DebugString(*response, options);
-    }
-    return response;
-  });
 }
 
 template <
@@ -277,55 +232,6 @@ Result LogWrapper(Functor&& functor, google::cloud::CompletionQueue& cq,
     }
     return response;
   });
-}
-
-template <typename Functor, typename Request, typename Response,
-          typename Result = google::cloud::internal::invoke_result_t<
-              Functor, grpc::ClientContext*, Request const&, Response*>,
-          typename std::enable_if<std::is_same<Result, grpc::Status>::value,
-                                  int>::type = 0>
-Result LogWrapper(Functor&& functor, grpc::ClientContext* context,
-                  Request const& request, Response* response, char const* where,
-                  TracingOptions const& options) {
-  GCP_LOG(DEBUG) << where << "() << " << DebugString(request, options);
-  auto status = functor(context, request, response);
-  if (!status.ok()) {
-    GCP_LOG(DEBUG) << where << "() >> status="
-                   << DebugString(MakeStatusFromRpcError(status), options);
-  } else {
-    GCP_LOG(DEBUG) << where
-                   << "() >> response=" << DebugString(*response, options);
-  }
-  return status;
-}
-
-template <typename Functor, typename Request,
-          typename Result = google::cloud::internal::invoke_result_t<
-              Functor, grpc::ClientContext*, Request const&>,
-          typename std::enable_if<IsUniquePtr<Result>::value, int>::type = 0>
-Result LogWrapper(Functor&& functor, grpc::ClientContext* context,
-                  Request const& request, char const* where,
-                  TracingOptions const& options) {
-  GCP_LOG(DEBUG) << where << "() << " << DebugString(request, options);
-  auto response = functor(context, request);
-  GCP_LOG(DEBUG) << where << "() >> " << (response ? "not null" : "null")
-                 << " stream";
-  return response;
-}
-
-template <
-    typename Functor, typename Request,
-    typename Result = google::cloud::internal::invoke_result_t<
-        Functor, grpc::ClientContext*, Request const&, grpc::CompletionQueue*>,
-    typename std::enable_if<IsUniquePtr<Result>::value, int>::type = 0>
-Result LogWrapper(Functor&& functor, grpc::ClientContext* context,
-                  Request const& request, grpc::CompletionQueue* cq,
-                  char const* where, TracingOptions const& options) {
-  GCP_LOG(DEBUG) << where << "() << " << DebugString(request, options);
-  auto response = functor(context, request, cq);
-  GCP_LOG(DEBUG) << where << "() >> " << (response ? "not null" : "null")
-                 << " async response reader";
-  return response;
 }
 
 }  // namespace internal

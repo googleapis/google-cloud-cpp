@@ -59,7 +59,7 @@ Options DefaultCommonOptions(Options opts) {
   if (!opts.has<pubsub::BackoffPolicyOption>()) {
     opts.set<pubsub::BackoffPolicyOption>(
         pubsub::ExponentialBackoffPolicy(std::chrono::milliseconds(100),
-                                         std::chrono::seconds(60), 1.3)
+                                         std::chrono::seconds(60), 4)
             .clone());
   }
   if (opts.get<GrpcBackgroundThreadPoolSizeOption>() == 0) {

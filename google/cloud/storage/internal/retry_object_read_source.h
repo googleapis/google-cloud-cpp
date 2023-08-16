@@ -15,8 +15,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_RETRY_OBJECT_READ_SOURCE_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_RETRY_OBJECT_READ_SOURCE_H
 
+#include "google/cloud/storage/internal/connection_impl.h"
 #include "google/cloud/storage/internal/object_read_source.h"
-#include "google/cloud/storage/internal/retry_client.h"
 #include "google/cloud/storage/version.h"
 #include "absl/types/optional.h"
 
@@ -38,7 +38,7 @@ enum OffsetDirection { kFromBeginning, kFromEnd };
  */
 class RetryObjectReadSource : public ObjectReadSource {
  public:
-  RetryObjectReadSource(std::shared_ptr<RetryClient> client,
+  RetryObjectReadSource(std::shared_ptr<StorageConnectionImpl> connection,
                         ReadObjectRangeRequest request,
                         std::unique_ptr<ObjectReadSource> child,
                         std::unique_ptr<RetryPolicy> retry_policy,
@@ -54,7 +54,7 @@ class RetryObjectReadSource : public ObjectReadSource {
   StatusOr<std::unique_ptr<ObjectReadSource>> ReadDiscard(
       std::unique_ptr<ObjectReadSource> child, std::int64_t count) const;
 
-  std::shared_ptr<RetryClient> client_;
+  std::shared_ptr<StorageConnectionImpl> connection_;
   ReadObjectRangeRequest request_;
   std::unique_ptr<ObjectReadSource> child_;
   absl::optional<std::int64_t> generation_;

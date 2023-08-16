@@ -51,8 +51,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * dependency on gRPC for existing customers. This means we need an interface
  * implemented by both gRPC and HTTP.
  *
- * Originally `RawClient` filled this role. We needed to introduce per-call
- * headers, so it became necessary to create a new class.
+ * Originally `StorageConnection` filled this role. We needed to introduce
+ * per-call headers, so it became necessary to create a new class.
  */
 class GenericStub {
  public:

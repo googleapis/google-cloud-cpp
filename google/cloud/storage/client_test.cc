@@ -153,7 +153,8 @@ TEST_F(ClientTest, OverrideBothPolicies) {
   EXPECT_LE(1, ObservableBackoffPolicy::on_completion_call_count_);
 }
 
-/// @test Verify the constructor creates the right set of RawClient decorations.
+/// @test Verify the constructor creates the right set of StorageConnection
+/// decorations.
 TEST_F(ClientTest, DefaultDecoratorsCurlClient) {
   ScopedEnvironment logging("CLOUD_STORAGE_ENABLE_TRACING", absl::nullopt);
   ScopedEnvironment curl("GOOGLE_CLOUD_CPP_STORAGE_USE_LEGACY_HTTP", "yes");
@@ -165,13 +166,14 @@ TEST_F(ClientTest, DefaultDecoratorsCurlClient) {
                  .set<UnifiedCredentialsOption>(MakeInsecureCredentials())
                  .set<TracingComponentsOption>({}));
 
-  auto const impl = ClientImplDetails::GetRawClient(tested);
+  auto const impl = ClientImplDetails::GetConnection(tested);
   ASSERT_THAT(impl, NotNull());
   EXPECT_THAT(impl->InspectStackStructure(),
-              ElementsAre("CurlStub", "RetryClient"));
+              ElementsAre("CurlStub", "StorageConnectionImpl"));
 }
 
-/// @test Verify the constructor creates the right set of RawClient decorations.
+/// @test Verify the constructor creates the right set of StorageConnection
+/// decorations.
 TEST_F(ClientTest, LoggingDecoratorsCurlClient) {
   ScopedEnvironment disable_rest("GOOGLE_CLOUD_CPP_STORAGE_USE_LEGACY_HTTP",
                                  "yes");
@@ -182,13 +184,14 @@ TEST_F(ClientTest, LoggingDecoratorsCurlClient) {
                  .set<UnifiedCredentialsOption>(MakeInsecureCredentials())
                  .set<TracingComponentsOption>({"raw-client"}));
 
-  auto const impl = ClientImplDetails::GetRawClient(tested);
+  auto const impl = ClientImplDetails::GetConnection(tested);
   ASSERT_THAT(impl, NotNull());
   EXPECT_THAT(impl->InspectStackStructure(),
-              ElementsAre("CurlStub", "LoggingStub", "RetryClient"));
+              ElementsAre("CurlStub", "LoggingStub", "StorageConnectionImpl"));
 }
 
-/// @test Verify the constructor creates the right set of RawClient decorations.
+/// @test Verify the constructor creates the right set of StorageConnection
+/// decorations.
 TEST_F(ClientTest, DefaultDecoratorsRestClient) {
   ScopedEnvironment disable_grpc("CLOUD_STORAGE_ENABLE_TRACING", absl::nullopt);
 
@@ -200,13 +203,14 @@ TEST_F(ClientTest, DefaultDecoratorsRestClient) {
                  .set<internal::UseRestClientOption>(true)
                  .set<TracingComponentsOption>({}));
 
-  auto const impl = ClientImplDetails::GetRawClient(tested);
+  auto const impl = ClientImplDetails::GetConnection(tested);
   ASSERT_THAT(impl, NotNull());
   EXPECT_THAT(impl->InspectStackStructure(),
-              ElementsAre("RestClient", "RetryClient"));
+              ElementsAre("RestStub", "StorageConnectionImpl"));
 }
 
-/// @test Verify the constructor creates the right set of RawClient decorations.
+/// @test Verify the constructor creates the right set of StorageConnection
+/// decorations.
 TEST_F(ClientTest, LoggingDecoratorsRestClient) {
   ScopedEnvironment logging("CLOUD_STORAGE_ENABLE_TRACING", absl::nullopt);
   ScopedEnvironment legacy("GOOGLE_CLOUD_CPP_STORAGE_USE_LEGACY_HTTP",
@@ -220,10 +224,10 @@ TEST_F(ClientTest, LoggingDecoratorsRestClient) {
                  .set<internal::UseRestClientOption>(true)
                  .set<TracingComponentsOption>({"raw-client"}));
 
-  auto const impl = ClientImplDetails::GetRawClient(tested);
+  auto const impl = ClientImplDetails::GetConnection(tested);
   ASSERT_THAT(impl, NotNull());
   EXPECT_THAT(impl->InspectStackStructure(),
-              ElementsAre("RestClient", "LoggingStub", "RetryClient"));
+              ElementsAre("RestStub", "LoggingStub", "StorageConnectionImpl"));
 }
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -243,12 +247,12 @@ TEST_F(ClientTest, OTelEnableTracing) {
                      .set<TracingComponentsOption>({"raw-client"});
 
   auto tested = Client(EnableTracing(std::move(options)));
-  auto const impl = ClientImplDetails::GetRawClient(tested);
+  auto const impl = ClientImplDetails::GetConnection(tested);
   ASSERT_THAT(impl, NotNull());
 
-  EXPECT_THAT(
-      impl->InspectStackStructure(),
-      ElementsAre("RestClient", "LoggingStub", "RetryClient", "TracingClient"));
+  EXPECT_THAT(impl->InspectStackStructure(),
+              ElementsAre("RestStub", "LoggingStub", "StorageConnectionImpl",
+                          "TracingConnection"));
 }
 
 TEST_F(ClientTest, OTelDisableTracing) {
@@ -264,11 +268,11 @@ TEST_F(ClientTest, OTelDisableTracing) {
                      .set<TracingComponentsOption>({"raw-client"});
 
   auto tested = Client(DisableTracing(std::move(options)));
-  auto const impl = ClientImplDetails::GetRawClient(tested);
+  auto const impl = ClientImplDetails::GetConnection(tested);
   ASSERT_THAT(impl, NotNull());
 
   EXPECT_THAT(impl->InspectStackStructure(),
-              ElementsAre("RestClient", "LoggingStub", "RetryClient"));
+              ElementsAre("RestStub", "LoggingStub", "StorageConnectionImpl"));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

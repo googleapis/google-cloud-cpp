@@ -35,11 +35,11 @@ std::uint64_t InitialOffset(OffsetDirection const& offset_direction,
 }
 
 RetryObjectReadSource::RetryObjectReadSource(
-    std::shared_ptr<RetryClient> client, ReadObjectRangeRequest request,
-    std::unique_ptr<ObjectReadSource> child,
+    std::shared_ptr<StorageConnectionImpl> connection,
+    ReadObjectRangeRequest request, std::unique_ptr<ObjectReadSource> child,
     std::unique_ptr<RetryPolicy> retry_policy,
     std::unique_ptr<BackoffPolicy> backoff_policy)
-    : client_(std::move(client)),
+    : connection_(std::move(connection)),
       request_(std::move(request)),
       child_(std::move(child)),
       retry_policy_prototype_(std::move(retry_policy)),
@@ -145,7 +145,7 @@ Status RetryObjectReadSource::MakeChild(RetryPolicy& retry_policy,
 
   OptionsSpan const span(span_options_);
   auto child =
-      client_->ReadObjectNotWrapped(request_, retry_policy, backoff_policy);
+      connection_->ReadObjectNotWrapped(request_, retry_policy, backoff_policy);
   if (!child) return std::move(child).status();
   if (!is_gunzipped_) return on_success(*std::move(child));
 

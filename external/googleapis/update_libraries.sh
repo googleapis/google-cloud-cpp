@@ -168,7 +168,6 @@ declare -A -r LIBRARIES=(
   )"
   ["iap"]="@com_google_googleapis//google/cloud/iap/v1:iap_cc_grpc"
   ["ids"]="@com_google_googleapis//google/cloud/ids/v1:ids_cc_grpc"
-  ["iot"]="@com_google_googleapis//google/cloud/iot/v1:iot_cc_grpc"
   ["kms"]="$(
     printf ",%s" \
       "@com_google_googleapis//google/cloud/kms/v1:kms_cc_grpc" \

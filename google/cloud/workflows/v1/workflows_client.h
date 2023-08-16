@@ -88,7 +88,7 @@ class WorkflowsClient {
 
   // clang-format off
   ///
-  /// Lists Workflows in a given project and location.
+  /// Lists workflows in a given project and location.
   /// The default order is not specified.
   ///
   /// @param parent  Required. Project and location from which the workflows should be listed.
@@ -116,8 +116,8 @@ class WorkflowsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.workflows.v1.ListWorkflowsRequest]: @googleapis_reference_link{google/cloud/workflows/v1/workflows.proto#L186}
-  /// [google.cloud.workflows.v1.Workflow]: @googleapis_reference_link{google/cloud/workflows/v1/workflows.proto#L104}
+  /// [google.cloud.workflows.v1.ListWorkflowsRequest]: @googleapis_reference_link{google/cloud/workflows/v1/workflows.proto#L272}
+  /// [google.cloud.workflows.v1.Workflow]: @googleapis_reference_link{google/cloud/workflows/v1/workflows.proto#L113}
   ///
   // clang-format on
   StreamRange<google::cloud::workflows::v1::Workflow> ListWorkflows(
@@ -125,7 +125,7 @@ class WorkflowsClient {
 
   // clang-format off
   ///
-  /// Lists Workflows in a given project and location.
+  /// Lists workflows in a given project and location.
   /// The default order is not specified.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -157,8 +157,8 @@ class WorkflowsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.workflows.v1.ListWorkflowsRequest]: @googleapis_reference_link{google/cloud/workflows/v1/workflows.proto#L186}
-  /// [google.cloud.workflows.v1.Workflow]: @googleapis_reference_link{google/cloud/workflows/v1/workflows.proto#L104}
+  /// [google.cloud.workflows.v1.ListWorkflowsRequest]: @googleapis_reference_link{google/cloud/workflows/v1/workflows.proto#L272}
+  /// [google.cloud.workflows.v1.Workflow]: @googleapis_reference_link{google/cloud/workflows/v1/workflows.proto#L113}
   ///
   // clang-format on
   StreamRange<google::cloud::workflows::v1::Workflow> ListWorkflows(
@@ -167,9 +167,9 @@ class WorkflowsClient {
 
   // clang-format off
   ///
-  /// Gets details of a single Workflow.
+  /// Gets details of a single workflow.
   ///
-  /// @param name  Required. Name of the workflow which information should be retrieved.
+  /// @param name  Required. Name of the workflow for which information should be retrieved.
   ///  Format: projects/{project}/locations/{location}/workflows/{workflow}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -185,8 +185,8 @@ class WorkflowsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.workflows.v1.GetWorkflowRequest]: @googleapis_reference_link{google/cloud/workflows/v1/workflows.proto#L236}
-  /// [google.cloud.workflows.v1.Workflow]: @googleapis_reference_link{google/cloud/workflows/v1/workflows.proto#L104}
+  /// [google.cloud.workflows.v1.GetWorkflowRequest]: @googleapis_reference_link{google/cloud/workflows/v1/workflows.proto#L322}
+  /// [google.cloud.workflows.v1.Workflow]: @googleapis_reference_link{google/cloud/workflows/v1/workflows.proto#L113}
   ///
   // clang-format on
   StatusOr<google::cloud::workflows::v1::Workflow> GetWorkflow(
@@ -194,7 +194,7 @@ class WorkflowsClient {
 
   // clang-format off
   ///
-  /// Gets details of a single Workflow.
+  /// Gets details of a single workflow.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -216,8 +216,8 @@ class WorkflowsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.workflows.v1.GetWorkflowRequest]: @googleapis_reference_link{google/cloud/workflows/v1/workflows.proto#L236}
-  /// [google.cloud.workflows.v1.Workflow]: @googleapis_reference_link{google/cloud/workflows/v1/workflows.proto#L104}
+  /// [google.cloud.workflows.v1.GetWorkflowRequest]: @googleapis_reference_link{google/cloud/workflows/v1/workflows.proto#L322}
+  /// [google.cloud.workflows.v1.Workflow]: @googleapis_reference_link{google/cloud/workflows/v1/workflows.proto#L113}
   ///
   // clang-format on
   StatusOr<google::cloud::workflows::v1::Workflow> GetWorkflow(
@@ -228,7 +228,7 @@ class WorkflowsClient {
   ///
   /// Creates a new workflow. If a workflow with the specified name already
   /// exists in the specified project and location, the long running operation
-  /// will return [ALREADY_EXISTS][google.rpc.Code.ALREADY_EXISTS] error.
+  /// returns a [ALREADY_EXISTS][google.rpc.Code.ALREADY_EXISTS] error.
   ///
   /// @param parent  Required. Project and location in which the workflow should be created.
   ///  Format:  projects/{project}/locations/{location}
@@ -261,8 +261,8 @@ class WorkflowsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.workflows.v1.CreateWorkflowRequest]: @googleapis_reference_link{google/cloud/workflows/v1/workflows.proto#L250}
-  /// [google.cloud.workflows.v1.Workflow]: @googleapis_reference_link{google/cloud/workflows/v1/workflows.proto#L104}
+  /// [google.cloud.workflows.v1.CreateWorkflowRequest]: @googleapis_reference_link{google/cloud/workflows/v1/workflows.proto#L343}
+  /// [google.cloud.workflows.v1.Workflow]: @googleapis_reference_link{google/cloud/workflows/v1/workflows.proto#L113}
   ///
   // clang-format on
   future<StatusOr<google::cloud::workflows::v1::Workflow>> CreateWorkflow(
@@ -274,7 +274,7 @@ class WorkflowsClient {
   ///
   /// Creates a new workflow. If a workflow with the specified name already
   /// exists in the specified project and location, the long running operation
-  /// will return [ALREADY_EXISTS][google.rpc.Code.ALREADY_EXISTS] error.
+  /// returns a [ALREADY_EXISTS][google.rpc.Code.ALREADY_EXISTS] error.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -302,8 +302,8 @@ class WorkflowsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.workflows.v1.CreateWorkflowRequest]: @googleapis_reference_link{google/cloud/workflows/v1/workflows.proto#L250}
-  /// [google.cloud.workflows.v1.Workflow]: @googleapis_reference_link{google/cloud/workflows/v1/workflows.proto#L104}
+  /// [google.cloud.workflows.v1.CreateWorkflowRequest]: @googleapis_reference_link{google/cloud/workflows/v1/workflows.proto#L343}
+  /// [google.cloud.workflows.v1.Workflow]: @googleapis_reference_link{google/cloud/workflows/v1/workflows.proto#L113}
   ///
   // clang-format on
   future<StatusOr<google::cloud::workflows::v1::Workflow>> CreateWorkflow(
@@ -338,8 +338,8 @@ class WorkflowsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.workflows.v1.DeleteWorkflowRequest]: @googleapis_reference_link{google/cloud/workflows/v1/workflows.proto#L277}
-  /// [google.cloud.workflows.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/workflows/v1/workflows.proto#L301}
+  /// [google.cloud.workflows.v1.DeleteWorkflowRequest]: @googleapis_reference_link{google/cloud/workflows/v1/workflows.proto#L370}
+  /// [google.cloud.workflows.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/workflows/v1/workflows.proto#L394}
   ///
   // clang-format on
   future<StatusOr<google::cloud::workflows::v1::OperationMetadata>>
@@ -377,8 +377,8 @@ class WorkflowsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.workflows.v1.DeleteWorkflowRequest]: @googleapis_reference_link{google/cloud/workflows/v1/workflows.proto#L277}
-  /// [google.cloud.workflows.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/workflows/v1/workflows.proto#L301}
+  /// [google.cloud.workflows.v1.DeleteWorkflowRequest]: @googleapis_reference_link{google/cloud/workflows/v1/workflows.proto#L370}
+  /// [google.cloud.workflows.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/workflows/v1/workflows.proto#L394}
   ///
   // clang-format on
   future<StatusOr<google::cloud::workflows::v1::OperationMetadata>>
@@ -390,8 +390,8 @@ class WorkflowsClient {
   ///
   /// Updates an existing workflow.
   /// Running this method has no impact on already running executions of the
-  /// workflow. A new revision of the workflow may be created as a result of a
-  /// successful update operation. In that case, such revision will be used
+  /// workflow. A new revision of the workflow might be created as a result of a
+  /// successful update operation. In that case, the new revision is used
   /// in new workflow executions.
   ///
   /// @param workflow  Required. Workflow to be updated.
@@ -417,8 +417,8 @@ class WorkflowsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.workflows.v1.UpdateWorkflowRequest]: @googleapis_reference_link{google/cloud/workflows/v1/workflows.proto#L291}
-  /// [google.cloud.workflows.v1.Workflow]: @googleapis_reference_link{google/cloud/workflows/v1/workflows.proto#L104}
+  /// [google.cloud.workflows.v1.UpdateWorkflowRequest]: @googleapis_reference_link{google/cloud/workflows/v1/workflows.proto#L384}
+  /// [google.cloud.workflows.v1.Workflow]: @googleapis_reference_link{google/cloud/workflows/v1/workflows.proto#L113}
   ///
   // clang-format on
   future<StatusOr<google::cloud::workflows::v1::Workflow>> UpdateWorkflow(
@@ -429,8 +429,8 @@ class WorkflowsClient {
   ///
   /// Updates an existing workflow.
   /// Running this method has no impact on already running executions of the
-  /// workflow. A new revision of the workflow may be created as a result of a
-  /// successful update operation. In that case, such revision will be used
+  /// workflow. A new revision of the workflow might be created as a result of a
+  /// successful update operation. In that case, the new revision is used
   /// in new workflow executions.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -459,8 +459,8 @@ class WorkflowsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.workflows.v1.UpdateWorkflowRequest]: @googleapis_reference_link{google/cloud/workflows/v1/workflows.proto#L291}
-  /// [google.cloud.workflows.v1.Workflow]: @googleapis_reference_link{google/cloud/workflows/v1/workflows.proto#L104}
+  /// [google.cloud.workflows.v1.UpdateWorkflowRequest]: @googleapis_reference_link{google/cloud/workflows/v1/workflows.proto#L384}
+  /// [google.cloud.workflows.v1.Workflow]: @googleapis_reference_link{google/cloud/workflows/v1/workflows.proto#L113}
   ///
   // clang-format on
   future<StatusOr<google::cloud::workflows::v1::Workflow>> UpdateWorkflow(

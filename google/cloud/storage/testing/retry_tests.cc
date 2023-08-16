@@ -43,7 +43,7 @@ auto constexpr kTooManyFailuresCount = 2;
 auto constexpr kIdempotencyTokenHeader = "x-goog-gcs-idempotency-token";
 auto constexpr kTestAuthority = "test-only-authority.googleapis.com";
 
-Options RetryClientTestOptions() {
+Options RetryTestOptions() {
   return Options{}
       .set<RetryPolicyOption>(
           LimitedErrorCountRetryPolicy(kTooManyFailuresCount).clone())

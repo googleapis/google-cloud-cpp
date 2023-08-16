@@ -228,10 +228,12 @@ Spanner implements some key features in the
 
 ### Storage
 
-The Storage `*Connection` classes are called `storage::internal::RawClient`,
-which sadly forces our users to reach into the `internal` namespace to mock
-things. Furthermore, some of the `RawClient` decorators should be called
-`*Stub`.
+In Storage the `*Connection` classes are in the `storage::internal` namespace,
+which forces our users to reach into the `internal` namespace to mock things.
+There is an open bug to fix this. It would involve moving all the `*Request` and
+`*Response` classes out of `storage::internal`. Some of the member functions in
+these classes should not be part of the public API. In short, the changes are
+more involved than a simple `git mv`.
 
 [check-expected-example-link]: https://github.com/googleapis/google-cloud-cpp/blob/0288f8c00dd21de2fb012c517155b300667edc5c/google/cloud/spanner/client.cc#L335-L338
 [client-options-link]: https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/storage/client_options.h
