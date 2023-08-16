@@ -92,6 +92,7 @@ add_library(
     internal/log_impl.h
     internal/make_status.cc
     internal/make_status.h
+    internal/make_string_vector.h
     internal/noexcept_action.cc
     internal/noexcept_action.h
     internal/non_constructible.h
@@ -349,6 +350,7 @@ if (BUILD_TESTING)
         internal/invoke_result_test.cc
         internal/log_impl_test.cc
         internal/make_status_test.cc
+        internal/make_string_vector_test.cc
         internal/noexcept_action_test.cc
         internal/opentelemetry_test.cc
         internal/pagination_range_test.cc
