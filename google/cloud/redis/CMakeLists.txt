@@ -111,8 +111,7 @@ target_include_directories(
 target_compile_options(google_cloud_cpp_redis_mocks
                        INTERFACE ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
-include(CTest)
-if (BUILD_TESTING)
+if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
     add_executable(redis_quickstart "quickstart/quickstart.cc")
     target_link_libraries(redis_quickstart PRIVATE google-cloud-cpp::redis)
     google_cloud_cpp_add_common_options(redis_quickstart)
