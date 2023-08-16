@@ -19,22 +19,34 @@ namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
-Status LogResponse(Status response, absl::string_view prefix,
+Status LogResponse(Status response, absl::string_view where,
                    absl::string_view args, TracingOptions const& options) {
-  GCP_LOG(DEBUG) << prefix << args
+  GCP_LOG(DEBUG) << where << args
                  << " >> status=" << DebugString(response, options);
   return response;
 }
 
-future<Status> LogResponse(future<Status> response, std::string prefix,
+void LogResponseFuture(std::future_status status, absl::string_view where,
+                       absl::string_view args,
+                       TracingOptions const& /*options*/) {
+  GCP_LOG(DEBUG) << where << args
+                 << " >> future_status=" << DebugFutureStatus(status);
+}
+
+future<Status> LogResponse(future<Status> response, std::string where,
                            std::string args, TracingOptions const& options) {
-  GCP_LOG(DEBUG) << prefix << " >> future_status="
-                 << DebugFutureStatus(
-                        response.wait_for(std::chrono::microseconds(0)));
-  return response.then([prefix = std::move(prefix), args = std::move(args),
+  LogResponseFuture(response.wait_for(std::chrono::microseconds(0)), where,
+                    args, options);
+  return response.then([where = std::move(where), args = std::move(args),
                         options = std::move(options)](auto f) {
-    return LogResponse(f.get(), prefix, args, options);
+    return LogResponse(f.get(), where, args, options);
   });
+}
+
+void LogResponsePtr(bool not_null, absl::string_view where,
+                    absl::string_view args, TracingOptions const& options) {
+  GCP_LOG(DEBUG) << where << args << " >> " << (not_null ? "not " : "")
+                 << " null stream";
 }
 
 }  // namespace internal
