@@ -26,15 +26,15 @@ Status LogResponse(Status response, absl::string_view prefix,
   return response;
 }
 
-future<Status> LogResponse(future<Status> response, absl::string_view prefix,
-                           TracingOptions const& options) {
+future<Status> LogResponse(future<Status> response, std::string prefix,
+                           std::string args, TracingOptions const& options) {
   GCP_LOG(DEBUG) << prefix << " >> future_status="
                  << DebugFutureStatus(
                         response.wait_for(std::chrono::microseconds(0)));
-  return response.then(
-      [prefix = std::move(prefix), options = std::move(options)](auto f) {
-        return LogResponse(f.get(), prefix, "", options);
-      });
+  return response.then([prefix = std::move(prefix), args = std::move(args),
+                        options = std::move(options)](auto f) {
+    return LogResponse(f.get(), prefix, args, options);
+  });
 }
 
 }  // namespace internal
