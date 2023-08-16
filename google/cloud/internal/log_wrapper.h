@@ -59,6 +59,9 @@ struct IsFutureStatus : public std::false_type {};
 template <>
 struct IsFutureStatus<future<Status>> : public std::true_type {};
 
+void LogRequest(absl::string_view where, absl::string_view args,
+                absl::string_view message);
+
 Status LogResponse(Status response, absl::string_view where,
                    absl::string_view args, TracingOptions const& options);
 
@@ -68,7 +71,7 @@ StatusOr<T> LogResponse(StatusOr<T> response, absl::string_view where,
   if (!response) {
     return LogResponse(std::move(response).status(), where, args, options);
   }
-  GCP_LOG(DEBUG) << where << args
+  GCP_LOG(DEBUG) << where << '(' << args << ')'
                  << " >> response=" << DebugString(*response, options);
   return response;
 }
@@ -97,7 +100,7 @@ template <typename T>
 std::unique_ptr<T> LogResponse(std::unique_ptr<T> response,
                                absl::string_view where, absl::string_view args,
                                TracingOptions const& options) {
-  LogResponsePtr(response, where, args, options);
+  LogResponsePtr(!!response, where, args, options);
   return response;
 }
 
@@ -109,8 +112,8 @@ template <
                             int>::type = 0>
 Result LogWrapper(Functor&& functor, Context& context, Request const& request,
                   char const* where, TracingOptions const& options) {
-  GCP_LOG(DEBUG) << where << "() << " << DebugString(request, options);
-  return LogResponse(functor(context, request), where, "()", options);
+  LogRequest(where, "", DebugString(request, options));
+  return LogResponse(functor(context, request), where, "", options);
 }
 
 template <typename Functor, typename Request, typename Context,
@@ -119,8 +122,8 @@ template <typename Functor, typename Request, typename Context,
           typename std::enable_if<IsStatusOr<Result>::value, int>::type = 0>
 Result LogWrapper(Functor&& functor, Context& context, Request const& request,
                   char const* where, TracingOptions const& options) {
-  GCP_LOG(DEBUG) << where << "() << " << DebugString(request, options);
-  return LogResponse(functor(context, request), where, "()", options);
+  LogRequest(where, "", DebugString(request, options));
+  return LogResponse(functor(context, request), where, "", options);
 }
 
 template <typename Functor, typename Request,
@@ -131,9 +134,8 @@ Result LogWrapper(Functor&& functor,
                   std::shared_ptr<grpc::ClientContext> context,
                   Request const& request, char const* where,
                   TracingOptions const& options) {
-  GCP_LOG(DEBUG) << where << "() << " << DebugString(request, options);
-  return LogResponse(functor(std::move(context), request), where, "()",
-                     options);
+  LogRequest(where, "", DebugString(request, options));
+  return LogResponse(functor(std::move(context), request), where, "", options);
 }
 
 template <
@@ -143,8 +145,8 @@ template <
 Result LogWrapper(Functor&& functor, grpc::ClientContext& context,
                   Request const& request, grpc::CompletionQueue* cq,
                   char const* where, TracingOptions const& options) {
-  GCP_LOG(DEBUG) << where << "() << " << DebugString(request, options);
-  return LogResponse(functor(context, request, cq), where, "()", options);
+  LogRequest(where, "", DebugString(request, options));
+  return LogResponse(functor(context, request, cq), where, "", options);
 }
 
 template <
@@ -159,8 +161,8 @@ Result LogWrapper(Functor&& functor, google::cloud::CompletionQueue& cq,
                   TracingOptions const& options) {
   // Because this is an asynchronous request we need a unique identifier so
   // applications can match the request and response in the log.
-  auto args = "(" + RequestIdForLogging() + ")";
-  GCP_LOG(DEBUG) << where << args << " << " << DebugString(request, options);
+  auto args = RequestIdForLogging();
+  LogRequest(where, args, DebugString(request, options));
   return LogResponse(functor(cq, std::move(context), request), where,
                      std::move(args), options);
 }
@@ -176,8 +178,8 @@ Result LogWrapper(Functor&& functor, google::cloud::CompletionQueue& cq,
                   TracingOptions const& options) {
   // Because this is an asynchronous request we need a unique identifier so
   // applications can match the request and response in the log.
-  auto args = "(" + RequestIdForLogging() + ")";
-  GCP_LOG(DEBUG) << where << args << " << " << DebugString(request, options);
+  auto args = RequestIdForLogging();
+  LogRequest(where, args, DebugString(request, options));
   return LogResponse(functor(cq, std::move(context), request), where,
                      std::move(args), options);
 }
@@ -192,8 +194,8 @@ Result LogWrapper(Functor&& functor, google::cloud::CompletionQueue& cq,
                   char const* where, TracingOptions const& options) {
   // Because this is an asynchronous request we need a unique identifier so
   // applications can match the request and response in the log.
-  auto args = "(" + RequestIdForLogging() + ")";
-  GCP_LOG(DEBUG) << where << args << " << " << DebugString(request, options);
+  auto args = RequestIdForLogging();
+  LogRequest(where, args, DebugString(request, options));
   return LogResponse(functor(cq, std::move(context), request), where,
                      std::move(args), options);
 }
@@ -209,8 +211,8 @@ Result LogWrapper(Functor&& functor, google::cloud::CompletionQueue& cq,
                   char const* where, TracingOptions const& options) {
   // Because this is an asynchronous request we need a unique identifier so
   // applications can match the request and response in the log.
-  auto args = "(" + RequestIdForLogging() + ")";
-  GCP_LOG(DEBUG) << where << args << " << " << DebugString(request, options);
+  auto args = RequestIdForLogging();
+  LogRequest(where, args, DebugString(request, options));
   return LogResponse(functor(cq, std::move(context), request), where,
                      std::move(args), options);
 }
