@@ -13,14 +13,15 @@
 // limitations under the License.
 
 #include "google/cloud/internal/log_wrapper.h"
-#include "google/cloud/grpc_error_delegate.h"
+#include "google/cloud/internal/debug_string_protobuf.h"
+#include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/scoped_log.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/tracing_options.h"
 #include <google/protobuf/duration.pb.h>
-#include <google/protobuf/text_format.h>
 #include <google/protobuf/timestamp.pb.h>
-#include <google/spanner/v1/mutation.pb.h>
 #include <gmock/gmock.h>
+#include <tuple>
 
 namespace google {
 namespace cloud {
@@ -28,185 +29,240 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 namespace {
 
+using ::google::cloud::testing_util::IsOk;
+using ::google::cloud::testing_util::IsOkAndHolds;
+using ::google::cloud::testing_util::IsProtoEqual;
+using ::google::cloud::testing_util::StatusIs;
 using ::testing::AllOf;
 using ::testing::Contains;
 using ::testing::HasSubstr;
+using ::testing::IsNull;
+using ::testing::Matcher;
+using ::testing::NotNull;
 
-google::spanner::v1::Mutation MakeMutation() {
-  auto constexpr kText = R"pb(
-    insert {
-      table: "Singers"
-      columns: "SingerId"
-      columns: "FirstName"
-      columns: "LastName"
-      values {
-        values { string_value: "1" }
-        values { string_value: "test-fname-1" }
-        values { string_value: "test-lname-1" }
-      }
-      values {
-        values { string_value: "2" }
-        values { string_value: "test-fname-2" }
-        values { string_value: "test-lname-2" }
-      }
-    }
-  )pb";
-  google::spanner::v1::Mutation mutation;
-  EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(kText, &mutation));
-  return mutation;
-}
-
-/// @test the overload for functions returning FutureStatusOr and using
-/// CompletionQueue as input
-TEST(LogWrapper, FutureStatusOrValueWithContextAndCQ) {
-  auto mock = [](google::cloud::CompletionQueue&, auto,
-                 google::spanner::v1::Mutation m) {
-    return make_ready_future(make_status_or(std::move(m)));
-  };
-
-  testing_util::ScopedLog log;
-
-  CompletionQueue cq;
-  std::shared_ptr<grpc::ClientContext> context;
-  LogWrapper(mock, cq, std::move(context), MakeMutation(), "in-test", {});
-
-  auto const log_lines = log.ExtractLines();
-  EXPECT_THAT(log_lines,
-              Contains(AllOf(HasSubstr("in-test("), HasSubstr(" << "))));
-  EXPECT_THAT(log_lines, Contains(AllOf(HasSubstr("in-test("),
-                                        HasSubstr(" >> response="))));
-  EXPECT_THAT(log_lines, Contains(AllOf(HasSubstr("in-test("),
-                                        HasSubstr(" >> future_status="))));
-}
-
-/// @test the overload for functions returning FutureStatusOr and using
-/// CompletionQueue as input
-TEST(LogWrapper, FutureStatusOrErrorWithContextAndCQ) {
-  auto mock = [](google::cloud::CompletionQueue&, auto,
-                 google::spanner::v1::Mutation const&) {
-    return make_ready_future(StatusOr<google::spanner::v1::Mutation>(
-        Status(StatusCode::kPermissionDenied, "uh-oh")));
-  };
-
-  testing_util::ScopedLog log;
-
-  CompletionQueue cq;
-  std::shared_ptr<grpc::ClientContext> context;
-  LogWrapper(mock, cq, std::move(context), MakeMutation(), "in-test", {});
-
-  auto const log_lines = log.ExtractLines();
-  EXPECT_THAT(log_lines,
-              Contains(AllOf(HasSubstr("in-test("), HasSubstr(" << "))));
-  EXPECT_THAT(log_lines,
-              Contains(AllOf(HasSubstr("in-test("), HasSubstr(" >> status="))));
-  EXPECT_THAT(log_lines,
-              Contains(AllOf(HasSubstr("in-test("), HasSubstr("uh-oh"))));
-  EXPECT_THAT(log_lines, Contains(AllOf(HasSubstr("in-test("),
-                                        HasSubstr(" >> future_status="))));
-}
-
-/// @test the overload for functions returning FutureStatus and using
-/// CompletionQueue as input
-TEST(LogWrapper, FutureStatusWithContextAndCQ) {
-  auto const status = Status(StatusCode::kPermissionDenied, "uh-oh");
-  auto mock = [&](google::cloud::CompletionQueue&, auto,
-                  google::spanner::v1::Mutation const&) {
-    return make_ready_future(status);
-  };
-
-  testing_util::ScopedLog log;
-
-  CompletionQueue cq;
-  std::shared_ptr<grpc::ClientContext> context;
-  LogWrapper(mock, cq, std::move(context), MakeMutation(), "in-test", {});
-
-  std::ostringstream os;
-  os << status;
-  auto status_as_string = std::move(os).str();
-
-  auto const log_lines = log.ExtractLines();
-  EXPECT_THAT(log_lines,
-              Contains(AllOf(HasSubstr("in-test("), HasSubstr(" << "))));
-  EXPECT_THAT(log_lines,
-              Contains(AllOf(HasSubstr("in-test("),
-                             HasSubstr(" >> status=" + status_as_string))));
-  EXPECT_THAT(log_lines, Contains(AllOf(HasSubstr("in-test("),
-                                        HasSubstr(" >> future_status="))));
-}
+using Request = google::protobuf::Duration;
+using Response = google::protobuf::Timestamp;
 
 struct TestContext {};
 
-/// @test the overload for functions returning FutureStatusOr and using
-/// CompletionQueue as input
-TEST(LogWrapper, FutureStatusOrValueWithTestContextAndCQ) {
-  auto mock = [](google::cloud::CompletionQueue&, std::unique_ptr<TestContext>,
-                 google::spanner::v1::Mutation m) {
-    return make_ready_future(make_status_or(std::move(m)));
-  };
+template <typename T>
+class LogWrapperTest : public ::testing::Test {
+ public:
+  using TestTypes = T;
+};
 
-  testing_util::ScopedLog log;
-  CompletionQueue cq;
-  auto context = std::make_unique<TestContext>();
-  LogWrapper(mock, cq, std::move(context), MakeMutation(), "in-test", {});
+using TestVariations = ::testing::Types<
+    std::tuple<Status, std::unique_ptr<TestContext>>,                     //
+    std::tuple<StatusOr<Response>, std::unique_ptr<TestContext>>,         //
+    std::tuple<Status, std::shared_ptr<grpc::ClientContext>>,             //
+    std::tuple<StatusOr<Response>, std::shared_ptr<grpc::ClientContext>>  //
+    >;
 
-  auto const log_lines = log.ExtractLines();
-  EXPECT_THAT(log_lines,
-              Contains(AllOf(HasSubstr("in-test("), HasSubstr(" << "))));
-  EXPECT_THAT(log_lines, Contains(AllOf(HasSubstr("in-test("),
-                                        HasSubstr(" >> response="))));
-  EXPECT_THAT(log_lines, Contains(AllOf(HasSubstr("in-test("),
-                                        HasSubstr(" >> future_status="))));
+TYPED_TEST_SUITE(LogWrapperTest, TestVariations);
+
+// These helper functions make it easier to write the tests.
+Request MakeRequest() {
+  Request r;
+  r.set_seconds(42);
+  return r;
 }
 
-/// @test the overload for functions returning FutureStatusOr and using
-/// CompletionQueue as input
-TEST(LogWrapper, FutureStatusOrErrorWithTestContextAndCQ) {
-  auto mock = [](google::cloud::CompletionQueue&, std::unique_ptr<TestContext>,
-                 google::spanner::v1::Mutation const&) {
-    return make_ready_future(StatusOr<google::spanner::v1::Mutation>(
-        Status(StatusCode::kPermissionDenied, "uh-oh")));
+Response MakeResponse() {
+  Response r;
+  r.set_seconds(123);
+  r.set_nanos(456);
+  return r;
+}
+
+Status SuccessValue(Status const&) { return Status{}; }
+StatusOr<Response> SuccessValue(StatusOr<Response> const&) {
+  return MakeResponse();
+}
+
+Status ErrorValue(Status const&) {
+  return Status(StatusCode::kPermissionDenied, "uh-oh");
+}
+StatusOr<Response> ErrorValue(StatusOr<Response> const&) {
+  return ErrorValue(Status{});
+}
+
+Matcher<Status> IsSuccess(Status const&) { return IsOk(); }
+Matcher<StatusOr<Response>> IsSuccess(StatusOr<Response> const&) {
+  return IsOkAndHolds(IsProtoEqual(MakeResponse()));
+}
+Matcher<Status> IsError(Status const&) {
+  auto expected = ErrorValue(Status{});
+  return StatusIs(expected.code(), expected.message());
+}
+Matcher<StatusOr<Response>> IsError(StatusOr<Response> const&) {
+  auto expected = ErrorValue(Status{});
+  return StatusIs(expected.code(), expected.message());
+}
+
+std::unique_ptr<TestContext> MakeContext(std::unique_ptr<TestContext> const&) {
+  return std::make_unique<TestContext>();
+}
+std::shared_ptr<grpc::ClientContext> MakeContext(
+    std::shared_ptr<grpc::ClientContext> const&) {
+  return std::make_shared<grpc::ClientContext>();
+}
+std::string SuccessMarker(Status const&) { return "status=OK"; }
+std::string SuccessMarker(StatusOr<Response> const&) {
+  return "response=" + DebugString(MakeResponse(), TracingOptions{});
+}
+
+// A non-parametric test is simpler in this case.
+TEST(LogWrapperUniquePtr, Success) {
+  // NOLINTNEXTLINE(performance-unnecessary-value-param)
+  auto functor = [](std::shared_ptr<grpc::ClientContext>, Request const&) {
+    return std::make_unique<Response>(MakeResponse());
   };
 
   testing_util::ScopedLog log;
-  CompletionQueue cq;
-  auto context = std::make_unique<TestContext>();
-  LogWrapper(mock, cq, std::move(context), MakeMutation(), "in-test", {});
+
+  auto context = std::make_shared<grpc::ClientContext>();
+  auto actual =
+      LogWrapper(functor, context, MakeRequest(), "in-test", TracingOptions{});
+  ASSERT_THAT(actual, NotNull());
+  EXPECT_THAT(*actual, IsProtoEqual(MakeResponse()));
+
+  auto const log_lines = log.ExtractLines();
+  auto const expected_request = DebugString(MakeRequest(), TracingOptions{});
+  EXPECT_THAT(log_lines,
+              Contains(AllOf(HasSubstr("in-test("), HasSubstr(" << "),
+                             HasSubstr(expected_request))));
+  EXPECT_THAT(log_lines, Contains(AllOf(HasSubstr("in-test("),
+                                        HasSubstr(" >> not null"))));
+}
+
+// A non-parametric test is simpler in this case.
+TEST(LogWrapperUniquePtr, Error) {
+  // NOLINTNEXTLINE(performance-unnecessary-value-param)
+  auto functor = [](std::shared_ptr<grpc::ClientContext>, Request const&) {
+    return std::unique_ptr<Response>();
+  };
+
+  testing_util::ScopedLog log;
+
+  auto context = std::make_shared<grpc::ClientContext>();
+  auto actual =
+      LogWrapper(functor, context, MakeRequest(), "in-test", TracingOptions{});
+  ASSERT_THAT(actual, IsNull());
+
+  auto const log_lines = log.ExtractLines();
+  auto const expected_request = DebugString(MakeRequest(), TracingOptions{});
+  EXPECT_THAT(log_lines,
+              Contains(AllOf(HasSubstr("in-test("), HasSubstr(" << "),
+                             HasSubstr(expected_request))));
+  EXPECT_THAT(log_lines,
+              Contains(AllOf(HasSubstr("in-test("), HasSubstr(" >> null"))));
+}
+
+TYPED_TEST(LogWrapperTest, BlockingSuccess) {
+  using ReturnType = std::tuple_element_t<0, typename TestFixture::TestTypes>;
+  using ContextPtrType =
+      std::tuple_element_t<1, typename TestFixture::TestTypes>;
+  using ContextType = typename ContextPtrType::element_type;
+
+  auto functor = [](ContextType&, Request const&) {
+    return SuccessValue(ReturnType{});
+  };
+
+  testing_util::ScopedLog log;
+
+  auto context = MakeContext(ContextPtrType{});
+  auto actual =
+      LogWrapper(functor, *context, MakeRequest(), "in-test", TracingOptions{});
+  EXPECT_THAT(actual, IsSuccess(ReturnType{}));
+
+  auto const log_lines = log.ExtractLines();
+  auto const expected_request = DebugString(MakeRequest(), TracingOptions{});
+  auto const expected_response = SuccessMarker(ReturnType{});
+  EXPECT_THAT(log_lines,
+              Contains(AllOf(HasSubstr("in-test("), HasSubstr(" << "),
+                             HasSubstr(expected_request))));
+  EXPECT_THAT(log_lines,
+              Contains(AllOf(HasSubstr("in-test("), HasSubstr(" >> "),
+                             HasSubstr(expected_response))));
+}
+
+TYPED_TEST(LogWrapperTest, BlockingError) {
+  using ReturnType = std::tuple_element_t<0, typename TestFixture::TestTypes>;
+  using ContextPtrType =
+      std::tuple_element_t<1, typename TestFixture::TestTypes>;
+  using ContextType = typename ContextPtrType::element_type;
+
+  auto functor = [](ContextType&, Request const&) {
+    return ErrorValue(ReturnType{});
+  };
+
+  testing_util::ScopedLog log;
+
+  google::cloud::CompletionQueue cq;
+  auto context = MakeContext(ContextPtrType{});
+  auto actual =
+      LogWrapper(functor, *context, MakeRequest(), "in-test", TracingOptions{});
+  EXPECT_THAT(actual, IsError(ReturnType{}));
 
   auto const log_lines = log.ExtractLines();
   EXPECT_THAT(log_lines,
               Contains(AllOf(HasSubstr("in-test("), HasSubstr(" << "))));
   EXPECT_THAT(log_lines,
               Contains(AllOf(HasSubstr("in-test("), HasSubstr(" >> status="))));
-  EXPECT_THAT(log_lines,
-              Contains(AllOf(HasSubstr("in-test("), HasSubstr("uh-oh"))));
-  EXPECT_THAT(log_lines, Contains(AllOf(HasSubstr("in-test("),
-                                        HasSubstr(" >> future_status="))));
 }
 
-/// @test the overload for functions returning FutureStatus and using
-/// CompletionQueue as input
-TEST(LogWrapper, FutureStatusWithTestContextAndCQ) {
-  auto const status = Status(StatusCode::kPermissionDenied, "uh-oh");
-  auto mock = [&](google::cloud::CompletionQueue&, std::unique_ptr<TestContext>,
-                  google::spanner::v1::Mutation const&) {
-    return make_ready_future(status);
+TYPED_TEST(LogWrapperTest, AsyncSuccess) {
+  using ReturnType = std::tuple_element_t<0, typename TestFixture::TestTypes>;
+  using ContextType = std::tuple_element_t<1, typename TestFixture::TestTypes>;
+
+  auto functor = [](google::cloud::CompletionQueue&, ContextType,
+                    Request const&) {
+    return make_ready_future(SuccessValue(ReturnType{}));
   };
 
   testing_util::ScopedLog log;
-  CompletionQueue cq;
-  auto context = std::make_unique<TestContext>();
-  LogWrapper(mock, cq, std::move(context), MakeMutation(), "in-test", {});
 
-  std::ostringstream os;
-  os << status;
-  auto status_as_string = std::move(os).str();
+  google::cloud::CompletionQueue cq;
+  auto context = MakeContext(ContextType{});
+  auto actual = LogWrapper(functor, cq, std::move(context), MakeRequest(),
+                           "in-test", TracingOptions{});
+  EXPECT_THAT(actual.get(), IsSuccess(ReturnType{}));
+
+  auto const log_lines = log.ExtractLines();
+  auto const expected_request = DebugString(MakeRequest(), TracingOptions{});
+  auto const expected_response = SuccessMarker(ReturnType{});
+  EXPECT_THAT(log_lines,
+              Contains(AllOf(HasSubstr("in-test("), HasSubstr(" << "),
+                             HasSubstr(expected_request))));
+  EXPECT_THAT(log_lines, Contains(AllOf(HasSubstr("in-test("),
+                                        HasSubstr(" >> future_status="))));
+  EXPECT_THAT(log_lines,
+              Contains(AllOf(HasSubstr("in-test("), HasSubstr(" >> "),
+                             HasSubstr(expected_response))));
+}
+
+TYPED_TEST(LogWrapperTest, AsyncError) {
+  using ReturnType = std::tuple_element_t<0, typename TestFixture::TestTypes>;
+  using ContextType = std::tuple_element_t<1, typename TestFixture::TestTypes>;
+
+  auto functor = [](google::cloud::CompletionQueue&, ContextType,
+                    Request const&) {
+    return make_ready_future(ErrorValue(ReturnType{}));
+  };
+
+  testing_util::ScopedLog log;
+
+  google::cloud::CompletionQueue cq;
+  auto context = MakeContext(ContextType{});
+  auto actual = LogWrapper(functor, cq, std::move(context), MakeRequest(),
+                           "in-test", TracingOptions{});
+  EXPECT_THAT(actual.get(), IsError(ReturnType{}));
 
   auto const log_lines = log.ExtractLines();
   EXPECT_THAT(log_lines,
               Contains(AllOf(HasSubstr("in-test("), HasSubstr(" << "))));
   EXPECT_THAT(log_lines,
-              Contains(AllOf(HasSubstr("in-test("),
-                             HasSubstr(" >> status=" + status_as_string))));
+              Contains(AllOf(HasSubstr("in-test("), HasSubstr(" >> status="))));
   EXPECT_THAT(log_lines, Contains(AllOf(HasSubstr("in-test("),
                                         HasSubstr(" >> future_status="))));
 }
