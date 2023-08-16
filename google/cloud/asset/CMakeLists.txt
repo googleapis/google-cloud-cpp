@@ -118,8 +118,7 @@ target_include_directories(
 target_compile_options(google_cloud_cpp_asset_mocks
                        INTERFACE ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
-include(CTest)
-if (BUILD_TESTING)
+if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
     add_executable(asset_quickstart "quickstart/quickstart.cc")
     target_link_libraries(asset_quickstart PRIVATE google-cloud-cpp::asset)
     google_cloud_cpp_add_common_options(asset_quickstart)

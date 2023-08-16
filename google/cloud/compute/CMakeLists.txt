@@ -220,8 +220,7 @@ target_include_directories(
 target_compile_options(google_cloud_cpp_compute_mocks
                        INTERFACE ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
-include(CTest)
-if (BUILD_TESTING)
+if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
     add_executable(compute_quickstart "quickstart/quickstart.cc")
     target_link_libraries(compute_quickstart
                           PRIVATE google-cloud-cpp::experimental-compute)
