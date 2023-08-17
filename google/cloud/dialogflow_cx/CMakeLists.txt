@@ -102,8 +102,7 @@ target_include_directories(
 target_compile_options(google_cloud_cpp_dialogflow_cx_mocks
                        INTERFACE ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
-include(CTest)
-if (BUILD_TESTING)
+if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
     add_executable(dialogflow_cx_quickstart "quickstart/quickstart.cc")
     target_link_libraries(dialogflow_cx_quickstart
                           PRIVATE google-cloud-cpp::dialogflow_cx)
