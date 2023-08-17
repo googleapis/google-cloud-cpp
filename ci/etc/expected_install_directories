@@ -842,6 +842,10 @@
 ./include/google/cloud/policysimulator/v1/internal
 ./include/google/cloud/policysimulator/v1/mocks
 ./include/google/cloud/policytroubleshooter
+./include/google/cloud/policytroubleshooter/iam
+./include/google/cloud/policytroubleshooter/iam/v3
+./include/google/cloud/policytroubleshooter/iam/v3/internal
+./include/google/cloud/policytroubleshooter/iam/v3/mocks
 ./include/google/cloud/policytroubleshooter/mocks
 ./include/google/cloud/policytroubleshooter/v1
 ./include/google/cloud/policytroubleshooter/v1/internal

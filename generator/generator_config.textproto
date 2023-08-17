@@ -2253,6 +2253,13 @@ service {
   retryable_status_codes: ["kUnavailable"]
 }
 
+service {
+  service_proto_path: "google/cloud/policytroubleshooter/iam/v3/troubleshooter.proto"
+  product_path: "google/cloud/policytroubleshooter/iam/v3"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # IDS (Cloud Intrusion Detection System)
 service {
   service_proto_path: "google/cloud/ids/v1/ids.proto"
