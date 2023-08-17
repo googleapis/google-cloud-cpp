@@ -43,6 +43,9 @@ using ::testing::NotNull;
 using Request = google::protobuf::Duration;
 using Response = google::protobuf::Timestamp;
 
+struct TestOption {
+  using Type = std::string;
+};
 struct TestContext {};
 
 template <typename T>
@@ -256,6 +259,123 @@ TYPED_TEST(LogWrapperTest, AsyncError) {
   auto context = MakeContext(ContextType{});
   auto actual = LogWrapper(functor, cq, std::move(context), MakeRequest(),
                            "in-test", TracingOptions{});
+  EXPECT_THAT(actual.get(), IsError(ReturnType{}));
+
+  auto const log_lines = log.ExtractLines();
+  EXPECT_THAT(log_lines,
+              Contains(AllOf(HasSubstr("in-test("), HasSubstr(" << "))));
+  EXPECT_THAT(log_lines,
+              Contains(AllOf(HasSubstr("in-test("), HasSubstr(" >> status="))));
+  EXPECT_THAT(log_lines, Contains(AllOf(HasSubstr("in-test("),
+                                        HasSubstr(" >> future_status="))));
+}
+
+TYPED_TEST(LogWrapperTest, BlockingSuccessExplicitOptions) {
+  using ReturnType = std::tuple_element_t<0, typename TestFixture::TestTypes>;
+  using ContextPtrType =
+      std::tuple_element_t<1, typename TestFixture::TestTypes>;
+  using ContextType = typename ContextPtrType::element_type;
+
+  auto functor = [](ContextType&, Options const& opts, Request const&) {
+    EXPECT_EQ(opts.get<TestOption>(), "test-option");
+    return SuccessValue(ReturnType{});
+  };
+
+  testing_util::ScopedLog log;
+
+  auto context = MakeContext(ContextPtrType{});
+  auto actual =
+      LogWrapper(functor, *context, Options{}.set<TestOption>("test-option"),
+                 MakeRequest(), "in-test", TracingOptions{});
+  EXPECT_THAT(actual, IsSuccess(ReturnType{}));
+
+  auto const log_lines = log.ExtractLines();
+  auto const expected_request = DebugString(MakeRequest(), TracingOptions{});
+  auto const expected_response = SuccessMarker(ReturnType{});
+  EXPECT_THAT(log_lines,
+              Contains(AllOf(HasSubstr("in-test("), HasSubstr(" << "),
+                             HasSubstr(expected_request))));
+  EXPECT_THAT(log_lines,
+              Contains(AllOf(HasSubstr("in-test("), HasSubstr(" >> "),
+                             HasSubstr(expected_response))));
+}
+
+TYPED_TEST(LogWrapperTest, BlockingErrorExplicitOptions) {
+  using ReturnType = std::tuple_element_t<0, typename TestFixture::TestTypes>;
+  using ContextPtrType =
+      std::tuple_element_t<1, typename TestFixture::TestTypes>;
+  using ContextType = typename ContextPtrType::element_type;
+
+  auto functor = [](ContextType&, Options const& opts, Request const&) {
+    EXPECT_EQ(opts.get<TestOption>(), "test-option");
+    return ErrorValue(ReturnType{});
+  };
+
+  testing_util::ScopedLog log;
+
+  google::cloud::CompletionQueue cq;
+  auto context = MakeContext(ContextPtrType{});
+  auto actual =
+      LogWrapper(functor, *context, Options{}.set<TestOption>("test-option"),
+                 MakeRequest(), "in-test", TracingOptions{});
+  EXPECT_THAT(actual, IsError(ReturnType{}));
+
+  auto const log_lines = log.ExtractLines();
+  EXPECT_THAT(log_lines,
+              Contains(AllOf(HasSubstr("in-test("), HasSubstr(" << "))));
+  EXPECT_THAT(log_lines,
+              Contains(AllOf(HasSubstr("in-test("), HasSubstr(" >> status="))));
+}
+
+TYPED_TEST(LogWrapperTest, AsyncSuccessExplicitOptions) {
+  using ReturnType = std::tuple_element_t<0, typename TestFixture::TestTypes>;
+  using ContextType = std::tuple_element_t<1, typename TestFixture::TestTypes>;
+
+  auto functor = [](google::cloud::CompletionQueue&, ContextType,
+                    Options const& opts, Request const&) {
+    EXPECT_EQ(opts.get<TestOption>(), "test-option");
+    return make_ready_future(SuccessValue(ReturnType{}));
+  };
+
+  testing_util::ScopedLog log;
+
+  google::cloud::CompletionQueue cq;
+  auto context = MakeContext(ContextType{});
+  auto actual = LogWrapper(functor, cq, std::move(context),
+                           Options{}.set<TestOption>("test-option"),
+                           MakeRequest(), "in-test", TracingOptions{});
+  EXPECT_THAT(actual.get(), IsSuccess(ReturnType{}));
+
+  auto const log_lines = log.ExtractLines();
+  auto const expected_request = DebugString(MakeRequest(), TracingOptions{});
+  auto const expected_response = SuccessMarker(ReturnType{});
+  EXPECT_THAT(log_lines,
+              Contains(AllOf(HasSubstr("in-test("), HasSubstr(" << "),
+                             HasSubstr(expected_request))));
+  EXPECT_THAT(log_lines, Contains(AllOf(HasSubstr("in-test("),
+                                        HasSubstr(" >> future_status="))));
+  EXPECT_THAT(log_lines,
+              Contains(AllOf(HasSubstr("in-test("), HasSubstr(" >> "),
+                             HasSubstr(expected_response))));
+}
+
+TYPED_TEST(LogWrapperTest, AsyncErrorExplicitOptions) {
+  using ReturnType = std::tuple_element_t<0, typename TestFixture::TestTypes>;
+  using ContextType = std::tuple_element_t<1, typename TestFixture::TestTypes>;
+
+  auto functor = [](google::cloud::CompletionQueue&, ContextType,
+                    Options const& opts, Request const&) {
+    EXPECT_EQ(opts.get<TestOption>(), "test-option");
+    return make_ready_future(ErrorValue(ReturnType{}));
+  };
+
+  testing_util::ScopedLog log;
+
+  google::cloud::CompletionQueue cq;
+  auto context = MakeContext(ContextType{});
+  auto actual = LogWrapper(functor, cq, std::move(context),
+                           Options{}.set<TestOption>("test-option"),
+                           MakeRequest(), "in-test", TracingOptions{});
   EXPECT_THAT(actual.get(), IsError(ReturnType{}));
 
   auto const log_lines = log.ExtractLines();
