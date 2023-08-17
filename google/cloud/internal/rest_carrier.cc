@@ -33,8 +33,8 @@ opentelemetry::nostd::string_view RestCarrier::Get(
 void RestCarrier::Set(opentelemetry::nostd::string_view key,
                       opentelemetry::nostd::string_view value) noexcept {
   internal::NoExceptAction([this, key, value] {
-    context_.AddDistinctHeader(std::string(key.data(), key.size()),
-                               std::string(value.data(), value.size()));
+    context_.AddHeader(std::string(key.data(), key.size()),
+                       std::string(value.data(), value.size()));
   });
 }
 

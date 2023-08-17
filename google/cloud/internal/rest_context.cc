@@ -39,20 +39,6 @@ RestContext& RestContext::AddHeader(
   return AddHeader(std::move(header.first), std::move(header.second));
 }
 
-RestContext& RestContext::AddDistinctHeader(std::string header,
-                                            std::string value) & {
-  std::transform(header.begin(), header.end(), header.begin(),
-                 [](unsigned char c) { return std::tolower(c); });
-  auto iter = headers_.find(header);
-  std::vector<std::string> v = {std::move(value)};
-  if (iter == headers_.end()) {
-    headers_.emplace(std::move(header), std::move(v));
-  } else {
-    iter->second = std::move(v);
-  }
-  return *this;
-}
-
 std::vector<std::string> RestContext::GetHeader(std::string header) const {
   std::transform(header.begin(), header.end(), header.begin(),
                  [](unsigned char c) { return std::tolower(c); });
