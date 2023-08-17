@@ -47,8 +47,8 @@ cc_library(
     deps = [
         "//:common",
         "//:grpc_utils",
-        "@com_google_googleapis//google/cloud/policytroubleshooter/v1:policytroubleshooter_cc_grpc",
         "@com_google_googleapis//google/cloud/policytroubleshooter/iam/v3:iam_cc_grpc",
+        "@com_google_googleapis//google/cloud/policytroubleshooter/v1:policytroubleshooter_cc_grpc",
         "@com_google_googleapis//google/iam/v2:iam_cc_grpc",
     ],
 )
