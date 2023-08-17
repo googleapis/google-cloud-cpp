@@ -428,8 +428,9 @@ TEST_F(HttpOptionUtilsTest, SetHttpDerivedMethodVarsExtensionInfoSingleParam) {
               Eq("\"parent=\", request.parent()"));
   EXPECT_THAT(vars.at("method_request_body"), Eq("*"));
   EXPECT_THAT(vars.at("method_http_verb"), Eq("Post"));
-  EXPECT_THAT(vars.at("method_rest_path"),
-              Eq("absl::StrCat(\"/v1/\", request.parent(), \"/databases\")"));
+  EXPECT_THAT(
+      vars.at("method_rest_path"),
+      Eq(R"""(absl::StrCat("/", "v1", "/", request.parent(), "/", "databases"))"""));
 }
 
 TEST_F(HttpOptionUtilsTest,
@@ -445,9 +446,9 @@ TEST_F(HttpOptionUtilsTest,
                  "request.instance()"));
   EXPECT_THAT(vars.at("method_request_body"), Eq("*"));
   EXPECT_THAT(vars.at("method_http_verb"), Eq("Post"));
-  EXPECT_THAT(vars.at("method_rest_path"),
-              Eq("absl::StrCat(\"/v1/projects/\", request.project(), "
-                 "\"/instances/\", request.instance(), \"/databases\")"));
+  EXPECT_THAT(
+      vars.at("method_rest_path"),
+      Eq(R"""(absl::StrCat("/", "v1", "/", "projects", "/", request.project(), "/", "instances", "/", request.instance(), "/", "databases"))"""));
 }
 
 TEST_F(HttpOptionUtilsTest,
@@ -460,9 +461,9 @@ TEST_F(HttpOptionUtilsTest,
   SetHttpDerivedMethodVars(ParseHttpExtension(*method), *method, vars);
   EXPECT_THAT(vars.at("method_request_body"), Eq("*"));
   EXPECT_THAT(vars.at("method_http_verb"), Eq("Post"));
-  auto const* expected_rest_path =
-      R"""(absl::StrCat("/v1/projects/", request.project(), "/instances/", request.instance(), "/databases"))""";
-  EXPECT_THAT(vars.at("method_rest_path"), Eq(expected_rest_path));
+  EXPECT_THAT(
+      vars.at("method_rest_path"),
+      Eq(R"""(absl::StrCat("/", "v1", "/", "projects", "/", request.project(), "/", "instances", "/", request.instance(), "/", "databases"))"""));
 }
 
 TEST_F(HttpOptionUtilsTest, SetHttpGetQueryParametersNonGet) {

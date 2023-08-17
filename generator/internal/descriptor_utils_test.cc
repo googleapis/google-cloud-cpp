@@ -910,7 +910,7 @@ INSTANTIATE_TEST_SUITE_P(
                              "kNonIdempotent"),
         MethodVarsTestValues(
             "google.protobuf.Service.Method5", "method_rest_path",
-            "absl::StrCat(\"/v1/\", request.parent(), \"/databases\")"),
+            R"""(absl::StrCat("/", "v1", "/", request.parent(), "/", "databases"))"""),
         // Method6
         MethodVarsTestValues("google.protobuf.Service.Method6",
                              "method_request_params",
@@ -958,7 +958,7 @@ INSTANTIATE_TEST_SUITE_P(
                              "request_resource", "request.namespace_()"),
         MethodVarsTestValues(
             "google.protobuf.Service.Method8", "method_rest_path",
-            "absl::StrCat(\"/v1/\", request.namespace_().name(), \"\")"),
+            R"""(absl::StrCat("/", "v1", "/", request.namespace_().name()))"""),
         // Method9
         MethodVarsTestValues("google.protobuf.Service.Method9",
                              "method_http_query_parameters",
