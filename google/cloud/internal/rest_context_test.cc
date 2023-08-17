@@ -48,6 +48,17 @@ TEST_F(RestContextTest, RvalueBuilder) {
               Contains(Pair("header2", ElementsAre("value2a", "value2b"))));
 }
 
+TEST_F(RestContextTest, AddDistinctHeader) {
+  auto context = RestContext().AddHeader("header1", "value1");
+  EXPECT_THAT(context.headers(),
+              Contains(Pair("header1", ElementsAre("value1"))));
+
+  context.AddDistinctHeader("header1", "value2");
+
+  EXPECT_THAT(context.headers(),
+              Contains(Pair("header1", ElementsAre("value2"))));
+}
+
 TEST_F(RestContextTest, GetHeaderNotFound) {
   RestContext context(headers_);
   auto result = context.GetHeader("NotFound");

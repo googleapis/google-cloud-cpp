@@ -58,6 +58,13 @@ class RestContext {
     return std::move(AddHeader(std::move(header)));
   }
 
+  // Adding a distinct header/value pair. Overwrites any list of values for an
+  // existing header.
+  RestContext& AddDistinctHeader(std::string header, std::string value) &;
+  RestContext&& AddDistinctHeader(std::string header, std::string value) && {
+    return std::move(AddDistinctHeader(std::move(header), std::move(value)));
+  }
+
   // Vector is empty if header name is not found.
   // Header names are case-insensitive; header values are case-sensitive.
   std::vector<std::string> GetHeader(std::string header) const;

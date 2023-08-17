@@ -37,6 +37,19 @@ TEST(RestCarrierTest, SetAttribute) {
               Contains(Pair("header", ElementsAre("test-value"))));
 }
 
+TEST(RestCarrierTest, OverwritesAttribute) {
+  auto context = RestContext().AddHeader("header", "original-value");
+  RestCarrier rest_carrier(context);
+
+  rest_carrier.Set("header", "test-value");
+  EXPECT_THAT(context.headers(),
+              Contains(Pair("header", ElementsAre("test-value"))));
+
+  rest_carrier.Set("header", "test-value2");
+  EXPECT_THAT(context.headers(),
+              Contains(Pair("header", ElementsAre("test-value2"))));
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace rest_internal
