@@ -26,7 +26,7 @@ export CC=gcc
 export CXX=g++
 
 mapfile -t cmake_args < <(cmake::common_args)
-read -r ENABLED_FEATURES < <(features::always_build_cmake)
+read -r ENABLED_FEATURES < <(features::list_full_cmake)
 readonly ENABLED_FEATURES
 
 io::run cmake "${cmake_args[@]}" \
