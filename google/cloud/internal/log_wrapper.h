@@ -104,38 +104,13 @@ std::unique_ptr<T> LogResponse(std::unique_ptr<T> response,
   return response;
 }
 
-template <
-    typename Functor, typename Request, typename Context,
-    typename Result = google::cloud::internal::invoke_result_t<
-        Functor, Context&, Request const&>,
-    typename std::enable_if<std::is_same<Result, google::cloud::Status>::value,
-                            int>::type = 0>
-Result LogWrapper(Functor&& functor, Context& context, Request const& request,
-                  char const* where, TracingOptions const& options) {
-  LogRequest(where, "", DebugString(request, options));
-  return LogResponse(functor(context, request), where, "", options);
-}
-
 template <typename Functor, typename Request, typename Context,
           typename Result = google::cloud::internal::invoke_result_t<
-              Functor, Context&, Request const&>,
-          typename std::enable_if<IsStatusOr<Result>::value, int>::type = 0>
-Result LogWrapper(Functor&& functor, Context& context, Request const& request,
+              Functor, Context, Request const&>>
+Result LogWrapper(Functor&& functor, Context&& context, Request const& request,
                   char const* where, TracingOptions const& options) {
   LogRequest(where, "", DebugString(request, options));
   return LogResponse(functor(context, request), where, "", options);
-}
-
-template <typename Functor, typename Request,
-          typename Result = google::cloud::internal::invoke_result_t<
-              Functor, std::shared_ptr<grpc::ClientContext>, Request const&>,
-          typename std::enable_if<IsUniquePtr<Result>::value, int>::type = 0>
-Result LogWrapper(Functor&& functor,
-                  std::shared_ptr<grpc::ClientContext> context,
-                  Request const& request, char const* where,
-                  TracingOptions const& options) {
-  LogRequest(where, "", DebugString(request, options));
-  return LogResponse(functor(std::move(context), request), where, "", options);
 }
 
 template <
@@ -150,71 +125,18 @@ Result LogWrapper(Functor&& functor, grpc::ClientContext& context,
 }
 
 template <
-    typename Functor, typename Request,
-    typename Result = google::cloud::internal::invoke_result_t<
-        Functor, google::cloud::CompletionQueue&,
-        std::shared_ptr<grpc::ClientContext>, Request const&>,
-    typename std::enable_if<IsFutureStatusOr<Result>::value, int>::type = 0>
-Result LogWrapper(Functor&& functor, google::cloud::CompletionQueue& cq,
-                  std::shared_ptr<grpc::ClientContext> context,
-                  Request const& request, char const* where,
-                  TracingOptions const& options) {
-  // Because this is an asynchronous request we need a unique identifier so
-  // applications can match the request and response in the log.
-  auto args = RequestIdForLogging();
-  LogRequest(where, args, DebugString(request, options));
-  return LogResponse(functor(cq, std::move(context), request), where,
-                     std::move(args), options);
-}
-
-template <typename Functor, typename Request,
-          typename Result = google::cloud::internal::invoke_result_t<
-              Functor, google::cloud::CompletionQueue&,
-              std::shared_ptr<grpc::ClientContext>, Request const&>,
-          typename std::enable_if<IsFutureStatus<Result>::value, int>::type = 0>
-Result LogWrapper(Functor&& functor, google::cloud::CompletionQueue& cq,
-                  std::shared_ptr<grpc::ClientContext> context,
-                  Request const& request, char const* where,
-                  TracingOptions const& options) {
-  // Because this is an asynchronous request we need a unique identifier so
-  // applications can match the request and response in the log.
-  auto args = RequestIdForLogging();
-  LogRequest(where, args, DebugString(request, options));
-  return LogResponse(functor(cq, std::move(context), request), where,
-                     std::move(args), options);
-}
-
-template <typename Functor, typename Request, typename Context,
-          typename Result = google::cloud::internal::invoke_result_t<
-              Functor, google::cloud::CompletionQueue&,
-              std::unique_ptr<Context>, Request const&>,
-          typename std::enable_if<IsFutureStatus<Result>::value, int>::type = 0>
-Result LogWrapper(Functor&& functor, google::cloud::CompletionQueue& cq,
-                  std::unique_ptr<Context> context, Request const& request,
-                  char const* where, TracingOptions const& options) {
-  // Because this is an asynchronous request we need a unique identifier so
-  // applications can match the request and response in the log.
-  auto args = RequestIdForLogging();
-  LogRequest(where, args, DebugString(request, options));
-  return LogResponse(functor(cq, std::move(context), request), where,
-                     std::move(args), options);
-}
-
-template <
     typename Functor, typename Request, typename Context,
     typename Result = google::cloud::internal::invoke_result_t<
-        Functor, google::cloud::CompletionQueue&, std::unique_ptr<Context>,
-        Request const&>,
-    typename std::enable_if<IsFutureStatusOr<Result>::value, int>::type = 0>
+        Functor, google::cloud::CompletionQueue&, Context, Request const&>>
 Result LogWrapper(Functor&& functor, google::cloud::CompletionQueue& cq,
-                  std::unique_ptr<Context> context, Request const& request,
-                  char const* where, TracingOptions const& options) {
+                  Context&& context, Request const& request, char const* where,
+                  TracingOptions const& options) {
   // Because this is an asynchronous request we need a unique identifier so
   // applications can match the request and response in the log.
   auto args = RequestIdForLogging();
   LogRequest(where, args, DebugString(request, options));
-  return LogResponse(functor(cq, std::move(context), request), where,
-                     std::move(args), options);
+  return LogResponse(functor(cq, std::forward<Context>(context), request),
+                     where, std::move(args), options);
 }
 
 }  // namespace internal
