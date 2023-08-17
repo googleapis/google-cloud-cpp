@@ -45,8 +45,8 @@ DefaultRegionsRestStub::GetRegions(
         request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Region>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/regions/",
-                   request.region(), ""),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "regions", "/", request.region()),
       {});
 }
 
@@ -57,7 +57,8 @@ DefaultRegionsRestStub::ListRegions(
         request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::RegionList>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/regions"),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "regions"),
       {std::make_pair("filter", request.filter()),
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),

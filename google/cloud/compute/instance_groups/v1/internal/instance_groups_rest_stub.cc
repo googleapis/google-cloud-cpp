@@ -59,9 +59,10 @@ DefaultInstanceGroupsRestStub::AsyncAddInstances(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
                 request.instance_groups_add_instances_request_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/zones/", request.zone(), "/instanceGroups/",
-                             request.instance_group(), "/addInstances")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "zones", "/",
+                             request.zone(), "/", "instanceGroups", "/",
+                             request.instance_group(), "/", "addInstances")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -78,8 +79,8 @@ DefaultInstanceGroupsRestStub::AggregatedListInstanceGroups(
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::InstanceGroupAggregatedList>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(),
-                   "/aggregated/instanceGroups"),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "aggregated", "/", "instanceGroups"),
       {std::make_pair("filter", request.filter()),
        std::make_pair("include_all_scopes",
                       request.include_all_scopes() ? "1" : "0"),
@@ -104,9 +105,10 @@ DefaultInstanceGroupsRestStub::AsyncDeleteInstanceGroups(
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request,
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/zones/", request.zone(), "/instanceGroups/",
-                             request.instance_group(), "")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "zones", "/",
+                             request.zone(), "/", "instanceGroups", "/",
+                             request.instance_group())));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -122,9 +124,9 @@ DefaultInstanceGroupsRestStub::GetInstanceGroups(
         GetInstanceGroupsRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::InstanceGroup>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/zones/",
-                   request.zone(), "/instanceGroups/", request.instance_group(),
-                   ""),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "zones", "/", request.zone(), "/",
+                   "instanceGroups", "/", request.instance_group()),
       {});
 }
 
@@ -142,8 +144,9 @@ DefaultInstanceGroupsRestStub::AsyncInsertInstanceGroups(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.instance_group_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/zones/", request.zone(), "/instanceGroups")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "zones", "/",
+                             request.zone(), "/", "instanceGroups")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -159,8 +162,9 @@ DefaultInstanceGroupsRestStub::ListInstanceGroups(
         ListInstanceGroupsRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::InstanceGroupList>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/zones/",
-                   request.zone(), "/instanceGroups"),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "zones", "/", request.zone(), "/",
+                   "instanceGroups"),
       {std::make_pair("filter", request.filter()),
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),
@@ -178,9 +182,10 @@ DefaultInstanceGroupsRestStub::ListInstances(
       google::cloud::cpp::compute::v1::InstanceGroupsListInstances>(
       *service_, rest_context,
       request.instance_groups_list_instances_request_resource(),
-      absl::StrCat("/compute/v1/projects/", request.project(), "/zones/",
-                   request.zone(), "/instanceGroups/", request.instance_group(),
-                   "/listInstances"));
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "zones", "/", request.zone(), "/",
+                   "instanceGroups", "/", request.instance_group(), "/",
+                   "listInstances"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -198,9 +203,11 @@ DefaultInstanceGroupsRestStub::AsyncRemoveInstances(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
                 request.instance_groups_remove_instances_request_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/zones/", request.zone(), "/instanceGroups/",
-                             request.instance_group(), "/removeInstances")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "zones", "/",
+                             request.zone(), "/", "instanceGroups", "/",
+                             request.instance_group(), "/",
+                             "removeInstances")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -224,9 +231,10 @@ DefaultInstanceGroupsRestStub::AsyncSetNamedPorts(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
                 request.instance_groups_set_named_ports_request_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/zones/", request.zone(), "/instanceGroups/",
-                             request.instance_group(), "/setNamedPorts")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "zones", "/",
+                             request.zone(), "/", "instanceGroups", "/",
+                             request.instance_group(), "/", "setNamedPorts")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {

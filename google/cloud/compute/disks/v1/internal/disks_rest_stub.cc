@@ -59,9 +59,10 @@ DefaultDisksRestStub::AsyncAddResourcePolicies(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
                 request.disks_add_resource_policies_request_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/zones/", request.zone(), "/disks/",
-                             request.disk(), "/addResourcePolicies")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "zones", "/",
+                             request.zone(), "/", "disks", "/", request.disk(),
+                             "/", "addResourcePolicies")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -78,8 +79,8 @@ DefaultDisksRestStub::AggregatedListDisks(
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::DiskAggregatedList>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(),
-                   "/aggregated/disks"),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "aggregated", "/", "disks"),
       {std::make_pair("filter", request.filter()),
        std::make_pair("include_all_scopes",
                       request.include_all_scopes() ? "1" : "0"),
@@ -103,8 +104,9 @@ DefaultDisksRestStub::AsyncBulkInsert(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.bulk_insert_disk_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/zones/", request.zone(), "/disks/bulkInsert")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "zones", "/",
+                             request.zone(), "/", "disks", "/", "bulkInsert")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -127,9 +129,10 @@ DefaultDisksRestStub::AsyncCreateSnapshot(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.snapshot_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/zones/", request.zone(), "/disks/",
-                             request.disk(), "/createSnapshot")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "zones", "/",
+                             request.zone(), "/", "disks", "/", request.disk(),
+                             "/", "createSnapshot")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -151,9 +154,10 @@ DefaultDisksRestStub::AsyncDeleteDisks(
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request,
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/zones/", request.zone(), "/disks/",
-                             request.disk(), "")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "zones", "/",
+                             request.zone(), "/", "disks", "/",
+                             request.disk())));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -167,8 +171,9 @@ StatusOr<google::cloud::cpp::compute::v1::Disk> DefaultDisksRestStub::GetDisks(
     google::cloud::cpp::compute::disks::v1::GetDisksRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Disk>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/zones/",
-                   request.zone(), "/disks/", request.disk(), ""),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "zones", "/", request.zone(), "/",
+                   "disks", "/", request.disk()),
       {});
 }
 
@@ -179,9 +184,9 @@ DefaultDisksRestStub::GetIamPolicy(
         request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/zones/",
-                   request.zone(), "/disks/", request.resource(),
-                   "/getIamPolicy"),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "zones", "/", request.zone(), "/",
+                   "disks", "/", request.resource(), "/", "getIamPolicy"),
       {std::make_pair(
           "options_requested_policy_version",
           std::to_string(request.options_requested_policy_version()))});
@@ -200,8 +205,9 @@ DefaultDisksRestStub::AsyncInsertDisks(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.disk_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/zones/", request.zone(), "/disks")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "zones", "/",
+                             request.zone(), "/", "disks")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -216,8 +222,9 @@ DefaultDisksRestStub::ListDisks(
     google::cloud::cpp::compute::disks::v1::ListDisksRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::DiskList>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/zones/",
-                   request.zone(), "/disks"),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "zones", "/", request.zone(), "/",
+                   "disks"),
       {std::make_pair("filter", request.filter()),
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),
@@ -241,9 +248,10 @@ DefaultDisksRestStub::AsyncRemoveResourcePolicies(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
                 request.disks_remove_resource_policies_request_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/zones/", request.zone(), "/disks/",
-                             request.disk(), "/removeResourcePolicies")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "zones", "/",
+                             request.zone(), "/", "disks", "/", request.disk(),
+                             "/", "removeResourcePolicies")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -266,9 +274,10 @@ DefaultDisksRestStub::AsyncResize(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
                 request.disks_resize_request_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/zones/", request.zone(), "/disks/",
-                             request.disk(), "/resize")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "zones", "/",
+                             request.zone(), "/", "disks", "/", request.disk(),
+                             "/", "resize")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -284,9 +293,9 @@ DefaultDisksRestStub::SetIamPolicy(
         request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request.zone_set_policy_request_resource(),
-      absl::StrCat("/compute/v1/projects/", request.project(), "/zones/",
-                   request.zone(), "/disks/", request.resource(),
-                   "/setIamPolicy"));
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "zones", "/", request.zone(), "/",
+                   "disks", "/", request.resource(), "/", "setIamPolicy"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -303,9 +312,10 @@ DefaultDisksRestStub::AsyncSetLabels(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
                 request.zone_set_labels_request_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/zones/", request.zone(), "/disks/",
-                             request.resource(), "/setLabels")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "zones", "/",
+                             request.zone(), "/", "disks", "/",
+                             request.resource(), "/", "setLabels")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -329,9 +339,10 @@ DefaultDisksRestStub::AsyncStartAsyncReplication(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
                 request.disks_start_async_replication_request_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/zones/", request.zone(), "/disks/",
-                             request.disk(), "/startAsyncReplication")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "zones", "/",
+                             request.zone(), "/", "disks", "/", request.disk(),
+                             "/", "startAsyncReplication")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -354,9 +365,10 @@ DefaultDisksRestStub::AsyncStopAsyncReplication(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request,
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/zones/", request.zone(), "/disks/",
-                             request.disk(), "/stopAsyncReplication")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "zones", "/",
+                             request.zone(), "/", "disks", "/", request.disk(),
+                             "/", "stopAsyncReplication")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -380,9 +392,10 @@ DefaultDisksRestStub::AsyncStopGroupAsyncReplication(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
                 request.disks_stop_group_async_replication_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/zones/", request.zone(),
-                             "/disks/stopGroupAsyncReplication")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "zones", "/",
+                             request.zone(), "/", "disks", "/",
+                             "stopGroupAsyncReplication")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -399,9 +412,10 @@ DefaultDisksRestStub::TestIamPermissions(
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::TestPermissionsResponse>(
       *service_, rest_context, request.test_permissions_request_resource(),
-      absl::StrCat("/compute/v1/projects/", request.project(), "/zones/",
-                   request.zone(), "/disks/", request.resource(),
-                   "/testIamPermissions"));
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "zones", "/", request.zone(), "/",
+                   "disks", "/", request.resource(), "/",
+                   "testIamPermissions"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -417,9 +431,10 @@ DefaultDisksRestStub::AsyncUpdateDisks(
         p.set_value(
             rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.disk_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/zones/", request.zone(), "/disks/",
-                             request.disk(), "")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "zones", "/",
+                             request.zone(), "/", "disks", "/",
+                             request.disk())));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {

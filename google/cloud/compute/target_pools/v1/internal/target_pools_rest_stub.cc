@@ -59,9 +59,10 @@ DefaultTargetPoolsRestStub::AsyncAddHealthCheck(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
                 request.target_pools_add_health_check_request_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/regions/", request.region(), "/targetPools/",
-                             request.target_pool(), "/addHealthCheck")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "regions", "/",
+                             request.region(), "/", "targetPools", "/",
+                             request.target_pool(), "/", "addHealthCheck")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -85,9 +86,10 @@ DefaultTargetPoolsRestStub::AsyncAddInstance(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
                 request.target_pools_add_instance_request_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/regions/", request.region(), "/targetPools/",
-                             request.target_pool(), "/addInstance")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "regions", "/",
+                             request.region(), "/", "targetPools", "/",
+                             request.target_pool(), "/", "addInstance")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -104,8 +106,8 @@ DefaultTargetPoolsRestStub::AggregatedListTargetPools(
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::TargetPoolAggregatedList>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(),
-                   "/aggregated/targetPools"),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "aggregated", "/", "targetPools"),
       {std::make_pair("filter", request.filter()),
        std::make_pair("include_all_scopes",
                       request.include_all_scopes() ? "1" : "0"),
@@ -130,9 +132,10 @@ DefaultTargetPoolsRestStub::AsyncDeleteTargetPools(
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request,
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/regions/", request.region(), "/targetPools/",
-                             request.target_pool(), "")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "regions", "/",
+                             request.region(), "/", "targetPools", "/",
+                             request.target_pool())));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -148,9 +151,9 @@ DefaultTargetPoolsRestStub::GetTargetPools(
         request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::TargetPool>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/regions/",
-                   request.region(), "/targetPools/", request.target_pool(),
-                   ""),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "regions", "/", request.region(),
+                   "/", "targetPools", "/", request.target_pool()),
       {});
 }
 
@@ -162,9 +165,10 @@ DefaultTargetPoolsRestStub::GetHealth(
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::TargetPoolInstanceHealth>(
       *service_, rest_context, request.instance_reference_resource(),
-      absl::StrCat("/compute/v1/projects/", request.project(), "/regions/",
-                   request.region(), "/targetPools/", request.target_pool(),
-                   "/getHealth"));
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "regions", "/", request.region(),
+                   "/", "targetPools", "/", request.target_pool(), "/",
+                   "getHealth"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -181,8 +185,9 @@ DefaultTargetPoolsRestStub::AsyncInsertTargetPools(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.target_pool_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/regions/", request.region(), "/targetPools")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "regions", "/",
+                             request.region(), "/", "targetPools")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -198,8 +203,9 @@ DefaultTargetPoolsRestStub::ListTargetPools(
         request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::TargetPoolList>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/regions/",
-                   request.region(), "/targetPools"),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "regions", "/", request.region(),
+                   "/", "targetPools"),
       {std::make_pair("filter", request.filter()),
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),
@@ -223,9 +229,10 @@ DefaultTargetPoolsRestStub::AsyncRemoveHealthCheck(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
                 request.target_pools_remove_health_check_request_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/regions/", request.region(), "/targetPools/",
-                             request.target_pool(), "/removeHealthCheck")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "regions", "/",
+                             request.region(), "/", "targetPools", "/",
+                             request.target_pool(), "/", "removeHealthCheck")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -249,9 +256,10 @@ DefaultTargetPoolsRestStub::AsyncRemoveInstance(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
                 request.target_pools_remove_instance_request_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/regions/", request.region(), "/targetPools/",
-                             request.target_pool(), "/removeInstance")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "regions", "/",
+                             request.region(), "/", "targetPools", "/",
+                             request.target_pool(), "/", "removeInstance")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -274,9 +282,10 @@ DefaultTargetPoolsRestStub::AsyncSetBackup(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.target_reference_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/regions/", request.region(), "/targetPools/",
-                             request.target_pool(), "/setBackup")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "regions", "/",
+                             request.region(), "/", "targetPools", "/",
+                             request.target_pool(), "/", "setBackup")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {

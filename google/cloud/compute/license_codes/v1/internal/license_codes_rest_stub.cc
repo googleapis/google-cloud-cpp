@@ -45,8 +45,9 @@ DefaultLicenseCodesRestStub::GetLicenseCodes(
         GetLicenseCodesRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::LicenseCode>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(),
-                   "/global/licenseCodes/", request.license_code(), ""),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "global", "/", "licenseCodes", "/",
+                   request.license_code()),
       {});
 }
 
@@ -58,9 +59,9 @@ DefaultLicenseCodesRestStub::TestIamPermissions(
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::TestPermissionsResponse>(
       *service_, rest_context, request.test_permissions_request_resource(),
-      absl::StrCat("/compute/v1/projects/", request.project(),
-                   "/global/licenseCodes/", request.resource(),
-                   "/testIamPermissions"));
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "global", "/", "licenseCodes", "/",
+                   request.resource(), "/", "testIamPermissions"));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

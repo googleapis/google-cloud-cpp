@@ -59,9 +59,10 @@ DefaultRegionSslPoliciesRestStub::AsyncDeleteRegionSslPolicies(
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request,
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/regions/", request.region(), "/sslPolicies/",
-                             request.ssl_policy(), "")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "regions", "/",
+                             request.region(), "/", "sslPolicies", "/",
+                             request.ssl_policy())));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -77,8 +78,9 @@ DefaultRegionSslPoliciesRestStub::GetRegionSslPolicies(
         GetRegionSslPoliciesRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::SslPolicy>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/regions/",
-                   request.region(), "/sslPolicies/", request.ssl_policy(), ""),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "regions", "/", request.region(),
+                   "/", "sslPolicies", "/", request.ssl_policy()),
       {});
 }
 
@@ -96,8 +98,9 @@ DefaultRegionSslPoliciesRestStub::AsyncInsertRegionSslPolicies(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.ssl_policy_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/regions/", request.region(), "/sslPolicies")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "regions", "/",
+                             request.region(), "/", "sslPolicies")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -113,8 +116,9 @@ DefaultRegionSslPoliciesRestStub::ListRegionSslPolicies(
         ListRegionSslPoliciesRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::SslPoliciesList>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/regions/",
-                   request.region(), "/sslPolicies"),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "regions", "/", request.region(),
+                   "/", "sslPolicies"),
       {std::make_pair("filter", request.filter()),
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),
@@ -132,8 +136,9 @@ DefaultRegionSslPoliciesRestStub::ListAvailableFeatures(
   return rest_internal::Get<google::cloud::cpp::compute::v1::
                                 SslPoliciesListAvailableFeaturesResponse>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/regions/",
-                   request.region(), "/sslPolicies/listAvailableFeatures"),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "regions", "/", request.region(),
+                   "/", "sslPolicies", "/", "listAvailableFeatures"),
       {std::make_pair("filter", request.filter()),
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),
@@ -156,9 +161,10 @@ DefaultRegionSslPoliciesRestStub::AsyncPatchRegionSslPolicies(
         p.set_value(
             rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.ssl_policy_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/regions/", request.region(), "/sslPolicies/",
-                             request.ssl_policy(), "")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "regions", "/",
+                             request.region(), "/", "sslPolicies", "/",
+                             request.ssl_policy())));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {

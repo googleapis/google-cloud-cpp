@@ -59,9 +59,10 @@ DefaultTargetSslProxiesRestStub::AsyncDeleteTargetSslProxies(
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request,
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/global/targetSslProxies/",
-                             request.target_ssl_proxy(), "")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "global", "/",
+                             "targetSslProxies", "/",
+                             request.target_ssl_proxy())));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -77,8 +78,9 @@ DefaultTargetSslProxiesRestStub::GetTargetSslProxies(
         GetTargetSslProxiesRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::TargetSslProxy>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(),
-                   "/global/targetSslProxies/", request.target_ssl_proxy(), ""),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "global", "/", "targetSslProxies",
+                   "/", request.target_ssl_proxy()),
       {});
 }
 
@@ -96,8 +98,9 @@ DefaultTargetSslProxiesRestStub::AsyncInsertTargetSslProxies(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.target_ssl_proxy_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/global/targetSslProxies")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "global", "/",
+                             "targetSslProxies")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -114,8 +117,8 @@ DefaultTargetSslProxiesRestStub::ListTargetSslProxies(
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::TargetSslProxyList>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(),
-                   "/global/targetSslProxies"),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "global", "/", "targetSslProxies"),
       {std::make_pair("filter", request.filter()),
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),
@@ -140,10 +143,11 @@ DefaultTargetSslProxiesRestStub::AsyncSetBackendService(
                 *service, *rest_context,
                 request
                     .target_ssl_proxies_set_backend_service_request_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/global/targetSslProxies/",
-                             request.target_ssl_proxy(),
-                             "/setBackendService")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "global", "/",
+                             "targetSslProxies", "/",
+                             request.target_ssl_proxy(), "/",
+                             "setBackendService")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -168,10 +172,11 @@ DefaultTargetSslProxiesRestStub::AsyncSetCertificateMap(
                 *service, *rest_context,
                 request
                     .target_ssl_proxies_set_certificate_map_request_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/global/targetSslProxies/",
-                             request.target_ssl_proxy(),
-                             "/setCertificateMap")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "global", "/",
+                             "targetSslProxies", "/",
+                             request.target_ssl_proxy(), "/",
+                             "setCertificateMap")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -195,9 +200,10 @@ DefaultTargetSslProxiesRestStub::AsyncSetProxyHeader(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
                 request.target_ssl_proxies_set_proxy_header_request_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/global/targetSslProxies/",
-                             request.target_ssl_proxy(), "/setProxyHeader")));
+                absl::StrCat(
+                    "/", "compute", "/", "v1", "/", "projects", "/",
+                    request.project(), "/", "global", "/", "targetSslProxies",
+                    "/", request.target_ssl_proxy(), "/", "setProxyHeader")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -222,10 +228,11 @@ DefaultTargetSslProxiesRestStub::AsyncSetSslCertificates(
                 *service, *rest_context,
                 request
                     .target_ssl_proxies_set_ssl_certificates_request_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/global/targetSslProxies/",
-                             request.target_ssl_proxy(),
-                             "/setSslCertificates")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "global", "/",
+                             "targetSslProxies", "/",
+                             request.target_ssl_proxy(), "/",
+                             "setSslCertificates")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -249,9 +256,10 @@ DefaultTargetSslProxiesRestStub::AsyncSetSslPolicy(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
                 request.ssl_policy_reference_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/global/targetSslProxies/",
-                             request.target_ssl_proxy(), "/setSslPolicy")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "global", "/",
+                             "targetSslProxies", "/",
+                             request.target_ssl_proxy(), "/", "setSslPolicy")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {

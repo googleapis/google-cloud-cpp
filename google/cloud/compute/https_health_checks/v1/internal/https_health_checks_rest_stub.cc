@@ -59,9 +59,10 @@ DefaultHttpsHealthChecksRestStub::AsyncDeleteHttpsHealthChecks(
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request,
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/global/httpsHealthChecks/",
-                             request.https_health_check(), "")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "global", "/",
+                             "httpsHealthChecks", "/",
+                             request.https_health_check())));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -77,9 +78,9 @@ DefaultHttpsHealthChecksRestStub::GetHttpsHealthChecks(
         GetHttpsHealthChecksRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::HttpsHealthCheck>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(),
-                   "/global/httpsHealthChecks/", request.https_health_check(),
-                   ""),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "global", "/", "httpsHealthChecks",
+                   "/", request.https_health_check()),
       {});
 }
 
@@ -97,8 +98,9 @@ DefaultHttpsHealthChecksRestStub::AsyncInsertHttpsHealthChecks(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.https_health_check_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/global/httpsHealthChecks")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "global", "/",
+                             "httpsHealthChecks")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -115,8 +117,8 @@ DefaultHttpsHealthChecksRestStub::ListHttpsHealthChecks(
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::HttpsHealthCheckList>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(),
-                   "/global/httpsHealthChecks"),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "global", "/", "httpsHealthChecks"),
       {std::make_pair("filter", request.filter()),
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),
@@ -139,9 +141,10 @@ DefaultHttpsHealthChecksRestStub::AsyncPatchHttpsHealthChecks(
         p.set_value(
             rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.https_health_check_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/global/httpsHealthChecks/",
-                             request.https_health_check(), "")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "global", "/",
+                             "httpsHealthChecks", "/",
+                             request.https_health_check())));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -164,9 +167,10 @@ DefaultHttpsHealthChecksRestStub::AsyncUpdateHttpsHealthChecks(
         p.set_value(
             rest_internal::Put<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.https_health_check_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/global/httpsHealthChecks/",
-                             request.https_health_check(), "")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "global", "/",
+                             "httpsHealthChecks", "/",
+                             request.https_health_check())));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {

@@ -45,8 +45,9 @@ DefaultRegionDiskTypesRestStub::GetRegionDiskTypes(
         GetRegionDiskTypesRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::DiskType>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/regions/",
-                   request.region(), "/diskTypes/", request.disk_type(), ""),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "regions", "/", request.region(),
+                   "/", "diskTypes", "/", request.disk_type()),
       {});
 }
 
@@ -58,8 +59,9 @@ DefaultRegionDiskTypesRestStub::ListRegionDiskTypes(
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::RegionDiskTypeList>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/regions/",
-                   request.region(), "/diskTypes"),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "regions", "/", request.region(),
+                   "/", "diskTypes"),
       {std::make_pair("filter", request.filter()),
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),

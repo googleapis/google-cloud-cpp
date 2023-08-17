@@ -54,8 +54,9 @@ DefaultPublicDelegatedPrefixesRestStub::AggregatedListPublicDelegatedPrefixes(
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::PublicDelegatedPrefixAggregatedList>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(),
-                   "/aggregated/publicDelegatedPrefixes"),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "aggregated", "/",
+                   "publicDelegatedPrefixes"),
       {std::make_pair("filter", request.filter()),
        std::make_pair("include_all_scopes",
                       request.include_all_scopes() ? "1" : "0"),
@@ -80,10 +81,10 @@ DefaultPublicDelegatedPrefixesRestStub::AsyncDeletePublicDelegatedPrefixes(
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request,
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/regions/", request.region(),
-                             "/publicDelegatedPrefixes/",
-                             request.public_delegated_prefix(), "")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "regions", "/",
+                             request.region(), "/", "publicDelegatedPrefixes",
+                             "/", request.public_delegated_prefix())));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -100,9 +101,10 @@ DefaultPublicDelegatedPrefixesRestStub::GetPublicDelegatedPrefixes(
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::PublicDelegatedPrefix>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/regions/",
-                   request.region(), "/publicDelegatedPrefixes/",
-                   request.public_delegated_prefix(), ""),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "regions", "/", request.region(),
+                   "/", "publicDelegatedPrefixes", "/",
+                   request.public_delegated_prefix()),
       {});
 }
 
@@ -121,9 +123,10 @@ DefaultPublicDelegatedPrefixesRestStub::AsyncInsertPublicDelegatedPrefixes(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
                 request.public_delegated_prefix_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/regions/", request.region(),
-                             "/publicDelegatedPrefixes")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "regions", "/",
+                             request.region(), "/",
+                             "publicDelegatedPrefixes")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -140,8 +143,9 @@ DefaultPublicDelegatedPrefixesRestStub::ListPublicDelegatedPrefixes(
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::PublicDelegatedPrefixList>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/regions/",
-                   request.region(), "/publicDelegatedPrefixes"),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "regions", "/", request.region(),
+                   "/", "publicDelegatedPrefixes"),
       {std::make_pair("filter", request.filter()),
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),
@@ -165,10 +169,10 @@ DefaultPublicDelegatedPrefixesRestStub::AsyncPatchPublicDelegatedPrefixes(
             rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
                 request.public_delegated_prefix_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/regions/", request.region(),
-                             "/publicDelegatedPrefixes/",
-                             request.public_delegated_prefix(), "")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "regions", "/",
+                             request.region(), "/", "publicDelegatedPrefixes",
+                             "/", request.public_delegated_prefix())));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {

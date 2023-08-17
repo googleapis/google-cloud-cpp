@@ -62,10 +62,10 @@ DefaultRegionNotificationEndpointsRestStub::
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request,
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/regions/", request.region(),
-                             "/notificationEndpoints/",
-                             request.notification_endpoint(), "")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "regions", "/",
+                             request.region(), "/", "notificationEndpoints",
+                             "/", request.notification_endpoint())));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -82,9 +82,10 @@ DefaultRegionNotificationEndpointsRestStub::GetRegionNotificationEndpoints(
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::NotificationEndpoint>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/regions/",
-                   request.region(), "/notificationEndpoints/",
-                   request.notification_endpoint(), ""),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "regions", "/", request.region(),
+                   "/", "notificationEndpoints", "/",
+                   request.notification_endpoint()),
       {});
 }
 
@@ -104,9 +105,9 @@ DefaultRegionNotificationEndpointsRestStub::
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
                 request.notification_endpoint_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/regions/", request.region(),
-                             "/notificationEndpoints")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "regions", "/",
+                             request.region(), "/", "notificationEndpoints")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -123,8 +124,9 @@ DefaultRegionNotificationEndpointsRestStub::ListRegionNotificationEndpoints(
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::NotificationEndpointList>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/regions/",
-                   request.region(), "/notificationEndpoints"),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "regions", "/", request.region(),
+                   "/", "notificationEndpoints"),
       {std::make_pair("filter", request.filter()),
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),

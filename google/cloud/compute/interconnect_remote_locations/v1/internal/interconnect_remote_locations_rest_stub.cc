@@ -49,9 +49,10 @@ DefaultInterconnectRemoteLocationsRestStub::GetInterconnectRemoteLocations(
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::InterconnectRemoteLocation>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(),
-                   "/global/interconnectRemoteLocations/",
-                   request.interconnect_remote_location(), ""),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "global", "/",
+                   "interconnectRemoteLocations", "/",
+                   request.interconnect_remote_location()),
       {});
 }
 
@@ -63,8 +64,9 @@ DefaultInterconnectRemoteLocationsRestStub::ListInterconnectRemoteLocations(
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::InterconnectRemoteLocationList>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(),
-                   "/global/interconnectRemoteLocations"),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "global", "/",
+                   "interconnectRemoteLocations"),
       {std::make_pair("filter", request.filter()),
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),

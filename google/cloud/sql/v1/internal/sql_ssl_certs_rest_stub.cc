@@ -45,9 +45,9 @@ DefaultSqlSslCertsServiceRestStub::Delete(
     google::cloud::sql::v1::SqlSslCertsDeleteRequest const& request) {
   return rest_internal::Delete<google::cloud::sql::v1::Operation>(
       *service_, rest_context, request,
-      absl::StrCat("/v1/projects/", request.project(), "/instances/",
-                   request.instance(), "/sslCerts/", request.sha1_fingerprint(),
-                   ""));
+      absl::StrCat("/", "v1", "/", "projects", "/", request.project(), "/",
+                   "instances", "/", request.instance(), "/", "sslCerts", "/",
+                   request.sha1_fingerprint()));
 }
 
 StatusOr<google::cloud::sql::v1::SslCert>
@@ -56,9 +56,9 @@ DefaultSqlSslCertsServiceRestStub::Get(
     google::cloud::sql::v1::SqlSslCertsGetRequest const& request) {
   return rest_internal::Get<google::cloud::sql::v1::SslCert>(
       *service_, rest_context, request,
-      absl::StrCat("/v1/projects/", request.project(), "/instances/",
-                   request.instance(), "/sslCerts/", request.sha1_fingerprint(),
-                   ""),
+      absl::StrCat("/", "v1", "/", "projects", "/", request.project(), "/",
+                   "instances", "/", request.instance(), "/", "sslCerts", "/",
+                   request.sha1_fingerprint()),
       {});
 }
 
@@ -68,8 +68,8 @@ DefaultSqlSslCertsServiceRestStub::Insert(
     google::cloud::sql::v1::SqlSslCertsInsertRequest const& request) {
   return rest_internal::Post<google::cloud::sql::v1::SslCertsInsertResponse>(
       *service_, rest_context, request.body(),
-      absl::StrCat("/v1/projects/", request.project(), "/instances/",
-                   request.instance(), "/sslCerts"));
+      absl::StrCat("/", "v1", "/", "projects", "/", request.project(), "/",
+                   "instances", "/", request.instance(), "/", "sslCerts"));
 }
 
 StatusOr<google::cloud::sql::v1::SslCertsListResponse>
@@ -78,8 +78,8 @@ DefaultSqlSslCertsServiceRestStub::List(
     google::cloud::sql::v1::SqlSslCertsListRequest const& request) {
   return rest_internal::Get<google::cloud::sql::v1::SslCertsListResponse>(
       *service_, rest_context, request,
-      absl::StrCat("/v1/projects/", request.project(), "/instances/",
-                   request.instance(), "/sslCerts"),
+      absl::StrCat("/", "v1", "/", "projects", "/", request.project(), "/",
+                   "instances", "/", request.instance(), "/", "sslCerts"),
       {});
 }
 

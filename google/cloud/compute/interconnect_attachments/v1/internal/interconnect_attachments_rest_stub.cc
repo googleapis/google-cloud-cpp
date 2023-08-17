@@ -54,8 +54,9 @@ DefaultInterconnectAttachmentsRestStub::AggregatedListInterconnectAttachments(
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::InterconnectAttachmentAggregatedList>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(),
-                   "/aggregated/interconnectAttachments"),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "aggregated", "/",
+                   "interconnectAttachments"),
       {std::make_pair("filter", request.filter()),
        std::make_pair("include_all_scopes",
                       request.include_all_scopes() ? "1" : "0"),
@@ -80,10 +81,10 @@ DefaultInterconnectAttachmentsRestStub::AsyncDeleteInterconnectAttachments(
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request,
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/regions/", request.region(),
-                             "/interconnectAttachments/",
-                             request.interconnect_attachment(), "")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "regions", "/",
+                             request.region(), "/", "interconnectAttachments",
+                             "/", request.interconnect_attachment())));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -100,9 +101,10 @@ DefaultInterconnectAttachmentsRestStub::GetInterconnectAttachments(
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::InterconnectAttachment>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/regions/",
-                   request.region(), "/interconnectAttachments/",
-                   request.interconnect_attachment(), ""),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "regions", "/", request.region(),
+                   "/", "interconnectAttachments", "/",
+                   request.interconnect_attachment()),
       {});
 }
 
@@ -121,9 +123,10 @@ DefaultInterconnectAttachmentsRestStub::AsyncInsertInterconnectAttachments(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
                 request.interconnect_attachment_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/regions/", request.region(),
-                             "/interconnectAttachments")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "regions", "/",
+                             request.region(), "/",
+                             "interconnectAttachments")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -140,8 +143,9 @@ DefaultInterconnectAttachmentsRestStub::ListInterconnectAttachments(
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::InterconnectAttachmentList>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/regions/",
-                   request.region(), "/interconnectAttachments"),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "regions", "/", request.region(),
+                   "/", "interconnectAttachments"),
       {std::make_pair("filter", request.filter()),
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),
@@ -165,10 +169,10 @@ DefaultInterconnectAttachmentsRestStub::AsyncPatchInterconnectAttachments(
             rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
                 request.interconnect_attachment_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/regions/", request.region(),
-                             "/interconnectAttachments/",
-                             request.interconnect_attachment(), "")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "regions", "/",
+                             request.region(), "/", "interconnectAttachments",
+                             "/", request.interconnect_attachment())));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -192,10 +196,10 @@ DefaultInterconnectAttachmentsRestStub::AsyncSetLabels(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
                 request.region_set_labels_request_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/regions/", request.region(),
-                             "/interconnectAttachments/", request.resource(),
-                             "/setLabels")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "regions", "/",
+                             request.region(), "/", "interconnectAttachments",
+                             "/", request.resource(), "/", "setLabels")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {

@@ -53,8 +53,8 @@ DefaultRegionCommitmentsRestStub::AggregatedListRegionCommitments(
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::CommitmentAggregatedList>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(),
-                   "/aggregated/commitments"),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "aggregated", "/", "commitments"),
       {std::make_pair("filter", request.filter()),
        std::make_pair("include_all_scopes",
                       request.include_all_scopes() ? "1" : "0"),
@@ -72,8 +72,9 @@ DefaultRegionCommitmentsRestStub::GetRegionCommitments(
         GetRegionCommitmentsRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Commitment>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/regions/",
-                   request.region(), "/commitments/", request.commitment(), ""),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "regions", "/", request.region(),
+                   "/", "commitments", "/", request.commitment()),
       {});
 }
 
@@ -91,8 +92,9 @@ DefaultRegionCommitmentsRestStub::AsyncInsertRegionCommitments(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.commitment_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/regions/", request.region(), "/commitments")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "regions", "/",
+                             request.region(), "/", "commitments")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -108,8 +110,9 @@ DefaultRegionCommitmentsRestStub::ListRegionCommitments(
         ListRegionCommitmentsRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::CommitmentList>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/regions/",
-                   request.region(), "/commitments"),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "regions", "/", request.region(),
+                   "/", "commitments"),
       {std::make_pair("filter", request.filter()),
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),
@@ -132,9 +135,10 @@ DefaultRegionCommitmentsRestStub::AsyncUpdateRegionCommitments(
         p.set_value(
             rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.commitment_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/regions/", request.region(), "/commitments/",
-                             request.commitment(), "")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "regions", "/",
+                             request.region(), "/", "commitments", "/",
+                             request.commitment())));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {

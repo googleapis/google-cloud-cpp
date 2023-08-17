@@ -45,8 +45,9 @@ DefaultSqlConnectServiceRestStub::GetConnectSettings(
     google::cloud::sql::v1::GetConnectSettingsRequest const& request) {
   return rest_internal::Get<google::cloud::sql::v1::ConnectSettings>(
       *service_, rest_context, request,
-      absl::StrCat("/v1/projects/", request.project(), "/instances/",
-                   request.instance(), "/connectSettings"),
+      absl::StrCat("/", "v1", "/", "projects", "/", request.project(), "/",
+                   "instances", "/", request.instance(), "/",
+                   "connectSettings"),
       {});
 }
 
@@ -57,8 +58,9 @@ DefaultSqlConnectServiceRestStub::GenerateEphemeralCert(
   return rest_internal::Post<
       google::cloud::sql::v1::GenerateEphemeralCertResponse>(
       *service_, rest_context, request,
-      absl::StrCat("/v1/projects/", request.project(), "/instances/",
-                   request.instance(), ":generateEphemeralCert"));
+      absl::StrCat("/", "v1", "/", "projects", "/", request.project(), "/",
+                   "instances", "/", request.instance(),
+                   ":generateEphemeralCert"));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

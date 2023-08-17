@@ -60,9 +60,10 @@ DefaultExternalVpnGatewaysRestStub::AsyncDeleteExternalVpnGateways(
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request,
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/global/externalVpnGateways/",
-                             request.external_vpn_gateway(), "")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "global", "/",
+                             "externalVpnGateways", "/",
+                             request.external_vpn_gateway())));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -79,9 +80,9 @@ DefaultExternalVpnGatewaysRestStub::GetExternalVpnGateways(
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::ExternalVpnGateway>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(),
-                   "/global/externalVpnGateways/",
-                   request.external_vpn_gateway(), ""),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "global", "/", "externalVpnGateways",
+                   "/", request.external_vpn_gateway()),
       {});
 }
 
@@ -100,8 +101,9 @@ DefaultExternalVpnGatewaysRestStub::AsyncInsertExternalVpnGateways(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
                 request.external_vpn_gateway_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/global/externalVpnGateways")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "global", "/",
+                             "externalVpnGateways")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -118,8 +120,9 @@ DefaultExternalVpnGatewaysRestStub::ListExternalVpnGateways(
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::ExternalVpnGatewayList>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(),
-                   "/global/externalVpnGateways"),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "global", "/",
+                   "externalVpnGateways"),
       {std::make_pair("filter", request.filter()),
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),
@@ -143,9 +146,10 @@ DefaultExternalVpnGatewaysRestStub::AsyncSetLabels(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
                 request.global_set_labels_request_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/global/externalVpnGateways/", request.resource(),
-                             "/setLabels")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "global", "/",
+                             "externalVpnGateways", "/", request.resource(),
+                             "/", "setLabels")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -162,9 +166,9 @@ DefaultExternalVpnGatewaysRestStub::TestIamPermissions(
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::TestPermissionsResponse>(
       *service_, rest_context, request.test_permissions_request_resource(),
-      absl::StrCat("/compute/v1/projects/", request.project(),
-                   "/global/externalVpnGateways/", request.resource(),
-                   "/testIamPermissions"));
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "global", "/", "externalVpnGateways",
+                   "/", request.resource(), "/", "testIamPermissions"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

@@ -51,7 +51,7 @@ DefaultDatabaseAdminRestStub::ListDatabases(
   return rest_internal::Get<
       google::spanner::admin::database::v1::ListDatabasesResponse>(
       *service_, rest_context, request,
-      absl::StrCat("/v1/", request.parent(), "/databases"),
+      absl::StrCat("/", "v1", "/", request.parent(), "/", "databases"),
       {std::make_pair("page_size", std::to_string(request.page_size())),
        std::make_pair("page_token", request.page_token())});
 }
@@ -68,7 +68,7 @@ DefaultDatabaseAdminRestStub::AsyncCreateDatabase(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(rest_internal::Post<google::longrunning::Operation>(
             *service, *rest_context, request,
-            absl::StrCat("/v1/", request.parent(), "/databases")));
+            absl::StrCat("/", "v1", "/", request.parent(), "/", "databases")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -83,7 +83,7 @@ DefaultDatabaseAdminRestStub::GetDatabase(
     google::spanner::admin::database::v1::GetDatabaseRequest const& request) {
   return rest_internal::Get<google::spanner::admin::database::v1::Database>(
       *service_, rest_context, request,
-      absl::StrCat("/v1/", request.name(), ""), {});
+      absl::StrCat("/", "v1", "/", request.name()), {});
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -98,7 +98,7 @@ DefaultDatabaseAdminRestStub::AsyncUpdateDatabase(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(rest_internal::Patch<google::longrunning::Operation>(
             *service, *rest_context, request.database(),
-            absl::StrCat("/v1/", request.database().name(), "")));
+            absl::StrCat("/", "v1", "/", request.database().name())));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -119,7 +119,7 @@ DefaultDatabaseAdminRestStub::AsyncUpdateDatabaseDdl(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(rest_internal::Patch<google::longrunning::Operation>(
             *service, *rest_context, request,
-            absl::StrCat("/v1/", request.database(), "/ddl")));
+            absl::StrCat("/", "v1", "/", request.database(), "/", "ddl")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -131,8 +131,9 @@ DefaultDatabaseAdminRestStub::AsyncUpdateDatabaseDdl(
 Status DefaultDatabaseAdminRestStub::DropDatabase(
     google::cloud::rest_internal::RestContext& rest_context,
     google::spanner::admin::database::v1::DropDatabaseRequest const& request) {
-  return rest_internal::Delete(*service_, rest_context, request,
-                               absl::StrCat("/v1/", request.database(), ""));
+  return rest_internal::Delete(
+      *service_, rest_context, request,
+      absl::StrCat("/", "v1", "/", request.database()));
 }
 
 StatusOr<google::spanner::admin::database::v1::GetDatabaseDdlResponse>
@@ -143,7 +144,7 @@ DefaultDatabaseAdminRestStub::GetDatabaseDdl(
   return rest_internal::Get<
       google::spanner::admin::database::v1::GetDatabaseDdlResponse>(
       *service_, rest_context, request,
-      absl::StrCat("/v1/", request.database(), "/ddl"), {});
+      absl::StrCat("/", "v1", "/", request.database(), "/", "ddl"), {});
 }
 
 StatusOr<google::iam::v1::Policy> DefaultDatabaseAdminRestStub::SetIamPolicy(
@@ -151,7 +152,7 @@ StatusOr<google::iam::v1::Policy> DefaultDatabaseAdminRestStub::SetIamPolicy(
     google::iam::v1::SetIamPolicyRequest const& request) {
   return rest_internal::Post<google::iam::v1::Policy>(
       *service_, rest_context, request,
-      absl::StrCat("/v1/", request.resource(), ":setIamPolicy"));
+      absl::StrCat("/", "v1", "/", request.resource(), ":setIamPolicy"));
 }
 
 StatusOr<google::iam::v1::Policy> DefaultDatabaseAdminRestStub::GetIamPolicy(
@@ -159,7 +160,7 @@ StatusOr<google::iam::v1::Policy> DefaultDatabaseAdminRestStub::GetIamPolicy(
     google::iam::v1::GetIamPolicyRequest const& request) {
   return rest_internal::Post<google::iam::v1::Policy>(
       *service_, rest_context, request,
-      absl::StrCat("/v1/", request.resource(), ":getIamPolicy"));
+      absl::StrCat("/", "v1", "/", request.resource(), ":getIamPolicy"));
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
@@ -168,7 +169,7 @@ DefaultDatabaseAdminRestStub::TestIamPermissions(
     google::iam::v1::TestIamPermissionsRequest const& request) {
   return rest_internal::Post<google::iam::v1::TestIamPermissionsResponse>(
       *service_, rest_context, request,
-      absl::StrCat("/v1/", request.resource(), ":testIamPermissions"));
+      absl::StrCat("/", "v1", "/", request.resource(), ":testIamPermissions"));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -182,7 +183,7 @@ DefaultDatabaseAdminRestStub::AsyncCreateBackup(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(rest_internal::Post<google::longrunning::Operation>(
             *service, *rest_context, request.backup(),
-            absl::StrCat("/v1/", request.parent(), "/backups")));
+            absl::StrCat("/", "v1", "/", request.parent(), "/", "backups")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -202,7 +203,8 @@ DefaultDatabaseAdminRestStub::AsyncCopyBackup(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(rest_internal::Post<google::longrunning::Operation>(
             *service, *rest_context, request,
-            absl::StrCat("/v1/", request.parent(), "/backups:copy")));
+            absl::StrCat("/", "v1", "/", request.parent(), "/", "backups",
+                         ":copy")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -217,7 +219,7 @@ DefaultDatabaseAdminRestStub::GetBackup(
     google::spanner::admin::database::v1::GetBackupRequest const& request) {
   return rest_internal::Get<google::spanner::admin::database::v1::Backup>(
       *service_, rest_context, request,
-      absl::StrCat("/v1/", request.name(), ""), {});
+      absl::StrCat("/", "v1", "/", request.name()), {});
 }
 
 StatusOr<google::spanner::admin::database::v1::Backup>
@@ -226,14 +228,14 @@ DefaultDatabaseAdminRestStub::UpdateBackup(
     google::spanner::admin::database::v1::UpdateBackupRequest const& request) {
   return rest_internal::Patch<google::spanner::admin::database::v1::Backup>(
       *service_, rest_context, request.backup(),
-      absl::StrCat("/v1/", request.backup().name(), ""));
+      absl::StrCat("/", "v1", "/", request.backup().name()));
 }
 
 Status DefaultDatabaseAdminRestStub::DeleteBackup(
     google::cloud::rest_internal::RestContext& rest_context,
     google::spanner::admin::database::v1::DeleteBackupRequest const& request) {
   return rest_internal::Delete(*service_, rest_context, request,
-                               absl::StrCat("/v1/", request.name(), ""));
+                               absl::StrCat("/", "v1", "/", request.name()));
 }
 
 StatusOr<google::spanner::admin::database::v1::ListBackupsResponse>
@@ -243,7 +245,7 @@ DefaultDatabaseAdminRestStub::ListBackups(
   return rest_internal::Get<
       google::spanner::admin::database::v1::ListBackupsResponse>(
       *service_, rest_context, request,
-      absl::StrCat("/v1/", request.parent(), "/backups"),
+      absl::StrCat("/", "v1", "/", request.parent(), "/", "backups"),
       {std::make_pair("filter", request.filter()),
        std::make_pair("page_size", std::to_string(request.page_size())),
        std::make_pair("page_token", request.page_token())});
@@ -261,7 +263,8 @@ DefaultDatabaseAdminRestStub::AsyncRestoreDatabase(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(rest_internal::Post<google::longrunning::Operation>(
             *service, *rest_context, request,
-            absl::StrCat("/v1/", request.parent(), "/databases:restore")));
+            absl::StrCat("/", "v1", "/", request.parent(), "/", "databases",
+                         ":restore")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -278,7 +281,7 @@ DefaultDatabaseAdminRestStub::ListDatabaseOperations(
   return rest_internal::Get<
       google::spanner::admin::database::v1::ListDatabaseOperationsResponse>(
       *service_, rest_context, request,
-      absl::StrCat("/v1/", request.parent(), "/databaseOperations"),
+      absl::StrCat("/", "v1", "/", request.parent(), "/", "databaseOperations"),
       {std::make_pair("filter", request.filter()),
        std::make_pair("page_size", std::to_string(request.page_size())),
        std::make_pair("page_token", request.page_token())});
@@ -292,7 +295,7 @@ DefaultDatabaseAdminRestStub::ListBackupOperations(
   return rest_internal::Get<
       google::spanner::admin::database::v1::ListBackupOperationsResponse>(
       *service_, rest_context, request,
-      absl::StrCat("/v1/", request.parent(), "/backupOperations"),
+      absl::StrCat("/", "v1", "/", request.parent(), "/", "backupOperations"),
       {std::make_pair("filter", request.filter()),
        std::make_pair("page_size", std::to_string(request.page_size())),
        std::make_pair("page_token", request.page_token())});
@@ -306,7 +309,7 @@ DefaultDatabaseAdminRestStub::ListDatabaseRoles(
   return rest_internal::Get<
       google::spanner::admin::database::v1::ListDatabaseRolesResponse>(
       *service_, rest_context, request,
-      absl::StrCat("/v1/", request.parent(), "/databaseRoles"),
+      absl::StrCat("/", "v1", "/", request.parent(), "/", "databaseRoles"),
       {std::make_pair("page_size", std::to_string(request.page_size())),
        std::make_pair("page_token", request.page_token())});
 }

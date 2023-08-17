@@ -43,8 +43,8 @@ StatusOr<google::cloud::cpp::compute::v1::Zone> DefaultZonesRestStub::GetZones(
     google::cloud::cpp::compute::zones::v1::GetZonesRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Zone>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/zones/",
-                   request.zone(), ""),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "zones", "/", request.zone()),
       {});
 }
 
@@ -54,7 +54,8 @@ DefaultZonesRestStub::ListZones(
     google::cloud::cpp::compute::zones::v1::ListZonesRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::ZoneList>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/zones"),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "zones"),
       {std::make_pair("filter", request.filter()),
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),

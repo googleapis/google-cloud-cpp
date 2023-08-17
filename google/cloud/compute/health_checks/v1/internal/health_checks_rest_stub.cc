@@ -52,8 +52,8 @@ DefaultHealthChecksRestStub::AggregatedListHealthChecks(
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::HealthChecksAggregatedList>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(),
-                   "/aggregated/healthChecks"),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "aggregated", "/", "healthChecks"),
       {std::make_pair("filter", request.filter()),
        std::make_pair("include_all_scopes",
                       request.include_all_scopes() ? "1" : "0"),
@@ -78,9 +78,9 @@ DefaultHealthChecksRestStub::AsyncDeleteHealthChecks(
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request,
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/global/healthChecks/", request.health_check(),
-                             "")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "global", "/",
+                             "healthChecks", "/", request.health_check())));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -96,8 +96,9 @@ DefaultHealthChecksRestStub::GetHealthChecks(
         GetHealthChecksRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::HealthCheck>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(),
-                   "/global/healthChecks/", request.health_check(), ""),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "global", "/", "healthChecks", "/",
+                   request.health_check()),
       {});
 }
 
@@ -115,8 +116,9 @@ DefaultHealthChecksRestStub::AsyncInsertHealthChecks(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.health_check_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/global/healthChecks")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "global", "/",
+                             "healthChecks")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -132,8 +134,8 @@ DefaultHealthChecksRestStub::ListHealthChecks(
         ListHealthChecksRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::HealthCheckList>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(),
-                   "/global/healthChecks"),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "global", "/", "healthChecks"),
       {std::make_pair("filter", request.filter()),
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),
@@ -156,9 +158,9 @@ DefaultHealthChecksRestStub::AsyncPatchHealthChecks(
         p.set_value(
             rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.health_check_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/global/healthChecks/", request.health_check(),
-                             "")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "global", "/",
+                             "healthChecks", "/", request.health_check())));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -181,9 +183,9 @@ DefaultHealthChecksRestStub::AsyncUpdateHealthChecks(
         p.set_value(
             rest_internal::Put<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.health_check_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/global/healthChecks/", request.health_check(),
-                             "")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "global", "/",
+                             "healthChecks", "/", request.health_check())));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {

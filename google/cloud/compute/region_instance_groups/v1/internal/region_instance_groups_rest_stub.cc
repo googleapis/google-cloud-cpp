@@ -53,9 +53,9 @@ DefaultRegionInstanceGroupsRestStub::GetRegionInstanceGroups(
         GetRegionInstanceGroupsRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::InstanceGroup>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/regions/",
-                   request.region(), "/instanceGroups/",
-                   request.instance_group(), ""),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "regions", "/", request.region(),
+                   "/", "instanceGroups", "/", request.instance_group()),
       {});
 }
 
@@ -67,8 +67,9 @@ DefaultRegionInstanceGroupsRestStub::ListRegionInstanceGroups(
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::RegionInstanceGroupList>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/regions/",
-                   request.region(), "/instanceGroups"),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "regions", "/", request.region(),
+                   "/", "instanceGroups"),
       {std::make_pair("filter", request.filter()),
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),
@@ -86,9 +87,10 @@ DefaultRegionInstanceGroupsRestStub::ListInstances(
       google::cloud::cpp::compute::v1::RegionInstanceGroupsListInstances>(
       *service_, rest_context,
       request.region_instance_groups_list_instances_request_resource(),
-      absl::StrCat("/compute/v1/projects/", request.project(), "/regions/",
-                   request.region(), "/instanceGroups/",
-                   request.instance_group(), "/listInstances"));
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "regions", "/", request.region(),
+                   "/", "instanceGroups", "/", request.instance_group(), "/",
+                   "listInstances"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -107,9 +109,10 @@ DefaultRegionInstanceGroupsRestStub::AsyncSetNamedPorts(
                 *service, *rest_context,
                 request
                     .region_instance_groups_set_named_ports_request_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/regions/", request.region(), "/instanceGroups/",
-                             request.instance_group(), "/setNamedPorts")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "regions", "/",
+                             request.region(), "/", "instanceGroups", "/",
+                             request.instance_group(), "/", "setNamedPorts")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {

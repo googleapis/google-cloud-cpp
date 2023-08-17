@@ -58,8 +58,8 @@ DefaultProjectsRestStub::AsyncDisableXpnHost(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request,
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/disableXpnHost")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "disableXpnHost")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -83,8 +83,8 @@ DefaultProjectsRestStub::AsyncDisableXpnResource(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
                 request.projects_disable_xpn_resource_request_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/disableXpnResource")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "disableXpnResource")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -107,8 +107,8 @@ DefaultProjectsRestStub::AsyncEnableXpnHost(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request,
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/enableXpnHost")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "enableXpnHost")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -132,8 +132,8 @@ DefaultProjectsRestStub::AsyncEnableXpnResource(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
                 request.projects_enable_xpn_resource_request_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/enableXpnResource")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "enableXpnResource")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -149,7 +149,9 @@ DefaultProjectsRestStub::GetProjects(
         request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Project>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), ""), {});
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project()),
+      {});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Project>
@@ -159,7 +161,8 @@ DefaultProjectsRestStub::GetXpnHost(
         request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Project>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/getXpnHost"),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "getXpnHost"),
       {});
 }
 
@@ -171,8 +174,8 @@ DefaultProjectsRestStub::GetXpnResources(
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::ProjectsGetXpnResources>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(),
-                   "/getXpnResources"),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "getXpnResources"),
       {std::make_pair("filter", request.filter()),
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),
@@ -189,8 +192,8 @@ DefaultProjectsRestStub::ListXpnHosts(
   return rest_internal::Post<google::cloud::cpp::compute::v1::XpnHostList>(
       *service_, rest_context,
       request.projects_list_xpn_hosts_request_resource(),
-      absl::StrCat("/compute/v1/projects/", request.project(),
-                   "/listXpnHosts"));
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "listXpnHosts"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -206,8 +209,8 @@ DefaultProjectsRestStub::AsyncMoveDisk(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.disk_move_request_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/moveDisk")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "moveDisk")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -231,8 +234,8 @@ DefaultProjectsRestStub::AsyncMoveInstance(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
                 request.instance_move_request_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/moveInstance")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "moveInstance")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -255,8 +258,9 @@ DefaultProjectsRestStub::AsyncSetCommonInstanceMetadata(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.metadata_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/setCommonInstanceMetadata")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/",
+                             "setCommonInstanceMetadata")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -280,8 +284,8 @@ DefaultProjectsRestStub::AsyncSetDefaultNetworkTier(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
                 request.projects_set_default_network_tier_request_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/setDefaultNetworkTier")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "setDefaultNetworkTier")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -305,8 +309,8 @@ DefaultProjectsRestStub::AsyncSetUsageExportBucket(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
                 request.usage_export_location_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/setUsageExportBucket")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "setUsageExportBucket")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {

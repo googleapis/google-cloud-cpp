@@ -63,10 +63,11 @@ DefaultGlobalNetworkEndpointGroupsRestStub::AsyncAttachNetworkEndpoints(
             *service, *rest_context,
             request
                 .global_network_endpoint_groups_attach_endpoints_request_resource(),
-            absl::StrCat("/compute/v1/projects/", request.project(),
-                         "/global/networkEndpointGroups/",
-                         request.network_endpoint_group(),
-                         "/attachNetworkEndpoints")));
+            absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                         request.project(), "/", "global", "/",
+                         "networkEndpointGroups", "/",
+                         request.network_endpoint_group(), "/",
+                         "attachNetworkEndpoints")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -90,9 +91,10 @@ DefaultGlobalNetworkEndpointGroupsRestStub::
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request,
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/global/networkEndpointGroups/",
-                             request.network_endpoint_group(), "")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "global", "/",
+                             "networkEndpointGroups", "/",
+                             request.network_endpoint_group())));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -117,10 +119,11 @@ DefaultGlobalNetworkEndpointGroupsRestStub::AsyncDetachNetworkEndpoints(
             *service, *rest_context,
             request
                 .global_network_endpoint_groups_detach_endpoints_request_resource(),
-            absl::StrCat("/compute/v1/projects/", request.project(),
-                         "/global/networkEndpointGroups/",
-                         request.network_endpoint_group(),
-                         "/detachNetworkEndpoints")));
+            absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                         request.project(), "/", "global", "/",
+                         "networkEndpointGroups", "/",
+                         request.network_endpoint_group(), "/",
+                         "detachNetworkEndpoints")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -137,9 +140,10 @@ DefaultGlobalNetworkEndpointGroupsRestStub::GetGlobalNetworkEndpointGroups(
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::NetworkEndpointGroup>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(),
-                   "/global/networkEndpointGroups/",
-                   request.network_endpoint_group(), ""),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "global", "/",
+                   "networkEndpointGroups", "/",
+                   request.network_endpoint_group()),
       {});
 }
 
@@ -159,8 +163,9 @@ DefaultGlobalNetworkEndpointGroupsRestStub::
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
                 request.network_endpoint_group_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/global/networkEndpointGroups")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "global", "/",
+                             "networkEndpointGroups")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -177,8 +182,9 @@ DefaultGlobalNetworkEndpointGroupsRestStub::ListGlobalNetworkEndpointGroups(
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::NetworkEndpointGroupList>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(),
-                   "/global/networkEndpointGroups"),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "global", "/",
+                   "networkEndpointGroups"),
       {std::make_pair("filter", request.filter()),
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),
@@ -196,9 +202,10 @@ DefaultGlobalNetworkEndpointGroupsRestStub::ListNetworkEndpoints(
   return rest_internal::Post<google::cloud::cpp::compute::v1::
                                  NetworkEndpointGroupsListNetworkEndpoints>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(),
-                   "/global/networkEndpointGroups/",
-                   request.network_endpoint_group(), "/listNetworkEndpoints"));
+      absl::StrCat(
+          "/", "compute", "/", "v1", "/", "projects", "/", request.project(),
+          "/", "global", "/", "networkEndpointGroups", "/",
+          request.network_endpoint_group(), "/", "listNetworkEndpoints"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

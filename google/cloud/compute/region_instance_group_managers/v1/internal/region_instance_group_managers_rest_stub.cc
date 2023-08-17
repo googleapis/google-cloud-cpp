@@ -63,10 +63,11 @@ DefaultRegionInstanceGroupManagersRestStub::AsyncAbandonInstances(
             *service, *rest_context,
             request
                 .region_instance_group_managers_abandon_instances_request_resource(),
-            absl::StrCat(
-                "/compute/v1/projects/", request.project(), "/regions/",
-                request.region(), "/instanceGroupManagers/",
-                request.instance_group_manager(), "/abandonInstances")));
+            absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                         request.project(), "/", "regions", "/",
+                         request.region(), "/", "instanceGroupManagers", "/",
+                         request.instance_group_manager(), "/",
+                         "abandonInstances")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -91,10 +92,11 @@ DefaultRegionInstanceGroupManagersRestStub::AsyncApplyUpdatesToInstances(
             *service, *rest_context,
             request
                 .region_instance_group_managers_apply_updates_request_resource(),
-            absl::StrCat(
-                "/compute/v1/projects/", request.project(), "/regions/",
-                request.region(), "/instanceGroupManagers/",
-                request.instance_group_manager(), "/applyUpdatesToInstances")));
+            absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                         request.project(), "/", "regions", "/",
+                         request.region(), "/", "instanceGroupManagers", "/",
+                         request.instance_group_manager(), "/",
+                         "applyUpdatesToInstances")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -119,10 +121,11 @@ DefaultRegionInstanceGroupManagersRestStub::AsyncCreateInstances(
             *service, *rest_context,
             request
                 .region_instance_group_managers_create_instances_request_resource(),
-            absl::StrCat(
-                "/compute/v1/projects/", request.project(), "/regions/",
-                request.region(), "/instanceGroupManagers/",
-                request.instance_group_manager(), "/createInstances")));
+            absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                         request.project(), "/", "regions", "/",
+                         request.region(), "/", "instanceGroupManagers", "/",
+                         request.instance_group_manager(), "/",
+                         "createInstances")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -146,10 +149,10 @@ DefaultRegionInstanceGroupManagersRestStub::
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request,
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/regions/", request.region(),
-                             "/instanceGroupManagers/",
-                             request.instance_group_manager(), "")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "regions", "/",
+                             request.region(), "/", "instanceGroupManagers",
+                             "/", request.instance_group_manager())));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -174,10 +177,11 @@ DefaultRegionInstanceGroupManagersRestStub::AsyncDeleteInstances(
             *service, *rest_context,
             request
                 .region_instance_group_managers_delete_instances_request_resource(),
-            absl::StrCat(
-                "/compute/v1/projects/", request.project(), "/regions/",
-                request.region(), "/instanceGroupManagers/",
-                request.instance_group_manager(), "/deleteInstances")));
+            absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                         request.project(), "/", "regions", "/",
+                         request.region(), "/", "instanceGroupManagers", "/",
+                         request.instance_group_manager(), "/",
+                         "deleteInstances")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -202,11 +206,11 @@ DefaultRegionInstanceGroupManagersRestStub::AsyncDeletePerInstanceConfigs(
             *service, *rest_context,
             request
                 .region_instance_group_manager_delete_instance_config_req_resource(),
-            absl::StrCat("/compute/v1/projects/", request.project(),
-                         "/regions/", request.region(),
-                         "/instanceGroupManagers/",
-                         request.instance_group_manager(),
-                         "/deletePerInstanceConfigs")));
+            absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                         request.project(), "/", "regions", "/",
+                         request.region(), "/", "instanceGroupManagers", "/",
+                         request.instance_group_manager(), "/",
+                         "deletePerInstanceConfigs")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -223,9 +227,10 @@ DefaultRegionInstanceGroupManagersRestStub::GetRegionInstanceGroupManagers(
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::InstanceGroupManager>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/regions/",
-                   request.region(), "/instanceGroupManagers/",
-                   request.instance_group_manager(), ""),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "regions", "/", request.region(),
+                   "/", "instanceGroupManagers", "/",
+                   request.instance_group_manager()),
       {});
 }
 
@@ -245,9 +250,9 @@ DefaultRegionInstanceGroupManagersRestStub::
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
                 request.instance_group_manager_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/regions/", request.region(),
-                             "/instanceGroupManagers")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "regions", "/",
+                             request.region(), "/", "instanceGroupManagers")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -264,8 +269,9 @@ DefaultRegionInstanceGroupManagersRestStub::ListRegionInstanceGroupManagers(
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::RegionInstanceGroupManagerList>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/regions/",
-                   request.region(), "/instanceGroupManagers"),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "regions", "/", request.region(),
+                   "/", "instanceGroupManagers"),
       {std::make_pair("filter", request.filter()),
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),
@@ -283,9 +289,10 @@ DefaultRegionInstanceGroupManagersRestStub::ListErrors(
   return rest_internal::Get<google::cloud::cpp::compute::v1::
                                 RegionInstanceGroupManagersListErrorsResponse>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/regions/",
-                   request.region(), "/instanceGroupManagers/",
-                   request.instance_group_manager(), "/listErrors"),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "regions", "/", request.region(),
+                   "/", "instanceGroupManagers", "/",
+                   request.instance_group_manager(), "/", "listErrors"),
       {std::make_pair("filter", request.filter()),
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),
@@ -304,9 +311,10 @@ DefaultRegionInstanceGroupManagersRestStub::ListManagedInstances(
       google::cloud::cpp::compute::v1::
           RegionInstanceGroupManagersListInstancesResponse>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/regions/",
-                   request.region(), "/instanceGroupManagers/",
-                   request.instance_group_manager(), "/listManagedInstances"));
+      absl::StrCat(
+          "/", "compute", "/", "v1", "/", "projects", "/", request.project(),
+          "/", "regions", "/", request.region(), "/", "instanceGroupManagers",
+          "/", request.instance_group_manager(), "/", "listManagedInstances"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::
@@ -319,10 +327,11 @@ DefaultRegionInstanceGroupManagersRestStub::ListPerInstanceConfigs(
       google::cloud::cpp::compute::v1::
           RegionInstanceGroupManagersListInstanceConfigsResp>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/regions/",
-                   request.region(), "/instanceGroupManagers/",
-                   request.instance_group_manager(),
-                   "/listPerInstanceConfigs"));
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "regions", "/", request.region(),
+                   "/", "instanceGroupManagers", "/",
+                   request.instance_group_manager(), "/",
+                   "listPerInstanceConfigs"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -341,10 +350,10 @@ DefaultRegionInstanceGroupManagersRestStub::
             rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
                 request.instance_group_manager_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/regions/", request.region(),
-                             "/instanceGroupManagers/",
-                             request.instance_group_manager(), "")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "regions", "/",
+                             request.region(), "/", "instanceGroupManagers",
+                             "/", request.instance_group_manager())));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -369,10 +378,11 @@ DefaultRegionInstanceGroupManagersRestStub::AsyncPatchPerInstanceConfigs(
             *service, *rest_context,
             request
                 .region_instance_group_manager_patch_instance_config_req_resource(),
-            absl::StrCat(
-                "/compute/v1/projects/", request.project(), "/regions/",
-                request.region(), "/instanceGroupManagers/",
-                request.instance_group_manager(), "/patchPerInstanceConfigs")));
+            absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                         request.project(), "/", "regions", "/",
+                         request.region(), "/", "instanceGroupManagers", "/",
+                         request.instance_group_manager(), "/",
+                         "patchPerInstanceConfigs")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -397,10 +407,11 @@ DefaultRegionInstanceGroupManagersRestStub::AsyncRecreateInstances(
                 *service, *rest_context,
                 request
                     .region_instance_group_managers_recreate_request_resource(),
-                absl::StrCat(
-                    "/compute/v1/projects/", request.project(), "/regions/",
-                    request.region(), "/instanceGroupManagers/",
-                    request.instance_group_manager(), "/recreateInstances")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "regions", "/",
+                             request.region(), "/", "instanceGroupManagers",
+                             "/", request.instance_group_manager(), "/",
+                             "recreateInstances")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -423,10 +434,11 @@ DefaultRegionInstanceGroupManagersRestStub::AsyncResize(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request,
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/regions/", request.region(),
-                             "/instanceGroupManagers/",
-                             request.instance_group_manager(), "/resize")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "regions", "/",
+                             request.region(), "/", "instanceGroupManagers",
+                             "/", request.instance_group_manager(), "/",
+                             "resize")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -451,10 +463,11 @@ DefaultRegionInstanceGroupManagersRestStub::AsyncSetInstanceTemplate(
             *service, *rest_context,
             request
                 .region_instance_group_managers_set_template_request_resource(),
-            absl::StrCat(
-                "/compute/v1/projects/", request.project(), "/regions/",
-                request.region(), "/instanceGroupManagers/",
-                request.instance_group_manager(), "/setInstanceTemplate")));
+            absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                         request.project(), "/", "regions", "/",
+                         request.region(), "/", "instanceGroupManagers", "/",
+                         request.instance_group_manager(), "/",
+                         "setInstanceTemplate")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -479,10 +492,11 @@ DefaultRegionInstanceGroupManagersRestStub::AsyncSetTargetPools(
             *service, *rest_context,
             request
                 .region_instance_group_managers_set_target_pools_request_resource(),
-            absl::StrCat("/compute/v1/projects/", request.project(),
-                         "/regions/", request.region(),
-                         "/instanceGroupManagers/",
-                         request.instance_group_manager(), "/setTargetPools")));
+            absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                         request.project(), "/", "regions", "/",
+                         request.region(), "/", "instanceGroupManagers", "/",
+                         request.instance_group_manager(), "/",
+                         "setTargetPools")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -507,11 +521,11 @@ DefaultRegionInstanceGroupManagersRestStub::AsyncUpdatePerInstanceConfigs(
             *service, *rest_context,
             request
                 .region_instance_group_manager_update_instance_config_req_resource(),
-            absl::StrCat("/compute/v1/projects/", request.project(),
-                         "/regions/", request.region(),
-                         "/instanceGroupManagers/",
-                         request.instance_group_manager(),
-                         "/updatePerInstanceConfigs")));
+            absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                         request.project(), "/", "regions", "/",
+                         request.region(), "/", "instanceGroupManagers", "/",
+                         request.instance_group_manager(), "/",
+                         "updatePerInstanceConfigs")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {

@@ -52,8 +52,8 @@ DefaultSslPoliciesRestStub::AggregatedListSslPolicies(
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::SslPoliciesAggregatedList>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(),
-                   "/aggregated/sslPolicies"),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "aggregated", "/", "sslPolicies"),
       {std::make_pair("filter", request.filter()),
        std::make_pair("include_all_scopes",
                       request.include_all_scopes() ? "1" : "0"),
@@ -78,9 +78,9 @@ DefaultSslPoliciesRestStub::AsyncDeleteSslPolicies(
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request,
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/global/sslPolicies/", request.ssl_policy(),
-                             "")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "global", "/",
+                             "sslPolicies", "/", request.ssl_policy())));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -96,8 +96,9 @@ DefaultSslPoliciesRestStub::GetSslPolicies(
         request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::SslPolicy>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(),
-                   "/global/sslPolicies/", request.ssl_policy(), ""),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "global", "/", "sslPolicies", "/",
+                   request.ssl_policy()),
       {});
 }
 
@@ -115,8 +116,9 @@ DefaultSslPoliciesRestStub::AsyncInsertSslPolicies(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.ssl_policy_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/global/sslPolicies")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "global", "/",
+                             "sslPolicies")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -132,8 +134,8 @@ DefaultSslPoliciesRestStub::ListSslPolicies(
         request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::SslPoliciesList>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(),
-                   "/global/sslPolicies"),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "global", "/", "sslPolicies"),
       {std::make_pair("filter", request.filter()),
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),
@@ -151,8 +153,9 @@ DefaultSslPoliciesRestStub::ListAvailableFeatures(
   return rest_internal::Get<google::cloud::cpp::compute::v1::
                                 SslPoliciesListAvailableFeaturesResponse>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(),
-                   "/global/sslPolicies/listAvailableFeatures"),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "global", "/", "sslPolicies", "/",
+                   "listAvailableFeatures"),
       {std::make_pair("filter", request.filter()),
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),
@@ -175,9 +178,9 @@ DefaultSslPoliciesRestStub::AsyncPatchSslPolicies(
         p.set_value(
             rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.ssl_policy_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/global/sslPolicies/", request.ssl_policy(),
-                             "")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "global", "/",
+                             "sslPolicies", "/", request.ssl_policy())));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {

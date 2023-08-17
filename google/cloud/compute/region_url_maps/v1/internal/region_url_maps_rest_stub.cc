@@ -58,9 +58,10 @@ DefaultRegionUrlMapsRestStub::AsyncDeleteRegionUrlMaps(
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request,
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/regions/", request.region(), "/urlMaps/",
-                             request.url_map(), "")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "regions", "/",
+                             request.region(), "/", "urlMaps", "/",
+                             request.url_map())));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -76,8 +77,9 @@ DefaultRegionUrlMapsRestStub::GetRegionUrlMaps(
         GetRegionUrlMapsRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::UrlMap>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/regions/",
-                   request.region(), "/urlMaps/", request.url_map(), ""),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "regions", "/", request.region(),
+                   "/", "urlMaps", "/", request.url_map()),
       {});
 }
 
@@ -95,8 +97,9 @@ DefaultRegionUrlMapsRestStub::AsyncInsertRegionUrlMaps(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.url_map_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/regions/", request.region(), "/urlMaps")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "regions", "/",
+                             request.region(), "/", "urlMaps")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -112,8 +115,9 @@ DefaultRegionUrlMapsRestStub::ListRegionUrlMaps(
         ListRegionUrlMapsRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::UrlMapList>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/regions/",
-                   request.region(), "/urlMaps"),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "regions", "/", request.region(),
+                   "/", "urlMaps"),
       {std::make_pair("filter", request.filter()),
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),
@@ -136,9 +140,10 @@ DefaultRegionUrlMapsRestStub::AsyncPatchRegionUrlMaps(
         p.set_value(
             rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.url_map_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/regions/", request.region(), "/urlMaps/",
-                             request.url_map(), "")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "regions", "/",
+                             request.region(), "/", "urlMaps", "/",
+                             request.url_map())));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -161,9 +166,10 @@ DefaultRegionUrlMapsRestStub::AsyncUpdateRegionUrlMaps(
         p.set_value(
             rest_internal::Put<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.url_map_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/regions/", request.region(), "/urlMaps/",
-                             request.url_map(), "")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "regions", "/",
+                             request.region(), "/", "urlMaps", "/",
+                             request.url_map())));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -181,9 +187,9 @@ DefaultRegionUrlMapsRestStub::Validate(
       google::cloud::cpp::compute::v1::UrlMapsValidateResponse>(
       *service_, rest_context,
       request.region_url_maps_validate_request_resource(),
-      absl::StrCat("/compute/v1/projects/", request.project(), "/regions/",
-                   request.region(), "/urlMaps/", request.url_map(),
-                   "/validate"));
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "regions", "/", request.region(),
+                   "/", "urlMaps", "/", request.url_map(), "/", "validate"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

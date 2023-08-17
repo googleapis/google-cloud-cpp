@@ -45,8 +45,8 @@ DefaultSqlOperationsServiceRestStub::Get(
     google::cloud::sql::v1::SqlOperationsGetRequest const& request) {
   return rest_internal::Get<google::cloud::sql::v1::Operation>(
       *service_, rest_context, request,
-      absl::StrCat("/v1/projects/", request.project(), "/operations/",
-                   request.operation(), ""),
+      absl::StrCat("/", "v1", "/", "projects", "/", request.project(), "/",
+                   "operations", "/", request.operation()),
       {});
 }
 
@@ -56,7 +56,8 @@ DefaultSqlOperationsServiceRestStub::List(
     google::cloud::sql::v1::SqlOperationsListRequest const& request) {
   return rest_internal::Get<google::cloud::sql::v1::OperationsListResponse>(
       *service_, rest_context, request,
-      absl::StrCat("/v1/projects/", request.project(), "/operations"),
+      absl::StrCat("/", "v1", "/", "projects", "/", request.project(), "/",
+                   "operations"),
       {std::make_pair("instance", request.instance()),
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("page_token", request.page_token())});
@@ -67,8 +68,8 @@ Status DefaultSqlOperationsServiceRestStub::Cancel(
     google::cloud::sql::v1::SqlOperationsCancelRequest const& request) {
   return rest_internal::Post(
       *service_, rest_context, request,
-      absl::StrCat("/v1/projects/", request.project(), "/operations/",
-                   request.operation(), "/cancel"));
+      absl::StrCat("/", "v1", "/", "projects", "/", request.project(), "/",
+                   "operations", "/", request.operation(), "/", "cancel"));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

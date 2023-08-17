@@ -46,8 +46,8 @@ DefaultDiskTypesRestStub::AggregatedListDiskTypes(
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::DiskTypeAggregatedList>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(),
-                   "/aggregated/diskTypes"),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "aggregated", "/", "diskTypes"),
       {std::make_pair("filter", request.filter()),
        std::make_pair("include_all_scopes",
                       request.include_all_scopes() ? "1" : "0"),
@@ -65,8 +65,9 @@ DefaultDiskTypesRestStub::GetDiskTypes(
         request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::DiskType>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/zones/",
-                   request.zone(), "/diskTypes/", request.disk_type(), ""),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "zones", "/", request.zone(), "/",
+                   "diskTypes", "/", request.disk_type()),
       {});
 }
 
@@ -77,8 +78,9 @@ DefaultDiskTypesRestStub::ListDiskTypes(
         request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::DiskTypeList>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/zones/",
-                   request.zone(), "/diskTypes"),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "zones", "/", request.zone(), "/",
+                   "diskTypes"),
       {std::make_pair("filter", request.filter()),
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),

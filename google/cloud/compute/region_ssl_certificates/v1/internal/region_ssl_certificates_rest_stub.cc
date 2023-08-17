@@ -60,9 +60,10 @@ DefaultRegionSslCertificatesRestStub::AsyncDeleteRegionSslCertificates(
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request,
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/regions/", request.region(), "/sslCertificates/",
-                             request.ssl_certificate(), "")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "regions", "/",
+                             request.region(), "/", "sslCertificates", "/",
+                             request.ssl_certificate())));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -78,9 +79,9 @@ DefaultRegionSslCertificatesRestStub::GetRegionSslCertificates(
         GetRegionSslCertificatesRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::SslCertificate>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/regions/",
-                   request.region(), "/sslCertificates/",
-                   request.ssl_certificate(), ""),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "regions", "/", request.region(),
+                   "/", "sslCertificates", "/", request.ssl_certificate()),
       {});
 }
 
@@ -98,9 +99,9 @@ DefaultRegionSslCertificatesRestStub::AsyncInsertRegionSslCertificates(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.ssl_certificate_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/regions/", request.region(),
-                             "/sslCertificates")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "regions", "/",
+                             request.region(), "/", "sslCertificates")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -117,8 +118,9 @@ DefaultRegionSslCertificatesRestStub::ListRegionSslCertificates(
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::SslCertificateList>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/regions/",
-                   request.region(), "/sslCertificates"),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "regions", "/", request.region(),
+                   "/", "sslCertificates"),
       {std::make_pair("filter", request.filter()),
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),

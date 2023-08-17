@@ -53,8 +53,9 @@ DefaultTargetVpnGatewaysRestStub::AggregatedListTargetVpnGateways(
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::TargetVpnGatewayAggregatedList>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(),
-                   "/aggregated/targetVpnGateways"),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "aggregated", "/",
+                   "targetVpnGateways"),
       {std::make_pair("filter", request.filter()),
        std::make_pair("include_all_scopes",
                       request.include_all_scopes() ? "1" : "0"),
@@ -79,10 +80,10 @@ DefaultTargetVpnGatewaysRestStub::AsyncDeleteTargetVpnGateways(
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request,
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/regions/", request.region(),
-                             "/targetVpnGateways/",
-                             request.target_vpn_gateway(), "")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "regions", "/",
+                             request.region(), "/", "targetVpnGateways", "/",
+                             request.target_vpn_gateway())));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -98,9 +99,9 @@ DefaultTargetVpnGatewaysRestStub::GetTargetVpnGateways(
         GetTargetVpnGatewaysRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::TargetVpnGateway>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/regions/",
-                   request.region(), "/targetVpnGateways/",
-                   request.target_vpn_gateway(), ""),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "regions", "/", request.region(),
+                   "/", "targetVpnGateways", "/", request.target_vpn_gateway()),
       {});
 }
 
@@ -118,9 +119,9 @@ DefaultTargetVpnGatewaysRestStub::AsyncInsertTargetVpnGateways(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.target_vpn_gateway_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/regions/", request.region(),
-                             "/targetVpnGateways")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "regions", "/",
+                             request.region(), "/", "targetVpnGateways")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -137,8 +138,9 @@ DefaultTargetVpnGatewaysRestStub::ListTargetVpnGateways(
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::TargetVpnGatewayList>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/regions/",
-                   request.region(), "/targetVpnGateways"),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "regions", "/", request.region(),
+                   "/", "targetVpnGateways"),
       {std::make_pair("filter", request.filter()),
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),
@@ -162,10 +164,10 @@ DefaultTargetVpnGatewaysRestStub::AsyncSetLabels(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
                 request.region_set_labels_request_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/regions/", request.region(),
-                             "/targetVpnGateways/", request.resource(),
-                             "/setLabels")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "regions", "/",
+                             request.region(), "/", "targetVpnGateways", "/",
+                             request.resource(), "/", "setLabels")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {

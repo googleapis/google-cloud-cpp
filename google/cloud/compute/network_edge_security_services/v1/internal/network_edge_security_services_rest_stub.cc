@@ -57,8 +57,9 @@ DefaultNetworkEdgeSecurityServicesRestStub::
   return rest_internal::Get<google::cloud::cpp::compute::v1::
                                 NetworkEdgeSecurityServiceAggregatedList>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(),
-                   "/aggregated/networkEdgeSecurityServices"),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "aggregated", "/",
+                   "networkEdgeSecurityServices"),
       {std::make_pair("filter", request.filter()),
        std::make_pair("include_all_scopes",
                       request.include_all_scopes() ? "1" : "0"),
@@ -84,10 +85,11 @@ DefaultNetworkEdgeSecurityServicesRestStub::
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request,
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/regions/", request.region(),
-                             "/networkEdgeSecurityServices/",
-                             request.network_edge_security_service(), "")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "regions", "/",
+                             request.region(), "/",
+                             "networkEdgeSecurityServices", "/",
+                             request.network_edge_security_service())));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -104,9 +106,10 @@ DefaultNetworkEdgeSecurityServicesRestStub::GetNetworkEdgeSecurityServices(
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::NetworkEdgeSecurityService>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/regions/",
-                   request.region(), "/networkEdgeSecurityServices/",
-                   request.network_edge_security_service(), ""),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "regions", "/", request.region(),
+                   "/", "networkEdgeSecurityServices", "/",
+                   request.network_edge_security_service()),
       {});
 }
 
@@ -126,9 +129,10 @@ DefaultNetworkEdgeSecurityServicesRestStub::
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
                 request.network_edge_security_service_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/regions/", request.region(),
-                             "/networkEdgeSecurityServices")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "regions", "/",
+                             request.region(), "/",
+                             "networkEdgeSecurityServices")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -153,10 +157,11 @@ DefaultNetworkEdgeSecurityServicesRestStub::
             rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
                 request.network_edge_security_service_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/regions/", request.region(),
-                             "/networkEdgeSecurityServices/",
-                             request.network_edge_security_service(), "")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "regions", "/",
+                             request.region(), "/",
+                             "networkEdgeSecurityServices", "/",
+                             request.network_edge_security_service())));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
