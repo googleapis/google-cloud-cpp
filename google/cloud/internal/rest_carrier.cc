@@ -17,6 +17,7 @@
 #include "google/cloud/internal/rest_carrier.h"
 #include "google/cloud/internal/noexcept_action.h"
 #include "google/cloud/internal/rest_context.h"
+#include "google/cloud/log.h"
 
 namespace google {
 namespace cloud {
@@ -25,6 +26,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 opentelemetry::nostd::string_view RestCarrier::Get(
     opentelemetry::nostd::string_view) const noexcept {
+  GCP_LOG(FATAL) << __func__ << " should never be called";
   // Since the client is never extracting data from the REST headers, we are not
   // implementing Get and returning an empty string.
   return "";
