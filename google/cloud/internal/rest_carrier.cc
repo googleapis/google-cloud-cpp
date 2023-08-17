@@ -15,6 +15,7 @@
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 #include "google/cloud/internal/rest_carrier.h"
+#include "google/cloud/internal/noexcept_action.h"
 #include "google/cloud/internal/rest_context.h"
 
 namespace google {
@@ -25,13 +26,16 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 opentelemetry::nostd::string_view RestCarrier::Get(
     opentelemetry::nostd::string_view) const noexcept {
   // Since the client is never extracting data from the REST headers, we are not
-  // implementing Get and returning an empty string by default.
+  // implementing Get and returning an empty string.
   return "";
 }
 
 void RestCarrier::Set(opentelemetry::nostd::string_view key,
                       opentelemetry::nostd::string_view value) noexcept {
-  context_.AddHeader(std::string(key.data()), std::string(value.data()));
+  internal::NoExceptAction([=] {
+    context_.AddHeader(std::string(key.data(), key.value()),
+                       std::string(value.data(), value.size()));
+  });
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

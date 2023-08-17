@@ -31,10 +31,10 @@ TEST(RestCarrierTest, SetAttribute) {
   auto context = RestContext();
   RestCarrier rest_carrier(context);
 
-  rest_carrier.Set("header1", "test-value");
+  rest_carrier.Set("header", "test-value");
 
   EXPECT_THAT(context.headers(),
-              Contains(Pair("header1", ElementsAre("test-value"))));
+              Contains(Pair("header", ElementsAre("test-value"))));
 }
 
 }  // namespace
