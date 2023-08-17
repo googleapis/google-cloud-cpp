@@ -28,7 +28,7 @@ opentelemetry::nostd::string_view RestCarrier::Get(
     opentelemetry::nostd::string_view) const noexcept {
   GCP_LOG(FATAL) << __func__ << " should never be called";
   // Since the client is never extracting data from the REST headers, we are not
-  // implementing Get and returning an empty string.
+  // implementing Get and returning a null string view.
   return opentelemetry::nostd::string_view();
 }
 
