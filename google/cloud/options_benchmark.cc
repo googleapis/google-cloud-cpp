@@ -61,6 +61,92 @@ void BM_OptionsOneElementPresent(benchmark::State& state) {
 }
 BENCHMARK(BM_OptionsOneElementPresent);
 
+template <int I>
+struct TestOption {
+  using Type = int;
+};
+
+template <int I>
+struct PopulateOptions;
+template <>
+struct PopulateOptions<0> {
+  Options operator()() const { return Options{}.set<TestOption<0>>(0); }
+};
+template <int I>
+struct PopulateOptions {
+  Options operator()() const {
+    return PopulateOptions<I - 1>{}().template set<TestOption<I>>(I);
+  }
+};
+
+template <int I>
+struct ReadAllOptions;
+template <>
+struct ReadAllOptions<0> {
+  int operator()(Options const& o) const { return o.get<TestOption<0>>(); }
+};
+template <int I>
+struct ReadAllOptions {
+  int operator()(Options const& o) const {
+    return ReadAllOptions<I - 1>{}(o) + o.get<TestOption<I>>();
+  }
+};
+
+auto constexpr kOptionCount = 64;
+auto constexpr kMessageCount = 100;
+
+std::string SimulateRpc(Options overrides, Options const& client) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(overrides), client));
+  auto const& current = internal::CurrentOptions();
+  return std::to_string(ReadAllOptions<kOptionCount>{}(current));
+}
+
+std::string SimulateStreamingRPCWithSave(Options overrides,
+                                         Options const& client) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(overrides), client));
+  auto current = internal::SaveCurrentOptions();
+  for (int i = 0; i != kMessageCount; ++i) {
+    internal::OptionsSpan tmp(current);
+  }
+  return std::to_string(ReadAllOptions<kOptionCount>{}(*current));
+}
+
+std::string SimulateStreamingRPC(Options overrides, Options const& client) {
+  internal::OptionsSpan span(
+      internal::MergeOptions(std::move(overrides), client));
+  auto const& current = internal::CurrentOptions();
+  for (int i = 0; i != kMessageCount; ++i) {
+    internal::OptionsSpan tmp(current);
+  }
+  return std::to_string(ReadAllOptions<kOptionCount>{}(current));
+}
+
+void BM_SimulateRpc(benchmark::State& state) {
+  auto const client = PopulateOptions<kOptionCount>{}();
+  for (auto _ : state) {
+    benchmark::DoNotOptimize(SimulateRpc(Options{}, client));
+  }
+}
+BENCHMARK(BM_SimulateRpc);
+
+void BM_SimulateStreamingRpc(benchmark::State& state) {
+  auto const client = PopulateOptions<kOptionCount>{}();
+  for (auto _ : state) {
+    benchmark::DoNotOptimize(SimulateStreamingRPC(Options{}, client));
+  }
+}
+BENCHMARK(BM_SimulateStreamingRpc);
+
+void BM_SimulateStreamingRpcWithSave(benchmark::State& state) {
+  auto const client = PopulateOptions<kOptionCount>{}();
+  for (auto _ : state) {
+    benchmark::DoNotOptimize(SimulateStreamingRPCWithSave(Options{}, client));
+  }
+}
+BENCHMARK(BM_SimulateStreamingRpcWithSave);
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
