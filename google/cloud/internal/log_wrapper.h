@@ -24,6 +24,7 @@
 #include "google/cloud/internal/debug_string_status.h"
 #include "google/cloud/internal/invoke_result.h"
 #include "google/cloud/log.h"
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
@@ -106,11 +107,27 @@ std::unique_ptr<T> LogResponse(std::unique_ptr<T> response,
 
 template <typename Functor, typename Request, typename Context,
           typename Result = google::cloud::internal::invoke_result_t<
+              Functor, Context, Options const&, Request const&>>
+Result LogWrapper(Functor&& functor, Context&& context, Options const& opts,
+                  Request const& request, char const* where,
+                  TracingOptions const& options) {
+  LogRequest(where, "", DebugString(request, options));
+  return LogResponse(functor(std::forward<Context>(context), opts, request),
+                     where, "", options);
+}
+
+template <typename Functor, typename Request, typename Context,
+          typename Result = google::cloud::internal::invoke_result_t<
               Functor, Context, Request const&>>
 Result LogWrapper(Functor&& functor, Context&& context, Request const& request,
                   char const* where, TracingOptions const& options) {
-  LogRequest(where, "", DebugString(request, options));
-  return LogResponse(functor(context, request), where, "", options);
+  auto wrapper = [functor = std::forward<Functor>(functor)](
+                     Context&& context, Options const&,
+                     Request const& request) {
+    return functor(std::forward<Context>(context), request);
+  };
+  return LogWrapper(std::move(wrapper), std::forward<Context>(context),
+                    Options{}, request, where, options);
 }
 
 template <
@@ -124,6 +141,22 @@ Result LogWrapper(Functor&& functor, grpc::ClientContext& context,
   return LogResponse(functor(context, request, cq), where, "", options);
 }
 
+template <typename Functor, typename Request, typename Context,
+          typename Result = google::cloud::internal::invoke_result_t<
+              Functor, google::cloud::CompletionQueue&, Context, Options const&,
+              Request const&>>
+Result LogWrapper(Functor&& functor, google::cloud::CompletionQueue& cq,
+                  Context&& context, Options const& opts,
+                  Request const& request, char const* where,
+                  TracingOptions const& options) {
+  // Because this is an asynchronous request we need a unique identifier so
+  // applications can match the request and response in the log.
+  auto args = RequestIdForLogging();
+  LogRequest(where, args, DebugString(request, options));
+  return LogResponse(functor(cq, std::forward<Context>(context), opts, request),
+                     where, std::move(args), options);
+}
+
 template <
     typename Functor, typename Request, typename Context,
     typename Result = google::cloud::internal::invoke_result_t<
@@ -131,12 +164,13 @@ template <
 Result LogWrapper(Functor&& functor, google::cloud::CompletionQueue& cq,
                   Context&& context, Request const& request, char const* where,
                   TracingOptions const& options) {
-  // Because this is an asynchronous request we need a unique identifier so
-  // applications can match the request and response in the log.
-  auto args = RequestIdForLogging();
-  LogRequest(where, args, DebugString(request, options));
-  return LogResponse(functor(cq, std::forward<Context>(context), request),
-                     where, std::move(args), options);
+  auto wrapper = [functor = std::forward<Functor>(functor)](
+                     google::cloud::CompletionQueue& cq, Context context,
+                     Options const&, Request const& request) {
+    return functor(cq, std::move(context), request);
+  };
+  return LogWrapper(std::move(wrapper), cq, std::forward<Context>(context),
+                    Options{}, request, where, options);
 }
 
 }  // namespace internal

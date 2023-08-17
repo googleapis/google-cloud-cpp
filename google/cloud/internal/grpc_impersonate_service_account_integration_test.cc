@@ -173,7 +173,8 @@ class TestStubLogging : public TestStub {
       std::shared_ptr<grpc::ClientContext> context,
       GetTableRequest const& request) override {
     return LogWrapper(
-        [this](google::cloud::CompletionQueue& cq, auto context,
+        [this](google::cloud::CompletionQueue& cq,
+               std::shared_ptr<grpc::ClientContext> context,
                GetTableRequest const& request) {
           return child_->AsyncGetTable(cq, std::move(context), request);
         },
