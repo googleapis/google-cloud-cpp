@@ -50,8 +50,7 @@ namespace {
 // additional propagation must be done whenever work for the operation
 // is done in another thread.
 std::shared_ptr<Options const>& ThreadLocalOptions() {
-  thread_local std::shared_ptr<Options const> current_options =
-      std::make_shared<Options const>();
+  thread_local auto current_options = std::make_shared<Options const>();
   return current_options;
 }
 
