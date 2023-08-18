@@ -46,8 +46,8 @@ DefaultMachineTypesRestStub::AggregatedListMachineTypes(
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::MachineTypeAggregatedList>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(),
-                   "/aggregated/machineTypes"),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "aggregated", "/", "machineTypes"),
       {std::make_pair("filter", request.filter()),
        std::make_pair("include_all_scopes",
                       request.include_all_scopes() ? "1" : "0"),
@@ -65,9 +65,9 @@ DefaultMachineTypesRestStub::GetMachineTypes(
         GetMachineTypesRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::MachineType>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/zones/",
-                   request.zone(), "/machineTypes/", request.machine_type(),
-                   ""),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "zones", "/", request.zone(), "/",
+                   "machineTypes", "/", request.machine_type()),
       {});
 }
 
@@ -78,8 +78,9 @@ DefaultMachineTypesRestStub::ListMachineTypes(
         ListMachineTypesRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::MachineTypeList>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/zones/",
-                   request.zone(), "/machineTypes"),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "zones", "/", request.zone(), "/",
+                   "machineTypes"),
       {std::make_pair("filter", request.filter()),
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),

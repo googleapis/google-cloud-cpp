@@ -46,8 +46,8 @@ DefaultNodeTypesRestStub::AggregatedListNodeTypes(
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::NodeTypeAggregatedList>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(),
-                   "/aggregated/nodeTypes"),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "aggregated", "/", "nodeTypes"),
       {std::make_pair("filter", request.filter()),
        std::make_pair("include_all_scopes",
                       request.include_all_scopes() ? "1" : "0"),
@@ -65,8 +65,9 @@ DefaultNodeTypesRestStub::GetNodeTypes(
         request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::NodeType>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/zones/",
-                   request.zone(), "/nodeTypes/", request.node_type(), ""),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "zones", "/", request.zone(), "/",
+                   "nodeTypes", "/", request.node_type()),
       {});
 }
 
@@ -77,8 +78,9 @@ DefaultNodeTypesRestStub::ListNodeTypes(
         request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::NodeTypeList>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/zones/",
-                   request.zone(), "/nodeTypes"),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "zones", "/", request.zone(), "/",
+                   "nodeTypes"),
       {std::make_pair("filter", request.filter()),
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),

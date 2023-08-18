@@ -58,9 +58,10 @@ DefaultBackendServicesRestStub::AsyncAddSignedUrlKey(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.signed_url_key_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/global/backendServices/",
-                             request.backend_service(), "/addSignedUrlKey")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "global", "/",
+                             "backendServices", "/", request.backend_service(),
+                             "/", "addSignedUrlKey")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -77,8 +78,9 @@ DefaultBackendServicesRestStub::AggregatedListBackendServices(
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::BackendServiceAggregatedList>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(),
-                   "/aggregated/backendServices"),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "aggregated", "/",
+                   "backendServices"),
       {std::make_pair("filter", request.filter()),
        std::make_pair("include_all_scopes",
                       request.include_all_scopes() ? "1" : "0"),
@@ -103,9 +105,10 @@ DefaultBackendServicesRestStub::AsyncDeleteBackendServices(
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request,
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/global/backendServices/",
-                             request.backend_service(), "")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "global", "/",
+                             "backendServices", "/",
+                             request.backend_service())));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -128,10 +131,10 @@ DefaultBackendServicesRestStub::AsyncDeleteSignedUrlKey(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request,
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/global/backendServices/",
-                             request.backend_service(),
-                             "/deleteSignedUrlKey")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "global", "/",
+                             "backendServices", "/", request.backend_service(),
+                             "/", "deleteSignedUrlKey")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -147,8 +150,9 @@ DefaultBackendServicesRestStub::GetBackendServices(
         GetBackendServicesRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::BackendService>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(),
-                   "/global/backendServices/", request.backend_service(), ""),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "global", "/", "backendServices",
+                   "/", request.backend_service()),
       {});
 }
 
@@ -160,9 +164,9 @@ DefaultBackendServicesRestStub::GetHealth(
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::BackendServiceGroupHealth>(
       *service_, rest_context, request.resource_group_reference_resource(),
-      absl::StrCat("/compute/v1/projects/", request.project(),
-                   "/global/backendServices/", request.backend_service(),
-                   "/getHealth"));
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "global", "/", "backendServices",
+                   "/", request.backend_service(), "/", "getHealth"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
@@ -172,9 +176,9 @@ DefaultBackendServicesRestStub::GetIamPolicy(
         GetIamPolicyRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(),
-                   "/global/backendServices/", request.resource(),
-                   "/getIamPolicy"),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "global", "/", "backendServices",
+                   "/", request.resource(), "/", "getIamPolicy"),
       {std::make_pair(
           "options_requested_policy_version",
           std::to_string(request.options_requested_policy_version()))});
@@ -194,8 +198,9 @@ DefaultBackendServicesRestStub::AsyncInsertBackendServices(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.backend_service_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/global/backendServices")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "global", "/",
+                             "backendServices")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -212,8 +217,8 @@ DefaultBackendServicesRestStub::ListBackendServices(
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::BackendServiceList>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(),
-                   "/global/backendServices"),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "global", "/", "backendServices"),
       {std::make_pair("filter", request.filter()),
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),
@@ -236,9 +241,10 @@ DefaultBackendServicesRestStub::AsyncPatchBackendServices(
         p.set_value(
             rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.backend_service_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/global/backendServices/",
-                             request.backend_service(), "")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "global", "/",
+                             "backendServices", "/",
+                             request.backend_service())));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -262,10 +268,10 @@ DefaultBackendServicesRestStub::AsyncSetEdgeSecurityPolicy(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
                 request.security_policy_reference_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/global/backendServices/",
-                             request.backend_service(),
-                             "/setEdgeSecurityPolicy")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "global", "/",
+                             "backendServices", "/", request.backend_service(),
+                             "/", "setEdgeSecurityPolicy")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -281,9 +287,9 @@ DefaultBackendServicesRestStub::SetIamPolicy(
         SetIamPolicyRequest const& request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request.global_set_policy_request_resource(),
-      absl::StrCat("/compute/v1/projects/", request.project(),
-                   "/global/backendServices/", request.resource(),
-                   "/setIamPolicy"));
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "global", "/", "backendServices",
+                   "/", request.resource(), "/", "setIamPolicy"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -301,9 +307,10 @@ DefaultBackendServicesRestStub::AsyncSetSecurityPolicy(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
                 request.security_policy_reference_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/global/backendServices/",
-                             request.backend_service(), "/setSecurityPolicy")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "global", "/",
+                             "backendServices", "/", request.backend_service(),
+                             "/", "setSecurityPolicy")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -326,9 +333,10 @@ DefaultBackendServicesRestStub::AsyncUpdateBackendServices(
         p.set_value(
             rest_internal::Put<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.backend_service_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/global/backendServices/",
-                             request.backend_service(), "")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "global", "/",
+                             "backendServices", "/",
+                             request.backend_service())));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {

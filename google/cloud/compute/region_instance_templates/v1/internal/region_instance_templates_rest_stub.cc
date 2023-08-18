@@ -60,10 +60,10 @@ DefaultRegionInstanceTemplatesRestStub::AsyncDeleteRegionInstanceTemplates(
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request,
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/regions/", request.region(),
-                             "/instanceTemplates/", request.instance_template(),
-                             "")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "regions", "/",
+                             request.region(), "/", "instanceTemplates", "/",
+                             request.instance_template())));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -79,9 +79,9 @@ DefaultRegionInstanceTemplatesRestStub::GetRegionInstanceTemplates(
         GetRegionInstanceTemplatesRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::InstanceTemplate>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/regions/",
-                   request.region(), "/instanceTemplates/",
-                   request.instance_template(), ""),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "regions", "/", request.region(),
+                   "/", "instanceTemplates", "/", request.instance_template()),
       {});
 }
 
@@ -99,9 +99,9 @@ DefaultRegionInstanceTemplatesRestStub::AsyncInsertRegionInstanceTemplates(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.instance_template_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/regions/", request.region(),
-                             "/instanceTemplates")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "regions", "/",
+                             request.region(), "/", "instanceTemplates")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -118,8 +118,9 @@ DefaultRegionInstanceTemplatesRestStub::ListRegionInstanceTemplates(
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::InstanceTemplateList>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/regions/",
-                   request.region(), "/instanceTemplates"),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "regions", "/", request.region(),
+                   "/", "instanceTemplates"),
       {std::make_pair("filter", request.filter()),
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),

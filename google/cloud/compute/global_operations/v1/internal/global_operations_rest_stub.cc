@@ -47,8 +47,8 @@ DefaultGlobalOperationsRestStub::AggregatedListGlobalOperations(
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::OperationAggregatedList>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(),
-                   "/aggregated/operations"),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "aggregated", "/", "operations"),
       {std::make_pair("filter", request.filter()),
        std::make_pair("include_all_scopes",
                       request.include_all_scopes() ? "1" : "0"),
@@ -65,8 +65,9 @@ Status DefaultGlobalOperationsRestStub::DeleteGlobalOperations(
         DeleteGlobalOperationsRequest const& request) {
   return rest_internal::Delete(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(),
-                   "/global/operations/", request.operation(), ""));
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "global", "/", "operations", "/",
+                   request.operation()));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
@@ -76,8 +77,9 @@ DefaultGlobalOperationsRestStub::GetGlobalOperations(
         GetGlobalOperationsRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(),
-                   "/global/operations/", request.operation(), ""),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "global", "/", "operations", "/",
+                   request.operation()),
       {});
 }
 
@@ -88,8 +90,8 @@ DefaultGlobalOperationsRestStub::ListGlobalOperations(
         ListGlobalOperationsRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::OperationList>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(),
-                   "/global/operations"),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "global", "/", "operations"),
       {std::make_pair("filter", request.filter()),
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),
@@ -105,8 +107,9 @@ DefaultGlobalOperationsRestStub::Wait(
         request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(),
-                   "/global/operations/", request.operation(), "/wait"));
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "global", "/", "operations", "/",
+                   request.operation(), "/", "wait"));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

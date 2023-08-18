@@ -47,8 +47,9 @@ DefaultAcceleratorTypesRestStub::AggregatedListAcceleratorTypes(
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::AcceleratorTypeAggregatedList>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(),
-                   "/aggregated/acceleratorTypes"),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "aggregated", "/",
+                   "acceleratorTypes"),
       {std::make_pair("filter", request.filter()),
        std::make_pair("include_all_scopes",
                       request.include_all_scopes() ? "1" : "0"),
@@ -66,9 +67,9 @@ DefaultAcceleratorTypesRestStub::GetAcceleratorTypes(
         GetAcceleratorTypesRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::AcceleratorType>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/zones/",
-                   request.zone(), "/acceleratorTypes/",
-                   request.accelerator_type(), ""),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "zones", "/", request.zone(), "/",
+                   "acceleratorTypes", "/", request.accelerator_type()),
       {});
 }
 
@@ -80,8 +81,9 @@ DefaultAcceleratorTypesRestStub::ListAcceleratorTypes(
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::AcceleratorTypeList>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/zones/",
-                   request.zone(), "/acceleratorTypes"),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "zones", "/", request.zone(), "/",
+                   "acceleratorTypes"),
       {std::make_pair("filter", request.filter()),
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),

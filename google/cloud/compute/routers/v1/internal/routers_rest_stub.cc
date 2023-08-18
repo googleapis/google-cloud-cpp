@@ -52,8 +52,8 @@ DefaultRoutersRestStub::AggregatedListRouters(
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::RouterAggregatedList>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(),
-                   "/aggregated/routers"),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "aggregated", "/", "routers"),
       {std::make_pair("filter", request.filter()),
        std::make_pair("include_all_scopes",
                       request.include_all_scopes() ? "1" : "0"),
@@ -78,9 +78,10 @@ DefaultRoutersRestStub::AsyncDeleteRouters(
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request,
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/regions/", request.region(), "/routers/",
-                             request.router(), "")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "regions", "/",
+                             request.region(), "/", "routers", "/",
+                             request.router())));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -96,8 +97,9 @@ DefaultRoutersRestStub::GetRouters(
         request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Router>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/regions/",
-                   request.region(), "/routers/", request.router(), ""),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "regions", "/", request.region(),
+                   "/", "routers", "/", request.router()),
       {});
 }
 
@@ -109,9 +111,10 @@ DefaultRoutersRestStub::GetNatMappingInfo(
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::VmEndpointNatMappingsList>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/regions/",
-                   request.region(), "/routers/", request.router(),
-                   "/getNatMappingInfo"),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "regions", "/", request.region(),
+                   "/", "routers", "/", request.router(), "/",
+                   "getNatMappingInfo"),
       {std::make_pair("filter", request.filter()),
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("nat_name", request.nat_name()),
@@ -129,9 +132,10 @@ DefaultRoutersRestStub::GetRouterStatus(
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::RouterStatusResponse>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/regions/",
-                   request.region(), "/routers/", request.router(),
-                   "/getRouterStatus"),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "regions", "/", request.region(),
+                   "/", "routers", "/", request.router(), "/",
+                   "getRouterStatus"),
       {});
 }
 
@@ -149,8 +153,9 @@ DefaultRoutersRestStub::AsyncInsertRouters(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.router_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/regions/", request.region(), "/routers")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "regions", "/",
+                             request.region(), "/", "routers")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -166,8 +171,9 @@ DefaultRoutersRestStub::ListRouters(
         request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::RouterList>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/regions/",
-                   request.region(), "/routers"),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "regions", "/", request.region(),
+                   "/", "routers"),
       {std::make_pair("filter", request.filter()),
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),
@@ -190,9 +196,10 @@ DefaultRoutersRestStub::AsyncPatchRouters(
         p.set_value(
             rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.router_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/regions/", request.region(), "/routers/",
-                             request.router(), "")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "regions", "/",
+                             request.region(), "/", "routers", "/",
+                             request.router())));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -208,9 +215,9 @@ DefaultRoutersRestStub::Preview(
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::RoutersPreviewResponse>(
       *service_, rest_context, request.router_resource(),
-      absl::StrCat("/compute/v1/projects/", request.project(), "/regions/",
-                   request.region(), "/routers/", request.router(),
-                   "/preview"));
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "regions", "/", request.region(),
+                   "/", "routers", "/", request.router(), "/", "preview"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -227,9 +234,10 @@ DefaultRoutersRestStub::AsyncUpdateRouters(
         p.set_value(
             rest_internal::Put<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.router_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/regions/", request.region(), "/routers/",
-                             request.router(), "")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "regions", "/",
+                             request.region(), "/", "routers", "/",
+                             request.router())));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {

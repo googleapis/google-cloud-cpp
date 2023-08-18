@@ -62,10 +62,11 @@ DefaultRegionNetworkFirewallPoliciesRestStub::AsyncAddAssociation(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
                 request.firewall_policy_association_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/regions/", request.region(),
-                             "/firewallPolicies/", request.firewall_policy(),
-                             "/addAssociation")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "regions", "/",
+                             request.region(), "/", "firewallPolicies", "/",
+                             request.firewall_policy(), "/",
+                             "addAssociation")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -89,10 +90,10 @@ DefaultRegionNetworkFirewallPoliciesRestStub::AsyncAddRule(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
                 request.firewall_policy_rule_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/regions/", request.region(),
-                             "/firewallPolicies/", request.firewall_policy(),
-                             "/addRule")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "regions", "/",
+                             request.region(), "/", "firewallPolicies", "/",
+                             request.firewall_policy(), "/", "addRule")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -115,10 +116,10 @@ DefaultRegionNetworkFirewallPoliciesRestStub::AsyncCloneRules(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request,
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/regions/", request.region(),
-                             "/firewallPolicies/", request.firewall_policy(),
-                             "/cloneRules")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "regions", "/",
+                             request.region(), "/", "firewallPolicies", "/",
+                             request.firewall_policy(), "/", "cloneRules")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -142,10 +143,10 @@ DefaultRegionNetworkFirewallPoliciesRestStub::
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request,
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/regions/", request.region(),
-                             "/firewallPolicies/", request.firewall_policy(),
-                             "")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "regions", "/",
+                             request.region(), "/", "firewallPolicies", "/",
+                             request.firewall_policy())));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -161,9 +162,9 @@ DefaultRegionNetworkFirewallPoliciesRestStub::GetRegionNetworkFirewallPolicies(
         GetRegionNetworkFirewallPoliciesRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::FirewallPolicy>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/regions/",
-                   request.region(), "/firewallPolicies/",
-                   request.firewall_policy(), ""),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "regions", "/", request.region(),
+                   "/", "firewallPolicies", "/", request.firewall_policy()),
       {});
 }
 
@@ -175,9 +176,10 @@ DefaultRegionNetworkFirewallPoliciesRestStub::GetAssociation(
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::FirewallPolicyAssociation>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/regions/",
-                   request.region(), "/firewallPolicies/",
-                   request.firewall_policy(), "/getAssociation"),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "regions", "/", request.region(),
+                   "/", "firewallPolicies", "/", request.firewall_policy(), "/",
+                   "getAssociation"),
       {std::make_pair("name", request.name())});
 }
 
@@ -191,8 +193,9 @@ DefaultRegionNetworkFirewallPoliciesRestStub::GetEffectiveFirewalls(
       google::cloud::cpp::compute::v1::
           RegionNetworkFirewallPoliciesGetEffectiveFirewallsResponse>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/regions/",
-                   request.region(), "/firewallPolicies/getEffectiveFirewalls"),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "regions", "/", request.region(),
+                   "/", "firewallPolicies", "/", "getEffectiveFirewalls"),
       {std::make_pair("network", request.network())});
 }
 
@@ -203,9 +206,10 @@ DefaultRegionNetworkFirewallPoliciesRestStub::GetIamPolicy(
         GetIamPolicyRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/regions/",
-                   request.region(), "/firewallPolicies/", request.resource(),
-                   "/getIamPolicy"),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "regions", "/", request.region(),
+                   "/", "firewallPolicies", "/", request.resource(), "/",
+                   "getIamPolicy"),
       {std::make_pair(
           "options_requested_policy_version",
           std::to_string(request.options_requested_policy_version()))});
@@ -219,9 +223,10 @@ DefaultRegionNetworkFirewallPoliciesRestStub::GetRule(
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::FirewallPolicyRule>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/regions/",
-                   request.region(), "/firewallPolicies/",
-                   request.firewall_policy(), "/getRule"),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "regions", "/", request.region(),
+                   "/", "firewallPolicies", "/", request.firewall_policy(), "/",
+                   "getRule"),
       {std::make_pair("priority", std::to_string(request.priority()))});
 }
 
@@ -240,9 +245,9 @@ DefaultRegionNetworkFirewallPoliciesRestStub::
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.firewall_policy_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/regions/", request.region(),
-                             "/firewallPolicies")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "regions", "/",
+                             request.region(), "/", "firewallPolicies")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -259,8 +264,9 @@ DefaultRegionNetworkFirewallPoliciesRestStub::ListRegionNetworkFirewallPolicies(
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::FirewallPolicyList>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/regions/",
-                   request.region(), "/firewallPolicies"),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "regions", "/", request.region(),
+                   "/", "firewallPolicies"),
       {std::make_pair("filter", request.filter()),
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),
@@ -284,10 +290,10 @@ DefaultRegionNetworkFirewallPoliciesRestStub::
         p.set_value(
             rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.firewall_policy_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/regions/", request.region(),
-                             "/firewallPolicies/", request.firewall_policy(),
-                             "")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "regions", "/",
+                             request.region(), "/", "firewallPolicies", "/",
+                             request.firewall_policy())));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -311,10 +317,10 @@ DefaultRegionNetworkFirewallPoliciesRestStub::AsyncPatchRule(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
                 request.firewall_policy_rule_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/regions/", request.region(),
-                             "/firewallPolicies/", request.firewall_policy(),
-                             "/patchRule")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "regions", "/",
+                             request.region(), "/", "firewallPolicies", "/",
+                             request.firewall_policy(), "/", "patchRule")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -337,10 +343,11 @@ DefaultRegionNetworkFirewallPoliciesRestStub::AsyncRemoveAssociation(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request,
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/regions/", request.region(),
-                             "/firewallPolicies/", request.firewall_policy(),
-                             "/removeAssociation")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "regions", "/",
+                             request.region(), "/", "firewallPolicies", "/",
+                             request.firewall_policy(), "/",
+                             "removeAssociation")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -363,10 +370,10 @@ DefaultRegionNetworkFirewallPoliciesRestStub::AsyncRemoveRule(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request,
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/regions/", request.region(),
-                             "/firewallPolicies/", request.firewall_policy(),
-                             "/removeRule")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "regions", "/",
+                             request.region(), "/", "firewallPolicies", "/",
+                             request.firewall_policy(), "/", "removeRule")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -382,9 +389,10 @@ DefaultRegionNetworkFirewallPoliciesRestStub::SetIamPolicy(
         SetIamPolicyRequest const& request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request.region_set_policy_request_resource(),
-      absl::StrCat("/compute/v1/projects/", request.project(), "/regions/",
-                   request.region(), "/firewallPolicies/", request.resource(),
-                   "/setIamPolicy"));
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "regions", "/", request.region(),
+                   "/", "firewallPolicies", "/", request.resource(), "/",
+                   "setIamPolicy"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
@@ -395,9 +403,10 @@ DefaultRegionNetworkFirewallPoliciesRestStub::TestIamPermissions(
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::TestPermissionsResponse>(
       *service_, rest_context, request.test_permissions_request_resource(),
-      absl::StrCat("/compute/v1/projects/", request.project(), "/regions/",
-                   request.region(), "/firewallPolicies/", request.resource(),
-                   "/testIamPermissions"));
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "regions", "/", request.region(),
+                   "/", "firewallPolicies", "/", request.resource(), "/",
+                   "testIamPermissions"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

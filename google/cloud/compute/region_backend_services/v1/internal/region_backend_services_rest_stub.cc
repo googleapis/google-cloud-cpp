@@ -60,9 +60,10 @@ DefaultRegionBackendServicesRestStub::AsyncDeleteRegionBackendServices(
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request,
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/regions/", request.region(), "/backendServices/",
-                             request.backend_service(), "")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "regions", "/",
+                             request.region(), "/", "backendServices", "/",
+                             request.backend_service())));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -78,9 +79,9 @@ DefaultRegionBackendServicesRestStub::GetRegionBackendServices(
         GetRegionBackendServicesRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::BackendService>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/regions/",
-                   request.region(), "/backendServices/",
-                   request.backend_service(), ""),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "regions", "/", request.region(),
+                   "/", "backendServices", "/", request.backend_service()),
       {});
 }
 
@@ -92,9 +93,10 @@ DefaultRegionBackendServicesRestStub::GetHealth(
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::BackendServiceGroupHealth>(
       *service_, rest_context, request.resource_group_reference_resource(),
-      absl::StrCat("/compute/v1/projects/", request.project(), "/regions/",
-                   request.region(), "/backendServices/",
-                   request.backend_service(), "/getHealth"));
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "regions", "/", request.region(),
+                   "/", "backendServices", "/", request.backend_service(), "/",
+                   "getHealth"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
@@ -104,9 +106,10 @@ DefaultRegionBackendServicesRestStub::GetIamPolicy(
         GetIamPolicyRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/regions/",
-                   request.region(), "/backendServices/", request.resource(),
-                   "/getIamPolicy"),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "regions", "/", request.region(),
+                   "/", "backendServices", "/", request.resource(), "/",
+                   "getIamPolicy"),
       {std::make_pair(
           "options_requested_policy_version",
           std::to_string(request.options_requested_policy_version()))});
@@ -126,9 +129,9 @@ DefaultRegionBackendServicesRestStub::AsyncInsertRegionBackendServices(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.backend_service_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/regions/", request.region(),
-                             "/backendServices")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "regions", "/",
+                             request.region(), "/", "backendServices")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -145,8 +148,9 @@ DefaultRegionBackendServicesRestStub::ListRegionBackendServices(
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::BackendServiceList>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/regions/",
-                   request.region(), "/backendServices"),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "regions", "/", request.region(),
+                   "/", "backendServices"),
       {std::make_pair("filter", request.filter()),
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),
@@ -169,9 +173,10 @@ DefaultRegionBackendServicesRestStub::AsyncPatchRegionBackendServices(
         p.set_value(
             rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.backend_service_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/regions/", request.region(), "/backendServices/",
-                             request.backend_service(), "")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "regions", "/",
+                             request.region(), "/", "backendServices", "/",
+                             request.backend_service())));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -187,9 +192,10 @@ DefaultRegionBackendServicesRestStub::SetIamPolicy(
         SetIamPolicyRequest const& request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request.region_set_policy_request_resource(),
-      absl::StrCat("/compute/v1/projects/", request.project(), "/regions/",
-                   request.region(), "/backendServices/", request.resource(),
-                   "/setIamPolicy"));
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "regions", "/", request.region(),
+                   "/", "backendServices", "/", request.resource(), "/",
+                   "setIamPolicy"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -206,9 +212,10 @@ DefaultRegionBackendServicesRestStub::AsyncUpdateRegionBackendServices(
         p.set_value(
             rest_internal::Put<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.backend_service_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/regions/", request.region(), "/backendServices/",
-                             request.backend_service(), "")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "regions", "/",
+                             request.region(), "/", "backendServices", "/",
+                             request.backend_service())));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {

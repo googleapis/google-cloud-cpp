@@ -58,8 +58,9 @@ DefaultImagesRestStub::AsyncDeleteImages(
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request,
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/global/images/", request.image(), "")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "global", "/", "images",
+                             "/", request.image())));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -81,9 +82,9 @@ DefaultImagesRestStub::AsyncDeprecate(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.deprecation_status_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/global/images/", request.image(),
-                             "/deprecate")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "global", "/", "images",
+                             "/", request.image(), "/", "deprecate")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -98,8 +99,9 @@ DefaultImagesRestStub::GetImages(
     google::cloud::cpp::compute::images::v1::GetImagesRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Image>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(),
-                   "/global/images/", request.image(), ""),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "global", "/", "images", "/",
+                   request.image()),
       {});
 }
 
@@ -110,8 +112,9 @@ DefaultImagesRestStub::GetFromFamily(
         request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Image>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(),
-                   "/global/images/family/", request.family(), ""),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "global", "/", "images", "/",
+                   "family", "/", request.family()),
       {});
 }
 
@@ -122,8 +125,9 @@ DefaultImagesRestStub::GetIamPolicy(
         request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(),
-                   "/global/images/", request.resource(), "/getIamPolicy"),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "global", "/", "images", "/",
+                   request.resource(), "/", "getIamPolicy"),
       {std::make_pair(
           "options_requested_policy_version",
           std::to_string(request.options_requested_policy_version()))});
@@ -143,8 +147,8 @@ DefaultImagesRestStub::AsyncInsertImages(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.image_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/global/images")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "global", "/", "images")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -159,8 +163,8 @@ DefaultImagesRestStub::ListImages(
     google::cloud::cpp::compute::images::v1::ListImagesRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::ImageList>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(),
-                   "/global/images"),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "global", "/", "images"),
       {std::make_pair("filter", request.filter()),
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),
@@ -183,8 +187,9 @@ DefaultImagesRestStub::AsyncPatchImages(
         p.set_value(
             rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.image_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/global/images/", request.image(), "")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "global", "/", "images",
+                             "/", request.image())));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -200,8 +205,9 @@ DefaultImagesRestStub::SetIamPolicy(
         request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request.global_set_policy_request_resource(),
-      absl::StrCat("/compute/v1/projects/", request.project(),
-                   "/global/images/", request.resource(), "/setIamPolicy"));
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "global", "/", "images", "/",
+                   request.resource(), "/", "setIamPolicy"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -218,9 +224,9 @@ DefaultImagesRestStub::AsyncSetLabels(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
                 request.global_set_labels_request_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/global/images/", request.resource(),
-                             "/setLabels")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "global", "/", "images",
+                             "/", request.resource(), "/", "setLabels")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -237,9 +243,9 @@ DefaultImagesRestStub::TestIamPermissions(
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::TestPermissionsResponse>(
       *service_, rest_context, request.test_permissions_request_resource(),
-      absl::StrCat("/compute/v1/projects/", request.project(),
-                   "/global/images/", request.resource(),
-                   "/testIamPermissions"));
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "global", "/", "images", "/",
+                   request.resource(), "/", "testIamPermissions"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

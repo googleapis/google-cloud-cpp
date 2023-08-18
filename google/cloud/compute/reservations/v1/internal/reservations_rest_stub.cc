@@ -52,8 +52,8 @@ DefaultReservationsRestStub::AggregatedListReservations(
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::ReservationAggregatedList>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(),
-                   "/aggregated/reservations"),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "aggregated", "/", "reservations"),
       {std::make_pair("filter", request.filter()),
        std::make_pair("include_all_scopes",
                       request.include_all_scopes() ? "1" : "0"),
@@ -78,9 +78,10 @@ DefaultReservationsRestStub::AsyncDeleteReservations(
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request,
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/zones/", request.zone(), "/reservations/",
-                             request.reservation(), "")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "zones", "/",
+                             request.zone(), "/", "reservations", "/",
+                             request.reservation())));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -96,8 +97,9 @@ DefaultReservationsRestStub::GetReservations(
         request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Reservation>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/zones/",
-                   request.zone(), "/reservations/", request.reservation(), ""),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "zones", "/", request.zone(), "/",
+                   "reservations", "/", request.reservation()),
       {});
 }
 
@@ -108,9 +110,10 @@ DefaultReservationsRestStub::GetIamPolicy(
         request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/zones/",
-                   request.zone(), "/reservations/", request.resource(),
-                   "/getIamPolicy"),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "zones", "/", request.zone(), "/",
+                   "reservations", "/", request.resource(), "/",
+                   "getIamPolicy"),
       {std::make_pair(
           "options_requested_policy_version",
           std::to_string(request.options_requested_policy_version()))});
@@ -130,8 +133,9 @@ DefaultReservationsRestStub::AsyncInsertReservations(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.reservation_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/zones/", request.zone(), "/reservations")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "zones", "/",
+                             request.zone(), "/", "reservations")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -147,8 +151,9 @@ DefaultReservationsRestStub::ListReservations(
         ListReservationsRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::ReservationList>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/zones/",
-                   request.zone(), "/reservations"),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "zones", "/", request.zone(), "/",
+                   "reservations"),
       {std::make_pair("filter", request.filter()),
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),
@@ -172,9 +177,10 @@ DefaultReservationsRestStub::AsyncResize(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
                 request.reservations_resize_request_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/zones/", request.zone(), "/reservations/",
-                             request.reservation(), "/resize")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "zones", "/",
+                             request.zone(), "/", "reservations", "/",
+                             request.reservation(), "/", "resize")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -190,9 +196,10 @@ DefaultReservationsRestStub::SetIamPolicy(
         request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request.zone_set_policy_request_resource(),
-      absl::StrCat("/compute/v1/projects/", request.project(), "/zones/",
-                   request.zone(), "/reservations/", request.resource(),
-                   "/setIamPolicy"));
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "zones", "/", request.zone(), "/",
+                   "reservations", "/", request.resource(), "/",
+                   "setIamPolicy"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
@@ -203,9 +210,10 @@ DefaultReservationsRestStub::TestIamPermissions(
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::TestPermissionsResponse>(
       *service_, rest_context, request.test_permissions_request_resource(),
-      absl::StrCat("/compute/v1/projects/", request.project(), "/zones/",
-                   request.zone(), "/reservations/", request.resource(),
-                   "/testIamPermissions"));
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "zones", "/", request.zone(), "/",
+                   "reservations", "/", request.resource(), "/",
+                   "testIamPermissions"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -222,9 +230,10 @@ DefaultReservationsRestStub::AsyncUpdateReservations(
         p.set_value(
             rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.reservation_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/zones/", request.zone(), "/reservations/",
-                             request.reservation(), "")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "zones", "/",
+                             request.zone(), "/", "reservations", "/",
+                             request.reservation())));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {

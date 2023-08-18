@@ -52,8 +52,8 @@ DefaultAddressesRestStub::AggregatedListAddresses(
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::AddressAggregatedList>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(),
-                   "/aggregated/addresses"),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "aggregated", "/", "addresses"),
       {std::make_pair("filter", request.filter()),
        std::make_pair("include_all_scopes",
                       request.include_all_scopes() ? "1" : "0"),
@@ -78,9 +78,10 @@ DefaultAddressesRestStub::AsyncDeleteAddresses(
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request,
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/regions/", request.region(), "/addresses/",
-                             request.address(), "")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "regions", "/",
+                             request.region(), "/", "addresses", "/",
+                             request.address())));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -96,8 +97,9 @@ DefaultAddressesRestStub::GetAddresses(
         request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Address>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/regions/",
-                   request.region(), "/addresses/", request.address(), ""),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "regions", "/", request.region(),
+                   "/", "addresses", "/", request.address()),
       {});
 }
 
@@ -115,8 +117,9 @@ DefaultAddressesRestStub::AsyncInsertAddresses(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.address_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/regions/", request.region(), "/addresses")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "regions", "/",
+                             request.region(), "/", "addresses")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -132,8 +135,9 @@ DefaultAddressesRestStub::ListAddresses(
         request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::AddressList>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/regions/",
-                   request.region(), "/addresses"),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "regions", "/", request.region(),
+                   "/", "addresses"),
       {std::make_pair("filter", request.filter()),
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),
@@ -156,9 +160,10 @@ DefaultAddressesRestStub::AsyncMove(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
                 request.region_addresses_move_request_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/regions/", request.region(), "/addresses/",
-                             request.address(), "/move")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "regions", "/",
+                             request.region(), "/", "addresses", "/",
+                             request.address(), "/", "move")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -182,9 +187,10 @@ DefaultAddressesRestStub::AsyncSetLabels(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
                 request.region_set_labels_request_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/regions/", request.region(), "/addresses/",
-                             request.resource(), "/setLabels")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "regions", "/",
+                             request.region(), "/", "addresses", "/",
+                             request.resource(), "/", "setLabels")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {

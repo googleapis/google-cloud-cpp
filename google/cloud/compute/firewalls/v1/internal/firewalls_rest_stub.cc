@@ -58,8 +58,9 @@ DefaultFirewallsRestStub::AsyncDeleteFirewalls(
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request,
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/global/firewalls/", request.firewall(), "")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "global", "/", "firewalls",
+                             "/", request.firewall())));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -75,8 +76,9 @@ DefaultFirewallsRestStub::GetFirewalls(
         request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Firewall>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(),
-                   "/global/firewalls/", request.firewall(), ""),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "global", "/", "firewalls", "/",
+                   request.firewall()),
       {});
 }
 
@@ -94,8 +96,9 @@ DefaultFirewallsRestStub::AsyncInsertFirewalls(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.firewall_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/global/firewalls")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "global", "/",
+                             "firewalls")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -111,8 +114,8 @@ DefaultFirewallsRestStub::ListFirewalls(
         request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::FirewallList>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(),
-                   "/global/firewalls"),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "global", "/", "firewalls"),
       {std::make_pair("filter", request.filter()),
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),
@@ -135,8 +138,9 @@ DefaultFirewallsRestStub::AsyncPatchFirewalls(
         p.set_value(
             rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.firewall_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/global/firewalls/", request.firewall(), "")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "global", "/", "firewalls",
+                             "/", request.firewall())));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -159,8 +163,9 @@ DefaultFirewallsRestStub::AsyncUpdateFirewalls(
         p.set_value(
             rest_internal::Put<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.firewall_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/global/firewalls/", request.firewall(), "")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "global", "/", "firewalls",
+                             "/", request.firewall())));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {

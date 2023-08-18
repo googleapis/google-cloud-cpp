@@ -48,8 +48,8 @@ DefaultGlobalOrganizationOperationsRestStub::DeleteGlobalOrganizationOperations(
         DeleteGlobalOrganizationOperationsRequest const& request) {
   return rest_internal::Delete(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/locations/global/operations/",
-                   request.operation(), ""));
+      absl::StrCat("/", "compute", "/", "v1", "/", "locations", "/", "global",
+                   "/", "operations", "/", request.operation()));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
@@ -59,8 +59,8 @@ DefaultGlobalOrganizationOperationsRestStub::GetGlobalOrganizationOperations(
         GetGlobalOrganizationOperationsRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/locations/global/operations/",
-                   request.operation(), ""),
+      absl::StrCat("/", "compute", "/", "v1", "/", "locations", "/", "global",
+                   "/", "operations", "/", request.operation()),
       {std::make_pair("parent_id", request.parent_id())});
 }
 

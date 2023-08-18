@@ -60,10 +60,10 @@ DefaultRegionTargetHttpProxiesRestStub::AsyncDeleteRegionTargetHttpProxies(
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request,
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/regions/", request.region(),
-                             "/targetHttpProxies/", request.target_http_proxy(),
-                             "")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "regions", "/",
+                             request.region(), "/", "targetHttpProxies", "/",
+                             request.target_http_proxy())));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -79,9 +79,9 @@ DefaultRegionTargetHttpProxiesRestStub::GetRegionTargetHttpProxies(
         GetRegionTargetHttpProxiesRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::TargetHttpProxy>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/regions/",
-                   request.region(), "/targetHttpProxies/",
-                   request.target_http_proxy(), ""),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "regions", "/", request.region(),
+                   "/", "targetHttpProxies", "/", request.target_http_proxy()),
       {});
 }
 
@@ -99,9 +99,9 @@ DefaultRegionTargetHttpProxiesRestStub::AsyncInsertRegionTargetHttpProxies(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.target_http_proxy_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/regions/", request.region(),
-                             "/targetHttpProxies")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "regions", "/",
+                             request.region(), "/", "targetHttpProxies")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -118,8 +118,9 @@ DefaultRegionTargetHttpProxiesRestStub::ListRegionTargetHttpProxies(
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::TargetHttpProxyList>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/regions/",
-                   request.region(), "/targetHttpProxies"),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "regions", "/", request.region(),
+                   "/", "targetHttpProxies"),
       {std::make_pair("filter", request.filter()),
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),
@@ -142,10 +143,10 @@ DefaultRegionTargetHttpProxiesRestStub::AsyncSetUrlMap(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.url_map_reference_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/regions/", request.region(),
-                             "/targetHttpProxies/", request.target_http_proxy(),
-                             "/setUrlMap")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "regions", "/",
+                             request.region(), "/", "targetHttpProxies", "/",
+                             request.target_http_proxy(), "/", "setUrlMap")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {

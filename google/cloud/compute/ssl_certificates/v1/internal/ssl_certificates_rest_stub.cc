@@ -52,8 +52,9 @@ DefaultSslCertificatesRestStub::AggregatedListSslCertificates(
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::SslCertificateAggregatedList>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(),
-                   "/aggregated/sslCertificates"),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "aggregated", "/",
+                   "sslCertificates"),
       {std::make_pair("filter", request.filter()),
        std::make_pair("include_all_scopes",
                       request.include_all_scopes() ? "1" : "0"),
@@ -78,9 +79,10 @@ DefaultSslCertificatesRestStub::AsyncDeleteSslCertificates(
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request,
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/global/sslCertificates/",
-                             request.ssl_certificate(), "")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "global", "/",
+                             "sslCertificates", "/",
+                             request.ssl_certificate())));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -96,8 +98,9 @@ DefaultSslCertificatesRestStub::GetSslCertificates(
         GetSslCertificatesRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::SslCertificate>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(),
-                   "/global/sslCertificates/", request.ssl_certificate(), ""),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "global", "/", "sslCertificates",
+                   "/", request.ssl_certificate()),
       {});
 }
 
@@ -115,8 +118,9 @@ DefaultSslCertificatesRestStub::AsyncInsertSslCertificates(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.ssl_certificate_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/global/sslCertificates")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "global", "/",
+                             "sslCertificates")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -133,8 +137,8 @@ DefaultSslCertificatesRestStub::ListSslCertificates(
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::SslCertificateList>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(),
-                   "/global/sslCertificates"),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "global", "/", "sslCertificates"),
       {std::make_pair("filter", request.filter()),
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),

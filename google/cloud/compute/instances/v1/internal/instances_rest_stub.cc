@@ -58,9 +58,10 @@ DefaultInstancesRestStub::AsyncAddAccessConfig(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.access_config_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/zones/", request.zone(), "/instances/",
-                             request.instance(), "/addAccessConfig")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "zones", "/",
+                             request.zone(), "/", "instances", "/",
+                             request.instance(), "/", "addAccessConfig")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -84,9 +85,10 @@ DefaultInstancesRestStub::AsyncAddResourcePolicies(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
                 request.instances_add_resource_policies_request_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/zones/", request.zone(), "/instances/",
-                             request.instance(), "/addResourcePolicies")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "zones", "/",
+                             request.zone(), "/", "instances", "/",
+                             request.instance(), "/", "addResourcePolicies")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -103,8 +105,8 @@ DefaultInstancesRestStub::AggregatedListInstances(
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::InstanceAggregatedList>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(),
-                   "/aggregated/instances"),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "aggregated", "/", "instances"),
       {std::make_pair("filter", request.filter()),
        std::make_pair("include_all_scopes",
                       request.include_all_scopes() ? "1" : "0"),
@@ -129,9 +131,10 @@ DefaultInstancesRestStub::AsyncAttachDisk(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.attached_disk_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/zones/", request.zone(), "/instances/",
-                             request.instance(), "/attachDisk")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "zones", "/",
+                             request.zone(), "/", "instances", "/",
+                             request.instance(), "/", "attachDisk")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -155,9 +158,10 @@ DefaultInstancesRestStub::AsyncBulkInsert(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
                 request.bulk_insert_instance_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/zones/", request.zone(),
-                             "/instances/bulkInsert")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "zones", "/",
+                             request.zone(), "/", "instances", "/",
+                             "bulkInsert")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -180,9 +184,10 @@ DefaultInstancesRestStub::AsyncDeleteInstances(
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request,
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/zones/", request.zone(), "/instances/",
-                             request.instance(), "")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "zones", "/",
+                             request.zone(), "/", "instances", "/",
+                             request.instance())));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -205,9 +210,10 @@ DefaultInstancesRestStub::AsyncDeleteAccessConfig(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request,
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/zones/", request.zone(), "/instances/",
-                             request.instance(), "/deleteAccessConfig")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "zones", "/",
+                             request.zone(), "/", "instances", "/",
+                             request.instance(), "/", "deleteAccessConfig")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -230,9 +236,10 @@ DefaultInstancesRestStub::AsyncDetachDisk(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request,
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/zones/", request.zone(), "/instances/",
-                             request.instance(), "/detachDisk")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "zones", "/",
+                             request.zone(), "/", "instances", "/",
+                             request.instance(), "/", "detachDisk")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -248,8 +255,9 @@ DefaultInstancesRestStub::GetInstances(
         request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Instance>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/zones/",
-                   request.zone(), "/instances/", request.instance(), ""),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "zones", "/", request.zone(), "/",
+                   "instances", "/", request.instance()),
       {});
 }
 
@@ -262,9 +270,10 @@ DefaultInstancesRestStub::GetEffectiveFirewalls(
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::InstancesGetEffectiveFirewallsResponse>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/zones/",
-                   request.zone(), "/instances/", request.instance(),
-                   "/getEffectiveFirewalls"),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "zones", "/", request.zone(), "/",
+                   "instances", "/", request.instance(), "/",
+                   "getEffectiveFirewalls"),
       {std::make_pair("network_interface", request.network_interface())});
 }
 
@@ -275,9 +284,10 @@ DefaultInstancesRestStub::GetGuestAttributes(
         request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::GuestAttributes>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/zones/",
-                   request.zone(), "/instances/", request.instance(),
-                   "/getGuestAttributes"),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "zones", "/", request.zone(), "/",
+                   "instances", "/", request.instance(), "/",
+                   "getGuestAttributes"),
       {std::make_pair("query_path", request.query_path()),
        std::make_pair("variable_key", request.variable_key())});
 }
@@ -289,9 +299,9 @@ DefaultInstancesRestStub::GetIamPolicy(
         request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/zones/",
-                   request.zone(), "/instances/", request.resource(),
-                   "/getIamPolicy"),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "zones", "/", request.zone(), "/",
+                   "instances", "/", request.resource(), "/", "getIamPolicy"),
       {std::make_pair(
           "options_requested_policy_version",
           std::to_string(request.options_requested_policy_version()))});
@@ -304,9 +314,9 @@ DefaultInstancesRestStub::GetScreenshot(
         request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Screenshot>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/zones/",
-                   request.zone(), "/instances/", request.instance(),
-                   "/screenshot"),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "zones", "/", request.zone(), "/",
+                   "instances", "/", request.instance(), "/", "screenshot"),
       {});
 }
 
@@ -317,9 +327,9 @@ DefaultInstancesRestStub::GetSerialPortOutput(
         GetSerialPortOutputRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::SerialPortOutput>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/zones/",
-                   request.zone(), "/instances/", request.instance(),
-                   "/serialPort"),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "zones", "/", request.zone(), "/",
+                   "instances", "/", request.instance(), "/", "serialPort"),
       {std::make_pair("port", std::to_string(request.port())),
        std::make_pair("start", request.start())});
 }
@@ -332,9 +342,10 @@ DefaultInstancesRestStub::GetShieldedInstanceIdentity(
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::ShieldedInstanceIdentity>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/zones/",
-                   request.zone(), "/instances/", request.instance(),
-                   "/getShieldedInstanceIdentity"),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "zones", "/", request.zone(), "/",
+                   "instances", "/", request.instance(), "/",
+                   "getShieldedInstanceIdentity"),
       {});
 }
 
@@ -352,8 +363,9 @@ DefaultInstancesRestStub::AsyncInsertInstances(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.instance_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/zones/", request.zone(), "/instances")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "zones", "/",
+                             request.zone(), "/", "instances")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -369,8 +381,9 @@ DefaultInstancesRestStub::ListInstances(
         request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::InstanceList>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/zones/",
-                   request.zone(), "/instances"),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "zones", "/", request.zone(), "/",
+                   "instances"),
       {std::make_pair("filter", request.filter()),
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),
@@ -387,9 +400,9 @@ DefaultInstancesRestStub::ListReferrers(
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::InstanceListReferrers>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/zones/",
-                   request.zone(), "/instances/", request.instance(),
-                   "/referrers"),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "zones", "/", request.zone(), "/",
+                   "instances", "/", request.instance(), "/", "referrers"),
       {std::make_pair("filter", request.filter()),
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),
@@ -413,9 +426,11 @@ DefaultInstancesRestStub::AsyncRemoveResourcePolicies(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
                 request.instances_remove_resource_policies_request_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/zones/", request.zone(), "/instances/",
-                             request.instance(), "/removeResourcePolicies")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "zones", "/",
+                             request.zone(), "/", "instances", "/",
+                             request.instance(), "/",
+                             "removeResourcePolicies")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -437,9 +452,10 @@ DefaultInstancesRestStub::AsyncReset(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request,
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/zones/", request.zone(), "/instances/",
-                             request.instance(), "/reset")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "zones", "/",
+                             request.zone(), "/", "instances", "/",
+                             request.instance(), "/", "reset")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -461,9 +477,10 @@ DefaultInstancesRestStub::AsyncResume(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request,
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/zones/", request.zone(), "/instances/",
-                             request.instance(), "/resume")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "zones", "/",
+                             request.zone(), "/", "instances", "/",
+                             request.instance(), "/", "resume")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -478,9 +495,10 @@ Status DefaultInstancesRestStub::SendDiagnosticInterrupt(
         SendDiagnosticInterruptRequest const& request) {
   return rest_internal::Post(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/zones/",
-                   request.zone(), "/instances/", request.instance(),
-                   "/sendDiagnosticInterrupt"));
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "zones", "/", request.zone(), "/",
+                   "instances", "/", request.instance(), "/",
+                   "sendDiagnosticInterrupt"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -497,9 +515,11 @@ DefaultInstancesRestStub::AsyncSetDeletionProtection(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request,
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/zones/", request.zone(), "/instances/",
-                             request.resource(), "/setDeletionProtection")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "zones", "/",
+                             request.zone(), "/", "instances", "/",
+                             request.resource(), "/",
+                             "setDeletionProtection")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -522,9 +542,10 @@ DefaultInstancesRestStub::AsyncSetDiskAutoDelete(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request,
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/zones/", request.zone(), "/instances/",
-                             request.instance(), "/setDiskAutoDelete")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "zones", "/",
+                             request.zone(), "/", "instances", "/",
+                             request.instance(), "/", "setDiskAutoDelete")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -540,9 +561,9 @@ DefaultInstancesRestStub::SetIamPolicy(
         request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request.zone_set_policy_request_resource(),
-      absl::StrCat("/compute/v1/projects/", request.project(), "/zones/",
-                   request.zone(), "/instances/", request.resource(),
-                   "/setIamPolicy"));
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "zones", "/", request.zone(), "/",
+                   "instances", "/", request.resource(), "/", "setIamPolicy"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -560,9 +581,10 @@ DefaultInstancesRestStub::AsyncSetLabels(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
                 request.instances_set_labels_request_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/zones/", request.zone(), "/instances/",
-                             request.instance(), "/setLabels")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "zones", "/",
+                             request.zone(), "/", "instances", "/",
+                             request.instance(), "/", "setLabels")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -586,9 +608,10 @@ DefaultInstancesRestStub::AsyncSetMachineResources(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
                 request.instances_set_machine_resources_request_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/zones/", request.zone(), "/instances/",
-                             request.instance(), "/setMachineResources")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "zones", "/",
+                             request.zone(), "/", "instances", "/",
+                             request.instance(), "/", "setMachineResources")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -612,9 +635,10 @@ DefaultInstancesRestStub::AsyncSetMachineType(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
                 request.instances_set_machine_type_request_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/zones/", request.zone(), "/instances/",
-                             request.instance(), "/setMachineType")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "zones", "/",
+                             request.zone(), "/", "instances", "/",
+                             request.instance(), "/", "setMachineType")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -637,9 +661,10 @@ DefaultInstancesRestStub::AsyncSetMetadata(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.metadata_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/zones/", request.zone(), "/instances/",
-                             request.instance(), "/setMetadata")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "zones", "/",
+                             request.zone(), "/", "instances", "/",
+                             request.instance(), "/", "setMetadata")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -663,9 +688,10 @@ DefaultInstancesRestStub::AsyncSetMinCpuPlatform(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
                 request.instances_set_min_cpu_platform_request_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/zones/", request.zone(), "/instances/",
-                             request.instance(), "/setMinCpuPlatform")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "zones", "/",
+                             request.zone(), "/", "instances", "/",
+                             request.instance(), "/", "setMinCpuPlatform")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -688,9 +714,10 @@ DefaultInstancesRestStub::AsyncSetName(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
                 request.instances_set_name_request_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/zones/", request.zone(), "/instances/",
-                             request.instance(), "/setName")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "zones", "/",
+                             request.zone(), "/", "instances", "/",
+                             request.instance(), "/", "setName")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -713,9 +740,10 @@ DefaultInstancesRestStub::AsyncSetScheduling(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.scheduling_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/zones/", request.zone(), "/instances/",
-                             request.instance(), "/setScheduling")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "zones", "/",
+                             request.zone(), "/", "instances", "/",
+                             request.instance(), "/", "setScheduling")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -739,9 +767,10 @@ DefaultInstancesRestStub::AsyncSetServiceAccount(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
                 request.instances_set_service_account_request_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/zones/", request.zone(), "/instances/",
-                             request.instance(), "/setServiceAccount")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "zones", "/",
+                             request.zone(), "/", "instances", "/",
+                             request.instance(), "/", "setServiceAccount")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -765,10 +794,11 @@ DefaultInstancesRestStub::AsyncSetShieldedInstanceIntegrityPolicy(
             rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
                 request.shielded_instance_integrity_policy_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/zones/", request.zone(), "/instances/",
-                             request.instance(),
-                             "/setShieldedInstanceIntegrityPolicy")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "zones", "/",
+                             request.zone(), "/", "instances", "/",
+                             request.instance(), "/",
+                             "setShieldedInstanceIntegrityPolicy")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -790,9 +820,10 @@ DefaultInstancesRestStub::AsyncSetTags(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.tags_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/zones/", request.zone(), "/instances/",
-                             request.instance(), "/setTags")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "zones", "/",
+                             request.zone(), "/", "instances", "/",
+                             request.instance(), "/", "setTags")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -815,9 +846,11 @@ DefaultInstancesRestStub::AsyncSimulateMaintenanceEvent(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request,
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/zones/", request.zone(), "/instances/",
-                             request.instance(), "/simulateMaintenanceEvent")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "zones", "/",
+                             request.zone(), "/", "instances", "/",
+                             request.instance(), "/",
+                             "simulateMaintenanceEvent")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -839,9 +872,10 @@ DefaultInstancesRestStub::AsyncStart(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request,
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/zones/", request.zone(), "/instances/",
-                             request.instance(), "/start")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "zones", "/",
+                             request.zone(), "/", "instances", "/",
+                             request.instance(), "/", "start")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -865,9 +899,11 @@ DefaultInstancesRestStub::AsyncStartWithEncryptionKey(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
                 request.instances_start_with_encryption_key_request_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/zones/", request.zone(), "/instances/",
-                             request.instance(), "/startWithEncryptionKey")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "zones", "/",
+                             request.zone(), "/", "instances", "/",
+                             request.instance(), "/",
+                             "startWithEncryptionKey")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -889,9 +925,10 @@ DefaultInstancesRestStub::AsyncStop(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request,
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/zones/", request.zone(), "/instances/",
-                             request.instance(), "/stop")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "zones", "/",
+                             request.zone(), "/", "instances", "/",
+                             request.instance(), "/", "stop")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -913,9 +950,10 @@ DefaultInstancesRestStub::AsyncSuspend(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request,
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/zones/", request.zone(), "/instances/",
-                             request.instance(), "/suspend")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "zones", "/",
+                             request.zone(), "/", "instances", "/",
+                             request.instance(), "/", "suspend")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -932,9 +970,10 @@ DefaultInstancesRestStub::TestIamPermissions(
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::TestPermissionsResponse>(
       *service_, rest_context, request.test_permissions_request_resource(),
-      absl::StrCat("/compute/v1/projects/", request.project(), "/zones/",
-                   request.zone(), "/instances/", request.resource(),
-                   "/testIamPermissions"));
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "zones", "/", request.zone(), "/",
+                   "instances", "/", request.resource(), "/",
+                   "testIamPermissions"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -951,9 +990,10 @@ DefaultInstancesRestStub::AsyncUpdateInstances(
         p.set_value(
             rest_internal::Put<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.instance_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/zones/", request.zone(), "/instances/",
-                             request.instance(), "")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "zones", "/",
+                             request.zone(), "/", "instances", "/",
+                             request.instance())));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -976,9 +1016,10 @@ DefaultInstancesRestStub::AsyncUpdateAccessConfig(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.access_config_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/zones/", request.zone(), "/instances/",
-                             request.instance(), "/updateAccessConfig")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "zones", "/",
+                             request.zone(), "/", "instances", "/",
+                             request.instance(), "/", "updateAccessConfig")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -1001,9 +1042,10 @@ DefaultInstancesRestStub::AsyncUpdateDisplayDevice(
         p.set_value(
             rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.display_device_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/zones/", request.zone(), "/instances/",
-                             request.instance(), "/updateDisplayDevice")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "zones", "/",
+                             request.zone(), "/", "instances", "/",
+                             request.instance(), "/", "updateDisplayDevice")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -1026,9 +1068,11 @@ DefaultInstancesRestStub::AsyncUpdateNetworkInterface(
         p.set_value(
             rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.network_interface_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/zones/", request.zone(), "/instances/",
-                             request.instance(), "/updateNetworkInterface")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "zones", "/",
+                             request.zone(), "/", "instances", "/",
+                             request.instance(), "/",
+                             "updateNetworkInterface")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -1052,10 +1096,11 @@ DefaultInstancesRestStub::AsyncUpdateShieldedInstanceConfig(
             rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
                 request.shielded_instance_config_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/zones/", request.zone(), "/instances/",
-                             request.instance(),
-                             "/updateShieldedInstanceConfig")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "zones", "/",
+                             request.zone(), "/", "instances", "/",
+                             request.instance(), "/",
+                             "updateShieldedInstanceConfig")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {

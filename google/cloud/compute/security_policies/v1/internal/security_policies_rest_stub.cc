@@ -60,9 +60,10 @@ DefaultSecurityPoliciesRestStub::AsyncAddRule(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
                 request.security_policy_rule_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/global/securityPolicies/",
-                             request.security_policy(), "/addRule")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "global", "/",
+                             "securityPolicies", "/", request.security_policy(),
+                             "/", "addRule")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -79,8 +80,9 @@ DefaultSecurityPoliciesRestStub::AggregatedListSecurityPolicies(
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::SecurityPoliciesAggregatedList>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(),
-                   "/aggregated/securityPolicies"),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "aggregated", "/",
+                   "securityPolicies"),
       {std::make_pair("filter", request.filter()),
        std::make_pair("include_all_scopes",
                       request.include_all_scopes() ? "1" : "0"),
@@ -105,9 +107,10 @@ DefaultSecurityPoliciesRestStub::AsyncDeleteSecurityPolicies(
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request,
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/global/securityPolicies/",
-                             request.security_policy(), "")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "global", "/",
+                             "securityPolicies", "/",
+                             request.security_policy())));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -123,8 +126,9 @@ DefaultSecurityPoliciesRestStub::GetSecurityPolicies(
         GetSecurityPoliciesRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::SecurityPolicy>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(),
-                   "/global/securityPolicies/", request.security_policy(), ""),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "global", "/", "securityPolicies",
+                   "/", request.security_policy()),
       {});
 }
 
@@ -136,9 +140,9 @@ DefaultSecurityPoliciesRestStub::GetRule(
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::SecurityPolicyRule>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(),
-                   "/global/securityPolicies/", request.security_policy(),
-                   "/getRule"),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "global", "/", "securityPolicies",
+                   "/", request.security_policy(), "/", "getRule"),
       {std::make_pair("priority", std::to_string(request.priority()))});
 }
 
@@ -156,8 +160,9 @@ DefaultSecurityPoliciesRestStub::AsyncInsertSecurityPolicies(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.security_policy_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/global/securityPolicies")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "global", "/",
+                             "securityPolicies")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -174,8 +179,8 @@ DefaultSecurityPoliciesRestStub::ListSecurityPolicies(
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::SecurityPolicyList>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(),
-                   "/global/securityPolicies"),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "global", "/", "securityPolicies"),
       {std::make_pair("filter", request.filter()),
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),
@@ -194,8 +199,9 @@ DefaultSecurityPoliciesRestStub::ListPreconfiguredExpressionSets(
       google::cloud::cpp::compute::v1::
           SecurityPoliciesListPreconfiguredExpressionSetsResponse>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(),
-                   "/global/securityPolicies/listPreconfiguredExpressionSets"),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "global", "/", "securityPolicies",
+                   "/", "listPreconfiguredExpressionSets"),
       {std::make_pair("filter", request.filter()),
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),
@@ -218,9 +224,10 @@ DefaultSecurityPoliciesRestStub::AsyncPatchSecurityPolicies(
         p.set_value(
             rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.security_policy_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/global/securityPolicies/",
-                             request.security_policy(), "")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "global", "/",
+                             "securityPolicies", "/",
+                             request.security_policy())));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -244,9 +251,10 @@ DefaultSecurityPoliciesRestStub::AsyncPatchRule(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
                 request.security_policy_rule_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/global/securityPolicies/",
-                             request.security_policy(), "/patchRule")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "global", "/",
+                             "securityPolicies", "/", request.security_policy(),
+                             "/", "patchRule")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -269,9 +277,10 @@ DefaultSecurityPoliciesRestStub::AsyncRemoveRule(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request,
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/global/securityPolicies/",
-                             request.security_policy(), "/removeRule")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "global", "/",
+                             "securityPolicies", "/", request.security_policy(),
+                             "/", "removeRule")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -295,9 +304,10 @@ DefaultSecurityPoliciesRestStub::AsyncSetLabels(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
                 request.global_set_labels_request_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/global/securityPolicies/", request.resource(),
-                             "/setLabels")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "global", "/",
+                             "securityPolicies", "/", request.resource(), "/",
+                             "setLabels")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {

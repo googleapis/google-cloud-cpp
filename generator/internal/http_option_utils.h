@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GENERATOR_INTERNAL_HTTP_OPTION_UTILS_H
 #define GOOGLE_CLOUD_CPP_GENERATOR_INTERNAL_HTTP_OPTION_UTILS_H
 
+#include "generator/internal/http_annotation_parser.h"
 #include "generator/internal/printer.h"
 #include "absl/types/variant.h"
 #include <google/protobuf/descriptor.h>
@@ -40,6 +41,7 @@ struct HttpExtensionInfo {
   std::string path_prefix;
   std::string path_suffix;
   std::vector<RestPathPiece> rest_path;
+  std::string rest_path_verb;
 };
 
 /**

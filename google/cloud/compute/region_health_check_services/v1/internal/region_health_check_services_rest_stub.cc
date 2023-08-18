@@ -61,10 +61,10 @@ DefaultRegionHealthCheckServicesRestStub::AsyncDeleteRegionHealthCheckServices(
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request,
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/regions/", request.region(),
-                             "/healthCheckServices/",
-                             request.health_check_service(), "")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "regions", "/",
+                             request.region(), "/", "healthCheckServices", "/",
+                             request.health_check_service())));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -81,9 +81,10 @@ DefaultRegionHealthCheckServicesRestStub::GetRegionHealthCheckServices(
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::HealthCheckService>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/regions/",
-                   request.region(), "/healthCheckServices/",
-                   request.health_check_service(), ""),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "regions", "/", request.region(),
+                   "/", "healthCheckServices", "/",
+                   request.health_check_service()),
       {});
 }
 
@@ -102,9 +103,9 @@ DefaultRegionHealthCheckServicesRestStub::AsyncInsertRegionHealthCheckServices(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
                 request.health_check_service_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/regions/", request.region(),
-                             "/healthCheckServices")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "regions", "/",
+                             request.region(), "/", "healthCheckServices")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -121,8 +122,9 @@ DefaultRegionHealthCheckServicesRestStub::ListRegionHealthCheckServices(
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::HealthCheckServicesList>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/regions/",
-                   request.region(), "/healthCheckServices"),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "regions", "/", request.region(),
+                   "/", "healthCheckServices"),
       {std::make_pair("filter", request.filter()),
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),
@@ -146,10 +148,10 @@ DefaultRegionHealthCheckServicesRestStub::AsyncPatchRegionHealthCheckServices(
             rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
                 request.health_check_service_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/regions/", request.region(),
-                             "/healthCheckServices/",
-                             request.health_check_service(), "")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "regions", "/",
+                             request.region(), "/", "healthCheckServices", "/",
+                             request.health_check_service())));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {

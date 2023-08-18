@@ -62,10 +62,10 @@ DefaultRegionNetworkEndpointGroupsRestStub::
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request,
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/regions/", request.region(),
-                             "/networkEndpointGroups/",
-                             request.network_endpoint_group(), "")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "regions", "/",
+                             request.region(), "/", "networkEndpointGroups",
+                             "/", request.network_endpoint_group())));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -82,9 +82,10 @@ DefaultRegionNetworkEndpointGroupsRestStub::GetRegionNetworkEndpointGroups(
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::NetworkEndpointGroup>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/regions/",
-                   request.region(), "/networkEndpointGroups/",
-                   request.network_endpoint_group(), ""),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "regions", "/", request.region(),
+                   "/", "networkEndpointGroups", "/",
+                   request.network_endpoint_group()),
       {});
 }
 
@@ -104,9 +105,9 @@ DefaultRegionNetworkEndpointGroupsRestStub::
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
                 request.network_endpoint_group_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/regions/", request.region(),
-                             "/networkEndpointGroups")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "regions", "/",
+                             request.region(), "/", "networkEndpointGroups")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -123,8 +124,9 @@ DefaultRegionNetworkEndpointGroupsRestStub::ListRegionNetworkEndpointGroups(
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::NetworkEndpointGroupList>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/regions/",
-                   request.region(), "/networkEndpointGroups"),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "regions", "/", request.region(),
+                   "/", "networkEndpointGroups"),
       {std::make_pair("filter", request.filter()),
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),

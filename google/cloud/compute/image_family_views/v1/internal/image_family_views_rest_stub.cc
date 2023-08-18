@@ -46,8 +46,9 @@ DefaultImageFamilyViewsRestStub::GetImageFamilyViews(
         GetImageFamilyViewsRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::ImageFamilyView>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/zones/",
-                   request.zone(), "/imageFamilyViews/", request.family(), ""),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "zones", "/", request.zone(), "/",
+                   "imageFamilyViews", "/", request.family()),
       {});
 }
 

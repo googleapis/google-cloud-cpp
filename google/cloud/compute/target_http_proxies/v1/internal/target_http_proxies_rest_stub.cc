@@ -53,8 +53,9 @@ DefaultTargetHttpProxiesRestStub::AggregatedListTargetHttpProxies(
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::TargetHttpProxyAggregatedList>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(),
-                   "/aggregated/targetHttpProxies"),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "aggregated", "/",
+                   "targetHttpProxies"),
       {std::make_pair("filter", request.filter()),
        std::make_pair("include_all_scopes",
                       request.include_all_scopes() ? "1" : "0"),
@@ -79,9 +80,10 @@ DefaultTargetHttpProxiesRestStub::AsyncDeleteTargetHttpProxies(
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request,
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/global/targetHttpProxies/",
-                             request.target_http_proxy(), "")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "global", "/",
+                             "targetHttpProxies", "/",
+                             request.target_http_proxy())));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -97,9 +99,9 @@ DefaultTargetHttpProxiesRestStub::GetTargetHttpProxies(
         GetTargetHttpProxiesRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::TargetHttpProxy>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(),
-                   "/global/targetHttpProxies/", request.target_http_proxy(),
-                   ""),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "global", "/", "targetHttpProxies",
+                   "/", request.target_http_proxy()),
       {});
 }
 
@@ -117,8 +119,9 @@ DefaultTargetHttpProxiesRestStub::AsyncInsertTargetHttpProxies(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.target_http_proxy_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/global/targetHttpProxies")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "global", "/",
+                             "targetHttpProxies")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -135,8 +138,8 @@ DefaultTargetHttpProxiesRestStub::ListTargetHttpProxies(
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::TargetHttpProxyList>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(),
-                   "/global/targetHttpProxies"),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "global", "/", "targetHttpProxies"),
       {std::make_pair("filter", request.filter()),
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),
@@ -159,9 +162,10 @@ DefaultTargetHttpProxiesRestStub::AsyncPatchTargetHttpProxies(
         p.set_value(
             rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.target_http_proxy_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/global/targetHttpProxies/",
-                             request.target_http_proxy(), "")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "global", "/",
+                             "targetHttpProxies", "/",
+                             request.target_http_proxy())));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -184,9 +188,9 @@ DefaultTargetHttpProxiesRestStub::AsyncSetUrlMap(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.url_map_reference_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/targetHttpProxies/", request.target_http_proxy(),
-                             "/setUrlMap")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "targetHttpProxies", "/",
+                             request.target_http_proxy(), "/", "setUrlMap")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {

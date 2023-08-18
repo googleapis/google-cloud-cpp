@@ -59,9 +59,10 @@ DefaultTargetGrpcProxiesRestStub::AsyncDeleteTargetGrpcProxies(
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request,
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/global/targetGrpcProxies/",
-                             request.target_grpc_proxy(), "")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "global", "/",
+                             "targetGrpcProxies", "/",
+                             request.target_grpc_proxy())));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -77,9 +78,9 @@ DefaultTargetGrpcProxiesRestStub::GetTargetGrpcProxies(
         GetTargetGrpcProxiesRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::TargetGrpcProxy>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(),
-                   "/global/targetGrpcProxies/", request.target_grpc_proxy(),
-                   ""),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "global", "/", "targetGrpcProxies",
+                   "/", request.target_grpc_proxy()),
       {});
 }
 
@@ -97,8 +98,9 @@ DefaultTargetGrpcProxiesRestStub::AsyncInsertTargetGrpcProxies(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.target_grpc_proxy_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/global/targetGrpcProxies")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "global", "/",
+                             "targetGrpcProxies")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -115,8 +117,8 @@ DefaultTargetGrpcProxiesRestStub::ListTargetGrpcProxies(
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::TargetGrpcProxyList>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(),
-                   "/global/targetGrpcProxies"),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "global", "/", "targetGrpcProxies"),
       {std::make_pair("filter", request.filter()),
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),
@@ -139,9 +141,10 @@ DefaultTargetGrpcProxiesRestStub::AsyncPatchTargetGrpcProxies(
         p.set_value(
             rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.target_grpc_proxy_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/global/targetGrpcProxies/",
-                             request.target_grpc_proxy(), "")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "global", "/",
+                             "targetGrpcProxies", "/",
+                             request.target_grpc_proxy())));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {

@@ -45,8 +45,9 @@ DefaultSqlBackupRunsServiceRestStub::Delete(
     google::cloud::sql::v1::SqlBackupRunsDeleteRequest const& request) {
   return rest_internal::Delete<google::cloud::sql::v1::Operation>(
       *service_, rest_context, request,
-      absl::StrCat("/v1/projects/", request.project(), "/instances/",
-                   request.instance(), "/backupRuns/", request.id(), ""));
+      absl::StrCat("/", "v1", "/", "projects", "/", request.project(), "/",
+                   "instances", "/", request.instance(), "/", "backupRuns", "/",
+                   request.id()));
 }
 
 StatusOr<google::cloud::sql::v1::BackupRun>
@@ -55,8 +56,9 @@ DefaultSqlBackupRunsServiceRestStub::Get(
     google::cloud::sql::v1::SqlBackupRunsGetRequest const& request) {
   return rest_internal::Get<google::cloud::sql::v1::BackupRun>(
       *service_, rest_context, request,
-      absl::StrCat("/v1/projects/", request.project(), "/instances/",
-                   request.instance(), "/backupRuns/", request.id(), ""),
+      absl::StrCat("/", "v1", "/", "projects", "/", request.project(), "/",
+                   "instances", "/", request.instance(), "/", "backupRuns", "/",
+                   request.id()),
       {});
 }
 
@@ -66,8 +68,8 @@ DefaultSqlBackupRunsServiceRestStub::Insert(
     google::cloud::sql::v1::SqlBackupRunsInsertRequest const& request) {
   return rest_internal::Post<google::cloud::sql::v1::Operation>(
       *service_, rest_context, request.body(),
-      absl::StrCat("/v1/projects/", request.project(), "/instances/",
-                   request.instance(), "/backupRuns"));
+      absl::StrCat("/", "v1", "/", "projects", "/", request.project(), "/",
+                   "instances", "/", request.instance(), "/", "backupRuns"));
 }
 
 StatusOr<google::cloud::sql::v1::BackupRunsListResponse>
@@ -76,8 +78,8 @@ DefaultSqlBackupRunsServiceRestStub::List(
     google::cloud::sql::v1::SqlBackupRunsListRequest const& request) {
   return rest_internal::Get<google::cloud::sql::v1::BackupRunsListResponse>(
       *service_, rest_context, request,
-      absl::StrCat("/v1/projects/", request.project(), "/instances/",
-                   request.instance(), "/backupRuns"),
+      absl::StrCat("/", "v1", "/", "projects", "/", request.project(), "/",
+                   "instances", "/", request.instance(), "/", "backupRuns"),
       {std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("page_token", request.page_token())});
 }

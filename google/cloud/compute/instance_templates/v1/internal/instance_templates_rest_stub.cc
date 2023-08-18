@@ -53,8 +53,9 @@ DefaultInstanceTemplatesRestStub::AggregatedListInstanceTemplates(
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::InstanceTemplateAggregatedList>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(),
-                   "/aggregated/instanceTemplates"),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "aggregated", "/",
+                   "instanceTemplates"),
       {std::make_pair("filter", request.filter()),
        std::make_pair("include_all_scopes",
                       request.include_all_scopes() ? "1" : "0"),
@@ -79,9 +80,10 @@ DefaultInstanceTemplatesRestStub::AsyncDeleteInstanceTemplates(
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request,
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/global/instanceTemplates/",
-                             request.instance_template(), "")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "global", "/",
+                             "instanceTemplates", "/",
+                             request.instance_template())));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -97,9 +99,9 @@ DefaultInstanceTemplatesRestStub::GetInstanceTemplates(
         GetInstanceTemplatesRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::InstanceTemplate>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(),
-                   "/global/instanceTemplates/", request.instance_template(),
-                   ""),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "global", "/", "instanceTemplates",
+                   "/", request.instance_template()),
       {});
 }
 
@@ -110,9 +112,9 @@ DefaultInstanceTemplatesRestStub::GetIamPolicy(
         GetIamPolicyRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(),
-                   "/global/instanceTemplates/", request.resource(),
-                   "/getIamPolicy"),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "global", "/", "instanceTemplates",
+                   "/", request.resource(), "/", "getIamPolicy"),
       {std::make_pair(
           "options_requested_policy_version",
           std::to_string(request.options_requested_policy_version()))});
@@ -132,8 +134,9 @@ DefaultInstanceTemplatesRestStub::AsyncInsertInstanceTemplates(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.instance_template_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/global/instanceTemplates")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "global", "/",
+                             "instanceTemplates")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -150,8 +153,8 @@ DefaultInstanceTemplatesRestStub::ListInstanceTemplates(
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::InstanceTemplateList>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(),
-                   "/global/instanceTemplates"),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "global", "/", "instanceTemplates"),
       {std::make_pair("filter", request.filter()),
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),
@@ -167,9 +170,9 @@ DefaultInstanceTemplatesRestStub::SetIamPolicy(
         SetIamPolicyRequest const& request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request.global_set_policy_request_resource(),
-      absl::StrCat("/compute/v1/projects/", request.project(),
-                   "/global/instanceTemplates/", request.resource(),
-                   "/setIamPolicy"));
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "global", "/", "instanceTemplates",
+                   "/", request.resource(), "/", "setIamPolicy"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
@@ -180,9 +183,9 @@ DefaultInstanceTemplatesRestStub::TestIamPermissions(
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::TestPermissionsResponse>(
       *service_, rest_context, request.test_permissions_request_resource(),
-      absl::StrCat("/compute/v1/projects/", request.project(),
-                   "/global/instanceTemplates/", request.resource(),
-                   "/testIamPermissions"));
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "global", "/", "instanceTemplates",
+                   "/", request.resource(), "/", "testIamPermissions"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

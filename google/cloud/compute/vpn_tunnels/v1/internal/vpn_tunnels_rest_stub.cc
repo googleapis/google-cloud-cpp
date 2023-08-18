@@ -52,8 +52,8 @@ DefaultVpnTunnelsRestStub::AggregatedListVpnTunnels(
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::VpnTunnelAggregatedList>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(),
-                   "/aggregated/vpnTunnels"),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "aggregated", "/", "vpnTunnels"),
       {std::make_pair("filter", request.filter()),
        std::make_pair("include_all_scopes",
                       request.include_all_scopes() ? "1" : "0"),
@@ -78,9 +78,10 @@ DefaultVpnTunnelsRestStub::AsyncDeleteVpnTunnels(
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request,
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/regions/", request.region(), "/vpnTunnels/",
-                             request.vpn_tunnel(), "")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "regions", "/",
+                             request.region(), "/", "vpnTunnels", "/",
+                             request.vpn_tunnel())));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -96,8 +97,9 @@ DefaultVpnTunnelsRestStub::GetVpnTunnels(
         request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::VpnTunnel>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/regions/",
-                   request.region(), "/vpnTunnels/", request.vpn_tunnel(), ""),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "regions", "/", request.region(),
+                   "/", "vpnTunnels", "/", request.vpn_tunnel()),
       {});
 }
 
@@ -115,8 +117,9 @@ DefaultVpnTunnelsRestStub::AsyncInsertVpnTunnels(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.vpn_tunnel_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/regions/", request.region(), "/vpnTunnels")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "regions", "/",
+                             request.region(), "/", "vpnTunnels")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -132,8 +135,9 @@ DefaultVpnTunnelsRestStub::ListVpnTunnels(
         request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::VpnTunnelList>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/regions/",
-                   request.region(), "/vpnTunnels"),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "regions", "/", request.region(),
+                   "/", "vpnTunnels"),
       {std::make_pair("filter", request.filter()),
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),
@@ -157,9 +161,10 @@ DefaultVpnTunnelsRestStub::AsyncSetLabels(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
                 request.region_set_labels_request_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/regions/", request.region(), "/vpnTunnels/",
-                             request.resource(), "/setLabels")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "regions", "/",
+                             request.region(), "/", "vpnTunnels", "/",
+                             request.resource(), "/", "setLabels")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {

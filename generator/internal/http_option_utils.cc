@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "generator/internal/http_option_utils.h"
+#include "generator/internal/http_annotation_parser.h"
 #include "generator/internal/printer.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/algorithm.h"
@@ -49,6 +50,39 @@ std::string FormatFieldAccessorCall(
   return absl::StrJoin(chunks, "().");
 }
 
+void RestPathVisitorHelper(PathTemplate::Segment const& s,
+                           std::vector<HttpExtensionInfo::RestPathPiece>& path);
+
+struct RestPathVisitor {
+  explicit RestPathVisitor(std::vector<HttpExtensionInfo::RestPathPiece>& path)
+      : path(path) {}
+  void operator()(PathTemplate::Match const&) { ; }
+  void operator()(PathTemplate::MatchRecursive const&) { ; }
+  void operator()(std::string const& s) {
+    path.emplace_back([piece = s](google::protobuf::MethodDescriptor const&) {
+      return absl::StrFormat("\"%s\"", piece);
+    });
+  }
+  void operator()(PathTemplate::Variable const& v) {
+    path.emplace_back([piece = v.field_path](
+                          google::protobuf::MethodDescriptor const& method) {
+      return absl::StrFormat("request.%s()",
+                             FormatFieldAccessorCall(method, piece));
+    });
+  }
+  void operator()(PathTemplate::Segment const& s) {
+    RestPathVisitorHelper(s, path);
+  }
+
+  std::vector<HttpExtensionInfo::RestPathPiece>& path;
+};
+
+void RestPathVisitorHelper(
+    PathTemplate::Segment const& s,
+    std::vector<HttpExtensionInfo::RestPathPiece>& path) {
+  absl::visit(RestPathVisitor{path}, s.value);
+}
+
 }  // namespace
 
 void SetHttpDerivedMethodVars(
@@ -82,13 +116,15 @@ void SetHttpDerivedMethodVars(
       method_vars["method_http_verb"] = info.http_verb;
       // method_rest_path is only used for REST transport.
       method_vars["method_rest_path"] = absl::StrCat(
-          "absl::StrCat(",
+          "absl::StrCat(\"/\", ",
           absl::StrJoin(
-              info.rest_path, ", ",
+              info.rest_path, ", \"/\", ",
               [&](std::string* out, HttpExtensionInfo::RestPathPiece const& p) {
                 out->append(p(method));
               }),
-          ")");
+          info.rest_path_verb.empty()
+              ? ")"
+              : absl::StrFormat(", \":%s\")", info.rest_path_verb));
     }
 
     // This visitor handles the case where no request field is specified in the
@@ -252,63 +288,78 @@ ParseHttpExtension(google::protobuf::MethodDescriptor const& method) {
                      << ": google::api::HttpRule not handled";
   }
 
-  static std::regex const kImplicitNamedFieldUrlPatternRegex(
-      R"((.*)\{(.*)\}(.*))");
-  std::smatch implicit_match;
+  auto parsed_http_rule = ParsePathTemplate(url_pattern);
+  if (!parsed_http_rule) {
+    GCP_LOG(FATAL) << __FILE__ << ":" << __LINE__
+                   << " failure in ParsePathTemplate: "
+                   << parsed_http_rule.status();
+  }
 
-  // The implicit named field regex matches both the implicit and explicit
-  // syntax. So we can use the implicit match to determine if either are
-  // present.
-  if (!std::regex_match(url_pattern, implicit_match,
-                        kImplicitNamedFieldUrlPatternRegex)) {
+  if (std::find_if(
+          parsed_http_rule->segments.begin(), parsed_http_rule->segments.end(),
+          [](std::shared_ptr<PathTemplate::Segment> const& s) {
+            return absl::holds_alternative<PathTemplate::Variable>(s->value);
+          }) == parsed_http_rule->segments.end()) {
     return HttpSimpleInfo{info.http_verb, url_pattern, http_rule.body()};
   }
 
-  static std::regex const kExplicitNamedFieldUrlPatternRegex(
-      R"((.*)\{(.*)=(.*)\}(.*))");
-  std::smatch explicit_match;
+  info.body = http_rule.body();
+  info.url_path = url_pattern;
 
-  if (std::regex_match(url_pattern, explicit_match,
-                       kExplicitNamedFieldUrlPatternRegex)) {
-    info.url_path = explicit_match[0];
-    info.body = http_rule.body();
-    info.path_suffix = explicit_match[4];
-  } else {
-    info.url_path = implicit_match[0];
-    info.body = http_rule.body();
-    info.path_suffix = implicit_match[3];
-  }
-
-  std::size_t current = 0;
-  auto open = url_pattern.find('{');
-  info.path_prefix = url_pattern.substr(current, open - current);
-  for (; open != std::string::npos; open = url_pattern.find('{', current)) {
-    info.rest_path.emplace_back(
-        [piece = url_pattern.substr(current, open - current)](
-            google::protobuf::MethodDescriptor const&) {
-          return absl::StrFormat("\"%s\"", piece);
-        });
-    current = open + 1;
-    auto close = url_pattern.find('}', current);
-    std::pair<std::string, std::string> param = absl::StrSplit(
-        url_pattern.substr(current, close - current), absl::ByChar('='));
-    if (!param.first.empty() && param.second.empty()) {
-      info.field_substitutions.emplace_back(param.first, param.first);
-    } else if (!param.first.empty() && !param.second.empty()) {
-      info.field_substitutions.emplace_back(param.first, param.second);
+  struct SegmentAsStringVisitor {
+    std::string operator()(PathTemplate::Match const&) { return "*"; }
+    std::string operator()(PathTemplate::MatchRecursive const&) { return "**"; }
+    std::string operator()(std::string const& s) { return s; }
+    std::string operator()(PathTemplate::Variable const&) {
+      GCP_LOG(FATAL) << __FILE__ << ":" << __LINE__
+                     << " unsupported attempt to format PathTemplate::Variable";
+      return {};
     }
-    info.rest_path.emplace_back(
-        [piece =
-             param.first](google::protobuf::MethodDescriptor const& method) {
-          return absl::StrFormat("request.%s()",
-                                 FormatFieldAccessorCall(method, piece));
-        });
-    current = close + 1;
+  };
+  auto segment_formatter = [](std::string* out,
+                              std::shared_ptr<PathTemplate::Segment> const& s) {
+    out->append(absl::visit(SegmentAsStringVisitor{}, s->value));
+  };
+
+  auto first_variable = std::find_if(
+      parsed_http_rule->segments.begin(), parsed_http_rule->segments.end(),
+      [](std::shared_ptr<PathTemplate::Segment> const& s) {
+        return absl::holds_alternative<PathTemplate::Variable>(s->value);
+      });
+  PathTemplate path_prefix;
+  path_prefix.segments = PathTemplate::Segments{
+      parsed_http_rule->segments.begin(), first_variable};
+  info.path_prefix = absl::StrCat(
+      "/", absl::StrJoin(path_prefix.segments, "/", segment_formatter), "/");
+
+  auto last_variable = std::find_if(
+      parsed_http_rule->segments.rbegin(), parsed_http_rule->segments.rend(),
+      [](std::shared_ptr<PathTemplate::Segment> const& s) {
+        return absl::holds_alternative<PathTemplate::Variable>(s->value);
+      });
+  PathTemplate path_suffix;
+  path_suffix.segments = PathTemplate::Segments{
+      parsed_http_rule->segments.rbegin(), last_variable};
+  if (!path_suffix.segments.empty()) {
+    info.path_suffix = absl::StrCat(
+        "/", absl::StrJoin(path_suffix.segments, "/", segment_formatter));
   }
-  info.rest_path.emplace_back([piece = url_pattern.substr(current)](
-                                  google::protobuf::MethodDescriptor const&) {
-    return absl::StrFormat("\"%s\"", piece);
-  });
+
+  for (auto const& s : parsed_http_rule->segments) {
+    if (absl::holds_alternative<PathTemplate::Variable>(s->value)) {
+      auto v = absl::get<PathTemplate::Variable>(s->value);
+      if (v.segments.empty()) {
+        info.field_substitutions.emplace_back(v.field_path, v.field_path);
+      } else {
+        info.field_substitutions.emplace_back(
+            v.field_path, absl::StrJoin(v.segments, "/", segment_formatter));
+      }
+    }
+
+    absl::visit(RestPathVisitor{info.rest_path}, s->value);
+  }
+
+  info.rest_path_verb = parsed_http_rule->verb;
   return info;
 }
 

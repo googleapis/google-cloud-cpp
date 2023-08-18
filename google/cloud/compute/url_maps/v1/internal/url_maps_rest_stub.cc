@@ -52,8 +52,8 @@ DefaultUrlMapsRestStub::AggregatedListUrlMaps(
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::UrlMapsAggregatedList>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(),
-                   "/aggregated/urlMaps"),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "aggregated", "/", "urlMaps"),
       {std::make_pair("filter", request.filter()),
        std::make_pair("include_all_scopes",
                       request.include_all_scopes() ? "1" : "0"),
@@ -78,8 +78,9 @@ DefaultUrlMapsRestStub::AsyncDeleteUrlMaps(
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request,
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/global/urlMaps/", request.url_map(), "")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "global", "/", "urlMaps",
+                             "/", request.url_map())));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -95,8 +96,9 @@ DefaultUrlMapsRestStub::GetUrlMaps(
         request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::UrlMap>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(),
-                   "/global/urlMaps/", request.url_map(), ""),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "global", "/", "urlMaps", "/",
+                   request.url_map()),
       {});
 }
 
@@ -114,8 +116,9 @@ DefaultUrlMapsRestStub::AsyncInsertUrlMaps(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.url_map_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/global/urlMaps")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "global", "/",
+                             "urlMaps")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -139,9 +142,9 @@ DefaultUrlMapsRestStub::AsyncInvalidateCache(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
                 request.cache_invalidation_rule_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/global/urlMaps/", request.url_map(),
-                             "/invalidateCache")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "global", "/", "urlMaps",
+                             "/", request.url_map(), "/", "invalidateCache")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -157,8 +160,8 @@ DefaultUrlMapsRestStub::ListUrlMaps(
         request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::UrlMapList>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(),
-                   "/global/urlMaps"),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "global", "/", "urlMaps"),
       {std::make_pair("filter", request.filter()),
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),
@@ -181,8 +184,9 @@ DefaultUrlMapsRestStub::AsyncPatchUrlMaps(
         p.set_value(
             rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.url_map_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/global/urlMaps/", request.url_map(), "")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "global", "/", "urlMaps",
+                             "/", request.url_map())));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -205,8 +209,9 @@ DefaultUrlMapsRestStub::AsyncUpdateUrlMaps(
         p.set_value(
             rest_internal::Put<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.url_map_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/global/urlMaps/", request.url_map(), "")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "global", "/", "urlMaps",
+                             "/", request.url_map())));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -222,8 +227,9 @@ DefaultUrlMapsRestStub::Validate(
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::UrlMapsValidateResponse>(
       *service_, rest_context, request.url_maps_validate_request_resource(),
-      absl::StrCat("/compute/v1/projects/", request.project(),
-                   "/global/urlMaps/", request.url_map(), "/validate"));
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "global", "/", "urlMaps", "/",
+                   request.url_map(), "/", "validate"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

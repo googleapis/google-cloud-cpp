@@ -52,7 +52,7 @@ DefaultInstanceAdminRestStub::ListInstanceConfigs(
   return rest_internal::Get<
       google::spanner::admin::instance::v1::ListInstanceConfigsResponse>(
       *service_, rest_context, request,
-      absl::StrCat("/v1/", request.parent(), "/instanceConfigs"),
+      absl::StrCat("/", "v1", "/", request.parent(), "/", "instanceConfigs"),
       {std::make_pair("page_size", std::to_string(request.page_size())),
        std::make_pair("page_token", request.page_token())});
 }
@@ -65,7 +65,7 @@ DefaultInstanceAdminRestStub::GetInstanceConfig(
   return rest_internal::Get<
       google::spanner::admin::instance::v1::InstanceConfig>(
       *service_, rest_context, request,
-      absl::StrCat("/v1/", request.name(), ""), {});
+      absl::StrCat("/", "v1", "/", request.name()), {});
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -80,7 +80,8 @@ DefaultInstanceAdminRestStub::AsyncCreateInstanceConfig(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(rest_internal::Post<google::longrunning::Operation>(
             *service, *rest_context, request,
-            absl::StrCat("/v1/", request.parent(), "/instanceConfigs")));
+            absl::StrCat("/", "v1", "/", request.parent(), "/",
+                         "instanceConfigs")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -101,7 +102,7 @@ DefaultInstanceAdminRestStub::AsyncUpdateInstanceConfig(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(rest_internal::Patch<google::longrunning::Operation>(
             *service, *rest_context, request,
-            absl::StrCat("/v1/", request.instance_config().name(), "")));
+            absl::StrCat("/", "v1", "/", request.instance_config().name())));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -115,7 +116,7 @@ Status DefaultInstanceAdminRestStub::DeleteInstanceConfig(
     google::spanner::admin::instance::v1::DeleteInstanceConfigRequest const&
         request) {
   return rest_internal::Delete(*service_, rest_context, request,
-                               absl::StrCat("/v1/", request.name(), ""));
+                               absl::StrCat("/", "v1", "/", request.name()));
 }
 
 StatusOr<
@@ -127,7 +128,8 @@ DefaultInstanceAdminRestStub::ListInstanceConfigOperations(
   return rest_internal::Get<google::spanner::admin::instance::v1::
                                 ListInstanceConfigOperationsResponse>(
       *service_, rest_context, request,
-      absl::StrCat("/v1/", request.parent(), "/instanceConfigOperations"),
+      absl::StrCat("/", "v1", "/", request.parent(), "/",
+                   "instanceConfigOperations"),
       {std::make_pair("filter", request.filter()),
        std::make_pair("page_size", std::to_string(request.page_size())),
        std::make_pair("page_token", request.page_token())});
@@ -140,7 +142,7 @@ DefaultInstanceAdminRestStub::ListInstances(
   return rest_internal::Get<
       google::spanner::admin::instance::v1::ListInstancesResponse>(
       *service_, rest_context, request,
-      absl::StrCat("/v1/", request.parent(), "/instances"),
+      absl::StrCat("/", "v1", "/", request.parent(), "/", "instances"),
       {std::make_pair("page_size", std::to_string(request.page_size())),
        std::make_pair("page_token", request.page_token()),
        std::make_pair("filter", request.filter())});
@@ -152,7 +154,7 @@ DefaultInstanceAdminRestStub::GetInstance(
     google::spanner::admin::instance::v1::GetInstanceRequest const& request) {
   return rest_internal::Get<google::spanner::admin::instance::v1::Instance>(
       *service_, rest_context, request,
-      absl::StrCat("/v1/", request.name(), ""), {});
+      absl::StrCat("/", "v1", "/", request.name()), {});
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -167,7 +169,7 @@ DefaultInstanceAdminRestStub::AsyncCreateInstance(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(rest_internal::Post<google::longrunning::Operation>(
             *service, *rest_context, request,
-            absl::StrCat("/v1/", request.parent(), "/instances")));
+            absl::StrCat("/", "v1", "/", request.parent(), "/", "instances")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -188,7 +190,7 @@ DefaultInstanceAdminRestStub::AsyncUpdateInstance(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(rest_internal::Patch<google::longrunning::Operation>(
             *service, *rest_context, request,
-            absl::StrCat("/v1/", request.instance().name(), "")));
+            absl::StrCat("/", "v1", "/", request.instance().name())));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -202,7 +204,7 @@ Status DefaultInstanceAdminRestStub::DeleteInstance(
     google::spanner::admin::instance::v1::DeleteInstanceRequest const&
         request) {
   return rest_internal::Delete(*service_, rest_context, request,
-                               absl::StrCat("/v1/", request.name(), ""));
+                               absl::StrCat("/", "v1", "/", request.name()));
 }
 
 StatusOr<google::iam::v1::Policy> DefaultInstanceAdminRestStub::SetIamPolicy(
@@ -210,7 +212,7 @@ StatusOr<google::iam::v1::Policy> DefaultInstanceAdminRestStub::SetIamPolicy(
     google::iam::v1::SetIamPolicyRequest const& request) {
   return rest_internal::Post<google::iam::v1::Policy>(
       *service_, rest_context, request,
-      absl::StrCat("/v1/", request.resource(), ":setIamPolicy"));
+      absl::StrCat("/", "v1", "/", request.resource(), ":setIamPolicy"));
 }
 
 StatusOr<google::iam::v1::Policy> DefaultInstanceAdminRestStub::GetIamPolicy(
@@ -218,7 +220,7 @@ StatusOr<google::iam::v1::Policy> DefaultInstanceAdminRestStub::GetIamPolicy(
     google::iam::v1::GetIamPolicyRequest const& request) {
   return rest_internal::Post<google::iam::v1::Policy>(
       *service_, rest_context, request,
-      absl::StrCat("/v1/", request.resource(), ":getIamPolicy"));
+      absl::StrCat("/", "v1", "/", request.resource(), ":getIamPolicy"));
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
@@ -227,7 +229,7 @@ DefaultInstanceAdminRestStub::TestIamPermissions(
     google::iam::v1::TestIamPermissionsRequest const& request) {
   return rest_internal::Post<google::iam::v1::TestIamPermissionsResponse>(
       *service_, rest_context, request,
-      absl::StrCat("/v1/", request.resource(), ":testIamPermissions"));
+      absl::StrCat("/", "v1", "/", request.resource(), ":testIamPermissions"));
 }
 
 future<StatusOr<google::longrunning::Operation>>

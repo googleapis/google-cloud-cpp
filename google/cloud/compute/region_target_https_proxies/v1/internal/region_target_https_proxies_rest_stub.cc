@@ -61,10 +61,10 @@ DefaultRegionTargetHttpsProxiesRestStub::AsyncDeleteRegionTargetHttpsProxies(
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request,
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/regions/", request.region(),
-                             "/targetHttpsProxies/",
-                             request.target_https_proxy(), "")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "regions", "/",
+                             request.region(), "/", "targetHttpsProxies", "/",
+                             request.target_https_proxy())));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -80,9 +80,10 @@ DefaultRegionTargetHttpsProxiesRestStub::GetRegionTargetHttpsProxies(
         GetRegionTargetHttpsProxiesRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::TargetHttpsProxy>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/regions/",
-                   request.region(), "/targetHttpsProxies/",
-                   request.target_https_proxy(), ""),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "regions", "/", request.region(),
+                   "/", "targetHttpsProxies", "/",
+                   request.target_https_proxy()),
       {});
 }
 
@@ -100,9 +101,9 @@ DefaultRegionTargetHttpsProxiesRestStub::AsyncInsertRegionTargetHttpsProxies(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.target_https_proxy_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/regions/", request.region(),
-                             "/targetHttpsProxies")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "regions", "/",
+                             request.region(), "/", "targetHttpsProxies")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -119,8 +120,9 @@ DefaultRegionTargetHttpsProxiesRestStub::ListRegionTargetHttpsProxies(
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::TargetHttpsProxyList>(
       *service_, rest_context, request,
-      absl::StrCat("/compute/v1/projects/", request.project(), "/regions/",
-                   request.region(), "/targetHttpsProxies"),
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "regions", "/", request.region(),
+                   "/", "targetHttpsProxies"),
       {std::make_pair("filter", request.filter()),
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),
@@ -143,10 +145,10 @@ DefaultRegionTargetHttpsProxiesRestStub::AsyncPatchRegionTargetHttpsProxies(
         p.set_value(
             rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.target_https_proxy_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/regions/", request.region(),
-                             "/targetHttpsProxies/",
-                             request.target_https_proxy(), "")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "regions", "/",
+                             request.region(), "/", "targetHttpsProxies", "/",
+                             request.target_https_proxy())));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -171,9 +173,11 @@ DefaultRegionTargetHttpsProxiesRestStub::AsyncSetSslCertificates(
             *service, *rest_context,
             request
                 .region_target_https_proxies_set_ssl_certificates_request_resource(),
-            absl::StrCat("/compute/v1/projects/", request.project(),
-                         "/regions/", request.region(), "/targetHttpsProxies/",
-                         request.target_https_proxy(), "/setSslCertificates")));
+            absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                         request.project(), "/", "regions", "/",
+                         request.region(), "/", "targetHttpsProxies", "/",
+                         request.target_https_proxy(), "/",
+                         "setSslCertificates")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -196,10 +200,10 @@ DefaultRegionTargetHttpsProxiesRestStub::AsyncSetUrlMap(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.url_map_reference_resource(),
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/regions/", request.region(),
-                             "/targetHttpsProxies/",
-                             request.target_https_proxy(), "/setUrlMap")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "regions", "/",
+                             request.region(), "/", "targetHttpsProxies", "/",
+                             request.target_https_proxy(), "/", "setUrlMap")));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
