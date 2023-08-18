@@ -45,9 +45,10 @@ PolicyTagManagerSerializationConnectionImpl::
 StatusOr<google::cloud::datacatalog::v1::Taxonomy>
 PolicyTagManagerSerializationConnectionImpl::ReplaceTaxonomy(
     google::cloud::datacatalog::v1::ReplaceTaxonomyRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->ReplaceTaxonomy(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ReplaceTaxonomy(request),
       [this](grpc::ClientContext& context,
              google::cloud::datacatalog::v1::ReplaceTaxonomyRequest const&
                  request) { return stub_->ReplaceTaxonomy(context, request); },
@@ -57,9 +58,10 @@ PolicyTagManagerSerializationConnectionImpl::ReplaceTaxonomy(
 StatusOr<google::cloud::datacatalog::v1::ImportTaxonomiesResponse>
 PolicyTagManagerSerializationConnectionImpl::ImportTaxonomies(
     google::cloud::datacatalog::v1::ImportTaxonomiesRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->ImportTaxonomies(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ImportTaxonomies(request),
       [this](grpc::ClientContext& context,
              google::cloud::datacatalog::v1::ImportTaxonomiesRequest const&
                  request) { return stub_->ImportTaxonomies(context, request); },
@@ -69,9 +71,10 @@ PolicyTagManagerSerializationConnectionImpl::ImportTaxonomies(
 StatusOr<google::cloud::datacatalog::v1::ExportTaxonomiesResponse>
 PolicyTagManagerSerializationConnectionImpl::ExportTaxonomies(
     google::cloud::datacatalog::v1::ExportTaxonomiesRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->ExportTaxonomies(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ExportTaxonomies(request),
       [this](grpc::ClientContext& context,
              google::cloud::datacatalog::v1::ExportTaxonomiesRequest const&
                  request) { return stub_->ExportTaxonomies(context, request); },

@@ -40,9 +40,10 @@ SchemaServiceConnectionImpl::SchemaServiceConnectionImpl(
 
 StatusOr<google::pubsub::v1::Schema> SchemaServiceConnectionImpl::CreateSchema(
     google::pubsub::v1::CreateSchemaRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateSchema(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateSchema(request),
       [this](grpc::ClientContext& context,
              google::pubsub::v1::CreateSchemaRequest const& request) {
         return stub_->CreateSchema(context, request);
@@ -52,9 +53,10 @@ StatusOr<google::pubsub::v1::Schema> SchemaServiceConnectionImpl::CreateSchema(
 
 StatusOr<google::pubsub::v1::Schema> SchemaServiceConnectionImpl::GetSchema(
     google::pubsub::v1::GetSchemaRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetSchema(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetSchema(request),
       [this](grpc::ClientContext& context,
              google::pubsub::v1::GetSchemaRequest const& request) {
         return stub_->GetSchema(context, request);
@@ -66,17 +68,17 @@ StreamRange<google::pubsub::v1::Schema>
 SchemaServiceConnectionImpl::ListSchemas(
     google::pubsub::v1::ListSchemasRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<pubsub::SchemaServiceRetryPolicy const>(retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListSchemas(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListSchemas(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::pubsub::v1::Schema>>(
       std::move(request),
-      [stub, retry, backoff, idempotency,
-       function_name](google::pubsub::v1::ListSchemasRequest const& r) {
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<pubsub::SchemaServiceRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          google::pubsub::v1::ListSchemasRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context,
@@ -97,17 +99,17 @@ StreamRange<google::pubsub::v1::Schema>
 SchemaServiceConnectionImpl::ListSchemaRevisions(
     google::pubsub::v1::ListSchemaRevisionsRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<pubsub::SchemaServiceRetryPolicy const>(retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListSchemaRevisions(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListSchemaRevisions(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::pubsub::v1::Schema>>(
       std::move(request),
-      [stub, retry, backoff, idempotency,
-       function_name](google::pubsub::v1::ListSchemaRevisionsRequest const& r) {
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<pubsub::SchemaServiceRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          google::pubsub::v1::ListSchemaRevisionsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
@@ -127,9 +129,10 @@ SchemaServiceConnectionImpl::ListSchemaRevisions(
 
 StatusOr<google::pubsub::v1::Schema> SchemaServiceConnectionImpl::CommitSchema(
     google::pubsub::v1::CommitSchemaRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CommitSchema(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CommitSchema(request),
       [this](grpc::ClientContext& context,
              google::pubsub::v1::CommitSchemaRequest const& request) {
         return stub_->CommitSchema(context, request);
@@ -140,9 +143,10 @@ StatusOr<google::pubsub::v1::Schema> SchemaServiceConnectionImpl::CommitSchema(
 StatusOr<google::pubsub::v1::Schema>
 SchemaServiceConnectionImpl::RollbackSchema(
     google::pubsub::v1::RollbackSchemaRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->RollbackSchema(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->RollbackSchema(request),
       [this](grpc::ClientContext& context,
              google::pubsub::v1::RollbackSchemaRequest const& request) {
         return stub_->RollbackSchema(context, request);
@@ -153,9 +157,10 @@ SchemaServiceConnectionImpl::RollbackSchema(
 StatusOr<google::pubsub::v1::Schema>
 SchemaServiceConnectionImpl::DeleteSchemaRevision(
     google::pubsub::v1::DeleteSchemaRevisionRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteSchemaRevision(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteSchemaRevision(request),
       [this](grpc::ClientContext& context,
              google::pubsub::v1::DeleteSchemaRevisionRequest const& request) {
         return stub_->DeleteSchemaRevision(context, request);
@@ -165,9 +170,10 @@ SchemaServiceConnectionImpl::DeleteSchemaRevision(
 
 Status SchemaServiceConnectionImpl::DeleteSchema(
     google::pubsub::v1::DeleteSchemaRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteSchema(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteSchema(request),
       [this](grpc::ClientContext& context,
              google::pubsub::v1::DeleteSchemaRequest const& request) {
         return stub_->DeleteSchema(context, request);
@@ -178,9 +184,10 @@ Status SchemaServiceConnectionImpl::DeleteSchema(
 StatusOr<google::pubsub::v1::ValidateSchemaResponse>
 SchemaServiceConnectionImpl::ValidateSchema(
     google::pubsub::v1::ValidateSchemaRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->ValidateSchema(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ValidateSchema(request),
       [this](grpc::ClientContext& context,
              google::pubsub::v1::ValidateSchemaRequest const& request) {
         return stub_->ValidateSchema(context, request);
@@ -191,9 +198,10 @@ SchemaServiceConnectionImpl::ValidateSchema(
 StatusOr<google::pubsub::v1::ValidateMessageResponse>
 SchemaServiceConnectionImpl::ValidateMessage(
     google::pubsub::v1::ValidateMessageRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->ValidateMessage(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ValidateMessage(request),
       [this](grpc::ClientContext& context,
              google::pubsub::v1::ValidateMessageRequest const& request) {
         return stub_->ValidateMessage(context, request);

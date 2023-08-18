@@ -139,42 +139,24 @@ class CloudDeployConnectionImpl : public deploy_v1::CloudDeployConnection {
       google::cloud::deploy::v1::GetConfigRequest const& request) override;
 
  private:
-  std::unique_ptr<deploy_v1::CloudDeployRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<deploy_v1::CloudDeployRetryPolicyOption>()) {
-      return options.get<deploy_v1::CloudDeployRetryPolicyOption>()->clone();
-    }
-    return options_.get<deploy_v1::CloudDeployRetryPolicyOption>()->clone();
+  static std::unique_ptr<deploy_v1::CloudDeployRetryPolicy> retry_policy(
+      Options const& options) {
+    return options.get<deploy_v1::CloudDeployRetryPolicyOption>()->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<deploy_v1::CloudDeployBackoffPolicyOption>()) {
-      return options.get<deploy_v1::CloudDeployBackoffPolicyOption>()->clone();
-    }
-    return options_.get<deploy_v1::CloudDeployBackoffPolicyOption>()->clone();
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<deploy_v1::CloudDeployBackoffPolicyOption>()->clone();
   }
 
-  std::unique_ptr<deploy_v1::CloudDeployConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<deploy_v1::CloudDeployConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<deploy_v1::CloudDeployConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<deploy_v1::CloudDeployConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<deploy_v1::CloudDeployConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<deploy_v1::CloudDeployPollingPolicyOption>()) {
-      return options.get<deploy_v1::CloudDeployPollingPolicyOption>()->clone();
-    }
-    return options_.get<deploy_v1::CloudDeployPollingPolicyOption>()->clone();
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options.get<deploy_v1::CloudDeployPollingPolicyOption>()->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

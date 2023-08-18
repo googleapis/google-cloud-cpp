@@ -89,39 +89,23 @@ class GkeHubConnectionImpl : public gkehub_v1::GkeHubConnection {
       override;
 
  private:
-  std::unique_ptr<gkehub_v1::GkeHubRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<gkehub_v1::GkeHubRetryPolicyOption>()) {
-      return options.get<gkehub_v1::GkeHubRetryPolicyOption>()->clone();
-    }
-    return options_.get<gkehub_v1::GkeHubRetryPolicyOption>()->clone();
+  static std::unique_ptr<gkehub_v1::GkeHubRetryPolicy> retry_policy(
+      Options const& options) {
+    return options.get<gkehub_v1::GkeHubRetryPolicyOption>()->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<gkehub_v1::GkeHubBackoffPolicyOption>()) {
-      return options.get<gkehub_v1::GkeHubBackoffPolicyOption>()->clone();
-    }
-    return options_.get<gkehub_v1::GkeHubBackoffPolicyOption>()->clone();
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<gkehub_v1::GkeHubBackoffPolicyOption>()->clone();
   }
 
-  std::unique_ptr<gkehub_v1::GkeHubConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<gkehub_v1::GkeHubConnectionIdempotencyPolicyOption>()) {
-      return options.get<gkehub_v1::GkeHubConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_.get<gkehub_v1::GkeHubConnectionIdempotencyPolicyOption>()
+  static std::unique_ptr<gkehub_v1::GkeHubConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options.get<gkehub_v1::GkeHubConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<gkehub_v1::GkeHubPollingPolicyOption>()) {
-      return options.get<gkehub_v1::GkeHubPollingPolicyOption>()->clone();
-    }
-    return options_.get<gkehub_v1::GkeHubPollingPolicyOption>()->clone();
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options.get<gkehub_v1::GkeHubPollingPolicyOption>()->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

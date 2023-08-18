@@ -90,66 +90,33 @@ class InterconnectAttachmentsRestConnectionImpl
           SetLabelsRequest const& request) override;
 
  private:
-  std::unique_ptr<
+  static std::unique_ptr<
       compute_interconnect_attachments_v1::InterconnectAttachmentsRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_interconnect_attachments_v1::
-                        InterconnectAttachmentsRetryPolicyOption>()) {
-      return options
-          .get<compute_interconnect_attachments_v1::
-                   InterconnectAttachmentsRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
+  retry_policy(Options const& options) {
+    return options
         .get<compute_interconnect_attachments_v1::
                  InterconnectAttachmentsRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_interconnect_attachments_v1::
-                        InterconnectAttachmentsBackoffPolicyOption>()) {
-      return options
-          .get<compute_interconnect_attachments_v1::
-                   InterconnectAttachmentsBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options
         .get<compute_interconnect_attachments_v1::
                  InterconnectAttachmentsBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<compute_interconnect_attachments_v1::
-                      InterconnectAttachmentsConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            compute_interconnect_attachments_v1::
-                InterconnectAttachmentsConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<compute_interconnect_attachments_v1::
-                   InterconnectAttachmentsConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<compute_interconnect_attachments_v1::
+                             InterconnectAttachmentsConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<compute_interconnect_attachments_v1::
                  InterconnectAttachmentsConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_interconnect_attachments_v1::
-                        InterconnectAttachmentsPollingPolicyOption>()) {
-      return options
-          .get<compute_interconnect_attachments_v1::
-                   InterconnectAttachmentsPollingPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options
         .get<compute_interconnect_attachments_v1::
                  InterconnectAttachmentsPollingPolicyOption>()
         ->clone();

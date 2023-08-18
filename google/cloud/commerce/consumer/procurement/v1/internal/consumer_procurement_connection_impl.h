@@ -70,67 +70,34 @@ class ConsumerProcurementServiceConnectionImpl
           request) override;
 
  private:
-  std::unique_ptr<
+  static std::unique_ptr<
       commerce_consumer_procurement_v1::ConsumerProcurementServiceRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<commerce_consumer_procurement_v1::
-                        ConsumerProcurementServiceRetryPolicyOption>()) {
-      return options
-          .get<commerce_consumer_procurement_v1::
-                   ConsumerProcurementServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
+  retry_policy(Options const& options) {
+    return options
         .get<commerce_consumer_procurement_v1::
                  ConsumerProcurementServiceRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<commerce_consumer_procurement_v1::
-                        ConsumerProcurementServiceBackoffPolicyOption>()) {
-      return options
-          .get<commerce_consumer_procurement_v1::
-                   ConsumerProcurementServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options
         .get<commerce_consumer_procurement_v1::
                  ConsumerProcurementServiceBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<commerce_consumer_procurement_v1::
-                      ConsumerProcurementServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            commerce_consumer_procurement_v1::
-                ConsumerProcurementServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<
-              commerce_consumer_procurement_v1::
-                  ConsumerProcurementServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<
+      commerce_consumer_procurement_v1::
+          ConsumerProcurementServiceConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<commerce_consumer_procurement_v1::
                  ConsumerProcurementServiceConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<commerce_consumer_procurement_v1::
-                        ConsumerProcurementServicePollingPolicyOption>()) {
-      return options
-          .get<commerce_consumer_procurement_v1::
-                   ConsumerProcurementServicePollingPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options
         .get<commerce_consumer_procurement_v1::
                  ConsumerProcurementServicePollingPolicyOption>()
         ->clone();

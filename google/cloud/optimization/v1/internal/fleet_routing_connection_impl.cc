@@ -42,9 +42,10 @@ FleetRoutingConnectionImpl::FleetRoutingConnectionImpl(
 StatusOr<google::cloud::optimization::v1::OptimizeToursResponse>
 FleetRoutingConnectionImpl::OptimizeTours(
     google::cloud::optimization::v1::OptimizeToursRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->OptimizeTours(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->OptimizeTours(request),
       [this](grpc::ClientContext& context,
              google::cloud::optimization::v1::OptimizeToursRequest const&
                  request) { return stub_->OptimizeTours(context, request); },
@@ -54,31 +55,33 @@ FleetRoutingConnectionImpl::OptimizeTours(
 future<StatusOr<google::cloud::optimization::v1::BatchOptimizeToursResponse>>
 FleetRoutingConnectionImpl::BatchOptimizeTours(
     google::cloud::optimization::v1::BatchOptimizeToursRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::optimization::v1::BatchOptimizeToursResponse>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::optimization::v1::BatchOptimizeToursRequest const&
-                 request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::optimization::v1::BatchOptimizeToursRequest const&
+              request) {
         return stub->AsyncBatchOptimizeTours(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::optimization::v1::BatchOptimizeToursResponse>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->BatchOptimizeTours(request), polling_policy(),
-      __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->BatchOptimizeTours(request),
+      polling_policy(*current), __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

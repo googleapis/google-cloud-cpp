@@ -74,66 +74,33 @@ class ClientGatewaysServiceConnectionImpl
                           DeleteClientGatewayRequest const& request) override;
 
  private:
-  std::unique_ptr<
+  static std::unique_ptr<
       beyondcorp_clientgateways_v1::ClientGatewaysServiceRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<beyondcorp_clientgateways_v1::
-                        ClientGatewaysServiceRetryPolicyOption>()) {
-      return options
-          .get<beyondcorp_clientgateways_v1::
-                   ClientGatewaysServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
+  retry_policy(Options const& options) {
+    return options
         .get<beyondcorp_clientgateways_v1::
                  ClientGatewaysServiceRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<beyondcorp_clientgateways_v1::
-                        ClientGatewaysServiceBackoffPolicyOption>()) {
-      return options
-          .get<beyondcorp_clientgateways_v1::
-                   ClientGatewaysServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options
         .get<beyondcorp_clientgateways_v1::
                  ClientGatewaysServiceBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<beyondcorp_clientgateways_v1::
-                      ClientGatewaysServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            beyondcorp_clientgateways_v1::
-                ClientGatewaysServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<beyondcorp_clientgateways_v1::
-                   ClientGatewaysServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<beyondcorp_clientgateways_v1::
+                             ClientGatewaysServiceConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<beyondcorp_clientgateways_v1::
                  ClientGatewaysServiceConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<beyondcorp_clientgateways_v1::
-                        ClientGatewaysServicePollingPolicyOption>()) {
-      return options
-          .get<beyondcorp_clientgateways_v1::
-                   ClientGatewaysServicePollingPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options
         .get<beyondcorp_clientgateways_v1::
                  ClientGatewaysServicePollingPolicyOption>()
         ->clone();

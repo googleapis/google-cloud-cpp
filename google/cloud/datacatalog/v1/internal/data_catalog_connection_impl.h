@@ -180,47 +180,25 @@ class DataCatalogConnectionImpl : public datacatalog_v1::DataCatalogConnection {
                     request) override;
 
  private:
-  std::unique_ptr<datacatalog_v1::DataCatalogRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<datacatalog_v1::DataCatalogRetryPolicyOption>()) {
-      return options.get<datacatalog_v1::DataCatalogRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<datacatalog_v1::DataCatalogRetryPolicyOption>()
+  static std::unique_ptr<datacatalog_v1::DataCatalogRetryPolicy> retry_policy(
+      Options const& options) {
+    return options.get<datacatalog_v1::DataCatalogRetryPolicyOption>()->clone();
+  }
+
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<datacatalog_v1::DataCatalogBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<datacatalog_v1::DataCatalogBackoffPolicyOption>()) {
-      return options.get<datacatalog_v1::DataCatalogBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<datacatalog_v1::DataCatalogBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<datacatalog_v1::DataCatalogConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            datacatalog_v1::DataCatalogConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<datacatalog_v1::DataCatalogConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<datacatalog_v1::DataCatalogConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<datacatalog_v1::DataCatalogConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<datacatalog_v1::DataCatalogPollingPolicyOption>()) {
-      return options.get<datacatalog_v1::DataCatalogPollingPolicyOption>()
-          ->clone();
-    }
-    return options_.get<datacatalog_v1::DataCatalogPollingPolicyOption>()
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options.get<datacatalog_v1::DataCatalogPollingPolicyOption>()
         ->clone();
   }
 

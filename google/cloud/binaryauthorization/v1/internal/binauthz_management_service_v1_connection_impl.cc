@@ -46,9 +46,10 @@ BinauthzManagementServiceV1ConnectionImpl::
 StatusOr<google::cloud::binaryauthorization::v1::Policy>
 BinauthzManagementServiceV1ConnectionImpl::GetPolicy(
     google::cloud::binaryauthorization::v1::GetPolicyRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetPolicy(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetPolicy(request),
       [this](grpc::ClientContext& context,
              google::cloud::binaryauthorization::v1::GetPolicyRequest const&
                  request) { return stub_->GetPolicy(context, request); },
@@ -59,9 +60,10 @@ StatusOr<google::cloud::binaryauthorization::v1::Policy>
 BinauthzManagementServiceV1ConnectionImpl::UpdatePolicy(
     google::cloud::binaryauthorization::v1::UpdatePolicyRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UpdatePolicy(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdatePolicy(request),
       [this](grpc::ClientContext& context,
              google::cloud::binaryauthorization::v1::UpdatePolicyRequest const&
                  request) { return stub_->UpdatePolicy(context, request); },
@@ -72,9 +74,10 @@ StatusOr<google::cloud::binaryauthorization::v1::Attestor>
 BinauthzManagementServiceV1ConnectionImpl::CreateAttestor(
     google::cloud::binaryauthorization::v1::CreateAttestorRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateAttestor(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateAttestor(request),
       [this](
           grpc::ClientContext& context,
           google::cloud::binaryauthorization::v1::CreateAttestorRequest const&
@@ -85,9 +88,10 @@ BinauthzManagementServiceV1ConnectionImpl::CreateAttestor(
 StatusOr<google::cloud::binaryauthorization::v1::Attestor>
 BinauthzManagementServiceV1ConnectionImpl::GetAttestor(
     google::cloud::binaryauthorization::v1::GetAttestorRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetAttestor(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetAttestor(request),
       [this](grpc::ClientContext& context,
              google::cloud::binaryauthorization::v1::GetAttestorRequest const&
                  request) { return stub_->GetAttestor(context, request); },
@@ -98,9 +102,10 @@ StatusOr<google::cloud::binaryauthorization::v1::Attestor>
 BinauthzManagementServiceV1ConnectionImpl::UpdateAttestor(
     google::cloud::binaryauthorization::v1::UpdateAttestorRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UpdateAttestor(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateAttestor(request),
       [this](
           grpc::ClientContext& context,
           google::cloud::binaryauthorization::v1::UpdateAttestorRequest const&
@@ -112,17 +117,17 @@ StreamRange<google::cloud::binaryauthorization::v1::Attestor>
 BinauthzManagementServiceV1ConnectionImpl::ListAttestors(
     google::cloud::binaryauthorization::v1::ListAttestorsRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<
-      binaryauthorization_v1::BinauthzManagementServiceV1RetryPolicy const>(
-      retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListAttestors(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListAttestors(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::binaryauthorization::v1::Attestor>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<
+           binaryauthorization_v1::BinauthzManagementServiceV1RetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::binaryauthorization::v1::ListAttestorsRequest const&
               r) {
         return google::cloud::internal::RetryLoop(
@@ -146,9 +151,10 @@ BinauthzManagementServiceV1ConnectionImpl::ListAttestors(
 Status BinauthzManagementServiceV1ConnectionImpl::DeleteAttestor(
     google::cloud::binaryauthorization::v1::DeleteAttestorRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteAttestor(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteAttestor(request),
       [this](
           grpc::ClientContext& context,
           google::cloud::binaryauthorization::v1::DeleteAttestorRequest const&

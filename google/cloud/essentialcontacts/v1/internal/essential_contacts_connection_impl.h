@@ -80,49 +80,25 @@ class EssentialContactsServiceConnectionImpl
           request) override;
 
  private:
-  std::unique_ptr<essentialcontacts_v1::EssentialContactsServiceRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<essentialcontacts_v1::
-                        EssentialContactsServiceRetryPolicyOption>()) {
-      return options
-          .get<
-              essentialcontacts_v1::EssentialContactsServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<
+      essentialcontacts_v1::EssentialContactsServiceRetryPolicy>
+  retry_policy(Options const& options) {
+    return options
         .get<essentialcontacts_v1::EssentialContactsServiceRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<essentialcontacts_v1::
-                        EssentialContactsServiceBackoffPolicyOption>()) {
-      return options
-          .get<essentialcontacts_v1::
-                   EssentialContactsServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options
         .get<
             essentialcontacts_v1::EssentialContactsServiceBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<
+  static std::unique_ptr<
       essentialcontacts_v1::EssentialContactsServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            essentialcontacts_v1::
-                EssentialContactsServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<essentialcontacts_v1::
-                   EssentialContactsServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  idempotency_policy(Options const& options) {
+    return options
         .get<essentialcontacts_v1::
                  EssentialContactsServiceConnectionIdempotencyPolicyOption>()
         ->clone();

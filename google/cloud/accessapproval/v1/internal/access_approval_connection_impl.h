@@ -94,38 +94,21 @@ class AccessApprovalConnectionImpl
           GetAccessApprovalServiceAccountMessage const& request) override;
 
  private:
-  std::unique_ptr<accessapproval_v1::AccessApprovalRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<accessapproval_v1::AccessApprovalRetryPolicyOption>()) {
-      return options.get<accessapproval_v1::AccessApprovalRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<accessapproval_v1::AccessApprovalRetryPolicyOption>()
+  static std::unique_ptr<accessapproval_v1::AccessApprovalRetryPolicy>
+  retry_policy(Options const& options) {
+    return options.get<accessapproval_v1::AccessApprovalRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<accessapproval_v1::AccessApprovalBackoffPolicyOption>()) {
-      return options
-          .get<accessapproval_v1::AccessApprovalBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<accessapproval_v1::AccessApprovalBackoffPolicyOption>()
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<accessapproval_v1::AccessApprovalBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<accessapproval_v1::AccessApprovalConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<accessapproval_v1::
-                        AccessApprovalConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<accessapproval_v1::
-                   AccessApprovalConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<
+      accessapproval_v1::AccessApprovalConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<accessapproval_v1::
                  AccessApprovalConnectionIdempotencyPolicyOption>()
         ->clone();

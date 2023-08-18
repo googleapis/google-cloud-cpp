@@ -87,36 +87,21 @@ class MetricServiceConnectionImpl
       google::monitoring::v3::CreateTimeSeriesRequest const& request) override;
 
  private:
-  std::unique_ptr<monitoring_v3::MetricServiceRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<monitoring_v3::MetricServiceRetryPolicyOption>()) {
-      return options.get<monitoring_v3::MetricServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<monitoring_v3::MetricServiceRetryPolicyOption>()
+  static std::unique_ptr<monitoring_v3::MetricServiceRetryPolicy> retry_policy(
+      Options const& options) {
+    return options.get<monitoring_v3::MetricServiceRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<monitoring_v3::MetricServiceBackoffPolicyOption>()) {
-      return options.get<monitoring_v3::MetricServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<monitoring_v3::MetricServiceBackoffPolicyOption>()
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<monitoring_v3::MetricServiceBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<monitoring_v3::MetricServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            monitoring_v3::MetricServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<monitoring_v3::MetricServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<
+      monitoring_v3::MetricServiceConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<monitoring_v3::MetricServiceConnectionIdempotencyPolicyOption>()
         ->clone();
   }

@@ -43,16 +43,16 @@ StreamRange<google::cloud::recommender::v1::Insight>
 RecommenderConnectionImpl::ListInsights(
     google::cloud::recommender::v1::ListInsightsRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<recommender_v1::RecommenderRetryPolicy const>(
-      retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListInsights(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListInsights(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::recommender::v1::Insight>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<recommender_v1::RecommenderRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::recommender::v1::ListInsightsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
@@ -75,9 +75,10 @@ RecommenderConnectionImpl::ListInsights(
 StatusOr<google::cloud::recommender::v1::Insight>
 RecommenderConnectionImpl::GetInsight(
     google::cloud::recommender::v1::GetInsightRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetInsight(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetInsight(request),
       [this](grpc::ClientContext& context,
              google::cloud::recommender::v1::GetInsightRequest const& request) {
         return stub_->GetInsight(context, request);
@@ -88,9 +89,10 @@ RecommenderConnectionImpl::GetInsight(
 StatusOr<google::cloud::recommender::v1::Insight>
 RecommenderConnectionImpl::MarkInsightAccepted(
     google::cloud::recommender::v1::MarkInsightAcceptedRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->MarkInsightAccepted(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->MarkInsightAccepted(request),
       [this](grpc::ClientContext& context,
              google::cloud::recommender::v1::MarkInsightAcceptedRequest const&
                  request) {
@@ -103,16 +105,16 @@ StreamRange<google::cloud::recommender::v1::Recommendation>
 RecommenderConnectionImpl::ListRecommendations(
     google::cloud::recommender::v1::ListRecommendationsRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<recommender_v1::RecommenderRetryPolicy const>(
-      retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListRecommendations(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListRecommendations(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::recommender::v1::Recommendation>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<recommender_v1::RecommenderRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::recommender::v1::ListRecommendationsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
@@ -135,9 +137,10 @@ RecommenderConnectionImpl::ListRecommendations(
 StatusOr<google::cloud::recommender::v1::Recommendation>
 RecommenderConnectionImpl::GetRecommendation(
     google::cloud::recommender::v1::GetRecommendationRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetRecommendation(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetRecommendation(request),
       [this](grpc::ClientContext& context,
              google::cloud::recommender::v1::GetRecommendationRequest const&
                  request) {
@@ -150,9 +153,10 @@ StatusOr<google::cloud::recommender::v1::Recommendation>
 RecommenderConnectionImpl::MarkRecommendationClaimed(
     google::cloud::recommender::v1::MarkRecommendationClaimedRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->MarkRecommendationClaimed(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->MarkRecommendationClaimed(request),
       [this](grpc::ClientContext& context,
              google::cloud::recommender::v1::
                  MarkRecommendationClaimedRequest const& request) {
@@ -165,9 +169,10 @@ StatusOr<google::cloud::recommender::v1::Recommendation>
 RecommenderConnectionImpl::MarkRecommendationSucceeded(
     google::cloud::recommender::v1::MarkRecommendationSucceededRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->MarkRecommendationSucceeded(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->MarkRecommendationSucceeded(request),
       [this](grpc::ClientContext& context,
              google::cloud::recommender::v1::
                  MarkRecommendationSucceededRequest const& request) {
@@ -180,9 +185,10 @@ StatusOr<google::cloud::recommender::v1::Recommendation>
 RecommenderConnectionImpl::MarkRecommendationFailed(
     google::cloud::recommender::v1::MarkRecommendationFailedRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->MarkRecommendationFailed(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->MarkRecommendationFailed(request),
       [this](
           grpc::ClientContext& context,
           google::cloud::recommender::v1::MarkRecommendationFailedRequest const&
@@ -196,9 +202,10 @@ StatusOr<google::cloud::recommender::v1::RecommenderConfig>
 RecommenderConnectionImpl::GetRecommenderConfig(
     google::cloud::recommender::v1::GetRecommenderConfigRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetRecommenderConfig(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetRecommenderConfig(request),
       [this](grpc::ClientContext& context,
              google::cloud::recommender::v1::GetRecommenderConfigRequest const&
                  request) {
@@ -211,9 +218,10 @@ StatusOr<google::cloud::recommender::v1::RecommenderConfig>
 RecommenderConnectionImpl::UpdateRecommenderConfig(
     google::cloud::recommender::v1::UpdateRecommenderConfigRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UpdateRecommenderConfig(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateRecommenderConfig(request),
       [this](
           grpc::ClientContext& context,
           google::cloud::recommender::v1::UpdateRecommenderConfigRequest const&
@@ -227,9 +235,10 @@ StatusOr<google::cloud::recommender::v1::InsightTypeConfig>
 RecommenderConnectionImpl::GetInsightTypeConfig(
     google::cloud::recommender::v1::GetInsightTypeConfigRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetInsightTypeConfig(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetInsightTypeConfig(request),
       [this](grpc::ClientContext& context,
              google::cloud::recommender::v1::GetInsightTypeConfigRequest const&
                  request) {
@@ -242,9 +251,10 @@ StatusOr<google::cloud::recommender::v1::InsightTypeConfig>
 RecommenderConnectionImpl::UpdateInsightTypeConfig(
     google::cloud::recommender::v1::UpdateInsightTypeConfigRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UpdateInsightTypeConfig(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateInsightTypeConfig(request),
       [this](
           grpc::ClientContext& context,
           google::cloud::recommender::v1::UpdateInsightTypeConfigRequest const&

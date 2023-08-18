@@ -80,45 +80,23 @@ class TranscoderServiceConnectionImpl
           request) override;
 
  private:
-  std::unique_ptr<video_transcoder_v1::TranscoderServiceRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<video_transcoder_v1::TranscoderServiceRetryPolicyOption>()) {
-      return options
-          .get<video_transcoder_v1::TranscoderServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<video_transcoder_v1::TranscoderServiceRetryPolicy>
+  retry_policy(Options const& options) {
+    return options
         .get<video_transcoder_v1::TranscoderServiceRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<video_transcoder_v1::TranscoderServiceBackoffPolicyOption>()) {
-      return options
-          .get<video_transcoder_v1::TranscoderServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options
         .get<video_transcoder_v1::TranscoderServiceBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<
+  static std::unique_ptr<
       video_transcoder_v1::TranscoderServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<video_transcoder_v1::
-                        TranscoderServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<video_transcoder_v1::
-                   TranscoderServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  idempotency_policy(Options const& options) {
+    return options
         .get<video_transcoder_v1::
                  TranscoderServiceConnectionIdempotencyPolicyOption>()
         ->clone();

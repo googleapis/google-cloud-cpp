@@ -103,36 +103,19 @@ class RecommenderConnectionImpl : public recommender_v1::RecommenderConnection {
           request) override;
 
  private:
-  std::unique_ptr<recommender_v1::RecommenderRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<recommender_v1::RecommenderRetryPolicyOption>()) {
-      return options.get<recommender_v1::RecommenderRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<recommender_v1::RecommenderRetryPolicyOption>()
+  static std::unique_ptr<recommender_v1::RecommenderRetryPolicy> retry_policy(
+      Options const& options) {
+    return options.get<recommender_v1::RecommenderRetryPolicyOption>()->clone();
+  }
+
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<recommender_v1::RecommenderBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<recommender_v1::RecommenderBackoffPolicyOption>()) {
-      return options.get<recommender_v1::RecommenderBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<recommender_v1::RecommenderBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<recommender_v1::RecommenderConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            recommender_v1::RecommenderConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<recommender_v1::RecommenderConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<recommender_v1::RecommenderConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<recommender_v1::RecommenderConnectionIdempotencyPolicyOption>()
         ->clone();
   }

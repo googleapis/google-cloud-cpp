@@ -63,50 +63,28 @@ class NodeGroupControllerConnectionImpl
       google::cloud::dataproc::v1::GetNodeGroupRequest const& request) override;
 
  private:
-  std::unique_ptr<dataproc_v1::NodeGroupControllerRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<dataproc_v1::NodeGroupControllerRetryPolicyOption>()) {
-      return options.get<dataproc_v1::NodeGroupControllerRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<dataproc_v1::NodeGroupControllerRetryPolicyOption>()
+  static std::unique_ptr<dataproc_v1::NodeGroupControllerRetryPolicy>
+  retry_policy(Options const& options) {
+    return options.get<dataproc_v1::NodeGroupControllerRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<dataproc_v1::NodeGroupControllerBackoffPolicyOption>()) {
-      return options.get<dataproc_v1::NodeGroupControllerBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<dataproc_v1::NodeGroupControllerBackoffPolicyOption>()
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<dataproc_v1::NodeGroupControllerBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<dataproc_v1::NodeGroupControllerConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<dataproc_v1::
-                     NodeGroupControllerConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<dataproc_v1::
-                   NodeGroupControllerConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<
+      dataproc_v1::NodeGroupControllerConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<
             dataproc_v1::NodeGroupControllerConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<dataproc_v1::NodeGroupControllerPollingPolicyOption>()) {
-      return options.get<dataproc_v1::NodeGroupControllerPollingPolicyOption>()
-          ->clone();
-    }
-    return options_.get<dataproc_v1::NodeGroupControllerPollingPolicyOption>()
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options.get<dataproc_v1::NodeGroupControllerPollingPolicyOption>()
         ->clone();
   }
 

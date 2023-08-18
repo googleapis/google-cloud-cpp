@@ -196,61 +196,30 @@ class CertificateAuthorityServiceConnectionImpl
           UpdateCertificateTemplateRequest const& request) override;
 
  private:
-  std::unique_ptr<privateca_v1::CertificateAuthorityServiceRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            privateca_v1::CertificateAuthorityServiceRetryPolicyOption>()) {
-      return options
-          .get<privateca_v1::CertificateAuthorityServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<privateca_v1::CertificateAuthorityServiceRetryPolicy>
+  retry_policy(Options const& options) {
+    return options
         .get<privateca_v1::CertificateAuthorityServiceRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            privateca_v1::CertificateAuthorityServiceBackoffPolicyOption>()) {
-      return options
-          .get<privateca_v1::CertificateAuthorityServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options
         .get<privateca_v1::CertificateAuthorityServiceBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<
+  static std::unique_ptr<
       privateca_v1::CertificateAuthorityServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            privateca_v1::
-                CertificateAuthorityServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<
-              privateca_v1::
-                  CertificateAuthorityServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  idempotency_policy(Options const& options) {
+    return options
         .get<privateca_v1::
                  CertificateAuthorityServiceConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            privateca_v1::CertificateAuthorityServicePollingPolicyOption>()) {
-      return options
-          .get<privateca_v1::CertificateAuthorityServicePollingPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options
         .get<privateca_v1::CertificateAuthorityServicePollingPolicyOption>()
         ->clone();
   }

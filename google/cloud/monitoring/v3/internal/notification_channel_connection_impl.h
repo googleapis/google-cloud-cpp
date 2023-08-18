@@ -100,47 +100,23 @@ class NotificationChannelServiceConnectionImpl
       override;
 
  private:
-  std::unique_ptr<monitoring_v3::NotificationChannelServiceRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            monitoring_v3::NotificationChannelServiceRetryPolicyOption>()) {
-      return options
-          .get<monitoring_v3::NotificationChannelServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<monitoring_v3::NotificationChannelServiceRetryPolicy>
+  retry_policy(Options const& options) {
+    return options
         .get<monitoring_v3::NotificationChannelServiceRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            monitoring_v3::NotificationChannelServiceBackoffPolicyOption>()) {
-      return options
-          .get<monitoring_v3::NotificationChannelServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options
         .get<monitoring_v3::NotificationChannelServiceBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<
+  static std::unique_ptr<
       monitoring_v3::NotificationChannelServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            monitoring_v3::
-                NotificationChannelServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<
-              monitoring_v3::
-                  NotificationChannelServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  idempotency_policy(Options const& options) {
+    return options
         .get<monitoring_v3::
                  NotificationChannelServiceConnectionIdempotencyPolicyOption>()
         ->clone();

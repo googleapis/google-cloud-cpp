@@ -86,38 +86,22 @@ class TpuConnectionImpl : public tpu_v1::TpuConnection {
       override;
 
  private:
-  std::unique_ptr<tpu_v1::TpuRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<tpu_v1::TpuRetryPolicyOption>()) {
-      return options.get<tpu_v1::TpuRetryPolicyOption>()->clone();
-    }
-    return options_.get<tpu_v1::TpuRetryPolicyOption>()->clone();
+  static std::unique_ptr<tpu_v1::TpuRetryPolicy> retry_policy(
+      Options const& options) {
+    return options.get<tpu_v1::TpuRetryPolicyOption>()->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<tpu_v1::TpuBackoffPolicyOption>()) {
-      return options.get<tpu_v1::TpuBackoffPolicyOption>()->clone();
-    }
-    return options_.get<tpu_v1::TpuBackoffPolicyOption>()->clone();
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<tpu_v1::TpuBackoffPolicyOption>()->clone();
   }
 
-  std::unique_ptr<tpu_v1::TpuConnectionIdempotencyPolicy> idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<tpu_v1::TpuConnectionIdempotencyPolicyOption>()) {
-      return options.get<tpu_v1::TpuConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_.get<tpu_v1::TpuConnectionIdempotencyPolicyOption>()
-        ->clone();
+  static std::unique_ptr<tpu_v1::TpuConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options.get<tpu_v1::TpuConnectionIdempotencyPolicyOption>()->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<tpu_v1::TpuPollingPolicyOption>()) {
-      return options.get<tpu_v1::TpuPollingPolicyOption>()->clone();
-    }
-    return options_.get<tpu_v1::TpuPollingPolicyOption>()->clone();
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options.get<tpu_v1::TpuPollingPolicyOption>()->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

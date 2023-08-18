@@ -42,8 +42,10 @@ PredictionServiceConnectionImpl::PredictionServiceConnectionImpl(
 StatusOr<google::cloud::automl::v1::PredictResponse>
 PredictionServiceConnectionImpl::Predict(
     google::cloud::automl::v1::PredictRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(), idempotency_policy()->Predict(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->Predict(request),
       [this](grpc::ClientContext& context,
              google::cloud::automl::v1::PredictRequest const& request) {
         return stub_->Predict(context, request);
@@ -54,29 +56,32 @@ PredictionServiceConnectionImpl::Predict(
 future<StatusOr<google::cloud::automl::v1::BatchPredictResult>>
 PredictionServiceConnectionImpl::BatchPredict(
     google::cloud::automl::v1::BatchPredictRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::automl::v1::BatchPredictResult>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::automl::v1::BatchPredictRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::automl::v1::BatchPredictRequest const& request) {
         return stub->AsyncBatchPredict(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::automl::v1::BatchPredictResult>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->BatchPredict(request), polling_policy(), __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->BatchPredict(request),
+      polling_policy(*current), __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

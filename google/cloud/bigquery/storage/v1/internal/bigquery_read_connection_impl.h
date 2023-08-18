@@ -67,38 +67,21 @@ class BigQueryReadConnectionImpl
           request) override;
 
  private:
-  std::unique_ptr<bigquery_storage_v1::BigQueryReadRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<bigquery_storage_v1::BigQueryReadRetryPolicyOption>()) {
-      return options.get<bigquery_storage_v1::BigQueryReadRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<bigquery_storage_v1::BigQueryReadRetryPolicyOption>()
+  static std::unique_ptr<bigquery_storage_v1::BigQueryReadRetryPolicy>
+  retry_policy(Options const& options) {
+    return options.get<bigquery_storage_v1::BigQueryReadRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<bigquery_storage_v1::BigQueryReadBackoffPolicyOption>()) {
-      return options
-          .get<bigquery_storage_v1::BigQueryReadBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<bigquery_storage_v1::BigQueryReadBackoffPolicyOption>()
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<bigquery_storage_v1::BigQueryReadBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<bigquery_storage_v1::BigQueryReadConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<bigquery_storage_v1::
-                        BigQueryReadConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<bigquery_storage_v1::
-                   BigQueryReadConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<
+      bigquery_storage_v1::BigQueryReadConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<bigquery_storage_v1::
                  BigQueryReadConnectionIdempotencyPolicyOption>()
         ->clone();

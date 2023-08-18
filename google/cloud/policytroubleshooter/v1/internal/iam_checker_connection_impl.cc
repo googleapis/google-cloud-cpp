@@ -42,9 +42,10 @@ StatusOr<google::cloud::policytroubleshooter::v1::TroubleshootIamPolicyResponse>
 IamCheckerConnectionImpl::TroubleshootIamPolicy(
     google::cloud::policytroubleshooter::v1::TroubleshootIamPolicyRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->TroubleshootIamPolicy(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->TroubleshootIamPolicy(request),
       [this](grpc::ClientContext& context,
              google::cloud::policytroubleshooter::v1::
                  TroubleshootIamPolicyRequest const& request) {

@@ -42,16 +42,16 @@ StreamRange<google::cloud::dialogflow::cx::v3::Webhook>
 WebhooksConnectionImpl::ListWebhooks(
     google::cloud::dialogflow::cx::v3::ListWebhooksRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<dialogflow_cx::WebhooksRetryPolicy const>(retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListWebhooks(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListWebhooks(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::dialogflow::cx::v3::Webhook>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<dialogflow_cx::WebhooksRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::dialogflow::cx::v3::ListWebhooksRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
@@ -74,9 +74,10 @@ WebhooksConnectionImpl::ListWebhooks(
 StatusOr<google::cloud::dialogflow::cx::v3::Webhook>
 WebhooksConnectionImpl::GetWebhook(
     google::cloud::dialogflow::cx::v3::GetWebhookRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetWebhook(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetWebhook(request),
       [this](
           grpc::ClientContext& context,
           google::cloud::dialogflow::cx::v3::GetWebhookRequest const& request) {
@@ -88,9 +89,10 @@ WebhooksConnectionImpl::GetWebhook(
 StatusOr<google::cloud::dialogflow::cx::v3::Webhook>
 WebhooksConnectionImpl::CreateWebhook(
     google::cloud::dialogflow::cx::v3::CreateWebhookRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateWebhook(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateWebhook(request),
       [this](grpc::ClientContext& context,
              google::cloud::dialogflow::cx::v3::CreateWebhookRequest const&
                  request) { return stub_->CreateWebhook(context, request); },
@@ -100,9 +102,10 @@ WebhooksConnectionImpl::CreateWebhook(
 StatusOr<google::cloud::dialogflow::cx::v3::Webhook>
 WebhooksConnectionImpl::UpdateWebhook(
     google::cloud::dialogflow::cx::v3::UpdateWebhookRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UpdateWebhook(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateWebhook(request),
       [this](grpc::ClientContext& context,
              google::cloud::dialogflow::cx::v3::UpdateWebhookRequest const&
                  request) { return stub_->UpdateWebhook(context, request); },
@@ -111,9 +114,10 @@ WebhooksConnectionImpl::UpdateWebhook(
 
 Status WebhooksConnectionImpl::DeleteWebhook(
     google::cloud::dialogflow::cx::v3::DeleteWebhookRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteWebhook(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteWebhook(request),
       [this](grpc::ClientContext& context,
              google::cloud::dialogflow::cx::v3::DeleteWebhookRequest const&
                  request) { return stub_->DeleteWebhook(context, request); },

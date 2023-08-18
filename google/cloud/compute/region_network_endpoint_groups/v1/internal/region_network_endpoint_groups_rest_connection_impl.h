@@ -75,67 +75,34 @@ class RegionNetworkEndpointGroupsRestConnectionImpl
           ListRegionNetworkEndpointGroupsRequest request) override;
 
  private:
-  std::unique_ptr<compute_region_network_endpoint_groups_v1::
-                      RegionNetworkEndpointGroupsRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_region_network_endpoint_groups_v1::
-                        RegionNetworkEndpointGroupsRetryPolicyOption>()) {
-      return options
-          .get<compute_region_network_endpoint_groups_v1::
-                   RegionNetworkEndpointGroupsRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<compute_region_network_endpoint_groups_v1::
+                             RegionNetworkEndpointGroupsRetryPolicy>
+  retry_policy(Options const& options) {
+    return options
         .get<compute_region_network_endpoint_groups_v1::
                  RegionNetworkEndpointGroupsRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_region_network_endpoint_groups_v1::
-                        RegionNetworkEndpointGroupsBackoffPolicyOption>()) {
-      return options
-          .get<compute_region_network_endpoint_groups_v1::
-                   RegionNetworkEndpointGroupsBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options
         .get<compute_region_network_endpoint_groups_v1::
                  RegionNetworkEndpointGroupsBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<compute_region_network_endpoint_groups_v1::
-                      RegionNetworkEndpointGroupsConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            compute_region_network_endpoint_groups_v1::
-                RegionNetworkEndpointGroupsConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<
-              compute_region_network_endpoint_groups_v1::
-                  RegionNetworkEndpointGroupsConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<
+      compute_region_network_endpoint_groups_v1::
+          RegionNetworkEndpointGroupsConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<compute_region_network_endpoint_groups_v1::
                  RegionNetworkEndpointGroupsConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_region_network_endpoint_groups_v1::
-                        RegionNetworkEndpointGroupsPollingPolicyOption>()) {
-      return options
-          .get<compute_region_network_endpoint_groups_v1::
-                   RegionNetworkEndpointGroupsPollingPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options
         .get<compute_region_network_endpoint_groups_v1::
                  RegionNetworkEndpointGroupsPollingPolicyOption>()
         ->clone();

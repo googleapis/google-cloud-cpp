@@ -41,8 +41,10 @@ PredictionServiceConnectionImpl::PredictionServiceConnectionImpl(
 StatusOr<google::cloud::retail::v2::PredictResponse>
 PredictionServiceConnectionImpl::Predict(
     google::cloud::retail::v2::PredictRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(), idempotency_policy()->Predict(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->Predict(request),
       [this](grpc::ClientContext& context,
              google::cloud::retail::v2::PredictRequest const& request) {
         return stub_->Predict(context, request);

@@ -41,9 +41,10 @@ RevisionsConnectionImpl::RevisionsConnectionImpl(
 
 StatusOr<google::cloud::run::v2::Revision> RevisionsConnectionImpl::GetRevision(
     google::cloud::run::v2::GetRevisionRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetRevision(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetRevision(request),
       [this](grpc::ClientContext& context,
              google::cloud::run::v2::GetRevisionRequest const& request) {
         return stub_->GetRevision(context, request);
@@ -55,17 +56,17 @@ StreamRange<google::cloud::run::v2::Revision>
 RevisionsConnectionImpl::ListRevisions(
     google::cloud::run::v2::ListRevisionsRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<run_v2::RevisionsRetryPolicy const>(retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListRevisions(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListRevisions(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::run::v2::Revision>>(
       std::move(request),
-      [stub, retry, backoff, idempotency,
-       function_name](google::cloud::run::v2::ListRevisionsRequest const& r) {
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<run_v2::RevisionsRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          google::cloud::run::v2::ListRevisionsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
@@ -87,30 +88,32 @@ RevisionsConnectionImpl::ListRevisions(
 future<StatusOr<google::cloud::run::v2::Revision>>
 RevisionsConnectionImpl::DeleteRevision(
     google::cloud::run::v2::DeleteRevisionRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::run::v2::Revision>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::run::v2::DeleteRevisionRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::run::v2::DeleteRevisionRequest const& request) {
         return stub->AsyncDeleteRevision(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::run::v2::Revision>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteRevision(request), polling_policy(),
-      __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteRevision(request),
+      polling_policy(*current), __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

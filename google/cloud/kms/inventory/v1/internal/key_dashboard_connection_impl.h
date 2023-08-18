@@ -54,45 +54,23 @@ class KeyDashboardServiceConnectionImpl
       override;
 
  private:
-  std::unique_ptr<kms_inventory_v1::KeyDashboardServiceRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<kms_inventory_v1::KeyDashboardServiceRetryPolicyOption>()) {
-      return options
-          .get<kms_inventory_v1::KeyDashboardServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<kms_inventory_v1::KeyDashboardServiceRetryPolicy>
+  retry_policy(Options const& options) {
+    return options
         .get<kms_inventory_v1::KeyDashboardServiceRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<kms_inventory_v1::KeyDashboardServiceBackoffPolicyOption>()) {
-      return options
-          .get<kms_inventory_v1::KeyDashboardServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options
         .get<kms_inventory_v1::KeyDashboardServiceBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<
+  static std::unique_ptr<
       kms_inventory_v1::KeyDashboardServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<kms_inventory_v1::
-                     KeyDashboardServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<kms_inventory_v1::
-                   KeyDashboardServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  idempotency_policy(Options const& options) {
+    return options
         .get<kms_inventory_v1::
                  KeyDashboardServiceConnectionIdempotencyPolicyOption>()
         ->clone();

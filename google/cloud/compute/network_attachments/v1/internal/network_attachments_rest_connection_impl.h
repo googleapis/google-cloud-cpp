@@ -89,65 +89,33 @@ class NetworkAttachmentsRestConnectionImpl
                          TestIamPermissionsRequest const& request) override;
 
  private:
-  std::unique_ptr<compute_network_attachments_v1::NetworkAttachmentsRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_network_attachments_v1::
-                        NetworkAttachmentsRetryPolicyOption>()) {
-      return options
-          .get<compute_network_attachments_v1::
-                   NetworkAttachmentsRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<
+      compute_network_attachments_v1::NetworkAttachmentsRetryPolicy>
+  retry_policy(Options const& options) {
+    return options
         .get<compute_network_attachments_v1::
                  NetworkAttachmentsRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_network_attachments_v1::
-                        NetworkAttachmentsBackoffPolicyOption>()) {
-      return options
-          .get<compute_network_attachments_v1::
-                   NetworkAttachmentsBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options
         .get<compute_network_attachments_v1::
                  NetworkAttachmentsBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<compute_network_attachments_v1::
-                      NetworkAttachmentsConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<compute_network_attachments_v1::
-                     NetworkAttachmentsConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<compute_network_attachments_v1::
-                   NetworkAttachmentsConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<compute_network_attachments_v1::
+                             NetworkAttachmentsConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<compute_network_attachments_v1::
                  NetworkAttachmentsConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_network_attachments_v1::
-                        NetworkAttachmentsPollingPolicyOption>()) {
-      return options
-          .get<compute_network_attachments_v1::
-                   NetworkAttachmentsPollingPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options
         .get<compute_network_attachments_v1::
                  NetworkAttachmentsPollingPolicyOption>()
         ->clone();

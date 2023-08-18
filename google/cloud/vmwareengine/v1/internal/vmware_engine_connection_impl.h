@@ -230,47 +230,27 @@ class VmwareEngineConnectionImpl
           request) override;
 
  private:
-  std::unique_ptr<vmwareengine_v1::VmwareEngineRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<vmwareengine_v1::VmwareEngineRetryPolicyOption>()) {
-      return options.get<vmwareengine_v1::VmwareEngineRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<vmwareengine_v1::VmwareEngineRetryPolicyOption>()
+  static std::unique_ptr<vmwareengine_v1::VmwareEngineRetryPolicy> retry_policy(
+      Options const& options) {
+    return options.get<vmwareengine_v1::VmwareEngineRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<vmwareengine_v1::VmwareEngineBackoffPolicyOption>()) {
-      return options.get<vmwareengine_v1::VmwareEngineBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<vmwareengine_v1::VmwareEngineBackoffPolicyOption>()
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<vmwareengine_v1::VmwareEngineBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<vmwareengine_v1::VmwareEngineConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            vmwareengine_v1::VmwareEngineConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<vmwareengine_v1::VmwareEngineConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<
+      vmwareengine_v1::VmwareEngineConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<vmwareengine_v1::VmwareEngineConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<vmwareengine_v1::VmwareEnginePollingPolicyOption>()) {
-      return options.get<vmwareengine_v1::VmwareEnginePollingPolicyOption>()
-          ->clone();
-    }
-    return options_.get<vmwareengine_v1::VmwareEnginePollingPolicyOption>()
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options.get<vmwareengine_v1::VmwareEnginePollingPolicyOption>()
         ->clone();
   }
 

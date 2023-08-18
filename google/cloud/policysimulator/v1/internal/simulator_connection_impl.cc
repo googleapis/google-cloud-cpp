@@ -43,9 +43,10 @@ SimulatorConnectionImpl::SimulatorConnectionImpl(
 StatusOr<google::cloud::policysimulator::v1::Replay>
 SimulatorConnectionImpl::GetReplay(
     google::cloud::policysimulator::v1::GetReplayRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetReplay(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetReplay(request),
       [this](
           grpc::ClientContext& context,
           google::cloud::policysimulator::v1::GetReplayRequest const& request) {
@@ -57,46 +58,49 @@ SimulatorConnectionImpl::GetReplay(
 future<StatusOr<google::cloud::policysimulator::v1::Replay>>
 SimulatorConnectionImpl::CreateReplay(
     google::cloud::policysimulator::v1::CreateReplayRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::policysimulator::v1::Replay>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::policysimulator::v1::CreateReplayRequest const&
-                 request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::policysimulator::v1::CreateReplayRequest const&
+              request) {
         return stub->AsyncCreateReplay(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::policysimulator::v1::Replay>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateReplay(request), polling_policy(), __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateReplay(request),
+      polling_policy(*current), __func__);
 }
 
 StreamRange<google::cloud::policysimulator::v1::ReplayResult>
 SimulatorConnectionImpl::ListReplayResults(
     google::cloud::policysimulator::v1::ListReplayResultsRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<policysimulator_v1::SimulatorRetryPolicy const>(
-      retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListReplayResults(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListReplayResults(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::policysimulator::v1::ReplayResult>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<policysimulator_v1::SimulatorRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::policysimulator::v1::ListReplayResultsRequest const&
               r) {
         return google::cloud::internal::RetryLoop(

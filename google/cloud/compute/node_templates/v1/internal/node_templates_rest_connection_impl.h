@@ -85,59 +85,30 @@ class NodeTemplatesRestConnectionImpl
                          TestIamPermissionsRequest const& request) override;
 
  private:
-  std::unique_ptr<compute_node_templates_v1::NodeTemplatesRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<compute_node_templates_v1::NodeTemplatesRetryPolicyOption>()) {
-      return options
-          .get<compute_node_templates_v1::NodeTemplatesRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<compute_node_templates_v1::NodeTemplatesRetryPolicy>
+  retry_policy(Options const& options) {
+    return options
         .get<compute_node_templates_v1::NodeTemplatesRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            compute_node_templates_v1::NodeTemplatesBackoffPolicyOption>()) {
-      return options
-          .get<compute_node_templates_v1::NodeTemplatesBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options
         .get<compute_node_templates_v1::NodeTemplatesBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<
+  static std::unique_ptr<
       compute_node_templates_v1::NodeTemplatesConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_node_templates_v1::
-                        NodeTemplatesConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<compute_node_templates_v1::
-                   NodeTemplatesConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  idempotency_policy(Options const& options) {
+    return options
         .get<compute_node_templates_v1::
                  NodeTemplatesConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            compute_node_templates_v1::NodeTemplatesPollingPolicyOption>()) {
-      return options
-          .get<compute_node_templates_v1::NodeTemplatesPollingPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options
         .get<compute_node_templates_v1::NodeTemplatesPollingPolicyOption>()
         ->clone();
   }

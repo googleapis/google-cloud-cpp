@@ -88,45 +88,23 @@ class DataPolicyServiceConnectionImpl
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
  private:
-  std::unique_ptr<bigquery_datapolicies_v1::DataPolicyServiceRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            bigquery_datapolicies_v1::DataPolicyServiceRetryPolicyOption>()) {
-      return options
-          .get<bigquery_datapolicies_v1::DataPolicyServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<bigquery_datapolicies_v1::DataPolicyServiceRetryPolicy>
+  retry_policy(Options const& options) {
+    return options
         .get<bigquery_datapolicies_v1::DataPolicyServiceRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            bigquery_datapolicies_v1::DataPolicyServiceBackoffPolicyOption>()) {
-      return options
-          .get<bigquery_datapolicies_v1::DataPolicyServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options
         .get<bigquery_datapolicies_v1::DataPolicyServiceBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<
+  static std::unique_ptr<
       bigquery_datapolicies_v1::DataPolicyServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<bigquery_datapolicies_v1::
-                        DataPolicyServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<bigquery_datapolicies_v1::
-                   DataPolicyServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  idempotency_policy(Options const& options) {
+    return options
         .get<bigquery_datapolicies_v1::
                  DataPolicyServiceConnectionIdempotencyPolicyOption>()
         ->clone();

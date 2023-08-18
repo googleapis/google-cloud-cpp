@@ -78,42 +78,22 @@ class StorageInsightsConnectionImpl
       override;
 
  private:
-  std::unique_ptr<storageinsights_v1::StorageInsightsRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<storageinsights_v1::StorageInsightsRetryPolicyOption>()) {
-      return options
-          .get<storageinsights_v1::StorageInsightsRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<storageinsights_v1::StorageInsightsRetryPolicyOption>()
+  static std::unique_ptr<storageinsights_v1::StorageInsightsRetryPolicy>
+  retry_policy(Options const& options) {
+    return options.get<storageinsights_v1::StorageInsightsRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<storageinsights_v1::StorageInsightsBackoffPolicyOption>()) {
-      return options
-          .get<storageinsights_v1::StorageInsightsBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options
         .get<storageinsights_v1::StorageInsightsBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<
+  static std::unique_ptr<
       storageinsights_v1::StorageInsightsConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<storageinsights_v1::
-                        StorageInsightsConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<storageinsights_v1::
-                   StorageInsightsConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  idempotency_policy(Options const& options) {
+    return options
         .get<storageinsights_v1::
                  StorageInsightsConnectionIdempotencyPolicyOption>()
         ->clone();

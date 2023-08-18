@@ -149,47 +149,25 @@ class ConfigServiceV2ConnectionImpl
       google::logging::v2::CopyLogEntriesRequest const& request) override;
 
  private:
-  std::unique_ptr<logging_v2::ConfigServiceV2RetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<logging_v2::ConfigServiceV2RetryPolicyOption>()) {
-      return options.get<logging_v2::ConfigServiceV2RetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<logging_v2::ConfigServiceV2RetryPolicyOption>()
+  static std::unique_ptr<logging_v2::ConfigServiceV2RetryPolicy> retry_policy(
+      Options const& options) {
+    return options.get<logging_v2::ConfigServiceV2RetryPolicyOption>()->clone();
+  }
+
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<logging_v2::ConfigServiceV2BackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<logging_v2::ConfigServiceV2BackoffPolicyOption>()) {
-      return options.get<logging_v2::ConfigServiceV2BackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<logging_v2::ConfigServiceV2BackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<logging_v2::ConfigServiceV2ConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            logging_v2::ConfigServiceV2ConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<logging_v2::ConfigServiceV2ConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<logging_v2::ConfigServiceV2ConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<logging_v2::ConfigServiceV2ConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<logging_v2::ConfigServiceV2PollingPolicyOption>()) {
-      return options.get<logging_v2::ConfigServiceV2PollingPolicyOption>()
-          ->clone();
-    }
-    return options_.get<logging_v2::ConfigServiceV2PollingPolicyOption>()
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options.get<logging_v2::ConfigServiceV2PollingPolicyOption>()
         ->clone();
   }
 

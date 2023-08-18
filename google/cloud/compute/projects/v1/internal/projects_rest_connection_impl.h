@@ -107,47 +107,27 @@ class ProjectsRestConnectionImpl
                            SetUsageExportBucketRequest const& request) override;
 
  private:
-  std::unique_ptr<compute_projects_v1::ProjectsRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_projects_v1::ProjectsRetryPolicyOption>()) {
-      return options.get<compute_projects_v1::ProjectsRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<compute_projects_v1::ProjectsRetryPolicyOption>()
+  static std::unique_ptr<compute_projects_v1::ProjectsRetryPolicy> retry_policy(
+      Options const& options) {
+    return options.get<compute_projects_v1::ProjectsRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_projects_v1::ProjectsBackoffPolicyOption>()) {
-      return options.get<compute_projects_v1::ProjectsBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<compute_projects_v1::ProjectsBackoffPolicyOption>()
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<compute_projects_v1::ProjectsBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<compute_projects_v1::ProjectsConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            compute_projects_v1::ProjectsConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<compute_projects_v1::ProjectsConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<
+      compute_projects_v1::ProjectsConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<compute_projects_v1::ProjectsConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_projects_v1::ProjectsPollingPolicyOption>()) {
-      return options.get<compute_projects_v1::ProjectsPollingPolicyOption>()
-          ->clone();
-    }
-    return options_.get<compute_projects_v1::ProjectsPollingPolicyOption>()
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options.get<compute_projects_v1::ProjectsPollingPolicyOption>()
         ->clone();
   }
 

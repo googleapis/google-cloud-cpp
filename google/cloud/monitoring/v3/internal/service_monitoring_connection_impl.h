@@ -90,46 +90,23 @@ class ServiceMonitoringServiceConnectionImpl
       override;
 
  private:
-  std::unique_ptr<monitoring_v3::ServiceMonitoringServiceRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<monitoring_v3::ServiceMonitoringServiceRetryPolicyOption>()) {
-      return options
-          .get<monitoring_v3::ServiceMonitoringServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<monitoring_v3::ServiceMonitoringServiceRetryPolicy>
+  retry_policy(Options const& options) {
+    return options
         .get<monitoring_v3::ServiceMonitoringServiceRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            monitoring_v3::ServiceMonitoringServiceBackoffPolicyOption>()) {
-      return options
-          .get<monitoring_v3::ServiceMonitoringServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options
         .get<monitoring_v3::ServiceMonitoringServiceBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<
+  static std::unique_ptr<
       monitoring_v3::ServiceMonitoringServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            monitoring_v3::
-                ServiceMonitoringServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<monitoring_v3::
-                   ServiceMonitoringServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  idempotency_policy(Options const& options) {
+    return options
         .get<monitoring_v3::
                  ServiceMonitoringServiceConnectionIdempotencyPolicyOption>()
         ->clone();

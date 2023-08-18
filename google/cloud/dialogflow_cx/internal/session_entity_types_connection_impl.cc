@@ -43,19 +43,19 @@ StreamRange<google::cloud::dialogflow::cx::v3::SessionEntityType>
 SessionEntityTypesConnectionImpl::ListSessionEntityTypes(
     google::cloud::dialogflow::cx::v3::ListSessionEntityTypesRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<dialogflow_cx::SessionEntityTypesRetryPolicy const>(
-          retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListSessionEntityTypes(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency =
+      idempotency_policy(*current)->ListSessionEntityTypes(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::dialogflow::cx::v3::SessionEntityType>>(
       std::move(request),
-      [stub, retry, backoff, idempotency,
-       function_name](google::cloud::dialogflow::cx::v3::
-                          ListSessionEntityTypesRequest const& r) {
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<dialogflow_cx::SessionEntityTypesRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          google::cloud::dialogflow::cx::v3::
+              ListSessionEntityTypesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context,
@@ -78,9 +78,10 @@ StatusOr<google::cloud::dialogflow::cx::v3::SessionEntityType>
 SessionEntityTypesConnectionImpl::GetSessionEntityType(
     google::cloud::dialogflow::cx::v3::GetSessionEntityTypeRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetSessionEntityType(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetSessionEntityType(request),
       [this](
           grpc::ClientContext& context,
           google::cloud::dialogflow::cx::v3::GetSessionEntityTypeRequest const&
@@ -94,9 +95,10 @@ StatusOr<google::cloud::dialogflow::cx::v3::SessionEntityType>
 SessionEntityTypesConnectionImpl::CreateSessionEntityType(
     google::cloud::dialogflow::cx::v3::CreateSessionEntityTypeRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateSessionEntityType(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateSessionEntityType(request),
       [this](grpc::ClientContext& context,
              google::cloud::dialogflow::cx::v3::
                  CreateSessionEntityTypeRequest const& request) {
@@ -109,9 +111,10 @@ StatusOr<google::cloud::dialogflow::cx::v3::SessionEntityType>
 SessionEntityTypesConnectionImpl::UpdateSessionEntityType(
     google::cloud::dialogflow::cx::v3::UpdateSessionEntityTypeRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UpdateSessionEntityType(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateSessionEntityType(request),
       [this](grpc::ClientContext& context,
              google::cloud::dialogflow::cx::v3::
                  UpdateSessionEntityTypeRequest const& request) {
@@ -123,9 +126,10 @@ SessionEntityTypesConnectionImpl::UpdateSessionEntityType(
 Status SessionEntityTypesConnectionImpl::DeleteSessionEntityType(
     google::cloud::dialogflow::cx::v3::DeleteSessionEntityTypeRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteSessionEntityType(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteSessionEntityType(request),
       [this](grpc::ClientContext& context,
              google::cloud::dialogflow::cx::v3::
                  DeleteSessionEntityTypeRequest const& request) {

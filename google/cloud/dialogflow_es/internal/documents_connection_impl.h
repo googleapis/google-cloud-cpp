@@ -83,44 +83,24 @@ class DocumentsConnectionImpl : public dialogflow_es::DocumentsConnection {
       override;
 
  private:
-  std::unique_ptr<dialogflow_es::DocumentsRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<dialogflow_es::DocumentsRetryPolicyOption>()) {
-      return options.get<dialogflow_es::DocumentsRetryPolicyOption>()->clone();
-    }
-    return options_.get<dialogflow_es::DocumentsRetryPolicyOption>()->clone();
+  static std::unique_ptr<dialogflow_es::DocumentsRetryPolicy> retry_policy(
+      Options const& options) {
+    return options.get<dialogflow_es::DocumentsRetryPolicyOption>()->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<dialogflow_es::DocumentsBackoffPolicyOption>()) {
-      return options.get<dialogflow_es::DocumentsBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<dialogflow_es::DocumentsBackoffPolicyOption>()->clone();
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<dialogflow_es::DocumentsBackoffPolicyOption>()->clone();
   }
 
-  std::unique_ptr<dialogflow_es::DocumentsConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<dialogflow_es::DocumentsConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<dialogflow_es::DocumentsConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<dialogflow_es::DocumentsConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<dialogflow_es::DocumentsConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<dialogflow_es::DocumentsPollingPolicyOption>()) {
-      return options.get<dialogflow_es::DocumentsPollingPolicyOption>()
-          ->clone();
-    }
-    return options_.get<dialogflow_es::DocumentsPollingPolicyOption>()->clone();
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options.get<dialogflow_es::DocumentsPollingPolicyOption>()->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

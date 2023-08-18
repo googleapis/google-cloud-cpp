@@ -113,47 +113,24 @@ class AnalyticsHubServiceConnectionImpl
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
  private:
-  std::unique_ptr<bigquery_analyticshub_v1::AnalyticsHubServiceRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            bigquery_analyticshub_v1::AnalyticsHubServiceRetryPolicyOption>()) {
-      return options
-          .get<bigquery_analyticshub_v1::AnalyticsHubServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<
+      bigquery_analyticshub_v1::AnalyticsHubServiceRetryPolicy>
+  retry_policy(Options const& options) {
+    return options
         .get<bigquery_analyticshub_v1::AnalyticsHubServiceRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<bigquery_analyticshub_v1::
-                        AnalyticsHubServiceBackoffPolicyOption>()) {
-      return options
-          .get<bigquery_analyticshub_v1::
-                   AnalyticsHubServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options
         .get<bigquery_analyticshub_v1::AnalyticsHubServiceBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<
+  static std::unique_ptr<
       bigquery_analyticshub_v1::AnalyticsHubServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<bigquery_analyticshub_v1::
-                     AnalyticsHubServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<bigquery_analyticshub_v1::
-                   AnalyticsHubServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  idempotency_policy(Options const& options) {
+    return options
         .get<bigquery_analyticshub_v1::
                  AnalyticsHubServiceConnectionIdempotencyPolicyOption>()
         ->clone();

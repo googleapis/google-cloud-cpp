@@ -69,38 +69,21 @@ class BudgetServiceConnectionImpl
       override;
 
  private:
-  std::unique_ptr<billing_budgets_v1::BudgetServiceRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<billing_budgets_v1::BudgetServiceRetryPolicyOption>()) {
-      return options.get<billing_budgets_v1::BudgetServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<billing_budgets_v1::BudgetServiceRetryPolicyOption>()
+  static std::unique_ptr<billing_budgets_v1::BudgetServiceRetryPolicy>
+  retry_policy(Options const& options) {
+    return options.get<billing_budgets_v1::BudgetServiceRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<billing_budgets_v1::BudgetServiceBackoffPolicyOption>()) {
-      return options
-          .get<billing_budgets_v1::BudgetServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<billing_budgets_v1::BudgetServiceBackoffPolicyOption>()
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<billing_budgets_v1::BudgetServiceBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<billing_budgets_v1::BudgetServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<billing_budgets_v1::
-                        BudgetServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<billing_budgets_v1::
-                   BudgetServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<
+      billing_budgets_v1::BudgetServiceConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<billing_budgets_v1::
                  BudgetServiceConnectionIdempotencyPolicyOption>()
         ->clone();

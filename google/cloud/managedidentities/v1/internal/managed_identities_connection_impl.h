@@ -98,64 +98,32 @@ class ManagedIdentitiesServiceConnectionImpl
       override;
 
  private:
-  std::unique_ptr<managedidentities_v1::ManagedIdentitiesServiceRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<managedidentities_v1::
-                        ManagedIdentitiesServiceRetryPolicyOption>()) {
-      return options
-          .get<
-              managedidentities_v1::ManagedIdentitiesServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<
+      managedidentities_v1::ManagedIdentitiesServiceRetryPolicy>
+  retry_policy(Options const& options) {
+    return options
         .get<managedidentities_v1::ManagedIdentitiesServiceRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<managedidentities_v1::
-                        ManagedIdentitiesServiceBackoffPolicyOption>()) {
-      return options
-          .get<managedidentities_v1::
-                   ManagedIdentitiesServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options
         .get<
             managedidentities_v1::ManagedIdentitiesServiceBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<
+  static std::unique_ptr<
       managedidentities_v1::ManagedIdentitiesServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            managedidentities_v1::
-                ManagedIdentitiesServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<managedidentities_v1::
-                   ManagedIdentitiesServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  idempotency_policy(Options const& options) {
+    return options
         .get<managedidentities_v1::
                  ManagedIdentitiesServiceConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<managedidentities_v1::
-                        ManagedIdentitiesServicePollingPolicyOption>()) {
-      return options
-          .get<managedidentities_v1::
-                   ManagedIdentitiesServicePollingPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options
         .get<
             managedidentities_v1::ManagedIdentitiesServicePollingPolicyOption>()
         ->clone();

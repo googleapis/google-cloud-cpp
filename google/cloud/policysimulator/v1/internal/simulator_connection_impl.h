@@ -64,47 +64,27 @@ class SimulatorConnectionImpl : public policysimulator_v1::SimulatorConnection {
                         request) override;
 
  private:
-  std::unique_ptr<policysimulator_v1::SimulatorRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<policysimulator_v1::SimulatorRetryPolicyOption>()) {
-      return options.get<policysimulator_v1::SimulatorRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<policysimulator_v1::SimulatorRetryPolicyOption>()
+  static std::unique_ptr<policysimulator_v1::SimulatorRetryPolicy> retry_policy(
+      Options const& options) {
+    return options.get<policysimulator_v1::SimulatorRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<policysimulator_v1::SimulatorBackoffPolicyOption>()) {
-      return options.get<policysimulator_v1::SimulatorBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<policysimulator_v1::SimulatorBackoffPolicyOption>()
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<policysimulator_v1::SimulatorBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<policysimulator_v1::SimulatorConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            policysimulator_v1::SimulatorConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<policysimulator_v1::SimulatorConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<
+      policysimulator_v1::SimulatorConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<policysimulator_v1::SimulatorConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<policysimulator_v1::SimulatorPollingPolicyOption>()) {
-      return options.get<policysimulator_v1::SimulatorPollingPolicyOption>()
-          ->clone();
-    }
-    return options_.get<policysimulator_v1::SimulatorPollingPolicyOption>()
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options.get<policysimulator_v1::SimulatorPollingPolicyOption>()
         ->clone();
   }
 

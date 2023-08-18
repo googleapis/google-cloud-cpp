@@ -40,9 +40,10 @@ SessionsConnectionImpl::SessionsConnectionImpl(
 StatusOr<google::cloud::dialogflow::cx::v3::DetectIntentResponse>
 SessionsConnectionImpl::DetectIntent(
     google::cloud::dialogflow::cx::v3::DetectIntentRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DetectIntent(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DetectIntent(request),
       [this](grpc::ClientContext& context,
              google::cloud::dialogflow::cx::v3::DetectIntentRequest const&
                  request) { return stub_->DetectIntent(context, request); },
@@ -52,9 +53,10 @@ SessionsConnectionImpl::DetectIntent(
 StatusOr<google::cloud::dialogflow::cx::v3::MatchIntentResponse>
 SessionsConnectionImpl::MatchIntent(
     google::cloud::dialogflow::cx::v3::MatchIntentRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->MatchIntent(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->MatchIntent(request),
       [this](grpc::ClientContext& context,
              google::cloud::dialogflow::cx::v3::MatchIntentRequest const&
                  request) { return stub_->MatchIntent(context, request); },
@@ -64,9 +66,10 @@ SessionsConnectionImpl::MatchIntent(
 StatusOr<google::cloud::dialogflow::cx::v3::FulfillIntentResponse>
 SessionsConnectionImpl::FulfillIntent(
     google::cloud::dialogflow::cx::v3::FulfillIntentRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->FulfillIntent(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->FulfillIntent(request),
       [this](grpc::ClientContext& context,
              google::cloud::dialogflow::cx::v3::FulfillIntentRequest const&
                  request) { return stub_->FulfillIntent(context, request); },

@@ -43,9 +43,10 @@ StatusOr<google::cloud::cpp::compute::v1::LicenseCode>
 LicenseCodesRestConnectionImpl::GetLicenseCodes(
     google::cloud::cpp::compute::license_codes::v1::
         GetLicenseCodesRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetLicenseCodes(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetLicenseCodes(request),
       [this](rest_internal::RestContext& rest_context,
              google::cloud::cpp::compute::license_codes::v1::
                  GetLicenseCodesRequest const& request) {
@@ -58,9 +59,10 @@ StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
 LicenseCodesRestConnectionImpl::TestIamPermissions(
     google::cloud::cpp::compute::license_codes::v1::
         TestIamPermissionsRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->TestIamPermissions(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->TestIamPermissions(request),
       [this](rest_internal::RestContext& rest_context,
              google::cloud::cpp::compute::license_codes::v1::
                  TestIamPermissionsRequest const& request) {

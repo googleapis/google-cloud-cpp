@@ -44,9 +44,10 @@ StatusOr<google::cloud::datacatalog::lineage::v1::Process>
 LineageConnectionImpl::CreateProcess(
     google::cloud::datacatalog::lineage::v1::CreateProcessRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateProcess(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateProcess(request),
       [this](
           grpc::ClientContext& context,
           google::cloud::datacatalog::lineage::v1::CreateProcessRequest const&
@@ -58,9 +59,10 @@ StatusOr<google::cloud::datacatalog::lineage::v1::Process>
 LineageConnectionImpl::UpdateProcess(
     google::cloud::datacatalog::lineage::v1::UpdateProcessRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UpdateProcess(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateProcess(request),
       [this](
           grpc::ClientContext& context,
           google::cloud::datacatalog::lineage::v1::UpdateProcessRequest const&
@@ -71,9 +73,10 @@ LineageConnectionImpl::UpdateProcess(
 StatusOr<google::cloud::datacatalog::lineage::v1::Process>
 LineageConnectionImpl::GetProcess(
     google::cloud::datacatalog::lineage::v1::GetProcessRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetProcess(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetProcess(request),
       [this](grpc::ClientContext& context,
              google::cloud::datacatalog::lineage::v1::GetProcessRequest const&
                  request) { return stub_->GetProcess(context, request); },
@@ -84,17 +87,16 @@ StreamRange<google::cloud::datacatalog::lineage::v1::Process>
 LineageConnectionImpl::ListProcesses(
     google::cloud::datacatalog::lineage::v1::ListProcessesRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<datacatalog_lineage_v1::LineageRetryPolicy const>(
-          retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListProcesses(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListProcesses(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::datacatalog::lineage::v1::Process>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<datacatalog_lineage_v1::LineageRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::datacatalog::lineage::v1::ListProcessesRequest const&
               r) {
         return google::cloud::internal::RetryLoop(
@@ -119,39 +121,42 @@ future<StatusOr<google::cloud::datacatalog::lineage::v1::OperationMetadata>>
 LineageConnectionImpl::DeleteProcess(
     google::cloud::datacatalog::lineage::v1::DeleteProcessRequest const&
         request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::datacatalog::lineage::v1::OperationMetadata>(
       background_->cq(), request,
-      [stub](
+      [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context,
           google::cloud::datacatalog::lineage::v1::DeleteProcessRequest const&
               request) {
         return stub->AsyncDeleteProcess(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::datacatalog::lineage::v1::OperationMetadata>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteProcess(request), polling_policy(), __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteProcess(request),
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::cloud::datacatalog::lineage::v1::Run>
 LineageConnectionImpl::CreateRun(
     google::cloud::datacatalog::lineage::v1::CreateRunRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateRun(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateRun(request),
       [this](grpc::ClientContext& context,
              google::cloud::datacatalog::lineage::v1::CreateRunRequest const&
                  request) { return stub_->CreateRun(context, request); },
@@ -161,9 +166,10 @@ LineageConnectionImpl::CreateRun(
 StatusOr<google::cloud::datacatalog::lineage::v1::Run>
 LineageConnectionImpl::UpdateRun(
     google::cloud::datacatalog::lineage::v1::UpdateRunRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UpdateRun(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateRun(request),
       [this](grpc::ClientContext& context,
              google::cloud::datacatalog::lineage::v1::UpdateRunRequest const&
                  request) { return stub_->UpdateRun(context, request); },
@@ -173,8 +179,10 @@ LineageConnectionImpl::UpdateRun(
 StatusOr<google::cloud::datacatalog::lineage::v1::Run>
 LineageConnectionImpl::GetRun(
     google::cloud::datacatalog::lineage::v1::GetRunRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(), idempotency_policy()->GetRun(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetRun(request),
       [this](grpc::ClientContext& context,
              google::cloud::datacatalog::lineage::v1::GetRunRequest const&
                  request) { return stub_->GetRun(context, request); },
@@ -185,17 +193,16 @@ StreamRange<google::cloud::datacatalog::lineage::v1::Run>
 LineageConnectionImpl::ListRuns(
     google::cloud::datacatalog::lineage::v1::ListRunsRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<datacatalog_lineage_v1::LineageRetryPolicy const>(
-          retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListRuns(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListRuns(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::datacatalog::lineage::v1::Run>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<datacatalog_lineage_v1::LineageRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::datacatalog::lineage::v1::ListRunsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
@@ -217,39 +224,43 @@ LineageConnectionImpl::ListRuns(
 future<StatusOr<google::cloud::datacatalog::lineage::v1::OperationMetadata>>
 LineageConnectionImpl::DeleteRun(
     google::cloud::datacatalog::lineage::v1::DeleteRunRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::datacatalog::lineage::v1::OperationMetadata>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::datacatalog::lineage::v1::DeleteRunRequest const&
-                 request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::datacatalog::lineage::v1::DeleteRunRequest const&
+              request) {
         return stub->AsyncDeleteRun(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::datacatalog::lineage::v1::OperationMetadata>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteRun(request), polling_policy(), __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteRun(request),
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::cloud::datacatalog::lineage::v1::LineageEvent>
 LineageConnectionImpl::CreateLineageEvent(
     google::cloud::datacatalog::lineage::v1::CreateLineageEventRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateLineageEvent(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateLineageEvent(request),
       [this](grpc::ClientContext& context,
              google::cloud::datacatalog::lineage::v1::
                  CreateLineageEventRequest const& request) {
@@ -262,9 +273,10 @@ StatusOr<google::cloud::datacatalog::lineage::v1::LineageEvent>
 LineageConnectionImpl::GetLineageEvent(
     google::cloud::datacatalog::lineage::v1::GetLineageEventRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetLineageEvent(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetLineageEvent(request),
       [this](
           grpc::ClientContext& context,
           google::cloud::datacatalog::lineage::v1::GetLineageEventRequest const&
@@ -276,19 +288,18 @@ StreamRange<google::cloud::datacatalog::lineage::v1::LineageEvent>
 LineageConnectionImpl::ListLineageEvents(
     google::cloud::datacatalog::lineage::v1::ListLineageEventsRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<datacatalog_lineage_v1::LineageRetryPolicy const>(
-          retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListLineageEvents(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListLineageEvents(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::datacatalog::lineage::v1::LineageEvent>>(
       std::move(request),
-      [stub, retry, backoff, idempotency,
-       function_name](google::cloud::datacatalog::lineage::v1::
-                          ListLineageEventsRequest const& r) {
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<datacatalog_lineage_v1::LineageRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          google::cloud::datacatalog::lineage::v1::
+              ListLineageEventsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context,
@@ -310,9 +321,10 @@ LineageConnectionImpl::ListLineageEvents(
 Status LineageConnectionImpl::DeleteLineageEvent(
     google::cloud::datacatalog::lineage::v1::DeleteLineageEventRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteLineageEvent(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteLineageEvent(request),
       [this](grpc::ClientContext& context,
              google::cloud::datacatalog::lineage::v1::
                  DeleteLineageEventRequest const& request) {
@@ -325,17 +337,16 @@ StreamRange<google::cloud::datacatalog::lineage::v1::Link>
 LineageConnectionImpl::SearchLinks(
     google::cloud::datacatalog::lineage::v1::SearchLinksRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<datacatalog_lineage_v1::LineageRetryPolicy const>(
-          retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->SearchLinks(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->SearchLinks(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::datacatalog::lineage::v1::Link>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<datacatalog_lineage_v1::LineageRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::datacatalog::lineage::v1::SearchLinksRequest const&
               r) {
         return google::cloud::internal::RetryLoop(
@@ -361,19 +372,19 @@ LineageConnectionImpl::BatchSearchLinkProcesses(
     google::cloud::datacatalog::lineage::v1::BatchSearchLinkProcessesRequest
         request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<datacatalog_lineage_v1::LineageRetryPolicy const>(
-          retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->BatchSearchLinkProcesses(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency =
+      idempotency_policy(*current)->BatchSearchLinkProcesses(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::datacatalog::lineage::v1::ProcessLinks>>(
       std::move(request),
-      [stub, retry, backoff, idempotency,
-       function_name](google::cloud::datacatalog::lineage::v1::
-                          BatchSearchLinkProcessesRequest const& r) {
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<datacatalog_lineage_v1::LineageRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          google::cloud::datacatalog::lineage::v1::
+              BatchSearchLinkProcessesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context,

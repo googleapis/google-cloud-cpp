@@ -42,9 +42,10 @@ ServiceMonitoringServiceConnectionImpl::ServiceMonitoringServiceConnectionImpl(
 StatusOr<google::monitoring::v3::Service>
 ServiceMonitoringServiceConnectionImpl::CreateService(
     google::monitoring::v3::CreateServiceRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateService(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateService(request),
       [this](grpc::ClientContext& context,
              google::monitoring::v3::CreateServiceRequest const& request) {
         return stub_->CreateService(context, request);
@@ -55,9 +56,10 @@ ServiceMonitoringServiceConnectionImpl::CreateService(
 StatusOr<google::monitoring::v3::Service>
 ServiceMonitoringServiceConnectionImpl::GetService(
     google::monitoring::v3::GetServiceRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetService(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetService(request),
       [this](grpc::ClientContext& context,
              google::monitoring::v3::GetServiceRequest const& request) {
         return stub_->GetService(context, request);
@@ -69,18 +71,18 @@ StreamRange<google::monitoring::v3::Service>
 ServiceMonitoringServiceConnectionImpl::ListServices(
     google::monitoring::v3::ListServicesRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<monitoring_v3::ServiceMonitoringServiceRetryPolicy const>(
-          retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListServices(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListServices(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::monitoring::v3::Service>>(
       std::move(request),
-      [stub, retry, backoff, idempotency,
-       function_name](google::monitoring::v3::ListServicesRequest const& r) {
+      [idempotency, function_name, stub = stub_,
+       retry =
+           std::shared_ptr<monitoring_v3::ServiceMonitoringServiceRetryPolicy>(
+               retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          google::monitoring::v3::ListServicesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context,
@@ -101,9 +103,10 @@ ServiceMonitoringServiceConnectionImpl::ListServices(
 StatusOr<google::monitoring::v3::Service>
 ServiceMonitoringServiceConnectionImpl::UpdateService(
     google::monitoring::v3::UpdateServiceRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UpdateService(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateService(request),
       [this](grpc::ClientContext& context,
              google::monitoring::v3::UpdateServiceRequest const& request) {
         return stub_->UpdateService(context, request);
@@ -113,9 +116,10 @@ ServiceMonitoringServiceConnectionImpl::UpdateService(
 
 Status ServiceMonitoringServiceConnectionImpl::DeleteService(
     google::monitoring::v3::DeleteServiceRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteService(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteService(request),
       [this](grpc::ClientContext& context,
              google::monitoring::v3::DeleteServiceRequest const& request) {
         return stub_->DeleteService(context, request);
@@ -126,9 +130,10 @@ Status ServiceMonitoringServiceConnectionImpl::DeleteService(
 StatusOr<google::monitoring::v3::ServiceLevelObjective>
 ServiceMonitoringServiceConnectionImpl::CreateServiceLevelObjective(
     google::monitoring::v3::CreateServiceLevelObjectiveRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateServiceLevelObjective(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateServiceLevelObjective(request),
       [this](grpc::ClientContext& context,
              google::monitoring::v3::CreateServiceLevelObjectiveRequest const&
                  request) {
@@ -140,9 +145,10 @@ ServiceMonitoringServiceConnectionImpl::CreateServiceLevelObjective(
 StatusOr<google::monitoring::v3::ServiceLevelObjective>
 ServiceMonitoringServiceConnectionImpl::GetServiceLevelObjective(
     google::monitoring::v3::GetServiceLevelObjectiveRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetServiceLevelObjective(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetServiceLevelObjective(request),
       [this](grpc::ClientContext& context,
              google::monitoring::v3::GetServiceLevelObjectiveRequest const&
                  request) {
@@ -155,17 +161,18 @@ StreamRange<google::monitoring::v3::ServiceLevelObjective>
 ServiceMonitoringServiceConnectionImpl::ListServiceLevelObjectives(
     google::monitoring::v3::ListServiceLevelObjectivesRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<monitoring_v3::ServiceMonitoringServiceRetryPolicy const>(
-          retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListServiceLevelObjectives(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency =
+      idempotency_policy(*current)->ListServiceLevelObjectives(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::monitoring::v3::ServiceLevelObjective>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry =
+           std::shared_ptr<monitoring_v3::ServiceMonitoringServiceRetryPolicy>(
+               retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::monitoring::v3::ListServiceLevelObjectivesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
@@ -189,9 +196,10 @@ ServiceMonitoringServiceConnectionImpl::ListServiceLevelObjectives(
 StatusOr<google::monitoring::v3::ServiceLevelObjective>
 ServiceMonitoringServiceConnectionImpl::UpdateServiceLevelObjective(
     google::monitoring::v3::UpdateServiceLevelObjectiveRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UpdateServiceLevelObjective(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateServiceLevelObjective(request),
       [this](grpc::ClientContext& context,
              google::monitoring::v3::UpdateServiceLevelObjectiveRequest const&
                  request) {
@@ -202,9 +210,10 @@ ServiceMonitoringServiceConnectionImpl::UpdateServiceLevelObjective(
 
 Status ServiceMonitoringServiceConnectionImpl::DeleteServiceLevelObjective(
     google::monitoring::v3::DeleteServiceLevelObjectiveRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteServiceLevelObjective(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteServiceLevelObjective(request),
       [this](grpc::ClientContext& context,
              google::monitoring::v3::DeleteServiceLevelObjectiveRequest const&
                  request) {

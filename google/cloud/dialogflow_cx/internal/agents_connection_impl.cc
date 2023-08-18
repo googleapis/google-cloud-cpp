@@ -43,16 +43,16 @@ StreamRange<google::cloud::dialogflow::cx::v3::Agent>
 AgentsConnectionImpl::ListAgents(
     google::cloud::dialogflow::cx::v3::ListAgentsRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<dialogflow_cx::AgentsRetryPolicy const>(retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListAgents(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListAgents(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::dialogflow::cx::v3::Agent>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<dialogflow_cx::AgentsRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::dialogflow::cx::v3::ListAgentsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
@@ -73,8 +73,10 @@ AgentsConnectionImpl::ListAgents(
 StatusOr<google::cloud::dialogflow::cx::v3::Agent>
 AgentsConnectionImpl::GetAgent(
     google::cloud::dialogflow::cx::v3::GetAgentRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(), idempotency_policy()->GetAgent(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetAgent(request),
       [this](
           grpc::ClientContext& context,
           google::cloud::dialogflow::cx::v3::GetAgentRequest const& request) {
@@ -86,9 +88,10 @@ AgentsConnectionImpl::GetAgent(
 StatusOr<google::cloud::dialogflow::cx::v3::Agent>
 AgentsConnectionImpl::CreateAgent(
     google::cloud::dialogflow::cx::v3::CreateAgentRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateAgent(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateAgent(request),
       [this](grpc::ClientContext& context,
              google::cloud::dialogflow::cx::v3::CreateAgentRequest const&
                  request) { return stub_->CreateAgent(context, request); },
@@ -98,9 +101,10 @@ AgentsConnectionImpl::CreateAgent(
 StatusOr<google::cloud::dialogflow::cx::v3::Agent>
 AgentsConnectionImpl::UpdateAgent(
     google::cloud::dialogflow::cx::v3::UpdateAgentRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UpdateAgent(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateAgent(request),
       [this](grpc::ClientContext& context,
              google::cloud::dialogflow::cx::v3::UpdateAgentRequest const&
                  request) { return stub_->UpdateAgent(context, request); },
@@ -109,9 +113,10 @@ AgentsConnectionImpl::UpdateAgent(
 
 Status AgentsConnectionImpl::DeleteAgent(
     google::cloud::dialogflow::cx::v3::DeleteAgentRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteAgent(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteAgent(request),
       [this](grpc::ClientContext& context,
              google::cloud::dialogflow::cx::v3::DeleteAgentRequest const&
                  request) { return stub_->DeleteAgent(context, request); },
@@ -121,66 +126,73 @@ Status AgentsConnectionImpl::DeleteAgent(
 future<StatusOr<google::cloud::dialogflow::cx::v3::ExportAgentResponse>>
 AgentsConnectionImpl::ExportAgent(
     google::cloud::dialogflow::cx::v3::ExportAgentRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::dialogflow::cx::v3::ExportAgentResponse>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::dialogflow::cx::v3::ExportAgentRequest const&
-                 request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::dialogflow::cx::v3::ExportAgentRequest const&
+              request) {
         return stub->AsyncExportAgent(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::dialogflow::cx::v3::ExportAgentResponse>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->ExportAgent(request), polling_policy(), __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ExportAgent(request),
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::protobuf::Struct>> AgentsConnectionImpl::RestoreAgent(
     google::cloud::dialogflow::cx::v3::RestoreAgentRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::protobuf::Struct>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::dialogflow::cx::v3::RestoreAgentRequest const&
-                 request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::dialogflow::cx::v3::RestoreAgentRequest const&
+              request) {
         return stub->AsyncRestoreAgent(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::protobuf::Struct>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->RestoreAgent(request), polling_policy(), __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->RestoreAgent(request),
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::AgentValidationResult>
 AgentsConnectionImpl::ValidateAgent(
     google::cloud::dialogflow::cx::v3::ValidateAgentRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->ValidateAgent(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ValidateAgent(request),
       [this](grpc::ClientContext& context,
              google::cloud::dialogflow::cx::v3::ValidateAgentRequest const&
                  request) { return stub_->ValidateAgent(context, request); },
@@ -191,9 +203,10 @@ StatusOr<google::cloud::dialogflow::cx::v3::AgentValidationResult>
 AgentsConnectionImpl::GetAgentValidationResult(
     google::cloud::dialogflow::cx::v3::GetAgentValidationResultRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetAgentValidationResult(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetAgentValidationResult(request),
       [this](grpc::ClientContext& context,
              google::cloud::dialogflow::cx::v3::
                  GetAgentValidationResultRequest const& request) {

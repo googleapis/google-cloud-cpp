@@ -42,16 +42,16 @@ StreamRange<google::cloud::dialogflow::cx::v3::Intent>
 IntentsConnectionImpl::ListIntents(
     google::cloud::dialogflow::cx::v3::ListIntentsRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<dialogflow_cx::IntentsRetryPolicy const>(retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListIntents(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListIntents(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::dialogflow::cx::v3::Intent>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<dialogflow_cx::IntentsRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::dialogflow::cx::v3::ListIntentsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
@@ -72,9 +72,10 @@ IntentsConnectionImpl::ListIntents(
 StatusOr<google::cloud::dialogflow::cx::v3::Intent>
 IntentsConnectionImpl::GetIntent(
     google::cloud::dialogflow::cx::v3::GetIntentRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetIntent(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetIntent(request),
       [this](
           grpc::ClientContext& context,
           google::cloud::dialogflow::cx::v3::GetIntentRequest const& request) {
@@ -86,9 +87,10 @@ IntentsConnectionImpl::GetIntent(
 StatusOr<google::cloud::dialogflow::cx::v3::Intent>
 IntentsConnectionImpl::CreateIntent(
     google::cloud::dialogflow::cx::v3::CreateIntentRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateIntent(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateIntent(request),
       [this](grpc::ClientContext& context,
              google::cloud::dialogflow::cx::v3::CreateIntentRequest const&
                  request) { return stub_->CreateIntent(context, request); },
@@ -98,9 +100,10 @@ IntentsConnectionImpl::CreateIntent(
 StatusOr<google::cloud::dialogflow::cx::v3::Intent>
 IntentsConnectionImpl::UpdateIntent(
     google::cloud::dialogflow::cx::v3::UpdateIntentRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UpdateIntent(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateIntent(request),
       [this](grpc::ClientContext& context,
              google::cloud::dialogflow::cx::v3::UpdateIntentRequest const&
                  request) { return stub_->UpdateIntent(context, request); },
@@ -109,9 +112,10 @@ IntentsConnectionImpl::UpdateIntent(
 
 Status IntentsConnectionImpl::DeleteIntent(
     google::cloud::dialogflow::cx::v3::DeleteIntentRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteIntent(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteIntent(request),
       [this](grpc::ClientContext& context,
              google::cloud::dialogflow::cx::v3::DeleteIntentRequest const&
                  request) { return stub_->DeleteIntent(context, request); },

@@ -87,56 +87,29 @@ class ConversationProfilesConnectionImpl
           request) override;
 
  private:
-  std::unique_ptr<dialogflow_es::ConversationProfilesRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<dialogflow_es::ConversationProfilesRetryPolicyOption>()) {
-      return options
-          .get<dialogflow_es::ConversationProfilesRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<dialogflow_es::ConversationProfilesRetryPolicyOption>()
+  static std::unique_ptr<dialogflow_es::ConversationProfilesRetryPolicy>
+  retry_policy(Options const& options) {
+    return options.get<dialogflow_es::ConversationProfilesRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<dialogflow_es::ConversationProfilesBackoffPolicyOption>()) {
-      return options
-          .get<dialogflow_es::ConversationProfilesBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options
         .get<dialogflow_es::ConversationProfilesBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<
+  static std::unique_ptr<
       dialogflow_es::ConversationProfilesConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<dialogflow_es::
-                     ConversationProfilesConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<dialogflow_es::
-                   ConversationProfilesConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  idempotency_policy(Options const& options) {
+    return options
         .get<dialogflow_es::
                  ConversationProfilesConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<dialogflow_es::ConversationProfilesPollingPolicyOption>()) {
-      return options
-          .get<dialogflow_es::ConversationProfilesPollingPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options
         .get<dialogflow_es::ConversationProfilesPollingPolicyOption>()
         ->clone();
   }

@@ -43,9 +43,10 @@ EssentialContactsServiceConnectionImpl::EssentialContactsServiceConnectionImpl(
 StatusOr<google::cloud::essentialcontacts::v1::Contact>
 EssentialContactsServiceConnectionImpl::CreateContact(
     google::cloud::essentialcontacts::v1::CreateContactRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateContact(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateContact(request),
       [this](grpc::ClientContext& context,
              google::cloud::essentialcontacts::v1::CreateContactRequest const&
                  request) { return stub_->CreateContact(context, request); },
@@ -55,9 +56,10 @@ EssentialContactsServiceConnectionImpl::CreateContact(
 StatusOr<google::cloud::essentialcontacts::v1::Contact>
 EssentialContactsServiceConnectionImpl::UpdateContact(
     google::cloud::essentialcontacts::v1::UpdateContactRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UpdateContact(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateContact(request),
       [this](grpc::ClientContext& context,
              google::cloud::essentialcontacts::v1::UpdateContactRequest const&
                  request) { return stub_->UpdateContact(context, request); },
@@ -68,17 +70,17 @@ StreamRange<google::cloud::essentialcontacts::v1::Contact>
 EssentialContactsServiceConnectionImpl::ListContacts(
     google::cloud::essentialcontacts::v1::ListContactsRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<
-      essentialcontacts_v1::EssentialContactsServiceRetryPolicy const>(
-      retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListContacts(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListContacts(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::essentialcontacts::v1::Contact>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<
+           essentialcontacts_v1::EssentialContactsServiceRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::essentialcontacts::v1::ListContactsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
@@ -100,9 +102,10 @@ EssentialContactsServiceConnectionImpl::ListContacts(
 StatusOr<google::cloud::essentialcontacts::v1::Contact>
 EssentialContactsServiceConnectionImpl::GetContact(
     google::cloud::essentialcontacts::v1::GetContactRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetContact(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetContact(request),
       [this](grpc::ClientContext& context,
              google::cloud::essentialcontacts::v1::GetContactRequest const&
                  request) { return stub_->GetContact(context, request); },
@@ -111,9 +114,10 @@ EssentialContactsServiceConnectionImpl::GetContact(
 
 Status EssentialContactsServiceConnectionImpl::DeleteContact(
     google::cloud::essentialcontacts::v1::DeleteContactRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteContact(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteContact(request),
       [this](grpc::ClientContext& context,
              google::cloud::essentialcontacts::v1::DeleteContactRequest const&
                  request) { return stub_->DeleteContact(context, request); },
@@ -124,17 +128,17 @@ StreamRange<google::cloud::essentialcontacts::v1::Contact>
 EssentialContactsServiceConnectionImpl::ComputeContacts(
     google::cloud::essentialcontacts::v1::ComputeContactsRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<
-      essentialcontacts_v1::EssentialContactsServiceRetryPolicy const>(
-      retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ComputeContacts(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ComputeContacts(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::essentialcontacts::v1::Contact>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<
+           essentialcontacts_v1::EssentialContactsServiceRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::essentialcontacts::v1::ComputeContactsRequest const&
               r) {
         return google::cloud::internal::RetryLoop(
@@ -158,9 +162,10 @@ EssentialContactsServiceConnectionImpl::ComputeContacts(
 Status EssentialContactsServiceConnectionImpl::SendTestMessage(
     google::cloud::essentialcontacts::v1::SendTestMessageRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->SendTestMessage(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->SendTestMessage(request),
       [this](grpc::ClientContext& context,
              google::cloud::essentialcontacts::v1::SendTestMessageRequest const&
                  request) { return stub_->SendTestMessage(context, request); },

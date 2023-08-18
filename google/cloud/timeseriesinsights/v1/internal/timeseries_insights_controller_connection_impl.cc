@@ -47,17 +47,17 @@ StreamRange<google::cloud::timeseriesinsights::v1::DataSet>
 TimeseriesInsightsControllerConnectionImpl::ListDataSets(
     google::cloud::timeseriesinsights::v1::ListDataSetsRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<
-      timeseriesinsights_v1::TimeseriesInsightsControllerRetryPolicy const>(
-      retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListDataSets(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListDataSets(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::timeseriesinsights::v1::DataSet>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<
+           timeseriesinsights_v1::TimeseriesInsightsControllerRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::timeseriesinsights::v1::ListDataSetsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
@@ -81,9 +81,10 @@ StatusOr<google::cloud::timeseriesinsights::v1::DataSet>
 TimeseriesInsightsControllerConnectionImpl::CreateDataSet(
     google::cloud::timeseriesinsights::v1::CreateDataSetRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateDataSet(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateDataSet(request),
       [this](grpc::ClientContext& context,
              google::cloud::timeseriesinsights::v1::CreateDataSetRequest const&
                  request) { return stub_->CreateDataSet(context, request); },
@@ -93,9 +94,10 @@ TimeseriesInsightsControllerConnectionImpl::CreateDataSet(
 Status TimeseriesInsightsControllerConnectionImpl::DeleteDataSet(
     google::cloud::timeseriesinsights::v1::DeleteDataSetRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteDataSet(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteDataSet(request),
       [this](grpc::ClientContext& context,
              google::cloud::timeseriesinsights::v1::DeleteDataSetRequest const&
                  request) { return stub_->DeleteDataSet(context, request); },
@@ -105,9 +107,10 @@ Status TimeseriesInsightsControllerConnectionImpl::DeleteDataSet(
 StatusOr<google::cloud::timeseriesinsights::v1::AppendEventsResponse>
 TimeseriesInsightsControllerConnectionImpl::AppendEvents(
     google::cloud::timeseriesinsights::v1::AppendEventsRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->AppendEvents(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->AppendEvents(request),
       [this](grpc::ClientContext& context,
              google::cloud::timeseriesinsights::v1::AppendEventsRequest const&
                  request) { return stub_->AppendEvents(context, request); },
@@ -117,9 +120,10 @@ TimeseriesInsightsControllerConnectionImpl::AppendEvents(
 StatusOr<google::cloud::timeseriesinsights::v1::QueryDataSetResponse>
 TimeseriesInsightsControllerConnectionImpl::QueryDataSet(
     google::cloud::timeseriesinsights::v1::QueryDataSetRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->QueryDataSet(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->QueryDataSet(request),
       [this](grpc::ClientContext& context,
              google::cloud::timeseriesinsights::v1::QueryDataSetRequest const&
                  request) { return stub_->QueryDataSet(context, request); },
@@ -130,9 +134,10 @@ StatusOr<google::cloud::timeseriesinsights::v1::EvaluatedSlice>
 TimeseriesInsightsControllerConnectionImpl::EvaluateSlice(
     google::cloud::timeseriesinsights::v1::EvaluateSliceRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->EvaluateSlice(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->EvaluateSlice(request),
       [this](grpc::ClientContext& context,
              google::cloud::timeseriesinsights::v1::EvaluateSliceRequest const&
                  request) { return stub_->EvaluateSlice(context, request); },
@@ -143,9 +148,10 @@ StatusOr<google::cloud::timeseriesinsights::v1::EvaluatedSlice>
 TimeseriesInsightsControllerConnectionImpl::EvaluateTimeseries(
     google::cloud::timeseriesinsights::v1::EvaluateTimeseriesRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->EvaluateTimeseries(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->EvaluateTimeseries(request),
       [this](grpc::ClientContext& context,
              google::cloud::timeseriesinsights::v1::
                  EvaluateTimeseriesRequest const& request) {

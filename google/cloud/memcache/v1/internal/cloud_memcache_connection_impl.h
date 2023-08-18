@@ -83,46 +83,25 @@ class CloudMemcacheConnectionImpl
       override;
 
  private:
-  std::unique_ptr<memcache_v1::CloudMemcacheRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<memcache_v1::CloudMemcacheRetryPolicyOption>()) {
-      return options.get<memcache_v1::CloudMemcacheRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<memcache_v1::CloudMemcacheRetryPolicyOption>()->clone();
+  static std::unique_ptr<memcache_v1::CloudMemcacheRetryPolicy> retry_policy(
+      Options const& options) {
+    return options.get<memcache_v1::CloudMemcacheRetryPolicyOption>()->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<memcache_v1::CloudMemcacheBackoffPolicyOption>()) {
-      return options.get<memcache_v1::CloudMemcacheBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<memcache_v1::CloudMemcacheBackoffPolicyOption>()
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<memcache_v1::CloudMemcacheBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<memcache_v1::CloudMemcacheConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            memcache_v1::CloudMemcacheConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<memcache_v1::CloudMemcacheConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<memcache_v1::CloudMemcacheConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<memcache_v1::CloudMemcacheConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<memcache_v1::CloudMemcachePollingPolicyOption>()) {
-      return options.get<memcache_v1::CloudMemcachePollingPolicyOption>()
-          ->clone();
-    }
-    return options_.get<memcache_v1::CloudMemcachePollingPolicyOption>()
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options.get<memcache_v1::CloudMemcachePollingPolicyOption>()
         ->clone();
   }
 

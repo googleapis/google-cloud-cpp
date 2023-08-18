@@ -65,36 +65,21 @@ class MetricsServiceV2ConnectionImpl
       google::logging::v2::DeleteLogMetricRequest const& request) override;
 
  private:
-  std::unique_ptr<logging_v2::MetricsServiceV2RetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<logging_v2::MetricsServiceV2RetryPolicyOption>()) {
-      return options.get<logging_v2::MetricsServiceV2RetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<logging_v2::MetricsServiceV2RetryPolicyOption>()
+  static std::unique_ptr<logging_v2::MetricsServiceV2RetryPolicy> retry_policy(
+      Options const& options) {
+    return options.get<logging_v2::MetricsServiceV2RetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<logging_v2::MetricsServiceV2BackoffPolicyOption>()) {
-      return options.get<logging_v2::MetricsServiceV2BackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<logging_v2::MetricsServiceV2BackoffPolicyOption>()
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<logging_v2::MetricsServiceV2BackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<logging_v2::MetricsServiceV2ConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            logging_v2::MetricsServiceV2ConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<logging_v2::MetricsServiceV2ConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<
+      logging_v2::MetricsServiceV2ConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<logging_v2::MetricsServiceV2ConnectionIdempotencyPolicyOption>()
         ->clone();
   }

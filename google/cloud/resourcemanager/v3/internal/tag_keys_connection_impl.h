@@ -84,47 +84,25 @@ class TagKeysConnectionImpl : public resourcemanager_v3::TagKeysConnection {
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
  private:
-  std::unique_ptr<resourcemanager_v3::TagKeysRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<resourcemanager_v3::TagKeysRetryPolicyOption>()) {
-      return options.get<resourcemanager_v3::TagKeysRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<resourcemanager_v3::TagKeysRetryPolicyOption>()
+  static std::unique_ptr<resourcemanager_v3::TagKeysRetryPolicy> retry_policy(
+      Options const& options) {
+    return options.get<resourcemanager_v3::TagKeysRetryPolicyOption>()->clone();
+  }
+
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<resourcemanager_v3::TagKeysBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<resourcemanager_v3::TagKeysBackoffPolicyOption>()) {
-      return options.get<resourcemanager_v3::TagKeysBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<resourcemanager_v3::TagKeysBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<resourcemanager_v3::TagKeysConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            resourcemanager_v3::TagKeysConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<resourcemanager_v3::TagKeysConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<resourcemanager_v3::TagKeysConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<resourcemanager_v3::TagKeysConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<resourcemanager_v3::TagKeysPollingPolicyOption>()) {
-      return options.get<resourcemanager_v3::TagKeysPollingPolicyOption>()
-          ->clone();
-    }
-    return options_.get<resourcemanager_v3::TagKeysPollingPolicyOption>()
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options.get<resourcemanager_v3::TagKeysPollingPolicyOption>()
         ->clone();
   }
 

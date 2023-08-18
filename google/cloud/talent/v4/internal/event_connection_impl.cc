@@ -40,9 +40,10 @@ EventServiceConnectionImpl::EventServiceConnectionImpl(
 StatusOr<google::cloud::talent::v4::ClientEvent>
 EventServiceConnectionImpl::CreateClientEvent(
     google::cloud::talent::v4::CreateClientEventRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateClientEvent(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateClientEvent(request),
       [this](
           grpc::ClientContext& context,
           google::cloud::talent::v4::CreateClientEventRequest const& request) {

@@ -43,16 +43,16 @@ StreamRange<google::cloud::dialogflow::cx::v3::EntityType>
 EntityTypesConnectionImpl::ListEntityTypes(
     google::cloud::dialogflow::cx::v3::ListEntityTypesRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<dialogflow_cx::EntityTypesRetryPolicy const>(
-      retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListEntityTypes(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListEntityTypes(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::dialogflow::cx::v3::EntityType>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<dialogflow_cx::EntityTypesRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::dialogflow::cx::v3::ListEntityTypesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
@@ -76,9 +76,10 @@ EntityTypesConnectionImpl::ListEntityTypes(
 StatusOr<google::cloud::dialogflow::cx::v3::EntityType>
 EntityTypesConnectionImpl::GetEntityType(
     google::cloud::dialogflow::cx::v3::GetEntityTypeRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetEntityType(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetEntityType(request),
       [this](grpc::ClientContext& context,
              google::cloud::dialogflow::cx::v3::GetEntityTypeRequest const&
                  request) { return stub_->GetEntityType(context, request); },
@@ -88,9 +89,10 @@ EntityTypesConnectionImpl::GetEntityType(
 StatusOr<google::cloud::dialogflow::cx::v3::EntityType>
 EntityTypesConnectionImpl::CreateEntityType(
     google::cloud::dialogflow::cx::v3::CreateEntityTypeRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateEntityType(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateEntityType(request),
       [this](grpc::ClientContext& context,
              google::cloud::dialogflow::cx::v3::CreateEntityTypeRequest const&
                  request) { return stub_->CreateEntityType(context, request); },
@@ -100,9 +102,10 @@ EntityTypesConnectionImpl::CreateEntityType(
 StatusOr<google::cloud::dialogflow::cx::v3::EntityType>
 EntityTypesConnectionImpl::UpdateEntityType(
     google::cloud::dialogflow::cx::v3::UpdateEntityTypeRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UpdateEntityType(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateEntityType(request),
       [this](grpc::ClientContext& context,
              google::cloud::dialogflow::cx::v3::UpdateEntityTypeRequest const&
                  request) { return stub_->UpdateEntityType(context, request); },
@@ -111,9 +114,10 @@ EntityTypesConnectionImpl::UpdateEntityType(
 
 Status EntityTypesConnectionImpl::DeleteEntityType(
     google::cloud::dialogflow::cx::v3::DeleteEntityTypeRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteEntityType(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteEntityType(request),
       [this](grpc::ClientContext& context,
              google::cloud::dialogflow::cx::v3::DeleteEntityTypeRequest const&
                  request) { return stub_->DeleteEntityType(context, request); },

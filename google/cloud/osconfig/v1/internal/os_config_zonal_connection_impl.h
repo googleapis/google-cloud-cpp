@@ -110,52 +110,28 @@ class OsConfigZonalServiceConnectionImpl
       override;
 
  private:
-  std::unique_ptr<osconfig_v1::OsConfigZonalServiceRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<osconfig_v1::OsConfigZonalServiceRetryPolicyOption>()) {
-      return options.get<osconfig_v1::OsConfigZonalServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<osconfig_v1::OsConfigZonalServiceRetryPolicyOption>()
+  static std::unique_ptr<osconfig_v1::OsConfigZonalServiceRetryPolicy>
+  retry_policy(Options const& options) {
+    return options.get<osconfig_v1::OsConfigZonalServiceRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<osconfig_v1::OsConfigZonalServiceBackoffPolicyOption>()) {
-      return options
-          .get<osconfig_v1::OsConfigZonalServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<osconfig_v1::OsConfigZonalServiceBackoffPolicyOption>()
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<osconfig_v1::OsConfigZonalServiceBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<osconfig_v1::OsConfigZonalServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<osconfig_v1::
-                     OsConfigZonalServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<osconfig_v1::
-                   OsConfigZonalServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<
+      osconfig_v1::OsConfigZonalServiceConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<osconfig_v1::
                  OsConfigZonalServiceConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<osconfig_v1::OsConfigZonalServicePollingPolicyOption>()) {
-      return options
-          .get<osconfig_v1::OsConfigZonalServicePollingPolicyOption>()
-          ->clone();
-    }
-    return options_.get<osconfig_v1::OsConfigZonalServicePollingPolicyOption>()
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options.get<osconfig_v1::OsConfigZonalServicePollingPolicyOption>()
         ->clone();
   }
 

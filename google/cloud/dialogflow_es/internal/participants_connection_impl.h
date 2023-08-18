@@ -89,36 +89,19 @@ class ParticipantsConnectionImpl
       override;
 
  private:
-  std::unique_ptr<dialogflow_es::ParticipantsRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<dialogflow_es::ParticipantsRetryPolicyOption>()) {
-      return options.get<dialogflow_es::ParticipantsRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<dialogflow_es::ParticipantsRetryPolicyOption>()
+  static std::unique_ptr<dialogflow_es::ParticipantsRetryPolicy> retry_policy(
+      Options const& options) {
+    return options.get<dialogflow_es::ParticipantsRetryPolicyOption>()->clone();
+  }
+
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<dialogflow_es::ParticipantsBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<dialogflow_es::ParticipantsBackoffPolicyOption>()) {
-      return options.get<dialogflow_es::ParticipantsBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<dialogflow_es::ParticipantsBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<dialogflow_es::ParticipantsConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            dialogflow_es::ParticipantsConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<dialogflow_es::ParticipantsConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<dialogflow_es::ParticipantsConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<dialogflow_es::ParticipantsConnectionIdempotencyPolicyOption>()
         ->clone();
   }

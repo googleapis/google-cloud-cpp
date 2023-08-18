@@ -94,62 +94,31 @@ class AssuredWorkloadsServiceConnectionImpl
           request) override;
 
  private:
-  std::unique_ptr<assuredworkloads_v1::AssuredWorkloadsServiceRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            assuredworkloads_v1::AssuredWorkloadsServiceRetryPolicyOption>()) {
-      return options
-          .get<assuredworkloads_v1::AssuredWorkloadsServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<
+      assuredworkloads_v1::AssuredWorkloadsServiceRetryPolicy>
+  retry_policy(Options const& options) {
+    return options
         .get<assuredworkloads_v1::AssuredWorkloadsServiceRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<assuredworkloads_v1::
-                        AssuredWorkloadsServiceBackoffPolicyOption>()) {
-      return options
-          .get<
-              assuredworkloads_v1::AssuredWorkloadsServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options
         .get<assuredworkloads_v1::AssuredWorkloadsServiceBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<
+  static std::unique_ptr<
       assuredworkloads_v1::AssuredWorkloadsServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            assuredworkloads_v1::
-                AssuredWorkloadsServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<assuredworkloads_v1::
-                   AssuredWorkloadsServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  idempotency_policy(Options const& options) {
+    return options
         .get<assuredworkloads_v1::
                  AssuredWorkloadsServiceConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<assuredworkloads_v1::
-                        AssuredWorkloadsServicePollingPolicyOption>()) {
-      return options
-          .get<
-              assuredworkloads_v1::AssuredWorkloadsServicePollingPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options
         .get<assuredworkloads_v1::AssuredWorkloadsServicePollingPolicyOption>()
         ->clone();
   }

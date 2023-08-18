@@ -53,39 +53,21 @@ class ModelGardenServiceConnectionImpl
       override;
 
  private:
-  std::unique_ptr<aiplatform_v1::ModelGardenServiceRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<aiplatform_v1::ModelGardenServiceRetryPolicyOption>()) {
-      return options.get<aiplatform_v1::ModelGardenServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<aiplatform_v1::ModelGardenServiceRetryPolicyOption>()
+  static std::unique_ptr<aiplatform_v1::ModelGardenServiceRetryPolicy>
+  retry_policy(Options const& options) {
+    return options.get<aiplatform_v1::ModelGardenServiceRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<aiplatform_v1::ModelGardenServiceBackoffPolicyOption>()) {
-      return options
-          .get<aiplatform_v1::ModelGardenServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<aiplatform_v1::ModelGardenServiceBackoffPolicyOption>()
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<aiplatform_v1::ModelGardenServiceBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<aiplatform_v1::ModelGardenServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<aiplatform_v1::
-                     ModelGardenServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<aiplatform_v1::
-                   ModelGardenServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<
+      aiplatform_v1::ModelGardenServiceConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<aiplatform_v1::
                  ModelGardenServiceConnectionIdempotencyPolicyOption>()
         ->clone();

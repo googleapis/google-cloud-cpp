@@ -68,38 +68,21 @@ class OrganizationsConnectionImpl
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
  private:
-  std::unique_ptr<resourcemanager_v3::OrganizationsRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<resourcemanager_v3::OrganizationsRetryPolicyOption>()) {
-      return options.get<resourcemanager_v3::OrganizationsRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<resourcemanager_v3::OrganizationsRetryPolicyOption>()
+  static std::unique_ptr<resourcemanager_v3::OrganizationsRetryPolicy>
+  retry_policy(Options const& options) {
+    return options.get<resourcemanager_v3::OrganizationsRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<resourcemanager_v3::OrganizationsBackoffPolicyOption>()) {
-      return options
-          .get<resourcemanager_v3::OrganizationsBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<resourcemanager_v3::OrganizationsBackoffPolicyOption>()
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<resourcemanager_v3::OrganizationsBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<resourcemanager_v3::OrganizationsConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<resourcemanager_v3::
-                        OrganizationsConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<resourcemanager_v3::
-                   OrganizationsConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<
+      resourcemanager_v3::OrganizationsConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<resourcemanager_v3::
                  OrganizationsConnectionIdempotencyPolicyOption>()
         ->clone();

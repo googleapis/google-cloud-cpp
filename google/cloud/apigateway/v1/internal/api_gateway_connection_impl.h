@@ -105,49 +105,28 @@ class ApiGatewayServiceConnectionImpl
                       request) override;
 
  private:
-  std::unique_ptr<apigateway_v1::ApiGatewayServiceRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<apigateway_v1::ApiGatewayServiceRetryPolicyOption>()) {
-      return options.get<apigateway_v1::ApiGatewayServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<apigateway_v1::ApiGatewayServiceRetryPolicyOption>()
+  static std::unique_ptr<apigateway_v1::ApiGatewayServiceRetryPolicy>
+  retry_policy(Options const& options) {
+    return options.get<apigateway_v1::ApiGatewayServiceRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<apigateway_v1::ApiGatewayServiceBackoffPolicyOption>()) {
-      return options.get<apigateway_v1::ApiGatewayServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<apigateway_v1::ApiGatewayServiceBackoffPolicyOption>()
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<apigateway_v1::ApiGatewayServiceBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<apigateway_v1::ApiGatewayServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<apigateway_v1::
-                        ApiGatewayServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<apigateway_v1::
-                   ApiGatewayServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<
+      apigateway_v1::ApiGatewayServiceConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<
             apigateway_v1::ApiGatewayServiceConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<apigateway_v1::ApiGatewayServicePollingPolicyOption>()) {
-      return options.get<apigateway_v1::ApiGatewayServicePollingPolicyOption>()
-          ->clone();
-    }
-    return options_.get<apigateway_v1::ApiGatewayServicePollingPolicyOption>()
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options.get<apigateway_v1::ApiGatewayServicePollingPolicyOption>()
         ->clone();
   }
 

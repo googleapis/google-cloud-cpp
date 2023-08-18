@@ -52,33 +52,18 @@ class SearchServiceConnectionImpl : public retail_v2::SearchServiceConnection {
       google::cloud::retail::v2::SearchRequest request) override;
 
  private:
-  std::unique_ptr<retail_v2::SearchServiceRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<retail_v2::SearchServiceRetryPolicyOption>()) {
-      return options.get<retail_v2::SearchServiceRetryPolicyOption>()->clone();
-    }
-    return options_.get<retail_v2::SearchServiceRetryPolicyOption>()->clone();
+  static std::unique_ptr<retail_v2::SearchServiceRetryPolicy> retry_policy(
+      Options const& options) {
+    return options.get<retail_v2::SearchServiceRetryPolicyOption>()->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<retail_v2::SearchServiceBackoffPolicyOption>()) {
-      return options.get<retail_v2::SearchServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<retail_v2::SearchServiceBackoffPolicyOption>()->clone();
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<retail_v2::SearchServiceBackoffPolicyOption>()->clone();
   }
 
-  std::unique_ptr<retail_v2::SearchServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<retail_v2::SearchServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<retail_v2::SearchServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<retail_v2::SearchServiceConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<retail_v2::SearchServiceConnectionIdempotencyPolicyOption>()
         ->clone();
   }

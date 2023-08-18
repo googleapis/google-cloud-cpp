@@ -39,8 +39,10 @@ DatastoreConnectionImpl::DatastoreConnectionImpl(
 
 StatusOr<google::datastore::v1::LookupResponse> DatastoreConnectionImpl::Lookup(
     google::datastore::v1::LookupRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(), idempotency_policy()->Lookup(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->Lookup(request),
       [this](grpc::ClientContext& context,
              google::datastore::v1::LookupRequest const& request) {
         return stub_->Lookup(context, request);
@@ -51,8 +53,10 @@ StatusOr<google::datastore::v1::LookupResponse> DatastoreConnectionImpl::Lookup(
 StatusOr<google::datastore::v1::RunQueryResponse>
 DatastoreConnectionImpl::RunQuery(
     google::datastore::v1::RunQueryRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(), idempotency_policy()->RunQuery(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->RunQuery(request),
       [this](grpc::ClientContext& context,
              google::datastore::v1::RunQueryRequest const& request) {
         return stub_->RunQuery(context, request);
@@ -63,9 +67,10 @@ DatastoreConnectionImpl::RunQuery(
 StatusOr<google::datastore::v1::RunAggregationQueryResponse>
 DatastoreConnectionImpl::RunAggregationQuery(
     google::datastore::v1::RunAggregationQueryRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->RunAggregationQuery(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->RunAggregationQuery(request),
       [this](grpc::ClientContext& context,
              google::datastore::v1::RunAggregationQueryRequest const& request) {
         return stub_->RunAggregationQuery(context, request);
@@ -76,9 +81,10 @@ DatastoreConnectionImpl::RunAggregationQuery(
 StatusOr<google::datastore::v1::BeginTransactionResponse>
 DatastoreConnectionImpl::BeginTransaction(
     google::datastore::v1::BeginTransactionRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->BeginTransaction(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->BeginTransaction(request),
       [this](grpc::ClientContext& context,
              google::datastore::v1::BeginTransactionRequest const& request) {
         return stub_->BeginTransaction(context, request);
@@ -88,8 +94,10 @@ DatastoreConnectionImpl::BeginTransaction(
 
 StatusOr<google::datastore::v1::CommitResponse> DatastoreConnectionImpl::Commit(
     google::datastore::v1::CommitRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(), idempotency_policy()->Commit(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->Commit(request),
       [this](grpc::ClientContext& context,
              google::datastore::v1::CommitRequest const& request) {
         return stub_->Commit(context, request);
@@ -100,8 +108,10 @@ StatusOr<google::datastore::v1::CommitResponse> DatastoreConnectionImpl::Commit(
 StatusOr<google::datastore::v1::RollbackResponse>
 DatastoreConnectionImpl::Rollback(
     google::datastore::v1::RollbackRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(), idempotency_policy()->Rollback(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->Rollback(request),
       [this](grpc::ClientContext& context,
              google::datastore::v1::RollbackRequest const& request) {
         return stub_->Rollback(context, request);
@@ -112,9 +122,10 @@ DatastoreConnectionImpl::Rollback(
 StatusOr<google::datastore::v1::AllocateIdsResponse>
 DatastoreConnectionImpl::AllocateIds(
     google::datastore::v1::AllocateIdsRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->AllocateIds(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->AllocateIds(request),
       [this](grpc::ClientContext& context,
              google::datastore::v1::AllocateIdsRequest const& request) {
         return stub_->AllocateIds(context, request);
@@ -125,9 +136,10 @@ DatastoreConnectionImpl::AllocateIds(
 StatusOr<google::datastore::v1::ReserveIdsResponse>
 DatastoreConnectionImpl::ReserveIds(
     google::datastore::v1::ReserveIdsRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->ReserveIds(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ReserveIds(request),
       [this](grpc::ClientContext& context,
              google::datastore::v1::ReserveIdsRequest const& request) {
         return stub_->ReserveIds(context, request);

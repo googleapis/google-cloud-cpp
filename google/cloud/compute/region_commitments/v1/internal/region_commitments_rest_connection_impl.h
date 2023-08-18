@@ -76,64 +76,33 @@ class RegionCommitmentsRestConnectionImpl
           UpdateRegionCommitmentsRequest const& request) override;
 
  private:
-  std::unique_ptr<compute_region_commitments_v1::RegionCommitmentsRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_region_commitments_v1::
-                        RegionCommitmentsRetryPolicyOption>()) {
-      return options
-          .get<compute_region_commitments_v1::
-                   RegionCommitmentsRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<
+      compute_region_commitments_v1::RegionCommitmentsRetryPolicy>
+  retry_policy(Options const& options) {
+    return options
         .get<
             compute_region_commitments_v1::RegionCommitmentsRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_region_commitments_v1::
-                        RegionCommitmentsBackoffPolicyOption>()) {
-      return options
-          .get<compute_region_commitments_v1::
-                   RegionCommitmentsBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options
         .get<compute_region_commitments_v1::
                  RegionCommitmentsBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<compute_region_commitments_v1::
-                      RegionCommitmentsConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_region_commitments_v1::
-                        RegionCommitmentsConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<compute_region_commitments_v1::
-                   RegionCommitmentsConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<compute_region_commitments_v1::
+                             RegionCommitmentsConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<compute_region_commitments_v1::
                  RegionCommitmentsConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_region_commitments_v1::
-                        RegionCommitmentsPollingPolicyOption>()) {
-      return options
-          .get<compute_region_commitments_v1::
-                   RegionCommitmentsPollingPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options
         .get<compute_region_commitments_v1::
                  RegionCommitmentsPollingPolicyOption>()
         ->clone();

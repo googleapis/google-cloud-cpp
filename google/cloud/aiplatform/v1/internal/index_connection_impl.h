@@ -79,47 +79,25 @@ class IndexServiceConnectionImpl
                        request) override;
 
  private:
-  std::unique_ptr<aiplatform_v1::IndexServiceRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<aiplatform_v1::IndexServiceRetryPolicyOption>()) {
-      return options.get<aiplatform_v1::IndexServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<aiplatform_v1::IndexServiceRetryPolicyOption>()
+  static std::unique_ptr<aiplatform_v1::IndexServiceRetryPolicy> retry_policy(
+      Options const& options) {
+    return options.get<aiplatform_v1::IndexServiceRetryPolicyOption>()->clone();
+  }
+
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<aiplatform_v1::IndexServiceBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<aiplatform_v1::IndexServiceBackoffPolicyOption>()) {
-      return options.get<aiplatform_v1::IndexServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<aiplatform_v1::IndexServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<aiplatform_v1::IndexServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            aiplatform_v1::IndexServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<aiplatform_v1::IndexServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<aiplatform_v1::IndexServiceConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<aiplatform_v1::IndexServiceConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<aiplatform_v1::IndexServicePollingPolicyOption>()) {
-      return options.get<aiplatform_v1::IndexServicePollingPolicyOption>()
-          ->clone();
-    }
-    return options_.get<aiplatform_v1::IndexServicePollingPolicyOption>()
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options.get<aiplatform_v1::IndexServicePollingPolicyOption>()
         ->clone();
   }
 

@@ -93,58 +93,30 @@ class ReservationsRestConnectionImpl
                          UpdateReservationsRequest const& request) override;
 
  private:
-  std::unique_ptr<compute_reservations_v1::ReservationsRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_reservations_v1::ReservationsRetryPolicyOption>()) {
-      return options
-          .get<compute_reservations_v1::ReservationsRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<compute_reservations_v1::ReservationsRetryPolicy>
+  retry_policy(Options const& options) {
+    return options
         .get<compute_reservations_v1::ReservationsRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<compute_reservations_v1::ReservationsBackoffPolicyOption>()) {
-      return options
-          .get<compute_reservations_v1::ReservationsBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options
         .get<compute_reservations_v1::ReservationsBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<
+  static std::unique_ptr<
       compute_reservations_v1::ReservationsConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_reservations_v1::
-                        ReservationsConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<compute_reservations_v1::
-                   ReservationsConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  idempotency_policy(Options const& options) {
+    return options
         .get<compute_reservations_v1::
                  ReservationsConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<compute_reservations_v1::ReservationsPollingPolicyOption>()) {
-      return options
-          .get<compute_reservations_v1::ReservationsPollingPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options
         .get<compute_reservations_v1::ReservationsPollingPolicyOption>()
         ->clone();
   }

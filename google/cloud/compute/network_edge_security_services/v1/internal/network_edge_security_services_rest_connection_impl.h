@@ -81,67 +81,34 @@ class NetworkEdgeSecurityServicesRestConnectionImpl
           PatchNetworkEdgeSecurityServicesRequest const& request) override;
 
  private:
-  std::unique_ptr<compute_network_edge_security_services_v1::
-                      NetworkEdgeSecurityServicesRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_network_edge_security_services_v1::
-                        NetworkEdgeSecurityServicesRetryPolicyOption>()) {
-      return options
-          .get<compute_network_edge_security_services_v1::
-                   NetworkEdgeSecurityServicesRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<compute_network_edge_security_services_v1::
+                             NetworkEdgeSecurityServicesRetryPolicy>
+  retry_policy(Options const& options) {
+    return options
         .get<compute_network_edge_security_services_v1::
                  NetworkEdgeSecurityServicesRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_network_edge_security_services_v1::
-                        NetworkEdgeSecurityServicesBackoffPolicyOption>()) {
-      return options
-          .get<compute_network_edge_security_services_v1::
-                   NetworkEdgeSecurityServicesBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options
         .get<compute_network_edge_security_services_v1::
                  NetworkEdgeSecurityServicesBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<compute_network_edge_security_services_v1::
-                      NetworkEdgeSecurityServicesConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            compute_network_edge_security_services_v1::
-                NetworkEdgeSecurityServicesConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<
-              compute_network_edge_security_services_v1::
-                  NetworkEdgeSecurityServicesConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<
+      compute_network_edge_security_services_v1::
+          NetworkEdgeSecurityServicesConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<compute_network_edge_security_services_v1::
                  NetworkEdgeSecurityServicesConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_network_edge_security_services_v1::
-                        NetworkEdgeSecurityServicesPollingPolicyOption>()) {
-      return options
-          .get<compute_network_edge_security_services_v1::
-                   NetworkEdgeSecurityServicesPollingPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options
         .get<compute_network_edge_security_services_v1::
                  NetworkEdgeSecurityServicesPollingPolicyOption>()
         ->clone();

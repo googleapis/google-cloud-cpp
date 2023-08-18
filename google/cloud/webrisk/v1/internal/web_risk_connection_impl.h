@@ -70,46 +70,25 @@ class WebRiskServiceConnectionImpl
       google::cloud::webrisk::v1::SubmitUriRequest const& request) override;
 
  private:
-  std::unique_ptr<webrisk_v1::WebRiskServiceRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<webrisk_v1::WebRiskServiceRetryPolicyOption>()) {
-      return options.get<webrisk_v1::WebRiskServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<webrisk_v1::WebRiskServiceRetryPolicyOption>()->clone();
+  static std::unique_ptr<webrisk_v1::WebRiskServiceRetryPolicy> retry_policy(
+      Options const& options) {
+    return options.get<webrisk_v1::WebRiskServiceRetryPolicyOption>()->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<webrisk_v1::WebRiskServiceBackoffPolicyOption>()) {
-      return options.get<webrisk_v1::WebRiskServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<webrisk_v1::WebRiskServiceBackoffPolicyOption>()
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<webrisk_v1::WebRiskServiceBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<webrisk_v1::WebRiskServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            webrisk_v1::WebRiskServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<webrisk_v1::WebRiskServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<webrisk_v1::WebRiskServiceConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<webrisk_v1::WebRiskServiceConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<webrisk_v1::WebRiskServicePollingPolicyOption>()) {
-      return options.get<webrisk_v1::WebRiskServicePollingPolicyOption>()
-          ->clone();
-    }
-    return options_.get<webrisk_v1::WebRiskServicePollingPolicyOption>()
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options.get<webrisk_v1::WebRiskServicePollingPolicyOption>()
         ->clone();
   }
 

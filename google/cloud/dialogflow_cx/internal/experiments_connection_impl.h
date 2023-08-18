@@ -77,35 +77,19 @@ class ExperimentsConnectionImpl : public dialogflow_cx::ExperimentsConnection {
       override;
 
  private:
-  std::unique_ptr<dialogflow_cx::ExperimentsRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<dialogflow_cx::ExperimentsRetryPolicyOption>()) {
-      return options.get<dialogflow_cx::ExperimentsRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<dialogflow_cx::ExperimentsRetryPolicyOption>()->clone();
+  static std::unique_ptr<dialogflow_cx::ExperimentsRetryPolicy> retry_policy(
+      Options const& options) {
+    return options.get<dialogflow_cx::ExperimentsRetryPolicyOption>()->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<dialogflow_cx::ExperimentsBackoffPolicyOption>()) {
-      return options.get<dialogflow_cx::ExperimentsBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<dialogflow_cx::ExperimentsBackoffPolicyOption>()
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<dialogflow_cx::ExperimentsBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<dialogflow_cx::ExperimentsConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            dialogflow_cx::ExperimentsConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<dialogflow_cx::ExperimentsConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<dialogflow_cx::ExperimentsConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<dialogflow_cx::ExperimentsConnectionIdempotencyPolicyOption>()
         ->clone();
   }

@@ -91,63 +91,32 @@ class TargetSslProxiesRestConnectionImpl
           SetSslPolicyRequest const& request) override;
 
  private:
-  std::unique_ptr<compute_target_ssl_proxies_v1::TargetSslProxiesRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_target_ssl_proxies_v1::
-                        TargetSslProxiesRetryPolicyOption>()) {
-      return options
-          .get<compute_target_ssl_proxies_v1::
-                   TargetSslProxiesRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<
+      compute_target_ssl_proxies_v1::TargetSslProxiesRetryPolicy>
+  retry_policy(Options const& options) {
+    return options
         .get<compute_target_ssl_proxies_v1::TargetSslProxiesRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_target_ssl_proxies_v1::
-                        TargetSslProxiesBackoffPolicyOption>()) {
-      return options
-          .get<compute_target_ssl_proxies_v1::
-                   TargetSslProxiesBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options
         .get<compute_target_ssl_proxies_v1::
                  TargetSslProxiesBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<compute_target_ssl_proxies_v1::
-                      TargetSslProxiesConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_target_ssl_proxies_v1::
-                        TargetSslProxiesConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<compute_target_ssl_proxies_v1::
-                   TargetSslProxiesConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<compute_target_ssl_proxies_v1::
+                             TargetSslProxiesConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<compute_target_ssl_proxies_v1::
                  TargetSslProxiesConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_target_ssl_proxies_v1::
-                        TargetSslProxiesPollingPolicyOption>()) {
-      return options
-          .get<compute_target_ssl_proxies_v1::
-                   TargetSslProxiesPollingPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options
         .get<compute_target_ssl_proxies_v1::
                  TargetSslProxiesPollingPolicyOption>()
         ->clone();

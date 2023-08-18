@@ -51,31 +51,18 @@ class CompletionConnectionImpl : public talent_v4::CompletionConnection {
       google::cloud::talent::v4::CompleteQueryRequest const& request) override;
 
  private:
-  std::unique_ptr<talent_v4::CompletionRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<talent_v4::CompletionRetryPolicyOption>()) {
-      return options.get<talent_v4::CompletionRetryPolicyOption>()->clone();
-    }
-    return options_.get<talent_v4::CompletionRetryPolicyOption>()->clone();
+  static std::unique_ptr<talent_v4::CompletionRetryPolicy> retry_policy(
+      Options const& options) {
+    return options.get<talent_v4::CompletionRetryPolicyOption>()->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<talent_v4::CompletionBackoffPolicyOption>()) {
-      return options.get<talent_v4::CompletionBackoffPolicyOption>()->clone();
-    }
-    return options_.get<talent_v4::CompletionBackoffPolicyOption>()->clone();
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<talent_v4::CompletionBackoffPolicyOption>()->clone();
   }
 
-  std::unique_ptr<talent_v4::CompletionConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<talent_v4::CompletionConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<talent_v4::CompletionConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<talent_v4::CompletionConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<talent_v4::CompletionConnectionIdempotencyPolicyOption>()
         ->clone();
   }

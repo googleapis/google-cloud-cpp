@@ -129,42 +129,24 @@ class DisksRestConnectionImpl : public compute_disks_v1::DisksConnection {
       override;
 
  private:
-  std::unique_ptr<compute_disks_v1::DisksRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_disks_v1::DisksRetryPolicyOption>()) {
-      return options.get<compute_disks_v1::DisksRetryPolicyOption>()->clone();
-    }
-    return options_.get<compute_disks_v1::DisksRetryPolicyOption>()->clone();
+  static std::unique_ptr<compute_disks_v1::DisksRetryPolicy> retry_policy(
+      Options const& options) {
+    return options.get<compute_disks_v1::DisksRetryPolicyOption>()->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_disks_v1::DisksBackoffPolicyOption>()) {
-      return options.get<compute_disks_v1::DisksBackoffPolicyOption>()->clone();
-    }
-    return options_.get<compute_disks_v1::DisksBackoffPolicyOption>()->clone();
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<compute_disks_v1::DisksBackoffPolicyOption>()->clone();
   }
 
-  std::unique_ptr<compute_disks_v1::DisksConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<compute_disks_v1::DisksConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<compute_disks_v1::DisksConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<compute_disks_v1::DisksConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<compute_disks_v1::DisksConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_disks_v1::DisksPollingPolicyOption>()) {
-      return options.get<compute_disks_v1::DisksPollingPolicyOption>()->clone();
-    }
-    return options_.get<compute_disks_v1::DisksPollingPolicyOption>()->clone();
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options.get<compute_disks_v1::DisksPollingPolicyOption>()->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

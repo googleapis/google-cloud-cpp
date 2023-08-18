@@ -67,32 +67,18 @@ class VersionsConnectionImpl : public dialogflow_es::VersionsConnection {
       override;
 
  private:
-  std::unique_ptr<dialogflow_es::VersionsRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<dialogflow_es::VersionsRetryPolicyOption>()) {
-      return options.get<dialogflow_es::VersionsRetryPolicyOption>()->clone();
-    }
-    return options_.get<dialogflow_es::VersionsRetryPolicyOption>()->clone();
+  static std::unique_ptr<dialogflow_es::VersionsRetryPolicy> retry_policy(
+      Options const& options) {
+    return options.get<dialogflow_es::VersionsRetryPolicyOption>()->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<dialogflow_es::VersionsBackoffPolicyOption>()) {
-      return options.get<dialogflow_es::VersionsBackoffPolicyOption>()->clone();
-    }
-    return options_.get<dialogflow_es::VersionsBackoffPolicyOption>()->clone();
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<dialogflow_es::VersionsBackoffPolicyOption>()->clone();
   }
 
-  std::unique_ptr<dialogflow_es::VersionsConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<dialogflow_es::VersionsConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<dialogflow_es::VersionsConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<dialogflow_es::VersionsConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<dialogflow_es::VersionsConnectionIdempotencyPolicyOption>()
         ->clone();
   }

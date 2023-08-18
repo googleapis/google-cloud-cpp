@@ -75,36 +75,21 @@ class LanguageServiceConnectionImpl
       google::cloud::language::v1::AnnotateTextRequest const& request) override;
 
  private:
-  std::unique_ptr<language_v1::LanguageServiceRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<language_v1::LanguageServiceRetryPolicyOption>()) {
-      return options.get<language_v1::LanguageServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<language_v1::LanguageServiceRetryPolicyOption>()
+  static std::unique_ptr<language_v1::LanguageServiceRetryPolicy> retry_policy(
+      Options const& options) {
+    return options.get<language_v1::LanguageServiceRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<language_v1::LanguageServiceBackoffPolicyOption>()) {
-      return options.get<language_v1::LanguageServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<language_v1::LanguageServiceBackoffPolicyOption>()
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<language_v1::LanguageServiceBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<language_v1::LanguageServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            language_v1::LanguageServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<language_v1::LanguageServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<
+      language_v1::LanguageServiceConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<language_v1::LanguageServiceConnectionIdempotencyPolicyOption>()
         ->clone();
   }

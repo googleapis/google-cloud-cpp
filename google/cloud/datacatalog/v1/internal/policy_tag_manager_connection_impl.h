@@ -97,37 +97,21 @@ class PolicyTagManagerConnectionImpl
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
  private:
-  std::unique_ptr<datacatalog_v1::PolicyTagManagerRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<datacatalog_v1::PolicyTagManagerRetryPolicyOption>()) {
-      return options.get<datacatalog_v1::PolicyTagManagerRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<datacatalog_v1::PolicyTagManagerRetryPolicyOption>()
+  static std::unique_ptr<datacatalog_v1::PolicyTagManagerRetryPolicy>
+  retry_policy(Options const& options) {
+    return options.get<datacatalog_v1::PolicyTagManagerRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<datacatalog_v1::PolicyTagManagerBackoffPolicyOption>()) {
-      return options.get<datacatalog_v1::PolicyTagManagerBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<datacatalog_v1::PolicyTagManagerBackoffPolicyOption>()
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<datacatalog_v1::PolicyTagManagerBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<datacatalog_v1::PolicyTagManagerConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<datacatalog_v1::
-                        PolicyTagManagerConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<datacatalog_v1::
-                   PolicyTagManagerConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<
+      datacatalog_v1::PolicyTagManagerConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<
             datacatalog_v1::PolicyTagManagerConnectionIdempotencyPolicyOption>()
         ->clone();

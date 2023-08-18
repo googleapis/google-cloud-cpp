@@ -96,48 +96,27 @@ class PipelineServiceConnectionImpl
       override;
 
  private:
-  std::unique_ptr<aiplatform_v1::PipelineServiceRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<aiplatform_v1::PipelineServiceRetryPolicyOption>()) {
-      return options.get<aiplatform_v1::PipelineServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<aiplatform_v1::PipelineServiceRetryPolicyOption>()
+  static std::unique_ptr<aiplatform_v1::PipelineServiceRetryPolicy>
+  retry_policy(Options const& options) {
+    return options.get<aiplatform_v1::PipelineServiceRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<aiplatform_v1::PipelineServiceBackoffPolicyOption>()) {
-      return options.get<aiplatform_v1::PipelineServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<aiplatform_v1::PipelineServiceBackoffPolicyOption>()
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<aiplatform_v1::PipelineServiceBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<aiplatform_v1::PipelineServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<aiplatform_v1::
-                        PipelineServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<
-              aiplatform_v1::PipelineServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<
+      aiplatform_v1::PipelineServiceConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<aiplatform_v1::PipelineServiceConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<aiplatform_v1::PipelineServicePollingPolicyOption>()) {
-      return options.get<aiplatform_v1::PipelineServicePollingPolicyOption>()
-          ->clone();
-    }
-    return options_.get<aiplatform_v1::PipelineServicePollingPolicyOption>()
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options.get<aiplatform_v1::PipelineServicePollingPolicyOption>()
         ->clone();
   }
 

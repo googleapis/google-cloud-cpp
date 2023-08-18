@@ -42,9 +42,10 @@ RuleSetServiceConnectionImpl::RuleSetServiceConnectionImpl(
 StatusOr<google::cloud::contentwarehouse::v1::RuleSet>
 RuleSetServiceConnectionImpl::CreateRuleSet(
     google::cloud::contentwarehouse::v1::CreateRuleSetRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateRuleSet(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateRuleSet(request),
       [this](grpc::ClientContext& context,
              google::cloud::contentwarehouse::v1::CreateRuleSetRequest const&
                  request) { return stub_->CreateRuleSet(context, request); },
@@ -54,9 +55,10 @@ RuleSetServiceConnectionImpl::CreateRuleSet(
 StatusOr<google::cloud::contentwarehouse::v1::RuleSet>
 RuleSetServiceConnectionImpl::GetRuleSet(
     google::cloud::contentwarehouse::v1::GetRuleSetRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetRuleSet(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetRuleSet(request),
       [this](grpc::ClientContext& context,
              google::cloud::contentwarehouse::v1::GetRuleSetRequest const&
                  request) { return stub_->GetRuleSet(context, request); },
@@ -66,9 +68,10 @@ RuleSetServiceConnectionImpl::GetRuleSet(
 StatusOr<google::cloud::contentwarehouse::v1::RuleSet>
 RuleSetServiceConnectionImpl::UpdateRuleSet(
     google::cloud::contentwarehouse::v1::UpdateRuleSetRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UpdateRuleSet(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateRuleSet(request),
       [this](grpc::ClientContext& context,
              google::cloud::contentwarehouse::v1::UpdateRuleSetRequest const&
                  request) { return stub_->UpdateRuleSet(context, request); },
@@ -77,9 +80,10 @@ RuleSetServiceConnectionImpl::UpdateRuleSet(
 
 Status RuleSetServiceConnectionImpl::DeleteRuleSet(
     google::cloud::contentwarehouse::v1::DeleteRuleSetRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteRuleSet(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteRuleSet(request),
       [this](grpc::ClientContext& context,
              google::cloud::contentwarehouse::v1::DeleteRuleSetRequest const&
                  request) { return stub_->DeleteRuleSet(context, request); },
@@ -90,17 +94,16 @@ StreamRange<google::cloud::contentwarehouse::v1::RuleSet>
 RuleSetServiceConnectionImpl::ListRuleSets(
     google::cloud::contentwarehouse::v1::ListRuleSetsRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<contentwarehouse_v1::RuleSetServiceRetryPolicy const>(
-          retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListRuleSets(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListRuleSets(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::contentwarehouse::v1::RuleSet>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<contentwarehouse_v1::RuleSetServiceRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::contentwarehouse::v1::ListRuleSetsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,

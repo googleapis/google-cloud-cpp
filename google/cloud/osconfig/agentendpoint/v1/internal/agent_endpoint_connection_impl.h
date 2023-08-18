@@ -89,49 +89,25 @@ class AgentEndpointServiceConnectionImpl
           request) override;
 
  private:
-  std::unique_ptr<osconfig_agentendpoint_v1::AgentEndpointServiceRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<osconfig_agentendpoint_v1::
-                        AgentEndpointServiceRetryPolicyOption>()) {
-      return options
-          .get<osconfig_agentendpoint_v1::
-                   AgentEndpointServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<
+      osconfig_agentendpoint_v1::AgentEndpointServiceRetryPolicy>
+  retry_policy(Options const& options) {
+    return options
         .get<osconfig_agentendpoint_v1::AgentEndpointServiceRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<osconfig_agentendpoint_v1::
-                        AgentEndpointServiceBackoffPolicyOption>()) {
-      return options
-          .get<osconfig_agentendpoint_v1::
-                   AgentEndpointServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options
         .get<osconfig_agentendpoint_v1::
                  AgentEndpointServiceBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<osconfig_agentendpoint_v1::
-                      AgentEndpointServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<osconfig_agentendpoint_v1::
-                     AgentEndpointServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<osconfig_agentendpoint_v1::
-                   AgentEndpointServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<osconfig_agentendpoint_v1::
+                             AgentEndpointServiceConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<osconfig_agentendpoint_v1::
                  AgentEndpointServiceConnectionIdempotencyPolicyOption>()
         ->clone();

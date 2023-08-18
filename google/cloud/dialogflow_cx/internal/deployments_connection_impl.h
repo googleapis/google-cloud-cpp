@@ -57,35 +57,19 @@ class DeploymentsConnectionImpl : public dialogflow_cx::DeploymentsConnection {
       override;
 
  private:
-  std::unique_ptr<dialogflow_cx::DeploymentsRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<dialogflow_cx::DeploymentsRetryPolicyOption>()) {
-      return options.get<dialogflow_cx::DeploymentsRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<dialogflow_cx::DeploymentsRetryPolicyOption>()->clone();
+  static std::unique_ptr<dialogflow_cx::DeploymentsRetryPolicy> retry_policy(
+      Options const& options) {
+    return options.get<dialogflow_cx::DeploymentsRetryPolicyOption>()->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<dialogflow_cx::DeploymentsBackoffPolicyOption>()) {
-      return options.get<dialogflow_cx::DeploymentsBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<dialogflow_cx::DeploymentsBackoffPolicyOption>()
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<dialogflow_cx::DeploymentsBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<dialogflow_cx::DeploymentsConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            dialogflow_cx::DeploymentsConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<dialogflow_cx::DeploymentsConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<dialogflow_cx::DeploymentsConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<dialogflow_cx::DeploymentsConnectionIdempotencyPolicyOption>()
         ->clone();
   }

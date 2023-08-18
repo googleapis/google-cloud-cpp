@@ -76,61 +76,31 @@ class SslCertificatesRestConnectionImpl
                           ListSslCertificatesRequest request) override;
 
  private:
-  std::unique_ptr<compute_ssl_certificates_v1::SslCertificatesRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            compute_ssl_certificates_v1::SslCertificatesRetryPolicyOption>()) {
-      return options
-          .get<compute_ssl_certificates_v1::SslCertificatesRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<
+      compute_ssl_certificates_v1::SslCertificatesRetryPolicy>
+  retry_policy(Options const& options) {
+    return options
         .get<compute_ssl_certificates_v1::SslCertificatesRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_ssl_certificates_v1::
-                        SslCertificatesBackoffPolicyOption>()) {
-      return options
-          .get<
-              compute_ssl_certificates_v1::SslCertificatesBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options
         .get<compute_ssl_certificates_v1::SslCertificatesBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<
+  static std::unique_ptr<
       compute_ssl_certificates_v1::SslCertificatesConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_ssl_certificates_v1::
-                        SslCertificatesConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<compute_ssl_certificates_v1::
-                   SslCertificatesConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  idempotency_policy(Options const& options) {
+    return options
         .get<compute_ssl_certificates_v1::
                  SslCertificatesConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_ssl_certificates_v1::
-                        SslCertificatesPollingPolicyOption>()) {
-      return options
-          .get<
-              compute_ssl_certificates_v1::SslCertificatesPollingPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options
         .get<compute_ssl_certificates_v1::SslCertificatesPollingPolicyOption>()
         ->clone();
   }

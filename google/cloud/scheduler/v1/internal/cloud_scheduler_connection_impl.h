@@ -74,36 +74,21 @@ class CloudSchedulerConnectionImpl
       google::cloud::scheduler::v1::RunJobRequest const& request) override;
 
  private:
-  std::unique_ptr<scheduler_v1::CloudSchedulerRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<scheduler_v1::CloudSchedulerRetryPolicyOption>()) {
-      return options.get<scheduler_v1::CloudSchedulerRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<scheduler_v1::CloudSchedulerRetryPolicyOption>()
+  static std::unique_ptr<scheduler_v1::CloudSchedulerRetryPolicy> retry_policy(
+      Options const& options) {
+    return options.get<scheduler_v1::CloudSchedulerRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<scheduler_v1::CloudSchedulerBackoffPolicyOption>()) {
-      return options.get<scheduler_v1::CloudSchedulerBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<scheduler_v1::CloudSchedulerBackoffPolicyOption>()
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<scheduler_v1::CloudSchedulerBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<scheduler_v1::CloudSchedulerConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            scheduler_v1::CloudSchedulerConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<scheduler_v1::CloudSchedulerConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<
+      scheduler_v1::CloudSchedulerConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<scheduler_v1::CloudSchedulerConnectionIdempotencyPolicyOption>()
         ->clone();
   }

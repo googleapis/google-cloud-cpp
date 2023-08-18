@@ -43,17 +43,17 @@ StreamRange<google::cloud::scheduler::v1::Job>
 CloudSchedulerConnectionImpl::ListJobs(
     google::cloud::scheduler::v1::ListJobsRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<scheduler_v1::CloudSchedulerRetryPolicy const>(
-      retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListJobs(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListJobs(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::scheduler::v1::Job>>(
       std::move(request),
-      [stub, retry, backoff, idempotency,
-       function_name](google::cloud::scheduler::v1::ListJobsRequest const& r) {
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<scheduler_v1::CloudSchedulerRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          google::cloud::scheduler::v1::ListJobsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
@@ -74,8 +74,10 @@ CloudSchedulerConnectionImpl::ListJobs(
 StatusOr<google::cloud::scheduler::v1::Job>
 CloudSchedulerConnectionImpl::GetJob(
     google::cloud::scheduler::v1::GetJobRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(), idempotency_policy()->GetJob(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetJob(request),
       [this](grpc::ClientContext& context,
              google::cloud::scheduler::v1::GetJobRequest const& request) {
         return stub_->GetJob(context, request);
@@ -86,9 +88,10 @@ CloudSchedulerConnectionImpl::GetJob(
 StatusOr<google::cloud::scheduler::v1::Job>
 CloudSchedulerConnectionImpl::CreateJob(
     google::cloud::scheduler::v1::CreateJobRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateJob(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateJob(request),
       [this](grpc::ClientContext& context,
              google::cloud::scheduler::v1::CreateJobRequest const& request) {
         return stub_->CreateJob(context, request);
@@ -99,9 +102,10 @@ CloudSchedulerConnectionImpl::CreateJob(
 StatusOr<google::cloud::scheduler::v1::Job>
 CloudSchedulerConnectionImpl::UpdateJob(
     google::cloud::scheduler::v1::UpdateJobRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UpdateJob(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateJob(request),
       [this](grpc::ClientContext& context,
              google::cloud::scheduler::v1::UpdateJobRequest const& request) {
         return stub_->UpdateJob(context, request);
@@ -111,9 +115,10 @@ CloudSchedulerConnectionImpl::UpdateJob(
 
 Status CloudSchedulerConnectionImpl::DeleteJob(
     google::cloud::scheduler::v1::DeleteJobRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteJob(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteJob(request),
       [this](grpc::ClientContext& context,
              google::cloud::scheduler::v1::DeleteJobRequest const& request) {
         return stub_->DeleteJob(context, request);
@@ -124,8 +129,10 @@ Status CloudSchedulerConnectionImpl::DeleteJob(
 StatusOr<google::cloud::scheduler::v1::Job>
 CloudSchedulerConnectionImpl::PauseJob(
     google::cloud::scheduler::v1::PauseJobRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(), idempotency_policy()->PauseJob(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->PauseJob(request),
       [this](grpc::ClientContext& context,
              google::cloud::scheduler::v1::PauseJobRequest const& request) {
         return stub_->PauseJob(context, request);
@@ -136,9 +143,10 @@ CloudSchedulerConnectionImpl::PauseJob(
 StatusOr<google::cloud::scheduler::v1::Job>
 CloudSchedulerConnectionImpl::ResumeJob(
     google::cloud::scheduler::v1::ResumeJobRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->ResumeJob(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ResumeJob(request),
       [this](grpc::ClientContext& context,
              google::cloud::scheduler::v1::ResumeJobRequest const& request) {
         return stub_->ResumeJob(context, request);
@@ -149,8 +157,10 @@ CloudSchedulerConnectionImpl::ResumeJob(
 StatusOr<google::cloud::scheduler::v1::Job>
 CloudSchedulerConnectionImpl::RunJob(
     google::cloud::scheduler::v1::RunJobRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(), idempotency_policy()->RunJob(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->RunJob(request),
       [this](grpc::ClientContext& context,
              google::cloud::scheduler::v1::RunJobRequest const& request) {
         return stub_->RunJob(context, request);

@@ -44,9 +44,10 @@ StatusOr<google::cloud::bigquery::reservation::v1::Reservation>
 ReservationServiceConnectionImpl::CreateReservation(
     google::cloud::bigquery::reservation::v1::CreateReservationRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateReservation(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateReservation(request),
       [this](grpc::ClientContext& context,
              google::cloud::bigquery::reservation::v1::
                  CreateReservationRequest const& request) {
@@ -59,19 +60,19 @@ StreamRange<google::cloud::bigquery::reservation::v1::Reservation>
 ReservationServiceConnectionImpl::ListReservations(
     google::cloud::bigquery::reservation::v1::ListReservationsRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<
-      bigquery_reservation_v1::ReservationServiceRetryPolicy const>(
-      retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListReservations(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListReservations(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::bigquery::reservation::v1::Reservation>>(
       std::move(request),
-      [stub, retry, backoff, idempotency,
-       function_name](google::cloud::bigquery::reservation::v1::
-                          ListReservationsRequest const& r) {
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<
+           bigquery_reservation_v1::ReservationServiceRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          google::cloud::bigquery::reservation::v1::
+              ListReservationsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context,
@@ -94,9 +95,10 @@ StatusOr<google::cloud::bigquery::reservation::v1::Reservation>
 ReservationServiceConnectionImpl::GetReservation(
     google::cloud::bigquery::reservation::v1::GetReservationRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetReservation(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetReservation(request),
       [this](
           grpc::ClientContext& context,
           google::cloud::bigquery::reservation::v1::GetReservationRequest const&
@@ -107,9 +109,10 @@ ReservationServiceConnectionImpl::GetReservation(
 Status ReservationServiceConnectionImpl::DeleteReservation(
     google::cloud::bigquery::reservation::v1::DeleteReservationRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteReservation(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteReservation(request),
       [this](grpc::ClientContext& context,
              google::cloud::bigquery::reservation::v1::
                  DeleteReservationRequest const& request) {
@@ -122,9 +125,10 @@ StatusOr<google::cloud::bigquery::reservation::v1::Reservation>
 ReservationServiceConnectionImpl::UpdateReservation(
     google::cloud::bigquery::reservation::v1::UpdateReservationRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UpdateReservation(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateReservation(request),
       [this](grpc::ClientContext& context,
              google::cloud::bigquery::reservation::v1::
                  UpdateReservationRequest const& request) {
@@ -137,9 +141,10 @@ StatusOr<google::cloud::bigquery::reservation::v1::CapacityCommitment>
 ReservationServiceConnectionImpl::CreateCapacityCommitment(
     google::cloud::bigquery::reservation::v1::
         CreateCapacityCommitmentRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateCapacityCommitment(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateCapacityCommitment(request),
       [this](grpc::ClientContext& context,
              google::cloud::bigquery::reservation::v1::
                  CreateCapacityCommitmentRequest const& request) {
@@ -153,19 +158,20 @@ ReservationServiceConnectionImpl::ListCapacityCommitments(
     google::cloud::bigquery::reservation::v1::ListCapacityCommitmentsRequest
         request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<
-      bigquery_reservation_v1::ReservationServiceRetryPolicy const>(
-      retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListCapacityCommitments(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency =
+      idempotency_policy(*current)->ListCapacityCommitments(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<StreamRange<
       google::cloud::bigquery::reservation::v1::CapacityCommitment>>(
       std::move(request),
-      [stub, retry, backoff, idempotency,
-       function_name](google::cloud::bigquery::reservation::v1::
-                          ListCapacityCommitmentsRequest const& r) {
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<
+           bigquery_reservation_v1::ReservationServiceRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          google::cloud::bigquery::reservation::v1::
+              ListCapacityCommitmentsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context,
@@ -190,9 +196,10 @@ StatusOr<google::cloud::bigquery::reservation::v1::CapacityCommitment>
 ReservationServiceConnectionImpl::GetCapacityCommitment(
     google::cloud::bigquery::reservation::v1::
         GetCapacityCommitmentRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetCapacityCommitment(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetCapacityCommitment(request),
       [this](grpc::ClientContext& context,
              google::cloud::bigquery::reservation::v1::
                  GetCapacityCommitmentRequest const& request) {
@@ -204,9 +211,10 @@ ReservationServiceConnectionImpl::GetCapacityCommitment(
 Status ReservationServiceConnectionImpl::DeleteCapacityCommitment(
     google::cloud::bigquery::reservation::v1::
         DeleteCapacityCommitmentRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteCapacityCommitment(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteCapacityCommitment(request),
       [this](grpc::ClientContext& context,
              google::cloud::bigquery::reservation::v1::
                  DeleteCapacityCommitmentRequest const& request) {
@@ -219,9 +227,10 @@ StatusOr<google::cloud::bigquery::reservation::v1::CapacityCommitment>
 ReservationServiceConnectionImpl::UpdateCapacityCommitment(
     google::cloud::bigquery::reservation::v1::
         UpdateCapacityCommitmentRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UpdateCapacityCommitment(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateCapacityCommitment(request),
       [this](grpc::ClientContext& context,
              google::cloud::bigquery::reservation::v1::
                  UpdateCapacityCommitmentRequest const& request) {
@@ -235,9 +244,10 @@ StatusOr<
 ReservationServiceConnectionImpl::SplitCapacityCommitment(
     google::cloud::bigquery::reservation::v1::
         SplitCapacityCommitmentRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->SplitCapacityCommitment(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->SplitCapacityCommitment(request),
       [this](grpc::ClientContext& context,
              google::cloud::bigquery::reservation::v1::
                  SplitCapacityCommitmentRequest const& request) {
@@ -250,9 +260,10 @@ StatusOr<google::cloud::bigquery::reservation::v1::CapacityCommitment>
 ReservationServiceConnectionImpl::MergeCapacityCommitments(
     google::cloud::bigquery::reservation::v1::
         MergeCapacityCommitmentsRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->MergeCapacityCommitments(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->MergeCapacityCommitments(request),
       [this](grpc::ClientContext& context,
              google::cloud::bigquery::reservation::v1::
                  MergeCapacityCommitmentsRequest const& request) {
@@ -265,9 +276,10 @@ StatusOr<google::cloud::bigquery::reservation::v1::Assignment>
 ReservationServiceConnectionImpl::CreateAssignment(
     google::cloud::bigquery::reservation::v1::CreateAssignmentRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateAssignment(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateAssignment(request),
       [this](grpc::ClientContext& context,
              google::cloud::bigquery::reservation::v1::
                  CreateAssignmentRequest const& request) {
@@ -280,19 +292,19 @@ StreamRange<google::cloud::bigquery::reservation::v1::Assignment>
 ReservationServiceConnectionImpl::ListAssignments(
     google::cloud::bigquery::reservation::v1::ListAssignmentsRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<
-      bigquery_reservation_v1::ReservationServiceRetryPolicy const>(
-      retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListAssignments(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListAssignments(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::bigquery::reservation::v1::Assignment>>(
       std::move(request),
-      [stub, retry, backoff, idempotency,
-       function_name](google::cloud::bigquery::reservation::v1::
-                          ListAssignmentsRequest const& r) {
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<
+           bigquery_reservation_v1::ReservationServiceRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          google::cloud::bigquery::reservation::v1::
+              ListAssignmentsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context,
@@ -314,9 +326,10 @@ ReservationServiceConnectionImpl::ListAssignments(
 Status ReservationServiceConnectionImpl::DeleteAssignment(
     google::cloud::bigquery::reservation::v1::DeleteAssignmentRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteAssignment(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteAssignment(request),
       [this](grpc::ClientContext& context,
              google::cloud::bigquery::reservation::v1::
                  DeleteAssignmentRequest const& request) {
@@ -330,19 +343,19 @@ ReservationServiceConnectionImpl::SearchAssignments(
     google::cloud::bigquery::reservation::v1::SearchAssignmentsRequest
         request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<
-      bigquery_reservation_v1::ReservationServiceRetryPolicy const>(
-      retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->SearchAssignments(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->SearchAssignments(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::bigquery::reservation::v1::Assignment>>(
       std::move(request),
-      [stub, retry, backoff, idempotency,
-       function_name](google::cloud::bigquery::reservation::v1::
-                          SearchAssignmentsRequest const& r) {
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<
+           bigquery_reservation_v1::ReservationServiceRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          google::cloud::bigquery::reservation::v1::
+              SearchAssignmentsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context,
@@ -367,19 +380,20 @@ ReservationServiceConnectionImpl::SearchAllAssignments(
     google::cloud::bigquery::reservation::v1::SearchAllAssignmentsRequest
         request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<
-      bigquery_reservation_v1::ReservationServiceRetryPolicy const>(
-      retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->SearchAllAssignments(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency =
+      idempotency_policy(*current)->SearchAllAssignments(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::bigquery::reservation::v1::Assignment>>(
       std::move(request),
-      [stub, retry, backoff, idempotency,
-       function_name](google::cloud::bigquery::reservation::v1::
-                          SearchAllAssignmentsRequest const& r) {
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<
+           bigquery_reservation_v1::ReservationServiceRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          google::cloud::bigquery::reservation::v1::
+              SearchAllAssignmentsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context,
@@ -403,9 +417,10 @@ StatusOr<google::cloud::bigquery::reservation::v1::Assignment>
 ReservationServiceConnectionImpl::MoveAssignment(
     google::cloud::bigquery::reservation::v1::MoveAssignmentRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->MoveAssignment(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->MoveAssignment(request),
       [this](
           grpc::ClientContext& context,
           google::cloud::bigquery::reservation::v1::MoveAssignmentRequest const&
@@ -417,9 +432,10 @@ StatusOr<google::cloud::bigquery::reservation::v1::Assignment>
 ReservationServiceConnectionImpl::UpdateAssignment(
     google::cloud::bigquery::reservation::v1::UpdateAssignmentRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UpdateAssignment(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateAssignment(request),
       [this](grpc::ClientContext& context,
              google::cloud::bigquery::reservation::v1::
                  UpdateAssignmentRequest const& request) {
@@ -432,9 +448,10 @@ StatusOr<google::cloud::bigquery::reservation::v1::BiReservation>
 ReservationServiceConnectionImpl::GetBiReservation(
     google::cloud::bigquery::reservation::v1::GetBiReservationRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetBiReservation(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetBiReservation(request),
       [this](grpc::ClientContext& context,
              google::cloud::bigquery::reservation::v1::
                  GetBiReservationRequest const& request) {
@@ -447,9 +464,10 @@ StatusOr<google::cloud::bigquery::reservation::v1::BiReservation>
 ReservationServiceConnectionImpl::UpdateBiReservation(
     google::cloud::bigquery::reservation::v1::UpdateBiReservationRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UpdateBiReservation(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateBiReservation(request),
       [this](grpc::ClientContext& context,
              google::cloud::bigquery::reservation::v1::
                  UpdateBiReservationRequest const& request) {

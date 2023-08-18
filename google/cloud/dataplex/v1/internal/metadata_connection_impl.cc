@@ -42,9 +42,10 @@ MetadataServiceConnectionImpl::MetadataServiceConnectionImpl(
 StatusOr<google::cloud::dataplex::v1::Entity>
 MetadataServiceConnectionImpl::CreateEntity(
     google::cloud::dataplex::v1::CreateEntityRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateEntity(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateEntity(request),
       [this](grpc::ClientContext& context,
              google::cloud::dataplex::v1::CreateEntityRequest const& request) {
         return stub_->CreateEntity(context, request);
@@ -55,9 +56,10 @@ MetadataServiceConnectionImpl::CreateEntity(
 StatusOr<google::cloud::dataplex::v1::Entity>
 MetadataServiceConnectionImpl::UpdateEntity(
     google::cloud::dataplex::v1::UpdateEntityRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UpdateEntity(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateEntity(request),
       [this](grpc::ClientContext& context,
              google::cloud::dataplex::v1::UpdateEntityRequest const& request) {
         return stub_->UpdateEntity(context, request);
@@ -67,9 +69,10 @@ MetadataServiceConnectionImpl::UpdateEntity(
 
 Status MetadataServiceConnectionImpl::DeleteEntity(
     google::cloud::dataplex::v1::DeleteEntityRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteEntity(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteEntity(request),
       [this](grpc::ClientContext& context,
              google::cloud::dataplex::v1::DeleteEntityRequest const& request) {
         return stub_->DeleteEntity(context, request);
@@ -80,9 +83,10 @@ Status MetadataServiceConnectionImpl::DeleteEntity(
 StatusOr<google::cloud::dataplex::v1::Entity>
 MetadataServiceConnectionImpl::GetEntity(
     google::cloud::dataplex::v1::GetEntityRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetEntity(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetEntity(request),
       [this](grpc::ClientContext& context,
              google::cloud::dataplex::v1::GetEntityRequest const& request) {
         return stub_->GetEntity(context, request);
@@ -94,16 +98,16 @@ StreamRange<google::cloud::dataplex::v1::Entity>
 MetadataServiceConnectionImpl::ListEntities(
     google::cloud::dataplex::v1::ListEntitiesRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<dataplex_v1::MetadataServiceRetryPolicy const>(
-      retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListEntities(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListEntities(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::dataplex::v1::Entity>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<dataplex_v1::MetadataServiceRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::dataplex::v1::ListEntitiesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
@@ -126,9 +130,10 @@ MetadataServiceConnectionImpl::ListEntities(
 StatusOr<google::cloud::dataplex::v1::Partition>
 MetadataServiceConnectionImpl::CreatePartition(
     google::cloud::dataplex::v1::CreatePartitionRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreatePartition(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreatePartition(request),
       [this](
           grpc::ClientContext& context,
           google::cloud::dataplex::v1::CreatePartitionRequest const& request) {
@@ -139,9 +144,10 @@ MetadataServiceConnectionImpl::CreatePartition(
 
 Status MetadataServiceConnectionImpl::DeletePartition(
     google::cloud::dataplex::v1::DeletePartitionRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeletePartition(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeletePartition(request),
       [this](
           grpc::ClientContext& context,
           google::cloud::dataplex::v1::DeletePartitionRequest const& request) {
@@ -153,9 +159,10 @@ Status MetadataServiceConnectionImpl::DeletePartition(
 StatusOr<google::cloud::dataplex::v1::Partition>
 MetadataServiceConnectionImpl::GetPartition(
     google::cloud::dataplex::v1::GetPartitionRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetPartition(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetPartition(request),
       [this](grpc::ClientContext& context,
              google::cloud::dataplex::v1::GetPartitionRequest const& request) {
         return stub_->GetPartition(context, request);
@@ -167,16 +174,16 @@ StreamRange<google::cloud::dataplex::v1::Partition>
 MetadataServiceConnectionImpl::ListPartitions(
     google::cloud::dataplex::v1::ListPartitionsRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<dataplex_v1::MetadataServiceRetryPolicy const>(
-      retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListPartitions(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListPartitions(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::dataplex::v1::Partition>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<dataplex_v1::MetadataServiceRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::dataplex::v1::ListPartitionsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,

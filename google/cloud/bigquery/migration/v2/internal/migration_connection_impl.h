@@ -84,45 +84,23 @@ class MigrationServiceConnectionImpl
           request) override;
 
  private:
-  std::unique_ptr<bigquery_migration_v2::MigrationServiceRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<bigquery_migration_v2::MigrationServiceRetryPolicyOption>()) {
-      return options
-          .get<bigquery_migration_v2::MigrationServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<bigquery_migration_v2::MigrationServiceRetryPolicy>
+  retry_policy(Options const& options) {
+    return options
         .get<bigquery_migration_v2::MigrationServiceRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            bigquery_migration_v2::MigrationServiceBackoffPolicyOption>()) {
-      return options
-          .get<bigquery_migration_v2::MigrationServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options
         .get<bigquery_migration_v2::MigrationServiceBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<
+  static std::unique_ptr<
       bigquery_migration_v2::MigrationServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<bigquery_migration_v2::
-                        MigrationServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<bigquery_migration_v2::
-                   MigrationServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  idempotency_policy(Options const& options) {
+    return options
         .get<bigquery_migration_v2::
                  MigrationServiceConnectionIdempotencyPolicyOption>()
         ->clone();

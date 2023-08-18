@@ -61,36 +61,21 @@ class ProfilerServiceConnectionImpl
       override;
 
  private:
-  std::unique_ptr<profiler_v2::ProfilerServiceRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<profiler_v2::ProfilerServiceRetryPolicyOption>()) {
-      return options.get<profiler_v2::ProfilerServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<profiler_v2::ProfilerServiceRetryPolicyOption>()
+  static std::unique_ptr<profiler_v2::ProfilerServiceRetryPolicy> retry_policy(
+      Options const& options) {
+    return options.get<profiler_v2::ProfilerServiceRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<profiler_v2::ProfilerServiceBackoffPolicyOption>()) {
-      return options.get<profiler_v2::ProfilerServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<profiler_v2::ProfilerServiceBackoffPolicyOption>()
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<profiler_v2::ProfilerServiceBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<profiler_v2::ProfilerServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            profiler_v2::ProfilerServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<profiler_v2::ProfilerServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<
+      profiler_v2::ProfilerServiceConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<profiler_v2::ProfilerServiceConnectionIdempotencyPolicyOption>()
         ->clone();
   }

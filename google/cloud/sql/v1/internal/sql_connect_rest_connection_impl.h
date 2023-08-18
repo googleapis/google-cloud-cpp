@@ -58,34 +58,18 @@ class SqlConnectServiceRestConnectionImpl
       override;
 
  private:
-  std::unique_ptr<sql_v1::SqlConnectServiceRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<sql_v1::SqlConnectServiceRetryPolicyOption>()) {
-      return options.get<sql_v1::SqlConnectServiceRetryPolicyOption>()->clone();
-    }
-    return options_.get<sql_v1::SqlConnectServiceRetryPolicyOption>()->clone();
+  static std::unique_ptr<sql_v1::SqlConnectServiceRetryPolicy> retry_policy(
+      Options const& options) {
+    return options.get<sql_v1::SqlConnectServiceRetryPolicyOption>()->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<sql_v1::SqlConnectServiceBackoffPolicyOption>()) {
-      return options.get<sql_v1::SqlConnectServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<sql_v1::SqlConnectServiceBackoffPolicyOption>()
-        ->clone();
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<sql_v1::SqlConnectServiceBackoffPolicyOption>()->clone();
   }
 
-  std::unique_ptr<sql_v1::SqlConnectServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            sql_v1::SqlConnectServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<sql_v1::SqlConnectServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<sql_v1::SqlConnectServiceConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<sql_v1::SqlConnectServiceConnectionIdempotencyPolicyOption>()
         ->clone();
   }

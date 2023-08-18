@@ -63,46 +63,25 @@ class ApplicationsConnectionImpl : public appengine_v1::ApplicationsConnection {
       google::appengine::v1::RepairApplicationRequest const& request) override;
 
  private:
-  std::unique_ptr<appengine_v1::ApplicationsRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<appengine_v1::ApplicationsRetryPolicyOption>()) {
-      return options.get<appengine_v1::ApplicationsRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<appengine_v1::ApplicationsRetryPolicyOption>()->clone();
+  static std::unique_ptr<appengine_v1::ApplicationsRetryPolicy> retry_policy(
+      Options const& options) {
+    return options.get<appengine_v1::ApplicationsRetryPolicyOption>()->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<appengine_v1::ApplicationsBackoffPolicyOption>()) {
-      return options.get<appengine_v1::ApplicationsBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<appengine_v1::ApplicationsBackoffPolicyOption>()
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<appengine_v1::ApplicationsBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<appengine_v1::ApplicationsConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            appengine_v1::ApplicationsConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<appengine_v1::ApplicationsConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<appengine_v1::ApplicationsConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<appengine_v1::ApplicationsConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<appengine_v1::ApplicationsPollingPolicyOption>()) {
-      return options.get<appengine_v1::ApplicationsPollingPolicyOption>()
-          ->clone();
-    }
-    return options_.get<appengine_v1::ApplicationsPollingPolicyOption>()
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options.get<appengine_v1::ApplicationsPollingPolicyOption>()
         ->clone();
   }
 

@@ -47,9 +47,10 @@ FeaturestoreOnlineServingServiceConnectionImpl::
 StatusOr<google::cloud::aiplatform::v1::ReadFeatureValuesResponse>
 FeaturestoreOnlineServingServiceConnectionImpl::ReadFeatureValues(
     google::cloud::aiplatform::v1::ReadFeatureValuesRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->ReadFeatureValues(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ReadFeatureValues(request),
       [this](grpc::ClientContext& context,
              google::cloud::aiplatform::v1::ReadFeatureValuesRequest const&
                  request) {
@@ -62,22 +63,18 @@ StreamRange<google::cloud::aiplatform::v1::ReadFeatureValuesResponse>
 FeaturestoreOnlineServingServiceConnectionImpl::StreamingReadFeatureValues(
     google::cloud::aiplatform::v1::StreamingReadFeatureValuesRequest const&
         request) {
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<
-      aiplatform_v1::FeaturestoreOnlineServingServiceRetryPolicy const>(
-      retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-
-  auto factory = [stub](google::cloud::aiplatform::v1::
-                            StreamingReadFeatureValuesRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto factory = [stub = stub_](
+                     google::cloud::aiplatform::v1::
+                         StreamingReadFeatureValuesRequest const& request) {
     return stub->StreamingReadFeatureValues(
         std::make_shared<grpc::ClientContext>(), request);
   };
   auto resumable = internal::MakeResumableStreamingReadRpc<
       google::cloud::aiplatform::v1::ReadFeatureValuesResponse,
       google::cloud::aiplatform::v1::StreamingReadFeatureValuesRequest>(
-      retry->clone(), backoff->clone(), [](std::chrono::milliseconds) {},
-      factory,
+      retry_policy(*current), backoff_policy(*current),
+      [](std::chrono::milliseconds) {}, factory,
       FeaturestoreOnlineServingServiceStreamingReadFeatureValuesStreamingUpdater,
       request);
   return internal::MakeStreamRange(
@@ -88,9 +85,10 @@ FeaturestoreOnlineServingServiceConnectionImpl::StreamingReadFeatureValues(
 StatusOr<google::cloud::aiplatform::v1::WriteFeatureValuesResponse>
 FeaturestoreOnlineServingServiceConnectionImpl::WriteFeatureValues(
     google::cloud::aiplatform::v1::WriteFeatureValuesRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->WriteFeatureValues(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->WriteFeatureValues(request),
       [this](grpc::ClientContext& context,
              google::cloud::aiplatform::v1::WriteFeatureValuesRequest const&
                  request) {

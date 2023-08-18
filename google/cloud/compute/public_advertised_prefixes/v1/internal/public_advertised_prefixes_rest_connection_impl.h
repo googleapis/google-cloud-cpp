@@ -80,66 +80,34 @@ class PublicAdvertisedPrefixesRestConnectionImpl
           PatchPublicAdvertisedPrefixesRequest const& request) override;
 
  private:
-  std::unique_ptr<compute_public_advertised_prefixes_v1::
-                      PublicAdvertisedPrefixesRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_public_advertised_prefixes_v1::
-                        PublicAdvertisedPrefixesRetryPolicyOption>()) {
-      return options
-          .get<compute_public_advertised_prefixes_v1::
-                   PublicAdvertisedPrefixesRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<compute_public_advertised_prefixes_v1::
+                             PublicAdvertisedPrefixesRetryPolicy>
+  retry_policy(Options const& options) {
+    return options
         .get<compute_public_advertised_prefixes_v1::
                  PublicAdvertisedPrefixesRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_public_advertised_prefixes_v1::
-                        PublicAdvertisedPrefixesBackoffPolicyOption>()) {
-      return options
-          .get<compute_public_advertised_prefixes_v1::
-                   PublicAdvertisedPrefixesBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options
         .get<compute_public_advertised_prefixes_v1::
                  PublicAdvertisedPrefixesBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<compute_public_advertised_prefixes_v1::
-                      PublicAdvertisedPrefixesConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            compute_public_advertised_prefixes_v1::
-                PublicAdvertisedPrefixesConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<compute_public_advertised_prefixes_v1::
-                   PublicAdvertisedPrefixesConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<
+      compute_public_advertised_prefixes_v1::
+          PublicAdvertisedPrefixesConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<compute_public_advertised_prefixes_v1::
                  PublicAdvertisedPrefixesConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_public_advertised_prefixes_v1::
-                        PublicAdvertisedPrefixesPollingPolicyOption>()) {
-      return options
-          .get<compute_public_advertised_prefixes_v1::
-                   PublicAdvertisedPrefixesPollingPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options
         .get<compute_public_advertised_prefixes_v1::
                  PublicAdvertisedPrefixesPollingPolicyOption>()
         ->clone();

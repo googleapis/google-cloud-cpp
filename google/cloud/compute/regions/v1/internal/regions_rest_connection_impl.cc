@@ -43,9 +43,10 @@ StatusOr<google::cloud::cpp::compute::v1::Region>
 RegionsRestConnectionImpl::GetRegions(
     google::cloud::cpp::compute::regions::v1::GetRegionsRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetRegions(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetRegions(request),
       [this](rest_internal::RestContext& rest_context,
              google::cloud::cpp::compute::regions::v1::GetRegionsRequest const&
                  request) { return stub_->GetRegions(rest_context, request); },
@@ -56,16 +57,16 @@ StreamRange<google::cloud::cpp::compute::v1::Region>
 RegionsRestConnectionImpl::ListRegions(
     google::cloud::cpp::compute::regions::v1::ListRegionsRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<compute_regions_v1::RegionsRetryPolicy const>(
-      retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListRegions(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListRegions(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::cpp::compute::v1::Region>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<compute_regions_v1::RegionsRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::cpp::compute::regions::v1::ListRegionsRequest const&
               r) {
         return google::cloud::rest_internal::RestRetryLoop(

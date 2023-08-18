@@ -85,31 +85,18 @@ class AdaptationConnectionImpl : public speech_v1::AdaptationConnection {
       override;
 
  private:
-  std::unique_ptr<speech_v1::AdaptationRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<speech_v1::AdaptationRetryPolicyOption>()) {
-      return options.get<speech_v1::AdaptationRetryPolicyOption>()->clone();
-    }
-    return options_.get<speech_v1::AdaptationRetryPolicyOption>()->clone();
+  static std::unique_ptr<speech_v1::AdaptationRetryPolicy> retry_policy(
+      Options const& options) {
+    return options.get<speech_v1::AdaptationRetryPolicyOption>()->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<speech_v1::AdaptationBackoffPolicyOption>()) {
-      return options.get<speech_v1::AdaptationBackoffPolicyOption>()->clone();
-    }
-    return options_.get<speech_v1::AdaptationBackoffPolicyOption>()->clone();
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<speech_v1::AdaptationBackoffPolicyOption>()->clone();
   }
 
-  std::unique_ptr<speech_v1::AdaptationConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<speech_v1::AdaptationConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<speech_v1::AdaptationConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<speech_v1::AdaptationConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<speech_v1::AdaptationConnectionIdempotencyPolicyOption>()
         ->clone();
   }

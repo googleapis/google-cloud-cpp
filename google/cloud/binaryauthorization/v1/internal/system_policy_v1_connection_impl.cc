@@ -42,9 +42,10 @@ StatusOr<google::cloud::binaryauthorization::v1::Policy>
 SystemPolicyV1ConnectionImpl::GetSystemPolicy(
     google::cloud::binaryauthorization::v1::GetSystemPolicyRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetSystemPolicy(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetSystemPolicy(request),
       [this](
           grpc::ClientContext& context,
           google::cloud::binaryauthorization::v1::GetSystemPolicyRequest const&

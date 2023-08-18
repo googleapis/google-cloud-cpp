@@ -76,36 +76,19 @@ class ContentServiceConnectionImpl
       google::cloud::dataplex::v1::ListContentRequest request) override;
 
  private:
-  std::unique_ptr<dataplex_v1::ContentServiceRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<dataplex_v1::ContentServiceRetryPolicyOption>()) {
-      return options.get<dataplex_v1::ContentServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<dataplex_v1::ContentServiceRetryPolicyOption>()
+  static std::unique_ptr<dataplex_v1::ContentServiceRetryPolicy> retry_policy(
+      Options const& options) {
+    return options.get<dataplex_v1::ContentServiceRetryPolicyOption>()->clone();
+  }
+
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<dataplex_v1::ContentServiceBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<dataplex_v1::ContentServiceBackoffPolicyOption>()) {
-      return options.get<dataplex_v1::ContentServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<dataplex_v1::ContentServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<dataplex_v1::ContentServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            dataplex_v1::ContentServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<dataplex_v1::ContentServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<dataplex_v1::ContentServiceConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<dataplex_v1::ContentServiceConnectionIdempotencyPolicyOption>()
         ->clone();
   }

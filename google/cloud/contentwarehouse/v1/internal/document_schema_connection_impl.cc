@@ -44,9 +44,10 @@ StatusOr<google::cloud::contentwarehouse::v1::DocumentSchema>
 DocumentSchemaServiceConnectionImpl::CreateDocumentSchema(
     google::cloud::contentwarehouse::v1::CreateDocumentSchemaRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateDocumentSchema(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateDocumentSchema(request),
       [this](grpc::ClientContext& context,
              google::cloud::contentwarehouse::v1::
                  CreateDocumentSchemaRequest const& request) {
@@ -59,9 +60,10 @@ StatusOr<google::cloud::contentwarehouse::v1::DocumentSchema>
 DocumentSchemaServiceConnectionImpl::UpdateDocumentSchema(
     google::cloud::contentwarehouse::v1::UpdateDocumentSchemaRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UpdateDocumentSchema(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateDocumentSchema(request),
       [this](grpc::ClientContext& context,
              google::cloud::contentwarehouse::v1::
                  UpdateDocumentSchemaRequest const& request) {
@@ -74,9 +76,10 @@ StatusOr<google::cloud::contentwarehouse::v1::DocumentSchema>
 DocumentSchemaServiceConnectionImpl::GetDocumentSchema(
     google::cloud::contentwarehouse::v1::GetDocumentSchemaRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetDocumentSchema(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetDocumentSchema(request),
       [this](
           grpc::ClientContext& context,
           google::cloud::contentwarehouse::v1::GetDocumentSchemaRequest const&
@@ -87,9 +90,10 @@ DocumentSchemaServiceConnectionImpl::GetDocumentSchema(
 Status DocumentSchemaServiceConnectionImpl::DeleteDocumentSchema(
     google::cloud::contentwarehouse::v1::DeleteDocumentSchemaRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteDocumentSchema(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteDocumentSchema(request),
       [this](grpc::ClientContext& context,
              google::cloud::contentwarehouse::v1::
                  DeleteDocumentSchemaRequest const& request) {
@@ -102,17 +106,17 @@ StreamRange<google::cloud::contentwarehouse::v1::DocumentSchema>
 DocumentSchemaServiceConnectionImpl::ListDocumentSchemas(
     google::cloud::contentwarehouse::v1::ListDocumentSchemasRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<
-      contentwarehouse_v1::DocumentSchemaServiceRetryPolicy const>(
-      retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListDocumentSchemas(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListDocumentSchemas(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::contentwarehouse::v1::DocumentSchema>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<
+           contentwarehouse_v1::DocumentSchemaServiceRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::contentwarehouse::v1::ListDocumentSchemasRequest const&
               r) {
         return google::cloud::internal::RetryLoop(

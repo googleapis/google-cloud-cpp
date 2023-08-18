@@ -206,58 +206,30 @@ class ArtifactRegistryConnectionImpl
           request) override;
 
  private:
-  std::unique_ptr<artifactregistry_v1::ArtifactRegistryRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<artifactregistry_v1::ArtifactRegistryRetryPolicyOption>()) {
-      return options
-          .get<artifactregistry_v1::ArtifactRegistryRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<artifactregistry_v1::ArtifactRegistryRetryPolicy>
+  retry_policy(Options const& options) {
+    return options
         .get<artifactregistry_v1::ArtifactRegistryRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<artifactregistry_v1::ArtifactRegistryBackoffPolicyOption>()) {
-      return options
-          .get<artifactregistry_v1::ArtifactRegistryBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options
         .get<artifactregistry_v1::ArtifactRegistryBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<
+  static std::unique_ptr<
       artifactregistry_v1::ArtifactRegistryConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<artifactregistry_v1::
-                        ArtifactRegistryConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<artifactregistry_v1::
-                   ArtifactRegistryConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  idempotency_policy(Options const& options) {
+    return options
         .get<artifactregistry_v1::
                  ArtifactRegistryConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<artifactregistry_v1::ArtifactRegistryPollingPolicyOption>()) {
-      return options
-          .get<artifactregistry_v1::ArtifactRegistryPollingPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options
         .get<artifactregistry_v1::ArtifactRegistryPollingPolicyOption>()
         ->clone();
   }

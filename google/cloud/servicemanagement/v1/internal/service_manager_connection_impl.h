@@ -109,58 +109,29 @@ class ServiceManagerConnectionImpl
           request) override;
 
  private:
-  std::unique_ptr<servicemanagement_v1::ServiceManagerRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<servicemanagement_v1::ServiceManagerRetryPolicyOption>()) {
-      return options
-          .get<servicemanagement_v1::ServiceManagerRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<servicemanagement_v1::ServiceManagerRetryPolicyOption>()
+  static std::unique_ptr<servicemanagement_v1::ServiceManagerRetryPolicy>
+  retry_policy(Options const& options) {
+    return options.get<servicemanagement_v1::ServiceManagerRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<servicemanagement_v1::ServiceManagerBackoffPolicyOption>()) {
-      return options
-          .get<servicemanagement_v1::ServiceManagerBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options
         .get<servicemanagement_v1::ServiceManagerBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<
+  static std::unique_ptr<
       servicemanagement_v1::ServiceManagerConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<servicemanagement_v1::
-                        ServiceManagerConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<servicemanagement_v1::
-                   ServiceManagerConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  idempotency_policy(Options const& options) {
+    return options
         .get<servicemanagement_v1::
                  ServiceManagerConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<servicemanagement_v1::ServiceManagerPollingPolicyOption>()) {
-      return options
-          .get<servicemanagement_v1::ServiceManagerPollingPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options
         .get<servicemanagement_v1::ServiceManagerPollingPolicyOption>()
         ->clone();
   }

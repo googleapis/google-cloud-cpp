@@ -70,42 +70,24 @@ class WorkflowsConnectionImpl : public workflows_v1::WorkflowsConnection {
       override;
 
  private:
-  std::unique_ptr<workflows_v1::WorkflowsRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<workflows_v1::WorkflowsRetryPolicyOption>()) {
-      return options.get<workflows_v1::WorkflowsRetryPolicyOption>()->clone();
-    }
-    return options_.get<workflows_v1::WorkflowsRetryPolicyOption>()->clone();
+  static std::unique_ptr<workflows_v1::WorkflowsRetryPolicy> retry_policy(
+      Options const& options) {
+    return options.get<workflows_v1::WorkflowsRetryPolicyOption>()->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<workflows_v1::WorkflowsBackoffPolicyOption>()) {
-      return options.get<workflows_v1::WorkflowsBackoffPolicyOption>()->clone();
-    }
-    return options_.get<workflows_v1::WorkflowsBackoffPolicyOption>()->clone();
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<workflows_v1::WorkflowsBackoffPolicyOption>()->clone();
   }
 
-  std::unique_ptr<workflows_v1::WorkflowsConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<workflows_v1::WorkflowsConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<workflows_v1::WorkflowsConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<workflows_v1::WorkflowsConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<workflows_v1::WorkflowsConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<workflows_v1::WorkflowsPollingPolicyOption>()) {
-      return options.get<workflows_v1::WorkflowsPollingPolicyOption>()->clone();
-    }
-    return options_.get<workflows_v1::WorkflowsPollingPolicyOption>()->clone();
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options.get<workflows_v1::WorkflowsPollingPolicyOption>()->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

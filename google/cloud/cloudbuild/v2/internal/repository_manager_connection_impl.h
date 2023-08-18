@@ -118,49 +118,28 @@ class RepositoryManagerConnectionImpl
       override;
 
  private:
-  std::unique_ptr<cloudbuild_v2::RepositoryManagerRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<cloudbuild_v2::RepositoryManagerRetryPolicyOption>()) {
-      return options.get<cloudbuild_v2::RepositoryManagerRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<cloudbuild_v2::RepositoryManagerRetryPolicyOption>()
+  static std::unique_ptr<cloudbuild_v2::RepositoryManagerRetryPolicy>
+  retry_policy(Options const& options) {
+    return options.get<cloudbuild_v2::RepositoryManagerRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<cloudbuild_v2::RepositoryManagerBackoffPolicyOption>()) {
-      return options.get<cloudbuild_v2::RepositoryManagerBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<cloudbuild_v2::RepositoryManagerBackoffPolicyOption>()
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<cloudbuild_v2::RepositoryManagerBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<cloudbuild_v2::RepositoryManagerConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<cloudbuild_v2::
-                        RepositoryManagerConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<cloudbuild_v2::
-                   RepositoryManagerConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<
+      cloudbuild_v2::RepositoryManagerConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<
             cloudbuild_v2::RepositoryManagerConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<cloudbuild_v2::RepositoryManagerPollingPolicyOption>()) {
-      return options.get<cloudbuild_v2::RepositoryManagerPollingPolicyOption>()
-          ->clone();
-    }
-    return options_.get<cloudbuild_v2::RepositoryManagerPollingPolicyOption>()
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options.get<cloudbuild_v2::RepositoryManagerPollingPolicyOption>()
         ->clone();
   }
 

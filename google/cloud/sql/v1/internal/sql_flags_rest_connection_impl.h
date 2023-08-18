@@ -52,32 +52,18 @@ class SqlFlagsServiceRestConnectionImpl
       google::cloud::sql::v1::SqlFlagsListRequest const& request) override;
 
  private:
-  std::unique_ptr<sql_v1::SqlFlagsServiceRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<sql_v1::SqlFlagsServiceRetryPolicyOption>()) {
-      return options.get<sql_v1::SqlFlagsServiceRetryPolicyOption>()->clone();
-    }
-    return options_.get<sql_v1::SqlFlagsServiceRetryPolicyOption>()->clone();
+  static std::unique_ptr<sql_v1::SqlFlagsServiceRetryPolicy> retry_policy(
+      Options const& options) {
+    return options.get<sql_v1::SqlFlagsServiceRetryPolicyOption>()->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<sql_v1::SqlFlagsServiceBackoffPolicyOption>()) {
-      return options.get<sql_v1::SqlFlagsServiceBackoffPolicyOption>()->clone();
-    }
-    return options_.get<sql_v1::SqlFlagsServiceBackoffPolicyOption>()->clone();
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<sql_v1::SqlFlagsServiceBackoffPolicyOption>()->clone();
   }
 
-  std::unique_ptr<sql_v1::SqlFlagsServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<sql_v1::SqlFlagsServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<sql_v1::SqlFlagsServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<sql_v1::SqlFlagsServiceConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<sql_v1::SqlFlagsServiceConnectionIdempotencyPolicyOption>()
         ->clone();
   }

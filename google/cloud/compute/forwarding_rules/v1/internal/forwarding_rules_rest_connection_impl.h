@@ -88,61 +88,31 @@ class ForwardingRulesRestConnectionImpl
           request) override;
 
  private:
-  std::unique_ptr<compute_forwarding_rules_v1::ForwardingRulesRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            compute_forwarding_rules_v1::ForwardingRulesRetryPolicyOption>()) {
-      return options
-          .get<compute_forwarding_rules_v1::ForwardingRulesRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<
+      compute_forwarding_rules_v1::ForwardingRulesRetryPolicy>
+  retry_policy(Options const& options) {
+    return options
         .get<compute_forwarding_rules_v1::ForwardingRulesRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_forwarding_rules_v1::
-                        ForwardingRulesBackoffPolicyOption>()) {
-      return options
-          .get<
-              compute_forwarding_rules_v1::ForwardingRulesBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options
         .get<compute_forwarding_rules_v1::ForwardingRulesBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<
+  static std::unique_ptr<
       compute_forwarding_rules_v1::ForwardingRulesConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_forwarding_rules_v1::
-                        ForwardingRulesConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<compute_forwarding_rules_v1::
-                   ForwardingRulesConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  idempotency_policy(Options const& options) {
+    return options
         .get<compute_forwarding_rules_v1::
                  ForwardingRulesConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_forwarding_rules_v1::
-                        ForwardingRulesPollingPolicyOption>()) {
-      return options
-          .get<
-              compute_forwarding_rules_v1::ForwardingRulesPollingPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options
         .get<compute_forwarding_rules_v1::ForwardingRulesPollingPolicyOption>()
         ->clone();
   }

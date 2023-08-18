@@ -71,46 +71,24 @@ class ImageAnnotatorConnectionImpl
       override;
 
  private:
-  std::unique_ptr<vision_v1::ImageAnnotatorRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<vision_v1::ImageAnnotatorRetryPolicyOption>()) {
-      return options.get<vision_v1::ImageAnnotatorRetryPolicyOption>()->clone();
-    }
-    return options_.get<vision_v1::ImageAnnotatorRetryPolicyOption>()->clone();
+  static std::unique_ptr<vision_v1::ImageAnnotatorRetryPolicy> retry_policy(
+      Options const& options) {
+    return options.get<vision_v1::ImageAnnotatorRetryPolicyOption>()->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<vision_v1::ImageAnnotatorBackoffPolicyOption>()) {
-      return options.get<vision_v1::ImageAnnotatorBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<vision_v1::ImageAnnotatorBackoffPolicyOption>()
-        ->clone();
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<vision_v1::ImageAnnotatorBackoffPolicyOption>()->clone();
   }
 
-  std::unique_ptr<vision_v1::ImageAnnotatorConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            vision_v1::ImageAnnotatorConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<vision_v1::ImageAnnotatorConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<vision_v1::ImageAnnotatorConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<vision_v1::ImageAnnotatorConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<vision_v1::ImageAnnotatorPollingPolicyOption>()) {
-      return options.get<vision_v1::ImageAnnotatorPollingPolicyOption>()
-          ->clone();
-    }
-    return options_.get<vision_v1::ImageAnnotatorPollingPolicyOption>()
-        ->clone();
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options.get<vision_v1::ImageAnnotatorPollingPolicyOption>()->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

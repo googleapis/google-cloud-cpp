@@ -88,47 +88,27 @@ class UrlMapsRestConnectionImpl
       override;
 
  private:
-  std::unique_ptr<compute_url_maps_v1::UrlMapsRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_url_maps_v1::UrlMapsRetryPolicyOption>()) {
-      return options.get<compute_url_maps_v1::UrlMapsRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<compute_url_maps_v1::UrlMapsRetryPolicyOption>()
+  static std::unique_ptr<compute_url_maps_v1::UrlMapsRetryPolicy> retry_policy(
+      Options const& options) {
+    return options.get<compute_url_maps_v1::UrlMapsRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_url_maps_v1::UrlMapsBackoffPolicyOption>()) {
-      return options.get<compute_url_maps_v1::UrlMapsBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<compute_url_maps_v1::UrlMapsBackoffPolicyOption>()
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<compute_url_maps_v1::UrlMapsBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<compute_url_maps_v1::UrlMapsConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            compute_url_maps_v1::UrlMapsConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<compute_url_maps_v1::UrlMapsConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<
+      compute_url_maps_v1::UrlMapsConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<compute_url_maps_v1::UrlMapsConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_url_maps_v1::UrlMapsPollingPolicyOption>()) {
-      return options.get<compute_url_maps_v1::UrlMapsPollingPolicyOption>()
-          ->clone();
-    }
-    return options_.get<compute_url_maps_v1::UrlMapsPollingPolicyOption>()
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options.get<compute_url_maps_v1::UrlMapsPollingPolicyOption>()
         ->clone();
   }
 

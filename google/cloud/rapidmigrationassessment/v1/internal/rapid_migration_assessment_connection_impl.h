@@ -103,66 +103,34 @@ class RapidMigrationAssessmentConnectionImpl
           request) override;
 
  private:
-  std::unique_ptr<
+  static std::unique_ptr<
       rapidmigrationassessment_v1::RapidMigrationAssessmentRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<rapidmigrationassessment_v1::
-                        RapidMigrationAssessmentRetryPolicyOption>()) {
-      return options
-          .get<rapidmigrationassessment_v1::
-                   RapidMigrationAssessmentRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
+  retry_policy(Options const& options) {
+    return options
         .get<rapidmigrationassessment_v1::
                  RapidMigrationAssessmentRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<rapidmigrationassessment_v1::
-                        RapidMigrationAssessmentBackoffPolicyOption>()) {
-      return options
-          .get<rapidmigrationassessment_v1::
-                   RapidMigrationAssessmentBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options
         .get<rapidmigrationassessment_v1::
                  RapidMigrationAssessmentBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<rapidmigrationassessment_v1::
-                      RapidMigrationAssessmentConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            rapidmigrationassessment_v1::
-                RapidMigrationAssessmentConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<rapidmigrationassessment_v1::
-                   RapidMigrationAssessmentConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<
+      rapidmigrationassessment_v1::
+          RapidMigrationAssessmentConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<rapidmigrationassessment_v1::
                  RapidMigrationAssessmentConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<rapidmigrationassessment_v1::
-                        RapidMigrationAssessmentPollingPolicyOption>()) {
-      return options
-          .get<rapidmigrationassessment_v1::
-                   RapidMigrationAssessmentPollingPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options
         .get<rapidmigrationassessment_v1::
                  RapidMigrationAssessmentPollingPolicyOption>()
         ->clone();

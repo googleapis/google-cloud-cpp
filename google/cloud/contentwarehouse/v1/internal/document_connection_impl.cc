@@ -42,9 +42,10 @@ DocumentServiceConnectionImpl::DocumentServiceConnectionImpl(
 StatusOr<google::cloud::contentwarehouse::v1::CreateDocumentResponse>
 DocumentServiceConnectionImpl::CreateDocument(
     google::cloud::contentwarehouse::v1::CreateDocumentRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateDocument(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateDocument(request),
       [this](grpc::ClientContext& context,
              google::cloud::contentwarehouse::v1::CreateDocumentRequest const&
                  request) { return stub_->CreateDocument(context, request); },
@@ -54,9 +55,10 @@ DocumentServiceConnectionImpl::CreateDocument(
 StatusOr<google::cloud::contentwarehouse::v1::Document>
 DocumentServiceConnectionImpl::GetDocument(
     google::cloud::contentwarehouse::v1::GetDocumentRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetDocument(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetDocument(request),
       [this](grpc::ClientContext& context,
              google::cloud::contentwarehouse::v1::GetDocumentRequest const&
                  request) { return stub_->GetDocument(context, request); },
@@ -66,9 +68,10 @@ DocumentServiceConnectionImpl::GetDocument(
 StatusOr<google::cloud::contentwarehouse::v1::UpdateDocumentResponse>
 DocumentServiceConnectionImpl::UpdateDocument(
     google::cloud::contentwarehouse::v1::UpdateDocumentRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UpdateDocument(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateDocument(request),
       [this](grpc::ClientContext& context,
              google::cloud::contentwarehouse::v1::UpdateDocumentRequest const&
                  request) { return stub_->UpdateDocument(context, request); },
@@ -77,9 +80,10 @@ DocumentServiceConnectionImpl::UpdateDocument(
 
 Status DocumentServiceConnectionImpl::DeleteDocument(
     google::cloud::contentwarehouse::v1::DeleteDocumentRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteDocument(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteDocument(request),
       [this](grpc::ClientContext& context,
              google::cloud::contentwarehouse::v1::DeleteDocumentRequest const&
                  request) { return stub_->DeleteDocument(context, request); },
@@ -91,18 +95,17 @@ StreamRange<google::cloud::contentwarehouse::v1::SearchDocumentsResponse::
 DocumentServiceConnectionImpl::SearchDocuments(
     google::cloud::contentwarehouse::v1::SearchDocumentsRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<contentwarehouse_v1::DocumentServiceRetryPolicy const>(
-          retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->SearchDocuments(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->SearchDocuments(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::contentwarehouse::v1::SearchDocumentsResponse::
                       MatchingDocument>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<contentwarehouse_v1::DocumentServiceRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::contentwarehouse::v1::SearchDocumentsRequest const&
               r) {
         return google::cloud::internal::RetryLoop(
@@ -127,9 +130,10 @@ DocumentServiceConnectionImpl::SearchDocuments(
 StatusOr<google::cloud::contentwarehouse::v1::Document>
 DocumentServiceConnectionImpl::LockDocument(
     google::cloud::contentwarehouse::v1::LockDocumentRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->LockDocument(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->LockDocument(request),
       [this](grpc::ClientContext& context,
              google::cloud::contentwarehouse::v1::LockDocumentRequest const&
                  request) { return stub_->LockDocument(context, request); },
@@ -139,8 +143,10 @@ DocumentServiceConnectionImpl::LockDocument(
 StatusOr<google::cloud::contentwarehouse::v1::FetchAclResponse>
 DocumentServiceConnectionImpl::FetchAcl(
     google::cloud::contentwarehouse::v1::FetchAclRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(), idempotency_policy()->FetchAcl(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->FetchAcl(request),
       [this](
           grpc::ClientContext& context,
           google::cloud::contentwarehouse::v1::FetchAclRequest const& request) {
@@ -152,8 +158,10 @@ DocumentServiceConnectionImpl::FetchAcl(
 StatusOr<google::cloud::contentwarehouse::v1::SetAclResponse>
 DocumentServiceConnectionImpl::SetAcl(
     google::cloud::contentwarehouse::v1::SetAclRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(), idempotency_policy()->SetAcl(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->SetAcl(request),
       [this](
           grpc::ClientContext& context,
           google::cloud::contentwarehouse::v1::SetAclRequest const& request) {

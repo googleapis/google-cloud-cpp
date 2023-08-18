@@ -43,9 +43,10 @@ StatusOr<google::cloud::eventarc::publishing::v1::
 PublisherConnectionImpl::PublishChannelConnectionEvents(
     google::cloud::eventarc::publishing::v1::
         PublishChannelConnectionEventsRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->PublishChannelConnectionEvents(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->PublishChannelConnectionEvents(request),
       [this](grpc::ClientContext& context,
              google::cloud::eventarc::publishing::v1::
                  PublishChannelConnectionEventsRequest const& request) {
@@ -58,9 +59,10 @@ StatusOr<google::cloud::eventarc::publishing::v1::PublishEventsResponse>
 PublisherConnectionImpl::PublishEvents(
     google::cloud::eventarc::publishing::v1::PublishEventsRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->PublishEvents(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->PublishEvents(request),
       [this](
           grpc::ClientContext& context,
           google::cloud::eventarc::publishing::v1::PublishEventsRequest const&

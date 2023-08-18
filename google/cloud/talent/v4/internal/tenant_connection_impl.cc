@@ -42,9 +42,10 @@ TenantServiceConnectionImpl::TenantServiceConnectionImpl(
 StatusOr<google::cloud::talent::v4::Tenant>
 TenantServiceConnectionImpl::CreateTenant(
     google::cloud::talent::v4::CreateTenantRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateTenant(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateTenant(request),
       [this](grpc::ClientContext& context,
              google::cloud::talent::v4::CreateTenantRequest const& request) {
         return stub_->CreateTenant(context, request);
@@ -55,9 +56,10 @@ TenantServiceConnectionImpl::CreateTenant(
 StatusOr<google::cloud::talent::v4::Tenant>
 TenantServiceConnectionImpl::GetTenant(
     google::cloud::talent::v4::GetTenantRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetTenant(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetTenant(request),
       [this](grpc::ClientContext& context,
              google::cloud::talent::v4::GetTenantRequest const& request) {
         return stub_->GetTenant(context, request);
@@ -68,9 +70,10 @@ TenantServiceConnectionImpl::GetTenant(
 StatusOr<google::cloud::talent::v4::Tenant>
 TenantServiceConnectionImpl::UpdateTenant(
     google::cloud::talent::v4::UpdateTenantRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UpdateTenant(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateTenant(request),
       [this](grpc::ClientContext& context,
              google::cloud::talent::v4::UpdateTenantRequest const& request) {
         return stub_->UpdateTenant(context, request);
@@ -80,9 +83,10 @@ TenantServiceConnectionImpl::UpdateTenant(
 
 Status TenantServiceConnectionImpl::DeleteTenant(
     google::cloud::talent::v4::DeleteTenantRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteTenant(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteTenant(request),
       [this](grpc::ClientContext& context,
              google::cloud::talent::v4::DeleteTenantRequest const& request) {
         return stub_->DeleteTenant(context, request);
@@ -94,17 +98,17 @@ StreamRange<google::cloud::talent::v4::Tenant>
 TenantServiceConnectionImpl::ListTenants(
     google::cloud::talent::v4::ListTenantsRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<talent_v4::TenantServiceRetryPolicy const>(
-      retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListTenants(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListTenants(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::talent::v4::Tenant>>(
       std::move(request),
-      [stub, retry, backoff, idempotency,
-       function_name](google::cloud::talent::v4::ListTenantsRequest const& r) {
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<talent_v4::TenantServiceRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          google::cloud::talent::v4::ListTenantsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](

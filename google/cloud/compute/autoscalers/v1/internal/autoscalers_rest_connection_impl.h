@@ -81,55 +81,29 @@ class AutoscalersRestConnectionImpl
                         UpdateAutoscalersRequest const& request) override;
 
  private:
-  std::unique_ptr<compute_autoscalers_v1::AutoscalersRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_autoscalers_v1::AutoscalersRetryPolicyOption>()) {
-      return options
-          .get<compute_autoscalers_v1::AutoscalersRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<compute_autoscalers_v1::AutoscalersRetryPolicyOption>()
+  static std::unique_ptr<compute_autoscalers_v1::AutoscalersRetryPolicy>
+  retry_policy(Options const& options) {
+    return options.get<compute_autoscalers_v1::AutoscalersRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_autoscalers_v1::AutoscalersBackoffPolicyOption>()) {
-      return options
-          .get<compute_autoscalers_v1::AutoscalersBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options
         .get<compute_autoscalers_v1::AutoscalersBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<
+  static std::unique_ptr<
       compute_autoscalers_v1::AutoscalersConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_autoscalers_v1::
-                        AutoscalersConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<compute_autoscalers_v1::
-                   AutoscalersConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  idempotency_policy(Options const& options) {
+    return options
         .get<compute_autoscalers_v1::
                  AutoscalersConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_autoscalers_v1::AutoscalersPollingPolicyOption>()) {
-      return options
-          .get<compute_autoscalers_v1::AutoscalersPollingPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options
         .get<compute_autoscalers_v1::AutoscalersPollingPolicyOption>()
         ->clone();
   }

@@ -65,34 +65,18 @@ class CompanyServiceConnectionImpl
       google::cloud::talent::v4::ListCompaniesRequest request) override;
 
  private:
-  std::unique_ptr<talent_v4::CompanyServiceRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<talent_v4::CompanyServiceRetryPolicyOption>()) {
-      return options.get<talent_v4::CompanyServiceRetryPolicyOption>()->clone();
-    }
-    return options_.get<talent_v4::CompanyServiceRetryPolicyOption>()->clone();
+  static std::unique_ptr<talent_v4::CompanyServiceRetryPolicy> retry_policy(
+      Options const& options) {
+    return options.get<talent_v4::CompanyServiceRetryPolicyOption>()->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<talent_v4::CompanyServiceBackoffPolicyOption>()) {
-      return options.get<talent_v4::CompanyServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<talent_v4::CompanyServiceBackoffPolicyOption>()
-        ->clone();
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<talent_v4::CompanyServiceBackoffPolicyOption>()->clone();
   }
 
-  std::unique_ptr<talent_v4::CompanyServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            talent_v4::CompanyServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<talent_v4::CompanyServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<talent_v4::CompanyServiceConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<talent_v4::CompanyServiceConnectionIdempotencyPolicyOption>()
         ->clone();
   }

@@ -76,42 +76,24 @@ class ModelServiceConnectionImpl : public retail_v2::ModelServiceConnection {
       google::cloud::retail::v2::TuneModelRequest const& request) override;
 
  private:
-  std::unique_ptr<retail_v2::ModelServiceRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<retail_v2::ModelServiceRetryPolicyOption>()) {
-      return options.get<retail_v2::ModelServiceRetryPolicyOption>()->clone();
-    }
-    return options_.get<retail_v2::ModelServiceRetryPolicyOption>()->clone();
+  static std::unique_ptr<retail_v2::ModelServiceRetryPolicy> retry_policy(
+      Options const& options) {
+    return options.get<retail_v2::ModelServiceRetryPolicyOption>()->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<retail_v2::ModelServiceBackoffPolicyOption>()) {
-      return options.get<retail_v2::ModelServiceBackoffPolicyOption>()->clone();
-    }
-    return options_.get<retail_v2::ModelServiceBackoffPolicyOption>()->clone();
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<retail_v2::ModelServiceBackoffPolicyOption>()->clone();
   }
 
-  std::unique_ptr<retail_v2::ModelServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<retail_v2::ModelServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<retail_v2::ModelServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<retail_v2::ModelServiceConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<retail_v2::ModelServiceConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<retail_v2::ModelServicePollingPolicyOption>()) {
-      return options.get<retail_v2::ModelServicePollingPolicyOption>()->clone();
-    }
-    return options_.get<retail_v2::ModelServicePollingPolicyOption>()->clone();
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options.get<retail_v2::ModelServicePollingPolicyOption>()->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

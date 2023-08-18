@@ -68,48 +68,27 @@ class VpcAccessServiceConnectionImpl
                       request) override;
 
  private:
-  std::unique_ptr<vpcaccess_v1::VpcAccessServiceRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<vpcaccess_v1::VpcAccessServiceRetryPolicyOption>()) {
-      return options.get<vpcaccess_v1::VpcAccessServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<vpcaccess_v1::VpcAccessServiceRetryPolicyOption>()
+  static std::unique_ptr<vpcaccess_v1::VpcAccessServiceRetryPolicy>
+  retry_policy(Options const& options) {
+    return options.get<vpcaccess_v1::VpcAccessServiceRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<vpcaccess_v1::VpcAccessServiceBackoffPolicyOption>()) {
-      return options.get<vpcaccess_v1::VpcAccessServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<vpcaccess_v1::VpcAccessServiceBackoffPolicyOption>()
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<vpcaccess_v1::VpcAccessServiceBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<vpcaccess_v1::VpcAccessServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<vpcaccess_v1::
-                        VpcAccessServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<
-              vpcaccess_v1::VpcAccessServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<
+      vpcaccess_v1::VpcAccessServiceConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<vpcaccess_v1::VpcAccessServiceConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<vpcaccess_v1::VpcAccessServicePollingPolicyOption>()) {
-      return options.get<vpcaccess_v1::VpcAccessServicePollingPolicyOption>()
-          ->clone();
-    }
-    return options_.get<vpcaccess_v1::VpcAccessServicePollingPolicyOption>()
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options.get<vpcaccess_v1::VpcAccessServicePollingPolicyOption>()
         ->clone();
   }
 

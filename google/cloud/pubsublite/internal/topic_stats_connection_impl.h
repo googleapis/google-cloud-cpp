@@ -64,36 +64,21 @@ class TopicStatsServiceConnectionImpl
       override;
 
  private:
-  std::unique_ptr<pubsublite::TopicStatsServiceRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<pubsublite::TopicStatsServiceRetryPolicyOption>()) {
-      return options.get<pubsublite::TopicStatsServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<pubsublite::TopicStatsServiceRetryPolicyOption>()
+  static std::unique_ptr<pubsublite::TopicStatsServiceRetryPolicy> retry_policy(
+      Options const& options) {
+    return options.get<pubsublite::TopicStatsServiceRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<pubsublite::TopicStatsServiceBackoffPolicyOption>()) {
-      return options.get<pubsublite::TopicStatsServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<pubsublite::TopicStatsServiceBackoffPolicyOption>()
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<pubsublite::TopicStatsServiceBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<pubsublite::TopicStatsServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            pubsublite::TopicStatsServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<pubsublite::TopicStatsServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<
+      pubsublite::TopicStatsServiceConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<pubsublite::TopicStatsServiceConnectionIdempotencyPolicyOption>()
         ->clone();
   }

@@ -102,55 +102,29 @@ class SubnetworksRestConnectionImpl
                          TestIamPermissionsRequest const& request) override;
 
  private:
-  std::unique_ptr<compute_subnetworks_v1::SubnetworksRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_subnetworks_v1::SubnetworksRetryPolicyOption>()) {
-      return options
-          .get<compute_subnetworks_v1::SubnetworksRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<compute_subnetworks_v1::SubnetworksRetryPolicyOption>()
+  static std::unique_ptr<compute_subnetworks_v1::SubnetworksRetryPolicy>
+  retry_policy(Options const& options) {
+    return options.get<compute_subnetworks_v1::SubnetworksRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_subnetworks_v1::SubnetworksBackoffPolicyOption>()) {
-      return options
-          .get<compute_subnetworks_v1::SubnetworksBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options
         .get<compute_subnetworks_v1::SubnetworksBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<
+  static std::unique_ptr<
       compute_subnetworks_v1::SubnetworksConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_subnetworks_v1::
-                        SubnetworksConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<compute_subnetworks_v1::
-                   SubnetworksConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  idempotency_policy(Options const& options) {
+    return options
         .get<compute_subnetworks_v1::
                  SubnetworksConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_subnetworks_v1::SubnetworksPollingPolicyOption>()) {
-      return options
-          .get<compute_subnetworks_v1::SubnetworksPollingPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options
         .get<compute_subnetworks_v1::SubnetworksPollingPolicyOption>()
         ->clone();
   }

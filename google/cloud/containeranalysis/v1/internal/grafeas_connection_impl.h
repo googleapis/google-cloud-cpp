@@ -90,36 +90,21 @@ class GrafeasConnectionImpl : public containeranalysis_v1::GrafeasConnection {
       grafeas::v1::ListNoteOccurrencesRequest request) override;
 
  private:
-  std::unique_ptr<containeranalysis_v1::GrafeasRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<containeranalysis_v1::GrafeasRetryPolicyOption>()) {
-      return options.get<containeranalysis_v1::GrafeasRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<containeranalysis_v1::GrafeasRetryPolicyOption>()
+  static std::unique_ptr<containeranalysis_v1::GrafeasRetryPolicy> retry_policy(
+      Options const& options) {
+    return options.get<containeranalysis_v1::GrafeasRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<containeranalysis_v1::GrafeasBackoffPolicyOption>()) {
-      return options.get<containeranalysis_v1::GrafeasBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<containeranalysis_v1::GrafeasBackoffPolicyOption>()
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<containeranalysis_v1::GrafeasBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<containeranalysis_v1::GrafeasConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            containeranalysis_v1::GrafeasConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<containeranalysis_v1::GrafeasConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<
+      containeranalysis_v1::GrafeasConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<containeranalysis_v1::GrafeasConnectionIdempotencyPolicyOption>()
         ->clone();
   }

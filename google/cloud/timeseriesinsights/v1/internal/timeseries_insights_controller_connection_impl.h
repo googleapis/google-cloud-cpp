@@ -81,52 +81,27 @@ class TimeseriesInsightsControllerConnectionImpl
           request) override;
 
  private:
-  std::unique_ptr<
+  static std::unique_ptr<
       timeseriesinsights_v1::TimeseriesInsightsControllerRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<timeseriesinsights_v1::
-                        TimeseriesInsightsControllerRetryPolicyOption>()) {
-      return options
-          .get<timeseriesinsights_v1::
-                   TimeseriesInsightsControllerRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
+  retry_policy(Options const& options) {
+    return options
         .get<timeseriesinsights_v1::
                  TimeseriesInsightsControllerRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<timeseriesinsights_v1::
-                        TimeseriesInsightsControllerBackoffPolicyOption>()) {
-      return options
-          .get<timeseriesinsights_v1::
-                   TimeseriesInsightsControllerBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options
         .get<timeseriesinsights_v1::
                  TimeseriesInsightsControllerBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<timeseriesinsights_v1::
-                      TimeseriesInsightsControllerConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            timeseriesinsights_v1::
-                TimeseriesInsightsControllerConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<
-              timeseriesinsights_v1::
-                  TimeseriesInsightsControllerConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<
+      timeseriesinsights_v1::
+          TimeseriesInsightsControllerConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<
             timeseriesinsights_v1::
                 TimeseriesInsightsControllerConnectionIdempotencyPolicyOption>()

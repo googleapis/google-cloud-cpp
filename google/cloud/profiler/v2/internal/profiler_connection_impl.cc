@@ -41,9 +41,10 @@ ProfilerServiceConnectionImpl::ProfilerServiceConnectionImpl(
 StatusOr<google::devtools::cloudprofiler::v2::Profile>
 ProfilerServiceConnectionImpl::CreateProfile(
     google::devtools::cloudprofiler::v2::CreateProfileRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateProfile(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateProfile(request),
       [this](grpc::ClientContext& context,
              google::devtools::cloudprofiler::v2::CreateProfileRequest const&
                  request) { return stub_->CreateProfile(context, request); },
@@ -54,9 +55,10 @@ StatusOr<google::devtools::cloudprofiler::v2::Profile>
 ProfilerServiceConnectionImpl::CreateOfflineProfile(
     google::devtools::cloudprofiler::v2::CreateOfflineProfileRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateOfflineProfile(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateOfflineProfile(request),
       [this](grpc::ClientContext& context,
              google::devtools::cloudprofiler::v2::
                  CreateOfflineProfileRequest const& request) {
@@ -68,9 +70,10 @@ ProfilerServiceConnectionImpl::CreateOfflineProfile(
 StatusOr<google::devtools::cloudprofiler::v2::Profile>
 ProfilerServiceConnectionImpl::UpdateProfile(
     google::devtools::cloudprofiler::v2::UpdateProfileRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UpdateProfile(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateProfile(request),
       [this](grpc::ClientContext& context,
              google::devtools::cloudprofiler::v2::UpdateProfileRequest const&
                  request) { return stub_->UpdateProfile(context, request); },

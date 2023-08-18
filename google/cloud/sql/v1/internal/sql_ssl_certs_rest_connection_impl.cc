@@ -41,8 +41,10 @@ SqlSslCertsServiceRestConnectionImpl::SqlSslCertsServiceRestConnectionImpl(
 StatusOr<google::cloud::sql::v1::Operation>
 SqlSslCertsServiceRestConnectionImpl::Delete(
     google::cloud::sql::v1::SqlSslCertsDeleteRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
-      retry_policy(), backoff_policy(), idempotency_policy()->Delete(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->Delete(request),
       [this](rest_internal::RestContext& rest_context,
              google::cloud::sql::v1::SqlSslCertsDeleteRequest const& request) {
         return stub_->Delete(rest_context, request);
@@ -53,8 +55,10 @@ SqlSslCertsServiceRestConnectionImpl::Delete(
 StatusOr<google::cloud::sql::v1::SslCert>
 SqlSslCertsServiceRestConnectionImpl::Get(
     google::cloud::sql::v1::SqlSslCertsGetRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
-      retry_policy(), backoff_policy(), idempotency_policy()->Get(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->Get(request),
       [this](rest_internal::RestContext& rest_context,
              google::cloud::sql::v1::SqlSslCertsGetRequest const& request) {
         return stub_->Get(rest_context, request);
@@ -65,8 +69,10 @@ SqlSslCertsServiceRestConnectionImpl::Get(
 StatusOr<google::cloud::sql::v1::SslCertsInsertResponse>
 SqlSslCertsServiceRestConnectionImpl::Insert(
     google::cloud::sql::v1::SqlSslCertsInsertRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
-      retry_policy(), backoff_policy(), idempotency_policy()->Insert(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->Insert(request),
       [this](rest_internal::RestContext& rest_context,
              google::cloud::sql::v1::SqlSslCertsInsertRequest const& request) {
         return stub_->Insert(rest_context, request);
@@ -77,8 +83,10 @@ SqlSslCertsServiceRestConnectionImpl::Insert(
 StatusOr<google::cloud::sql::v1::SslCertsListResponse>
 SqlSslCertsServiceRestConnectionImpl::List(
     google::cloud::sql::v1::SqlSslCertsListRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
-      retry_policy(), backoff_policy(), idempotency_policy()->List(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->List(request),
       [this](rest_internal::RestContext& rest_context,
              google::cloud::sql::v1::SqlSslCertsListRequest const& request) {
         return stub_->List(rest_context, request);
