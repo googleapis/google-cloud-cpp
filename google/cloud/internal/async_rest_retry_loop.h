@@ -175,8 +175,8 @@ class AsyncRestRetryLoopImpl
   AsyncRestRetryLoopImpl(std::unique_ptr<RetryPolicyType> retry_policy,
                          std::unique_ptr<BackoffPolicy> backoff_policy,
                          Idempotency idempotency, CompletionQueue cq,
-                         Functor&& functor, Options options, Request request,
-                         char const* location)
+                         Functor&& functor, internal::ImmutableOptions options,
+                         Request request, char const* location)
       : retry_policy_(std::move(retry_policy)),
         backoff_policy_(std::move(backoff_policy)),
         idempotency_(idempotency),
@@ -241,7 +241,7 @@ class AsyncRestRetryLoopImpl
     if (state.cancelled) return;
     SetPending(state.operation,
                functor_(cq_, std::make_unique<RestContext>(),
-                        call_context_.options, request_)
+                        *call_context_.options, request_)
                    .then([self](future<T> f) { self->OnAttempt(f.get()); }));
   }
 
@@ -250,7 +250,7 @@ class AsyncRestRetryLoopImpl
     auto state = StartOperation();
     if (state.cancelled) return;
     SetPending(state.operation,
-               internal::TracedAsyncBackoff(cq_, call_context_.options,
+               internal::TracedAsyncBackoff(cq_, *call_context_.options,
                                             backoff_policy_->OnCompletion())
                    .then([self](future<TimerArgType> f) {
                      self->OnBackoff(f.get());
@@ -358,8 +358,8 @@ template <typename Functor, typename Request, typename RetryPolicyType,
 auto AsyncRestRetryLoop(std::unique_ptr<RetryPolicyType> retry_policy,
                         std::unique_ptr<BackoffPolicy> backoff_policy,
                         Idempotency idempotency, CompletionQueue cq,
-                        Functor&& functor, Options options, Request request,
-                        char const* location)
+                        Functor&& functor, internal::ImmutableOptions options,
+                        Request request, char const* location)
     -> google::cloud::internal::invoke_result_t<
         Functor, CompletionQueue&, std::unique_ptr<RestContext>, Options const&,
         Request const&> {
@@ -396,7 +396,7 @@ auto AsyncRestRetryLoop(std::unique_ptr<RetryPolicyType> retry_policy,
   };
   return AsyncRestRetryLoop(std::move(retry_policy), std::move(backoff_policy),
                             idempotency, std::move(cq), std::move(wrapper),
-                            internal::CurrentOptions(), std::move(request),
+                            internal::SaveCurrentOptions(), std::move(request),
                             location);
 }
 
