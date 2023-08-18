@@ -40,11 +40,12 @@ GoldenRestOnlyRestConnectionImpl::GoldenRestOnlyRestConnectionImpl(
 
 Status
 GoldenRestOnlyRestConnectionImpl::Noop(google::protobuf::Empty const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->Noop(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->Noop(request),
       [this](rest_internal::RestContext& rest_context,
-          google::protobuf::Empty const& request) {
+             google::protobuf::Empty const& request) {
         return stub_->Noop(rest_context, request);
       },
       request, __func__);
