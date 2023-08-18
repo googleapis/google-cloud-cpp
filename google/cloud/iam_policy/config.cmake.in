@@ -1,4 +1,4 @@
-# Copyright 2020 Google LLC
+# Copyright 2023 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,10 +14,9 @@
 
 include(CMakeFindDependencyMacro)
 # google_cloud_cpp_googleapis finds both gRPC and Protobuf, no need to load them here.
-find_dependency(google_cloud_cpp_iam_policy)
 find_dependency(google_cloud_cpp_googleapis)
 find_dependency(google_cloud_cpp_common)
 find_dependency(google_cloud_cpp_grpc_utils)
 find_dependency(absl)
 
-include("${CMAKE_CURRENT_LIST_DIR}/google_cloud_cpp_iam-targets.cmake")
+include("${CMAKE_CURRENT_LIST_DIR}/google_cloud_cpp_iam_policy-targets.cmake")

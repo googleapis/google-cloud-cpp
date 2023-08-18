@@ -74,6 +74,9 @@ set(EXTERNAL_GOOGLEAPIS_PROTO_FILES
     # does not appear in protolists/asset.list. In addition, it is not compiled
     # by any other library. So, added manually.
     "google/cloud/orgpolicy/v1/orgpolicy.proto"
+    "google/iam/v1/iam_policy.proto"
+    "google/iam/v1/options.proto"
+    "google/iam/v1/policy.proto"
     "google/longrunning/operations.proto"
     "google/rpc/code.proto"
     "google/rpc/context/attribute_context.proto"
@@ -209,6 +212,9 @@ if (GOOGLE_CLOUD_CPP_USE_INSTALLED_COMMON)
     return()
 endif ()
 
+# Avoid adding new proto libraries to this list as these libraries are always
+# installed, regardless of whether or not they are needed. See #8022 for more
+# details.
 set(external_googleapis_installed_libraries_list
     # cmake-format: sort
     google_cloud_cpp_cloud_common_common_protos
@@ -238,6 +244,9 @@ set(PROTO_FILES_WITH_DEPENDENCIES
     "google/api/quota.proto"
     "google/api/service.proto"
     "google/api/usage.proto"
+    "google/iam/v1/iam_policy.proto"
+    "google/iam/v1/options.proto"
+    "google/iam/v1/policy.proto"
     "google/rpc/status.proto")
 
 # For some directories *most* (but not all) the proto files are simple enough
@@ -304,14 +313,15 @@ external_googleapis_add_library(
     api_source_info_protos
     api_system_parameter_protos
     api_usage_protos)
-
+external_googleapis_add_library("google/rpc/status.proto"
+                                rpc_error_details_protos)
+external_googleapis_add_library(
+    "google/longrunning/operations.proto" api_annotations_protos
+    api_client_protos rpc_status_protos)
 external_googleapis_add_library("google/iam/v1/options.proto"
                                 api_annotations_protos)
 external_googleapis_add_library("google/iam/v1/policy.proto"
                                 api_annotations_protos type_expr_protos)
-external_googleapis_add_library("google/rpc/status.proto"
-                                rpc_error_details_protos)
-
 external_googleapis_add_library(
     "google/iam/v1/iam_policy.proto"
     api_annotations_protos
@@ -320,11 +330,6 @@ external_googleapis_add_library(
     api_resource_protos
     iam_v1_options_protos
     iam_v1_policy_protos)
-
-external_googleapis_add_library(
-    "google/longrunning/operations.proto" api_annotations_protos
-    api_client_protos rpc_status_protos)
-
 google_cloud_cpp_load_protolist(cloud_common_list "protolists/common.list")
 google_cloud_cpp_load_protodeps(cloud_common_deps "protodeps/common.deps")
 google_cloud_cpp_grpcpp_library(
@@ -334,6 +339,72 @@ google_cloud_cpp_grpcpp_library(
 external_googleapis_set_version_and_alias(cloud_common_common_protos)
 target_link_libraries(google_cloud_cpp_cloud_common_common_protos
                       PUBLIC ${cloud_common_deps})
+
+external_googleapis_add_library(
+    "google/devtools/cloudtrace/v2/trace.proto" api_annotations_protos
+    api_field_behavior_protos api_resource_protos rpc_status_protos)
+external_googleapis_add_library(
+    "google/devtools/cloudtrace/v2/tracing.proto"
+    devtools_cloudtrace_v2_trace_protos api_annotations_protos
+    api_client_protos api_field_behavior_protos rpc_status_protos)
+
+external_googleapis_add_library("google/devtools/source/v1/source_context.proto"
+                                api_annotations_protos)
+
+google_cloud_cpp_load_protolist(cloud_bigquery_list "protolists/bigquery.list")
+google_cloud_cpp_load_protodeps(cloud_bigquery_deps "protodeps/bigquery.deps")
+google_cloud_cpp_grpcpp_library(
+    google_cloud_cpp_cloud_bigquery_protos ${cloud_bigquery_list}
+    PROTO_PATH_DIRECTORIES "${EXTERNAL_GOOGLEAPIS_SOURCE}"
+    "${PROTO_INCLUDE_DIR}")
+external_googleapis_set_version_and_alias(cloud_bigquery_protos)
+target_link_libraries(google_cloud_cpp_cloud_bigquery_protos
+                      PUBLIC ${cloud_bigquery_deps})
+
+google_cloud_cpp_load_protolist(bigtable_list "protolists/bigtable.list")
+google_cloud_cpp_load_protodeps(bigtable_deps "protodeps/bigtable.deps")
+google_cloud_cpp_grpcpp_library(
+    google_cloud_cpp_bigtable_protos ${bigtable_list} PROTO_PATH_DIRECTORIES
+    "${EXTERNAL_GOOGLEAPIS_SOURCE}" "${PROTO_INCLUDE_DIR}")
+external_googleapis_set_version_and_alias(bigtable_protos)
+target_link_libraries(google_cloud_cpp_bigtable_protos PUBLIC ${bigtable_deps})
+
+google_cloud_cpp_load_protolist(cloud_dialogflow_v2_list
+                                "protolists/dialogflow.list")
+google_cloud_cpp_load_protodeps(cloud_dialogflow_v2_deps
+                                "protodeps/dialogflow.deps")
+google_cloud_cpp_grpcpp_library(
+    google_cloud_cpp_cloud_dialogflow_v2_protos ${cloud_dialogflow_v2_list}
+    PROTO_PATH_DIRECTORIES "${EXTERNAL_GOOGLEAPIS_SOURCE}"
+    "${PROTO_INCLUDE_DIR}")
+external_googleapis_set_version_and_alias(cloud_dialogflow_v2_protos)
+target_link_libraries(google_cloud_cpp_cloud_dialogflow_v2_protos
+                      PUBLIC ${cloud_dialogflow_v2_deps})
+
+list(APPEND external_googleapis_installed_libraries_list
+     google_cloud_cpp_cloud_dialogflow_v2_protos)
+
+google_cloud_cpp_load_protolist(cloud_speech_list "protolists/speech.list")
+google_cloud_cpp_load_protodeps(cloud_speech_deps "protodeps/speech.deps")
+google_cloud_cpp_grpcpp_library(
+    google_cloud_cpp_cloud_speech_protos ${cloud_speech_list}
+    PROTO_PATH_DIRECTORIES "${EXTERNAL_GOOGLEAPIS_SOURCE}"
+    "${PROTO_INCLUDE_DIR}")
+external_googleapis_set_version_and_alias(cloud_speech_protos)
+target_link_libraries(google_cloud_cpp_cloud_speech_protos
+                      PUBLIC ${cloud_speech_deps})
+
+google_cloud_cpp_load_protolist(cloud_texttospeech_list
+                                "protolists/texttospeech.list")
+google_cloud_cpp_load_protodeps(cloud_texttospeech_deps
+                                "protodeps/texttospeech.deps")
+google_cloud_cpp_grpcpp_library(
+    google_cloud_cpp_cloud_texttospeech_protos ${cloud_texttospeech_list}
+    PROTO_PATH_DIRECTORIES "${EXTERNAL_GOOGLEAPIS_SOURCE}"
+    "${PROTO_INCLUDE_DIR}")
+external_googleapis_set_version_and_alias(cloud_texttospeech_protos)
+target_link_libraries(google_cloud_cpp_cloud_texttospeech_protos
+                      PUBLIC ${cloud_texttospeech_deps})
 
 google_cloud_cpp_load_protolist(iam_list "protolists/iam.list")
 google_cloud_cpp_load_protodeps(iam_deps "protodeps/iam.deps")
@@ -369,6 +440,40 @@ set_target_properties(
     PROPERTIES EXPORT_NAME google-cloud-cpp::logging_type_protos)
 target_link_libraries(google_cloud_cpp_logging_type_protos
                       INTERFACE google-cloud-cpp::logging_type_type_protos)
+
+google_cloud_cpp_load_protolist(monitoring_list "protolists/monitoring.list")
+google_cloud_cpp_load_protodeps(monitoring_deps "protodeps/monitoring.deps")
+google_cloud_cpp_grpcpp_library(
+    google_cloud_cpp_monitoring_protos ${monitoring_list}
+    PROTO_PATH_DIRECTORIES "${EXTERNAL_GOOGLEAPIS_SOURCE}"
+    "${PROTO_INCLUDE_DIR}")
+external_googleapis_set_version_and_alias(monitoring_protos)
+target_link_libraries(google_cloud_cpp_monitoring_protos
+                      PUBLIC ${monitoring_deps})
+
+google_cloud_cpp_load_protolist(pubsub_list "protolists/pubsub.list")
+google_cloud_cpp_load_protodeps(pubsub_deps "protodeps/pubsub.deps")
+google_cloud_cpp_grpcpp_library(
+    google_cloud_cpp_pubsub_protos ${pubsub_list} PROTO_PATH_DIRECTORIES
+    "${EXTERNAL_GOOGLEAPIS_SOURCE}" "${PROTO_INCLUDE_DIR}")
+external_googleapis_set_version_and_alias(pubsub_protos)
+target_link_libraries(google_cloud_cpp_pubsub_protos PUBLIC ${pubsub_deps})
+
+google_cloud_cpp_load_protolist(spanner_list "protolists/spanner.list")
+google_cloud_cpp_load_protodeps(spanner_deps "protodeps/spanner.deps")
+google_cloud_cpp_grpcpp_library(
+    google_cloud_cpp_spanner_protos ${spanner_list} PROTO_PATH_DIRECTORIES
+    "${EXTERNAL_GOOGLEAPIS_SOURCE}" "${PROTO_INCLUDE_DIR}")
+external_googleapis_set_version_and_alias(spanner_protos)
+target_link_libraries(google_cloud_cpp_spanner_protos PUBLIC ${spanner_deps})
+
+google_cloud_cpp_load_protolist(storage_list "protolists/storage.list")
+google_cloud_cpp_load_protodeps(storage_deps "protodeps/storage.deps")
+google_cloud_cpp_grpcpp_library(
+    google_cloud_cpp_storage_protos ${storage_list} PROTO_PATH_DIRECTORIES
+    "${EXTERNAL_GOOGLEAPIS_SOURCE}" "${PROTO_INCLUDE_DIR}")
+external_googleapis_set_version_and_alias(storage_protos)
+target_link_libraries(google_cloud_cpp_storage_protos PUBLIC ${storage_deps})
 
 # Install the libraries and headers in the locations determined by
 # GNUInstallDirs
