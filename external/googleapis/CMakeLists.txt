@@ -75,6 +75,9 @@ set(EXTERNAL_GOOGLEAPIS_PROTO_FILES
     # by any other library. So, added manually.
     "google/cloud/orgpolicy/v1/orgpolicy.proto"
     "google/devtools/source/v1/source_context.proto"
+    "google/iam/v1/iam_policy.proto"
+    "google/iam/v1/options.proto"
+    "google/iam/v1/policy.proto"
     "google/longrunning/operations.proto"
     "google/rpc/code.proto"
     "google/rpc/context/attribute_context.proto"
@@ -216,6 +219,9 @@ if (GOOGLE_CLOUD_CPP_USE_INSTALLED_COMMON)
     return()
 endif ()
 
+# Avoid adding new proto libraries to this list as these libraries are always
+# installed, regardless of whether or not they are needed. See #8022 for more
+# details.
 set(external_googleapis_installed_libraries_list
     # cmake-format: sort
     google_cloud_cpp_bigtable_protos
@@ -256,6 +262,9 @@ set(PROTO_FILES_WITH_DEPENDENCIES
     "google/api/quota.proto"
     "google/api/service.proto"
     "google/api/usage.proto"
+    "google/iam/v1/iam_policy.proto"
+    "google/iam/v1/options.proto"
+    "google/iam/v1/policy.proto"
     "google/rpc/status.proto")
 
 # For some directories *most* (but not all) the proto files are simple enough
@@ -322,14 +331,15 @@ external_googleapis_add_library(
     api_source_info_protos
     api_system_parameter_protos
     api_usage_protos)
-
+external_googleapis_add_library("google/rpc/status.proto"
+                                rpc_error_details_protos)
+external_googleapis_add_library(
+    "google/longrunning/operations.proto" api_annotations_protos
+    api_client_protos rpc_status_protos)
 external_googleapis_add_library("google/iam/v1/options.proto"
                                 api_annotations_protos)
 external_googleapis_add_library("google/iam/v1/policy.proto"
                                 api_annotations_protos type_expr_protos)
-external_googleapis_add_library("google/rpc/status.proto"
-                                rpc_error_details_protos)
-
 external_googleapis_add_library(
     "google/iam/v1/iam_policy.proto"
     api_annotations_protos
@@ -338,11 +348,6 @@ external_googleapis_add_library(
     api_resource_protos
     iam_v1_options_protos
     iam_v1_policy_protos)
-
-external_googleapis_add_library(
-    "google/longrunning/operations.proto" api_annotations_protos
-    api_client_protos rpc_status_protos)
-
 google_cloud_cpp_load_protolist(cloud_common_list "protolists/common.list")
 google_cloud_cpp_load_protodeps(cloud_common_deps "protodeps/common.deps")
 google_cloud_cpp_grpcpp_library(

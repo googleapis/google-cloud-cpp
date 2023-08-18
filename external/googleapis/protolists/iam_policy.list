@@ -1,4 +1,2 @@
-@com_google_googleapis//google/iam/v1/logging:audit_data.proto
-@com_google_googleapis//google/iam/v1:iam_policy.proto
-@com_google_googleapis//google/iam/v1:options.proto
-@com_google_googleapis//google/iam/v1:policy.proto
+@com_google_googleapis//google/iam/v2:deny.proto
+@com_google_googleapis//google/iam/v2:policy.proto
