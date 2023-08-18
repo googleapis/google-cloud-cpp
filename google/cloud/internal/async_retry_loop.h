@@ -178,8 +178,8 @@ class AsyncRetryLoopImpl
   AsyncRetryLoopImpl(std::unique_ptr<RetryPolicyType> retry_policy,
                      std::unique_ptr<BackoffPolicy> backoff_policy,
                      Idempotency idempotency, google::cloud::CompletionQueue cq,
-                     Functor&& functor, Options options, Request request,
-                     char const* location)
+                     Functor&& functor, ImmutableOptions options,
+                     Request request, char const* location)
       : retry_policy_(std::move(retry_policy)),
         backoff_policy_(std::move(backoff_policy)),
         idempotency_(idempotency),
@@ -235,11 +235,11 @@ class AsyncRetryLoopImpl
     auto state = StartOperation();
     if (state.cancelled) return;
     auto context = std::make_shared<grpc::ClientContext>();
-    ConfigureContext(*context, call_context_.options);
+    ConfigureContext(*context, *call_context_.options);
     SetupContext<RetryPolicyType>::Setup(*retry_policy_, *context);
     SetPending(
         state.operation,
-        functor_(cq_, std::move(context), call_context_.options, request_)
+        functor_(cq_, std::move(context), *call_context_.options, request_)
             .then([self](future<T> f) { self->OnAttempt(f.get()); }));
   }
 
@@ -248,7 +248,7 @@ class AsyncRetryLoopImpl
     auto state = StartOperation();
     if (state.cancelled) return;
     SetPending(state.operation,
-               TracedAsyncBackoff(cq_, call_context_.options,
+               TracedAsyncBackoff(cq_, *call_context_.options,
                                   backoff_policy_->OnCompletion())
                    .then([self](future<TimerArgType> f) {
                      self->OnBackoff(f.get());
@@ -353,8 +353,8 @@ template <typename Functor, typename Request, typename RetryPolicyType,
 auto AsyncRetryLoop(std::unique_ptr<RetryPolicyType> retry_policy,
                     std::unique_ptr<BackoffPolicy> backoff_policy,
                     Idempotency idempotency, google::cloud::CompletionQueue cq,
-                    Functor&& functor, Options const& options, Request request,
-                    char const* location)
+                    Functor&& functor, ImmutableOptions options,
+                    Request request, char const* location)
     -> google::cloud::internal::invoke_result_t<
         Functor, google::cloud::CompletionQueue&,
         std::shared_ptr<grpc::ClientContext>, Options const&, Request const&> {
@@ -391,7 +391,7 @@ auto AsyncRetryLoop(std::unique_ptr<RetryPolicyType> retry_policy,
   };
   return AsyncRetryLoop(std::move(retry_policy), std::move(backoff_policy),
                         idempotency, std::move(cq), std::move(wrapper),
-                        CurrentOptions(), std::move(request), location);
+                        SaveCurrentOptions(), std::move(request), location);
 }
 
 }  // namespace internal

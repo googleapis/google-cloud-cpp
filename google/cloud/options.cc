@@ -49,8 +49,8 @@ namespace {
 // The prevailing options for the current operation.  Thread local, so
 // additional propagation must be done whenever work for the operation
 // is done in another thread.
-std::shared_ptr<Options const>& ThreadLocalOptions() {
-  thread_local auto current_options = std::make_shared<Options const>();
+ImmutableOptions& ThreadLocalOptions() {
+  thread_local auto current_options = MakeImmutableOptions(Options{});
   return current_options;
 }
 
@@ -58,15 +58,12 @@ std::shared_ptr<Options const>& ThreadLocalOptions() {
 
 Options const& CurrentOptions() { return *ThreadLocalOptions(); }
 
-std::shared_ptr<Options const> SaveCurrentOptions() {
-  return ThreadLocalOptions();
-}
+ImmutableOptions SaveCurrentOptions() { return ThreadLocalOptions(); }
 
 OptionsSpan::OptionsSpan(Options opts)
-    : OptionsSpan(std::make_shared<Options const>(std::move(opts))) {}
+    : OptionsSpan(MakeImmutableOptions(std::move(opts))) {}
 
-OptionsSpan::OptionsSpan(std::shared_ptr<Options const> opts)
-    : opts_(std::move(opts)) {
+OptionsSpan::OptionsSpan(ImmutableOptions opts) : opts_(std::move(opts)) {
   using std::swap;
   swap(opts_, ThreadLocalOptions());
 }

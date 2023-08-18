@@ -33,6 +33,7 @@ namespace rest_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+using ::google::cloud::internal::MakeImmutableOptions;
 using ::google::cloud::testing_util::AsyncSequencer;
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::MockBackoffPolicy;
@@ -149,7 +150,8 @@ TEST(AsyncRestRetryLoopTest, SuccessWithExplicitOptions) {
         EXPECT_EQ(options.get<TestOption>(), "Success");
         return make_ready_future(StatusOr<int>(2 * request));
       },
-      Options{}.set<TestOption>("Success"), 42, "error message");
+      MakeImmutableOptions(Options{}.set<TestOption>("Success")), 42,
+      "error message");
   internal::OptionsSpan overlay(Options{}.set<TestOption>("uh-oh"));
   StatusOr<int> actual = pending.get();
   ASSERT_THAT(actual.status(), IsOk());
@@ -171,7 +173,8 @@ TEST(AsyncRestRetryLoopTest, TransientThenSuccess) {
         }
         return make_ready_future(StatusOr<int>(2 * request));
       },
-      Options{}.set<TestOption>("TransientThenSuccess"), 42, "error message");
+      MakeImmutableOptions(Options{}.set<TestOption>("TransientThenSuccess")),
+      42, "error message");
   internal::OptionsSpan overlay(Options{}.set<TestOption>("uh-oh"));
   StatusOr<int> actual = pending.get();
   ASSERT_THAT(actual.status(), IsOk());
@@ -193,7 +196,8 @@ TEST(AsyncRestRetryLoopTest, ReturnJustStatus) {
         }
         return make_ready_future(Status());
       },
-      Options{}.set<TestOption>("ReturnJustStatus"), 42, "error message");
+      MakeImmutableOptions(Options{}.set<TestOption>("ReturnJustStatus")), 42,
+      "error message");
   internal::OptionsSpan overlay(Options{}.set<TestOption>("uh-oh"));
   Status actual = pending.get();
   ASSERT_THAT(actual, IsOk());
@@ -239,7 +243,8 @@ TEST(AsyncRestRetryLoopTest, UsesBackoffPolicy) {
         }
         return make_ready_future(StatusOr<int>(2 * request));
       },
-      Options{}.set<TestOption>("UsesBackoffPolicy"), 42, "error message");
+      MakeImmutableOptions(Options{}.set<TestOption>("UsesBackoffPolicy")), 42,
+      "error message");
   internal::OptionsSpan overlay(Options{}.set<TestOption>("uh-oh"));
   StatusOr<int> actual = pending.get();
   ASSERT_THAT(actual.status(), IsOk());
@@ -257,8 +262,9 @@ TEST(AsyncRestRetryLoopTest, TransientFailureNonIdempotent) {
         return make_ready_future(StatusOr<int>(
             Status(StatusCode::kUnavailable, "test-message-try-again")));
       },
-      Options{}.set<TestOption>("TransientFailureNonIdempotent"), 42,
-      "test-location");
+      MakeImmutableOptions(
+          Options{}.set<TestOption>("TransientFailureNonIdempotent")),
+      42, "test-location");
   internal::OptionsSpan overlay(Options{}.set<TestOption>("uh-oh"));
   StatusOr<int> actual = pending.get();
   EXPECT_THAT(actual, StatusIs(StatusCode::kUnavailable,
@@ -283,8 +289,9 @@ TEST(AsyncRestRetryLoopTest, PermanentFailureIdempotent) {
         return make_ready_future(StatusOr<int>(
             Status(StatusCode::kPermissionDenied, "test-message-uh-oh")));
       },
-      Options{}.set<TestOption>("PermanentFailureIdempotent"), 42,
-      "test-location");
+      MakeImmutableOptions(
+          Options{}.set<TestOption>("PermanentFailureIdempotent")),
+      42, "test-location");
   internal::OptionsSpan overlay(Options{}.set<TestOption>("uh-oh"));
   StatusOr<int> actual = pending.get();
   EXPECT_THAT(actual, StatusIs(StatusCode::kPermissionDenied,
@@ -310,8 +317,9 @@ TEST(AsyncRestRetryLoopTest, TooManyTransientFailuresIdempotent) {
         return make_ready_future(StatusOr<int>(
             Status(StatusCode::kUnavailable, "test-message-try-again")));
       },
-      Options{}.set<TestOption>("TooManyTransientFailuresIdempotent"), 42,
-      "test-location");
+      MakeImmutableOptions(
+          Options{}.set<TestOption>("TooManyTransientFailuresIdempotent")),
+      42, "test-location");
   internal::OptionsSpan overlay(Options{}.set<TestOption>("uh-oh"));
   StatusOr<int> actual = pending.get();
   EXPECT_THAT(actual, StatusIs(StatusCode::kUnavailable,
@@ -339,7 +347,8 @@ TEST(AsyncRestRetryLoopTest, ExhaustedDuringBackoff) {
         return make_ready_future(StatusOr<int>(
             Status(StatusCode::kUnavailable, "test-message-try-again")));
       },
-      Options{}.set<TestOption>("ExhaustedDuringBackoff"), 42, "test-location");
+      MakeImmutableOptions(Options{}.set<TestOption>("ExhaustedDuringBackoff")),
+      42, "test-location");
   internal::OptionsSpan overlay(Options{}.set<TestOption>("uh-oh"));
   StatusOr<int> actual = pending.get();
   EXPECT_THAT(actual, StatusIs(StatusCode::kUnavailable,
@@ -367,7 +376,7 @@ TEST(AsyncRestRetryLoopTest, ExhaustedBeforeStart) {
             return make_ready_future(StatusOr<int>(
                 Status(StatusCode::kUnavailable, "test-message-try-again")));
           },
-          Options{}, 42, "test-location")
+          MakeImmutableOptions(Options{}), 42, "test-location")
           .get();
   EXPECT_THAT(actual, StatusIs(StatusCode::kDeadlineExceeded));
   auto const& metadata = actual.status().error_info().metadata();
@@ -402,7 +411,8 @@ TEST(AsyncRestRetryLoopTest, SetsTimeout) {
         return make_ready_future(
             StatusOr<int>(Status(StatusCode::kUnavailable, "try again")));
       },
-      Options{}.set<TestOption>("SetsTimeout"), 42, "error message");
+      MakeImmutableOptions(Options{}.set<TestOption>("SetsTimeout")), 42,
+      "error message");
   internal::OptionsSpan overlay(Options{}.set<TestOption>("uh-oh"));
   StatusOr<int> actual = pending.get();
   ASSERT_THAT(actual.status(), StatusIs(StatusCode::kUnavailable));
@@ -419,8 +429,9 @@ TEST(AsyncRestRetryLoopTest, CallOptionsDuringCancel) {
       TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kIdempotent,
       background.cq(),
       [&p](auto&, auto, auto const&, auto) { return p.get_future(); },
-      Options{}.set<TestOption>("CallOptionsDuringCancel"), 42,
-      "error message");
+      MakeImmutableOptions(
+          Options{}.set<TestOption>("CallOptionsDuringCancel")),
+      42, "error message");
 
   internal::OptionsSpan overlay(Options{}.set<TestOption>("uh-oh"));
   pending.cancel();
@@ -437,7 +448,7 @@ TEST_F(AsyncRestRetryLoopCancelTest, CancelAndSuccess) {
       TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kIdempotent, cq,
       [this](CompletionQueue&, std::unique_ptr<RestContext>, Options const&,
              int x) { return SimulateRequest(x); },
-      Options{}, 42, "test-location");
+      MakeImmutableOptions(Options{}), 42, "test-location");
 
   // First simulate a regular request that results in a transient failure.
   auto p = WaitForRequest();
@@ -467,7 +478,7 @@ TEST_F(AsyncRestRetryLoopCancelTest, CancelWithFailure) {
       TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kIdempotent, cq,
       [this](CompletionQueue&, std::unique_ptr<RestContext>, Options const&,
              int x) { return SimulateRequest(x); },
-      Options{}, 42, "test-location");
+      MakeImmutableOptions(Options{}), 42, "test-location");
 
   // First simulate a regular request.
   auto p = WaitForRequest();
@@ -501,7 +512,7 @@ TEST_F(AsyncRestRetryLoopCancelTest, CancelDuringTimer) {
       TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kIdempotent, cq,
       [this](CompletionQueue&, std::unique_ptr<RestContext>, Options const&,
              int x) { return SimulateRequest(x); },
-      Options{}, 42, "test-location");
+      MakeImmutableOptions(Options{}), 42, "test-location");
 
   // First simulate a regular request.
   auto p = WaitForRequest();
@@ -537,7 +548,7 @@ TEST_F(AsyncRestRetryLoopCancelTest, ShutdownDuringTimer) {
       TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kIdempotent, cq,
       [this](CompletionQueue&, std::unique_ptr<RestContext>, Options const&,
              int x) { return SimulateRequest(x); },
-      Options{}, 42, "test-location");
+      MakeImmutableOptions(Options{}), 42, "test-location");
 
   // First simulate a regular request.
   auto p = WaitForRequest();
@@ -585,7 +596,7 @@ TEST(AsyncRestRetryLoopTest, TracedBackoff) {
           return StatusOr<int>(internal::UnavailableError("try again"));
         });
       },
-      EnableTracing(Options{}), 42, "error message");
+      MakeImmutableOptions(EnableTracing(Options{})), 42, "error message");
 
   internal::OptionsSpan overlay(Options{});
   for (auto i = 0; i != kMaxRetries + 1; ++i) {
@@ -613,7 +624,7 @@ TEST(AsyncRestRetryLoopTest, CallSpanActiveThroughout) {
         EXPECT_THAT(span, IsActive());
         return sequencer.PushBack();
       },
-      EnableTracing(Options{}), 42, "error message");
+      MakeImmutableOptions(EnableTracing(Options{})), 42, "error message");
 
   sequencer.PopFront().set_value(internal::UnavailableError("try again"));
   sequencer.PopFront().set_value(0);
@@ -634,7 +645,7 @@ TEST(AsyncRestRetryLoopTest, CallSpanActiveDuringCancel) {
       TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kIdempotent,
       background.cq(),
       [&](auto, auto, auto const&, auto) { return p.get_future(); },
-      EnableTracing(Options{}), 42, "error message");
+      MakeImmutableOptions(EnableTracing(Options{})), 42, "error message");
 
   auto overlay = opentelemetry::trace::Scope(internal::MakeSpan("overlay"));
   actual.cancel();

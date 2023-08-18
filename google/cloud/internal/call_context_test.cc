@@ -27,21 +27,21 @@ struct IntOption {
 };
 
 TEST(CallContext, Options) {
-  EXPECT_FALSE(CallContext().options.has<IntOption>());
+  EXPECT_FALSE(CallContext().options->has<IntOption>());
   {
+    OptionsSpan span(Options{}.set<IntOption>(1));
     auto context = CallContext();
-    context.options.set<IntOption>(1);
     ScopedCallContext scope(context);
-    EXPECT_EQ(CallContext().options.get<IntOption>(), 1);
+    EXPECT_EQ(CallContext().options->get<IntOption>(), 1);
     {
+      OptionsSpan span2(Options{}.set<IntOption>(2));
       auto context = CallContext();
-      context.options.set<IntOption>(2);
       ScopedCallContext scope(context);
-      EXPECT_EQ(CallContext().options.get<IntOption>(), 2);
+      EXPECT_EQ(CallContext().options->get<IntOption>(), 2);
     }
-    EXPECT_EQ(CallContext().options.get<IntOption>(), 1);
+    EXPECT_EQ(CallContext().options->get<IntOption>(), 1);
   }
-  EXPECT_FALSE(CallContext().options.has<IntOption>());
+  EXPECT_FALSE(CallContext().options->has<IntOption>());
 }
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
