@@ -37,12 +37,13 @@ namespace internal {
  * enabled, it also contains the parent span that encompasses the client call.
  */
 struct CallContext {
-  explicit CallContext(Options o) : options(std::move(o)) {}
+  explicit CallContext(ImmutableOptions o)
+      : options(std::move(o)) {}
   // TODO(#12359) - maybe this can be removed once the explicit options cleanup
   //     is done.
-  CallContext() : CallContext(CurrentOptions()) {}
+  CallContext() : CallContext(SaveCurrentOptions()) {}
 
-  Options options;
+  ImmutableOptions options;
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> span =
       opentelemetry::trace::Tracer::GetCurrentSpan();

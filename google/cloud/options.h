@@ -342,9 +342,31 @@ absl::optional<typename T::Type> ExtractOption(Options& opts) {
 }
 
 /**
+ * Represent immutable options.
+ *
+ * After we create the initial set of Options for an RPC the options do not
+ * change during the lifetime of the RPC.  For streaming RPCs we may need to
+ * create multiple `OptionsSpan` objects (see below) with these same options.
+ * We can optimize the implementation if the immutable options are represented
+ * by a shared pointer.
+ */
+using ImmutableOptions = std::shared_ptr<Options const>;
+
+/// Creates a new set of immutable options from an existing set of options.
+inline ImmutableOptions MakeImmutableOptions(Options o) {
+  return std::make_shared<Options const>(std::move(o));
+}
+
+/**
  * The prevailing options for the current operation.
  */
 Options const& CurrentOptions();
+
+/**
+ * Save the current options. Typically used to install them in a future
+ * `OptionsSpan` in a different thread.
+ */
+ImmutableOptions SaveCurrentOptions();
 
 /**
  * RAII object to set/restore the prevailing options for the enclosing scope.
@@ -369,6 +391,7 @@ Options const& CurrentOptions();
 class ABSL_MUST_USE_RESULT OptionsSpan {
  public:
   explicit OptionsSpan(Options opts);
+  explicit OptionsSpan(ImmutableOptions opts);
 
   // `OptionsSpan` should not be copied/moved.
   OptionsSpan(OptionsSpan const&) = delete;
@@ -383,7 +406,7 @@ class ABSL_MUST_USE_RESULT OptionsSpan {
   ~OptionsSpan();
 
  private:
-  Options opts_;
+  ImmutableOptions opts_;
 };
 
 }  // namespace internal
