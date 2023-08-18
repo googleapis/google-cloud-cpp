@@ -342,7 +342,7 @@ absl::optional<typename T::Type> ExtractOption(Options& opts) {
 }
 
 /**
- * Represent immutable options.
+ * Represents immutable options.
  *
  * After we create the initial set of Options for an RPC the options do not
  * change during the lifetime of the RPC.  For streaming RPCs we may need to
