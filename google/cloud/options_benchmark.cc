@@ -21,18 +21,21 @@ namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-// Run on (96 X 2000 MHz CPU s)
+// Run on (128 X 2250 MHz CPU s)
 // CPU Caches:
-//   L1 Data 32 KiB (x48)
-//   L1 Instruction 32 KiB (x48)
-//   L2 Unified 1024 KiB (x48)
-//   L3 Unified 39424 KiB (x2)
-// Load Average: 0.49, 0.35, 0.89
-// ----------------------------------------------------------------------
-// Benchmark                            Time             CPU   Iterations
-// ----------------------------------------------------------------------
-// BM_OptionsOneElementDefault       25.6 ns         25.6 ns     27332591
-// BM_OptionsOneElementPresent       28.0 ns         28.0 ns     24999101
+//   L1 Data 32 KiB (x64)
+//   L1 Instruction 32 KiB (x64)
+//   L2 Unified 512 KiB (x64)
+//   L3 Unified 16384 KiB (x16)
+// Load Average: 1.26, 1.39, 2.94
+// --------------------------------------------------------------------------
+// Benchmark                                Time             CPU   Iterations
+// --------------------------------------------------------------------------
+// BM_OptionsOneElementDefault           18.4 ns         18.4 ns     38006008
+// BM_OptionsOneElementPresent           45.8 ns         45.8 ns     15266572
+// BM_SimulateRpc                       10721 ns        10721 ns        64131
+// BM_SimulateStreamingRpc             891912 ns       891888 ns          774
+// BM_SimulateStreamingRpcWithSave      12547 ns        12547 ns        54804
 
 struct StringOptionDefault {
   using Type = std::string;
