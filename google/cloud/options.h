@@ -347,6 +347,12 @@ absl::optional<typename T::Type> ExtractOption(Options& opts) {
 Options const& CurrentOptions();
 
 /**
+ * Save the current options. Typically used to install them in a future
+ * `OptionsSpan` in a different thread.
+ */
+std::shared_ptr<Options const> SaveCurrentOptions();
+
+/**
  * RAII object to set/restore the prevailing options for the enclosing scope.
  *
  * @code
@@ -369,6 +375,7 @@ Options const& CurrentOptions();
 class ABSL_MUST_USE_RESULT OptionsSpan {
  public:
   explicit OptionsSpan(Options opts);
+  explicit OptionsSpan(std::shared_ptr<Options const> opts);
 
   // `OptionsSpan` should not be copied/moved.
   OptionsSpan(OptionsSpan const&) = delete;
@@ -383,7 +390,7 @@ class ABSL_MUST_USE_RESULT OptionsSpan {
   ~OptionsSpan();
 
  private:
-  Options opts_;
+  std::shared_ptr<Options const> opts_;
 };
 
 }  // namespace internal
