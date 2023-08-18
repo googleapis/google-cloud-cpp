@@ -96,39 +96,24 @@ class $connection_impl_rest_class_name$
   // So, we have to fallback to `options_`.
   HeaderPrint(R"""(
  private:
-  std::unique_ptr<$product_namespace$::$retry_policy_name$> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<$product_namespace$::$retry_policy_name$Option>()) {
-      return options.get<$product_namespace$::$retry_policy_name$Option>()->clone();
-    }
-    return options_.get<$product_namespace$::$retry_policy_name$Option>()->clone();
+  static std::unique_ptr<$product_namespace$::$retry_policy_name$>
+  retry_policy(Options const& options) {
+    return options.get<$product_namespace$::$retry_policy_name$Option>()->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<$product_namespace$::$service_name$BackoffPolicyOption>()) {
-      return options.get<$product_namespace$::$service_name$BackoffPolicyOption>()->clone();
-    }
-    return options_.get<$product_namespace$::$service_name$BackoffPolicyOption>()->clone();
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<$product_namespace$::$service_name$BackoffPolicyOption>()->clone();
   }
 
-  std::unique_ptr<$product_namespace$::$idempotency_class_name$> idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<$product_namespace$::$idempotency_class_name$Option>()) {
-      return options.get<$product_namespace$::$idempotency_class_name$Option>()->clone();
-    }
-    return options_.get<$product_namespace$::$idempotency_class_name$Option>()->
-clone();
+  static std::unique_ptr<$product_namespace$::$idempotency_class_name$>
+  idempotency_policy(Options const& options) {
+    return options.get<$product_namespace$::$idempotency_class_name$Option>()->clone();
   }
 )""");
   if (HasLongrunningMethod()) {
     HeaderPrint(R"""(
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<$product_namespace$::$service_name$PollingPolicyOption>()) {
-      return options.get<$product_namespace$::$service_name$PollingPolicyOption>()->clone();
-    }
-    return options_.get<$product_namespace$::$service_name$PollingPolicyOption>()->clone();
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options.get<$product_namespace$::$service_name$PollingPolicyOption>()->clone();
   }
 )""");
   }
@@ -257,15 +242,15 @@ std::string ConnectionImplRestGenerator::MethodDefinition(
 StreamRange<$range_output_type$>
 $connection_impl_rest_class_name$::$method_name$($request_type$ request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<$product_namespace$::$retry_policy_name$ const>(retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->$method_name$(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->$method_name$(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<StreamRange<$range_output_type$>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name]
-        ($request_type$ const& r) {
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<$product_namespace$::$retry_policy_name$>(retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          $request_type$ const& r) {
         return google::cloud::rest_internal::RestRetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](rest_internal::RestContext& rest_context, $request_type$ const& request) {
@@ -354,30 +339,30 @@ future<StatusOr<$longrunning_deduced_response_type$>>)""",
         // in `google::cloud::internal`.
         R"""(
 $connection_impl_rest_class_name$::$method_name$($request_type$ const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestLongRunningOperation<)""",
         lro_template_types(), R"""(>(
     background_->cq(), request,
-    [stub](CompletionQueue& cq,
-          std::unique_ptr<rest_internal::RestContext> context,
-          $request_type$ const& request) {
+    [stub = stub_](CompletionQueue& cq,
+                   std::unique_ptr<rest_internal::RestContext> context,
+                   $request_type$ const& request) {
      return stub->Async$method_name$(cq, std::move(context), request);
     },
-    [stub](CompletionQueue& cq,
-          std::unique_ptr<rest_internal::RestContext> context,
-          $longrunning_get_operation_request_type$ const& request) {
+    [stub = stub_](CompletionQueue& cq,
+                   std::unique_ptr<rest_internal::RestContext> context,
+                   $longrunning_get_operation_request_type$ const& request) {
      return stub->AsyncGetOperation(cq, std::move(context), request);
     },
-    [stub](CompletionQueue& cq,
-          std::unique_ptr<rest_internal::RestContext> context,
-          $longrunning_cancel_operation_request_type$ const& request) {
+    [stub = stub_](CompletionQueue& cq,
+                   std::unique_ptr<rest_internal::RestContext> context,
+                   $longrunning_cancel_operation_request_type$ const& request) {
      return stub->AsyncCancelOperation(cq, std::move(context), request);
     },)""",
         extractor(),
         R"""(
-    retry_policy(), backoff_policy(),
-    idempotency_policy()->$method_name$(request),
-    polling_policy(), __func__)""",
+    retry_policy(*current), backoff_policy(*current),
+    idempotency_policy(*current)->$method_name$(request),
+    polling_policy(*current), __func__)""",
         is_operation_done(), get_request_set_operation(),
         cancel_request_set_operation(), R"""())""",
         // Finally, the internal::AsyncRestLongRunningOperation helper may
@@ -401,11 +386,12 @@ Status)"""
 StatusOr<$response_type$>)""",
                       R"""(
 $connection_impl_rest_class_name$::$method_name$($request_type$ const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->$method_name$(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->$method_name$(request),
       [this](rest_internal::RestContext& rest_context,
-          $request_type$ const& request) {
+             $request_type$ const& request) {
         return stub_->$method_name$(rest_context, request);
       },
       request, __func__);
@@ -421,14 +407,14 @@ future<Status>)"""
 future<StatusOr<$response_type$>>)""",
                       R"""(
 $connection_impl_rest_class_name$::Async$method_name$($request_type$ const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestRetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->$method_name$(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->$method_name$(request),
       background_->cq(),
-      [stub](CompletionQueue& cq,
-             std::unique_ptr<rest_internal::RestContext> context,
-             $request_type$ const& request) {
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     $request_type$ const& request) {
         return stub->Async$method_name$(cq, std::move(context), request);
       },
       request, __func__);
