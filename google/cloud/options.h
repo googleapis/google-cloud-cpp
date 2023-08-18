@@ -125,9 +125,15 @@ class Options {
    * @param v the value to set the option T
    */
   template <typename T>
-  Options& set(ValueTypeT<T> v) {
+  Options& set(ValueTypeT<T> v) & {
     m_[typeid(T)] = std::make_unique<Data<T>>(std::move(v));
     return *this;
+  }
+
+  /// @copydoc set(ValueTypeT<T>) &
+  template <typename T>
+  Options&& set(ValueTypeT<T> v) && {
+    return std::move(set<T>(std::move(v)));
   }
 
   /**
