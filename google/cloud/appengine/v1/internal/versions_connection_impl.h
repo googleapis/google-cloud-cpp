@@ -67,42 +67,24 @@ class VersionsConnectionImpl : public appengine_v1::VersionsConnection {
       google::appengine::v1::DeleteVersionRequest const& request) override;
 
  private:
-  std::unique_ptr<appengine_v1::VersionsRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<appengine_v1::VersionsRetryPolicyOption>()) {
-      return options.get<appengine_v1::VersionsRetryPolicyOption>()->clone();
-    }
-    return options_.get<appengine_v1::VersionsRetryPolicyOption>()->clone();
+  static std::unique_ptr<appengine_v1::VersionsRetryPolicy> retry_policy(
+      Options const& options) {
+    return options.get<appengine_v1::VersionsRetryPolicyOption>()->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<appengine_v1::VersionsBackoffPolicyOption>()) {
-      return options.get<appengine_v1::VersionsBackoffPolicyOption>()->clone();
-    }
-    return options_.get<appengine_v1::VersionsBackoffPolicyOption>()->clone();
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<appengine_v1::VersionsBackoffPolicyOption>()->clone();
   }
 
-  std::unique_ptr<appengine_v1::VersionsConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<appengine_v1::VersionsConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<appengine_v1::VersionsConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<appengine_v1::VersionsConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<appengine_v1::VersionsConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<appengine_v1::VersionsPollingPolicyOption>()) {
-      return options.get<appengine_v1::VersionsPollingPolicyOption>()->clone();
-    }
-    return options_.get<appengine_v1::VersionsPollingPolicyOption>()->clone();
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options.get<appengine_v1::VersionsPollingPolicyOption>()->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

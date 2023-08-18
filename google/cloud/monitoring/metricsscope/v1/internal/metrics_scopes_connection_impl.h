@@ -73,59 +73,30 @@ class MetricsScopesConnectionImpl
           request) override;
 
  private:
-  std::unique_ptr<monitoring_metricsscope_v1::MetricsScopesRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            monitoring_metricsscope_v1::MetricsScopesRetryPolicyOption>()) {
-      return options
-          .get<monitoring_metricsscope_v1::MetricsScopesRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<monitoring_metricsscope_v1::MetricsScopesRetryPolicy>
+  retry_policy(Options const& options) {
+    return options
         .get<monitoring_metricsscope_v1::MetricsScopesRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            monitoring_metricsscope_v1::MetricsScopesBackoffPolicyOption>()) {
-      return options
-          .get<monitoring_metricsscope_v1::MetricsScopesBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options
         .get<monitoring_metricsscope_v1::MetricsScopesBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<
+  static std::unique_ptr<
       monitoring_metricsscope_v1::MetricsScopesConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<monitoring_metricsscope_v1::
-                        MetricsScopesConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<monitoring_metricsscope_v1::
-                   MetricsScopesConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  idempotency_policy(Options const& options) {
+    return options
         .get<monitoring_metricsscope_v1::
                  MetricsScopesConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            monitoring_metricsscope_v1::MetricsScopesPollingPolicyOption>()) {
-      return options
-          .get<monitoring_metricsscope_v1::MetricsScopesPollingPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options
         .get<monitoring_metricsscope_v1::MetricsScopesPollingPolicyOption>()
         ->clone();
   }

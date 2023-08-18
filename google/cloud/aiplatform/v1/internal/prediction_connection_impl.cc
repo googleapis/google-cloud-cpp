@@ -43,8 +43,10 @@ PredictionServiceConnectionImpl::PredictionServiceConnectionImpl(
 StatusOr<google::cloud::aiplatform::v1::PredictResponse>
 PredictionServiceConnectionImpl::Predict(
     google::cloud::aiplatform::v1::PredictRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(), idempotency_policy()->Predict(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->Predict(request),
       [this](grpc::ClientContext& context,
              google::cloud::aiplatform::v1::PredictRequest const& request) {
         return stub_->Predict(context, request);
@@ -54,9 +56,10 @@ PredictionServiceConnectionImpl::Predict(
 
 StatusOr<google::api::HttpBody> PredictionServiceConnectionImpl::RawPredict(
     google::cloud::aiplatform::v1::RawPredictRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->RawPredict(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->RawPredict(request),
       [this](grpc::ClientContext& context,
              google::cloud::aiplatform::v1::RawPredictRequest const& request) {
         return stub_->RawPredict(context, request);
@@ -67,24 +70,20 @@ StatusOr<google::api::HttpBody> PredictionServiceConnectionImpl::RawPredict(
 StreamRange<google::cloud::aiplatform::v1::StreamingPredictResponse>
 PredictionServiceConnectionImpl::ServerStreamingPredict(
     google::cloud::aiplatform::v1::StreamingPredictRequest const& request) {
-  auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<aiplatform_v1::PredictionServiceRetryPolicy const>(
-          retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-
+  auto current = google::cloud::internal::SaveCurrentOptions();
   auto factory =
-      [stub](google::cloud::aiplatform::v1::StreamingPredictRequest const&
-                 request) {
+      [stub =
+           stub_](google::cloud::aiplatform::v1::StreamingPredictRequest const&
+                      request) {
         return stub->ServerStreamingPredict(
             std::make_shared<grpc::ClientContext>(), request);
       };
   auto resumable = internal::MakeResumableStreamingReadRpc<
       google::cloud::aiplatform::v1::StreamingPredictResponse,
       google::cloud::aiplatform::v1::StreamingPredictRequest>(
-      retry->clone(), backoff->clone(), [](std::chrono::milliseconds) {},
-      factory, PredictionServiceServerStreamingPredictStreamingUpdater,
-      request);
+      retry_policy(*current), backoff_policy(*current),
+      [](std::chrono::milliseconds) {}, factory,
+      PredictionServiceServerStreamingPredictStreamingUpdater, request);
   return internal::MakeStreamRange(
       internal::StreamReader<
           google::cloud::aiplatform::v1::StreamingPredictResponse>(
@@ -93,8 +92,10 @@ PredictionServiceConnectionImpl::ServerStreamingPredict(
 StatusOr<google::cloud::aiplatform::v1::ExplainResponse>
 PredictionServiceConnectionImpl::Explain(
     google::cloud::aiplatform::v1::ExplainRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(), idempotency_policy()->Explain(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->Explain(request),
       [this](grpc::ClientContext& context,
              google::cloud::aiplatform::v1::ExplainRequest const& request) {
         return stub_->Explain(context, request);

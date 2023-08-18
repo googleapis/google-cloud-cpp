@@ -40,8 +40,10 @@ TasksConnectionImpl::TasksConnectionImpl(
 
 StatusOr<google::cloud::run::v2::Task> TasksConnectionImpl::GetTask(
     google::cloud::run::v2::GetTaskRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(), idempotency_policy()->GetTask(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetTask(request),
       [this](grpc::ClientContext& context,
              google::cloud::run::v2::GetTaskRequest const& request) {
         return stub_->GetTask(context, request);
@@ -52,16 +54,17 @@ StatusOr<google::cloud::run::v2::Task> TasksConnectionImpl::GetTask(
 StreamRange<google::cloud::run::v2::Task> TasksConnectionImpl::ListTasks(
     google::cloud::run::v2::ListTasksRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<run_v2::TasksRetryPolicy const>(retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListTasks(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListTasks(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::run::v2::Task>>(
       std::move(request),
-      [stub, retry, backoff, idempotency,
-       function_name](google::cloud::run::v2::ListTasksRequest const& r) {
+      [idempotency, function_name, stub = stub_,
+       retry =
+           std::shared_ptr<run_v2::TasksRetryPolicy>(retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          google::cloud::run::v2::ListTasksRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context,

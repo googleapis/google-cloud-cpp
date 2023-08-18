@@ -120,46 +120,23 @@ class RegistrationServiceConnectionImpl
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
  private:
-  std::unique_ptr<servicedirectory_v1::RegistrationServiceRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<servicedirectory_v1::RegistrationServiceRetryPolicyOption>()) {
-      return options
-          .get<servicedirectory_v1::RegistrationServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<servicedirectory_v1::RegistrationServiceRetryPolicy>
+  retry_policy(Options const& options) {
+    return options
         .get<servicedirectory_v1::RegistrationServiceRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            servicedirectory_v1::RegistrationServiceBackoffPolicyOption>()) {
-      return options
-          .get<servicedirectory_v1::RegistrationServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options
         .get<servicedirectory_v1::RegistrationServiceBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<
+  static std::unique_ptr<
       servicedirectory_v1::RegistrationServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<servicedirectory_v1::
-                     RegistrationServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<servicedirectory_v1::
-                   RegistrationServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  idempotency_policy(Options const& options) {
+    return options
         .get<servicedirectory_v1::
                  RegistrationServiceConnectionIdempotencyPolicyOption>()
         ->clone();

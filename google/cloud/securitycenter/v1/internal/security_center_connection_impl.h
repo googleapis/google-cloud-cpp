@@ -259,51 +259,28 @@ class SecurityCenterConnectionImpl
       override;
 
  private:
-  std::unique_ptr<securitycenter_v1::SecurityCenterRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<securitycenter_v1::SecurityCenterRetryPolicyOption>()) {
-      return options.get<securitycenter_v1::SecurityCenterRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<securitycenter_v1::SecurityCenterRetryPolicyOption>()
+  static std::unique_ptr<securitycenter_v1::SecurityCenterRetryPolicy>
+  retry_policy(Options const& options) {
+    return options.get<securitycenter_v1::SecurityCenterRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<securitycenter_v1::SecurityCenterBackoffPolicyOption>()) {
-      return options
-          .get<securitycenter_v1::SecurityCenterBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<securitycenter_v1::SecurityCenterBackoffPolicyOption>()
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<securitycenter_v1::SecurityCenterBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<securitycenter_v1::SecurityCenterConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<securitycenter_v1::
-                        SecurityCenterConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<securitycenter_v1::
-                   SecurityCenterConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<
+      securitycenter_v1::SecurityCenterConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<securitycenter_v1::
                  SecurityCenterConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<securitycenter_v1::SecurityCenterPollingPolicyOption>()) {
-      return options
-          .get<securitycenter_v1::SecurityCenterPollingPolicyOption>()
-          ->clone();
-    }
-    return options_.get<securitycenter_v1::SecurityCenterPollingPolicyOption>()
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options.get<securitycenter_v1::SecurityCenterPollingPolicyOption>()
         ->clone();
   }
 

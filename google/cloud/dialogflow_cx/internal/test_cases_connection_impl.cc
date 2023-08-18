@@ -44,16 +44,16 @@ StreamRange<google::cloud::dialogflow::cx::v3::TestCase>
 TestCasesConnectionImpl::ListTestCases(
     google::cloud::dialogflow::cx::v3::ListTestCasesRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<dialogflow_cx::TestCasesRetryPolicy const>(
-      retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListTestCases(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListTestCases(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::dialogflow::cx::v3::TestCase>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<dialogflow_cx::TestCasesRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::dialogflow::cx::v3::ListTestCasesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
@@ -75,9 +75,10 @@ TestCasesConnectionImpl::ListTestCases(
 Status TestCasesConnectionImpl::BatchDeleteTestCases(
     google::cloud::dialogflow::cx::v3::BatchDeleteTestCasesRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->BatchDeleteTestCases(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->BatchDeleteTestCases(request),
       [this](
           grpc::ClientContext& context,
           google::cloud::dialogflow::cx::v3::BatchDeleteTestCasesRequest const&
@@ -90,9 +91,10 @@ Status TestCasesConnectionImpl::BatchDeleteTestCases(
 StatusOr<google::cloud::dialogflow::cx::v3::TestCase>
 TestCasesConnectionImpl::GetTestCase(
     google::cloud::dialogflow::cx::v3::GetTestCaseRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetTestCase(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetTestCase(request),
       [this](grpc::ClientContext& context,
              google::cloud::dialogflow::cx::v3::GetTestCaseRequest const&
                  request) { return stub_->GetTestCase(context, request); },
@@ -102,9 +104,10 @@ TestCasesConnectionImpl::GetTestCase(
 StatusOr<google::cloud::dialogflow::cx::v3::TestCase>
 TestCasesConnectionImpl::CreateTestCase(
     google::cloud::dialogflow::cx::v3::CreateTestCaseRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateTestCase(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateTestCase(request),
       [this](grpc::ClientContext& context,
              google::cloud::dialogflow::cx::v3::CreateTestCaseRequest const&
                  request) { return stub_->CreateTestCase(context, request); },
@@ -114,9 +117,10 @@ TestCasesConnectionImpl::CreateTestCase(
 StatusOr<google::cloud::dialogflow::cx::v3::TestCase>
 TestCasesConnectionImpl::UpdateTestCase(
     google::cloud::dialogflow::cx::v3::UpdateTestCaseRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UpdateTestCase(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateTestCase(request),
       [this](grpc::ClientContext& context,
              google::cloud::dialogflow::cx::v3::UpdateTestCaseRequest const&
                  request) { return stub_->UpdateTestCase(context, request); },
@@ -126,70 +130,76 @@ TestCasesConnectionImpl::UpdateTestCase(
 future<StatusOr<google::cloud::dialogflow::cx::v3::RunTestCaseResponse>>
 TestCasesConnectionImpl::RunTestCase(
     google::cloud::dialogflow::cx::v3::RunTestCaseRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::dialogflow::cx::v3::RunTestCaseResponse>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::dialogflow::cx::v3::RunTestCaseRequest const&
-                 request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::dialogflow::cx::v3::RunTestCaseRequest const&
+              request) {
         return stub->AsyncRunTestCase(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::dialogflow::cx::v3::RunTestCaseResponse>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->RunTestCase(request), polling_policy(), __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->RunTestCase(request),
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::BatchRunTestCasesResponse>>
 TestCasesConnectionImpl::BatchRunTestCases(
     google::cloud::dialogflow::cx::v3::BatchRunTestCasesRequest const&
         request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::dialogflow::cx::v3::BatchRunTestCasesResponse>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::dialogflow::cx::v3::BatchRunTestCasesRequest const&
-                 request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::dialogflow::cx::v3::BatchRunTestCasesRequest const&
+              request) {
         return stub->AsyncBatchRunTestCases(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::dialogflow::cx::v3::BatchRunTestCasesResponse>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->BatchRunTestCases(request), polling_policy(),
-      __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->BatchRunTestCases(request),
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::CalculateCoverageResponse>
 TestCasesConnectionImpl::CalculateCoverage(
     google::cloud::dialogflow::cx::v3::CalculateCoverageRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CalculateCoverage(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CalculateCoverage(request),
       [this](grpc::ClientContext& context,
              google::cloud::dialogflow::cx::v3::CalculateCoverageRequest const&
                  request) {
@@ -201,77 +211,81 @@ TestCasesConnectionImpl::CalculateCoverage(
 future<StatusOr<google::cloud::dialogflow::cx::v3::ImportTestCasesResponse>>
 TestCasesConnectionImpl::ImportTestCases(
     google::cloud::dialogflow::cx::v3::ImportTestCasesRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::dialogflow::cx::v3::ImportTestCasesResponse>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::dialogflow::cx::v3::ImportTestCasesRequest const&
-                 request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::dialogflow::cx::v3::ImportTestCasesRequest const&
+              request) {
         return stub->AsyncImportTestCases(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::dialogflow::cx::v3::ImportTestCasesResponse>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->ImportTestCases(request), polling_policy(),
-      __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ImportTestCases(request),
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::ExportTestCasesResponse>>
 TestCasesConnectionImpl::ExportTestCases(
     google::cloud::dialogflow::cx::v3::ExportTestCasesRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::dialogflow::cx::v3::ExportTestCasesResponse>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::dialogflow::cx::v3::ExportTestCasesRequest const&
-                 request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::dialogflow::cx::v3::ExportTestCasesRequest const&
+              request) {
         return stub->AsyncExportTestCases(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::dialogflow::cx::v3::ExportTestCasesResponse>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->ExportTestCases(request), polling_policy(),
-      __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ExportTestCases(request),
+      polling_policy(*current), __func__);
 }
 
 StreamRange<google::cloud::dialogflow::cx::v3::TestCaseResult>
 TestCasesConnectionImpl::ListTestCaseResults(
     google::cloud::dialogflow::cx::v3::ListTestCaseResultsRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<dialogflow_cx::TestCasesRetryPolicy const>(
-      retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListTestCaseResults(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListTestCaseResults(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::dialogflow::cx::v3::TestCaseResult>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<dialogflow_cx::TestCasesRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::dialogflow::cx::v3::ListTestCaseResultsRequest const&
               r) {
         return google::cloud::internal::RetryLoop(
@@ -296,9 +310,10 @@ StatusOr<google::cloud::dialogflow::cx::v3::TestCaseResult>
 TestCasesConnectionImpl::GetTestCaseResult(
     google::cloud::dialogflow::cx::v3::GetTestCaseResultRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetTestCaseResult(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetTestCaseResult(request),
       [this](grpc::ClientContext& context,
              google::cloud::dialogflow::cx::v3::GetTestCaseResultRequest const&
                  request) {

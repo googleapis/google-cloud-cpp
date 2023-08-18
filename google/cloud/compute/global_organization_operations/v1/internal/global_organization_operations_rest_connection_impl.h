@@ -68,52 +68,27 @@ class GlobalOrganizationOperationsRestConnectionImpl
           ListGlobalOrganizationOperationsRequest request) override;
 
  private:
-  std::unique_ptr<compute_global_organization_operations_v1::
-                      GlobalOrganizationOperationsRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_global_organization_operations_v1::
-                        GlobalOrganizationOperationsRetryPolicyOption>()) {
-      return options
-          .get<compute_global_organization_operations_v1::
-                   GlobalOrganizationOperationsRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<compute_global_organization_operations_v1::
+                             GlobalOrganizationOperationsRetryPolicy>
+  retry_policy(Options const& options) {
+    return options
         .get<compute_global_organization_operations_v1::
                  GlobalOrganizationOperationsRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_global_organization_operations_v1::
-                        GlobalOrganizationOperationsBackoffPolicyOption>()) {
-      return options
-          .get<compute_global_organization_operations_v1::
-                   GlobalOrganizationOperationsBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options
         .get<compute_global_organization_operations_v1::
                  GlobalOrganizationOperationsBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<compute_global_organization_operations_v1::
-                      GlobalOrganizationOperationsConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            compute_global_organization_operations_v1::
-                GlobalOrganizationOperationsConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<
-              compute_global_organization_operations_v1::
-                  GlobalOrganizationOperationsConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<
+      compute_global_organization_operations_v1::
+          GlobalOrganizationOperationsConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<
             compute_global_organization_operations_v1::
                 GlobalOrganizationOperationsConnectionIdempotencyPolicyOption>()

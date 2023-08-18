@@ -42,45 +42,48 @@ ApiKeysConnectionImpl::ApiKeysConnectionImpl(
 future<StatusOr<google::api::apikeys::v2::Key>>
 ApiKeysConnectionImpl::CreateKey(
     google::api::apikeys::v2::CreateKeyRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::api::apikeys::v2::Key>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::api::apikeys::v2::CreateKeyRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::api::apikeys::v2::CreateKeyRequest const& request) {
         return stub->AsyncCreateKey(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::api::apikeys::v2::Key>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateKey(request), polling_policy(), __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateKey(request),
+      polling_policy(*current), __func__);
 }
 
 StreamRange<google::api::apikeys::v2::Key> ApiKeysConnectionImpl::ListKeys(
     google::api::apikeys::v2::ListKeysRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<apikeys_v2::ApiKeysRetryPolicy const>(retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListKeys(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListKeys(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::api::apikeys::v2::Key>>(
       std::move(request),
-      [stub, retry, backoff, idempotency,
-       function_name](google::api::apikeys::v2::ListKeysRequest const& r) {
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<apikeys_v2::ApiKeysRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          google::api::apikeys::v2::ListKeysRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context,
@@ -99,8 +102,10 @@ StreamRange<google::api::apikeys::v2::Key> ApiKeysConnectionImpl::ListKeys(
 
 StatusOr<google::api::apikeys::v2::Key> ApiKeysConnectionImpl::GetKey(
     google::api::apikeys::v2::GetKeyRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(), idempotency_policy()->GetKey(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetKey(request),
       [this](grpc::ClientContext& context,
              google::api::apikeys::v2::GetKeyRequest const& request) {
         return stub_->GetKey(context, request);
@@ -111,9 +116,10 @@ StatusOr<google::api::apikeys::v2::Key> ApiKeysConnectionImpl::GetKey(
 StatusOr<google::api::apikeys::v2::GetKeyStringResponse>
 ApiKeysConnectionImpl::GetKeyString(
     google::api::apikeys::v2::GetKeyStringRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetKeyString(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetKeyString(request),
       [this](grpc::ClientContext& context,
              google::api::apikeys::v2::GetKeyStringRequest const& request) {
         return stub_->GetKeyString(context, request);
@@ -124,93 +130,103 @@ ApiKeysConnectionImpl::GetKeyString(
 future<StatusOr<google::api::apikeys::v2::Key>>
 ApiKeysConnectionImpl::UpdateKey(
     google::api::apikeys::v2::UpdateKeyRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::api::apikeys::v2::Key>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::api::apikeys::v2::UpdateKeyRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::api::apikeys::v2::UpdateKeyRequest const& request) {
         return stub->AsyncUpdateKey(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::api::apikeys::v2::Key>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UpdateKey(request), polling_policy(), __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateKey(request),
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::api::apikeys::v2::Key>>
 ApiKeysConnectionImpl::DeleteKey(
     google::api::apikeys::v2::DeleteKeyRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::api::apikeys::v2::Key>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::api::apikeys::v2::DeleteKeyRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::api::apikeys::v2::DeleteKeyRequest const& request) {
         return stub->AsyncDeleteKey(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::api::apikeys::v2::Key>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteKey(request), polling_policy(), __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteKey(request),
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::api::apikeys::v2::Key>>
 ApiKeysConnectionImpl::UndeleteKey(
     google::api::apikeys::v2::UndeleteKeyRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::api::apikeys::v2::Key>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::api::apikeys::v2::UndeleteKeyRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::api::apikeys::v2::UndeleteKeyRequest const& request) {
         return stub->AsyncUndeleteKey(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::api::apikeys::v2::Key>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UndeleteKey(request), polling_policy(), __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UndeleteKey(request),
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::api::apikeys::v2::LookupKeyResponse>
 ApiKeysConnectionImpl::LookupKey(
     google::api::apikeys::v2::LookupKeyRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->LookupKey(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->LookupKey(request),
       [this](grpc::ClientContext& context,
              google::api::apikeys::v2::LookupKeyRequest const& request) {
         return stub_->LookupKey(context, request);

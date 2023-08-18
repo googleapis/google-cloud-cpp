@@ -141,46 +141,25 @@ class BackupForGKEConnectionImpl : public gkebackup_v1::BackupForGKEConnection {
       override;
 
  private:
-  std::unique_ptr<gkebackup_v1::BackupForGKERetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<gkebackup_v1::BackupForGKERetryPolicyOption>()) {
-      return options.get<gkebackup_v1::BackupForGKERetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<gkebackup_v1::BackupForGKERetryPolicyOption>()->clone();
+  static std::unique_ptr<gkebackup_v1::BackupForGKERetryPolicy> retry_policy(
+      Options const& options) {
+    return options.get<gkebackup_v1::BackupForGKERetryPolicyOption>()->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<gkebackup_v1::BackupForGKEBackoffPolicyOption>()) {
-      return options.get<gkebackup_v1::BackupForGKEBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<gkebackup_v1::BackupForGKEBackoffPolicyOption>()
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<gkebackup_v1::BackupForGKEBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<gkebackup_v1::BackupForGKEConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            gkebackup_v1::BackupForGKEConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<gkebackup_v1::BackupForGKEConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<gkebackup_v1::BackupForGKEConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<gkebackup_v1::BackupForGKEConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<gkebackup_v1::BackupForGKEPollingPolicyOption>()) {
-      return options.get<gkebackup_v1::BackupForGKEPollingPolicyOption>()
-          ->clone();
-    }
-    return options_.get<gkebackup_v1::BackupForGKEPollingPolicyOption>()
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options.get<gkebackup_v1::BackupForGKEPollingPolicyOption>()
         ->clone();
   }
 

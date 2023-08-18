@@ -94,47 +94,25 @@ class EnvironmentsConnectionImpl
                  request) override;
 
  private:
-  std::unique_ptr<dialogflow_cx::EnvironmentsRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<dialogflow_cx::EnvironmentsRetryPolicyOption>()) {
-      return options.get<dialogflow_cx::EnvironmentsRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<dialogflow_cx::EnvironmentsRetryPolicyOption>()
+  static std::unique_ptr<dialogflow_cx::EnvironmentsRetryPolicy> retry_policy(
+      Options const& options) {
+    return options.get<dialogflow_cx::EnvironmentsRetryPolicyOption>()->clone();
+  }
+
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<dialogflow_cx::EnvironmentsBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<dialogflow_cx::EnvironmentsBackoffPolicyOption>()) {
-      return options.get<dialogflow_cx::EnvironmentsBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<dialogflow_cx::EnvironmentsBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<dialogflow_cx::EnvironmentsConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            dialogflow_cx::EnvironmentsConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<dialogflow_cx::EnvironmentsConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<dialogflow_cx::EnvironmentsConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<dialogflow_cx::EnvironmentsConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<dialogflow_cx::EnvironmentsPollingPolicyOption>()) {
-      return options.get<dialogflow_cx::EnvironmentsPollingPolicyOption>()
-          ->clone();
-    }
-    return options_.get<dialogflow_cx::EnvironmentsPollingPolicyOption>()
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options.get<dialogflow_cx::EnvironmentsPollingPolicyOption>()
         ->clone();
   }
 

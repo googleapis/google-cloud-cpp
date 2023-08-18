@@ -43,17 +43,17 @@ StreamRange<google::cloud::retail::v2::SearchResponse::SearchResult>
 SearchServiceConnectionImpl::Search(
     google::cloud::retail::v2::SearchRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<retail_v2::SearchServiceRetryPolicy const>(
-      retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->Search(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->Search(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::retail::v2::SearchResponse::SearchResult>>(
       std::move(request),
-      [stub, retry, backoff, idempotency,
-       function_name](google::cloud::retail::v2::SearchRequest const& r) {
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<retail_v2::SearchServiceRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          google::cloud::retail::v2::SearchRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context,

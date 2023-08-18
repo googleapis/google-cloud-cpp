@@ -52,32 +52,18 @@ class EventServiceConnectionImpl : public talent_v4::EventServiceConnection {
       override;
 
  private:
-  std::unique_ptr<talent_v4::EventServiceRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<talent_v4::EventServiceRetryPolicyOption>()) {
-      return options.get<talent_v4::EventServiceRetryPolicyOption>()->clone();
-    }
-    return options_.get<talent_v4::EventServiceRetryPolicyOption>()->clone();
+  static std::unique_ptr<talent_v4::EventServiceRetryPolicy> retry_policy(
+      Options const& options) {
+    return options.get<talent_v4::EventServiceRetryPolicyOption>()->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<talent_v4::EventServiceBackoffPolicyOption>()) {
-      return options.get<talent_v4::EventServiceBackoffPolicyOption>()->clone();
-    }
-    return options_.get<talent_v4::EventServiceBackoffPolicyOption>()->clone();
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<talent_v4::EventServiceBackoffPolicyOption>()->clone();
   }
 
-  std::unique_ptr<talent_v4::EventServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<talent_v4::EventServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<talent_v4::EventServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<talent_v4::EventServiceConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<talent_v4::EventServiceConnectionIdempotencyPolicyOption>()
         ->clone();
   }

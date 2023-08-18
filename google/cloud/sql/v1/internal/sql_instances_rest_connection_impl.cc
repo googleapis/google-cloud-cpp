@@ -42,9 +42,10 @@ SqlInstancesServiceRestConnectionImpl::SqlInstancesServiceRestConnectionImpl(
 StatusOr<google::cloud::sql::v1::Operation>
 SqlInstancesServiceRestConnectionImpl::AddServerCa(
     google::cloud::sql::v1::SqlInstancesAddServerCaRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->AddServerCa(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->AddServerCa(request),
       [this](rest_internal::RestContext& rest_context,
              google::cloud::sql::v1::SqlInstancesAddServerCaRequest const&
                  request) { return stub_->AddServerCa(rest_context, request); },
@@ -54,8 +55,10 @@ SqlInstancesServiceRestConnectionImpl::AddServerCa(
 StatusOr<google::cloud::sql::v1::Operation>
 SqlInstancesServiceRestConnectionImpl::Clone(
     google::cloud::sql::v1::SqlInstancesCloneRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
-      retry_policy(), backoff_policy(), idempotency_policy()->Clone(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->Clone(request),
       [this](rest_internal::RestContext& rest_context,
              google::cloud::sql::v1::SqlInstancesCloneRequest const& request) {
         return stub_->Clone(rest_context, request);
@@ -66,8 +69,10 @@ SqlInstancesServiceRestConnectionImpl::Clone(
 StatusOr<google::cloud::sql::v1::Operation>
 SqlInstancesServiceRestConnectionImpl::Delete(
     google::cloud::sql::v1::SqlInstancesDeleteRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
-      retry_policy(), backoff_policy(), idempotency_policy()->Delete(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->Delete(request),
       [this](rest_internal::RestContext& rest_context,
              google::cloud::sql::v1::SqlInstancesDeleteRequest const& request) {
         return stub_->Delete(rest_context, request);
@@ -78,9 +83,10 @@ SqlInstancesServiceRestConnectionImpl::Delete(
 StatusOr<google::cloud::sql::v1::Operation>
 SqlInstancesServiceRestConnectionImpl::DemoteMaster(
     google::cloud::sql::v1::SqlInstancesDemoteMasterRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DemoteMaster(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DemoteMaster(request),
       [this](rest_internal::RestContext& rest_context,
              google::cloud::sql::v1::SqlInstancesDemoteMasterRequest const&
                  request) {
@@ -92,8 +98,10 @@ SqlInstancesServiceRestConnectionImpl::DemoteMaster(
 StatusOr<google::cloud::sql::v1::Operation>
 SqlInstancesServiceRestConnectionImpl::Export(
     google::cloud::sql::v1::SqlInstancesExportRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
-      retry_policy(), backoff_policy(), idempotency_policy()->Export(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->Export(request),
       [this](rest_internal::RestContext& rest_context,
              google::cloud::sql::v1::SqlInstancesExportRequest const& request) {
         return stub_->Export(rest_context, request);
@@ -104,8 +112,10 @@ SqlInstancesServiceRestConnectionImpl::Export(
 StatusOr<google::cloud::sql::v1::Operation>
 SqlInstancesServiceRestConnectionImpl::Failover(
     google::cloud::sql::v1::SqlInstancesFailoverRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
-      retry_policy(), backoff_policy(), idempotency_policy()->Failover(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->Failover(request),
       [this](
           rest_internal::RestContext& rest_context,
           google::cloud::sql::v1::SqlInstancesFailoverRequest const& request) {
@@ -117,9 +127,10 @@ SqlInstancesServiceRestConnectionImpl::Failover(
 StatusOr<google::cloud::sql::v1::Operation>
 SqlInstancesServiceRestConnectionImpl::Reencrypt(
     google::cloud::sql::v1::SqlInstancesReencryptRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->Reencrypt(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->Reencrypt(request),
       [this](
           rest_internal::RestContext& rest_context,
           google::cloud::sql::v1::SqlInstancesReencryptRequest const& request) {
@@ -131,8 +142,10 @@ SqlInstancesServiceRestConnectionImpl::Reencrypt(
 StatusOr<google::cloud::sql::v1::DatabaseInstance>
 SqlInstancesServiceRestConnectionImpl::Get(
     google::cloud::sql::v1::SqlInstancesGetRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
-      retry_policy(), backoff_policy(), idempotency_policy()->Get(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->Get(request),
       [this](rest_internal::RestContext& rest_context,
              google::cloud::sql::v1::SqlInstancesGetRequest const& request) {
         return stub_->Get(rest_context, request);
@@ -143,8 +156,10 @@ SqlInstancesServiceRestConnectionImpl::Get(
 StatusOr<google::cloud::sql::v1::Operation>
 SqlInstancesServiceRestConnectionImpl::Import(
     google::cloud::sql::v1::SqlInstancesImportRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
-      retry_policy(), backoff_policy(), idempotency_policy()->Import(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->Import(request),
       [this](rest_internal::RestContext& rest_context,
              google::cloud::sql::v1::SqlInstancesImportRequest const& request) {
         return stub_->Import(rest_context, request);
@@ -155,8 +170,10 @@ SqlInstancesServiceRestConnectionImpl::Import(
 StatusOr<google::cloud::sql::v1::Operation>
 SqlInstancesServiceRestConnectionImpl::Insert(
     google::cloud::sql::v1::SqlInstancesInsertRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
-      retry_policy(), backoff_policy(), idempotency_policy()->Insert(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->Insert(request),
       [this](rest_internal::RestContext& rest_context,
              google::cloud::sql::v1::SqlInstancesInsertRequest const& request) {
         return stub_->Insert(rest_context, request);
@@ -168,16 +185,16 @@ StreamRange<google::cloud::sql::v1::DatabaseInstance>
 SqlInstancesServiceRestConnectionImpl::List(
     google::cloud::sql::v1::SqlInstancesListRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<sql_v1::SqlInstancesServiceRetryPolicy const>(
-      retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->List(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->List(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::sql::v1::DatabaseInstance>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<sql_v1::SqlInstancesServiceRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::sql::v1::SqlInstancesListRequest const& r) {
         return google::cloud::rest_internal::RestRetryLoop(
             retry->clone(), backoff->clone(), idempotency,
@@ -198,9 +215,10 @@ SqlInstancesServiceRestConnectionImpl::List(
 StatusOr<google::cloud::sql::v1::InstancesListServerCasResponse>
 SqlInstancesServiceRestConnectionImpl::ListServerCas(
     google::cloud::sql::v1::SqlInstancesListServerCasRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->ListServerCas(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ListServerCas(request),
       [this](rest_internal::RestContext& rest_context,
              google::cloud::sql::v1::SqlInstancesListServerCasRequest const&
                  request) {
@@ -212,8 +230,10 @@ SqlInstancesServiceRestConnectionImpl::ListServerCas(
 StatusOr<google::cloud::sql::v1::Operation>
 SqlInstancesServiceRestConnectionImpl::Patch(
     google::cloud::sql::v1::SqlInstancesPatchRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
-      retry_policy(), backoff_policy(), idempotency_policy()->Patch(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->Patch(request),
       [this](rest_internal::RestContext& rest_context,
              google::cloud::sql::v1::SqlInstancesPatchRequest const& request) {
         return stub_->Patch(rest_context, request);
@@ -224,9 +244,10 @@ SqlInstancesServiceRestConnectionImpl::Patch(
 StatusOr<google::cloud::sql::v1::Operation>
 SqlInstancesServiceRestConnectionImpl::PromoteReplica(
     google::cloud::sql::v1::SqlInstancesPromoteReplicaRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->PromoteReplica(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->PromoteReplica(request),
       [this](rest_internal::RestContext& rest_context,
              google::cloud::sql::v1::SqlInstancesPromoteReplicaRequest const&
                  request) {
@@ -238,9 +259,10 @@ SqlInstancesServiceRestConnectionImpl::PromoteReplica(
 StatusOr<google::cloud::sql::v1::Operation>
 SqlInstancesServiceRestConnectionImpl::ResetSslConfig(
     google::cloud::sql::v1::SqlInstancesResetSslConfigRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->ResetSslConfig(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ResetSslConfig(request),
       [this](rest_internal::RestContext& rest_context,
              google::cloud::sql::v1::SqlInstancesResetSslConfigRequest const&
                  request) {
@@ -252,8 +274,10 @@ SqlInstancesServiceRestConnectionImpl::ResetSslConfig(
 StatusOr<google::cloud::sql::v1::Operation>
 SqlInstancesServiceRestConnectionImpl::Restart(
     google::cloud::sql::v1::SqlInstancesRestartRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
-      retry_policy(), backoff_policy(), idempotency_policy()->Restart(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->Restart(request),
       [this](
           rest_internal::RestContext& rest_context,
           google::cloud::sql::v1::SqlInstancesRestartRequest const& request) {
@@ -265,9 +289,10 @@ SqlInstancesServiceRestConnectionImpl::Restart(
 StatusOr<google::cloud::sql::v1::Operation>
 SqlInstancesServiceRestConnectionImpl::RestoreBackup(
     google::cloud::sql::v1::SqlInstancesRestoreBackupRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->RestoreBackup(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->RestoreBackup(request),
       [this](rest_internal::RestContext& rest_context,
              google::cloud::sql::v1::SqlInstancesRestoreBackupRequest const&
                  request) {
@@ -279,9 +304,10 @@ SqlInstancesServiceRestConnectionImpl::RestoreBackup(
 StatusOr<google::cloud::sql::v1::Operation>
 SqlInstancesServiceRestConnectionImpl::RotateServerCa(
     google::cloud::sql::v1::SqlInstancesRotateServerCaRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->RotateServerCa(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->RotateServerCa(request),
       [this](rest_internal::RestContext& rest_context,
              google::cloud::sql::v1::SqlInstancesRotateServerCaRequest const&
                  request) {
@@ -293,9 +319,10 @@ SqlInstancesServiceRestConnectionImpl::RotateServerCa(
 StatusOr<google::cloud::sql::v1::Operation>
 SqlInstancesServiceRestConnectionImpl::StartReplica(
     google::cloud::sql::v1::SqlInstancesStartReplicaRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->StartReplica(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->StartReplica(request),
       [this](rest_internal::RestContext& rest_context,
              google::cloud::sql::v1::SqlInstancesStartReplicaRequest const&
                  request) {
@@ -307,9 +334,10 @@ SqlInstancesServiceRestConnectionImpl::StartReplica(
 StatusOr<google::cloud::sql::v1::Operation>
 SqlInstancesServiceRestConnectionImpl::StopReplica(
     google::cloud::sql::v1::SqlInstancesStopReplicaRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->StopReplica(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->StopReplica(request),
       [this](rest_internal::RestContext& rest_context,
              google::cloud::sql::v1::SqlInstancesStopReplicaRequest const&
                  request) { return stub_->StopReplica(rest_context, request); },
@@ -319,9 +347,10 @@ SqlInstancesServiceRestConnectionImpl::StopReplica(
 StatusOr<google::cloud::sql::v1::Operation>
 SqlInstancesServiceRestConnectionImpl::TruncateLog(
     google::cloud::sql::v1::SqlInstancesTruncateLogRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->TruncateLog(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->TruncateLog(request),
       [this](rest_internal::RestContext& rest_context,
              google::cloud::sql::v1::SqlInstancesTruncateLogRequest const&
                  request) { return stub_->TruncateLog(rest_context, request); },
@@ -331,8 +360,10 @@ SqlInstancesServiceRestConnectionImpl::TruncateLog(
 StatusOr<google::cloud::sql::v1::Operation>
 SqlInstancesServiceRestConnectionImpl::Update(
     google::cloud::sql::v1::SqlInstancesUpdateRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
-      retry_policy(), backoff_policy(), idempotency_policy()->Update(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->Update(request),
       [this](rest_internal::RestContext& rest_context,
              google::cloud::sql::v1::SqlInstancesUpdateRequest const& request) {
         return stub_->Update(rest_context, request);
@@ -344,9 +375,10 @@ StatusOr<google::cloud::sql::v1::SslCert>
 SqlInstancesServiceRestConnectionImpl::CreateEphemeral(
     google::cloud::sql::v1::SqlInstancesCreateEphemeralCertRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateEphemeral(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateEphemeral(request),
       [this](
           rest_internal::RestContext& rest_context,
           google::cloud::sql::v1::SqlInstancesCreateEphemeralCertRequest const&
@@ -360,9 +392,10 @@ StatusOr<google::cloud::sql::v1::Operation>
 SqlInstancesServiceRestConnectionImpl::RescheduleMaintenance(
     google::cloud::sql::v1::SqlInstancesRescheduleMaintenanceRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->RescheduleMaintenance(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->RescheduleMaintenance(request),
       [this](rest_internal::RestContext& rest_context,
              google::cloud::sql::v1::
                  SqlInstancesRescheduleMaintenanceRequest const& request) {
@@ -375,9 +408,10 @@ StatusOr<google::cloud::sql::v1::SqlInstancesVerifyExternalSyncSettingsResponse>
 SqlInstancesServiceRestConnectionImpl::VerifyExternalSyncSettings(
     google::cloud::sql::v1::SqlInstancesVerifyExternalSyncSettingsRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->VerifyExternalSyncSettings(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->VerifyExternalSyncSettings(request),
       [this](rest_internal::RestContext& rest_context,
              google::cloud::sql::v1::
                  SqlInstancesVerifyExternalSyncSettingsRequest const& request) {
@@ -390,9 +424,10 @@ StatusOr<google::cloud::sql::v1::Operation>
 SqlInstancesServiceRestConnectionImpl::StartExternalSync(
     google::cloud::sql::v1::SqlInstancesStartExternalSyncRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->StartExternalSync(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->StartExternalSync(request),
       [this](rest_internal::RestContext& rest_context,
              google::cloud::sql::v1::SqlInstancesStartExternalSyncRequest const&
                  request) {
@@ -405,9 +440,10 @@ StatusOr<google::cloud::sql::v1::Operation>
 SqlInstancesServiceRestConnectionImpl::PerformDiskShrink(
     google::cloud::sql::v1::SqlInstancesPerformDiskShrinkRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->PerformDiskShrink(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->PerformDiskShrink(request),
       [this](rest_internal::RestContext& rest_context,
              google::cloud::sql::v1::SqlInstancesPerformDiskShrinkRequest const&
                  request) {
@@ -420,9 +456,10 @@ StatusOr<google::cloud::sql::v1::SqlInstancesGetDiskShrinkConfigResponse>
 SqlInstancesServiceRestConnectionImpl::GetDiskShrinkConfig(
     google::cloud::sql::v1::SqlInstancesGetDiskShrinkConfigRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetDiskShrinkConfig(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetDiskShrinkConfig(request),
       [this](
           rest_internal::RestContext& rest_context,
           google::cloud::sql::v1::SqlInstancesGetDiskShrinkConfigRequest const&
@@ -436,9 +473,10 @@ StatusOr<google::cloud::sql::v1::Operation>
 SqlInstancesServiceRestConnectionImpl::ResetReplicaSize(
     google::cloud::sql::v1::SqlInstancesResetReplicaSizeRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->ResetReplicaSize(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ResetReplicaSize(request),
       [this](rest_internal::RestContext& rest_context,
              google::cloud::sql::v1::SqlInstancesResetReplicaSizeRequest const&
                  request) {

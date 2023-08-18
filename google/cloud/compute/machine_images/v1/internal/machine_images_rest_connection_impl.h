@@ -80,59 +80,30 @@ class MachineImagesRestConnectionImpl
                          TestIamPermissionsRequest const& request) override;
 
  private:
-  std::unique_ptr<compute_machine_images_v1::MachineImagesRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<compute_machine_images_v1::MachineImagesRetryPolicyOption>()) {
-      return options
-          .get<compute_machine_images_v1::MachineImagesRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<compute_machine_images_v1::MachineImagesRetryPolicy>
+  retry_policy(Options const& options) {
+    return options
         .get<compute_machine_images_v1::MachineImagesRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            compute_machine_images_v1::MachineImagesBackoffPolicyOption>()) {
-      return options
-          .get<compute_machine_images_v1::MachineImagesBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options
         .get<compute_machine_images_v1::MachineImagesBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<
+  static std::unique_ptr<
       compute_machine_images_v1::MachineImagesConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_machine_images_v1::
-                        MachineImagesConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<compute_machine_images_v1::
-                   MachineImagesConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  idempotency_policy(Options const& options) {
+    return options
         .get<compute_machine_images_v1::
                  MachineImagesConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            compute_machine_images_v1::MachineImagesPollingPolicyOption>()) {
-      return options
-          .get<compute_machine_images_v1::MachineImagesPollingPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options
         .get<compute_machine_images_v1::MachineImagesPollingPolicyOption>()
         ->clone();
   }

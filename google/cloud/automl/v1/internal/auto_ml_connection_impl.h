@@ -107,39 +107,23 @@ class AutoMlConnectionImpl : public automl_v1::AutoMlConnection {
       google::cloud::automl::v1::ListModelEvaluationsRequest request) override;
 
  private:
-  std::unique_ptr<automl_v1::AutoMlRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<automl_v1::AutoMlRetryPolicyOption>()) {
-      return options.get<automl_v1::AutoMlRetryPolicyOption>()->clone();
-    }
-    return options_.get<automl_v1::AutoMlRetryPolicyOption>()->clone();
+  static std::unique_ptr<automl_v1::AutoMlRetryPolicy> retry_policy(
+      Options const& options) {
+    return options.get<automl_v1::AutoMlRetryPolicyOption>()->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<automl_v1::AutoMlBackoffPolicyOption>()) {
-      return options.get<automl_v1::AutoMlBackoffPolicyOption>()->clone();
-    }
-    return options_.get<automl_v1::AutoMlBackoffPolicyOption>()->clone();
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<automl_v1::AutoMlBackoffPolicyOption>()->clone();
   }
 
-  std::unique_ptr<automl_v1::AutoMlConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<automl_v1::AutoMlConnectionIdempotencyPolicyOption>()) {
-      return options.get<automl_v1::AutoMlConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_.get<automl_v1::AutoMlConnectionIdempotencyPolicyOption>()
+  static std::unique_ptr<automl_v1::AutoMlConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options.get<automl_v1::AutoMlConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<automl_v1::AutoMlPollingPolicyOption>()) {
-      return options.get<automl_v1::AutoMlPollingPolicyOption>()->clone();
-    }
-    return options_.get<automl_v1::AutoMlPollingPolicyOption>()->clone();
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options.get<automl_v1::AutoMlPollingPolicyOption>()->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

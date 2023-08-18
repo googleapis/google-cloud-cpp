@@ -61,47 +61,27 @@ class FleetRoutingConnectionImpl
       override;
 
  private:
-  std::unique_ptr<optimization_v1::FleetRoutingRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<optimization_v1::FleetRoutingRetryPolicyOption>()) {
-      return options.get<optimization_v1::FleetRoutingRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<optimization_v1::FleetRoutingRetryPolicyOption>()
+  static std::unique_ptr<optimization_v1::FleetRoutingRetryPolicy> retry_policy(
+      Options const& options) {
+    return options.get<optimization_v1::FleetRoutingRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<optimization_v1::FleetRoutingBackoffPolicyOption>()) {
-      return options.get<optimization_v1::FleetRoutingBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<optimization_v1::FleetRoutingBackoffPolicyOption>()
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<optimization_v1::FleetRoutingBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<optimization_v1::FleetRoutingConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            optimization_v1::FleetRoutingConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<optimization_v1::FleetRoutingConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<
+      optimization_v1::FleetRoutingConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<optimization_v1::FleetRoutingConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<optimization_v1::FleetRoutingPollingPolicyOption>()) {
-      return options.get<optimization_v1::FleetRoutingPollingPolicyOption>()
-          ->clone();
-    }
-    return options_.get<optimization_v1::FleetRoutingPollingPolicyOption>()
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options.get<optimization_v1::FleetRoutingPollingPolicyOption>()
         ->clone();
   }
 

@@ -78,39 +78,23 @@ class JobsConnectionImpl : public run_v2::JobsConnection {
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
  private:
-  std::unique_ptr<run_v2::JobsRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<run_v2::JobsRetryPolicyOption>()) {
-      return options.get<run_v2::JobsRetryPolicyOption>()->clone();
-    }
-    return options_.get<run_v2::JobsRetryPolicyOption>()->clone();
+  static std::unique_ptr<run_v2::JobsRetryPolicy> retry_policy(
+      Options const& options) {
+    return options.get<run_v2::JobsRetryPolicyOption>()->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<run_v2::JobsBackoffPolicyOption>()) {
-      return options.get<run_v2::JobsBackoffPolicyOption>()->clone();
-    }
-    return options_.get<run_v2::JobsBackoffPolicyOption>()->clone();
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<run_v2::JobsBackoffPolicyOption>()->clone();
   }
 
-  std::unique_ptr<run_v2::JobsConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<run_v2::JobsConnectionIdempotencyPolicyOption>()) {
-      return options.get<run_v2::JobsConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_.get<run_v2::JobsConnectionIdempotencyPolicyOption>()
+  static std::unique_ptr<run_v2::JobsConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options.get<run_v2::JobsConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<run_v2::JobsPollingPolicyOption>()) {
-      return options.get<run_v2::JobsPollingPolicyOption>()->clone();
-    }
-    return options_.get<run_v2::JobsPollingPolicyOption>()->clone();
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options.get<run_v2::JobsPollingPolicyOption>()->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

@@ -55,33 +55,18 @@ class CloudCatalogConnectionImpl : public billing_v1::CloudCatalogConnection {
       google::cloud::billing::v1::ListSkusRequest request) override;
 
  private:
-  std::unique_ptr<billing_v1::CloudCatalogRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<billing_v1::CloudCatalogRetryPolicyOption>()) {
-      return options.get<billing_v1::CloudCatalogRetryPolicyOption>()->clone();
-    }
-    return options_.get<billing_v1::CloudCatalogRetryPolicyOption>()->clone();
+  static std::unique_ptr<billing_v1::CloudCatalogRetryPolicy> retry_policy(
+      Options const& options) {
+    return options.get<billing_v1::CloudCatalogRetryPolicyOption>()->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<billing_v1::CloudCatalogBackoffPolicyOption>()) {
-      return options.get<billing_v1::CloudCatalogBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<billing_v1::CloudCatalogBackoffPolicyOption>()->clone();
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<billing_v1::CloudCatalogBackoffPolicyOption>()->clone();
   }
 
-  std::unique_ptr<billing_v1::CloudCatalogConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<billing_v1::CloudCatalogConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<billing_v1::CloudCatalogConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<billing_v1::CloudCatalogConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<billing_v1::CloudCatalogConnectionIdempotencyPolicyOption>()
         ->clone();
   }

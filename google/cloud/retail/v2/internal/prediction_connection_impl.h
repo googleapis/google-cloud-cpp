@@ -52,36 +52,21 @@ class PredictionServiceConnectionImpl
       google::cloud::retail::v2::PredictRequest const& request) override;
 
  private:
-  std::unique_ptr<retail_v2::PredictionServiceRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<retail_v2::PredictionServiceRetryPolicyOption>()) {
-      return options.get<retail_v2::PredictionServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<retail_v2::PredictionServiceRetryPolicyOption>()
+  static std::unique_ptr<retail_v2::PredictionServiceRetryPolicy> retry_policy(
+      Options const& options) {
+    return options.get<retail_v2::PredictionServiceRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<retail_v2::PredictionServiceBackoffPolicyOption>()) {
-      return options.get<retail_v2::PredictionServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<retail_v2::PredictionServiceBackoffPolicyOption>()
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<retail_v2::PredictionServiceBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<retail_v2::PredictionServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            retail_v2::PredictionServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<retail_v2::PredictionServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<
+      retail_v2::PredictionServiceConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<retail_v2::PredictionServiceConnectionIdempotencyPolicyOption>()
         ->clone();
   }

@@ -42,17 +42,17 @@ StreamRange<google::appengine::v1::FirewallRule>
 FirewallConnectionImpl::ListIngressRules(
     google::appengine::v1::ListIngressRulesRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<appengine_v1::FirewallRetryPolicy const>(retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListIngressRules(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListIngressRules(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::appengine::v1::FirewallRule>>(
       std::move(request),
-      [stub, retry, backoff, idempotency,
-       function_name](google::appengine::v1::ListIngressRulesRequest const& r) {
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<appengine_v1::FirewallRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          google::appengine::v1::ListIngressRulesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
@@ -74,9 +74,10 @@ FirewallConnectionImpl::ListIngressRules(
 StatusOr<google::appengine::v1::BatchUpdateIngressRulesResponse>
 FirewallConnectionImpl::BatchUpdateIngressRules(
     google::appengine::v1::BatchUpdateIngressRulesRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->BatchUpdateIngressRules(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->BatchUpdateIngressRules(request),
       [this](grpc::ClientContext& context,
              google::appengine::v1::BatchUpdateIngressRulesRequest const&
                  request) {
@@ -88,9 +89,10 @@ FirewallConnectionImpl::BatchUpdateIngressRules(
 StatusOr<google::appengine::v1::FirewallRule>
 FirewallConnectionImpl::CreateIngressRule(
     google::appengine::v1::CreateIngressRuleRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateIngressRule(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateIngressRule(request),
       [this](grpc::ClientContext& context,
              google::appengine::v1::CreateIngressRuleRequest const& request) {
         return stub_->CreateIngressRule(context, request);
@@ -101,9 +103,10 @@ FirewallConnectionImpl::CreateIngressRule(
 StatusOr<google::appengine::v1::FirewallRule>
 FirewallConnectionImpl::GetIngressRule(
     google::appengine::v1::GetIngressRuleRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetIngressRule(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetIngressRule(request),
       [this](grpc::ClientContext& context,
              google::appengine::v1::GetIngressRuleRequest const& request) {
         return stub_->GetIngressRule(context, request);
@@ -114,9 +117,10 @@ FirewallConnectionImpl::GetIngressRule(
 StatusOr<google::appengine::v1::FirewallRule>
 FirewallConnectionImpl::UpdateIngressRule(
     google::appengine::v1::UpdateIngressRuleRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UpdateIngressRule(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateIngressRule(request),
       [this](grpc::ClientContext& context,
              google::appengine::v1::UpdateIngressRuleRequest const& request) {
         return stub_->UpdateIngressRule(context, request);
@@ -126,9 +130,10 @@ FirewallConnectionImpl::UpdateIngressRule(
 
 Status FirewallConnectionImpl::DeleteIngressRule(
     google::appengine::v1::DeleteIngressRuleRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteIngressRule(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteIngressRule(request),
       [this](grpc::ClientContext& context,
              google::appengine::v1::DeleteIngressRuleRequest const& request) {
         return stub_->DeleteIngressRule(context, request);

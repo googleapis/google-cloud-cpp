@@ -64,52 +64,27 @@ class InterconnectRemoteLocationsRestConnectionImpl
           ListInterconnectRemoteLocationsRequest request) override;
 
  private:
-  std::unique_ptr<compute_interconnect_remote_locations_v1::
-                      InterconnectRemoteLocationsRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_interconnect_remote_locations_v1::
-                        InterconnectRemoteLocationsRetryPolicyOption>()) {
-      return options
-          .get<compute_interconnect_remote_locations_v1::
-                   InterconnectRemoteLocationsRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<compute_interconnect_remote_locations_v1::
+                             InterconnectRemoteLocationsRetryPolicy>
+  retry_policy(Options const& options) {
+    return options
         .get<compute_interconnect_remote_locations_v1::
                  InterconnectRemoteLocationsRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_interconnect_remote_locations_v1::
-                        InterconnectRemoteLocationsBackoffPolicyOption>()) {
-      return options
-          .get<compute_interconnect_remote_locations_v1::
-                   InterconnectRemoteLocationsBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options
         .get<compute_interconnect_remote_locations_v1::
                  InterconnectRemoteLocationsBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<compute_interconnect_remote_locations_v1::
-                      InterconnectRemoteLocationsConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            compute_interconnect_remote_locations_v1::
-                InterconnectRemoteLocationsConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<
-              compute_interconnect_remote_locations_v1::
-                  InterconnectRemoteLocationsConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<
+      compute_interconnect_remote_locations_v1::
+          InterconnectRemoteLocationsConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<compute_interconnect_remote_locations_v1::
                  InterconnectRemoteLocationsConnectionIdempotencyPolicyOption>()
         ->clone();

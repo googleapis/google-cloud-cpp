@@ -76,59 +76,29 @@ class SpecialistPoolServiceConnectionImpl
       override;
 
  private:
-  std::unique_ptr<aiplatform_v1::SpecialistPoolServiceRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<aiplatform_v1::SpecialistPoolServiceRetryPolicyOption>()) {
-      return options
-          .get<aiplatform_v1::SpecialistPoolServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<aiplatform_v1::SpecialistPoolServiceRetryPolicyOption>()
+  static std::unique_ptr<aiplatform_v1::SpecialistPoolServiceRetryPolicy>
+  retry_policy(Options const& options) {
+    return options.get<aiplatform_v1::SpecialistPoolServiceRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<aiplatform_v1::SpecialistPoolServiceBackoffPolicyOption>()) {
-      return options
-          .get<aiplatform_v1::SpecialistPoolServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options
         .get<aiplatform_v1::SpecialistPoolServiceBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<
+  static std::unique_ptr<
       aiplatform_v1::SpecialistPoolServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            aiplatform_v1::
-                SpecialistPoolServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<aiplatform_v1::
-                   SpecialistPoolServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  idempotency_policy(Options const& options) {
+    return options
         .get<aiplatform_v1::
                  SpecialistPoolServiceConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<aiplatform_v1::SpecialistPoolServicePollingPolicyOption>()) {
-      return options
-          .get<aiplatform_v1::SpecialistPoolServicePollingPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options
         .get<aiplatform_v1::SpecialistPoolServicePollingPolicyOption>()
         ->clone();
   }

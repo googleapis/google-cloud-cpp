@@ -43,16 +43,16 @@ StreamRange<google::cloud::dialogflow::cx::v3::Changelog>
 ChangelogsConnectionImpl::ListChangelogs(
     google::cloud::dialogflow::cx::v3::ListChangelogsRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<dialogflow_cx::ChangelogsRetryPolicy const>(
-      retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListChangelogs(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListChangelogs(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::dialogflow::cx::v3::Changelog>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<dialogflow_cx::ChangelogsRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::dialogflow::cx::v3::ListChangelogsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
@@ -74,9 +74,10 @@ ChangelogsConnectionImpl::ListChangelogs(
 StatusOr<google::cloud::dialogflow::cx::v3::Changelog>
 ChangelogsConnectionImpl::GetChangelog(
     google::cloud::dialogflow::cx::v3::GetChangelogRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetChangelog(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetChangelog(request),
       [this](grpc::ClientContext& context,
              google::cloud::dialogflow::cx::v3::GetChangelogRequest const&
                  request) { return stub_->GetChangelog(context, request); },

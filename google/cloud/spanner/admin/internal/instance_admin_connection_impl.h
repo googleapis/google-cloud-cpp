@@ -112,47 +112,27 @@ class InstanceAdminConnectionImpl
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
  private:
-  std::unique_ptr<spanner_admin::InstanceAdminRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<spanner_admin::InstanceAdminRetryPolicyOption>()) {
-      return options.get<spanner_admin::InstanceAdminRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<spanner_admin::InstanceAdminRetryPolicyOption>()
+  static std::unique_ptr<spanner_admin::InstanceAdminRetryPolicy> retry_policy(
+      Options const& options) {
+    return options.get<spanner_admin::InstanceAdminRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<spanner_admin::InstanceAdminBackoffPolicyOption>()) {
-      return options.get<spanner_admin::InstanceAdminBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<spanner_admin::InstanceAdminBackoffPolicyOption>()
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<spanner_admin::InstanceAdminBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<spanner_admin::InstanceAdminConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            spanner_admin::InstanceAdminConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<spanner_admin::InstanceAdminConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<
+      spanner_admin::InstanceAdminConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<spanner_admin::InstanceAdminConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<spanner_admin::InstanceAdminPollingPolicyOption>()) {
-      return options.get<spanner_admin::InstanceAdminPollingPolicyOption>()
-          ->clone();
-    }
-    return options_.get<spanner_admin::InstanceAdminPollingPolicyOption>()
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options.get<spanner_admin::InstanceAdminPollingPolicyOption>()
         ->clone();
   }
 

@@ -82,65 +82,33 @@ class AppConnectorsServiceConnectionImpl
           request) override;
 
  private:
-  std::unique_ptr<beyondcorp_appconnectors_v1::AppConnectorsServiceRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<beyondcorp_appconnectors_v1::
-                        AppConnectorsServiceRetryPolicyOption>()) {
-      return options
-          .get<beyondcorp_appconnectors_v1::
-                   AppConnectorsServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<
+      beyondcorp_appconnectors_v1::AppConnectorsServiceRetryPolicy>
+  retry_policy(Options const& options) {
+    return options
         .get<beyondcorp_appconnectors_v1::
                  AppConnectorsServiceRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<beyondcorp_appconnectors_v1::
-                        AppConnectorsServiceBackoffPolicyOption>()) {
-      return options
-          .get<beyondcorp_appconnectors_v1::
-                   AppConnectorsServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options
         .get<beyondcorp_appconnectors_v1::
                  AppConnectorsServiceBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<beyondcorp_appconnectors_v1::
-                      AppConnectorsServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<beyondcorp_appconnectors_v1::
-                     AppConnectorsServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<beyondcorp_appconnectors_v1::
-                   AppConnectorsServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<beyondcorp_appconnectors_v1::
+                             AppConnectorsServiceConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<beyondcorp_appconnectors_v1::
                  AppConnectorsServiceConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<beyondcorp_appconnectors_v1::
-                        AppConnectorsServicePollingPolicyOption>()) {
-      return options
-          .get<beyondcorp_appconnectors_v1::
-                   AppConnectorsServicePollingPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options
         .get<beyondcorp_appconnectors_v1::
                  AppConnectorsServicePollingPolicyOption>()
         ->clone();

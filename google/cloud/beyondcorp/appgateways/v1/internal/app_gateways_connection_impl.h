@@ -76,62 +76,31 @@ class AppGatewaysServiceConnectionImpl
           request) override;
 
  private:
-  std::unique_ptr<beyondcorp_appgateways_v1::AppGatewaysServiceRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            beyondcorp_appgateways_v1::AppGatewaysServiceRetryPolicyOption>()) {
-      return options
-          .get<beyondcorp_appgateways_v1::AppGatewaysServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<
+      beyondcorp_appgateways_v1::AppGatewaysServiceRetryPolicy>
+  retry_policy(Options const& options) {
+    return options
         .get<beyondcorp_appgateways_v1::AppGatewaysServiceRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<beyondcorp_appgateways_v1::
-                        AppGatewaysServiceBackoffPolicyOption>()) {
-      return options
-          .get<beyondcorp_appgateways_v1::
-                   AppGatewaysServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options
         .get<beyondcorp_appgateways_v1::AppGatewaysServiceBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<
+  static std::unique_ptr<
       beyondcorp_appgateways_v1::AppGatewaysServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<beyondcorp_appgateways_v1::
-                     AppGatewaysServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<beyondcorp_appgateways_v1::
-                   AppGatewaysServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  idempotency_policy(Options const& options) {
+    return options
         .get<beyondcorp_appgateways_v1::
                  AppGatewaysServiceConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<beyondcorp_appgateways_v1::
-                        AppGatewaysServicePollingPolicyOption>()) {
-      return options
-          .get<beyondcorp_appgateways_v1::
-                   AppGatewaysServicePollingPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options
         .get<beyondcorp_appgateways_v1::AppGatewaysServicePollingPolicyOption>()
         ->clone();
   }

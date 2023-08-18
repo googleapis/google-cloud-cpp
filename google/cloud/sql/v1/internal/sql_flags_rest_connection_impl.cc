@@ -41,8 +41,10 @@ SqlFlagsServiceRestConnectionImpl::SqlFlagsServiceRestConnectionImpl(
 StatusOr<google::cloud::sql::v1::FlagsListResponse>
 SqlFlagsServiceRestConnectionImpl::List(
     google::cloud::sql::v1::SqlFlagsListRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
-      retry_policy(), backoff_policy(), idempotency_policy()->List(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->List(request),
       [this](rest_internal::RestContext& rest_context,
              google::cloud::sql::v1::SqlFlagsListRequest const& request) {
         return stub_->List(rest_context, request);

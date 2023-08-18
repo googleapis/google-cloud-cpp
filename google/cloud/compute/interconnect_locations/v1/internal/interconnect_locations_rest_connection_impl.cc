@@ -47,9 +47,10 @@ StatusOr<google::cloud::cpp::compute::v1::InterconnectLocation>
 InterconnectLocationsRestConnectionImpl::GetInterconnectLocations(
     google::cloud::cpp::compute::interconnect_locations::v1::
         GetInterconnectLocationsRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetInterconnectLocations(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetInterconnectLocations(request),
       [this](rest_internal::RestContext& rest_context,
              google::cloud::cpp::compute::interconnect_locations::v1::
                  GetInterconnectLocationsRequest const& request) {
@@ -63,19 +64,20 @@ InterconnectLocationsRestConnectionImpl::ListInterconnectLocations(
     google::cloud::cpp::compute::interconnect_locations::v1::
         ListInterconnectLocationsRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<compute_interconnect_locations_v1::
-                                   InterconnectLocationsRetryPolicy const>(
-      retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListInterconnectLocations(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency =
+      idempotency_policy(*current)->ListInterconnectLocations(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::cpp::compute::v1::InterconnectLocation>>(
       std::move(request),
-      [stub, retry, backoff, idempotency,
-       function_name](google::cloud::cpp::compute::interconnect_locations::v1::
-                          ListInterconnectLocationsRequest const& r) {
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<
+           compute_interconnect_locations_v1::InterconnectLocationsRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          google::cloud::cpp::compute::interconnect_locations::v1::
+              ListInterconnectLocationsRequest const& r) {
         return google::cloud::rest_internal::RestRetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](rest_internal::RestContext& rest_context,

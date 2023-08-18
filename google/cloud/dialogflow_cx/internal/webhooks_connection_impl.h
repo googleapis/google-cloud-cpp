@@ -68,32 +68,18 @@ class WebhooksConnectionImpl : public dialogflow_cx::WebhooksConnection {
       override;
 
  private:
-  std::unique_ptr<dialogflow_cx::WebhooksRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<dialogflow_cx::WebhooksRetryPolicyOption>()) {
-      return options.get<dialogflow_cx::WebhooksRetryPolicyOption>()->clone();
-    }
-    return options_.get<dialogflow_cx::WebhooksRetryPolicyOption>()->clone();
+  static std::unique_ptr<dialogflow_cx::WebhooksRetryPolicy> retry_policy(
+      Options const& options) {
+    return options.get<dialogflow_cx::WebhooksRetryPolicyOption>()->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<dialogflow_cx::WebhooksBackoffPolicyOption>()) {
-      return options.get<dialogflow_cx::WebhooksBackoffPolicyOption>()->clone();
-    }
-    return options_.get<dialogflow_cx::WebhooksBackoffPolicyOption>()->clone();
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<dialogflow_cx::WebhooksBackoffPolicyOption>()->clone();
   }
 
-  std::unique_ptr<dialogflow_cx::WebhooksConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<dialogflow_cx::WebhooksConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<dialogflow_cx::WebhooksConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<dialogflow_cx::WebhooksConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<dialogflow_cx::WebhooksConnectionIdempotencyPolicyOption>()
         ->clone();
   }

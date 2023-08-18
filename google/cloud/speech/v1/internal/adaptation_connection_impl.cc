@@ -41,9 +41,10 @@ AdaptationConnectionImpl::AdaptationConnectionImpl(
 StatusOr<google::cloud::speech::v1::PhraseSet>
 AdaptationConnectionImpl::CreatePhraseSet(
     google::cloud::speech::v1::CreatePhraseSetRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreatePhraseSet(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreatePhraseSet(request),
       [this](grpc::ClientContext& context,
              google::cloud::speech::v1::CreatePhraseSetRequest const& request) {
         return stub_->CreatePhraseSet(context, request);
@@ -54,9 +55,10 @@ AdaptationConnectionImpl::CreatePhraseSet(
 StatusOr<google::cloud::speech::v1::PhraseSet>
 AdaptationConnectionImpl::GetPhraseSet(
     google::cloud::speech::v1::GetPhraseSetRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetPhraseSet(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetPhraseSet(request),
       [this](grpc::ClientContext& context,
              google::cloud::speech::v1::GetPhraseSetRequest const& request) {
         return stub_->GetPhraseSet(context, request);
@@ -68,16 +70,16 @@ StreamRange<google::cloud::speech::v1::PhraseSet>
 AdaptationConnectionImpl::ListPhraseSet(
     google::cloud::speech::v1::ListPhraseSetRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<speech_v1::AdaptationRetryPolicy const>(retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListPhraseSet(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListPhraseSet(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::speech::v1::PhraseSet>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<speech_v1::AdaptationRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::speech::v1::ListPhraseSetRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
@@ -100,9 +102,10 @@ AdaptationConnectionImpl::ListPhraseSet(
 StatusOr<google::cloud::speech::v1::PhraseSet>
 AdaptationConnectionImpl::UpdatePhraseSet(
     google::cloud::speech::v1::UpdatePhraseSetRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UpdatePhraseSet(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdatePhraseSet(request),
       [this](grpc::ClientContext& context,
              google::cloud::speech::v1::UpdatePhraseSetRequest const& request) {
         return stub_->UpdatePhraseSet(context, request);
@@ -112,9 +115,10 @@ AdaptationConnectionImpl::UpdatePhraseSet(
 
 Status AdaptationConnectionImpl::DeletePhraseSet(
     google::cloud::speech::v1::DeletePhraseSetRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeletePhraseSet(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeletePhraseSet(request),
       [this](grpc::ClientContext& context,
              google::cloud::speech::v1::DeletePhraseSetRequest const& request) {
         return stub_->DeletePhraseSet(context, request);
@@ -125,9 +129,10 @@ Status AdaptationConnectionImpl::DeletePhraseSet(
 StatusOr<google::cloud::speech::v1::CustomClass>
 AdaptationConnectionImpl::CreateCustomClass(
     google::cloud::speech::v1::CreateCustomClassRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateCustomClass(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateCustomClass(request),
       [this](
           grpc::ClientContext& context,
           google::cloud::speech::v1::CreateCustomClassRequest const& request) {
@@ -139,9 +144,10 @@ AdaptationConnectionImpl::CreateCustomClass(
 StatusOr<google::cloud::speech::v1::CustomClass>
 AdaptationConnectionImpl::GetCustomClass(
     google::cloud::speech::v1::GetCustomClassRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetCustomClass(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetCustomClass(request),
       [this](grpc::ClientContext& context,
              google::cloud::speech::v1::GetCustomClassRequest const& request) {
         return stub_->GetCustomClass(context, request);
@@ -153,16 +159,16 @@ StreamRange<google::cloud::speech::v1::CustomClass>
 AdaptationConnectionImpl::ListCustomClasses(
     google::cloud::speech::v1::ListCustomClassesRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<speech_v1::AdaptationRetryPolicy const>(retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListCustomClasses(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListCustomClasses(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::speech::v1::CustomClass>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<speech_v1::AdaptationRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::speech::v1::ListCustomClassesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
@@ -185,9 +191,10 @@ AdaptationConnectionImpl::ListCustomClasses(
 StatusOr<google::cloud::speech::v1::CustomClass>
 AdaptationConnectionImpl::UpdateCustomClass(
     google::cloud::speech::v1::UpdateCustomClassRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UpdateCustomClass(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateCustomClass(request),
       [this](
           grpc::ClientContext& context,
           google::cloud::speech::v1::UpdateCustomClassRequest const& request) {
@@ -198,9 +205,10 @@ AdaptationConnectionImpl::UpdateCustomClass(
 
 Status AdaptationConnectionImpl::DeleteCustomClass(
     google::cloud::speech::v1::DeleteCustomClassRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteCustomClass(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteCustomClass(request),
       [this](
           grpc::ClientContext& context,
           google::cloud::speech::v1::DeleteCustomClassRequest const& request) {

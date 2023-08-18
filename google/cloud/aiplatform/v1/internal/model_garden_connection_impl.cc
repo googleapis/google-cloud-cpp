@@ -41,9 +41,10 @@ ModelGardenServiceConnectionImpl::ModelGardenServiceConnectionImpl(
 StatusOr<google::cloud::aiplatform::v1::PublisherModel>
 ModelGardenServiceConnectionImpl::GetPublisherModel(
     google::cloud::aiplatform::v1::GetPublisherModelRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetPublisherModel(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetPublisherModel(request),
       [this](grpc::ClientContext& context,
              google::cloud::aiplatform::v1::GetPublisherModelRequest const&
                  request) {

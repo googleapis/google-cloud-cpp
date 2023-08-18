@@ -60,38 +60,21 @@ class PublisherConnectionImpl
           request) override;
 
  private:
-  std::unique_ptr<eventarc_publishing_v1::PublisherRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<eventarc_publishing_v1::PublisherRetryPolicyOption>()) {
-      return options.get<eventarc_publishing_v1::PublisherRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<eventarc_publishing_v1::PublisherRetryPolicyOption>()
+  static std::unique_ptr<eventarc_publishing_v1::PublisherRetryPolicy>
+  retry_policy(Options const& options) {
+    return options.get<eventarc_publishing_v1::PublisherRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<eventarc_publishing_v1::PublisherBackoffPolicyOption>()) {
-      return options
-          .get<eventarc_publishing_v1::PublisherBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<eventarc_publishing_v1::PublisherBackoffPolicyOption>()
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<eventarc_publishing_v1::PublisherBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<eventarc_publishing_v1::PublisherConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<eventarc_publishing_v1::
-                        PublisherConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<eventarc_publishing_v1::
-                   PublisherConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<
+      eventarc_publishing_v1::PublisherConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<eventarc_publishing_v1::
                  PublisherConnectionIdempotencyPolicyOption>()
         ->clone();

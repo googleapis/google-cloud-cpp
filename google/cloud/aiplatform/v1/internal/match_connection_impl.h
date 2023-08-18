@@ -58,36 +58,19 @@ class MatchServiceConnectionImpl
       override;
 
  private:
-  std::unique_ptr<aiplatform_v1::MatchServiceRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<aiplatform_v1::MatchServiceRetryPolicyOption>()) {
-      return options.get<aiplatform_v1::MatchServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<aiplatform_v1::MatchServiceRetryPolicyOption>()
+  static std::unique_ptr<aiplatform_v1::MatchServiceRetryPolicy> retry_policy(
+      Options const& options) {
+    return options.get<aiplatform_v1::MatchServiceRetryPolicyOption>()->clone();
+  }
+
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<aiplatform_v1::MatchServiceBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<aiplatform_v1::MatchServiceBackoffPolicyOption>()) {
-      return options.get<aiplatform_v1::MatchServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<aiplatform_v1::MatchServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<aiplatform_v1::MatchServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            aiplatform_v1::MatchServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<aiplatform_v1::MatchServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<aiplatform_v1::MatchServiceConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<aiplatform_v1::MatchServiceConnectionIdempotencyPolicyOption>()
         ->clone();
   }

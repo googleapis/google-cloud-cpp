@@ -128,44 +128,24 @@ class AdminServiceConnectionImpl : public pubsublite::AdminServiceConnection {
       override;
 
  private:
-  std::unique_ptr<pubsublite::AdminServiceRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<pubsublite::AdminServiceRetryPolicyOption>()) {
-      return options.get<pubsublite::AdminServiceRetryPolicyOption>()->clone();
-    }
-    return options_.get<pubsublite::AdminServiceRetryPolicyOption>()->clone();
+  static std::unique_ptr<pubsublite::AdminServiceRetryPolicy> retry_policy(
+      Options const& options) {
+    return options.get<pubsublite::AdminServiceRetryPolicyOption>()->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<pubsublite::AdminServiceBackoffPolicyOption>()) {
-      return options.get<pubsublite::AdminServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<pubsublite::AdminServiceBackoffPolicyOption>()->clone();
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<pubsublite::AdminServiceBackoffPolicyOption>()->clone();
   }
 
-  std::unique_ptr<pubsublite::AdminServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<pubsublite::AdminServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<pubsublite::AdminServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<pubsublite::AdminServiceConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<pubsublite::AdminServiceConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<pubsublite::AdminServicePollingPolicyOption>()) {
-      return options.get<pubsublite::AdminServicePollingPolicyOption>()
-          ->clone();
-    }
-    return options_.get<pubsublite::AdminServicePollingPolicyOption>()->clone();
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options.get<pubsublite::AdminServicePollingPolicyOption>()->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

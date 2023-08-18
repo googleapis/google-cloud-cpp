@@ -76,47 +76,27 @@ class ServiceUsageConnectionImpl
                        request) override;
 
  private:
-  std::unique_ptr<serviceusage_v1::ServiceUsageRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<serviceusage_v1::ServiceUsageRetryPolicyOption>()) {
-      return options.get<serviceusage_v1::ServiceUsageRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<serviceusage_v1::ServiceUsageRetryPolicyOption>()
+  static std::unique_ptr<serviceusage_v1::ServiceUsageRetryPolicy> retry_policy(
+      Options const& options) {
+    return options.get<serviceusage_v1::ServiceUsageRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<serviceusage_v1::ServiceUsageBackoffPolicyOption>()) {
-      return options.get<serviceusage_v1::ServiceUsageBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<serviceusage_v1::ServiceUsageBackoffPolicyOption>()
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<serviceusage_v1::ServiceUsageBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<serviceusage_v1::ServiceUsageConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            serviceusage_v1::ServiceUsageConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<serviceusage_v1::ServiceUsageConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<
+      serviceusage_v1::ServiceUsageConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<serviceusage_v1::ServiceUsageConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<serviceusage_v1::ServiceUsagePollingPolicyOption>()) {
-      return options.get<serviceusage_v1::ServiceUsagePollingPolicyOption>()
-          ->clone();
-    }
-    return options_.get<serviceusage_v1::ServiceUsagePollingPolicyOption>()
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options.get<serviceusage_v1::ServiceUsagePollingPolicyOption>()
         ->clone();
   }
 

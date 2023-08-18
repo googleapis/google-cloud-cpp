@@ -72,30 +72,18 @@ class EkmServiceConnectionImpl : public kms_v1::EkmServiceConnection {
                          request) override;
 
  private:
-  std::unique_ptr<kms_v1::EkmServiceRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<kms_v1::EkmServiceRetryPolicyOption>()) {
-      return options.get<kms_v1::EkmServiceRetryPolicyOption>()->clone();
-    }
-    return options_.get<kms_v1::EkmServiceRetryPolicyOption>()->clone();
+  static std::unique_ptr<kms_v1::EkmServiceRetryPolicy> retry_policy(
+      Options const& options) {
+    return options.get<kms_v1::EkmServiceRetryPolicyOption>()->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<kms_v1::EkmServiceBackoffPolicyOption>()) {
-      return options.get<kms_v1::EkmServiceBackoffPolicyOption>()->clone();
-    }
-    return options_.get<kms_v1::EkmServiceBackoffPolicyOption>()->clone();
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<kms_v1::EkmServiceBackoffPolicyOption>()->clone();
   }
 
-  std::unique_ptr<kms_v1::EkmServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<kms_v1::EkmServiceConnectionIdempotencyPolicyOption>()) {
-      return options.get<kms_v1::EkmServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_.get<kms_v1::EkmServiceConnectionIdempotencyPolicyOption>()
+  static std::unique_ptr<kms_v1::EkmServiceConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options.get<kms_v1::EkmServiceConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 

@@ -41,9 +41,10 @@ TextToSpeechConnectionImpl::TextToSpeechConnectionImpl(
 StatusOr<google::cloud::texttospeech::v1::ListVoicesResponse>
 TextToSpeechConnectionImpl::ListVoices(
     google::cloud::texttospeech::v1::ListVoicesRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->ListVoices(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ListVoices(request),
       [this](
           grpc::ClientContext& context,
           google::cloud::texttospeech::v1::ListVoicesRequest const& request) {
@@ -55,9 +56,10 @@ TextToSpeechConnectionImpl::ListVoices(
 StatusOr<google::cloud::texttospeech::v1::SynthesizeSpeechResponse>
 TextToSpeechConnectionImpl::SynthesizeSpeech(
     google::cloud::texttospeech::v1::SynthesizeSpeechRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->SynthesizeSpeech(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->SynthesizeSpeech(request),
       [this](grpc::ClientContext& context,
              google::cloud::texttospeech::v1::SynthesizeSpeechRequest const&
                  request) { return stub_->SynthesizeSpeech(context, request); },

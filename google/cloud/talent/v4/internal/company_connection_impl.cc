@@ -42,9 +42,10 @@ CompanyServiceConnectionImpl::CompanyServiceConnectionImpl(
 StatusOr<google::cloud::talent::v4::Company>
 CompanyServiceConnectionImpl::CreateCompany(
     google::cloud::talent::v4::CreateCompanyRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateCompany(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateCompany(request),
       [this](grpc::ClientContext& context,
              google::cloud::talent::v4::CreateCompanyRequest const& request) {
         return stub_->CreateCompany(context, request);
@@ -55,9 +56,10 @@ CompanyServiceConnectionImpl::CreateCompany(
 StatusOr<google::cloud::talent::v4::Company>
 CompanyServiceConnectionImpl::GetCompany(
     google::cloud::talent::v4::GetCompanyRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetCompany(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetCompany(request),
       [this](grpc::ClientContext& context,
              google::cloud::talent::v4::GetCompanyRequest const& request) {
         return stub_->GetCompany(context, request);
@@ -68,9 +70,10 @@ CompanyServiceConnectionImpl::GetCompany(
 StatusOr<google::cloud::talent::v4::Company>
 CompanyServiceConnectionImpl::UpdateCompany(
     google::cloud::talent::v4::UpdateCompanyRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UpdateCompany(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateCompany(request),
       [this](grpc::ClientContext& context,
              google::cloud::talent::v4::UpdateCompanyRequest const& request) {
         return stub_->UpdateCompany(context, request);
@@ -80,9 +83,10 @@ CompanyServiceConnectionImpl::UpdateCompany(
 
 Status CompanyServiceConnectionImpl::DeleteCompany(
     google::cloud::talent::v4::DeleteCompanyRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteCompany(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteCompany(request),
       [this](grpc::ClientContext& context,
              google::cloud::talent::v4::DeleteCompanyRequest const& request) {
         return stub_->DeleteCompany(context, request);
@@ -94,16 +98,16 @@ StreamRange<google::cloud::talent::v4::Company>
 CompanyServiceConnectionImpl::ListCompanies(
     google::cloud::talent::v4::ListCompaniesRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<talent_v4::CompanyServiceRetryPolicy const>(
-      retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListCompanies(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListCompanies(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::talent::v4::Company>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<talent_v4::CompanyServiceRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::talent::v4::ListCompaniesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,

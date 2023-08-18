@@ -84,47 +84,23 @@ class IdentityAwareProxyAdminServiceConnectionImpl
       override;
 
  private:
-  std::unique_ptr<iap_v1::IdentityAwareProxyAdminServiceRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<iap_v1::IdentityAwareProxyAdminServiceRetryPolicyOption>()) {
-      return options
-          .get<iap_v1::IdentityAwareProxyAdminServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<iap_v1::IdentityAwareProxyAdminServiceRetryPolicy>
+  retry_policy(Options const& options) {
+    return options
         .get<iap_v1::IdentityAwareProxyAdminServiceRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<iap_v1::IdentityAwareProxyAdminServiceBackoffPolicyOption>()) {
-      return options
-          .get<iap_v1::IdentityAwareProxyAdminServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options
         .get<iap_v1::IdentityAwareProxyAdminServiceBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<
+  static std::unique_ptr<
       iap_v1::IdentityAwareProxyAdminServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            iap_v1::
-                IdentityAwareProxyAdminServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<
-              iap_v1::
-                  IdentityAwareProxyAdminServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  idempotency_policy(Options const& options) {
+    return options
         .get<
             iap_v1::
                 IdentityAwareProxyAdminServiceConnectionIdempotencyPolicyOption>()

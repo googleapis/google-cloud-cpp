@@ -75,32 +75,18 @@ class CaseServiceConnectionImpl : public support_v2::CaseServiceConnection {
       override;
 
  private:
-  std::unique_ptr<support_v2::CaseServiceRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<support_v2::CaseServiceRetryPolicyOption>()) {
-      return options.get<support_v2::CaseServiceRetryPolicyOption>()->clone();
-    }
-    return options_.get<support_v2::CaseServiceRetryPolicyOption>()->clone();
+  static std::unique_ptr<support_v2::CaseServiceRetryPolicy> retry_policy(
+      Options const& options) {
+    return options.get<support_v2::CaseServiceRetryPolicyOption>()->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<support_v2::CaseServiceBackoffPolicyOption>()) {
-      return options.get<support_v2::CaseServiceBackoffPolicyOption>()->clone();
-    }
-    return options_.get<support_v2::CaseServiceBackoffPolicyOption>()->clone();
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<support_v2::CaseServiceBackoffPolicyOption>()->clone();
   }
 
-  std::unique_ptr<support_v2::CaseServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<support_v2::CaseServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<support_v2::CaseServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<support_v2::CaseServiceConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<support_v2::CaseServiceConnectionIdempotencyPolicyOption>()
         ->clone();
   }

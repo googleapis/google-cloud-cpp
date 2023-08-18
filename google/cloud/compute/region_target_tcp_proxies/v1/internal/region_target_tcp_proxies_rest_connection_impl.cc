@@ -49,7 +49,7 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionTargetTcpProxiesRestConnectionImpl::DeleteRegionTargetTcpProxies(
     google::cloud::cpp::compute::region_target_tcp_proxies::v1::
         DeleteRegionTargetTcpProxiesRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestLongRunningOperation<
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::v1::Operation,
@@ -58,30 +58,31 @@ RegionTargetTcpProxiesRestConnectionImpl::DeleteRegionTargetTcpProxies(
       google::cloud::cpp::compute::region_operations::v1::
           DeleteRegionOperationsRequest>(
       background_->cq(), request,
-      [stub](CompletionQueue& cq,
-             std::unique_ptr<rest_internal::RestContext> context,
-             google::cloud::cpp::compute::region_target_tcp_proxies::v1::
-                 DeleteRegionTargetTcpProxiesRequest const& request) {
+      [stub = stub_](
+          CompletionQueue& cq,
+          std::unique_ptr<rest_internal::RestContext> context,
+          google::cloud::cpp::compute::region_target_tcp_proxies::v1::
+              DeleteRegionTargetTcpProxiesRequest const& request) {
         return stub->AsyncDeleteRegionTargetTcpProxies(cq, std::move(context),
                                                        request);
       },
-      [stub](CompletionQueue& cq,
-             std::unique_ptr<rest_internal::RestContext> context,
-             google::cloud::cpp::compute::region_operations::v1::
-                 GetRegionOperationsRequest const& request) {
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::cpp::compute::region_operations::v1::
+                         GetRegionOperationsRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](CompletionQueue& cq,
-             std::unique_ptr<rest_internal::RestContext> context,
-             google::cloud::cpp::compute::region_operations::v1::
-                 DeleteRegionOperationsRequest const& request) {
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::cpp::compute::region_operations::v1::
+                         DeleteRegionOperationsRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
          std::string const&) { return op; },
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteRegionTargetTcpProxies(request),
-      polling_policy(), __func__,
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteRegionTargetTcpProxies(request),
+      polling_policy(*current), __func__,
       [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
       },
@@ -105,9 +106,10 @@ StatusOr<google::cloud::cpp::compute::v1::TargetTcpProxy>
 RegionTargetTcpProxiesRestConnectionImpl::GetRegionTargetTcpProxies(
     google::cloud::cpp::compute::region_target_tcp_proxies::v1::
         GetRegionTargetTcpProxiesRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetRegionTargetTcpProxies(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetRegionTargetTcpProxies(request),
       [this](rest_internal::RestContext& rest_context,
              google::cloud::cpp::compute::region_target_tcp_proxies::v1::
                  GetRegionTargetTcpProxiesRequest const& request) {
@@ -120,7 +122,7 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionTargetTcpProxiesRestConnectionImpl::InsertRegionTargetTcpProxies(
     google::cloud::cpp::compute::region_target_tcp_proxies::v1::
         InsertRegionTargetTcpProxiesRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestLongRunningOperation<
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::v1::Operation,
@@ -129,30 +131,31 @@ RegionTargetTcpProxiesRestConnectionImpl::InsertRegionTargetTcpProxies(
       google::cloud::cpp::compute::region_operations::v1::
           DeleteRegionOperationsRequest>(
       background_->cq(), request,
-      [stub](CompletionQueue& cq,
-             std::unique_ptr<rest_internal::RestContext> context,
-             google::cloud::cpp::compute::region_target_tcp_proxies::v1::
-                 InsertRegionTargetTcpProxiesRequest const& request) {
+      [stub = stub_](
+          CompletionQueue& cq,
+          std::unique_ptr<rest_internal::RestContext> context,
+          google::cloud::cpp::compute::region_target_tcp_proxies::v1::
+              InsertRegionTargetTcpProxiesRequest const& request) {
         return stub->AsyncInsertRegionTargetTcpProxies(cq, std::move(context),
                                                        request);
       },
-      [stub](CompletionQueue& cq,
-             std::unique_ptr<rest_internal::RestContext> context,
-             google::cloud::cpp::compute::region_operations::v1::
-                 GetRegionOperationsRequest const& request) {
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::cpp::compute::region_operations::v1::
+                         GetRegionOperationsRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](CompletionQueue& cq,
-             std::unique_ptr<rest_internal::RestContext> context,
-             google::cloud::cpp::compute::region_operations::v1::
-                 DeleteRegionOperationsRequest const& request) {
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::cpp::compute::region_operations::v1::
+                         DeleteRegionOperationsRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
          std::string const&) { return op; },
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->InsertRegionTargetTcpProxies(request),
-      polling_policy(), __func__,
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->InsertRegionTargetTcpProxies(request),
+      polling_policy(*current), __func__,
       [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
       },
@@ -177,19 +180,20 @@ RegionTargetTcpProxiesRestConnectionImpl::ListRegionTargetTcpProxies(
     google::cloud::cpp::compute::region_target_tcp_proxies::v1::
         ListRegionTargetTcpProxiesRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<compute_region_target_tcp_proxies_v1::
-                                   RegionTargetTcpProxiesRetryPolicy const>(
-      retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListRegionTargetTcpProxies(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency =
+      idempotency_policy(*current)->ListRegionTargetTcpProxies(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::cpp::compute::v1::TargetTcpProxy>>(
       std::move(request),
-      [stub, retry, backoff, idempotency,
-       function_name](google::cloud::cpp::compute::region_target_tcp_proxies::
-                          v1::ListRegionTargetTcpProxiesRequest const& r) {
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<compute_region_target_tcp_proxies_v1::
+                                   RegionTargetTcpProxiesRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          google::cloud::cpp::compute::region_target_tcp_proxies::v1::
+              ListRegionTargetTcpProxiesRequest const& r) {
         return google::cloud::rest_internal::RestRetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](rest_internal::RestContext& rest_context,

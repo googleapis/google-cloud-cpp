@@ -97,36 +97,21 @@ class OsConfigServiceConnectionImpl
       override;
 
  private:
-  std::unique_ptr<osconfig_v1::OsConfigServiceRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<osconfig_v1::OsConfigServiceRetryPolicyOption>()) {
-      return options.get<osconfig_v1::OsConfigServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<osconfig_v1::OsConfigServiceRetryPolicyOption>()
+  static std::unique_ptr<osconfig_v1::OsConfigServiceRetryPolicy> retry_policy(
+      Options const& options) {
+    return options.get<osconfig_v1::OsConfigServiceRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<osconfig_v1::OsConfigServiceBackoffPolicyOption>()) {
-      return options.get<osconfig_v1::OsConfigServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<osconfig_v1::OsConfigServiceBackoffPolicyOption>()
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<osconfig_v1::OsConfigServiceBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<osconfig_v1::OsConfigServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            osconfig_v1::OsConfigServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<osconfig_v1::OsConfigServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<
+      osconfig_v1::OsConfigServiceConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<osconfig_v1::OsConfigServiceConnectionIdempotencyPolicyOption>()
         ->clone();
   }

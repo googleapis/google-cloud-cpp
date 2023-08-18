@@ -80,48 +80,27 @@ class AddressesRestConnectionImpl
           request) override;
 
  private:
-  std::unique_ptr<compute_addresses_v1::AddressesRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_addresses_v1::AddressesRetryPolicyOption>()) {
-      return options.get<compute_addresses_v1::AddressesRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<compute_addresses_v1::AddressesRetryPolicyOption>()
+  static std::unique_ptr<compute_addresses_v1::AddressesRetryPolicy>
+  retry_policy(Options const& options) {
+    return options.get<compute_addresses_v1::AddressesRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_addresses_v1::AddressesBackoffPolicyOption>()) {
-      return options.get<compute_addresses_v1::AddressesBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<compute_addresses_v1::AddressesBackoffPolicyOption>()
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<compute_addresses_v1::AddressesBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<compute_addresses_v1::AddressesConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_addresses_v1::
-                        AddressesConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<compute_addresses_v1::
-                   AddressesConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<
+      compute_addresses_v1::AddressesConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<compute_addresses_v1::AddressesConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_addresses_v1::AddressesPollingPolicyOption>()) {
-      return options.get<compute_addresses_v1::AddressesPollingPolicyOption>()
-          ->clone();
-    }
-    return options_.get<compute_addresses_v1::AddressesPollingPolicyOption>()
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options.get<compute_addresses_v1::AddressesPollingPolicyOption>()
         ->clone();
   }
 

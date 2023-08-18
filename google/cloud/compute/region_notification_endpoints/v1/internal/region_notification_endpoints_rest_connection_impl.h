@@ -75,67 +75,34 @@ class RegionNotificationEndpointsRestConnectionImpl
           ListRegionNotificationEndpointsRequest request) override;
 
  private:
-  std::unique_ptr<compute_region_notification_endpoints_v1::
-                      RegionNotificationEndpointsRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_region_notification_endpoints_v1::
-                        RegionNotificationEndpointsRetryPolicyOption>()) {
-      return options
-          .get<compute_region_notification_endpoints_v1::
-                   RegionNotificationEndpointsRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<compute_region_notification_endpoints_v1::
+                             RegionNotificationEndpointsRetryPolicy>
+  retry_policy(Options const& options) {
+    return options
         .get<compute_region_notification_endpoints_v1::
                  RegionNotificationEndpointsRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_region_notification_endpoints_v1::
-                        RegionNotificationEndpointsBackoffPolicyOption>()) {
-      return options
-          .get<compute_region_notification_endpoints_v1::
-                   RegionNotificationEndpointsBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options
         .get<compute_region_notification_endpoints_v1::
                  RegionNotificationEndpointsBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<compute_region_notification_endpoints_v1::
-                      RegionNotificationEndpointsConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            compute_region_notification_endpoints_v1::
-                RegionNotificationEndpointsConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<
-              compute_region_notification_endpoints_v1::
-                  RegionNotificationEndpointsConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<
+      compute_region_notification_endpoints_v1::
+          RegionNotificationEndpointsConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<compute_region_notification_endpoints_v1::
                  RegionNotificationEndpointsConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_region_notification_endpoints_v1::
-                        RegionNotificationEndpointsPollingPolicyOption>()) {
-      return options
-          .get<compute_region_notification_endpoints_v1::
-                   RegionNotificationEndpointsPollingPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options
         .get<compute_region_notification_endpoints_v1::
                  RegionNotificationEndpointsPollingPolicyOption>()
         ->clone();

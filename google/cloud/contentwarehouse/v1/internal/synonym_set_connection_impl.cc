@@ -43,9 +43,10 @@ StatusOr<google::cloud::contentwarehouse::v1::SynonymSet>
 SynonymSetServiceConnectionImpl::CreateSynonymSet(
     google::cloud::contentwarehouse::v1::CreateSynonymSetRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateSynonymSet(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateSynonymSet(request),
       [this](grpc::ClientContext& context,
              google::cloud::contentwarehouse::v1::CreateSynonymSetRequest const&
                  request) { return stub_->CreateSynonymSet(context, request); },
@@ -55,9 +56,10 @@ SynonymSetServiceConnectionImpl::CreateSynonymSet(
 StatusOr<google::cloud::contentwarehouse::v1::SynonymSet>
 SynonymSetServiceConnectionImpl::GetSynonymSet(
     google::cloud::contentwarehouse::v1::GetSynonymSetRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetSynonymSet(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetSynonymSet(request),
       [this](grpc::ClientContext& context,
              google::cloud::contentwarehouse::v1::GetSynonymSetRequest const&
                  request) { return stub_->GetSynonymSet(context, request); },
@@ -68,9 +70,10 @@ StatusOr<google::cloud::contentwarehouse::v1::SynonymSet>
 SynonymSetServiceConnectionImpl::UpdateSynonymSet(
     google::cloud::contentwarehouse::v1::UpdateSynonymSetRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UpdateSynonymSet(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateSynonymSet(request),
       [this](grpc::ClientContext& context,
              google::cloud::contentwarehouse::v1::UpdateSynonymSetRequest const&
                  request) { return stub_->UpdateSynonymSet(context, request); },
@@ -80,9 +83,10 @@ SynonymSetServiceConnectionImpl::UpdateSynonymSet(
 Status SynonymSetServiceConnectionImpl::DeleteSynonymSet(
     google::cloud::contentwarehouse::v1::DeleteSynonymSetRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteSynonymSet(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteSynonymSet(request),
       [this](grpc::ClientContext& context,
              google::cloud::contentwarehouse::v1::DeleteSynonymSetRequest const&
                  request) { return stub_->DeleteSynonymSet(context, request); },
@@ -93,17 +97,17 @@ StreamRange<google::cloud::contentwarehouse::v1::SynonymSet>
 SynonymSetServiceConnectionImpl::ListSynonymSets(
     google::cloud::contentwarehouse::v1::ListSynonymSetsRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<contentwarehouse_v1::SynonymSetServiceRetryPolicy const>(
-          retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListSynonymSets(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListSynonymSets(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::contentwarehouse::v1::SynonymSet>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry =
+           std::shared_ptr<contentwarehouse_v1::SynonymSetServiceRetryPolicy>(
+               retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::contentwarehouse::v1::ListSynonymSetsRequest const&
               r) {
         return google::cloud::internal::RetryLoop(

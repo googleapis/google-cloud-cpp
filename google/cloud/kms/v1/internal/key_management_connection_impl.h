@@ -142,36 +142,21 @@ class KeyManagementServiceConnectionImpl
                           request) override;
 
  private:
-  std::unique_ptr<kms_v1::KeyManagementServiceRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<kms_v1::KeyManagementServiceRetryPolicyOption>()) {
-      return options.get<kms_v1::KeyManagementServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<kms_v1::KeyManagementServiceRetryPolicyOption>()
+  static std::unique_ptr<kms_v1::KeyManagementServiceRetryPolicy> retry_policy(
+      Options const& options) {
+    return options.get<kms_v1::KeyManagementServiceRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<kms_v1::KeyManagementServiceBackoffPolicyOption>()) {
-      return options.get<kms_v1::KeyManagementServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<kms_v1::KeyManagementServiceBackoffPolicyOption>()
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<kms_v1::KeyManagementServiceBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<kms_v1::KeyManagementServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            kms_v1::KeyManagementServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<kms_v1::KeyManagementServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<
+      kms_v1::KeyManagementServiceConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<kms_v1::KeyManagementServiceConnectionIdempotencyPolicyOption>()
         ->clone();
   }

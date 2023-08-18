@@ -71,47 +71,27 @@ class DomainMappingsConnectionImpl
                           request) override;
 
  private:
-  std::unique_ptr<appengine_v1::DomainMappingsRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<appengine_v1::DomainMappingsRetryPolicyOption>()) {
-      return options.get<appengine_v1::DomainMappingsRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<appengine_v1::DomainMappingsRetryPolicyOption>()
+  static std::unique_ptr<appengine_v1::DomainMappingsRetryPolicy> retry_policy(
+      Options const& options) {
+    return options.get<appengine_v1::DomainMappingsRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<appengine_v1::DomainMappingsBackoffPolicyOption>()) {
-      return options.get<appengine_v1::DomainMappingsBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<appengine_v1::DomainMappingsBackoffPolicyOption>()
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<appengine_v1::DomainMappingsBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<appengine_v1::DomainMappingsConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            appengine_v1::DomainMappingsConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<appengine_v1::DomainMappingsConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<
+      appengine_v1::DomainMappingsConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<appengine_v1::DomainMappingsConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<appengine_v1::DomainMappingsPollingPolicyOption>()) {
-      return options.get<appengine_v1::DomainMappingsPollingPolicyOption>()
-          ->clone();
-    }
-    return options_.get<appengine_v1::DomainMappingsPollingPolicyOption>()
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options.get<appengine_v1::DomainMappingsPollingPolicyOption>()
         ->clone();
   }
 

@@ -103,66 +103,33 @@ class TargetHttpsProxiesRestConnectionImpl
           SetUrlMapRequest const& request) override;
 
  private:
-  std::unique_ptr<
+  static std::unique_ptr<
       compute_target_https_proxies_v1::TargetHttpsProxiesRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_target_https_proxies_v1::
-                        TargetHttpsProxiesRetryPolicyOption>()) {
-      return options
-          .get<compute_target_https_proxies_v1::
-                   TargetHttpsProxiesRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
+  retry_policy(Options const& options) {
+    return options
         .get<compute_target_https_proxies_v1::
                  TargetHttpsProxiesRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_target_https_proxies_v1::
-                        TargetHttpsProxiesBackoffPolicyOption>()) {
-      return options
-          .get<compute_target_https_proxies_v1::
-                   TargetHttpsProxiesBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options
         .get<compute_target_https_proxies_v1::
                  TargetHttpsProxiesBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<compute_target_https_proxies_v1::
-                      TargetHttpsProxiesConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<compute_target_https_proxies_v1::
-                     TargetHttpsProxiesConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<compute_target_https_proxies_v1::
-                   TargetHttpsProxiesConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<compute_target_https_proxies_v1::
+                             TargetHttpsProxiesConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<compute_target_https_proxies_v1::
                  TargetHttpsProxiesConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_target_https_proxies_v1::
-                        TargetHttpsProxiesPollingPolicyOption>()) {
-      return options
-          .get<compute_target_https_proxies_v1::
-                   TargetHttpsProxiesPollingPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options
         .get<compute_target_https_proxies_v1::
                  TargetHttpsProxiesPollingPolicyOption>()
         ->clone();

@@ -41,9 +41,10 @@ QuotaControllerConnectionImpl::QuotaControllerConnectionImpl(
 StatusOr<google::api::servicecontrol::v1::AllocateQuotaResponse>
 QuotaControllerConnectionImpl::AllocateQuota(
     google::api::servicecontrol::v1::AllocateQuotaRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->AllocateQuota(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->AllocateQuota(request),
       [this](grpc::ClientContext& context,
              google::api::servicecontrol::v1::AllocateQuotaRequest const&
                  request) { return stub_->AllocateQuota(context, request); },

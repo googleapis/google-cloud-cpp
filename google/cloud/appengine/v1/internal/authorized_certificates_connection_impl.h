@@ -74,45 +74,22 @@ class AuthorizedCertificatesConnectionImpl
       override;
 
  private:
-  std::unique_ptr<appengine_v1::AuthorizedCertificatesRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<appengine_v1::AuthorizedCertificatesRetryPolicyOption>()) {
-      return options
-          .get<appengine_v1::AuthorizedCertificatesRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<appengine_v1::AuthorizedCertificatesRetryPolicyOption>()
+  static std::unique_ptr<appengine_v1::AuthorizedCertificatesRetryPolicy>
+  retry_policy(Options const& options) {
+    return options.get<appengine_v1::AuthorizedCertificatesRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<appengine_v1::AuthorizedCertificatesBackoffPolicyOption>()) {
-      return options
-          .get<appengine_v1::AuthorizedCertificatesBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options
         .get<appengine_v1::AuthorizedCertificatesBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<
+  static std::unique_ptr<
       appengine_v1::AuthorizedCertificatesConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            appengine_v1::
-                AuthorizedCertificatesConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<appengine_v1::
-                   AuthorizedCertificatesConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  idempotency_policy(Options const& options) {
+    return options
         .get<appengine_v1::
                  AuthorizedCertificatesConnectionIdempotencyPolicyOption>()
         ->clone();

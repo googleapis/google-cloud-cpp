@@ -43,39 +43,42 @@ MetadataServiceConnectionImpl::MetadataServiceConnectionImpl(
 future<StatusOr<google::cloud::aiplatform::v1::MetadataStore>>
 MetadataServiceConnectionImpl::CreateMetadataStore(
     google::cloud::aiplatform::v1::CreateMetadataStoreRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::aiplatform::v1::MetadataStore>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::aiplatform::v1::CreateMetadataStoreRequest const&
-                 request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::aiplatform::v1::CreateMetadataStoreRequest const&
+              request) {
         return stub->AsyncCreateMetadataStore(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::aiplatform::v1::MetadataStore>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateMetadataStore(request), polling_policy(),
-      __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateMetadataStore(request),
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::cloud::aiplatform::v1::MetadataStore>
 MetadataServiceConnectionImpl::GetMetadataStore(
     google::cloud::aiplatform::v1::GetMetadataStoreRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetMetadataStore(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetMetadataStore(request),
       [this](grpc::ClientContext& context,
              google::cloud::aiplatform::v1::GetMetadataStoreRequest const&
                  request) { return stub_->GetMetadataStore(context, request); },
@@ -86,16 +89,16 @@ StreamRange<google::cloud::aiplatform::v1::MetadataStore>
 MetadataServiceConnectionImpl::ListMetadataStores(
     google::cloud::aiplatform::v1::ListMetadataStoresRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<aiplatform_v1::MetadataServiceRetryPolicy const>(
-      retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListMetadataStores(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListMetadataStores(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::aiplatform::v1::MetadataStore>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<aiplatform_v1::MetadataServiceRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::aiplatform::v1::ListMetadataStoresRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
@@ -120,39 +123,42 @@ future<StatusOr<
     google::cloud::aiplatform::v1::DeleteMetadataStoreOperationMetadata>>
 MetadataServiceConnectionImpl::DeleteMetadataStore(
     google::cloud::aiplatform::v1::DeleteMetadataStoreRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::aiplatform::v1::DeleteMetadataStoreOperationMetadata>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::aiplatform::v1::DeleteMetadataStoreRequest const&
-                 request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::aiplatform::v1::DeleteMetadataStoreRequest const&
+              request) {
         return stub->AsyncDeleteMetadataStore(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::aiplatform::v1::DeleteMetadataStoreOperationMetadata>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteMetadataStore(request), polling_policy(),
-      __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteMetadataStore(request),
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::cloud::aiplatform::v1::Artifact>
 MetadataServiceConnectionImpl::CreateArtifact(
     google::cloud::aiplatform::v1::CreateArtifactRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateArtifact(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateArtifact(request),
       [this](
           grpc::ClientContext& context,
           google::cloud::aiplatform::v1::CreateArtifactRequest const& request) {
@@ -164,9 +170,10 @@ MetadataServiceConnectionImpl::CreateArtifact(
 StatusOr<google::cloud::aiplatform::v1::Artifact>
 MetadataServiceConnectionImpl::GetArtifact(
     google::cloud::aiplatform::v1::GetArtifactRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetArtifact(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetArtifact(request),
       [this](grpc::ClientContext& context,
              google::cloud::aiplatform::v1::GetArtifactRequest const& request) {
         return stub_->GetArtifact(context, request);
@@ -178,16 +185,16 @@ StreamRange<google::cloud::aiplatform::v1::Artifact>
 MetadataServiceConnectionImpl::ListArtifacts(
     google::cloud::aiplatform::v1::ListArtifactsRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<aiplatform_v1::MetadataServiceRetryPolicy const>(
-      retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListArtifacts(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListArtifacts(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::aiplatform::v1::Artifact>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<aiplatform_v1::MetadataServiceRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::aiplatform::v1::ListArtifactsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
@@ -210,9 +217,10 @@ MetadataServiceConnectionImpl::ListArtifacts(
 StatusOr<google::cloud::aiplatform::v1::Artifact>
 MetadataServiceConnectionImpl::UpdateArtifact(
     google::cloud::aiplatform::v1::UpdateArtifactRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UpdateArtifact(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateArtifact(request),
       [this](
           grpc::ClientContext& context,
           google::cloud::aiplatform::v1::UpdateArtifactRequest const& request) {
@@ -224,69 +232,72 @@ MetadataServiceConnectionImpl::UpdateArtifact(
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 MetadataServiceConnectionImpl::DeleteArtifact(
     google::cloud::aiplatform::v1::DeleteArtifactRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::aiplatform::v1::DeleteOperationMetadata>(
       background_->cq(), request,
-      [stub](
+      [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context,
           google::cloud::aiplatform::v1::DeleteArtifactRequest const& request) {
         return stub->AsyncDeleteArtifact(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::aiplatform::v1::DeleteOperationMetadata>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteArtifact(request), polling_policy(),
-      __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteArtifact(request),
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::PurgeArtifactsResponse>>
 MetadataServiceConnectionImpl::PurgeArtifacts(
     google::cloud::aiplatform::v1::PurgeArtifactsRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::aiplatform::v1::PurgeArtifactsResponse>(
       background_->cq(), request,
-      [stub](
+      [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context,
           google::cloud::aiplatform::v1::PurgeArtifactsRequest const& request) {
         return stub->AsyncPurgeArtifacts(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::aiplatform::v1::PurgeArtifactsResponse>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->PurgeArtifacts(request), polling_policy(),
-      __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->PurgeArtifacts(request),
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::cloud::aiplatform::v1::Context>
 MetadataServiceConnectionImpl::CreateContext(
     google::cloud::aiplatform::v1::CreateContextRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateContext(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateContext(request),
       [this](
           grpc::ClientContext& context,
           google::cloud::aiplatform::v1::CreateContextRequest const& request) {
@@ -298,9 +309,10 @@ MetadataServiceConnectionImpl::CreateContext(
 StatusOr<google::cloud::aiplatform::v1::Context>
 MetadataServiceConnectionImpl::GetContext(
     google::cloud::aiplatform::v1::GetContextRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetContext(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetContext(request),
       [this](grpc::ClientContext& context,
              google::cloud::aiplatform::v1::GetContextRequest const& request) {
         return stub_->GetContext(context, request);
@@ -312,16 +324,16 @@ StreamRange<google::cloud::aiplatform::v1::Context>
 MetadataServiceConnectionImpl::ListContexts(
     google::cloud::aiplatform::v1::ListContextsRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<aiplatform_v1::MetadataServiceRetryPolicy const>(
-      retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListContexts(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListContexts(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::aiplatform::v1::Context>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<aiplatform_v1::MetadataServiceRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::aiplatform::v1::ListContextsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
@@ -344,9 +356,10 @@ MetadataServiceConnectionImpl::ListContexts(
 StatusOr<google::cloud::aiplatform::v1::Context>
 MetadataServiceConnectionImpl::UpdateContext(
     google::cloud::aiplatform::v1::UpdateContextRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UpdateContext(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateContext(request),
       [this](
           grpc::ClientContext& context,
           google::cloud::aiplatform::v1::UpdateContextRequest const& request) {
@@ -358,59 +371,63 @@ MetadataServiceConnectionImpl::UpdateContext(
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 MetadataServiceConnectionImpl::DeleteContext(
     google::cloud::aiplatform::v1::DeleteContextRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::aiplatform::v1::DeleteOperationMetadata>(
       background_->cq(), request,
-      [stub](
+      [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context,
           google::cloud::aiplatform::v1::DeleteContextRequest const& request) {
         return stub->AsyncDeleteContext(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::aiplatform::v1::DeleteOperationMetadata>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteContext(request), polling_policy(), __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteContext(request),
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::PurgeContextsResponse>>
 MetadataServiceConnectionImpl::PurgeContexts(
     google::cloud::aiplatform::v1::PurgeContextsRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::aiplatform::v1::PurgeContextsResponse>(
       background_->cq(), request,
-      [stub](
+      [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context,
           google::cloud::aiplatform::v1::PurgeContextsRequest const& request) {
         return stub->AsyncPurgeContexts(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::aiplatform::v1::PurgeContextsResponse>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->PurgeContexts(request), polling_policy(), __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->PurgeContexts(request),
+      polling_policy(*current), __func__);
 }
 
 StatusOr<
@@ -418,9 +435,10 @@ StatusOr<
 MetadataServiceConnectionImpl::AddContextArtifactsAndExecutions(
     google::cloud::aiplatform::v1::
         AddContextArtifactsAndExecutionsRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->AddContextArtifactsAndExecutions(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->AddContextArtifactsAndExecutions(request),
       [this](grpc::ClientContext& context,
              google::cloud::aiplatform::v1::
                  AddContextArtifactsAndExecutionsRequest const& request) {
@@ -432,9 +450,10 @@ MetadataServiceConnectionImpl::AddContextArtifactsAndExecutions(
 StatusOr<google::cloud::aiplatform::v1::AddContextChildrenResponse>
 MetadataServiceConnectionImpl::AddContextChildren(
     google::cloud::aiplatform::v1::AddContextChildrenRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->AddContextChildren(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->AddContextChildren(request),
       [this](grpc::ClientContext& context,
              google::cloud::aiplatform::v1::AddContextChildrenRequest const&
                  request) {
@@ -447,9 +466,10 @@ StatusOr<google::cloud::aiplatform::v1::RemoveContextChildrenResponse>
 MetadataServiceConnectionImpl::RemoveContextChildren(
     google::cloud::aiplatform::v1::RemoveContextChildrenRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->RemoveContextChildren(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->RemoveContextChildren(request),
       [this](grpc::ClientContext& context,
              google::cloud::aiplatform::v1::RemoveContextChildrenRequest const&
                  request) {
@@ -462,9 +482,10 @@ StatusOr<google::cloud::aiplatform::v1::LineageSubgraph>
 MetadataServiceConnectionImpl::QueryContextLineageSubgraph(
     google::cloud::aiplatform::v1::QueryContextLineageSubgraphRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->QueryContextLineageSubgraph(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->QueryContextLineageSubgraph(request),
       [this](grpc::ClientContext& context,
              google::cloud::aiplatform::v1::
                  QueryContextLineageSubgraphRequest const& request) {
@@ -476,9 +497,10 @@ MetadataServiceConnectionImpl::QueryContextLineageSubgraph(
 StatusOr<google::cloud::aiplatform::v1::Execution>
 MetadataServiceConnectionImpl::CreateExecution(
     google::cloud::aiplatform::v1::CreateExecutionRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateExecution(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateExecution(request),
       [this](grpc::ClientContext& context,
              google::cloud::aiplatform::v1::CreateExecutionRequest const&
                  request) { return stub_->CreateExecution(context, request); },
@@ -488,9 +510,10 @@ MetadataServiceConnectionImpl::CreateExecution(
 StatusOr<google::cloud::aiplatform::v1::Execution>
 MetadataServiceConnectionImpl::GetExecution(
     google::cloud::aiplatform::v1::GetExecutionRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetExecution(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetExecution(request),
       [this](
           grpc::ClientContext& context,
           google::cloud::aiplatform::v1::GetExecutionRequest const& request) {
@@ -503,16 +526,16 @@ StreamRange<google::cloud::aiplatform::v1::Execution>
 MetadataServiceConnectionImpl::ListExecutions(
     google::cloud::aiplatform::v1::ListExecutionsRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<aiplatform_v1::MetadataServiceRetryPolicy const>(
-      retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListExecutions(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListExecutions(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::aiplatform::v1::Execution>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<aiplatform_v1::MetadataServiceRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::aiplatform::v1::ListExecutionsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
@@ -535,9 +558,10 @@ MetadataServiceConnectionImpl::ListExecutions(
 StatusOr<google::cloud::aiplatform::v1::Execution>
 MetadataServiceConnectionImpl::UpdateExecution(
     google::cloud::aiplatform::v1::UpdateExecutionRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UpdateExecution(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateExecution(request),
       [this](grpc::ClientContext& context,
              google::cloud::aiplatform::v1::UpdateExecutionRequest const&
                  request) { return stub_->UpdateExecution(context, request); },
@@ -547,69 +571,74 @@ MetadataServiceConnectionImpl::UpdateExecution(
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 MetadataServiceConnectionImpl::DeleteExecution(
     google::cloud::aiplatform::v1::DeleteExecutionRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::aiplatform::v1::DeleteOperationMetadata>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::aiplatform::v1::DeleteExecutionRequest const&
-                 request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::aiplatform::v1::DeleteExecutionRequest const&
+              request) {
         return stub->AsyncDeleteExecution(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::aiplatform::v1::DeleteOperationMetadata>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteExecution(request), polling_policy(),
-      __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteExecution(request),
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::PurgeExecutionsResponse>>
 MetadataServiceConnectionImpl::PurgeExecutions(
     google::cloud::aiplatform::v1::PurgeExecutionsRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::aiplatform::v1::PurgeExecutionsResponse>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::aiplatform::v1::PurgeExecutionsRequest const&
-                 request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::aiplatform::v1::PurgeExecutionsRequest const&
+              request) {
         return stub->AsyncPurgeExecutions(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::aiplatform::v1::PurgeExecutionsResponse>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->PurgeExecutions(request), polling_policy(),
-      __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->PurgeExecutions(request),
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::cloud::aiplatform::v1::AddExecutionEventsResponse>
 MetadataServiceConnectionImpl::AddExecutionEvents(
     google::cloud::aiplatform::v1::AddExecutionEventsRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->AddExecutionEvents(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->AddExecutionEvents(request),
       [this](grpc::ClientContext& context,
              google::cloud::aiplatform::v1::AddExecutionEventsRequest const&
                  request) {
@@ -622,9 +651,10 @@ StatusOr<google::cloud::aiplatform::v1::LineageSubgraph>
 MetadataServiceConnectionImpl::QueryExecutionInputsAndOutputs(
     google::cloud::aiplatform::v1::QueryExecutionInputsAndOutputsRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->QueryExecutionInputsAndOutputs(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->QueryExecutionInputsAndOutputs(request),
       [this](grpc::ClientContext& context,
              google::cloud::aiplatform::v1::
                  QueryExecutionInputsAndOutputsRequest const& request) {
@@ -636,9 +666,10 @@ MetadataServiceConnectionImpl::QueryExecutionInputsAndOutputs(
 StatusOr<google::cloud::aiplatform::v1::MetadataSchema>
 MetadataServiceConnectionImpl::CreateMetadataSchema(
     google::cloud::aiplatform::v1::CreateMetadataSchemaRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateMetadataSchema(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateMetadataSchema(request),
       [this](grpc::ClientContext& context,
              google::cloud::aiplatform::v1::CreateMetadataSchemaRequest const&
                  request) {
@@ -650,9 +681,10 @@ MetadataServiceConnectionImpl::CreateMetadataSchema(
 StatusOr<google::cloud::aiplatform::v1::MetadataSchema>
 MetadataServiceConnectionImpl::GetMetadataSchema(
     google::cloud::aiplatform::v1::GetMetadataSchemaRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetMetadataSchema(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetMetadataSchema(request),
       [this](grpc::ClientContext& context,
              google::cloud::aiplatform::v1::GetMetadataSchemaRequest const&
                  request) {
@@ -665,16 +697,16 @@ StreamRange<google::cloud::aiplatform::v1::MetadataSchema>
 MetadataServiceConnectionImpl::ListMetadataSchemas(
     google::cloud::aiplatform::v1::ListMetadataSchemasRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<aiplatform_v1::MetadataServiceRetryPolicy const>(
-      retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListMetadataSchemas(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListMetadataSchemas(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::aiplatform::v1::MetadataSchema>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<aiplatform_v1::MetadataServiceRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::aiplatform::v1::ListMetadataSchemasRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
@@ -699,9 +731,10 @@ StatusOr<google::cloud::aiplatform::v1::LineageSubgraph>
 MetadataServiceConnectionImpl::QueryArtifactLineageSubgraph(
     google::cloud::aiplatform::v1::QueryArtifactLineageSubgraphRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->QueryArtifactLineageSubgraph(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->QueryArtifactLineageSubgraph(request),
       [this](grpc::ClientContext& context,
              google::cloud::aiplatform::v1::
                  QueryArtifactLineageSubgraphRequest const& request) {

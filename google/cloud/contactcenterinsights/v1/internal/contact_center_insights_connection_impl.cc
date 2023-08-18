@@ -46,9 +46,10 @@ StatusOr<google::cloud::contactcenterinsights::v1::Conversation>
 ContactCenterInsightsConnectionImpl::CreateConversation(
     google::cloud::contactcenterinsights::v1::CreateConversationRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateConversation(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateConversation(request),
       [this](grpc::ClientContext& context,
              google::cloud::contactcenterinsights::v1::
                  CreateConversationRequest const& request) {
@@ -61,40 +62,42 @@ future<StatusOr<google::cloud::contactcenterinsights::v1::Conversation>>
 ContactCenterInsightsConnectionImpl::UploadConversation(
     google::cloud::contactcenterinsights::v1::UploadConversationRequest const&
         request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::contactcenterinsights::v1::Conversation>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::contactcenterinsights::v1::
-                 UploadConversationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::contactcenterinsights::v1::
+                         UploadConversationRequest const& request) {
         return stub->AsyncUploadConversation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::contactcenterinsights::v1::Conversation>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UploadConversation(request), polling_policy(),
-      __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UploadConversation(request),
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::Conversation>
 ContactCenterInsightsConnectionImpl::UpdateConversation(
     google::cloud::contactcenterinsights::v1::UpdateConversationRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UpdateConversation(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateConversation(request),
       [this](grpc::ClientContext& context,
              google::cloud::contactcenterinsights::v1::
                  UpdateConversationRequest const& request) {
@@ -107,9 +110,10 @@ StatusOr<google::cloud::contactcenterinsights::v1::Conversation>
 ContactCenterInsightsConnectionImpl::GetConversation(
     google::cloud::contactcenterinsights::v1::GetConversationRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetConversation(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetConversation(request),
       [this](grpc::ClientContext& context,
              google::cloud::contactcenterinsights::v1::
                  GetConversationRequest const& request) {
@@ -123,19 +127,19 @@ ContactCenterInsightsConnectionImpl::ListConversations(
     google::cloud::contactcenterinsights::v1::ListConversationsRequest
         request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<
-      contactcenterinsights_v1::ContactCenterInsightsRetryPolicy const>(
-      retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListConversations(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListConversations(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::contactcenterinsights::v1::Conversation>>(
       std::move(request),
-      [stub, retry, backoff, idempotency,
-       function_name](google::cloud::contactcenterinsights::v1::
-                          ListConversationsRequest const& r) {
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<
+           contactcenterinsights_v1::ContactCenterInsightsRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          google::cloud::contactcenterinsights::v1::
+              ListConversationsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context,
@@ -158,9 +162,10 @@ ContactCenterInsightsConnectionImpl::ListConversations(
 Status ContactCenterInsightsConnectionImpl::DeleteConversation(
     google::cloud::contactcenterinsights::v1::DeleteConversationRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteConversation(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteConversation(request),
       [this](grpc::ClientContext& context,
              google::cloud::contactcenterinsights::v1::
                  DeleteConversationRequest const& request) {
@@ -173,41 +178,43 @@ future<StatusOr<google::cloud::contactcenterinsights::v1::Analysis>>
 ContactCenterInsightsConnectionImpl::CreateAnalysis(
     google::cloud::contactcenterinsights::v1::CreateAnalysisRequest const&
         request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::contactcenterinsights::v1::Analysis>(
       background_->cq(), request,
-      [stub](
+      [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context,
           google::cloud::contactcenterinsights::v1::CreateAnalysisRequest const&
               request) {
         return stub->AsyncCreateAnalysis(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::contactcenterinsights::v1::Analysis>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateAnalysis(request), polling_policy(),
-      __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateAnalysis(request),
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::Analysis>
 ContactCenterInsightsConnectionImpl::GetAnalysis(
     google::cloud::contactcenterinsights::v1::GetAnalysisRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetAnalysis(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetAnalysis(request),
       [this](grpc::ClientContext& context,
              google::cloud::contactcenterinsights::v1::GetAnalysisRequest const&
                  request) { return stub_->GetAnalysis(context, request); },
@@ -218,17 +225,17 @@ StreamRange<google::cloud::contactcenterinsights::v1::Analysis>
 ContactCenterInsightsConnectionImpl::ListAnalyses(
     google::cloud::contactcenterinsights::v1::ListAnalysesRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<
-      contactcenterinsights_v1::ContactCenterInsightsRetryPolicy const>(
-      retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListAnalyses(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListAnalyses(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::contactcenterinsights::v1::Analysis>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<
+           contactcenterinsights_v1::ContactCenterInsightsRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::contactcenterinsights::v1::ListAnalysesRequest const&
               r) {
         return google::cloud::internal::RetryLoop(
@@ -252,9 +259,10 @@ ContactCenterInsightsConnectionImpl::ListAnalyses(
 Status ContactCenterInsightsConnectionImpl::DeleteAnalysis(
     google::cloud::contactcenterinsights::v1::DeleteAnalysisRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteAnalysis(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteAnalysis(request),
       [this](
           grpc::ClientContext& context,
           google::cloud::contactcenterinsights::v1::DeleteAnalysisRequest const&
@@ -267,34 +275,35 @@ future<StatusOr<
 ContactCenterInsightsConnectionImpl::BulkAnalyzeConversations(
     google::cloud::contactcenterinsights::v1::
         BulkAnalyzeConversationsRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::contactcenterinsights::v1::
           BulkAnalyzeConversationsResponse>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::contactcenterinsights::v1::
-                 BulkAnalyzeConversationsRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::contactcenterinsights::v1::
+                         BulkAnalyzeConversationsRequest const& request) {
         return stub->AsyncBulkAnalyzeConversations(cq, std::move(context),
                                                    request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::contactcenterinsights::v1::
               BulkAnalyzeConversationsResponse>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->BulkAnalyzeConversations(request), polling_policy(),
-      __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->BulkAnalyzeConversations(request),
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<
@@ -302,32 +311,33 @@ future<StatusOr<
 ContactCenterInsightsConnectionImpl::IngestConversations(
     google::cloud::contactcenterinsights::v1::IngestConversationsRequest const&
         request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::contactcenterinsights::v1::IngestConversationsResponse>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::contactcenterinsights::v1::
-                 IngestConversationsRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::contactcenterinsights::v1::
+                         IngestConversationsRequest const& request) {
         return stub->AsyncIngestConversations(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::contactcenterinsights::v1::
               IngestConversationsResponse>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->IngestConversations(request), polling_policy(),
-      __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->IngestConversations(request),
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<
@@ -335,71 +345,74 @@ future<StatusOr<
 ContactCenterInsightsConnectionImpl::ExportInsightsData(
     google::cloud::contactcenterinsights::v1::ExportInsightsDataRequest const&
         request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::contactcenterinsights::v1::ExportInsightsDataResponse>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::contactcenterinsights::v1::
-                 ExportInsightsDataRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::contactcenterinsights::v1::
+                         ExportInsightsDataRequest const& request) {
         return stub->AsyncExportInsightsData(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::contactcenterinsights::v1::ExportInsightsDataResponse>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->ExportInsightsData(request), polling_policy(),
-      __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ExportInsightsData(request),
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::contactcenterinsights::v1::IssueModel>>
 ContactCenterInsightsConnectionImpl::CreateIssueModel(
     google::cloud::contactcenterinsights::v1::CreateIssueModelRequest const&
         request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::contactcenterinsights::v1::IssueModel>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::contactcenterinsights::v1::
-                 CreateIssueModelRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::contactcenterinsights::v1::
+                         CreateIssueModelRequest const& request) {
         return stub->AsyncCreateIssueModel(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::contactcenterinsights::v1::IssueModel>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateIssueModel(request), polling_policy(),
-      __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateIssueModel(request),
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::IssueModel>
 ContactCenterInsightsConnectionImpl::UpdateIssueModel(
     google::cloud::contactcenterinsights::v1::UpdateIssueModelRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UpdateIssueModel(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateIssueModel(request),
       [this](grpc::ClientContext& context,
              google::cloud::contactcenterinsights::v1::
                  UpdateIssueModelRequest const& request) {
@@ -412,9 +425,10 @@ StatusOr<google::cloud::contactcenterinsights::v1::IssueModel>
 ContactCenterInsightsConnectionImpl::GetIssueModel(
     google::cloud::contactcenterinsights::v1::GetIssueModelRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetIssueModel(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetIssueModel(request),
       [this](
           grpc::ClientContext& context,
           google::cloud::contactcenterinsights::v1::GetIssueModelRequest const&
@@ -426,9 +440,10 @@ StatusOr<google::cloud::contactcenterinsights::v1::ListIssueModelsResponse>
 ContactCenterInsightsConnectionImpl::ListIssueModels(
     google::cloud::contactcenterinsights::v1::ListIssueModelsRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->ListIssueModels(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ListIssueModels(request),
       [this](grpc::ClientContext& context,
              google::cloud::contactcenterinsights::v1::
                  ListIssueModelsRequest const& request) {
@@ -442,31 +457,32 @@ future<StatusOr<
 ContactCenterInsightsConnectionImpl::DeleteIssueModel(
     google::cloud::contactcenterinsights::v1::DeleteIssueModelRequest const&
         request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::contactcenterinsights::v1::DeleteIssueModelMetadata>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::contactcenterinsights::v1::
-                 DeleteIssueModelRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::contactcenterinsights::v1::
+                         DeleteIssueModelRequest const& request) {
         return stub->AsyncDeleteIssueModel(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::contactcenterinsights::v1::DeleteIssueModelMetadata>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteIssueModel(request), polling_policy(),
-      __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteIssueModel(request),
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<
@@ -474,31 +490,32 @@ future<StatusOr<
 ContactCenterInsightsConnectionImpl::DeployIssueModel(
     google::cloud::contactcenterinsights::v1::DeployIssueModelRequest const&
         request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::contactcenterinsights::v1::DeployIssueModelResponse>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::contactcenterinsights::v1::
-                 DeployIssueModelRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::contactcenterinsights::v1::
+                         DeployIssueModelRequest const& request) {
         return stub->AsyncDeployIssueModel(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::contactcenterinsights::v1::DeployIssueModelResponse>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeployIssueModel(request), polling_policy(),
-      __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeployIssueModel(request),
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<
@@ -506,38 +523,41 @@ future<StatusOr<
 ContactCenterInsightsConnectionImpl::UndeployIssueModel(
     google::cloud::contactcenterinsights::v1::UndeployIssueModelRequest const&
         request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::contactcenterinsights::v1::UndeployIssueModelResponse>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::contactcenterinsights::v1::
-                 UndeployIssueModelRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::contactcenterinsights::v1::
+                         UndeployIssueModelRequest const& request) {
         return stub->AsyncUndeployIssueModel(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::contactcenterinsights::v1::UndeployIssueModelResponse>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UndeployIssueModel(request), polling_policy(),
-      __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UndeployIssueModel(request),
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::Issue>
 ContactCenterInsightsConnectionImpl::GetIssue(
     google::cloud::contactcenterinsights::v1::GetIssueRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(), idempotency_policy()->GetIssue(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetIssue(request),
       [this](grpc::ClientContext& context,
              google::cloud::contactcenterinsights::v1::GetIssueRequest const&
                  request) { return stub_->GetIssue(context, request); },
@@ -548,9 +568,10 @@ StatusOr<google::cloud::contactcenterinsights::v1::ListIssuesResponse>
 ContactCenterInsightsConnectionImpl::ListIssues(
     google::cloud::contactcenterinsights::v1::ListIssuesRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->ListIssues(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ListIssues(request),
       [this](grpc::ClientContext& context,
              google::cloud::contactcenterinsights::v1::ListIssuesRequest const&
                  request) { return stub_->ListIssues(context, request); },
@@ -561,9 +582,10 @@ StatusOr<google::cloud::contactcenterinsights::v1::Issue>
 ContactCenterInsightsConnectionImpl::UpdateIssue(
     google::cloud::contactcenterinsights::v1::UpdateIssueRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UpdateIssue(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateIssue(request),
       [this](grpc::ClientContext& context,
              google::cloud::contactcenterinsights::v1::UpdateIssueRequest const&
                  request) { return stub_->UpdateIssue(context, request); },
@@ -573,9 +595,10 @@ ContactCenterInsightsConnectionImpl::UpdateIssue(
 Status ContactCenterInsightsConnectionImpl::DeleteIssue(
     google::cloud::contactcenterinsights::v1::DeleteIssueRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteIssue(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteIssue(request),
       [this](grpc::ClientContext& context,
              google::cloud::contactcenterinsights::v1::DeleteIssueRequest const&
                  request) { return stub_->DeleteIssue(context, request); },
@@ -587,9 +610,10 @@ StatusOr<
 ContactCenterInsightsConnectionImpl::CalculateIssueModelStats(
     google::cloud::contactcenterinsights::v1::
         CalculateIssueModelStatsRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CalculateIssueModelStats(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CalculateIssueModelStats(request),
       [this](grpc::ClientContext& context,
              google::cloud::contactcenterinsights::v1::
                  CalculateIssueModelStatsRequest const& request) {
@@ -602,9 +626,10 @@ StatusOr<google::cloud::contactcenterinsights::v1::PhraseMatcher>
 ContactCenterInsightsConnectionImpl::CreatePhraseMatcher(
     google::cloud::contactcenterinsights::v1::CreatePhraseMatcherRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreatePhraseMatcher(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreatePhraseMatcher(request),
       [this](grpc::ClientContext& context,
              google::cloud::contactcenterinsights::v1::
                  CreatePhraseMatcherRequest const& request) {
@@ -617,9 +642,10 @@ StatusOr<google::cloud::contactcenterinsights::v1::PhraseMatcher>
 ContactCenterInsightsConnectionImpl::GetPhraseMatcher(
     google::cloud::contactcenterinsights::v1::GetPhraseMatcherRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetPhraseMatcher(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetPhraseMatcher(request),
       [this](grpc::ClientContext& context,
              google::cloud::contactcenterinsights::v1::
                  GetPhraseMatcherRequest const& request) {
@@ -633,19 +659,19 @@ ContactCenterInsightsConnectionImpl::ListPhraseMatchers(
     google::cloud::contactcenterinsights::v1::ListPhraseMatchersRequest
         request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<
-      contactcenterinsights_v1::ContactCenterInsightsRetryPolicy const>(
-      retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListPhraseMatchers(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListPhraseMatchers(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::contactcenterinsights::v1::PhraseMatcher>>(
       std::move(request),
-      [stub, retry, backoff, idempotency,
-       function_name](google::cloud::contactcenterinsights::v1::
-                          ListPhraseMatchersRequest const& r) {
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<
+           contactcenterinsights_v1::ContactCenterInsightsRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          google::cloud::contactcenterinsights::v1::
+              ListPhraseMatchersRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context,
@@ -668,9 +694,10 @@ ContactCenterInsightsConnectionImpl::ListPhraseMatchers(
 Status ContactCenterInsightsConnectionImpl::DeletePhraseMatcher(
     google::cloud::contactcenterinsights::v1::DeletePhraseMatcherRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeletePhraseMatcher(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeletePhraseMatcher(request),
       [this](grpc::ClientContext& context,
              google::cloud::contactcenterinsights::v1::
                  DeletePhraseMatcherRequest const& request) {
@@ -683,9 +710,10 @@ StatusOr<google::cloud::contactcenterinsights::v1::PhraseMatcher>
 ContactCenterInsightsConnectionImpl::UpdatePhraseMatcher(
     google::cloud::contactcenterinsights::v1::UpdatePhraseMatcherRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UpdatePhraseMatcher(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdatePhraseMatcher(request),
       [this](grpc::ClientContext& context,
              google::cloud::contactcenterinsights::v1::
                  UpdatePhraseMatcherRequest const& request) {
@@ -698,9 +726,10 @@ StatusOr<google::cloud::contactcenterinsights::v1::CalculateStatsResponse>
 ContactCenterInsightsConnectionImpl::CalculateStats(
     google::cloud::contactcenterinsights::v1::CalculateStatsRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CalculateStats(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CalculateStats(request),
       [this](
           grpc::ClientContext& context,
           google::cloud::contactcenterinsights::v1::CalculateStatsRequest const&
@@ -712,9 +741,10 @@ StatusOr<google::cloud::contactcenterinsights::v1::Settings>
 ContactCenterInsightsConnectionImpl::GetSettings(
     google::cloud::contactcenterinsights::v1::GetSettingsRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetSettings(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetSettings(request),
       [this](grpc::ClientContext& context,
              google::cloud::contactcenterinsights::v1::GetSettingsRequest const&
                  request) { return stub_->GetSettings(context, request); },
@@ -725,9 +755,10 @@ StatusOr<google::cloud::contactcenterinsights::v1::Settings>
 ContactCenterInsightsConnectionImpl::UpdateSettings(
     google::cloud::contactcenterinsights::v1::UpdateSettingsRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UpdateSettings(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateSettings(request),
       [this](
           grpc::ClientContext& context,
           google::cloud::contactcenterinsights::v1::UpdateSettingsRequest const&
@@ -739,9 +770,10 @@ StatusOr<google::cloud::contactcenterinsights::v1::View>
 ContactCenterInsightsConnectionImpl::CreateView(
     google::cloud::contactcenterinsights::v1::CreateViewRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateView(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateView(request),
       [this](grpc::ClientContext& context,
              google::cloud::contactcenterinsights::v1::CreateViewRequest const&
                  request) { return stub_->CreateView(context, request); },
@@ -751,8 +783,10 @@ ContactCenterInsightsConnectionImpl::CreateView(
 StatusOr<google::cloud::contactcenterinsights::v1::View>
 ContactCenterInsightsConnectionImpl::GetView(
     google::cloud::contactcenterinsights::v1::GetViewRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(), idempotency_policy()->GetView(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetView(request),
       [this](grpc::ClientContext& context,
              google::cloud::contactcenterinsights::v1::GetViewRequest const&
                  request) { return stub_->GetView(context, request); },
@@ -763,17 +797,17 @@ StreamRange<google::cloud::contactcenterinsights::v1::View>
 ContactCenterInsightsConnectionImpl::ListViews(
     google::cloud::contactcenterinsights::v1::ListViewsRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<
-      contactcenterinsights_v1::ContactCenterInsightsRetryPolicy const>(
-      retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListViews(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListViews(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::contactcenterinsights::v1::View>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<
+           contactcenterinsights_v1::ContactCenterInsightsRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::contactcenterinsights::v1::ListViewsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
@@ -797,9 +831,10 @@ StatusOr<google::cloud::contactcenterinsights::v1::View>
 ContactCenterInsightsConnectionImpl::UpdateView(
     google::cloud::contactcenterinsights::v1::UpdateViewRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UpdateView(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateView(request),
       [this](grpc::ClientContext& context,
              google::cloud::contactcenterinsights::v1::UpdateViewRequest const&
                  request) { return stub_->UpdateView(context, request); },
@@ -809,9 +844,10 @@ ContactCenterInsightsConnectionImpl::UpdateView(
 Status ContactCenterInsightsConnectionImpl::DeleteView(
     google::cloud::contactcenterinsights::v1::DeleteViewRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteView(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteView(request),
       [this](grpc::ClientContext& context,
              google::cloud::contactcenterinsights::v1::DeleteViewRequest const&
                  request) { return stub_->DeleteView(context, request); },

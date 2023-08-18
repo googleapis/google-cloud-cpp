@@ -56,30 +56,18 @@ class IAMPolicyConnectionImpl : public iam_v1::IAMPolicyConnection {
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
  private:
-  std::unique_ptr<iam_v1::IAMPolicyRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<iam_v1::IAMPolicyRetryPolicyOption>()) {
-      return options.get<iam_v1::IAMPolicyRetryPolicyOption>()->clone();
-    }
-    return options_.get<iam_v1::IAMPolicyRetryPolicyOption>()->clone();
+  static std::unique_ptr<iam_v1::IAMPolicyRetryPolicy> retry_policy(
+      Options const& options) {
+    return options.get<iam_v1::IAMPolicyRetryPolicyOption>()->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<iam_v1::IAMPolicyBackoffPolicyOption>()) {
-      return options.get<iam_v1::IAMPolicyBackoffPolicyOption>()->clone();
-    }
-    return options_.get<iam_v1::IAMPolicyBackoffPolicyOption>()->clone();
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<iam_v1::IAMPolicyBackoffPolicyOption>()->clone();
   }
 
-  std::unique_ptr<iam_v1::IAMPolicyConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<iam_v1::IAMPolicyConnectionIdempotencyPolicyOption>()) {
-      return options.get<iam_v1::IAMPolicyConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_.get<iam_v1::IAMPolicyConnectionIdempotencyPolicyOption>()
+  static std::unique_ptr<iam_v1::IAMPolicyConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options.get<iam_v1::IAMPolicyConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 

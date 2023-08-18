@@ -41,9 +41,10 @@ MatchServiceConnectionImpl::MatchServiceConnectionImpl(
 StatusOr<google::cloud::aiplatform::v1::FindNeighborsResponse>
 MatchServiceConnectionImpl::FindNeighbors(
     google::cloud::aiplatform::v1::FindNeighborsRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->FindNeighbors(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->FindNeighbors(request),
       [this](
           grpc::ClientContext& context,
           google::cloud::aiplatform::v1::FindNeighborsRequest const& request) {
@@ -55,9 +56,10 @@ MatchServiceConnectionImpl::FindNeighbors(
 StatusOr<google::cloud::aiplatform::v1::ReadIndexDatapointsResponse>
 MatchServiceConnectionImpl::ReadIndexDatapoints(
     google::cloud::aiplatform::v1::ReadIndexDatapointsRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->ReadIndexDatapoints(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ReadIndexDatapoints(request),
       [this](grpc::ClientContext& context,
              google::cloud::aiplatform::v1::ReadIndexDatapointsRequest const&
                  request) {

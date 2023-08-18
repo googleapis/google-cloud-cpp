@@ -41,8 +41,10 @@ SqlBackupRunsServiceRestConnectionImpl::SqlBackupRunsServiceRestConnectionImpl(
 StatusOr<google::cloud::sql::v1::Operation>
 SqlBackupRunsServiceRestConnectionImpl::Delete(
     google::cloud::sql::v1::SqlBackupRunsDeleteRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
-      retry_policy(), backoff_policy(), idempotency_policy()->Delete(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->Delete(request),
       [this](
           rest_internal::RestContext& rest_context,
           google::cloud::sql::v1::SqlBackupRunsDeleteRequest const& request) {
@@ -54,8 +56,10 @@ SqlBackupRunsServiceRestConnectionImpl::Delete(
 StatusOr<google::cloud::sql::v1::BackupRun>
 SqlBackupRunsServiceRestConnectionImpl::Get(
     google::cloud::sql::v1::SqlBackupRunsGetRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
-      retry_policy(), backoff_policy(), idempotency_policy()->Get(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->Get(request),
       [this](rest_internal::RestContext& rest_context,
              google::cloud::sql::v1::SqlBackupRunsGetRequest const& request) {
         return stub_->Get(rest_context, request);
@@ -66,8 +70,10 @@ SqlBackupRunsServiceRestConnectionImpl::Get(
 StatusOr<google::cloud::sql::v1::Operation>
 SqlBackupRunsServiceRestConnectionImpl::Insert(
     google::cloud::sql::v1::SqlBackupRunsInsertRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
-      retry_policy(), backoff_policy(), idempotency_policy()->Insert(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->Insert(request),
       [this](
           rest_internal::RestContext& rest_context,
           google::cloud::sql::v1::SqlBackupRunsInsertRequest const& request) {
@@ -79,8 +85,10 @@ SqlBackupRunsServiceRestConnectionImpl::Insert(
 StatusOr<google::cloud::sql::v1::BackupRunsListResponse>
 SqlBackupRunsServiceRestConnectionImpl::List(
     google::cloud::sql::v1::SqlBackupRunsListRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
-      retry_policy(), backoff_policy(), idempotency_policy()->List(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->List(request),
       [this](rest_internal::RestContext& rest_context,
              google::cloud::sql::v1::SqlBackupRunsListRequest const& request) {
         return stub_->List(rest_context, request);

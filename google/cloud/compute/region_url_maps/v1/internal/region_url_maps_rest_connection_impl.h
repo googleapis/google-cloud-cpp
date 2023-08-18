@@ -81,59 +81,30 @@ class RegionUrlMapsRestConnectionImpl
           request) override;
 
  private:
-  std::unique_ptr<compute_region_url_maps_v1::RegionUrlMapsRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            compute_region_url_maps_v1::RegionUrlMapsRetryPolicyOption>()) {
-      return options
-          .get<compute_region_url_maps_v1::RegionUrlMapsRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<compute_region_url_maps_v1::RegionUrlMapsRetryPolicy>
+  retry_policy(Options const& options) {
+    return options
         .get<compute_region_url_maps_v1::RegionUrlMapsRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            compute_region_url_maps_v1::RegionUrlMapsBackoffPolicyOption>()) {
-      return options
-          .get<compute_region_url_maps_v1::RegionUrlMapsBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options
         .get<compute_region_url_maps_v1::RegionUrlMapsBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<
+  static std::unique_ptr<
       compute_region_url_maps_v1::RegionUrlMapsConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_region_url_maps_v1::
-                        RegionUrlMapsConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<compute_region_url_maps_v1::
-                   RegionUrlMapsConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  idempotency_policy(Options const& options) {
+    return options
         .get<compute_region_url_maps_v1::
                  RegionUrlMapsConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            compute_region_url_maps_v1::RegionUrlMapsPollingPolicyOption>()) {
-      return options
-          .get<compute_region_url_maps_v1::RegionUrlMapsPollingPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options
         .get<compute_region_url_maps_v1::RegionUrlMapsPollingPolicyOption>()
         ->clone();
   }

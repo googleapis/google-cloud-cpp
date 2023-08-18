@@ -47,14 +47,10 @@ StreamRange<
 AgentEndpointServiceConnectionImpl::ReceiveTaskNotification(
     google::cloud::osconfig::agentendpoint::v1::
         ReceiveTaskNotificationRequest const& request) {
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<
-      osconfig_agentendpoint_v1::AgentEndpointServiceRetryPolicy const>(
-      retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-
-  auto factory = [stub](google::cloud::osconfig::agentendpoint::v1::
-                            ReceiveTaskNotificationRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto factory = [stub = stub_](
+                     google::cloud::osconfig::agentendpoint::v1::
+                         ReceiveTaskNotificationRequest const& request) {
     return stub->ReceiveTaskNotification(
         std::make_shared<grpc::ClientContext>(), request);
   };
@@ -63,9 +59,9 @@ AgentEndpointServiceConnectionImpl::ReceiveTaskNotification(
           ReceiveTaskNotificationResponse,
       google::cloud::osconfig::agentendpoint::v1::
           ReceiveTaskNotificationRequest>(
-      retry->clone(), backoff->clone(), [](std::chrono::milliseconds) {},
-      factory, AgentEndpointServiceReceiveTaskNotificationStreamingUpdater,
-      request);
+      retry_policy(*current), backoff_policy(*current),
+      [](std::chrono::milliseconds) {}, factory,
+      AgentEndpointServiceReceiveTaskNotificationStreamingUpdater, request);
   return internal::MakeStreamRange(
       internal::StreamReader<google::cloud::osconfig::agentendpoint::v1::
                                  ReceiveTaskNotificationResponse>(
@@ -75,9 +71,10 @@ StatusOr<google::cloud::osconfig::agentendpoint::v1::StartNextTaskResponse>
 AgentEndpointServiceConnectionImpl::StartNextTask(
     google::cloud::osconfig::agentendpoint::v1::StartNextTaskRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->StartNextTask(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->StartNextTask(request),
       [this](grpc::ClientContext& context,
              google::cloud::osconfig::agentendpoint::v1::
                  StartNextTaskRequest const& request) {
@@ -90,9 +87,10 @@ StatusOr<google::cloud::osconfig::agentendpoint::v1::ReportTaskProgressResponse>
 AgentEndpointServiceConnectionImpl::ReportTaskProgress(
     google::cloud::osconfig::agentendpoint::v1::ReportTaskProgressRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->ReportTaskProgress(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ReportTaskProgress(request),
       [this](grpc::ClientContext& context,
              google::cloud::osconfig::agentendpoint::v1::
                  ReportTaskProgressRequest const& request) {
@@ -105,9 +103,10 @@ StatusOr<google::cloud::osconfig::agentendpoint::v1::ReportTaskCompleteResponse>
 AgentEndpointServiceConnectionImpl::ReportTaskComplete(
     google::cloud::osconfig::agentendpoint::v1::ReportTaskCompleteRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->ReportTaskComplete(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ReportTaskComplete(request),
       [this](grpc::ClientContext& context,
              google::cloud::osconfig::agentendpoint::v1::
                  ReportTaskCompleteRequest const& request) {
@@ -120,9 +119,10 @@ StatusOr<google::cloud::osconfig::agentendpoint::v1::RegisterAgentResponse>
 AgentEndpointServiceConnectionImpl::RegisterAgent(
     google::cloud::osconfig::agentendpoint::v1::RegisterAgentRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->RegisterAgent(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->RegisterAgent(request),
       [this](grpc::ClientContext& context,
              google::cloud::osconfig::agentendpoint::v1::
                  RegisterAgentRequest const& request) {
@@ -135,9 +135,10 @@ StatusOr<google::cloud::osconfig::agentendpoint::v1::ReportInventoryResponse>
 AgentEndpointServiceConnectionImpl::ReportInventory(
     google::cloud::osconfig::agentendpoint::v1::ReportInventoryRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->ReportInventory(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ReportInventory(request),
       [this](grpc::ClientContext& context,
              google::cloud::osconfig::agentendpoint::v1::
                  ReportInventoryRequest const& request) {

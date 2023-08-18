@@ -43,16 +43,16 @@ StreamRange<google::cloud::dialogflow::cx::v3::Deployment>
 DeploymentsConnectionImpl::ListDeployments(
     google::cloud::dialogflow::cx::v3::ListDeploymentsRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<dialogflow_cx::DeploymentsRetryPolicy const>(
-      retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListDeployments(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListDeployments(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::dialogflow::cx::v3::Deployment>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<dialogflow_cx::DeploymentsRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::dialogflow::cx::v3::ListDeploymentsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
@@ -76,9 +76,10 @@ DeploymentsConnectionImpl::ListDeployments(
 StatusOr<google::cloud::dialogflow::cx::v3::Deployment>
 DeploymentsConnectionImpl::GetDeployment(
     google::cloud::dialogflow::cx::v3::GetDeploymentRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetDeployment(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetDeployment(request),
       [this](grpc::ClientContext& context,
              google::cloud::dialogflow::cx::v3::GetDeploymentRequest const&
                  request) { return stub_->GetDeployment(context, request); },

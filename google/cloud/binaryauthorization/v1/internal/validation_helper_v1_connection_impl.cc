@@ -44,9 +44,10 @@ StatusOr<google::cloud::binaryauthorization::v1::
 ValidationHelperV1ConnectionImpl::ValidateAttestationOccurrence(
     google::cloud::binaryauthorization::v1::
         ValidateAttestationOccurrenceRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->ValidateAttestationOccurrence(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ValidateAttestationOccurrence(request),
       [this](grpc::ClientContext& context,
              google::cloud::binaryauthorization::v1::
                  ValidateAttestationOccurrenceRequest const& request) {

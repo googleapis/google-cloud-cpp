@@ -128,55 +128,29 @@ class NetworkSecurityConnectionImpl
           request) override;
 
  private:
-  std::unique_ptr<networksecurity_v1::NetworkSecurityRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<networksecurity_v1::NetworkSecurityRetryPolicyOption>()) {
-      return options
-          .get<networksecurity_v1::NetworkSecurityRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<networksecurity_v1::NetworkSecurityRetryPolicyOption>()
+  static std::unique_ptr<networksecurity_v1::NetworkSecurityRetryPolicy>
+  retry_policy(Options const& options) {
+    return options.get<networksecurity_v1::NetworkSecurityRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<networksecurity_v1::NetworkSecurityBackoffPolicyOption>()) {
-      return options
-          .get<networksecurity_v1::NetworkSecurityBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options
         .get<networksecurity_v1::NetworkSecurityBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<
+  static std::unique_ptr<
       networksecurity_v1::NetworkSecurityConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<networksecurity_v1::
-                        NetworkSecurityConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<networksecurity_v1::
-                   NetworkSecurityConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  idempotency_policy(Options const& options) {
+    return options
         .get<networksecurity_v1::
                  NetworkSecurityConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<networksecurity_v1::NetworkSecurityPollingPolicyOption>()) {
-      return options
-          .get<networksecurity_v1::NetworkSecurityPollingPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options
         .get<networksecurity_v1::NetworkSecurityPollingPolicyOption>()
         ->clone();
   }

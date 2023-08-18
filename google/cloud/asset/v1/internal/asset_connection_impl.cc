@@ -42,46 +42,49 @@ AssetServiceConnectionImpl::AssetServiceConnectionImpl(
 future<StatusOr<google::cloud::asset::v1::ExportAssetsResponse>>
 AssetServiceConnectionImpl::ExportAssets(
     google::cloud::asset::v1::ExportAssetsRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::asset::v1::ExportAssetsResponse>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::asset::v1::ExportAssetsRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::asset::v1::ExportAssetsRequest const& request) {
         return stub->AsyncExportAssets(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::asset::v1::ExportAssetsResponse>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->ExportAssets(request), polling_policy(), __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ExportAssets(request),
+      polling_policy(*current), __func__);
 }
 
 StreamRange<google::cloud::asset::v1::Asset>
 AssetServiceConnectionImpl::ListAssets(
     google::cloud::asset::v1::ListAssetsRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<asset_v1::AssetServiceRetryPolicy const>(retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListAssets(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListAssets(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::asset::v1::Asset>>(
       std::move(request),
-      [stub, retry, backoff, idempotency,
-       function_name](google::cloud::asset::v1::ListAssetsRequest const& r) {
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<asset_v1::AssetServiceRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          google::cloud::asset::v1::ListAssetsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context,
@@ -101,9 +104,10 @@ AssetServiceConnectionImpl::ListAssets(
 StatusOr<google::cloud::asset::v1::BatchGetAssetsHistoryResponse>
 AssetServiceConnectionImpl::BatchGetAssetsHistory(
     google::cloud::asset::v1::BatchGetAssetsHistoryRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->BatchGetAssetsHistory(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->BatchGetAssetsHistory(request),
       [this](grpc::ClientContext& context,
              google::cloud::asset::v1::BatchGetAssetsHistoryRequest const&
                  request) {
@@ -114,9 +118,10 @@ AssetServiceConnectionImpl::BatchGetAssetsHistory(
 
 StatusOr<google::cloud::asset::v1::Feed> AssetServiceConnectionImpl::CreateFeed(
     google::cloud::asset::v1::CreateFeedRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateFeed(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateFeed(request),
       [this](grpc::ClientContext& context,
              google::cloud::asset::v1::CreateFeedRequest const& request) {
         return stub_->CreateFeed(context, request);
@@ -126,8 +131,10 @@ StatusOr<google::cloud::asset::v1::Feed> AssetServiceConnectionImpl::CreateFeed(
 
 StatusOr<google::cloud::asset::v1::Feed> AssetServiceConnectionImpl::GetFeed(
     google::cloud::asset::v1::GetFeedRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(), idempotency_policy()->GetFeed(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetFeed(request),
       [this](grpc::ClientContext& context,
              google::cloud::asset::v1::GetFeedRequest const& request) {
         return stub_->GetFeed(context, request);
@@ -138,9 +145,10 @@ StatusOr<google::cloud::asset::v1::Feed> AssetServiceConnectionImpl::GetFeed(
 StatusOr<google::cloud::asset::v1::ListFeedsResponse>
 AssetServiceConnectionImpl::ListFeeds(
     google::cloud::asset::v1::ListFeedsRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->ListFeeds(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ListFeeds(request),
       [this](grpc::ClientContext& context,
              google::cloud::asset::v1::ListFeedsRequest const& request) {
         return stub_->ListFeeds(context, request);
@@ -150,9 +158,10 @@ AssetServiceConnectionImpl::ListFeeds(
 
 StatusOr<google::cloud::asset::v1::Feed> AssetServiceConnectionImpl::UpdateFeed(
     google::cloud::asset::v1::UpdateFeedRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UpdateFeed(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateFeed(request),
       [this](grpc::ClientContext& context,
              google::cloud::asset::v1::UpdateFeedRequest const& request) {
         return stub_->UpdateFeed(context, request);
@@ -162,9 +171,10 @@ StatusOr<google::cloud::asset::v1::Feed> AssetServiceConnectionImpl::UpdateFeed(
 
 Status AssetServiceConnectionImpl::DeleteFeed(
     google::cloud::asset::v1::DeleteFeedRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteFeed(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteFeed(request),
       [this](grpc::ClientContext& context,
              google::cloud::asset::v1::DeleteFeedRequest const& request) {
         return stub_->DeleteFeed(context, request);
@@ -176,16 +186,16 @@ StreamRange<google::cloud::asset::v1::ResourceSearchResult>
 AssetServiceConnectionImpl::SearchAllResources(
     google::cloud::asset::v1::SearchAllResourcesRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<asset_v1::AssetServiceRetryPolicy const>(retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->SearchAllResources(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->SearchAllResources(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::asset::v1::ResourceSearchResult>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<asset_v1::AssetServiceRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::asset::v1::SearchAllResourcesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
@@ -209,16 +219,17 @@ StreamRange<google::cloud::asset::v1::IamPolicySearchResult>
 AssetServiceConnectionImpl::SearchAllIamPolicies(
     google::cloud::asset::v1::SearchAllIamPoliciesRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<asset_v1::AssetServiceRetryPolicy const>(retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->SearchAllIamPolicies(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency =
+      idempotency_policy(*current)->SearchAllIamPolicies(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::asset::v1::IamPolicySearchResult>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<asset_v1::AssetServiceRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::asset::v1::SearchAllIamPoliciesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
@@ -241,9 +252,10 @@ AssetServiceConnectionImpl::SearchAllIamPolicies(
 StatusOr<google::cloud::asset::v1::AnalyzeIamPolicyResponse>
 AssetServiceConnectionImpl::AnalyzeIamPolicy(
     google::cloud::asset::v1::AnalyzeIamPolicyRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->AnalyzeIamPolicy(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->AnalyzeIamPolicy(request),
       [this](grpc::ClientContext& context,
              google::cloud::asset::v1::AnalyzeIamPolicyRequest const& request) {
         return stub_->AnalyzeIamPolicy(context, request);
@@ -255,40 +267,43 @@ future<StatusOr<google::cloud::asset::v1::AnalyzeIamPolicyLongrunningResponse>>
 AssetServiceConnectionImpl::AnalyzeIamPolicyLongrunning(
     google::cloud::asset::v1::AnalyzeIamPolicyLongrunningRequest const&
         request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::asset::v1::AnalyzeIamPolicyLongrunningResponse>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::asset::v1::AnalyzeIamPolicyLongrunningRequest const&
-                 request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::asset::v1::AnalyzeIamPolicyLongrunningRequest const&
+              request) {
         return stub->AsyncAnalyzeIamPolicyLongrunning(cq, std::move(context),
                                                       request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::asset::v1::AnalyzeIamPolicyLongrunningResponse>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->AnalyzeIamPolicyLongrunning(request),
-      polling_policy(), __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->AnalyzeIamPolicyLongrunning(request),
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::cloud::asset::v1::AnalyzeMoveResponse>
 AssetServiceConnectionImpl::AnalyzeMove(
     google::cloud::asset::v1::AnalyzeMoveRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->AnalyzeMove(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->AnalyzeMove(request),
       [this](grpc::ClientContext& context,
              google::cloud::asset::v1::AnalyzeMoveRequest const& request) {
         return stub_->AnalyzeMove(context, request);
@@ -299,9 +314,10 @@ AssetServiceConnectionImpl::AnalyzeMove(
 StatusOr<google::cloud::asset::v1::QueryAssetsResponse>
 AssetServiceConnectionImpl::QueryAssets(
     google::cloud::asset::v1::QueryAssetsRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->QueryAssets(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->QueryAssets(request),
       [this](grpc::ClientContext& context,
              google::cloud::asset::v1::QueryAssetsRequest const& request) {
         return stub_->QueryAssets(context, request);
@@ -312,9 +328,10 @@ AssetServiceConnectionImpl::QueryAssets(
 StatusOr<google::cloud::asset::v1::SavedQuery>
 AssetServiceConnectionImpl::CreateSavedQuery(
     google::cloud::asset::v1::CreateSavedQueryRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateSavedQuery(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateSavedQuery(request),
       [this](grpc::ClientContext& context,
              google::cloud::asset::v1::CreateSavedQueryRequest const& request) {
         return stub_->CreateSavedQuery(context, request);
@@ -325,9 +342,10 @@ AssetServiceConnectionImpl::CreateSavedQuery(
 StatusOr<google::cloud::asset::v1::SavedQuery>
 AssetServiceConnectionImpl::GetSavedQuery(
     google::cloud::asset::v1::GetSavedQueryRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetSavedQuery(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetSavedQuery(request),
       [this](grpc::ClientContext& context,
              google::cloud::asset::v1::GetSavedQueryRequest const& request) {
         return stub_->GetSavedQuery(context, request);
@@ -339,16 +357,16 @@ StreamRange<google::cloud::asset::v1::SavedQuery>
 AssetServiceConnectionImpl::ListSavedQueries(
     google::cloud::asset::v1::ListSavedQueriesRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<asset_v1::AssetServiceRetryPolicy const>(retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListSavedQueries(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListSavedQueries(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::asset::v1::SavedQuery>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<asset_v1::AssetServiceRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::asset::v1::ListSavedQueriesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
@@ -371,9 +389,10 @@ AssetServiceConnectionImpl::ListSavedQueries(
 StatusOr<google::cloud::asset::v1::SavedQuery>
 AssetServiceConnectionImpl::UpdateSavedQuery(
     google::cloud::asset::v1::UpdateSavedQueryRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UpdateSavedQuery(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateSavedQuery(request),
       [this](grpc::ClientContext& context,
              google::cloud::asset::v1::UpdateSavedQueryRequest const& request) {
         return stub_->UpdateSavedQuery(context, request);
@@ -383,9 +402,10 @@ AssetServiceConnectionImpl::UpdateSavedQuery(
 
 Status AssetServiceConnectionImpl::DeleteSavedQuery(
     google::cloud::asset::v1::DeleteSavedQueryRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteSavedQuery(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteSavedQuery(request),
       [this](grpc::ClientContext& context,
              google::cloud::asset::v1::DeleteSavedQueryRequest const& request) {
         return stub_->DeleteSavedQuery(context, request);
@@ -397,9 +417,10 @@ StatusOr<google::cloud::asset::v1::BatchGetEffectiveIamPoliciesResponse>
 AssetServiceConnectionImpl::BatchGetEffectiveIamPolicies(
     google::cloud::asset::v1::BatchGetEffectiveIamPoliciesRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->BatchGetEffectiveIamPolicies(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->BatchGetEffectiveIamPolicies(request),
       [this](
           grpc::ClientContext& context,
           google::cloud::asset::v1::BatchGetEffectiveIamPoliciesRequest const&
@@ -414,16 +435,16 @@ StreamRange<
 AssetServiceConnectionImpl::AnalyzeOrgPolicies(
     google::cloud::asset::v1::AnalyzeOrgPoliciesRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<asset_v1::AssetServiceRetryPolicy const>(retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->AnalyzeOrgPolicies(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->AnalyzeOrgPolicies(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<StreamRange<
       google::cloud::asset::v1::AnalyzeOrgPoliciesResponse::OrgPolicyResult>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<asset_v1::AssetServiceRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::asset::v1::AnalyzeOrgPoliciesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
@@ -450,20 +471,20 @@ AssetServiceConnectionImpl::AnalyzeOrgPolicyGovernedContainers(
     google::cloud::asset::v1::AnalyzeOrgPolicyGovernedContainersRequest
         request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<asset_v1::AssetServiceRetryPolicy const>(retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+  auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency =
-      idempotency_policy()->AnalyzeOrgPolicyGovernedContainers(request);
+      idempotency_policy(*current)->AnalyzeOrgPolicyGovernedContainers(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<StreamRange<
       google::cloud::asset::v1::AnalyzeOrgPolicyGovernedContainersResponse::
           GovernedContainer>>(
       std::move(request),
-      [stub, retry, backoff, idempotency,
-       function_name](google::cloud::asset::v1::
-                          AnalyzeOrgPolicyGovernedContainersRequest const& r) {
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<asset_v1::AssetServiceRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          google::cloud::asset::v1::
+              AnalyzeOrgPolicyGovernedContainersRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
@@ -491,18 +512,18 @@ StreamRange<google::cloud::asset::v1::AnalyzeOrgPolicyGovernedAssetsResponse::
 AssetServiceConnectionImpl::AnalyzeOrgPolicyGovernedAssets(
     google::cloud::asset::v1::AnalyzeOrgPolicyGovernedAssetsRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<asset_v1::AssetServiceRetryPolicy const>(retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+  auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency =
-      idempotency_policy()->AnalyzeOrgPolicyGovernedAssets(request);
+      idempotency_policy(*current)->AnalyzeOrgPolicyGovernedAssets(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::asset::v1::
                       AnalyzeOrgPolicyGovernedAssetsResponse::GovernedAsset>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<asset_v1::AssetServiceRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::asset::v1::AnalyzeOrgPolicyGovernedAssetsRequest const&
               r) {
         return google::cloud::internal::RetryLoop(

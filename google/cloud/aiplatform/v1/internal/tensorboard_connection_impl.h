@@ -199,52 +199,28 @@ class TensorboardServiceConnectionImpl
           request) override;
 
  private:
-  std::unique_ptr<aiplatform_v1::TensorboardServiceRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<aiplatform_v1::TensorboardServiceRetryPolicyOption>()) {
-      return options.get<aiplatform_v1::TensorboardServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<aiplatform_v1::TensorboardServiceRetryPolicyOption>()
+  static std::unique_ptr<aiplatform_v1::TensorboardServiceRetryPolicy>
+  retry_policy(Options const& options) {
+    return options.get<aiplatform_v1::TensorboardServiceRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<aiplatform_v1::TensorboardServiceBackoffPolicyOption>()) {
-      return options
-          .get<aiplatform_v1::TensorboardServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<aiplatform_v1::TensorboardServiceBackoffPolicyOption>()
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<aiplatform_v1::TensorboardServiceBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<aiplatform_v1::TensorboardServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<aiplatform_v1::
-                     TensorboardServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<aiplatform_v1::
-                   TensorboardServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<
+      aiplatform_v1::TensorboardServiceConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<aiplatform_v1::
                  TensorboardServiceConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<aiplatform_v1::TensorboardServicePollingPolicyOption>()) {
-      return options
-          .get<aiplatform_v1::TensorboardServicePollingPolicyOption>()
-          ->clone();
-    }
-    return options_.get<aiplatform_v1::TensorboardServicePollingPolicyOption>()
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options.get<aiplatform_v1::TensorboardServicePollingPolicyOption>()
         ->clone();
   }
 

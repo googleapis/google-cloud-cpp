@@ -122,46 +122,24 @@ class ConnectorsConnectionImpl : public connectors_v1::ConnectorsConnection {
       override;
 
  private:
-  std::unique_ptr<connectors_v1::ConnectorsRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<connectors_v1::ConnectorsRetryPolicyOption>()) {
-      return options.get<connectors_v1::ConnectorsRetryPolicyOption>()->clone();
-    }
-    return options_.get<connectors_v1::ConnectorsRetryPolicyOption>()->clone();
+  static std::unique_ptr<connectors_v1::ConnectorsRetryPolicy> retry_policy(
+      Options const& options) {
+    return options.get<connectors_v1::ConnectorsRetryPolicyOption>()->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<connectors_v1::ConnectorsBackoffPolicyOption>()) {
-      return options.get<connectors_v1::ConnectorsBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<connectors_v1::ConnectorsBackoffPolicyOption>()
-        ->clone();
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<connectors_v1::ConnectorsBackoffPolicyOption>()->clone();
   }
 
-  std::unique_ptr<connectors_v1::ConnectorsConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            connectors_v1::ConnectorsConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<connectors_v1::ConnectorsConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<connectors_v1::ConnectorsConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<connectors_v1::ConnectorsConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<connectors_v1::ConnectorsPollingPolicyOption>()) {
-      return options.get<connectors_v1::ConnectorsPollingPolicyOption>()
-          ->clone();
-    }
-    return options_.get<connectors_v1::ConnectorsPollingPolicyOption>()
-        ->clone();
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options.get<connectors_v1::ConnectorsPollingPolicyOption>()->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

@@ -75,66 +75,33 @@ class RegionTargetTcpProxiesRestConnectionImpl
           ListRegionTargetTcpProxiesRequest request) override;
 
  private:
-  std::unique_ptr<
+  static std::unique_ptr<
       compute_region_target_tcp_proxies_v1::RegionTargetTcpProxiesRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_region_target_tcp_proxies_v1::
-                        RegionTargetTcpProxiesRetryPolicyOption>()) {
-      return options
-          .get<compute_region_target_tcp_proxies_v1::
-                   RegionTargetTcpProxiesRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
+  retry_policy(Options const& options) {
+    return options
         .get<compute_region_target_tcp_proxies_v1::
                  RegionTargetTcpProxiesRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_region_target_tcp_proxies_v1::
-                        RegionTargetTcpProxiesBackoffPolicyOption>()) {
-      return options
-          .get<compute_region_target_tcp_proxies_v1::
-                   RegionTargetTcpProxiesBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options
         .get<compute_region_target_tcp_proxies_v1::
                  RegionTargetTcpProxiesBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<compute_region_target_tcp_proxies_v1::
-                      RegionTargetTcpProxiesConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            compute_region_target_tcp_proxies_v1::
-                RegionTargetTcpProxiesConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<compute_region_target_tcp_proxies_v1::
-                   RegionTargetTcpProxiesConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<compute_region_target_tcp_proxies_v1::
+                             RegionTargetTcpProxiesConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<compute_region_target_tcp_proxies_v1::
                  RegionTargetTcpProxiesConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_region_target_tcp_proxies_v1::
-                        RegionTargetTcpProxiesPollingPolicyOption>()) {
-      return options
-          .get<compute_region_target_tcp_proxies_v1::
-                   RegionTargetTcpProxiesPollingPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options
         .get<compute_region_target_tcp_proxies_v1::
                  RegionTargetTcpProxiesPollingPolicyOption>()
         ->clone();

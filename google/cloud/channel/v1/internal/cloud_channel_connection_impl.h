@@ -252,49 +252,27 @@ class CloudChannelServiceConnectionImpl
       override;
 
  private:
-  std::unique_ptr<channel_v1::CloudChannelServiceRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<channel_v1::CloudChannelServiceRetryPolicyOption>()) {
-      return options.get<channel_v1::CloudChannelServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<channel_v1::CloudChannelServiceRetryPolicyOption>()
+  static std::unique_ptr<channel_v1::CloudChannelServiceRetryPolicy>
+  retry_policy(Options const& options) {
+    return options.get<channel_v1::CloudChannelServiceRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<channel_v1::CloudChannelServiceBackoffPolicyOption>()) {
-      return options.get<channel_v1::CloudChannelServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<channel_v1::CloudChannelServiceBackoffPolicyOption>()
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<channel_v1::CloudChannelServiceBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<channel_v1::CloudChannelServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<channel_v1::
-                     CloudChannelServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<channel_v1::
-                   CloudChannelServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<
+      channel_v1::CloudChannelServiceConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<channel_v1::CloudChannelServiceConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<channel_v1::CloudChannelServicePollingPolicyOption>()) {
-      return options.get<channel_v1::CloudChannelServicePollingPolicyOption>()
-          ->clone();
-    }
-    return options_.get<channel_v1::CloudChannelServicePollingPolicyOption>()
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options.get<channel_v1::CloudChannelServicePollingPolicyOption>()
         ->clone();
   }
 

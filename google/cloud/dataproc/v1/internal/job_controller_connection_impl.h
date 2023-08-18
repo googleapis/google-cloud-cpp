@@ -74,46 +74,25 @@ class JobControllerConnectionImpl
       google::cloud::dataproc::v1::DeleteJobRequest const& request) override;
 
  private:
-  std::unique_ptr<dataproc_v1::JobControllerRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<dataproc_v1::JobControllerRetryPolicyOption>()) {
-      return options.get<dataproc_v1::JobControllerRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<dataproc_v1::JobControllerRetryPolicyOption>()->clone();
+  static std::unique_ptr<dataproc_v1::JobControllerRetryPolicy> retry_policy(
+      Options const& options) {
+    return options.get<dataproc_v1::JobControllerRetryPolicyOption>()->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<dataproc_v1::JobControllerBackoffPolicyOption>()) {
-      return options.get<dataproc_v1::JobControllerBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<dataproc_v1::JobControllerBackoffPolicyOption>()
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<dataproc_v1::JobControllerBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<dataproc_v1::JobControllerConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            dataproc_v1::JobControllerConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<dataproc_v1::JobControllerConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<dataproc_v1::JobControllerConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<dataproc_v1::JobControllerConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<dataproc_v1::JobControllerPollingPolicyOption>()) {
-      return options.get<dataproc_v1::JobControllerPollingPolicyOption>()
-          ->clone();
-    }
-    return options_.get<dataproc_v1::JobControllerPollingPolicyOption>()
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options.get<dataproc_v1::JobControllerPollingPolicyOption>()
         ->clone();
   }
 

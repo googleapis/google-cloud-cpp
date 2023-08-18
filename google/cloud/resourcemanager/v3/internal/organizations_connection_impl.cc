@@ -42,9 +42,10 @@ OrganizationsConnectionImpl::OrganizationsConnectionImpl(
 StatusOr<google::cloud::resourcemanager::v3::Organization>
 OrganizationsConnectionImpl::GetOrganization(
     google::cloud::resourcemanager::v3::GetOrganizationRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetOrganization(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetOrganization(request),
       [this](grpc::ClientContext& context,
              google::cloud::resourcemanager::v3::GetOrganizationRequest const&
                  request) { return stub_->GetOrganization(context, request); },
@@ -55,17 +56,16 @@ StreamRange<google::cloud::resourcemanager::v3::Organization>
 OrganizationsConnectionImpl::SearchOrganizations(
     google::cloud::resourcemanager::v3::SearchOrganizationsRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<resourcemanager_v3::OrganizationsRetryPolicy const>(
-          retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->SearchOrganizations(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->SearchOrganizations(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::resourcemanager::v3::Organization>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<resourcemanager_v3::OrganizationsRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::resourcemanager::v3::SearchOrganizationsRequest const&
               r) {
         return google::cloud::internal::RetryLoop(
@@ -88,9 +88,10 @@ OrganizationsConnectionImpl::SearchOrganizations(
 
 StatusOr<google::iam::v1::Policy> OrganizationsConnectionImpl::GetIamPolicy(
     google::iam::v1::GetIamPolicyRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetIamPolicy(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetIamPolicy(request),
       [this](grpc::ClientContext& context,
              google::iam::v1::GetIamPolicyRequest const& request) {
         return stub_->GetIamPolicy(context, request);
@@ -100,9 +101,10 @@ StatusOr<google::iam::v1::Policy> OrganizationsConnectionImpl::GetIamPolicy(
 
 StatusOr<google::iam::v1::Policy> OrganizationsConnectionImpl::SetIamPolicy(
     google::iam::v1::SetIamPolicyRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->SetIamPolicy(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->SetIamPolicy(request),
       [this](grpc::ClientContext& context,
              google::iam::v1::SetIamPolicyRequest const& request) {
         return stub_->SetIamPolicy(context, request);
@@ -113,9 +115,10 @@ StatusOr<google::iam::v1::Policy> OrganizationsConnectionImpl::SetIamPolicy(
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 OrganizationsConnectionImpl::TestIamPermissions(
     google::iam::v1::TestIamPermissionsRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->TestIamPermissions(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->TestIamPermissions(request),
       [this](grpc::ClientContext& context,
              google::iam::v1::TestIamPermissionsRequest const& request) {
         return stub_->TestIamPermissions(context, request);

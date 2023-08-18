@@ -47,19 +47,19 @@ AppConnectorsServiceConnectionImpl::ListAppConnectors(
     google::cloud::beyondcorp::appconnectors::v1::ListAppConnectorsRequest
         request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<
-      beyondcorp_appconnectors_v1::AppConnectorsServiceRetryPolicy const>(
-      retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListAppConnectors(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListAppConnectors(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>(
       std::move(request),
-      [stub, retry, backoff, idempotency,
-       function_name](google::cloud::beyondcorp::appconnectors::v1::
-                          ListAppConnectorsRequest const& r) {
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<
+           beyondcorp_appconnectors_v1::AppConnectorsServiceRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          google::cloud::beyondcorp::appconnectors::v1::
+              ListAppConnectorsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context,
@@ -83,9 +83,10 @@ StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>
 AppConnectorsServiceConnectionImpl::GetAppConnector(
     google::cloud::beyondcorp::appconnectors::v1::GetAppConnectorRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetAppConnector(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetAppConnector(request),
       [this](grpc::ClientContext& context,
              google::cloud::beyondcorp::appconnectors::v1::
                  GetAppConnectorRequest const& request) {
@@ -98,62 +99,64 @@ future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
 AppConnectorsServiceConnectionImpl::CreateAppConnector(
     google::cloud::beyondcorp::appconnectors::v1::
         CreateAppConnectorRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::beyondcorp::appconnectors::v1::AppConnector>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::beyondcorp::appconnectors::v1::
-                 CreateAppConnectorRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::beyondcorp::appconnectors::v1::
+                         CreateAppConnectorRequest const& request) {
         return stub->AsyncCreateAppConnector(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::beyondcorp::appconnectors::v1::AppConnector>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateAppConnector(request), polling_policy(),
-      __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateAppConnector(request),
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
 AppConnectorsServiceConnectionImpl::UpdateAppConnector(
     google::cloud::beyondcorp::appconnectors::v1::
         UpdateAppConnectorRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::beyondcorp::appconnectors::v1::AppConnector>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::beyondcorp::appconnectors::v1::
-                 UpdateAppConnectorRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::beyondcorp::appconnectors::v1::
+                         UpdateAppConnectorRequest const& request) {
         return stub->AsyncUpdateAppConnector(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::beyondcorp::appconnectors::v1::AppConnector>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UpdateAppConnector(request), polling_policy(),
-      __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateAppConnector(request),
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::
@@ -161,63 +164,66 @@ future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::
 AppConnectorsServiceConnectionImpl::DeleteAppConnector(
     google::cloud::beyondcorp::appconnectors::v1::
         DeleteAppConnectorRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::beyondcorp::appconnectors::v1::
           AppConnectorOperationMetadata>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::beyondcorp::appconnectors::v1::
-                 DeleteAppConnectorRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::beyondcorp::appconnectors::v1::
+                         DeleteAppConnectorRequest const& request) {
         return stub->AsyncDeleteAppConnector(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::beyondcorp::appconnectors::v1::
               AppConnectorOperationMetadata>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteAppConnector(request), polling_policy(),
-      __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteAppConnector(request),
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
 AppConnectorsServiceConnectionImpl::ReportStatus(
     google::cloud::beyondcorp::appconnectors::v1::ReportStatusRequest const&
         request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::beyondcorp::appconnectors::v1::AppConnector>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::beyondcorp::appconnectors::v1::
-                 ReportStatusRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::beyondcorp::appconnectors::v1::
+                         ReportStatusRequest const& request) {
         return stub->AsyncReportStatus(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::beyondcorp::appconnectors::v1::AppConnector>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->ReportStatus(request), polling_policy(), __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ReportStatus(request),
+      polling_policy(*current), __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

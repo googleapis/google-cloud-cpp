@@ -41,9 +41,10 @@ FulfillmentsConnectionImpl::FulfillmentsConnectionImpl(
 StatusOr<google::cloud::dialogflow::v2::Fulfillment>
 FulfillmentsConnectionImpl::GetFulfillment(
     google::cloud::dialogflow::v2::GetFulfillmentRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetFulfillment(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetFulfillment(request),
       [this](
           grpc::ClientContext& context,
           google::cloud::dialogflow::v2::GetFulfillmentRequest const& request) {
@@ -55,9 +56,10 @@ FulfillmentsConnectionImpl::GetFulfillment(
 StatusOr<google::cloud::dialogflow::v2::Fulfillment>
 FulfillmentsConnectionImpl::UpdateFulfillment(
     google::cloud::dialogflow::v2::UpdateFulfillmentRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UpdateFulfillment(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateFulfillment(request),
       [this](grpc::ClientContext& context,
              google::cloud::dialogflow::v2::UpdateFulfillmentRequest const&
                  request) {

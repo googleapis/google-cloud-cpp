@@ -41,8 +41,10 @@ ServiceControllerConnectionImpl::ServiceControllerConnectionImpl(
 StatusOr<google::api::servicecontrol::v2::CheckResponse>
 ServiceControllerConnectionImpl::Check(
     google::api::servicecontrol::v2::CheckRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(), idempotency_policy()->Check(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->Check(request),
       [this](grpc::ClientContext& context,
              google::api::servicecontrol::v2::CheckRequest const& request) {
         return stub_->Check(context, request);
@@ -53,8 +55,10 @@ ServiceControllerConnectionImpl::Check(
 StatusOr<google::api::servicecontrol::v2::ReportResponse>
 ServiceControllerConnectionImpl::Report(
     google::api::servicecontrol::v2::ReportRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(), idempotency_policy()->Report(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->Report(request),
       [this](grpc::ClientContext& context,
              google::api::servicecontrol::v2::ReportRequest const& request) {
         return stub_->Report(context, request);

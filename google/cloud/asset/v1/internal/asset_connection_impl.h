@@ -142,42 +142,24 @@ class AssetServiceConnectionImpl : public asset_v1::AssetServiceConnection {
       override;
 
  private:
-  std::unique_ptr<asset_v1::AssetServiceRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<asset_v1::AssetServiceRetryPolicyOption>()) {
-      return options.get<asset_v1::AssetServiceRetryPolicyOption>()->clone();
-    }
-    return options_.get<asset_v1::AssetServiceRetryPolicyOption>()->clone();
+  static std::unique_ptr<asset_v1::AssetServiceRetryPolicy> retry_policy(
+      Options const& options) {
+    return options.get<asset_v1::AssetServiceRetryPolicyOption>()->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<asset_v1::AssetServiceBackoffPolicyOption>()) {
-      return options.get<asset_v1::AssetServiceBackoffPolicyOption>()->clone();
-    }
-    return options_.get<asset_v1::AssetServiceBackoffPolicyOption>()->clone();
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<asset_v1::AssetServiceBackoffPolicyOption>()->clone();
   }
 
-  std::unique_ptr<asset_v1::AssetServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<asset_v1::AssetServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<asset_v1::AssetServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<asset_v1::AssetServiceConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<asset_v1::AssetServiceConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<asset_v1::AssetServicePollingPolicyOption>()) {
-      return options.get<asset_v1::AssetServicePollingPolicyOption>()->clone();
-    }
-    return options_.get<asset_v1::AssetServicePollingPolicyOption>()->clone();
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options.get<asset_v1::AssetServicePollingPolicyOption>()->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

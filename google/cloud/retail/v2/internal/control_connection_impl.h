@@ -65,34 +65,18 @@ class ControlServiceConnectionImpl
       google::cloud::retail::v2::ListControlsRequest request) override;
 
  private:
-  std::unique_ptr<retail_v2::ControlServiceRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<retail_v2::ControlServiceRetryPolicyOption>()) {
-      return options.get<retail_v2::ControlServiceRetryPolicyOption>()->clone();
-    }
-    return options_.get<retail_v2::ControlServiceRetryPolicyOption>()->clone();
+  static std::unique_ptr<retail_v2::ControlServiceRetryPolicy> retry_policy(
+      Options const& options) {
+    return options.get<retail_v2::ControlServiceRetryPolicyOption>()->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<retail_v2::ControlServiceBackoffPolicyOption>()) {
-      return options.get<retail_v2::ControlServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<retail_v2::ControlServiceBackoffPolicyOption>()
-        ->clone();
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<retail_v2::ControlServiceBackoffPolicyOption>()->clone();
   }
 
-  std::unique_ptr<retail_v2::ControlServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            retail_v2::ControlServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<retail_v2::ControlServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<retail_v2::ControlServiceConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<retail_v2::ControlServiceConnectionIdempotencyPolicyOption>()
         ->clone();
   }

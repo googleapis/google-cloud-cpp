@@ -43,16 +43,16 @@ StreamRange<google::cloud::dialogflow::v2::Intent>
 IntentsConnectionImpl::ListIntents(
     google::cloud::dialogflow::v2::ListIntentsRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<dialogflow_es::IntentsRetryPolicy const>(retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListIntents(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListIntents(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::dialogflow::v2::Intent>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<dialogflow_es::IntentsRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::dialogflow::v2::ListIntentsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
@@ -73,9 +73,10 @@ IntentsConnectionImpl::ListIntents(
 StatusOr<google::cloud::dialogflow::v2::Intent>
 IntentsConnectionImpl::GetIntent(
     google::cloud::dialogflow::v2::GetIntentRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetIntent(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetIntent(request),
       [this](grpc::ClientContext& context,
              google::cloud::dialogflow::v2::GetIntentRequest const& request) {
         return stub_->GetIntent(context, request);
@@ -86,9 +87,10 @@ IntentsConnectionImpl::GetIntent(
 StatusOr<google::cloud::dialogflow::v2::Intent>
 IntentsConnectionImpl::CreateIntent(
     google::cloud::dialogflow::v2::CreateIntentRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateIntent(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateIntent(request),
       [this](
           grpc::ClientContext& context,
           google::cloud::dialogflow::v2::CreateIntentRequest const& request) {
@@ -100,9 +102,10 @@ IntentsConnectionImpl::CreateIntent(
 StatusOr<google::cloud::dialogflow::v2::Intent>
 IntentsConnectionImpl::UpdateIntent(
     google::cloud::dialogflow::v2::UpdateIntentRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UpdateIntent(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateIntent(request),
       [this](
           grpc::ClientContext& context,
           google::cloud::dialogflow::v2::UpdateIntentRequest const& request) {
@@ -113,9 +116,10 @@ IntentsConnectionImpl::UpdateIntent(
 
 Status IntentsConnectionImpl::DeleteIntent(
     google::cloud::dialogflow::v2::DeleteIntentRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteIntent(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteIntent(request),
       [this](
           grpc::ClientContext& context,
           google::cloud::dialogflow::v2::DeleteIntentRequest const& request) {
@@ -127,61 +131,65 @@ Status IntentsConnectionImpl::DeleteIntent(
 future<StatusOr<google::cloud::dialogflow::v2::BatchUpdateIntentsResponse>>
 IntentsConnectionImpl::BatchUpdateIntents(
     google::cloud::dialogflow::v2::BatchUpdateIntentsRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::dialogflow::v2::BatchUpdateIntentsResponse>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::dialogflow::v2::BatchUpdateIntentsRequest const&
-                 request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::dialogflow::v2::BatchUpdateIntentsRequest const&
+              request) {
         return stub->AsyncBatchUpdateIntents(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::dialogflow::v2::BatchUpdateIntentsResponse>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->BatchUpdateIntents(request), polling_policy(),
-      __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->BatchUpdateIntents(request),
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::protobuf::Struct>>
 IntentsConnectionImpl::BatchDeleteIntents(
     google::cloud::dialogflow::v2::BatchDeleteIntentsRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::protobuf::Struct>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::dialogflow::v2::BatchDeleteIntentsRequest const&
-                 request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::dialogflow::v2::BatchDeleteIntentsRequest const&
+              request) {
         return stub->AsyncBatchDeleteIntents(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::protobuf::Struct>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->BatchDeleteIntents(request), polling_policy(),
-      __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->BatchDeleteIntents(request),
+      polling_policy(*current), __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

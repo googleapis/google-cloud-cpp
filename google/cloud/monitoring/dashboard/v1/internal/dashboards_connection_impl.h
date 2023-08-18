@@ -71,45 +71,23 @@ class DashboardsServiceConnectionImpl
       override;
 
  private:
-  std::unique_ptr<monitoring_dashboard_v1::DashboardsServiceRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            monitoring_dashboard_v1::DashboardsServiceRetryPolicyOption>()) {
-      return options
-          .get<monitoring_dashboard_v1::DashboardsServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<monitoring_dashboard_v1::DashboardsServiceRetryPolicy>
+  retry_policy(Options const& options) {
+    return options
         .get<monitoring_dashboard_v1::DashboardsServiceRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            monitoring_dashboard_v1::DashboardsServiceBackoffPolicyOption>()) {
-      return options
-          .get<monitoring_dashboard_v1::DashboardsServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options
         .get<monitoring_dashboard_v1::DashboardsServiceBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<
+  static std::unique_ptr<
       monitoring_dashboard_v1::DashboardsServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<monitoring_dashboard_v1::
-                        DashboardsServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<monitoring_dashboard_v1::
-                   DashboardsServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  idempotency_policy(Options const& options) {
+    return options
         .get<monitoring_dashboard_v1::
                  DashboardsServiceConnectionIdempotencyPolicyOption>()
         ->clone();

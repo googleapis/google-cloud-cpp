@@ -41,9 +41,10 @@ LookupServiceConnectionImpl::LookupServiceConnectionImpl(
 StatusOr<google::cloud::servicedirectory::v1::ResolveServiceResponse>
 LookupServiceConnectionImpl::ResolveService(
     google::cloud::servicedirectory::v1::ResolveServiceRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->ResolveService(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ResolveService(request),
       [this](grpc::ClientContext& context,
              google::cloud::servicedirectory::v1::ResolveServiceRequest const&
                  request) { return stub_->ResolveService(context, request); },

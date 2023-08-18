@@ -81,59 +81,30 @@ class HealthChecksRestConnectionImpl
                          UpdateHealthChecksRequest const& request) override;
 
  private:
-  std::unique_ptr<compute_health_checks_v1::HealthChecksRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<compute_health_checks_v1::HealthChecksRetryPolicyOption>()) {
-      return options
-          .get<compute_health_checks_v1::HealthChecksRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<compute_health_checks_v1::HealthChecksRetryPolicy>
+  retry_policy(Options const& options) {
+    return options
         .get<compute_health_checks_v1::HealthChecksRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<compute_health_checks_v1::HealthChecksBackoffPolicyOption>()) {
-      return options
-          .get<compute_health_checks_v1::HealthChecksBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options
         .get<compute_health_checks_v1::HealthChecksBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<
+  static std::unique_ptr<
       compute_health_checks_v1::HealthChecksConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_health_checks_v1::
-                        HealthChecksConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<compute_health_checks_v1::
-                   HealthChecksConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  idempotency_policy(Options const& options) {
+    return options
         .get<compute_health_checks_v1::
                  HealthChecksConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<compute_health_checks_v1::HealthChecksPollingPolicyOption>()) {
-      return options
-          .get<compute_health_checks_v1::HealthChecksPollingPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options
         .get<compute_health_checks_v1::HealthChecksPollingPolicyOption>()
         ->clone();
   }

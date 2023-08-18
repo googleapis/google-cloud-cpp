@@ -43,36 +43,41 @@ BatchControllerConnectionImpl::BatchControllerConnectionImpl(
 future<StatusOr<google::cloud::dataproc::v1::Batch>>
 BatchControllerConnectionImpl::CreateBatch(
     google::cloud::dataproc::v1::CreateBatchRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::dataproc::v1::Batch>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::dataproc::v1::CreateBatchRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::dataproc::v1::CreateBatchRequest const& request) {
         return stub->AsyncCreateBatch(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::dataproc::v1::Batch>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateBatch(request), polling_policy(), __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateBatch(request),
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::cloud::dataproc::v1::Batch>
 BatchControllerConnectionImpl::GetBatch(
     google::cloud::dataproc::v1::GetBatchRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(), idempotency_policy()->GetBatch(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetBatch(request),
       [this](grpc::ClientContext& context,
              google::cloud::dataproc::v1::GetBatchRequest const& request) {
         return stub_->GetBatch(context, request);
@@ -84,16 +89,16 @@ StreamRange<google::cloud::dataproc::v1::Batch>
 BatchControllerConnectionImpl::ListBatches(
     google::cloud::dataproc::v1::ListBatchesRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<dataproc_v1::BatchControllerRetryPolicy const>(
-      retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListBatches(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListBatches(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::dataproc::v1::Batch>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<dataproc_v1::BatchControllerRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::dataproc::v1::ListBatchesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
@@ -113,9 +118,10 @@ BatchControllerConnectionImpl::ListBatches(
 
 Status BatchControllerConnectionImpl::DeleteBatch(
     google::cloud::dataproc::v1::DeleteBatchRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteBatch(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteBatch(request),
       [this](grpc::ClientContext& context,
              google::cloud::dataproc::v1::DeleteBatchRequest const& request) {
         return stub_->DeleteBatch(context, request);

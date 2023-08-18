@@ -66,46 +66,24 @@ class RoutesRestConnectionImpl : public compute_routes_v1::RoutesConnection {
       override;
 
  private:
-  std::unique_ptr<compute_routes_v1::RoutesRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_routes_v1::RoutesRetryPolicyOption>()) {
-      return options.get<compute_routes_v1::RoutesRetryPolicyOption>()->clone();
-    }
-    return options_.get<compute_routes_v1::RoutesRetryPolicyOption>()->clone();
+  static std::unique_ptr<compute_routes_v1::RoutesRetryPolicy> retry_policy(
+      Options const& options) {
+    return options.get<compute_routes_v1::RoutesRetryPolicyOption>()->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_routes_v1::RoutesBackoffPolicyOption>()) {
-      return options.get<compute_routes_v1::RoutesBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<compute_routes_v1::RoutesBackoffPolicyOption>()
-        ->clone();
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<compute_routes_v1::RoutesBackoffPolicyOption>()->clone();
   }
 
-  std::unique_ptr<compute_routes_v1::RoutesConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            compute_routes_v1::RoutesConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<compute_routes_v1::RoutesConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<compute_routes_v1::RoutesConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<compute_routes_v1::RoutesConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_routes_v1::RoutesPollingPolicyOption>()) {
-      return options.get<compute_routes_v1::RoutesPollingPolicyOption>()
-          ->clone();
-    }
-    return options_.get<compute_routes_v1::RoutesPollingPolicyOption>()
-        ->clone();
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options.get<compute_routes_v1::RoutesPollingPolicyOption>()->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

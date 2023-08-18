@@ -92,54 +92,28 @@ class HubServiceConnectionImpl
                   request) override;
 
  private:
-  std::unique_ptr<networkconnectivity_v1::HubServiceRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<networkconnectivity_v1::HubServiceRetryPolicyOption>()) {
-      return options.get<networkconnectivity_v1::HubServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<networkconnectivity_v1::HubServiceRetryPolicyOption>()
+  static std::unique_ptr<networkconnectivity_v1::HubServiceRetryPolicy>
+  retry_policy(Options const& options) {
+    return options.get<networkconnectivity_v1::HubServiceRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<networkconnectivity_v1::HubServiceBackoffPolicyOption>()) {
-      return options
-          .get<networkconnectivity_v1::HubServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<networkconnectivity_v1::HubServiceBackoffPolicyOption>()
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<networkconnectivity_v1::HubServiceBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<networkconnectivity_v1::HubServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<networkconnectivity_v1::
-                        HubServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<networkconnectivity_v1::
-                   HubServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<
+      networkconnectivity_v1::HubServiceConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<networkconnectivity_v1::
                  HubServiceConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<networkconnectivity_v1::HubServicePollingPolicyOption>()) {
-      return options
-          .get<networkconnectivity_v1::HubServicePollingPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<networkconnectivity_v1::HubServicePollingPolicyOption>()
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options.get<networkconnectivity_v1::HubServicePollingPolicyOption>()
         ->clone();
   }
 

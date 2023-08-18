@@ -39,9 +39,10 @@ TraceServiceConnectionImpl::TraceServiceConnectionImpl(
 
 Status TraceServiceConnectionImpl::BatchWriteSpans(
     google::devtools::cloudtrace::v2::BatchWriteSpansRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->BatchWriteSpans(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->BatchWriteSpans(request),
       [this](grpc::ClientContext& context,
              google::devtools::cloudtrace::v2::BatchWriteSpansRequest const&
                  request) { return stub_->BatchWriteSpans(context, request); },
@@ -51,9 +52,10 @@ Status TraceServiceConnectionImpl::BatchWriteSpans(
 StatusOr<google::devtools::cloudtrace::v2::Span>
 TraceServiceConnectionImpl::CreateSpan(
     google::devtools::cloudtrace::v2::Span const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateSpan(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateSpan(request),
       [this](grpc::ClientContext& context,
              google::devtools::cloudtrace::v2::Span const& request) {
         return stub_->CreateSpan(context, request);

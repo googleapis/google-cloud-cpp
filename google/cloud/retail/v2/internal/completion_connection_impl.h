@@ -60,47 +60,27 @@ class CompletionServiceConnectionImpl
       override;
 
  private:
-  std::unique_ptr<retail_v2::CompletionServiceRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<retail_v2::CompletionServiceRetryPolicyOption>()) {
-      return options.get<retail_v2::CompletionServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<retail_v2::CompletionServiceRetryPolicyOption>()
+  static std::unique_ptr<retail_v2::CompletionServiceRetryPolicy> retry_policy(
+      Options const& options) {
+    return options.get<retail_v2::CompletionServiceRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<retail_v2::CompletionServiceBackoffPolicyOption>()) {
-      return options.get<retail_v2::CompletionServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<retail_v2::CompletionServiceBackoffPolicyOption>()
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<retail_v2::CompletionServiceBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<retail_v2::CompletionServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            retail_v2::CompletionServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<retail_v2::CompletionServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<
+      retail_v2::CompletionServiceConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<retail_v2::CompletionServiceConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<retail_v2::CompletionServicePollingPolicyOption>()) {
-      return options.get<retail_v2::CompletionServicePollingPolicyOption>()
-          ->clone();
-    }
-    return options_.get<retail_v2::CompletionServicePollingPolicyOption>()
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options.get<retail_v2::CompletionServicePollingPolicyOption>()
         ->clone();
   }
 

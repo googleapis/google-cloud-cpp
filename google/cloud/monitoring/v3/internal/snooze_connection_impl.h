@@ -62,36 +62,21 @@ class SnoozeServiceConnectionImpl
       google::monitoring::v3::UpdateSnoozeRequest const& request) override;
 
  private:
-  std::unique_ptr<monitoring_v3::SnoozeServiceRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<monitoring_v3::SnoozeServiceRetryPolicyOption>()) {
-      return options.get<monitoring_v3::SnoozeServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<monitoring_v3::SnoozeServiceRetryPolicyOption>()
+  static std::unique_ptr<monitoring_v3::SnoozeServiceRetryPolicy> retry_policy(
+      Options const& options) {
+    return options.get<monitoring_v3::SnoozeServiceRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<monitoring_v3::SnoozeServiceBackoffPolicyOption>()) {
-      return options.get<monitoring_v3::SnoozeServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<monitoring_v3::SnoozeServiceBackoffPolicyOption>()
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<monitoring_v3::SnoozeServiceBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<monitoring_v3::SnoozeServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            monitoring_v3::SnoozeServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<monitoring_v3::SnoozeServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<
+      monitoring_v3::SnoozeServiceConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<monitoring_v3::SnoozeServiceConnectionIdempotencyPolicyOption>()
         ->clone();
   }

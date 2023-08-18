@@ -44,17 +44,17 @@ StreamRange<google::cloud::baremetalsolution::v2::Instance>
 BareMetalSolutionConnectionImpl::ListInstances(
     google::cloud::baremetalsolution::v2::ListInstancesRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<baremetalsolution_v2::BareMetalSolutionRetryPolicy const>(
-          retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListInstances(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListInstances(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::baremetalsolution::v2::Instance>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry =
+           std::shared_ptr<baremetalsolution_v2::BareMetalSolutionRetryPolicy>(
+               retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::baremetalsolution::v2::ListInstancesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
@@ -77,9 +77,10 @@ BareMetalSolutionConnectionImpl::ListInstances(
 StatusOr<google::cloud::baremetalsolution::v2::Instance>
 BareMetalSolutionConnectionImpl::GetInstance(
     google::cloud::baremetalsolution::v2::GetInstanceRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetInstance(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetInstance(request),
       [this](grpc::ClientContext& context,
              google::cloud::baremetalsolution::v2::GetInstanceRequest const&
                  request) { return stub_->GetInstance(context, request); },
@@ -90,40 +91,43 @@ future<StatusOr<google::cloud::baremetalsolution::v2::Instance>>
 BareMetalSolutionConnectionImpl::UpdateInstance(
     google::cloud::baremetalsolution::v2::UpdateInstanceRequest const&
         request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::baremetalsolution::v2::Instance>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::baremetalsolution::v2::UpdateInstanceRequest const&
-                 request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::baremetalsolution::v2::UpdateInstanceRequest const&
+              request) {
         return stub->AsyncUpdateInstance(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::baremetalsolution::v2::Instance>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UpdateInstance(request), polling_policy(),
-      __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateInstance(request),
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::Instance>
 BareMetalSolutionConnectionImpl::RenameInstance(
     google::cloud::baremetalsolution::v2::RenameInstanceRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->RenameInstance(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->RenameInstance(request),
       [this](grpc::ClientContext& context,
              google::cloud::baremetalsolution::v2::RenameInstanceRequest const&
                  request) { return stub_->RenameInstance(context, request); },
@@ -133,88 +137,97 @@ BareMetalSolutionConnectionImpl::RenameInstance(
 future<StatusOr<google::cloud::baremetalsolution::v2::ResetInstanceResponse>>
 BareMetalSolutionConnectionImpl::ResetInstance(
     google::cloud::baremetalsolution::v2::ResetInstanceRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::baremetalsolution::v2::ResetInstanceResponse>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::baremetalsolution::v2::ResetInstanceRequest const&
-                 request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::baremetalsolution::v2::ResetInstanceRequest const&
+              request) {
         return stub->AsyncResetInstance(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::baremetalsolution::v2::ResetInstanceResponse>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->ResetInstance(request), polling_policy(), __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ResetInstance(request),
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::baremetalsolution::v2::StartInstanceResponse>>
 BareMetalSolutionConnectionImpl::StartInstance(
     google::cloud::baremetalsolution::v2::StartInstanceRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::baremetalsolution::v2::StartInstanceResponse>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::baremetalsolution::v2::StartInstanceRequest const&
-                 request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::baremetalsolution::v2::StartInstanceRequest const&
+              request) {
         return stub->AsyncStartInstance(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::baremetalsolution::v2::StartInstanceResponse>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->StartInstance(request), polling_policy(), __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->StartInstance(request),
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::baremetalsolution::v2::StopInstanceResponse>>
 BareMetalSolutionConnectionImpl::StopInstance(
     google::cloud::baremetalsolution::v2::StopInstanceRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::baremetalsolution::v2::StopInstanceResponse>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::baremetalsolution::v2::StopInstanceRequest const&
-                 request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::baremetalsolution::v2::StopInstanceRequest const&
+              request) {
         return stub->AsyncStopInstance(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::baremetalsolution::v2::StopInstanceResponse>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->StopInstance(request), polling_policy(), __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->StopInstance(request),
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::baremetalsolution::v2::
@@ -222,34 +235,35 @@ future<StatusOr<google::cloud::baremetalsolution::v2::
 BareMetalSolutionConnectionImpl::EnableInteractiveSerialConsole(
     google::cloud::baremetalsolution::v2::
         EnableInteractiveSerialConsoleRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::baremetalsolution::v2::
           EnableInteractiveSerialConsoleResponse>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::baremetalsolution::v2::
-                 EnableInteractiveSerialConsoleRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::baremetalsolution::v2::
+                         EnableInteractiveSerialConsoleRequest const& request) {
         return stub->AsyncEnableInteractiveSerialConsole(cq, std::move(context),
                                                          request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::baremetalsolution::v2::
               EnableInteractiveSerialConsoleResponse>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->EnableInteractiveSerialConsole(request),
-      polling_policy(), __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->EnableInteractiveSerialConsole(request),
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::baremetalsolution::v2::
@@ -257,80 +271,85 @@ future<StatusOr<google::cloud::baremetalsolution::v2::
 BareMetalSolutionConnectionImpl::DisableInteractiveSerialConsole(
     google::cloud::baremetalsolution::v2::
         DisableInteractiveSerialConsoleRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::baremetalsolution::v2::
           DisableInteractiveSerialConsoleResponse>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::baremetalsolution::v2::
-                 DisableInteractiveSerialConsoleRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::baremetalsolution::v2::
+              DisableInteractiveSerialConsoleRequest const& request) {
         return stub->AsyncDisableInteractiveSerialConsole(
             cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::baremetalsolution::v2::
               DisableInteractiveSerialConsoleResponse>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DisableInteractiveSerialConsole(request),
-      polling_policy(), __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DisableInteractiveSerialConsole(request),
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::baremetalsolution::v2::Instance>>
 BareMetalSolutionConnectionImpl::DetachLun(
     google::cloud::baremetalsolution::v2::DetachLunRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::baremetalsolution::v2::Instance>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::baremetalsolution::v2::DetachLunRequest const&
-                 request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::baremetalsolution::v2::DetachLunRequest const&
+              request) {
         return stub->AsyncDetachLun(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::baremetalsolution::v2::Instance>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DetachLun(request), polling_policy(), __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DetachLun(request),
+      polling_policy(*current), __func__);
 }
 
 StreamRange<google::cloud::baremetalsolution::v2::SSHKey>
 BareMetalSolutionConnectionImpl::ListSSHKeys(
     google::cloud::baremetalsolution::v2::ListSSHKeysRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<baremetalsolution_v2::BareMetalSolutionRetryPolicy const>(
-          retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListSSHKeys(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListSSHKeys(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::baremetalsolution::v2::SSHKey>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry =
+           std::shared_ptr<baremetalsolution_v2::BareMetalSolutionRetryPolicy>(
+               retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::baremetalsolution::v2::ListSSHKeysRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
@@ -352,9 +371,10 @@ BareMetalSolutionConnectionImpl::ListSSHKeys(
 StatusOr<google::cloud::baremetalsolution::v2::SSHKey>
 BareMetalSolutionConnectionImpl::CreateSSHKey(
     google::cloud::baremetalsolution::v2::CreateSSHKeyRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateSSHKey(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateSSHKey(request),
       [this](grpc::ClientContext& context,
              google::cloud::baremetalsolution::v2::CreateSSHKeyRequest const&
                  request) { return stub_->CreateSSHKey(context, request); },
@@ -363,9 +383,10 @@ BareMetalSolutionConnectionImpl::CreateSSHKey(
 
 Status BareMetalSolutionConnectionImpl::DeleteSSHKey(
     google::cloud::baremetalsolution::v2::DeleteSSHKeyRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteSSHKey(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteSSHKey(request),
       [this](grpc::ClientContext& context,
              google::cloud::baremetalsolution::v2::DeleteSSHKeyRequest const&
                  request) { return stub_->DeleteSSHKey(context, request); },
@@ -376,17 +397,17 @@ StreamRange<google::cloud::baremetalsolution::v2::Volume>
 BareMetalSolutionConnectionImpl::ListVolumes(
     google::cloud::baremetalsolution::v2::ListVolumesRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<baremetalsolution_v2::BareMetalSolutionRetryPolicy const>(
-          retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListVolumes(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListVolumes(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::baremetalsolution::v2::Volume>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry =
+           std::shared_ptr<baremetalsolution_v2::BareMetalSolutionRetryPolicy>(
+               retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::baremetalsolution::v2::ListVolumesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
@@ -408,9 +429,10 @@ BareMetalSolutionConnectionImpl::ListVolumes(
 StatusOr<google::cloud::baremetalsolution::v2::Volume>
 BareMetalSolutionConnectionImpl::GetVolume(
     google::cloud::baremetalsolution::v2::GetVolumeRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetVolume(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetVolume(request),
       [this](grpc::ClientContext& context,
              google::cloud::baremetalsolution::v2::GetVolumeRequest const&
                  request) { return stub_->GetVolume(context, request); },
@@ -420,38 +442,42 @@ BareMetalSolutionConnectionImpl::GetVolume(
 future<StatusOr<google::cloud::baremetalsolution::v2::Volume>>
 BareMetalSolutionConnectionImpl::UpdateVolume(
     google::cloud::baremetalsolution::v2::UpdateVolumeRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::baremetalsolution::v2::Volume>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::baremetalsolution::v2::UpdateVolumeRequest const&
-                 request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::baremetalsolution::v2::UpdateVolumeRequest const&
+              request) {
         return stub->AsyncUpdateVolume(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::baremetalsolution::v2::Volume>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UpdateVolume(request), polling_policy(), __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateVolume(request),
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::Volume>
 BareMetalSolutionConnectionImpl::RenameVolume(
     google::cloud::baremetalsolution::v2::RenameVolumeRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->RenameVolume(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->RenameVolume(request),
       [this](grpc::ClientContext& context,
              google::cloud::baremetalsolution::v2::RenameVolumeRequest const&
                  request) { return stub_->RenameVolume(context, request); },
@@ -461,76 +487,82 @@ BareMetalSolutionConnectionImpl::RenameVolume(
 future<StatusOr<google::cloud::baremetalsolution::v2::OperationMetadata>>
 BareMetalSolutionConnectionImpl::EvictVolume(
     google::cloud::baremetalsolution::v2::EvictVolumeRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::baremetalsolution::v2::OperationMetadata>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::baremetalsolution::v2::EvictVolumeRequest const&
-                 request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::baremetalsolution::v2::EvictVolumeRequest const&
+              request) {
         return stub->AsyncEvictVolume(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::baremetalsolution::v2::OperationMetadata>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->EvictVolume(request), polling_policy(), __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->EvictVolume(request),
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::baremetalsolution::v2::Volume>>
 BareMetalSolutionConnectionImpl::ResizeVolume(
     google::cloud::baremetalsolution::v2::ResizeVolumeRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::baremetalsolution::v2::Volume>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::baremetalsolution::v2::ResizeVolumeRequest const&
-                 request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::baremetalsolution::v2::ResizeVolumeRequest const&
+              request) {
         return stub->AsyncResizeVolume(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::baremetalsolution::v2::Volume>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->ResizeVolume(request), polling_policy(), __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ResizeVolume(request),
+      polling_policy(*current), __func__);
 }
 
 StreamRange<google::cloud::baremetalsolution::v2::Network>
 BareMetalSolutionConnectionImpl::ListNetworks(
     google::cloud::baremetalsolution::v2::ListNetworksRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<baremetalsolution_v2::BareMetalSolutionRetryPolicy const>(
-          retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListNetworks(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListNetworks(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::baremetalsolution::v2::Network>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry =
+           std::shared_ptr<baremetalsolution_v2::BareMetalSolutionRetryPolicy>(
+               retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::baremetalsolution::v2::ListNetworksRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
@@ -553,9 +585,10 @@ StatusOr<google::cloud::baremetalsolution::v2::ListNetworkUsageResponse>
 BareMetalSolutionConnectionImpl::ListNetworkUsage(
     google::cloud::baremetalsolution::v2::ListNetworkUsageRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->ListNetworkUsage(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ListNetworkUsage(request),
       [this](
           grpc::ClientContext& context,
           google::cloud::baremetalsolution::v2::ListNetworkUsageRequest const&
@@ -566,9 +599,10 @@ BareMetalSolutionConnectionImpl::ListNetworkUsage(
 StatusOr<google::cloud::baremetalsolution::v2::Network>
 BareMetalSolutionConnectionImpl::GetNetwork(
     google::cloud::baremetalsolution::v2::GetNetworkRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetNetwork(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetNetwork(request),
       [this](grpc::ClientContext& context,
              google::cloud::baremetalsolution::v2::GetNetworkRequest const&
                  request) { return stub_->GetNetwork(context, request); },
@@ -578,39 +612,43 @@ BareMetalSolutionConnectionImpl::GetNetwork(
 future<StatusOr<google::cloud::baremetalsolution::v2::Network>>
 BareMetalSolutionConnectionImpl::UpdateNetwork(
     google::cloud::baremetalsolution::v2::UpdateNetworkRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::baremetalsolution::v2::Network>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::baremetalsolution::v2::UpdateNetworkRequest const&
-                 request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::baremetalsolution::v2::UpdateNetworkRequest const&
+              request) {
         return stub->AsyncUpdateNetwork(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::baremetalsolution::v2::Network>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UpdateNetwork(request), polling_policy(), __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateNetwork(request),
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::VolumeSnapshot>
 BareMetalSolutionConnectionImpl::CreateVolumeSnapshot(
     google::cloud::baremetalsolution::v2::CreateVolumeSnapshotRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateVolumeSnapshot(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateVolumeSnapshot(request),
       [this](grpc::ClientContext& context,
              google::cloud::baremetalsolution::v2::
                  CreateVolumeSnapshotRequest const& request) {
@@ -623,40 +661,42 @@ future<StatusOr<google::cloud::baremetalsolution::v2::VolumeSnapshot>>
 BareMetalSolutionConnectionImpl::RestoreVolumeSnapshot(
     google::cloud::baremetalsolution::v2::RestoreVolumeSnapshotRequest const&
         request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::baremetalsolution::v2::VolumeSnapshot>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::baremetalsolution::v2::
-                 RestoreVolumeSnapshotRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::baremetalsolution::v2::
+                         RestoreVolumeSnapshotRequest const& request) {
         return stub->AsyncRestoreVolumeSnapshot(cq, std::move(context),
                                                 request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::baremetalsolution::v2::VolumeSnapshot>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->RestoreVolumeSnapshot(request), polling_policy(),
-      __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->RestoreVolumeSnapshot(request),
+      polling_policy(*current), __func__);
 }
 
 Status BareMetalSolutionConnectionImpl::DeleteVolumeSnapshot(
     google::cloud::baremetalsolution::v2::DeleteVolumeSnapshotRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteVolumeSnapshot(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteVolumeSnapshot(request),
       [this](grpc::ClientContext& context,
              google::cloud::baremetalsolution::v2::
                  DeleteVolumeSnapshotRequest const& request) {
@@ -669,9 +709,10 @@ StatusOr<google::cloud::baremetalsolution::v2::VolumeSnapshot>
 BareMetalSolutionConnectionImpl::GetVolumeSnapshot(
     google::cloud::baremetalsolution::v2::GetVolumeSnapshotRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetVolumeSnapshot(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetVolumeSnapshot(request),
       [this](
           grpc::ClientContext& context,
           google::cloud::baremetalsolution::v2::GetVolumeSnapshotRequest const&
@@ -683,19 +724,19 @@ StreamRange<google::cloud::baremetalsolution::v2::VolumeSnapshot>
 BareMetalSolutionConnectionImpl::ListVolumeSnapshots(
     google::cloud::baremetalsolution::v2::ListVolumeSnapshotsRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<baremetalsolution_v2::BareMetalSolutionRetryPolicy const>(
-          retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListVolumeSnapshots(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListVolumeSnapshots(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::baremetalsolution::v2::VolumeSnapshot>>(
       std::move(request),
-      [stub, retry, backoff, idempotency,
-       function_name](google::cloud::baremetalsolution::v2::
-                          ListVolumeSnapshotsRequest const& r) {
+      [idempotency, function_name, stub = stub_,
+       retry =
+           std::shared_ptr<baremetalsolution_v2::BareMetalSolutionRetryPolicy>(
+               retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          google::cloud::baremetalsolution::v2::
+              ListVolumeSnapshotsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context,
@@ -717,8 +758,10 @@ BareMetalSolutionConnectionImpl::ListVolumeSnapshots(
 StatusOr<google::cloud::baremetalsolution::v2::Lun>
 BareMetalSolutionConnectionImpl::GetLun(
     google::cloud::baremetalsolution::v2::GetLunRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(), idempotency_policy()->GetLun(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetLun(request),
       [this](
           grpc::ClientContext& context,
           google::cloud::baremetalsolution::v2::GetLunRequest const& request) {
@@ -731,17 +774,17 @@ StreamRange<google::cloud::baremetalsolution::v2::Lun>
 BareMetalSolutionConnectionImpl::ListLuns(
     google::cloud::baremetalsolution::v2::ListLunsRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<baremetalsolution_v2::BareMetalSolutionRetryPolicy const>(
-          retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListLuns(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListLuns(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::baremetalsolution::v2::Lun>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry =
+           std::shared_ptr<baremetalsolution_v2::BareMetalSolutionRetryPolicy>(
+               retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::baremetalsolution::v2::ListLunsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
@@ -762,38 +805,42 @@ BareMetalSolutionConnectionImpl::ListLuns(
 future<StatusOr<google::cloud::baremetalsolution::v2::OperationMetadata>>
 BareMetalSolutionConnectionImpl::EvictLun(
     google::cloud::baremetalsolution::v2::EvictLunRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::baremetalsolution::v2::OperationMetadata>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::baremetalsolution::v2::EvictLunRequest const&
-                 request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::baremetalsolution::v2::EvictLunRequest const&
+              request) {
         return stub->AsyncEvictLun(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::baremetalsolution::v2::OperationMetadata>,
-      retry_policy(), backoff_policy(), idempotency_policy()->EvictLun(request),
-      polling_policy(), __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->EvictLun(request), polling_policy(*current),
+      __func__);
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::NfsShare>
 BareMetalSolutionConnectionImpl::GetNfsShare(
     google::cloud::baremetalsolution::v2::GetNfsShareRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetNfsShare(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetNfsShare(request),
       [this](grpc::ClientContext& context,
              google::cloud::baremetalsolution::v2::GetNfsShareRequest const&
                  request) { return stub_->GetNfsShare(context, request); },
@@ -804,17 +851,17 @@ StreamRange<google::cloud::baremetalsolution::v2::NfsShare>
 BareMetalSolutionConnectionImpl::ListNfsShares(
     google::cloud::baremetalsolution::v2::ListNfsSharesRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<baremetalsolution_v2::BareMetalSolutionRetryPolicy const>(
-          retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListNfsShares(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListNfsShares(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::baremetalsolution::v2::NfsShare>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry =
+           std::shared_ptr<baremetalsolution_v2::BareMetalSolutionRetryPolicy>(
+               retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::baremetalsolution::v2::ListNfsSharesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
@@ -838,71 +885,76 @@ future<StatusOr<google::cloud::baremetalsolution::v2::NfsShare>>
 BareMetalSolutionConnectionImpl::UpdateNfsShare(
     google::cloud::baremetalsolution::v2::UpdateNfsShareRequest const&
         request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::baremetalsolution::v2::NfsShare>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::baremetalsolution::v2::UpdateNfsShareRequest const&
-                 request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::baremetalsolution::v2::UpdateNfsShareRequest const&
+              request) {
         return stub->AsyncUpdateNfsShare(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::baremetalsolution::v2::NfsShare>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UpdateNfsShare(request), polling_policy(),
-      __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateNfsShare(request),
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::baremetalsolution::v2::NfsShare>>
 BareMetalSolutionConnectionImpl::CreateNfsShare(
     google::cloud::baremetalsolution::v2::CreateNfsShareRequest const&
         request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::baremetalsolution::v2::NfsShare>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::baremetalsolution::v2::CreateNfsShareRequest const&
-                 request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::baremetalsolution::v2::CreateNfsShareRequest const&
+              request) {
         return stub->AsyncCreateNfsShare(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::baremetalsolution::v2::NfsShare>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateNfsShare(request), polling_policy(),
-      __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateNfsShare(request),
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::NfsShare>
 BareMetalSolutionConnectionImpl::RenameNfsShare(
     google::cloud::baremetalsolution::v2::RenameNfsShareRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->RenameNfsShare(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->RenameNfsShare(request),
       [this](grpc::ClientContext& context,
              google::cloud::baremetalsolution::v2::RenameNfsShareRequest const&
                  request) { return stub_->RenameNfsShare(context, request); },
@@ -913,31 +965,33 @@ future<StatusOr<google::cloud::baremetalsolution::v2::OperationMetadata>>
 BareMetalSolutionConnectionImpl::DeleteNfsShare(
     google::cloud::baremetalsolution::v2::DeleteNfsShareRequest const&
         request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::baremetalsolution::v2::OperationMetadata>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::baremetalsolution::v2::DeleteNfsShareRequest const&
-                 request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::baremetalsolution::v2::DeleteNfsShareRequest const&
+              request) {
         return stub->AsyncDeleteNfsShare(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::baremetalsolution::v2::OperationMetadata>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteNfsShare(request), polling_policy(),
-      __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteNfsShare(request),
+      polling_policy(*current), __func__);
 }
 
 StreamRange<google::cloud::baremetalsolution::v2::ProvisioningQuota>
@@ -945,19 +999,20 @@ BareMetalSolutionConnectionImpl::ListProvisioningQuotas(
     google::cloud::baremetalsolution::v2::ListProvisioningQuotasRequest
         request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<baremetalsolution_v2::BareMetalSolutionRetryPolicy const>(
-          retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListProvisioningQuotas(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency =
+      idempotency_policy(*current)->ListProvisioningQuotas(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::baremetalsolution::v2::ProvisioningQuota>>(
       std::move(request),
-      [stub, retry, backoff, idempotency,
-       function_name](google::cloud::baremetalsolution::v2::
-                          ListProvisioningQuotasRequest const& r) {
+      [idempotency, function_name, stub = stub_,
+       retry =
+           std::shared_ptr<baremetalsolution_v2::BareMetalSolutionRetryPolicy>(
+               retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          google::cloud::baremetalsolution::v2::
+              ListProvisioningQuotasRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context,
@@ -981,9 +1036,10 @@ StatusOr<google::cloud::baremetalsolution::v2::SubmitProvisioningConfigResponse>
 BareMetalSolutionConnectionImpl::SubmitProvisioningConfig(
     google::cloud::baremetalsolution::v2::SubmitProvisioningConfigRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->SubmitProvisioningConfig(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->SubmitProvisioningConfig(request),
       [this](grpc::ClientContext& context,
              google::cloud::baremetalsolution::v2::
                  SubmitProvisioningConfigRequest const& request) {
@@ -996,9 +1052,10 @@ StatusOr<google::cloud::baremetalsolution::v2::ProvisioningConfig>
 BareMetalSolutionConnectionImpl::GetProvisioningConfig(
     google::cloud::baremetalsolution::v2::GetProvisioningConfigRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetProvisioningConfig(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetProvisioningConfig(request),
       [this](grpc::ClientContext& context,
              google::cloud::baremetalsolution::v2::
                  GetProvisioningConfigRequest const& request) {
@@ -1011,9 +1068,10 @@ StatusOr<google::cloud::baremetalsolution::v2::ProvisioningConfig>
 BareMetalSolutionConnectionImpl::CreateProvisioningConfig(
     google::cloud::baremetalsolution::v2::CreateProvisioningConfigRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateProvisioningConfig(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateProvisioningConfig(request),
       [this](grpc::ClientContext& context,
              google::cloud::baremetalsolution::v2::
                  CreateProvisioningConfigRequest const& request) {
@@ -1026,9 +1084,10 @@ StatusOr<google::cloud::baremetalsolution::v2::ProvisioningConfig>
 BareMetalSolutionConnectionImpl::UpdateProvisioningConfig(
     google::cloud::baremetalsolution::v2::UpdateProvisioningConfigRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UpdateProvisioningConfig(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateProvisioningConfig(request),
       [this](grpc::ClientContext& context,
              google::cloud::baremetalsolution::v2::
                  UpdateProvisioningConfigRequest const& request) {
@@ -1040,9 +1099,10 @@ BareMetalSolutionConnectionImpl::UpdateProvisioningConfig(
 StatusOr<google::cloud::baremetalsolution::v2::Network>
 BareMetalSolutionConnectionImpl::RenameNetwork(
     google::cloud::baremetalsolution::v2::RenameNetworkRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->RenameNetwork(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->RenameNetwork(request),
       [this](grpc::ClientContext& context,
              google::cloud::baremetalsolution::v2::RenameNetworkRequest const&
                  request) { return stub_->RenameNetwork(context, request); },
@@ -1053,17 +1113,17 @@ StreamRange<google::cloud::baremetalsolution::v2::OSImage>
 BareMetalSolutionConnectionImpl::ListOSImages(
     google::cloud::baremetalsolution::v2::ListOSImagesRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<baremetalsolution_v2::BareMetalSolutionRetryPolicy const>(
-          retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListOSImages(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListOSImages(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::baremetalsolution::v2::OSImage>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry =
+           std::shared_ptr<baremetalsolution_v2::BareMetalSolutionRetryPolicy>(
+               retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::baremetalsolution::v2::ListOSImagesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,

@@ -42,9 +42,10 @@ ServingConfigServiceConnectionImpl::ServingConfigServiceConnectionImpl(
 StatusOr<google::cloud::retail::v2::ServingConfig>
 ServingConfigServiceConnectionImpl::CreateServingConfig(
     google::cloud::retail::v2::CreateServingConfigRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateServingConfig(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateServingConfig(request),
       [this](grpc::ClientContext& context,
              google::cloud::retail::v2::CreateServingConfigRequest const&
                  request) {
@@ -55,9 +56,10 @@ ServingConfigServiceConnectionImpl::CreateServingConfig(
 
 Status ServingConfigServiceConnectionImpl::DeleteServingConfig(
     google::cloud::retail::v2::DeleteServingConfigRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteServingConfig(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteServingConfig(request),
       [this](grpc::ClientContext& context,
              google::cloud::retail::v2::DeleteServingConfigRequest const&
                  request) {
@@ -69,9 +71,10 @@ Status ServingConfigServiceConnectionImpl::DeleteServingConfig(
 StatusOr<google::cloud::retail::v2::ServingConfig>
 ServingConfigServiceConnectionImpl::UpdateServingConfig(
     google::cloud::retail::v2::UpdateServingConfigRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UpdateServingConfig(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateServingConfig(request),
       [this](grpc::ClientContext& context,
              google::cloud::retail::v2::UpdateServingConfigRequest const&
                  request) {
@@ -83,9 +86,10 @@ ServingConfigServiceConnectionImpl::UpdateServingConfig(
 StatusOr<google::cloud::retail::v2::ServingConfig>
 ServingConfigServiceConnectionImpl::GetServingConfig(
     google::cloud::retail::v2::GetServingConfigRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetServingConfig(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetServingConfig(request),
       [this](
           grpc::ClientContext& context,
           google::cloud::retail::v2::GetServingConfigRequest const& request) {
@@ -98,17 +102,16 @@ StreamRange<google::cloud::retail::v2::ServingConfig>
 ServingConfigServiceConnectionImpl::ListServingConfigs(
     google::cloud::retail::v2::ListServingConfigsRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<retail_v2::ServingConfigServiceRetryPolicy const>(
-          retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListServingConfigs(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListServingConfigs(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::retail::v2::ServingConfig>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<retail_v2::ServingConfigServiceRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::retail::v2::ListServingConfigsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
@@ -131,9 +134,10 @@ ServingConfigServiceConnectionImpl::ListServingConfigs(
 StatusOr<google::cloud::retail::v2::ServingConfig>
 ServingConfigServiceConnectionImpl::AddControl(
     google::cloud::retail::v2::AddControlRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->AddControl(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->AddControl(request),
       [this](grpc::ClientContext& context,
              google::cloud::retail::v2::AddControlRequest const& request) {
         return stub_->AddControl(context, request);
@@ -144,9 +148,10 @@ ServingConfigServiceConnectionImpl::AddControl(
 StatusOr<google::cloud::retail::v2::ServingConfig>
 ServingConfigServiceConnectionImpl::RemoveControl(
     google::cloud::retail::v2::RemoveControlRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->RemoveControl(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->RemoveControl(request),
       [this](grpc::ClientContext& context,
              google::cloud::retail::v2::RemoveControlRequest const& request) {
         return stub_->RemoveControl(context, request);

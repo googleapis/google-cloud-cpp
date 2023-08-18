@@ -121,48 +121,27 @@ class LineageConnectionImpl : public datacatalog_lineage_v1::LineageConnection {
           request) override;
 
  private:
-  std::unique_ptr<datacatalog_lineage_v1::LineageRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<datacatalog_lineage_v1::LineageRetryPolicyOption>()) {
-      return options.get<datacatalog_lineage_v1::LineageRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<datacatalog_lineage_v1::LineageRetryPolicyOption>()
+  static std::unique_ptr<datacatalog_lineage_v1::LineageRetryPolicy>
+  retry_policy(Options const& options) {
+    return options.get<datacatalog_lineage_v1::LineageRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<datacatalog_lineage_v1::LineageBackoffPolicyOption>()) {
-      return options.get<datacatalog_lineage_v1::LineageBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<datacatalog_lineage_v1::LineageBackoffPolicyOption>()
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<datacatalog_lineage_v1::LineageBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<datacatalog_lineage_v1::LineageConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<datacatalog_lineage_v1::
-                        LineageConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<datacatalog_lineage_v1::
-                   LineageConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<
+      datacatalog_lineage_v1::LineageConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<datacatalog_lineage_v1::LineageConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<datacatalog_lineage_v1::LineagePollingPolicyOption>()) {
-      return options.get<datacatalog_lineage_v1::LineagePollingPolicyOption>()
-          ->clone();
-    }
-    return options_.get<datacatalog_lineage_v1::LineagePollingPolicyOption>()
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options.get<datacatalog_lineage_v1::LineagePollingPolicyOption>()
         ->clone();
   }
 

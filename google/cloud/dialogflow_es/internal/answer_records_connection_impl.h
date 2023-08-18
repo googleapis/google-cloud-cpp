@@ -57,36 +57,21 @@ class AnswerRecordsConnectionImpl
       override;
 
  private:
-  std::unique_ptr<dialogflow_es::AnswerRecordsRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<dialogflow_es::AnswerRecordsRetryPolicyOption>()) {
-      return options.get<dialogflow_es::AnswerRecordsRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<dialogflow_es::AnswerRecordsRetryPolicyOption>()
+  static std::unique_ptr<dialogflow_es::AnswerRecordsRetryPolicy> retry_policy(
+      Options const& options) {
+    return options.get<dialogflow_es::AnswerRecordsRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<dialogflow_es::AnswerRecordsBackoffPolicyOption>()) {
-      return options.get<dialogflow_es::AnswerRecordsBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<dialogflow_es::AnswerRecordsBackoffPolicyOption>()
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<dialogflow_es::AnswerRecordsBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<dialogflow_es::AnswerRecordsConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            dialogflow_es::AnswerRecordsConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<dialogflow_es::AnswerRecordsConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<
+      dialogflow_es::AnswerRecordsConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<dialogflow_es::AnswerRecordsConnectionIdempotencyPolicyOption>()
         ->clone();
   }

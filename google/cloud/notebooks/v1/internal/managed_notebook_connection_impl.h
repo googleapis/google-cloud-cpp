@@ -103,59 +103,29 @@ class ManagedNotebookServiceConnectionImpl
       override;
 
  private:
-  std::unique_ptr<notebooks_v1::ManagedNotebookServiceRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<notebooks_v1::ManagedNotebookServiceRetryPolicyOption>()) {
-      return options
-          .get<notebooks_v1::ManagedNotebookServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<notebooks_v1::ManagedNotebookServiceRetryPolicyOption>()
+  static std::unique_ptr<notebooks_v1::ManagedNotebookServiceRetryPolicy>
+  retry_policy(Options const& options) {
+    return options.get<notebooks_v1::ManagedNotebookServiceRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<notebooks_v1::ManagedNotebookServiceBackoffPolicyOption>()) {
-      return options
-          .get<notebooks_v1::ManagedNotebookServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options
         .get<notebooks_v1::ManagedNotebookServiceBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<
+  static std::unique_ptr<
       notebooks_v1::ManagedNotebookServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            notebooks_v1::
-                ManagedNotebookServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<notebooks_v1::
-                   ManagedNotebookServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  idempotency_policy(Options const& options) {
+    return options
         .get<notebooks_v1::
                  ManagedNotebookServiceConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<notebooks_v1::ManagedNotebookServicePollingPolicyOption>()) {
-      return options
-          .get<notebooks_v1::ManagedNotebookServicePollingPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options
         .get<notebooks_v1::ManagedNotebookServicePollingPolicyOption>()
         ->clone();
   }

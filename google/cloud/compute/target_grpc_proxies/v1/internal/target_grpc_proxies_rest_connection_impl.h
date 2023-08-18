@@ -76,64 +76,33 @@ class TargetGrpcProxiesRestConnectionImpl
           PatchTargetGrpcProxiesRequest const& request) override;
 
  private:
-  std::unique_ptr<compute_target_grpc_proxies_v1::TargetGrpcProxiesRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_target_grpc_proxies_v1::
-                        TargetGrpcProxiesRetryPolicyOption>()) {
-      return options
-          .get<compute_target_grpc_proxies_v1::
-                   TargetGrpcProxiesRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<
+      compute_target_grpc_proxies_v1::TargetGrpcProxiesRetryPolicy>
+  retry_policy(Options const& options) {
+    return options
         .get<compute_target_grpc_proxies_v1::
                  TargetGrpcProxiesRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_target_grpc_proxies_v1::
-                        TargetGrpcProxiesBackoffPolicyOption>()) {
-      return options
-          .get<compute_target_grpc_proxies_v1::
-                   TargetGrpcProxiesBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options
         .get<compute_target_grpc_proxies_v1::
                  TargetGrpcProxiesBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<compute_target_grpc_proxies_v1::
-                      TargetGrpcProxiesConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_target_grpc_proxies_v1::
-                        TargetGrpcProxiesConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<compute_target_grpc_proxies_v1::
-                   TargetGrpcProxiesConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<compute_target_grpc_proxies_v1::
+                             TargetGrpcProxiesConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<compute_target_grpc_proxies_v1::
                  TargetGrpcProxiesConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_target_grpc_proxies_v1::
-                        TargetGrpcProxiesPollingPolicyOption>()) {
-      return options
-          .get<compute_target_grpc_proxies_v1::
-                   TargetGrpcProxiesPollingPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options
         .get<compute_target_grpc_proxies_v1::
                  TargetGrpcProxiesPollingPolicyOption>()
         ->clone();

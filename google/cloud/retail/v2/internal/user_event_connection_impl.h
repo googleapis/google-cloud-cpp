@@ -71,47 +71,25 @@ class UserEventServiceConnectionImpl
                        request) override;
 
  private:
-  std::unique_ptr<retail_v2::UserEventServiceRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<retail_v2::UserEventServiceRetryPolicyOption>()) {
-      return options.get<retail_v2::UserEventServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<retail_v2::UserEventServiceRetryPolicyOption>()
+  static std::unique_ptr<retail_v2::UserEventServiceRetryPolicy> retry_policy(
+      Options const& options) {
+    return options.get<retail_v2::UserEventServiceRetryPolicyOption>()->clone();
+  }
+
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<retail_v2::UserEventServiceBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<retail_v2::UserEventServiceBackoffPolicyOption>()) {
-      return options.get<retail_v2::UserEventServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<retail_v2::UserEventServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<retail_v2::UserEventServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            retail_v2::UserEventServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<retail_v2::UserEventServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<retail_v2::UserEventServiceConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<retail_v2::UserEventServiceConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<retail_v2::UserEventServicePollingPolicyOption>()) {
-      return options.get<retail_v2::UserEventServicePollingPolicyOption>()
-          ->clone();
-    }
-    return options_.get<retail_v2::UserEventServicePollingPolicyOption>()
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options.get<retail_v2::UserEventServicePollingPolicyOption>()
         ->clone();
   }
 

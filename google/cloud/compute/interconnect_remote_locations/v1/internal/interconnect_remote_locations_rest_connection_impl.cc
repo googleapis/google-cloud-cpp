@@ -48,9 +48,10 @@ StatusOr<google::cloud::cpp::compute::v1::InterconnectRemoteLocation>
 InterconnectRemoteLocationsRestConnectionImpl::GetInterconnectRemoteLocations(
     google::cloud::cpp::compute::interconnect_remote_locations::v1::
         GetInterconnectRemoteLocationsRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetInterconnectRemoteLocations(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetInterconnectRemoteLocations(request),
       [this](rest_internal::RestContext& rest_context,
              google::cloud::cpp::compute::interconnect_remote_locations::v1::
                  GetInterconnectRemoteLocationsRequest const& request) {
@@ -64,19 +65,18 @@ InterconnectRemoteLocationsRestConnectionImpl::ListInterconnectRemoteLocations(
     google::cloud::cpp::compute::interconnect_remote_locations::v1::
         ListInterconnectRemoteLocationsRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<compute_interconnect_remote_locations_v1::
-                          InterconnectRemoteLocationsRetryPolicy const>(
-          retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+  auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency =
-      idempotency_policy()->ListInterconnectRemoteLocations(request);
+      idempotency_policy(*current)->ListInterconnectRemoteLocations(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::cpp::compute::v1::InterconnectRemoteLocation>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<compute_interconnect_remote_locations_v1::
+                                   InterconnectRemoteLocationsRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::cpp::compute::interconnect_remote_locations::v1::
               ListInterconnectRemoteLocationsRequest const& r) {
         return google::cloud::rest_internal::RestRetryLoop(

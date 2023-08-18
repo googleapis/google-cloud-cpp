@@ -99,47 +99,27 @@ class DatasetServiceConnectionImpl
       google::cloud::aiplatform::v1::ListAnnotationsRequest request) override;
 
  private:
-  std::unique_ptr<aiplatform_v1::DatasetServiceRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<aiplatform_v1::DatasetServiceRetryPolicyOption>()) {
-      return options.get<aiplatform_v1::DatasetServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<aiplatform_v1::DatasetServiceRetryPolicyOption>()
+  static std::unique_ptr<aiplatform_v1::DatasetServiceRetryPolicy> retry_policy(
+      Options const& options) {
+    return options.get<aiplatform_v1::DatasetServiceRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<aiplatform_v1::DatasetServiceBackoffPolicyOption>()) {
-      return options.get<aiplatform_v1::DatasetServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<aiplatform_v1::DatasetServiceBackoffPolicyOption>()
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<aiplatform_v1::DatasetServiceBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<aiplatform_v1::DatasetServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            aiplatform_v1::DatasetServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<aiplatform_v1::DatasetServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<
+      aiplatform_v1::DatasetServiceConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<aiplatform_v1::DatasetServiceConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<aiplatform_v1::DatasetServicePollingPolicyOption>()) {
-      return options.get<aiplatform_v1::DatasetServicePollingPolicyOption>()
-          ->clone();
-    }
-    return options_.get<aiplatform_v1::DatasetServicePollingPolicyOption>()
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options.get<aiplatform_v1::DatasetServicePollingPolicyOption>()
         ->clone();
   }
 

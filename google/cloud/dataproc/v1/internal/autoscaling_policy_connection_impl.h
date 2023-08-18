@@ -73,45 +73,23 @@ class AutoscalingPolicyServiceConnectionImpl
           request) override;
 
  private:
-  std::unique_ptr<dataproc_v1::AutoscalingPolicyServiceRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<dataproc_v1::AutoscalingPolicyServiceRetryPolicyOption>()) {
-      return options
-          .get<dataproc_v1::AutoscalingPolicyServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<dataproc_v1::AutoscalingPolicyServiceRetryPolicy>
+  retry_policy(Options const& options) {
+    return options
         .get<dataproc_v1::AutoscalingPolicyServiceRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<dataproc_v1::AutoscalingPolicyServiceBackoffPolicyOption>()) {
-      return options
-          .get<dataproc_v1::AutoscalingPolicyServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options
         .get<dataproc_v1::AutoscalingPolicyServiceBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<
+  static std::unique_ptr<
       dataproc_v1::AutoscalingPolicyServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            dataproc_v1::
-                AutoscalingPolicyServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<dataproc_v1::
-                   AutoscalingPolicyServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  idempotency_policy(Options const& options) {
+    return options
         .get<dataproc_v1::
                  AutoscalingPolicyServiceConnectionIdempotencyPolicyOption>()
         ->clone();

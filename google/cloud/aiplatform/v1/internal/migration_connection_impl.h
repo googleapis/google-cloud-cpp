@@ -63,48 +63,27 @@ class MigrationServiceConnectionImpl
           request) override;
 
  private:
-  std::unique_ptr<aiplatform_v1::MigrationServiceRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<aiplatform_v1::MigrationServiceRetryPolicyOption>()) {
-      return options.get<aiplatform_v1::MigrationServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<aiplatform_v1::MigrationServiceRetryPolicyOption>()
+  static std::unique_ptr<aiplatform_v1::MigrationServiceRetryPolicy>
+  retry_policy(Options const& options) {
+    return options.get<aiplatform_v1::MigrationServiceRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<aiplatform_v1::MigrationServiceBackoffPolicyOption>()) {
-      return options.get<aiplatform_v1::MigrationServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<aiplatform_v1::MigrationServiceBackoffPolicyOption>()
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<aiplatform_v1::MigrationServiceBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<aiplatform_v1::MigrationServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<aiplatform_v1::
-                        MigrationServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<aiplatform_v1::
-                   MigrationServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<
+      aiplatform_v1::MigrationServiceConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<aiplatform_v1::MigrationServiceConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<aiplatform_v1::MigrationServicePollingPolicyOption>()) {
-      return options.get<aiplatform_v1::MigrationServicePollingPolicyOption>()
-          ->clone();
-    }
-    return options_.get<aiplatform_v1::MigrationServicePollingPolicyOption>()
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options.get<aiplatform_v1::MigrationServicePollingPolicyOption>()
         ->clone();
   }
 

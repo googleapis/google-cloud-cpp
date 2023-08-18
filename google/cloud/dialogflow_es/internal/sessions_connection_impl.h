@@ -58,32 +58,18 @@ class SessionsConnectionImpl : public dialogflow_es::SessionsConnection {
   AsyncStreamingDetectIntent() override;
 
  private:
-  std::unique_ptr<dialogflow_es::SessionsRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<dialogflow_es::SessionsRetryPolicyOption>()) {
-      return options.get<dialogflow_es::SessionsRetryPolicyOption>()->clone();
-    }
-    return options_.get<dialogflow_es::SessionsRetryPolicyOption>()->clone();
+  static std::unique_ptr<dialogflow_es::SessionsRetryPolicy> retry_policy(
+      Options const& options) {
+    return options.get<dialogflow_es::SessionsRetryPolicyOption>()->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<dialogflow_es::SessionsBackoffPolicyOption>()) {
-      return options.get<dialogflow_es::SessionsBackoffPolicyOption>()->clone();
-    }
-    return options_.get<dialogflow_es::SessionsBackoffPolicyOption>()->clone();
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<dialogflow_es::SessionsBackoffPolicyOption>()->clone();
   }
 
-  std::unique_ptr<dialogflow_es::SessionsConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<dialogflow_es::SessionsConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<dialogflow_es::SessionsConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<dialogflow_es::SessionsConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<dialogflow_es::SessionsConnectionIdempotencyPolicyOption>()
         ->clone();
   }

@@ -63,37 +63,21 @@ class DiskTypesRestConnectionImpl
       override;
 
  private:
-  std::unique_ptr<compute_disk_types_v1::DiskTypesRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_disk_types_v1::DiskTypesRetryPolicyOption>()) {
-      return options.get<compute_disk_types_v1::DiskTypesRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<compute_disk_types_v1::DiskTypesRetryPolicyOption>()
+  static std::unique_ptr<compute_disk_types_v1::DiskTypesRetryPolicy>
+  retry_policy(Options const& options) {
+    return options.get<compute_disk_types_v1::DiskTypesRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_disk_types_v1::DiskTypesBackoffPolicyOption>()) {
-      return options.get<compute_disk_types_v1::DiskTypesBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<compute_disk_types_v1::DiskTypesBackoffPolicyOption>()
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<compute_disk_types_v1::DiskTypesBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<compute_disk_types_v1::DiskTypesConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_disk_types_v1::
-                        DiskTypesConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<compute_disk_types_v1::
-                   DiskTypesConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<
+      compute_disk_types_v1::DiskTypesConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<
             compute_disk_types_v1::DiskTypesConnectionIdempotencyPolicyOption>()
         ->clone();

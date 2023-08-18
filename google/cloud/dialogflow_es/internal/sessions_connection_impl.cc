@@ -40,9 +40,10 @@ SessionsConnectionImpl::SessionsConnectionImpl(
 StatusOr<google::cloud::dialogflow::v2::DetectIntentResponse>
 SessionsConnectionImpl::DetectIntent(
     google::cloud::dialogflow::v2::DetectIntentRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DetectIntent(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DetectIntent(request),
       [this](
           grpc::ClientContext& context,
           google::cloud::dialogflow::v2::DetectIntentRequest const& request) {

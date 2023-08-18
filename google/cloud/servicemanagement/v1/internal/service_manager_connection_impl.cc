@@ -44,17 +44,16 @@ StreamRange<google::api::servicemanagement::v1::ManagedService>
 ServiceManagerConnectionImpl::ListServices(
     google::api::servicemanagement::v1::ListServicesRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<servicemanagement_v1::ServiceManagerRetryPolicy const>(
-          retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListServices(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListServices(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::api::servicemanagement::v1::ManagedService>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<servicemanagement_v1::ServiceManagerRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::api::servicemanagement::v1::ListServicesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
@@ -76,9 +75,10 @@ ServiceManagerConnectionImpl::ListServices(
 StatusOr<google::api::servicemanagement::v1::ManagedService>
 ServiceManagerConnectionImpl::GetService(
     google::api::servicemanagement::v1::GetServiceRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetService(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetService(request),
       [this](grpc::ClientContext& context,
              google::api::servicemanagement::v1::GetServiceRequest const&
                  request) { return stub_->GetService(context, request); },
@@ -88,106 +88,113 @@ ServiceManagerConnectionImpl::GetService(
 future<StatusOr<google::api::servicemanagement::v1::ManagedService>>
 ServiceManagerConnectionImpl::CreateService(
     google::api::servicemanagement::v1::CreateServiceRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::api::servicemanagement::v1::ManagedService>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::api::servicemanagement::v1::CreateServiceRequest const&
-                 request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::api::servicemanagement::v1::CreateServiceRequest const&
+              request) {
         return stub->AsyncCreateService(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::api::servicemanagement::v1::ManagedService>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateService(request), polling_policy(), __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateService(request),
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::api::servicemanagement::v1::OperationMetadata>>
 ServiceManagerConnectionImpl::DeleteService(
     google::api::servicemanagement::v1::DeleteServiceRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::api::servicemanagement::v1::OperationMetadata>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::api::servicemanagement::v1::DeleteServiceRequest const&
-                 request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::api::servicemanagement::v1::DeleteServiceRequest const&
+              request) {
         return stub->AsyncDeleteService(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::api::servicemanagement::v1::OperationMetadata>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteService(request), polling_policy(), __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteService(request),
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::api::servicemanagement::v1::UndeleteServiceResponse>>
 ServiceManagerConnectionImpl::UndeleteService(
     google::api::servicemanagement::v1::UndeleteServiceRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::api::servicemanagement::v1::UndeleteServiceResponse>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::api::servicemanagement::v1::UndeleteServiceRequest const&
-                 request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::api::servicemanagement::v1::UndeleteServiceRequest const&
+              request) {
         return stub->AsyncUndeleteService(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::api::servicemanagement::v1::UndeleteServiceResponse>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UndeleteService(request), polling_policy(),
-      __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UndeleteService(request),
+      polling_policy(*current), __func__);
 }
 
 StreamRange<google::api::Service>
 ServiceManagerConnectionImpl::ListServiceConfigs(
     google::api::servicemanagement::v1::ListServiceConfigsRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<servicemanagement_v1::ServiceManagerRetryPolicy const>(
-          retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListServiceConfigs(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListServiceConfigs(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::api::Service>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<servicemanagement_v1::ServiceManagerRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::api::servicemanagement::v1::ListServiceConfigsRequest const&
               r) {
         return google::cloud::internal::RetryLoop(
@@ -210,9 +217,10 @@ ServiceManagerConnectionImpl::ListServiceConfigs(
 StatusOr<google::api::Service> ServiceManagerConnectionImpl::GetServiceConfig(
     google::api::servicemanagement::v1::GetServiceConfigRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetServiceConfig(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetServiceConfig(request),
       [this](grpc::ClientContext& context,
              google::api::servicemanagement::v1::GetServiceConfigRequest const&
                  request) { return stub_->GetServiceConfig(context, request); },
@@ -223,9 +231,10 @@ StatusOr<google::api::Service>
 ServiceManagerConnectionImpl::CreateServiceConfig(
     google::api::servicemanagement::v1::CreateServiceConfigRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateServiceConfig(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateServiceConfig(request),
       [this](
           grpc::ClientContext& context,
           google::api::servicemanagement::v1::CreateServiceConfigRequest const&
@@ -237,49 +246,49 @@ future<StatusOr<google::api::servicemanagement::v1::SubmitConfigSourceResponse>>
 ServiceManagerConnectionImpl::SubmitConfigSource(
     google::api::servicemanagement::v1::SubmitConfigSourceRequest const&
         request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::api::servicemanagement::v1::SubmitConfigSourceResponse>(
       background_->cq(), request,
-      [stub](
+      [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context,
           google::api::servicemanagement::v1::SubmitConfigSourceRequest const&
               request) {
         return stub->AsyncSubmitConfigSource(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::api::servicemanagement::v1::SubmitConfigSourceResponse>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->SubmitConfigSource(request), polling_policy(),
-      __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->SubmitConfigSource(request),
+      polling_policy(*current), __func__);
 }
 
 StreamRange<google::api::servicemanagement::v1::Rollout>
 ServiceManagerConnectionImpl::ListServiceRollouts(
     google::api::servicemanagement::v1::ListServiceRolloutsRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<servicemanagement_v1::ServiceManagerRetryPolicy const>(
-          retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListServiceRollouts(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListServiceRollouts(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::api::servicemanagement::v1::Rollout>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<servicemanagement_v1::ServiceManagerRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::api::servicemanagement::v1::ListServiceRolloutsRequest const&
               r) {
         return google::cloud::internal::RetryLoop(
@@ -304,9 +313,10 @@ StatusOr<google::api::servicemanagement::v1::Rollout>
 ServiceManagerConnectionImpl::GetServiceRollout(
     google::api::servicemanagement::v1::GetServiceRolloutRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetServiceRollout(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetServiceRollout(request),
       [this](grpc::ClientContext& context,
              google::api::servicemanagement::v1::GetServiceRolloutRequest const&
                  request) {
@@ -319,41 +329,43 @@ future<StatusOr<google::api::servicemanagement::v1::Rollout>>
 ServiceManagerConnectionImpl::CreateServiceRollout(
     google::api::servicemanagement::v1::CreateServiceRolloutRequest const&
         request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::api::servicemanagement::v1::Rollout>(
       background_->cq(), request,
-      [stub](
+      [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context,
           google::api::servicemanagement::v1::CreateServiceRolloutRequest const&
               request) {
         return stub->AsyncCreateServiceRollout(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::api::servicemanagement::v1::Rollout>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateServiceRollout(request), polling_policy(),
-      __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateServiceRollout(request),
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::api::servicemanagement::v1::GenerateConfigReportResponse>
 ServiceManagerConnectionImpl::GenerateConfigReport(
     google::api::servicemanagement::v1::GenerateConfigReportRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GenerateConfigReport(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GenerateConfigReport(request),
       [this](
           grpc::ClientContext& context,
           google::api::servicemanagement::v1::GenerateConfigReportRequest const&

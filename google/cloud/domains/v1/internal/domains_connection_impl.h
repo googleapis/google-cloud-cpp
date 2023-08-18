@@ -117,40 +117,23 @@ class DomainsConnectionImpl : public domains_v1::DomainsConnection {
       override;
 
  private:
-  std::unique_ptr<domains_v1::DomainsRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<domains_v1::DomainsRetryPolicyOption>()) {
-      return options.get<domains_v1::DomainsRetryPolicyOption>()->clone();
-    }
-    return options_.get<domains_v1::DomainsRetryPolicyOption>()->clone();
+  static std::unique_ptr<domains_v1::DomainsRetryPolicy> retry_policy(
+      Options const& options) {
+    return options.get<domains_v1::DomainsRetryPolicyOption>()->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<domains_v1::DomainsBackoffPolicyOption>()) {
-      return options.get<domains_v1::DomainsBackoffPolicyOption>()->clone();
-    }
-    return options_.get<domains_v1::DomainsBackoffPolicyOption>()->clone();
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<domains_v1::DomainsBackoffPolicyOption>()->clone();
   }
 
-  std::unique_ptr<domains_v1::DomainsConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<domains_v1::DomainsConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<domains_v1::DomainsConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_.get<domains_v1::DomainsConnectionIdempotencyPolicyOption>()
+  static std::unique_ptr<domains_v1::DomainsConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options.get<domains_v1::DomainsConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<domains_v1::DomainsPollingPolicyOption>()) {
-      return options.get<domains_v1::DomainsPollingPolicyOption>()->clone();
-    }
-    return options_.get<domains_v1::DomainsPollingPolicyOption>()->clone();
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options.get<domains_v1::DomainsPollingPolicyOption>()->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

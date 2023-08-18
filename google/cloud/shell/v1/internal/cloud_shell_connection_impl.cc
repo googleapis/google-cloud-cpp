@@ -42,9 +42,10 @@ CloudShellServiceConnectionImpl::CloudShellServiceConnectionImpl(
 StatusOr<google::cloud::shell::v1::Environment>
 CloudShellServiceConnectionImpl::GetEnvironment(
     google::cloud::shell::v1::GetEnvironmentRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetEnvironment(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetEnvironment(request),
       [this](grpc::ClientContext& context,
              google::cloud::shell::v1::GetEnvironmentRequest const& request) {
         return stub_->GetEnvironment(context, request);
@@ -55,117 +56,126 @@ CloudShellServiceConnectionImpl::GetEnvironment(
 future<StatusOr<google::cloud::shell::v1::StartEnvironmentResponse>>
 CloudShellServiceConnectionImpl::StartEnvironment(
     google::cloud::shell::v1::StartEnvironmentRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::shell::v1::StartEnvironmentResponse>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::shell::v1::StartEnvironmentRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::shell::v1::StartEnvironmentRequest const& request) {
         return stub->AsyncStartEnvironment(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::shell::v1::StartEnvironmentResponse>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->StartEnvironment(request), polling_policy(),
-      __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->StartEnvironment(request),
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::shell::v1::AuthorizeEnvironmentResponse>>
 CloudShellServiceConnectionImpl::AuthorizeEnvironment(
     google::cloud::shell::v1::AuthorizeEnvironmentRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::shell::v1::AuthorizeEnvironmentResponse>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::shell::v1::AuthorizeEnvironmentRequest const&
-                 request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::shell::v1::AuthorizeEnvironmentRequest const&
+              request) {
         return stub->AsyncAuthorizeEnvironment(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::shell::v1::AuthorizeEnvironmentResponse>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->AuthorizeEnvironment(request), polling_policy(),
-      __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->AuthorizeEnvironment(request),
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::shell::v1::AddPublicKeyResponse>>
 CloudShellServiceConnectionImpl::AddPublicKey(
     google::cloud::shell::v1::AddPublicKeyRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::shell::v1::AddPublicKeyResponse>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::shell::v1::AddPublicKeyRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::shell::v1::AddPublicKeyRequest const& request) {
         return stub->AsyncAddPublicKey(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::shell::v1::AddPublicKeyResponse>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->AddPublicKey(request), polling_policy(), __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->AddPublicKey(request),
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::shell::v1::RemovePublicKeyResponse>>
 CloudShellServiceConnectionImpl::RemovePublicKey(
     google::cloud::shell::v1::RemovePublicKeyRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::shell::v1::RemovePublicKeyResponse>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::shell::v1::RemovePublicKeyRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::shell::v1::RemovePublicKeyRequest const& request) {
         return stub->AsyncRemovePublicKey(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::shell::v1::RemovePublicKeyResponse>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->RemovePublicKey(request), polling_policy(),
-      __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->RemovePublicKey(request),
+      polling_policy(*current), __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

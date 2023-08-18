@@ -85,64 +85,33 @@ class TargetHttpProxiesRestConnectionImpl
           SetUrlMapRequest const& request) override;
 
  private:
-  std::unique_ptr<compute_target_http_proxies_v1::TargetHttpProxiesRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_target_http_proxies_v1::
-                        TargetHttpProxiesRetryPolicyOption>()) {
-      return options
-          .get<compute_target_http_proxies_v1::
-                   TargetHttpProxiesRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<
+      compute_target_http_proxies_v1::TargetHttpProxiesRetryPolicy>
+  retry_policy(Options const& options) {
+    return options
         .get<compute_target_http_proxies_v1::
                  TargetHttpProxiesRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_target_http_proxies_v1::
-                        TargetHttpProxiesBackoffPolicyOption>()) {
-      return options
-          .get<compute_target_http_proxies_v1::
-                   TargetHttpProxiesBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options
         .get<compute_target_http_proxies_v1::
                  TargetHttpProxiesBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<compute_target_http_proxies_v1::
-                      TargetHttpProxiesConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_target_http_proxies_v1::
-                        TargetHttpProxiesConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<compute_target_http_proxies_v1::
-                   TargetHttpProxiesConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<compute_target_http_proxies_v1::
+                             TargetHttpProxiesConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<compute_target_http_proxies_v1::
                  TargetHttpProxiesConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_target_http_proxies_v1::
-                        TargetHttpProxiesPollingPolicyOption>()) {
-      return options
-          .get<compute_target_http_proxies_v1::
-                   TargetHttpProxiesPollingPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options
         .get<compute_target_http_proxies_v1::
                  TargetHttpProxiesPollingPolicyOption>()
         ->clone();

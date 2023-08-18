@@ -85,48 +85,27 @@ class EndpointServiceConnectionImpl
       override;
 
  private:
-  std::unique_ptr<aiplatform_v1::EndpointServiceRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<aiplatform_v1::EndpointServiceRetryPolicyOption>()) {
-      return options.get<aiplatform_v1::EndpointServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<aiplatform_v1::EndpointServiceRetryPolicyOption>()
+  static std::unique_ptr<aiplatform_v1::EndpointServiceRetryPolicy>
+  retry_policy(Options const& options) {
+    return options.get<aiplatform_v1::EndpointServiceRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<aiplatform_v1::EndpointServiceBackoffPolicyOption>()) {
-      return options.get<aiplatform_v1::EndpointServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<aiplatform_v1::EndpointServiceBackoffPolicyOption>()
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<aiplatform_v1::EndpointServiceBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<aiplatform_v1::EndpointServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<aiplatform_v1::
-                        EndpointServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<
-              aiplatform_v1::EndpointServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<
+      aiplatform_v1::EndpointServiceConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<aiplatform_v1::EndpointServiceConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<aiplatform_v1::EndpointServicePollingPolicyOption>()) {
-      return options.get<aiplatform_v1::EndpointServicePollingPolicyOption>()
-          ->clone();
-    }
-    return options_.get<aiplatform_v1::EndpointServicePollingPolicyOption>()
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options.get<aiplatform_v1::EndpointServicePollingPolicyOption>()
         ->clone();
   }
 

@@ -79,61 +79,31 @@ class GlobalAddressesRestConnectionImpl
           request) override;
 
  private:
-  std::unique_ptr<compute_global_addresses_v1::GlobalAddressesRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            compute_global_addresses_v1::GlobalAddressesRetryPolicyOption>()) {
-      return options
-          .get<compute_global_addresses_v1::GlobalAddressesRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<
+      compute_global_addresses_v1::GlobalAddressesRetryPolicy>
+  retry_policy(Options const& options) {
+    return options
         .get<compute_global_addresses_v1::GlobalAddressesRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_global_addresses_v1::
-                        GlobalAddressesBackoffPolicyOption>()) {
-      return options
-          .get<
-              compute_global_addresses_v1::GlobalAddressesBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options
         .get<compute_global_addresses_v1::GlobalAddressesBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<
+  static std::unique_ptr<
       compute_global_addresses_v1::GlobalAddressesConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_global_addresses_v1::
-                        GlobalAddressesConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<compute_global_addresses_v1::
-                   GlobalAddressesConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  idempotency_policy(Options const& options) {
+    return options
         .get<compute_global_addresses_v1::
                  GlobalAddressesConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_global_addresses_v1::
-                        GlobalAddressesPollingPolicyOption>()) {
-      return options
-          .get<
-              compute_global_addresses_v1::GlobalAddressesPollingPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options
         .get<compute_global_addresses_v1::GlobalAddressesPollingPolicyOption>()
         ->clone();
   }

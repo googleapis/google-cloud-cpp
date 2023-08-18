@@ -129,63 +129,32 @@ class FirewallPoliciesRestConnectionImpl
                          TestIamPermissionsRequest const& request) override;
 
  private:
-  std::unique_ptr<compute_firewall_policies_v1::FirewallPoliciesRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_firewall_policies_v1::
-                        FirewallPoliciesRetryPolicyOption>()) {
-      return options
-          .get<
-              compute_firewall_policies_v1::FirewallPoliciesRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<
+      compute_firewall_policies_v1::FirewallPoliciesRetryPolicy>
+  retry_policy(Options const& options) {
+    return options
         .get<compute_firewall_policies_v1::FirewallPoliciesRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_firewall_policies_v1::
-                        FirewallPoliciesBackoffPolicyOption>()) {
-      return options
-          .get<compute_firewall_policies_v1::
-                   FirewallPoliciesBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options
         .get<
             compute_firewall_policies_v1::FirewallPoliciesBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<
+  static std::unique_ptr<
       compute_firewall_policies_v1::FirewallPoliciesConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_firewall_policies_v1::
-                        FirewallPoliciesConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<compute_firewall_policies_v1::
-                   FirewallPoliciesConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  idempotency_policy(Options const& options) {
+    return options
         .get<compute_firewall_policies_v1::
                  FirewallPoliciesConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_firewall_policies_v1::
-                        FirewallPoliciesPollingPolicyOption>()) {
-      return options
-          .get<compute_firewall_policies_v1::
-                   FirewallPoliciesPollingPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options
         .get<
             compute_firewall_policies_v1::FirewallPoliciesPollingPolicyOption>()
         ->clone();

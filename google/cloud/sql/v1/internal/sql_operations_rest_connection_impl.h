@@ -59,36 +59,21 @@ class SqlOperationsServiceRestConnectionImpl
                     request) override;
 
  private:
-  std::unique_ptr<sql_v1::SqlOperationsServiceRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<sql_v1::SqlOperationsServiceRetryPolicyOption>()) {
-      return options.get<sql_v1::SqlOperationsServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<sql_v1::SqlOperationsServiceRetryPolicyOption>()
+  static std::unique_ptr<sql_v1::SqlOperationsServiceRetryPolicy> retry_policy(
+      Options const& options) {
+    return options.get<sql_v1::SqlOperationsServiceRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<sql_v1::SqlOperationsServiceBackoffPolicyOption>()) {
-      return options.get<sql_v1::SqlOperationsServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<sql_v1::SqlOperationsServiceBackoffPolicyOption>()
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<sql_v1::SqlOperationsServiceBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<sql_v1::SqlOperationsServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            sql_v1::SqlOperationsServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<sql_v1::SqlOperationsServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<
+      sql_v1::SqlOperationsServiceConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<sql_v1::SqlOperationsServiceConnectionIdempotencyPolicyOption>()
         ->clone();
   }

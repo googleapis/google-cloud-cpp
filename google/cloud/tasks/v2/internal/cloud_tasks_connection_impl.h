@@ -96,32 +96,18 @@ class CloudTasksConnectionImpl : public tasks_v2::CloudTasksConnection {
       google::cloud::tasks::v2::RunTaskRequest const& request) override;
 
  private:
-  std::unique_ptr<tasks_v2::CloudTasksRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<tasks_v2::CloudTasksRetryPolicyOption>()) {
-      return options.get<tasks_v2::CloudTasksRetryPolicyOption>()->clone();
-    }
-    return options_.get<tasks_v2::CloudTasksRetryPolicyOption>()->clone();
+  static std::unique_ptr<tasks_v2::CloudTasksRetryPolicy> retry_policy(
+      Options const& options) {
+    return options.get<tasks_v2::CloudTasksRetryPolicyOption>()->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<tasks_v2::CloudTasksBackoffPolicyOption>()) {
-      return options.get<tasks_v2::CloudTasksBackoffPolicyOption>()->clone();
-    }
-    return options_.get<tasks_v2::CloudTasksBackoffPolicyOption>()->clone();
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<tasks_v2::CloudTasksBackoffPolicyOption>()->clone();
   }
 
-  std::unique_ptr<tasks_v2::CloudTasksConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<tasks_v2::CloudTasksConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<tasks_v2::CloudTasksConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<tasks_v2::CloudTasksConnectionIdempotencyPolicyOption>()
+  static std::unique_ptr<tasks_v2::CloudTasksConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options.get<tasks_v2::CloudTasksConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 

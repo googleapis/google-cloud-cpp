@@ -42,9 +42,10 @@ ConversationsConnectionImpl::ConversationsConnectionImpl(
 StatusOr<google::cloud::dialogflow::v2::Conversation>
 ConversationsConnectionImpl::CreateConversation(
     google::cloud::dialogflow::v2::CreateConversationRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateConversation(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateConversation(request),
       [this](grpc::ClientContext& context,
              google::cloud::dialogflow::v2::CreateConversationRequest const&
                  request) {
@@ -57,16 +58,16 @@ StreamRange<google::cloud::dialogflow::v2::Conversation>
 ConversationsConnectionImpl::ListConversations(
     google::cloud::dialogflow::v2::ListConversationsRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<dialogflow_es::ConversationsRetryPolicy const>(
-      retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListConversations(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListConversations(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::dialogflow::v2::Conversation>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<dialogflow_es::ConversationsRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::dialogflow::v2::ListConversationsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
@@ -90,9 +91,10 @@ ConversationsConnectionImpl::ListConversations(
 StatusOr<google::cloud::dialogflow::v2::Conversation>
 ConversationsConnectionImpl::GetConversation(
     google::cloud::dialogflow::v2::GetConversationRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetConversation(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetConversation(request),
       [this](grpc::ClientContext& context,
              google::cloud::dialogflow::v2::GetConversationRequest const&
                  request) { return stub_->GetConversation(context, request); },
@@ -102,9 +104,10 @@ ConversationsConnectionImpl::GetConversation(
 StatusOr<google::cloud::dialogflow::v2::Conversation>
 ConversationsConnectionImpl::CompleteConversation(
     google::cloud::dialogflow::v2::CompleteConversationRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CompleteConversation(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CompleteConversation(request),
       [this](grpc::ClientContext& context,
              google::cloud::dialogflow::v2::CompleteConversationRequest const&
                  request) {
@@ -117,16 +120,16 @@ StreamRange<google::cloud::dialogflow::v2::Message>
 ConversationsConnectionImpl::ListMessages(
     google::cloud::dialogflow::v2::ListMessagesRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<dialogflow_es::ConversationsRetryPolicy const>(
-      retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListMessages(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListMessages(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::dialogflow::v2::Message>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<dialogflow_es::ConversationsRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::dialogflow::v2::ListMessagesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
@@ -150,9 +153,10 @@ StatusOr<google::cloud::dialogflow::v2::SuggestConversationSummaryResponse>
 ConversationsConnectionImpl::SuggestConversationSummary(
     google::cloud::dialogflow::v2::SuggestConversationSummaryRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->SuggestConversationSummary(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->SuggestConversationSummary(request),
       [this](grpc::ClientContext& context,
              google::cloud::dialogflow::v2::
                  SuggestConversationSummaryRequest const& request) {
@@ -165,9 +169,10 @@ StatusOr<google::cloud::dialogflow::v2::GenerateStatelessSummaryResponse>
 ConversationsConnectionImpl::GenerateStatelessSummary(
     google::cloud::dialogflow::v2::GenerateStatelessSummaryRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GenerateStatelessSummary(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GenerateStatelessSummary(request),
       [this](
           grpc::ClientContext& context,
           google::cloud::dialogflow::v2::GenerateStatelessSummaryRequest const&

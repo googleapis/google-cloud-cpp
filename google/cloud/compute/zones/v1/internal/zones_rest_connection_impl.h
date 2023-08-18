@@ -57,32 +57,18 @@ class ZonesRestConnectionImpl : public compute_zones_v1::ZonesConnection {
       override;
 
  private:
-  std::unique_ptr<compute_zones_v1::ZonesRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_zones_v1::ZonesRetryPolicyOption>()) {
-      return options.get<compute_zones_v1::ZonesRetryPolicyOption>()->clone();
-    }
-    return options_.get<compute_zones_v1::ZonesRetryPolicyOption>()->clone();
+  static std::unique_ptr<compute_zones_v1::ZonesRetryPolicy> retry_policy(
+      Options const& options) {
+    return options.get<compute_zones_v1::ZonesRetryPolicyOption>()->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_zones_v1::ZonesBackoffPolicyOption>()) {
-      return options.get<compute_zones_v1::ZonesBackoffPolicyOption>()->clone();
-    }
-    return options_.get<compute_zones_v1::ZonesBackoffPolicyOption>()->clone();
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<compute_zones_v1::ZonesBackoffPolicyOption>()->clone();
   }
 
-  std::unique_ptr<compute_zones_v1::ZonesConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<compute_zones_v1::ZonesConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<compute_zones_v1::ZonesConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<compute_zones_v1::ZonesConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<compute_zones_v1::ZonesConnectionIdempotencyPolicyOption>()
         ->clone();
   }

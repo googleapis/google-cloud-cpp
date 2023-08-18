@@ -61,35 +61,19 @@ class SqlSslCertsServiceRestConnectionImpl
       google::cloud::sql::v1::SqlSslCertsListRequest const& request) override;
 
  private:
-  std::unique_ptr<sql_v1::SqlSslCertsServiceRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<sql_v1::SqlSslCertsServiceRetryPolicyOption>()) {
-      return options.get<sql_v1::SqlSslCertsServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<sql_v1::SqlSslCertsServiceRetryPolicyOption>()->clone();
+  static std::unique_ptr<sql_v1::SqlSslCertsServiceRetryPolicy> retry_policy(
+      Options const& options) {
+    return options.get<sql_v1::SqlSslCertsServiceRetryPolicyOption>()->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<sql_v1::SqlSslCertsServiceBackoffPolicyOption>()) {
-      return options.get<sql_v1::SqlSslCertsServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<sql_v1::SqlSslCertsServiceBackoffPolicyOption>()
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<sql_v1::SqlSslCertsServiceBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<sql_v1::SqlSslCertsServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            sql_v1::SqlSslCertsServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<sql_v1::SqlSslCertsServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<sql_v1::SqlSslCertsServiceConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<sql_v1::SqlSslCertsServiceConnectionIdempotencyPolicyOption>()
         ->clone();
   }

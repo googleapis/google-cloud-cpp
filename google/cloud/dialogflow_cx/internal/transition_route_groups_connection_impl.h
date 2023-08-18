@@ -74,45 +74,22 @@ class TransitionRouteGroupsConnectionImpl
           DeleteTransitionRouteGroupRequest const& request) override;
 
  private:
-  std::unique_ptr<dialogflow_cx::TransitionRouteGroupsRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<dialogflow_cx::TransitionRouteGroupsRetryPolicyOption>()) {
-      return options
-          .get<dialogflow_cx::TransitionRouteGroupsRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<dialogflow_cx::TransitionRouteGroupsRetryPolicyOption>()
+  static std::unique_ptr<dialogflow_cx::TransitionRouteGroupsRetryPolicy>
+  retry_policy(Options const& options) {
+    return options.get<dialogflow_cx::TransitionRouteGroupsRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<dialogflow_cx::TransitionRouteGroupsBackoffPolicyOption>()) {
-      return options
-          .get<dialogflow_cx::TransitionRouteGroupsBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options
         .get<dialogflow_cx::TransitionRouteGroupsBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<
+  static std::unique_ptr<
       dialogflow_cx::TransitionRouteGroupsConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            dialogflow_cx::
-                TransitionRouteGroupsConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<dialogflow_cx::
-                   TransitionRouteGroupsConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  idempotency_policy(Options const& options) {
+    return options
         .get<dialogflow_cx::
                  TransitionRouteGroupsConnectionIdempotencyPolicyOption>()
         ->clone();

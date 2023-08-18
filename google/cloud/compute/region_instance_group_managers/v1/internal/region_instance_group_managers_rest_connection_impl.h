@@ -145,67 +145,34 @@ class RegionInstanceGroupManagersRestConnectionImpl
           UpdatePerInstanceConfigsRequest const& request) override;
 
  private:
-  std::unique_ptr<compute_region_instance_group_managers_v1::
-                      RegionInstanceGroupManagersRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_region_instance_group_managers_v1::
-                        RegionInstanceGroupManagersRetryPolicyOption>()) {
-      return options
-          .get<compute_region_instance_group_managers_v1::
-                   RegionInstanceGroupManagersRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<compute_region_instance_group_managers_v1::
+                             RegionInstanceGroupManagersRetryPolicy>
+  retry_policy(Options const& options) {
+    return options
         .get<compute_region_instance_group_managers_v1::
                  RegionInstanceGroupManagersRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_region_instance_group_managers_v1::
-                        RegionInstanceGroupManagersBackoffPolicyOption>()) {
-      return options
-          .get<compute_region_instance_group_managers_v1::
-                   RegionInstanceGroupManagersBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options
         .get<compute_region_instance_group_managers_v1::
                  RegionInstanceGroupManagersBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<compute_region_instance_group_managers_v1::
-                      RegionInstanceGroupManagersConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            compute_region_instance_group_managers_v1::
-                RegionInstanceGroupManagersConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<
-              compute_region_instance_group_managers_v1::
-                  RegionInstanceGroupManagersConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<
+      compute_region_instance_group_managers_v1::
+          RegionInstanceGroupManagersConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<compute_region_instance_group_managers_v1::
                  RegionInstanceGroupManagersConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_region_instance_group_managers_v1::
-                        RegionInstanceGroupManagersPollingPolicyOption>()) {
-      return options
-          .get<compute_region_instance_group_managers_v1::
-                   RegionInstanceGroupManagersPollingPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options
         .get<compute_region_instance_group_managers_v1::
                  RegionInstanceGroupManagersPollingPolicyOption>()
         ->clone();

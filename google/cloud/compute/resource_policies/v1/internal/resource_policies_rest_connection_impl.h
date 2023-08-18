@@ -93,63 +93,32 @@ class ResourcePoliciesRestConnectionImpl
                          TestIamPermissionsRequest const& request) override;
 
  private:
-  std::unique_ptr<compute_resource_policies_v1::ResourcePoliciesRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_resource_policies_v1::
-                        ResourcePoliciesRetryPolicyOption>()) {
-      return options
-          .get<
-              compute_resource_policies_v1::ResourcePoliciesRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<
+      compute_resource_policies_v1::ResourcePoliciesRetryPolicy>
+  retry_policy(Options const& options) {
+    return options
         .get<compute_resource_policies_v1::ResourcePoliciesRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_resource_policies_v1::
-                        ResourcePoliciesBackoffPolicyOption>()) {
-      return options
-          .get<compute_resource_policies_v1::
-                   ResourcePoliciesBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options
         .get<
             compute_resource_policies_v1::ResourcePoliciesBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<
+  static std::unique_ptr<
       compute_resource_policies_v1::ResourcePoliciesConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_resource_policies_v1::
-                        ResourcePoliciesConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<compute_resource_policies_v1::
-                   ResourcePoliciesConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  idempotency_policy(Options const& options) {
+    return options
         .get<compute_resource_policies_v1::
                  ResourcePoliciesConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_resource_policies_v1::
-                        ResourcePoliciesPollingPolicyOption>()) {
-      return options
-          .get<compute_resource_policies_v1::
-                   ResourcePoliciesPollingPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options
         .get<
             compute_resource_policies_v1::ResourcePoliciesPollingPolicyOption>()
         ->clone();

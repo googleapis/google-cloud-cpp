@@ -41,9 +41,10 @@ OsLoginServiceConnectionImpl::OsLoginServiceConnectionImpl(
 StatusOr<google::cloud::oslogin::common::SshPublicKey>
 OsLoginServiceConnectionImpl::CreateSshPublicKey(
     google::cloud::oslogin::v1::CreateSshPublicKeyRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateSshPublicKey(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateSshPublicKey(request),
       [this](grpc::ClientContext& context,
              google::cloud::oslogin::v1::CreateSshPublicKeyRequest const&
                  request) {
@@ -54,9 +55,10 @@ OsLoginServiceConnectionImpl::CreateSshPublicKey(
 
 Status OsLoginServiceConnectionImpl::DeletePosixAccount(
     google::cloud::oslogin::v1::DeletePosixAccountRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeletePosixAccount(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeletePosixAccount(request),
       [this](grpc::ClientContext& context,
              google::cloud::oslogin::v1::DeletePosixAccountRequest const&
                  request) {
@@ -67,9 +69,10 @@ Status OsLoginServiceConnectionImpl::DeletePosixAccount(
 
 Status OsLoginServiceConnectionImpl::DeleteSshPublicKey(
     google::cloud::oslogin::v1::DeleteSshPublicKeyRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteSshPublicKey(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteSshPublicKey(request),
       [this](grpc::ClientContext& context,
              google::cloud::oslogin::v1::DeleteSshPublicKeyRequest const&
                  request) {
@@ -81,9 +84,10 @@ Status OsLoginServiceConnectionImpl::DeleteSshPublicKey(
 StatusOr<google::cloud::oslogin::v1::LoginProfile>
 OsLoginServiceConnectionImpl::GetLoginProfile(
     google::cloud::oslogin::v1::GetLoginProfileRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetLoginProfile(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetLoginProfile(request),
       [this](
           grpc::ClientContext& context,
           google::cloud::oslogin::v1::GetLoginProfileRequest const& request) {
@@ -95,9 +99,10 @@ OsLoginServiceConnectionImpl::GetLoginProfile(
 StatusOr<google::cloud::oslogin::common::SshPublicKey>
 OsLoginServiceConnectionImpl::GetSshPublicKey(
     google::cloud::oslogin::v1::GetSshPublicKeyRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetSshPublicKey(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetSshPublicKey(request),
       [this](
           grpc::ClientContext& context,
           google::cloud::oslogin::v1::GetSshPublicKeyRequest const& request) {
@@ -109,9 +114,10 @@ OsLoginServiceConnectionImpl::GetSshPublicKey(
 StatusOr<google::cloud::oslogin::v1::ImportSshPublicKeyResponse>
 OsLoginServiceConnectionImpl::ImportSshPublicKey(
     google::cloud::oslogin::v1::ImportSshPublicKeyRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->ImportSshPublicKey(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ImportSshPublicKey(request),
       [this](grpc::ClientContext& context,
              google::cloud::oslogin::v1::ImportSshPublicKeyRequest const&
                  request) {
@@ -123,9 +129,10 @@ OsLoginServiceConnectionImpl::ImportSshPublicKey(
 StatusOr<google::cloud::oslogin::common::SshPublicKey>
 OsLoginServiceConnectionImpl::UpdateSshPublicKey(
     google::cloud::oslogin::v1::UpdateSshPublicKeyRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UpdateSshPublicKey(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateSshPublicKey(request),
       [this](grpc::ClientContext& context,
              google::cloud::oslogin::v1::UpdateSshPublicKeyRequest const&
                  request) {

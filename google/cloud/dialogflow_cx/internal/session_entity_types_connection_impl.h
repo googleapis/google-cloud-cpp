@@ -74,39 +74,21 @@ class SessionEntityTypesConnectionImpl
           request) override;
 
  private:
-  std::unique_ptr<dialogflow_cx::SessionEntityTypesRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<dialogflow_cx::SessionEntityTypesRetryPolicyOption>()) {
-      return options.get<dialogflow_cx::SessionEntityTypesRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<dialogflow_cx::SessionEntityTypesRetryPolicyOption>()
+  static std::unique_ptr<dialogflow_cx::SessionEntityTypesRetryPolicy>
+  retry_policy(Options const& options) {
+    return options.get<dialogflow_cx::SessionEntityTypesRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<dialogflow_cx::SessionEntityTypesBackoffPolicyOption>()) {
-      return options
-          .get<dialogflow_cx::SessionEntityTypesBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<dialogflow_cx::SessionEntityTypesBackoffPolicyOption>()
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<dialogflow_cx::SessionEntityTypesBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<dialogflow_cx::SessionEntityTypesConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<dialogflow_cx::
-                     SessionEntityTypesConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<dialogflow_cx::
-                   SessionEntityTypesConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<
+      dialogflow_cx::SessionEntityTypesConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<dialogflow_cx::
                  SessionEntityTypesConnectionIdempotencyPolicyOption>()
         ->clone();

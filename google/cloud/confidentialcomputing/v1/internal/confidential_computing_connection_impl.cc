@@ -44,9 +44,10 @@ StatusOr<google::cloud::confidentialcomputing::v1::Challenge>
 ConfidentialComputingConnectionImpl::CreateChallenge(
     google::cloud::confidentialcomputing::v1::CreateChallengeRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateChallenge(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateChallenge(request),
       [this](grpc::ClientContext& context,
              google::cloud::confidentialcomputing::v1::
                  CreateChallengeRequest const& request) {
@@ -59,9 +60,10 @@ StatusOr<google::cloud::confidentialcomputing::v1::VerifyAttestationResponse>
 ConfidentialComputingConnectionImpl::VerifyAttestation(
     google::cloud::confidentialcomputing::v1::VerifyAttestationRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->VerifyAttestation(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->VerifyAttestation(request),
       [this](grpc::ClientContext& context,
              google::cloud::confidentialcomputing::v1::
                  VerifyAttestationRequest const& request) {

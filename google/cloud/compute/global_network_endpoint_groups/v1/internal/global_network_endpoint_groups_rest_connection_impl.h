@@ -90,67 +90,34 @@ class GlobalNetworkEndpointGroupsRestConnectionImpl
           ListNetworkEndpointsRequest request) override;
 
  private:
-  std::unique_ptr<compute_global_network_endpoint_groups_v1::
-                      GlobalNetworkEndpointGroupsRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_global_network_endpoint_groups_v1::
-                        GlobalNetworkEndpointGroupsRetryPolicyOption>()) {
-      return options
-          .get<compute_global_network_endpoint_groups_v1::
-                   GlobalNetworkEndpointGroupsRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<compute_global_network_endpoint_groups_v1::
+                             GlobalNetworkEndpointGroupsRetryPolicy>
+  retry_policy(Options const& options) {
+    return options
         .get<compute_global_network_endpoint_groups_v1::
                  GlobalNetworkEndpointGroupsRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_global_network_endpoint_groups_v1::
-                        GlobalNetworkEndpointGroupsBackoffPolicyOption>()) {
-      return options
-          .get<compute_global_network_endpoint_groups_v1::
-                   GlobalNetworkEndpointGroupsBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options
         .get<compute_global_network_endpoint_groups_v1::
                  GlobalNetworkEndpointGroupsBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<compute_global_network_endpoint_groups_v1::
-                      GlobalNetworkEndpointGroupsConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            compute_global_network_endpoint_groups_v1::
-                GlobalNetworkEndpointGroupsConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<
-              compute_global_network_endpoint_groups_v1::
-                  GlobalNetworkEndpointGroupsConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<
+      compute_global_network_endpoint_groups_v1::
+          GlobalNetworkEndpointGroupsConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<compute_global_network_endpoint_groups_v1::
                  GlobalNetworkEndpointGroupsConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_global_network_endpoint_groups_v1::
-                        GlobalNetworkEndpointGroupsPollingPolicyOption>()) {
-      return options
-          .get<compute_global_network_endpoint_groups_v1::
-                   GlobalNetworkEndpointGroupsPollingPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options
         .get<compute_global_network_endpoint_groups_v1::
                  GlobalNetworkEndpointGroupsPollingPolicyOption>()
         ->clone();

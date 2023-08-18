@@ -68,48 +68,25 @@ class RegionOperationsRestConnectionImpl
           request) override;
 
  private:
-  std::unique_ptr<compute_region_operations_v1::RegionOperationsRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_region_operations_v1::
-                        RegionOperationsRetryPolicyOption>()) {
-      return options
-          .get<
-              compute_region_operations_v1::RegionOperationsRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<
+      compute_region_operations_v1::RegionOperationsRetryPolicy>
+  retry_policy(Options const& options) {
+    return options
         .get<compute_region_operations_v1::RegionOperationsRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_region_operations_v1::
-                        RegionOperationsBackoffPolicyOption>()) {
-      return options
-          .get<compute_region_operations_v1::
-                   RegionOperationsBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options
         .get<
             compute_region_operations_v1::RegionOperationsBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<
+  static std::unique_ptr<
       compute_region_operations_v1::RegionOperationsConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_region_operations_v1::
-                        RegionOperationsConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<compute_region_operations_v1::
-                   RegionOperationsConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  idempotency_policy(Options const& options) {
+    return options
         .get<compute_region_operations_v1::
                  RegionOperationsConnectionIdempotencyPolicyOption>()
         ->clone();

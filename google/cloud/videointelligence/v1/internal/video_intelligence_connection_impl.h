@@ -59,64 +59,32 @@ class VideoIntelligenceServiceConnectionImpl
       override;
 
  private:
-  std::unique_ptr<videointelligence_v1::VideoIntelligenceServiceRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<videointelligence_v1::
-                        VideoIntelligenceServiceRetryPolicyOption>()) {
-      return options
-          .get<
-              videointelligence_v1::VideoIntelligenceServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<
+      videointelligence_v1::VideoIntelligenceServiceRetryPolicy>
+  retry_policy(Options const& options) {
+    return options
         .get<videointelligence_v1::VideoIntelligenceServiceRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<videointelligence_v1::
-                        VideoIntelligenceServiceBackoffPolicyOption>()) {
-      return options
-          .get<videointelligence_v1::
-                   VideoIntelligenceServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options
         .get<
             videointelligence_v1::VideoIntelligenceServiceBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<
+  static std::unique_ptr<
       videointelligence_v1::VideoIntelligenceServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            videointelligence_v1::
-                VideoIntelligenceServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<videointelligence_v1::
-                   VideoIntelligenceServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  idempotency_policy(Options const& options) {
+    return options
         .get<videointelligence_v1::
                  VideoIntelligenceServiceConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<videointelligence_v1::
-                        VideoIntelligenceServicePollingPolicyOption>()) {
-      return options
-          .get<videointelligence_v1::
-                   VideoIntelligenceServicePollingPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options
         .get<
             videointelligence_v1::VideoIntelligenceServicePollingPolicyOption>()
         ->clone();

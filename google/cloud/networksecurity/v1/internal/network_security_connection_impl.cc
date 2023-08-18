@@ -45,19 +45,19 @@ NetworkSecurityConnectionImpl::ListAuthorizationPolicies(
     google::cloud::networksecurity::v1::ListAuthorizationPoliciesRequest
         request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<networksecurity_v1::NetworkSecurityRetryPolicy const>(
-          retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListAuthorizationPolicies(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency =
+      idempotency_policy(*current)->ListAuthorizationPolicies(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::networksecurity::v1::AuthorizationPolicy>>(
       std::move(request),
-      [stub, retry, backoff, idempotency,
-       function_name](google::cloud::networksecurity::v1::
-                          ListAuthorizationPoliciesRequest const& r) {
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<networksecurity_v1::NetworkSecurityRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          google::cloud::networksecurity::v1::
+              ListAuthorizationPoliciesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context,
@@ -81,9 +81,10 @@ StatusOr<google::cloud::networksecurity::v1::AuthorizationPolicy>
 NetworkSecurityConnectionImpl::GetAuthorizationPolicy(
     google::cloud::networksecurity::v1::GetAuthorizationPolicyRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetAuthorizationPolicy(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetAuthorizationPolicy(request),
       [this](grpc::ClientContext& context,
              google::cloud::networksecurity::v1::
                  GetAuthorizationPolicyRequest const& request) {
@@ -96,115 +97,118 @@ future<StatusOr<google::cloud::networksecurity::v1::AuthorizationPolicy>>
 NetworkSecurityConnectionImpl::CreateAuthorizationPolicy(
     google::cloud::networksecurity::v1::CreateAuthorizationPolicyRequest const&
         request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::networksecurity::v1::AuthorizationPolicy>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::networksecurity::v1::
-                 CreateAuthorizationPolicyRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::networksecurity::v1::
+                         CreateAuthorizationPolicyRequest const& request) {
         return stub->AsyncCreateAuthorizationPolicy(cq, std::move(context),
                                                     request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::networksecurity::v1::AuthorizationPolicy>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateAuthorizationPolicy(request),
-      polling_policy(), __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateAuthorizationPolicy(request),
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::networksecurity::v1::AuthorizationPolicy>>
 NetworkSecurityConnectionImpl::UpdateAuthorizationPolicy(
     google::cloud::networksecurity::v1::UpdateAuthorizationPolicyRequest const&
         request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::networksecurity::v1::AuthorizationPolicy>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::networksecurity::v1::
-                 UpdateAuthorizationPolicyRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::networksecurity::v1::
+                         UpdateAuthorizationPolicyRequest const& request) {
         return stub->AsyncUpdateAuthorizationPolicy(cq, std::move(context),
                                                     request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::networksecurity::v1::AuthorizationPolicy>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UpdateAuthorizationPolicy(request),
-      polling_policy(), __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateAuthorizationPolicy(request),
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>
 NetworkSecurityConnectionImpl::DeleteAuthorizationPolicy(
     google::cloud::networksecurity::v1::DeleteAuthorizationPolicyRequest const&
         request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::networksecurity::v1::OperationMetadata>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::networksecurity::v1::
-                 DeleteAuthorizationPolicyRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::networksecurity::v1::
+                         DeleteAuthorizationPolicyRequest const& request) {
         return stub->AsyncDeleteAuthorizationPolicy(cq, std::move(context),
                                                     request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::networksecurity::v1::OperationMetadata>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteAuthorizationPolicy(request),
-      polling_policy(), __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteAuthorizationPolicy(request),
+      polling_policy(*current), __func__);
 }
 
 StreamRange<google::cloud::networksecurity::v1::ServerTlsPolicy>
 NetworkSecurityConnectionImpl::ListServerTlsPolicies(
     google::cloud::networksecurity::v1::ListServerTlsPoliciesRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<networksecurity_v1::NetworkSecurityRetryPolicy const>(
-          retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListServerTlsPolicies(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency =
+      idempotency_policy(*current)->ListServerTlsPolicies(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::networksecurity::v1::ServerTlsPolicy>>(
       std::move(request),
-      [stub, retry, backoff, idempotency,
-       function_name](google::cloud::networksecurity::v1::
-                          ListServerTlsPoliciesRequest const& r) {
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<networksecurity_v1::NetworkSecurityRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          google::cloud::networksecurity::v1::
+              ListServerTlsPoliciesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context,
@@ -227,9 +231,10 @@ StatusOr<google::cloud::networksecurity::v1::ServerTlsPolicy>
 NetworkSecurityConnectionImpl::GetServerTlsPolicy(
     google::cloud::networksecurity::v1::GetServerTlsPolicyRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetServerTlsPolicy(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetServerTlsPolicy(request),
       [this](
           grpc::ClientContext& context,
           google::cloud::networksecurity::v1::GetServerTlsPolicyRequest const&
@@ -241,115 +246,118 @@ future<StatusOr<google::cloud::networksecurity::v1::ServerTlsPolicy>>
 NetworkSecurityConnectionImpl::CreateServerTlsPolicy(
     google::cloud::networksecurity::v1::CreateServerTlsPolicyRequest const&
         request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::networksecurity::v1::ServerTlsPolicy>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::networksecurity::v1::
-                 CreateServerTlsPolicyRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::networksecurity::v1::
+                         CreateServerTlsPolicyRequest const& request) {
         return stub->AsyncCreateServerTlsPolicy(cq, std::move(context),
                                                 request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::networksecurity::v1::ServerTlsPolicy>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateServerTlsPolicy(request), polling_policy(),
-      __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateServerTlsPolicy(request),
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::networksecurity::v1::ServerTlsPolicy>>
 NetworkSecurityConnectionImpl::UpdateServerTlsPolicy(
     google::cloud::networksecurity::v1::UpdateServerTlsPolicyRequest const&
         request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::networksecurity::v1::ServerTlsPolicy>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::networksecurity::v1::
-                 UpdateServerTlsPolicyRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::networksecurity::v1::
+                         UpdateServerTlsPolicyRequest const& request) {
         return stub->AsyncUpdateServerTlsPolicy(cq, std::move(context),
                                                 request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::networksecurity::v1::ServerTlsPolicy>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UpdateServerTlsPolicy(request), polling_policy(),
-      __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateServerTlsPolicy(request),
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>
 NetworkSecurityConnectionImpl::DeleteServerTlsPolicy(
     google::cloud::networksecurity::v1::DeleteServerTlsPolicyRequest const&
         request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::networksecurity::v1::OperationMetadata>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::networksecurity::v1::
-                 DeleteServerTlsPolicyRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::networksecurity::v1::
+                         DeleteServerTlsPolicyRequest const& request) {
         return stub->AsyncDeleteServerTlsPolicy(cq, std::move(context),
                                                 request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::networksecurity::v1::OperationMetadata>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteServerTlsPolicy(request), polling_policy(),
-      __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteServerTlsPolicy(request),
+      polling_policy(*current), __func__);
 }
 
 StreamRange<google::cloud::networksecurity::v1::ClientTlsPolicy>
 NetworkSecurityConnectionImpl::ListClientTlsPolicies(
     google::cloud::networksecurity::v1::ListClientTlsPoliciesRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<networksecurity_v1::NetworkSecurityRetryPolicy const>(
-          retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListClientTlsPolicies(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency =
+      idempotency_policy(*current)->ListClientTlsPolicies(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::networksecurity::v1::ClientTlsPolicy>>(
       std::move(request),
-      [stub, retry, backoff, idempotency,
-       function_name](google::cloud::networksecurity::v1::
-                          ListClientTlsPoliciesRequest const& r) {
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<networksecurity_v1::NetworkSecurityRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          google::cloud::networksecurity::v1::
+              ListClientTlsPoliciesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context,
@@ -372,9 +380,10 @@ StatusOr<google::cloud::networksecurity::v1::ClientTlsPolicy>
 NetworkSecurityConnectionImpl::GetClientTlsPolicy(
     google::cloud::networksecurity::v1::GetClientTlsPolicyRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetClientTlsPolicy(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetClientTlsPolicy(request),
       [this](
           grpc::ClientContext& context,
           google::cloud::networksecurity::v1::GetClientTlsPolicyRequest const&
@@ -386,96 +395,99 @@ future<StatusOr<google::cloud::networksecurity::v1::ClientTlsPolicy>>
 NetworkSecurityConnectionImpl::CreateClientTlsPolicy(
     google::cloud::networksecurity::v1::CreateClientTlsPolicyRequest const&
         request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::networksecurity::v1::ClientTlsPolicy>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::networksecurity::v1::
-                 CreateClientTlsPolicyRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::networksecurity::v1::
+                         CreateClientTlsPolicyRequest const& request) {
         return stub->AsyncCreateClientTlsPolicy(cq, std::move(context),
                                                 request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::networksecurity::v1::ClientTlsPolicy>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateClientTlsPolicy(request), polling_policy(),
-      __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateClientTlsPolicy(request),
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::networksecurity::v1::ClientTlsPolicy>>
 NetworkSecurityConnectionImpl::UpdateClientTlsPolicy(
     google::cloud::networksecurity::v1::UpdateClientTlsPolicyRequest const&
         request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::networksecurity::v1::ClientTlsPolicy>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::networksecurity::v1::
-                 UpdateClientTlsPolicyRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::networksecurity::v1::
+                         UpdateClientTlsPolicyRequest const& request) {
         return stub->AsyncUpdateClientTlsPolicy(cq, std::move(context),
                                                 request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::networksecurity::v1::ClientTlsPolicy>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UpdateClientTlsPolicy(request), polling_policy(),
-      __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateClientTlsPolicy(request),
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>
 NetworkSecurityConnectionImpl::DeleteClientTlsPolicy(
     google::cloud::networksecurity::v1::DeleteClientTlsPolicyRequest const&
         request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::networksecurity::v1::OperationMetadata>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::networksecurity::v1::
-                 DeleteClientTlsPolicyRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::networksecurity::v1::
+                         DeleteClientTlsPolicyRequest const& request) {
         return stub->AsyncDeleteClientTlsPolicy(cq, std::move(context),
                                                 request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::networksecurity::v1::OperationMetadata>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteClientTlsPolicy(request), polling_policy(),
-      __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteClientTlsPolicy(request),
+      polling_policy(*current), __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

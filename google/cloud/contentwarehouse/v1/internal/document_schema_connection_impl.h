@@ -75,46 +75,23 @@ class DocumentSchemaServiceConnectionImpl
       override;
 
  private:
-  std::unique_ptr<contentwarehouse_v1::DocumentSchemaServiceRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            contentwarehouse_v1::DocumentSchemaServiceRetryPolicyOption>()) {
-      return options
-          .get<contentwarehouse_v1::DocumentSchemaServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<contentwarehouse_v1::DocumentSchemaServiceRetryPolicy>
+  retry_policy(Options const& options) {
+    return options
         .get<contentwarehouse_v1::DocumentSchemaServiceRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            contentwarehouse_v1::DocumentSchemaServiceBackoffPolicyOption>()) {
-      return options
-          .get<contentwarehouse_v1::DocumentSchemaServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options
         .get<contentwarehouse_v1::DocumentSchemaServiceBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<
+  static std::unique_ptr<
       contentwarehouse_v1::DocumentSchemaServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            contentwarehouse_v1::
-                DocumentSchemaServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<contentwarehouse_v1::
-                   DocumentSchemaServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  idempotency_policy(Options const& options) {
+    return options
         .get<contentwarehouse_v1::
                  DocumentSchemaServiceConnectionIdempotencyPolicyOption>()
         ->clone();

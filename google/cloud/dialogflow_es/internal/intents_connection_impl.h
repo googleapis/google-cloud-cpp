@@ -78,42 +78,24 @@ class IntentsConnectionImpl : public dialogflow_es::IntentsConnection {
       override;
 
  private:
-  std::unique_ptr<dialogflow_es::IntentsRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<dialogflow_es::IntentsRetryPolicyOption>()) {
-      return options.get<dialogflow_es::IntentsRetryPolicyOption>()->clone();
-    }
-    return options_.get<dialogflow_es::IntentsRetryPolicyOption>()->clone();
+  static std::unique_ptr<dialogflow_es::IntentsRetryPolicy> retry_policy(
+      Options const& options) {
+    return options.get<dialogflow_es::IntentsRetryPolicyOption>()->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<dialogflow_es::IntentsBackoffPolicyOption>()) {
-      return options.get<dialogflow_es::IntentsBackoffPolicyOption>()->clone();
-    }
-    return options_.get<dialogflow_es::IntentsBackoffPolicyOption>()->clone();
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<dialogflow_es::IntentsBackoffPolicyOption>()->clone();
   }
 
-  std::unique_ptr<dialogflow_es::IntentsConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<dialogflow_es::IntentsConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<dialogflow_es::IntentsConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<dialogflow_es::IntentsConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<dialogflow_es::IntentsConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<dialogflow_es::IntentsPollingPolicyOption>()) {
-      return options.get<dialogflow_es::IntentsPollingPolicyOption>()->clone();
-    }
-    return options_.get<dialogflow_es::IntentsPollingPolicyOption>()->clone();
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options.get<dialogflow_es::IntentsPollingPolicyOption>()->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

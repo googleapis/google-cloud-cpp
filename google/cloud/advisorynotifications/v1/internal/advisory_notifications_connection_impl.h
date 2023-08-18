@@ -62,52 +62,27 @@ class AdvisoryNotificationsServiceConnectionImpl
           request) override;
 
  private:
-  std::unique_ptr<
+  static std::unique_ptr<
       advisorynotifications_v1::AdvisoryNotificationsServiceRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<advisorynotifications_v1::
-                        AdvisoryNotificationsServiceRetryPolicyOption>()) {
-      return options
-          .get<advisorynotifications_v1::
-                   AdvisoryNotificationsServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
+  retry_policy(Options const& options) {
+    return options
         .get<advisorynotifications_v1::
                  AdvisoryNotificationsServiceRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<advisorynotifications_v1::
-                        AdvisoryNotificationsServiceBackoffPolicyOption>()) {
-      return options
-          .get<advisorynotifications_v1::
-                   AdvisoryNotificationsServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options
         .get<advisorynotifications_v1::
                  AdvisoryNotificationsServiceBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<advisorynotifications_v1::
-                      AdvisoryNotificationsServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            advisorynotifications_v1::
-                AdvisoryNotificationsServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<
-              advisorynotifications_v1::
-                  AdvisoryNotificationsServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<
+      advisorynotifications_v1::
+          AdvisoryNotificationsServiceConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<
             advisorynotifications_v1::
                 AdvisoryNotificationsServiceConnectionIdempotencyPolicyOption>()

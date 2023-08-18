@@ -104,46 +104,23 @@ class WebSecurityScannerConnectionImpl
           request) override;
 
  private:
-  std::unique_ptr<websecurityscanner_v1::WebSecurityScannerRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            websecurityscanner_v1::WebSecurityScannerRetryPolicyOption>()) {
-      return options
-          .get<websecurityscanner_v1::WebSecurityScannerRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<websecurityscanner_v1::WebSecurityScannerRetryPolicy>
+  retry_policy(Options const& options) {
+    return options
         .get<websecurityscanner_v1::WebSecurityScannerRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            websecurityscanner_v1::WebSecurityScannerBackoffPolicyOption>()) {
-      return options
-          .get<websecurityscanner_v1::WebSecurityScannerBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options
         .get<websecurityscanner_v1::WebSecurityScannerBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<
+  static std::unique_ptr<
       websecurityscanner_v1::WebSecurityScannerConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<websecurityscanner_v1::
-                     WebSecurityScannerConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<websecurityscanner_v1::
-                   WebSecurityScannerConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  idempotency_policy(Options const& options) {
+    return options
         .get<websecurityscanner_v1::
                  WebSecurityScannerConnectionIdempotencyPolicyOption>()
         ->clone();

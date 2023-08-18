@@ -72,39 +72,21 @@ class UptimeCheckServiceConnectionImpl
       google::monitoring::v3::ListUptimeCheckIpsRequest request) override;
 
  private:
-  std::unique_ptr<monitoring_v3::UptimeCheckServiceRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<monitoring_v3::UptimeCheckServiceRetryPolicyOption>()) {
-      return options.get<monitoring_v3::UptimeCheckServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<monitoring_v3::UptimeCheckServiceRetryPolicyOption>()
+  static std::unique_ptr<monitoring_v3::UptimeCheckServiceRetryPolicy>
+  retry_policy(Options const& options) {
+    return options.get<monitoring_v3::UptimeCheckServiceRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<monitoring_v3::UptimeCheckServiceBackoffPolicyOption>()) {
-      return options
-          .get<monitoring_v3::UptimeCheckServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<monitoring_v3::UptimeCheckServiceBackoffPolicyOption>()
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<monitoring_v3::UptimeCheckServiceBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<monitoring_v3::UptimeCheckServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<monitoring_v3::
-                     UptimeCheckServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<monitoring_v3::
-                   UptimeCheckServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<
+      monitoring_v3::UptimeCheckServiceConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<monitoring_v3::
                  UptimeCheckServiceConnectionIdempotencyPolicyOption>()
         ->clone();

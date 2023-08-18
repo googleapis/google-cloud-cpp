@@ -60,39 +60,23 @@ class ExecutionsConnectionImpl : public run_v2::ExecutionsConnection {
       google::cloud::run::v2::DeleteExecutionRequest const& request) override;
 
  private:
-  std::unique_ptr<run_v2::ExecutionsRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<run_v2::ExecutionsRetryPolicyOption>()) {
-      return options.get<run_v2::ExecutionsRetryPolicyOption>()->clone();
-    }
-    return options_.get<run_v2::ExecutionsRetryPolicyOption>()->clone();
+  static std::unique_ptr<run_v2::ExecutionsRetryPolicy> retry_policy(
+      Options const& options) {
+    return options.get<run_v2::ExecutionsRetryPolicyOption>()->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<run_v2::ExecutionsBackoffPolicyOption>()) {
-      return options.get<run_v2::ExecutionsBackoffPolicyOption>()->clone();
-    }
-    return options_.get<run_v2::ExecutionsBackoffPolicyOption>()->clone();
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<run_v2::ExecutionsBackoffPolicyOption>()->clone();
   }
 
-  std::unique_ptr<run_v2::ExecutionsConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<run_v2::ExecutionsConnectionIdempotencyPolicyOption>()) {
-      return options.get<run_v2::ExecutionsConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_.get<run_v2::ExecutionsConnectionIdempotencyPolicyOption>()
+  static std::unique_ptr<run_v2::ExecutionsConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options.get<run_v2::ExecutionsConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<run_v2::ExecutionsPollingPolicyOption>()) {
-      return options.get<run_v2::ExecutionsPollingPolicyOption>()->clone();
-    }
-    return options_.get<run_v2::ExecutionsPollingPolicyOption>()->clone();
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options.get<run_v2::ExecutionsPollingPolicyOption>()->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

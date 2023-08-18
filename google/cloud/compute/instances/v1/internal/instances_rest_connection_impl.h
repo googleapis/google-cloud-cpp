@@ -246,48 +246,27 @@ class InstancesRestConnectionImpl
           UpdateShieldedInstanceConfigRequest const& request) override;
 
  private:
-  std::unique_ptr<compute_instances_v1::InstancesRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_instances_v1::InstancesRetryPolicyOption>()) {
-      return options.get<compute_instances_v1::InstancesRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<compute_instances_v1::InstancesRetryPolicyOption>()
+  static std::unique_ptr<compute_instances_v1::InstancesRetryPolicy>
+  retry_policy(Options const& options) {
+    return options.get<compute_instances_v1::InstancesRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_instances_v1::InstancesBackoffPolicyOption>()) {
-      return options.get<compute_instances_v1::InstancesBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<compute_instances_v1::InstancesBackoffPolicyOption>()
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<compute_instances_v1::InstancesBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<compute_instances_v1::InstancesConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_instances_v1::
-                        InstancesConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<compute_instances_v1::
-                   InstancesConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<
+      compute_instances_v1::InstancesConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<compute_instances_v1::InstancesConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_instances_v1::InstancesPollingPolicyOption>()) {
-      return options.get<compute_instances_v1::InstancesPollingPolicyOption>()
-          ->clone();
-    }
-    return options_.get<compute_instances_v1::InstancesPollingPolicyOption>()
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options.get<compute_instances_v1::InstancesPollingPolicyOption>()
         ->clone();
   }
 

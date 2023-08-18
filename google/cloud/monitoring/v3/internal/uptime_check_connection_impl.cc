@@ -43,17 +43,17 @@ StreamRange<google::monitoring::v3::UptimeCheckConfig>
 UptimeCheckServiceConnectionImpl::ListUptimeCheckConfigs(
     google::monitoring::v3::ListUptimeCheckConfigsRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<monitoring_v3::UptimeCheckServiceRetryPolicy const>(
-          retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListUptimeCheckConfigs(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency =
+      idempotency_policy(*current)->ListUptimeCheckConfigs(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::monitoring::v3::UptimeCheckConfig>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<monitoring_v3::UptimeCheckServiceRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::monitoring::v3::ListUptimeCheckConfigsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
@@ -76,9 +76,10 @@ UptimeCheckServiceConnectionImpl::ListUptimeCheckConfigs(
 StatusOr<google::monitoring::v3::UptimeCheckConfig>
 UptimeCheckServiceConnectionImpl::GetUptimeCheckConfig(
     google::monitoring::v3::GetUptimeCheckConfigRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetUptimeCheckConfig(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetUptimeCheckConfig(request),
       [this](
           grpc::ClientContext& context,
           google::monitoring::v3::GetUptimeCheckConfigRequest const& request) {
@@ -90,9 +91,10 @@ UptimeCheckServiceConnectionImpl::GetUptimeCheckConfig(
 StatusOr<google::monitoring::v3::UptimeCheckConfig>
 UptimeCheckServiceConnectionImpl::CreateUptimeCheckConfig(
     google::monitoring::v3::CreateUptimeCheckConfigRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateUptimeCheckConfig(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateUptimeCheckConfig(request),
       [this](grpc::ClientContext& context,
              google::monitoring::v3::CreateUptimeCheckConfigRequest const&
                  request) {
@@ -104,9 +106,10 @@ UptimeCheckServiceConnectionImpl::CreateUptimeCheckConfig(
 StatusOr<google::monitoring::v3::UptimeCheckConfig>
 UptimeCheckServiceConnectionImpl::UpdateUptimeCheckConfig(
     google::monitoring::v3::UpdateUptimeCheckConfigRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UpdateUptimeCheckConfig(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateUptimeCheckConfig(request),
       [this](grpc::ClientContext& context,
              google::monitoring::v3::UpdateUptimeCheckConfigRequest const&
                  request) {
@@ -117,9 +120,10 @@ UptimeCheckServiceConnectionImpl::UpdateUptimeCheckConfig(
 
 Status UptimeCheckServiceConnectionImpl::DeleteUptimeCheckConfig(
     google::monitoring::v3::DeleteUptimeCheckConfigRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteUptimeCheckConfig(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteUptimeCheckConfig(request),
       [this](grpc::ClientContext& context,
              google::monitoring::v3::DeleteUptimeCheckConfigRequest const&
                  request) {
@@ -132,17 +136,16 @@ StreamRange<google::monitoring::v3::UptimeCheckIp>
 UptimeCheckServiceConnectionImpl::ListUptimeCheckIps(
     google::monitoring::v3::ListUptimeCheckIpsRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<monitoring_v3::UptimeCheckServiceRetryPolicy const>(
-          retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListUptimeCheckIps(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListUptimeCheckIps(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::monitoring::v3::UptimeCheckIp>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<monitoring_v3::UptimeCheckServiceRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::monitoring::v3::ListUptimeCheckIpsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,

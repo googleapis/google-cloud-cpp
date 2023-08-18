@@ -109,54 +109,28 @@ class NodeGroupsRestConnectionImpl
                          TestIamPermissionsRequest const& request) override;
 
  private:
-  std::unique_ptr<compute_node_groups_v1::NodeGroupsRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_node_groups_v1::NodeGroupsRetryPolicyOption>()) {
-      return options.get<compute_node_groups_v1::NodeGroupsRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<compute_node_groups_v1::NodeGroupsRetryPolicyOption>()
+  static std::unique_ptr<compute_node_groups_v1::NodeGroupsRetryPolicy>
+  retry_policy(Options const& options) {
+    return options.get<compute_node_groups_v1::NodeGroupsRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_node_groups_v1::NodeGroupsBackoffPolicyOption>()) {
-      return options
-          .get<compute_node_groups_v1::NodeGroupsBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<compute_node_groups_v1::NodeGroupsBackoffPolicyOption>()
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<compute_node_groups_v1::NodeGroupsBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<compute_node_groups_v1::NodeGroupsConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_node_groups_v1::
-                        NodeGroupsConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<compute_node_groups_v1::
-                   NodeGroupsConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<
+      compute_node_groups_v1::NodeGroupsConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<compute_node_groups_v1::
                  NodeGroupsConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_node_groups_v1::NodeGroupsPollingPolicyOption>()) {
-      return options
-          .get<compute_node_groups_v1::NodeGroupsPollingPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<compute_node_groups_v1::NodeGroupsPollingPolicyOption>()
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options.get<compute_node_groups_v1::NodeGroupsPollingPolicyOption>()
         ->clone();
   }
 

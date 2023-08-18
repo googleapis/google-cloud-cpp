@@ -47,9 +47,10 @@ StatusOr<google::cloud::cpp::compute::v1::InstanceTemplateAggregatedList>
 InstanceTemplatesRestConnectionImpl::AggregatedListInstanceTemplates(
     google::cloud::cpp::compute::instance_templates::v1::
         AggregatedListInstanceTemplatesRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->AggregatedListInstanceTemplates(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->AggregatedListInstanceTemplates(request),
       [this](rest_internal::RestContext& rest_context,
              google::cloud::cpp::compute::instance_templates::v1::
                  AggregatedListInstanceTemplatesRequest const& request) {
@@ -62,7 +63,7 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstanceTemplatesRestConnectionImpl::DeleteInstanceTemplates(
     google::cloud::cpp::compute::instance_templates::v1::
         DeleteInstanceTemplatesRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestLongRunningOperation<
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::v1::Operation,
@@ -71,30 +72,30 @@ InstanceTemplatesRestConnectionImpl::DeleteInstanceTemplates(
       google::cloud::cpp::compute::global_operations::v1::
           DeleteGlobalOperationsRequest>(
       background_->cq(), request,
-      [stub](CompletionQueue& cq,
-             std::unique_ptr<rest_internal::RestContext> context,
-             google::cloud::cpp::compute::instance_templates::v1::
-                 DeleteInstanceTemplatesRequest const& request) {
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::cpp::compute::instance_templates::v1::
+                         DeleteInstanceTemplatesRequest const& request) {
         return stub->AsyncDeleteInstanceTemplates(cq, std::move(context),
                                                   request);
       },
-      [stub](CompletionQueue& cq,
-             std::unique_ptr<rest_internal::RestContext> context,
-             google::cloud::cpp::compute::global_operations::v1::
-                 GetGlobalOperationsRequest const& request) {
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::cpp::compute::global_operations::v1::
+                         GetGlobalOperationsRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](CompletionQueue& cq,
-             std::unique_ptr<rest_internal::RestContext> context,
-             google::cloud::cpp::compute::global_operations::v1::
-                 DeleteGlobalOperationsRequest const& request) {
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::cpp::compute::global_operations::v1::
+                         DeleteGlobalOperationsRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
          std::string const&) { return op; },
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteInstanceTemplates(request), polling_policy(),
-      __func__,
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteInstanceTemplates(request),
+      polling_policy(*current), __func__,
       [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
       },
@@ -116,9 +117,10 @@ StatusOr<google::cloud::cpp::compute::v1::InstanceTemplate>
 InstanceTemplatesRestConnectionImpl::GetInstanceTemplates(
     google::cloud::cpp::compute::instance_templates::v1::
         GetInstanceTemplatesRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetInstanceTemplates(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetInstanceTemplates(request),
       [this](rest_internal::RestContext& rest_context,
              google::cloud::cpp::compute::instance_templates::v1::
                  GetInstanceTemplatesRequest const& request) {
@@ -131,9 +133,10 @@ StatusOr<google::cloud::cpp::compute::v1::Policy>
 InstanceTemplatesRestConnectionImpl::GetIamPolicy(
     google::cloud::cpp::compute::instance_templates::v1::
         GetIamPolicyRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetIamPolicy(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetIamPolicy(request),
       [this](rest_internal::RestContext& rest_context,
              google::cloud::cpp::compute::instance_templates::v1::
                  GetIamPolicyRequest const& request) {
@@ -146,7 +149,7 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstanceTemplatesRestConnectionImpl::InsertInstanceTemplates(
     google::cloud::cpp::compute::instance_templates::v1::
         InsertInstanceTemplatesRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestLongRunningOperation<
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::v1::Operation,
@@ -155,30 +158,30 @@ InstanceTemplatesRestConnectionImpl::InsertInstanceTemplates(
       google::cloud::cpp::compute::global_operations::v1::
           DeleteGlobalOperationsRequest>(
       background_->cq(), request,
-      [stub](CompletionQueue& cq,
-             std::unique_ptr<rest_internal::RestContext> context,
-             google::cloud::cpp::compute::instance_templates::v1::
-                 InsertInstanceTemplatesRequest const& request) {
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::cpp::compute::instance_templates::v1::
+                         InsertInstanceTemplatesRequest const& request) {
         return stub->AsyncInsertInstanceTemplates(cq, std::move(context),
                                                   request);
       },
-      [stub](CompletionQueue& cq,
-             std::unique_ptr<rest_internal::RestContext> context,
-             google::cloud::cpp::compute::global_operations::v1::
-                 GetGlobalOperationsRequest const& request) {
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::cpp::compute::global_operations::v1::
+                         GetGlobalOperationsRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](CompletionQueue& cq,
-             std::unique_ptr<rest_internal::RestContext> context,
-             google::cloud::cpp::compute::global_operations::v1::
-                 DeleteGlobalOperationsRequest const& request) {
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::cpp::compute::global_operations::v1::
+                         DeleteGlobalOperationsRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
          std::string const&) { return op; },
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->InsertInstanceTemplates(request), polling_policy(),
-      __func__,
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->InsertInstanceTemplates(request),
+      polling_policy(*current), __func__,
       [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
       },
@@ -201,19 +204,20 @@ InstanceTemplatesRestConnectionImpl::ListInstanceTemplates(
     google::cloud::cpp::compute::instance_templates::v1::
         ListInstanceTemplatesRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<
-      compute_instance_templates_v1::InstanceTemplatesRetryPolicy const>(
-      retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListInstanceTemplates(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency =
+      idempotency_policy(*current)->ListInstanceTemplates(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::cpp::compute::v1::InstanceTemplate>>(
       std::move(request),
-      [stub, retry, backoff, idempotency,
-       function_name](google::cloud::cpp::compute::instance_templates::v1::
-                          ListInstanceTemplatesRequest const& r) {
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<
+           compute_instance_templates_v1::InstanceTemplatesRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          google::cloud::cpp::compute::instance_templates::v1::
+              ListInstanceTemplatesRequest const& r) {
         return google::cloud::rest_internal::RestRetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](rest_internal::RestContext& rest_context,
@@ -236,9 +240,10 @@ StatusOr<google::cloud::cpp::compute::v1::Policy>
 InstanceTemplatesRestConnectionImpl::SetIamPolicy(
     google::cloud::cpp::compute::instance_templates::v1::
         SetIamPolicyRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->SetIamPolicy(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->SetIamPolicy(request),
       [this](rest_internal::RestContext& rest_context,
              google::cloud::cpp::compute::instance_templates::v1::
                  SetIamPolicyRequest const& request) {
@@ -251,9 +256,10 @@ StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
 InstanceTemplatesRestConnectionImpl::TestIamPermissions(
     google::cloud::cpp::compute::instance_templates::v1::
         TestIamPermissionsRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->TestIamPermissions(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->TestIamPermissions(request),
       [this](rest_internal::RestContext& rest_context,
              google::cloud::cpp::compute::instance_templates::v1::
                  TestIamPermissionsRequest const& request) {

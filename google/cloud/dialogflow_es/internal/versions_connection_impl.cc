@@ -42,16 +42,16 @@ StreamRange<google::cloud::dialogflow::v2::Version>
 VersionsConnectionImpl::ListVersions(
     google::cloud::dialogflow::v2::ListVersionsRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<dialogflow_es::VersionsRetryPolicy const>(retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListVersions(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListVersions(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::dialogflow::v2::Version>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<dialogflow_es::VersionsRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::dialogflow::v2::ListVersionsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
@@ -74,9 +74,10 @@ VersionsConnectionImpl::ListVersions(
 StatusOr<google::cloud::dialogflow::v2::Version>
 VersionsConnectionImpl::GetVersion(
     google::cloud::dialogflow::v2::GetVersionRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetVersion(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetVersion(request),
       [this](grpc::ClientContext& context,
              google::cloud::dialogflow::v2::GetVersionRequest const& request) {
         return stub_->GetVersion(context, request);
@@ -87,9 +88,10 @@ VersionsConnectionImpl::GetVersion(
 StatusOr<google::cloud::dialogflow::v2::Version>
 VersionsConnectionImpl::CreateVersion(
     google::cloud::dialogflow::v2::CreateVersionRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateVersion(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateVersion(request),
       [this](
           grpc::ClientContext& context,
           google::cloud::dialogflow::v2::CreateVersionRequest const& request) {
@@ -101,9 +103,10 @@ VersionsConnectionImpl::CreateVersion(
 StatusOr<google::cloud::dialogflow::v2::Version>
 VersionsConnectionImpl::UpdateVersion(
     google::cloud::dialogflow::v2::UpdateVersionRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UpdateVersion(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateVersion(request),
       [this](
           grpc::ClientContext& context,
           google::cloud::dialogflow::v2::UpdateVersionRequest const& request) {
@@ -114,9 +117,10 @@ VersionsConnectionImpl::UpdateVersion(
 
 Status VersionsConnectionImpl::DeleteVersion(
     google::cloud::dialogflow::v2::DeleteVersionRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteVersion(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteVersion(request),
       [this](
           grpc::ClientContext& context,
           google::cloud::dialogflow::v2::DeleteVersionRequest const& request) {

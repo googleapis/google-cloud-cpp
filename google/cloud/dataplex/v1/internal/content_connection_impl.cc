@@ -42,9 +42,10 @@ ContentServiceConnectionImpl::ContentServiceConnectionImpl(
 StatusOr<google::cloud::dataplex::v1::Content>
 ContentServiceConnectionImpl::CreateContent(
     google::cloud::dataplex::v1::CreateContentRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateContent(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateContent(request),
       [this](grpc::ClientContext& context,
              google::cloud::dataplex::v1::CreateContentRequest const& request) {
         return stub_->CreateContent(context, request);
@@ -55,9 +56,10 @@ ContentServiceConnectionImpl::CreateContent(
 StatusOr<google::cloud::dataplex::v1::Content>
 ContentServiceConnectionImpl::UpdateContent(
     google::cloud::dataplex::v1::UpdateContentRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UpdateContent(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateContent(request),
       [this](grpc::ClientContext& context,
              google::cloud::dataplex::v1::UpdateContentRequest const& request) {
         return stub_->UpdateContent(context, request);
@@ -67,9 +69,10 @@ ContentServiceConnectionImpl::UpdateContent(
 
 Status ContentServiceConnectionImpl::DeleteContent(
     google::cloud::dataplex::v1::DeleteContentRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteContent(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteContent(request),
       [this](grpc::ClientContext& context,
              google::cloud::dataplex::v1::DeleteContentRequest const& request) {
         return stub_->DeleteContent(context, request);
@@ -80,9 +83,10 @@ Status ContentServiceConnectionImpl::DeleteContent(
 StatusOr<google::cloud::dataplex::v1::Content>
 ContentServiceConnectionImpl::GetContent(
     google::cloud::dataplex::v1::GetContentRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetContent(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetContent(request),
       [this](grpc::ClientContext& context,
              google::cloud::dataplex::v1::GetContentRequest const& request) {
         return stub_->GetContent(context, request);
@@ -92,9 +96,10 @@ ContentServiceConnectionImpl::GetContent(
 
 StatusOr<google::iam::v1::Policy> ContentServiceConnectionImpl::GetIamPolicy(
     google::iam::v1::GetIamPolicyRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetIamPolicy(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetIamPolicy(request),
       [this](grpc::ClientContext& context,
              google::iam::v1::GetIamPolicyRequest const& request) {
         return stub_->GetIamPolicy(context, request);
@@ -104,9 +109,10 @@ StatusOr<google::iam::v1::Policy> ContentServiceConnectionImpl::GetIamPolicy(
 
 StatusOr<google::iam::v1::Policy> ContentServiceConnectionImpl::SetIamPolicy(
     google::iam::v1::SetIamPolicyRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->SetIamPolicy(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->SetIamPolicy(request),
       [this](grpc::ClientContext& context,
              google::iam::v1::SetIamPolicyRequest const& request) {
         return stub_->SetIamPolicy(context, request);
@@ -117,9 +123,10 @@ StatusOr<google::iam::v1::Policy> ContentServiceConnectionImpl::SetIamPolicy(
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 ContentServiceConnectionImpl::TestIamPermissions(
     google::iam::v1::TestIamPermissionsRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->TestIamPermissions(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->TestIamPermissions(request),
       [this](grpc::ClientContext& context,
              google::iam::v1::TestIamPermissionsRequest const& request) {
         return stub_->TestIamPermissions(context, request);
@@ -131,16 +138,16 @@ StreamRange<google::cloud::dataplex::v1::Content>
 ContentServiceConnectionImpl::ListContent(
     google::cloud::dataplex::v1::ListContentRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<dataplex_v1::ContentServiceRetryPolicy const>(
-      retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListContent(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListContent(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::dataplex::v1::Content>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<dataplex_v1::ContentServiceRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::dataplex::v1::ListContentRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,

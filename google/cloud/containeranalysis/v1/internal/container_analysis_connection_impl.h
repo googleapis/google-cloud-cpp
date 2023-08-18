@@ -65,45 +65,23 @@ class ContainerAnalysisConnectionImpl
           GetVulnerabilityOccurrencesSummaryRequest const& request) override;
 
  private:
-  std::unique_ptr<containeranalysis_v1::ContainerAnalysisRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<containeranalysis_v1::ContainerAnalysisRetryPolicyOption>()) {
-      return options
-          .get<containeranalysis_v1::ContainerAnalysisRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<containeranalysis_v1::ContainerAnalysisRetryPolicy>
+  retry_policy(Options const& options) {
+    return options
         .get<containeranalysis_v1::ContainerAnalysisRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            containeranalysis_v1::ContainerAnalysisBackoffPolicyOption>()) {
-      return options
-          .get<containeranalysis_v1::ContainerAnalysisBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options
         .get<containeranalysis_v1::ContainerAnalysisBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<
+  static std::unique_ptr<
       containeranalysis_v1::ContainerAnalysisConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<containeranalysis_v1::
-                        ContainerAnalysisConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<containeranalysis_v1::
-                   ContainerAnalysisConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  idempotency_policy(Options const& options) {
+    return options
         .get<containeranalysis_v1::
                  ContainerAnalysisConnectionIdempotencyPolicyOption>()
         ->clone();

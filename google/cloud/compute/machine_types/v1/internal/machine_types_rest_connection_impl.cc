@@ -44,9 +44,10 @@ StatusOr<google::cloud::cpp::compute::v1::MachineTypeAggregatedList>
 MachineTypesRestConnectionImpl::AggregatedListMachineTypes(
     google::cloud::cpp::compute::machine_types::v1::
         AggregatedListMachineTypesRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->AggregatedListMachineTypes(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->AggregatedListMachineTypes(request),
       [this](rest_internal::RestContext& rest_context,
              google::cloud::cpp::compute::machine_types::v1::
                  AggregatedListMachineTypesRequest const& request) {
@@ -59,9 +60,10 @@ StatusOr<google::cloud::cpp::compute::v1::MachineType>
 MachineTypesRestConnectionImpl::GetMachineTypes(
     google::cloud::cpp::compute::machine_types::v1::
         GetMachineTypesRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetMachineTypes(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetMachineTypes(request),
       [this](rest_internal::RestContext& rest_context,
              google::cloud::cpp::compute::machine_types::v1::
                  GetMachineTypesRequest const& request) {
@@ -75,19 +77,19 @@ MachineTypesRestConnectionImpl::ListMachineTypes(
     google::cloud::cpp::compute::machine_types::v1::ListMachineTypesRequest
         request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<compute_machine_types_v1::MachineTypesRetryPolicy const>(
-          retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListMachineTypes(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListMachineTypes(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::cpp::compute::v1::MachineType>>(
       std::move(request),
-      [stub, retry, backoff, idempotency,
-       function_name](google::cloud::cpp::compute::machine_types::v1::
-                          ListMachineTypesRequest const& r) {
+      [idempotency, function_name, stub = stub_,
+       retry =
+           std::shared_ptr<compute_machine_types_v1::MachineTypesRetryPolicy>(
+               retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          google::cloud::cpp::compute::machine_types::v1::
+              ListMachineTypesRequest const& r) {
         return google::cloud::rest_internal::RestRetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](rest_internal::RestContext& rest_context,

@@ -232,64 +232,32 @@ class ContactCenterInsightsConnectionImpl
           request) override;
 
  private:
-  std::unique_ptr<contactcenterinsights_v1::ContactCenterInsightsRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<contactcenterinsights_v1::
-                        ContactCenterInsightsRetryPolicyOption>()) {
-      return options
-          .get<contactcenterinsights_v1::
-                   ContactCenterInsightsRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<
+      contactcenterinsights_v1::ContactCenterInsightsRetryPolicy>
+  retry_policy(Options const& options) {
+    return options
         .get<contactcenterinsights_v1::ContactCenterInsightsRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<contactcenterinsights_v1::
-                        ContactCenterInsightsBackoffPolicyOption>()) {
-      return options
-          .get<contactcenterinsights_v1::
-                   ContactCenterInsightsBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options
         .get<contactcenterinsights_v1::
                  ContactCenterInsightsBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<contactcenterinsights_v1::
-                      ContactCenterInsightsConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            contactcenterinsights_v1::
-                ContactCenterInsightsConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<contactcenterinsights_v1::
-                   ContactCenterInsightsConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<contactcenterinsights_v1::
+                             ContactCenterInsightsConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<contactcenterinsights_v1::
                  ContactCenterInsightsConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<contactcenterinsights_v1::
-                        ContactCenterInsightsPollingPolicyOption>()) {
-      return options
-          .get<contactcenterinsights_v1::
-                   ContactCenterInsightsPollingPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options
         .get<contactcenterinsights_v1::
                  ContactCenterInsightsPollingPolicyOption>()
         ->clone();

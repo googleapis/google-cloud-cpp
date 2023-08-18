@@ -53,37 +53,21 @@ class AuthorizedDomainsConnectionImpl
       google::appengine::v1::ListAuthorizedDomainsRequest request) override;
 
  private:
-  std::unique_ptr<appengine_v1::AuthorizedDomainsRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<appengine_v1::AuthorizedDomainsRetryPolicyOption>()) {
-      return options.get<appengine_v1::AuthorizedDomainsRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<appengine_v1::AuthorizedDomainsRetryPolicyOption>()
+  static std::unique_ptr<appengine_v1::AuthorizedDomainsRetryPolicy>
+  retry_policy(Options const& options) {
+    return options.get<appengine_v1::AuthorizedDomainsRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<appengine_v1::AuthorizedDomainsBackoffPolicyOption>()) {
-      return options.get<appengine_v1::AuthorizedDomainsBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<appengine_v1::AuthorizedDomainsBackoffPolicyOption>()
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<appengine_v1::AuthorizedDomainsBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<appengine_v1::AuthorizedDomainsConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<appengine_v1::
-                        AuthorizedDomainsConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<appengine_v1::
-                   AuthorizedDomainsConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<
+      appengine_v1::AuthorizedDomainsConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<appengine_v1::AuthorizedDomainsConnectionIdempotencyPolicyOption>()
         ->clone();
   }

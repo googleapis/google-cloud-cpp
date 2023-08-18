@@ -60,45 +60,22 @@ class KeyTrackingServiceConnectionImpl
           request) override;
 
  private:
-  std::unique_ptr<kms_inventory_v1::KeyTrackingServiceRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<kms_inventory_v1::KeyTrackingServiceRetryPolicyOption>()) {
-      return options
-          .get<kms_inventory_v1::KeyTrackingServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<kms_inventory_v1::KeyTrackingServiceRetryPolicyOption>()
+  static std::unique_ptr<kms_inventory_v1::KeyTrackingServiceRetryPolicy>
+  retry_policy(Options const& options) {
+    return options.get<kms_inventory_v1::KeyTrackingServiceRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<kms_inventory_v1::KeyTrackingServiceBackoffPolicyOption>()) {
-      return options
-          .get<kms_inventory_v1::KeyTrackingServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options
         .get<kms_inventory_v1::KeyTrackingServiceBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<
+  static std::unique_ptr<
       kms_inventory_v1::KeyTrackingServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<kms_inventory_v1::
-                     KeyTrackingServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<kms_inventory_v1::
-                   KeyTrackingServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  idempotency_policy(Options const& options) {
+    return options
         .get<kms_inventory_v1::
                  KeyTrackingServiceConnectionIdempotencyPolicyOption>()
         ->clone();

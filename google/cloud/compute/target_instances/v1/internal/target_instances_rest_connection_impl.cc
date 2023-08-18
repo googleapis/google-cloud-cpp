@@ -47,9 +47,10 @@ StatusOr<google::cloud::cpp::compute::v1::TargetInstanceAggregatedList>
 TargetInstancesRestConnectionImpl::AggregatedListTargetInstances(
     google::cloud::cpp::compute::target_instances::v1::
         AggregatedListTargetInstancesRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->AggregatedListTargetInstances(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->AggregatedListTargetInstances(request),
       [this](rest_internal::RestContext& rest_context,
              google::cloud::cpp::compute::target_instances::v1::
                  AggregatedListTargetInstancesRequest const& request) {
@@ -62,7 +63,7 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetInstancesRestConnectionImpl::DeleteTargetInstances(
     google::cloud::cpp::compute::target_instances::v1::
         DeleteTargetInstancesRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestLongRunningOperation<
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::v1::Operation,
@@ -71,30 +72,30 @@ TargetInstancesRestConnectionImpl::DeleteTargetInstances(
       google::cloud::cpp::compute::zone_operations::v1::
           DeleteZoneOperationsRequest>(
       background_->cq(), request,
-      [stub](CompletionQueue& cq,
-             std::unique_ptr<rest_internal::RestContext> context,
-             google::cloud::cpp::compute::target_instances::v1::
-                 DeleteTargetInstancesRequest const& request) {
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::cpp::compute::target_instances::v1::
+                         DeleteTargetInstancesRequest const& request) {
         return stub->AsyncDeleteTargetInstances(cq, std::move(context),
                                                 request);
       },
-      [stub](CompletionQueue& cq,
-             std::unique_ptr<rest_internal::RestContext> context,
-             google::cloud::cpp::compute::zone_operations::v1::
-                 GetZoneOperationsRequest const& request) {
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::cpp::compute::zone_operations::v1::
+                         GetZoneOperationsRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](CompletionQueue& cq,
-             std::unique_ptr<rest_internal::RestContext> context,
-             google::cloud::cpp::compute::zone_operations::v1::
-                 DeleteZoneOperationsRequest const& request) {
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::cpp::compute::zone_operations::v1::
+                         DeleteZoneOperationsRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
          std::string const&) { return op; },
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteTargetInstances(request), polling_policy(),
-      __func__,
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteTargetInstances(request),
+      polling_policy(*current), __func__,
       [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
       },
@@ -118,9 +119,10 @@ StatusOr<google::cloud::cpp::compute::v1::TargetInstance>
 TargetInstancesRestConnectionImpl::GetTargetInstances(
     google::cloud::cpp::compute::target_instances::v1::
         GetTargetInstancesRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetTargetInstances(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetTargetInstances(request),
       [this](rest_internal::RestContext& rest_context,
              google::cloud::cpp::compute::target_instances::v1::
                  GetTargetInstancesRequest const& request) {
@@ -133,7 +135,7 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetInstancesRestConnectionImpl::InsertTargetInstances(
     google::cloud::cpp::compute::target_instances::v1::
         InsertTargetInstancesRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestLongRunningOperation<
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::v1::Operation,
@@ -142,30 +144,30 @@ TargetInstancesRestConnectionImpl::InsertTargetInstances(
       google::cloud::cpp::compute::zone_operations::v1::
           DeleteZoneOperationsRequest>(
       background_->cq(), request,
-      [stub](CompletionQueue& cq,
-             std::unique_ptr<rest_internal::RestContext> context,
-             google::cloud::cpp::compute::target_instances::v1::
-                 InsertTargetInstancesRequest const& request) {
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::cpp::compute::target_instances::v1::
+                         InsertTargetInstancesRequest const& request) {
         return stub->AsyncInsertTargetInstances(cq, std::move(context),
                                                 request);
       },
-      [stub](CompletionQueue& cq,
-             std::unique_ptr<rest_internal::RestContext> context,
-             google::cloud::cpp::compute::zone_operations::v1::
-                 GetZoneOperationsRequest const& request) {
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::cpp::compute::zone_operations::v1::
+                         GetZoneOperationsRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](CompletionQueue& cq,
-             std::unique_ptr<rest_internal::RestContext> context,
-             google::cloud::cpp::compute::zone_operations::v1::
-                 DeleteZoneOperationsRequest const& request) {
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::cpp::compute::zone_operations::v1::
+                         DeleteZoneOperationsRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
          std::string const&) { return op; },
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->InsertTargetInstances(request), polling_policy(),
-      __func__,
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->InsertTargetInstances(request),
+      polling_policy(*current), __func__,
       [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
       },
@@ -190,19 +192,19 @@ TargetInstancesRestConnectionImpl::ListTargetInstances(
     google::cloud::cpp::compute::target_instances::v1::
         ListTargetInstancesRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<
-      compute_target_instances_v1::TargetInstancesRetryPolicy const>(
-      retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListTargetInstances(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListTargetInstances(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::cpp::compute::v1::TargetInstance>>(
       std::move(request),
-      [stub, retry, backoff, idempotency,
-       function_name](google::cloud::cpp::compute::target_instances::v1::
-                          ListTargetInstancesRequest const& r) {
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<
+           compute_target_instances_v1::TargetInstancesRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          google::cloud::cpp::compute::target_instances::v1::
+              ListTargetInstancesRequest const& r) {
         return google::cloud::rest_internal::RestRetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](rest_internal::RestContext& rest_context,

@@ -53,39 +53,21 @@ class CaseAttachmentServiceConnectionImpl
       google::cloud::support::v2::ListAttachmentsRequest request) override;
 
  private:
-  std::unique_ptr<support_v2::CaseAttachmentServiceRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<support_v2::CaseAttachmentServiceRetryPolicyOption>()) {
-      return options.get<support_v2::CaseAttachmentServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<support_v2::CaseAttachmentServiceRetryPolicyOption>()
+  static std::unique_ptr<support_v2::CaseAttachmentServiceRetryPolicy>
+  retry_policy(Options const& options) {
+    return options.get<support_v2::CaseAttachmentServiceRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<support_v2::CaseAttachmentServiceBackoffPolicyOption>()) {
-      return options
-          .get<support_v2::CaseAttachmentServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<support_v2::CaseAttachmentServiceBackoffPolicyOption>()
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<support_v2::CaseAttachmentServiceBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<support_v2::CaseAttachmentServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            support_v2::
-                CaseAttachmentServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<support_v2::
-                   CaseAttachmentServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<
+      support_v2::CaseAttachmentServiceConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<support_v2::
                  CaseAttachmentServiceConnectionIdempotencyPolicyOption>()
         ->clone();

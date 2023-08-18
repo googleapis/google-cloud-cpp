@@ -58,36 +58,21 @@ class TextToSpeechConnectionImpl
       override;
 
  private:
-  std::unique_ptr<texttospeech_v1::TextToSpeechRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<texttospeech_v1::TextToSpeechRetryPolicyOption>()) {
-      return options.get<texttospeech_v1::TextToSpeechRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<texttospeech_v1::TextToSpeechRetryPolicyOption>()
+  static std::unique_ptr<texttospeech_v1::TextToSpeechRetryPolicy> retry_policy(
+      Options const& options) {
+    return options.get<texttospeech_v1::TextToSpeechRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<texttospeech_v1::TextToSpeechBackoffPolicyOption>()) {
-      return options.get<texttospeech_v1::TextToSpeechBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<texttospeech_v1::TextToSpeechBackoffPolicyOption>()
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<texttospeech_v1::TextToSpeechBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<texttospeech_v1::TextToSpeechConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            texttospeech_v1::TextToSpeechConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<texttospeech_v1::TextToSpeechConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<
+      texttospeech_v1::TextToSpeechConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<texttospeech_v1::TextToSpeechConnectionIdempotencyPolicyOption>()
         ->clone();
   }

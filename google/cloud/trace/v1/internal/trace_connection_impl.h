@@ -59,32 +59,18 @@ class TraceServiceConnectionImpl : public trace_v1::TraceServiceConnection {
                          request) override;
 
  private:
-  std::unique_ptr<trace_v1::TraceServiceRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<trace_v1::TraceServiceRetryPolicyOption>()) {
-      return options.get<trace_v1::TraceServiceRetryPolicyOption>()->clone();
-    }
-    return options_.get<trace_v1::TraceServiceRetryPolicyOption>()->clone();
+  static std::unique_ptr<trace_v1::TraceServiceRetryPolicy> retry_policy(
+      Options const& options) {
+    return options.get<trace_v1::TraceServiceRetryPolicyOption>()->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<trace_v1::TraceServiceBackoffPolicyOption>()) {
-      return options.get<trace_v1::TraceServiceBackoffPolicyOption>()->clone();
-    }
-    return options_.get<trace_v1::TraceServiceBackoffPolicyOption>()->clone();
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<trace_v1::TraceServiceBackoffPolicyOption>()->clone();
   }
 
-  std::unique_ptr<trace_v1::TraceServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<trace_v1::TraceServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<trace_v1::TraceServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<trace_v1::TraceServiceConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<trace_v1::TraceServiceConnectionIdempotencyPolicyOption>()
         ->clone();
   }

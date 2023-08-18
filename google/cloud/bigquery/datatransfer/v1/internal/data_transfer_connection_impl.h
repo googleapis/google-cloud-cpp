@@ -122,47 +122,24 @@ class DataTransferServiceConnectionImpl
           request) override;
 
  private:
-  std::unique_ptr<bigquery_datatransfer_v1::DataTransferServiceRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            bigquery_datatransfer_v1::DataTransferServiceRetryPolicyOption>()) {
-      return options
-          .get<bigquery_datatransfer_v1::DataTransferServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<
+      bigquery_datatransfer_v1::DataTransferServiceRetryPolicy>
+  retry_policy(Options const& options) {
+    return options
         .get<bigquery_datatransfer_v1::DataTransferServiceRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<bigquery_datatransfer_v1::
-                        DataTransferServiceBackoffPolicyOption>()) {
-      return options
-          .get<bigquery_datatransfer_v1::
-                   DataTransferServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options
         .get<bigquery_datatransfer_v1::DataTransferServiceBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<
+  static std::unique_ptr<
       bigquery_datatransfer_v1::DataTransferServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<bigquery_datatransfer_v1::
-                     DataTransferServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<bigquery_datatransfer_v1::
-                   DataTransferServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  idempotency_policy(Options const& options) {
+    return options
         .get<bigquery_datatransfer_v1::
                  DataTransferServiceConnectionIdempotencyPolicyOption>()
         ->clone();

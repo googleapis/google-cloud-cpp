@@ -80,66 +80,34 @@ class RegionHealthCheckServicesRestConnectionImpl
           PatchRegionHealthCheckServicesRequest const& request) override;
 
  private:
-  std::unique_ptr<compute_region_health_check_services_v1::
-                      RegionHealthCheckServicesRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_region_health_check_services_v1::
-                        RegionHealthCheckServicesRetryPolicyOption>()) {
-      return options
-          .get<compute_region_health_check_services_v1::
-                   RegionHealthCheckServicesRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<compute_region_health_check_services_v1::
+                             RegionHealthCheckServicesRetryPolicy>
+  retry_policy(Options const& options) {
+    return options
         .get<compute_region_health_check_services_v1::
                  RegionHealthCheckServicesRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_region_health_check_services_v1::
-                        RegionHealthCheckServicesBackoffPolicyOption>()) {
-      return options
-          .get<compute_region_health_check_services_v1::
-                   RegionHealthCheckServicesBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options
         .get<compute_region_health_check_services_v1::
                  RegionHealthCheckServicesBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<compute_region_health_check_services_v1::
-                      RegionHealthCheckServicesConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            compute_region_health_check_services_v1::
-                RegionHealthCheckServicesConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<compute_region_health_check_services_v1::
-                   RegionHealthCheckServicesConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<
+      compute_region_health_check_services_v1::
+          RegionHealthCheckServicesConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<compute_region_health_check_services_v1::
                  RegionHealthCheckServicesConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_region_health_check_services_v1::
-                        RegionHealthCheckServicesPollingPolicyOption>()) {
-      return options
-          .get<compute_region_health_check_services_v1::
-                   RegionHealthCheckServicesPollingPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options
         .get<compute_region_health_check_services_v1::
                  RegionHealthCheckServicesPollingPolicyOption>()
         ->clone();

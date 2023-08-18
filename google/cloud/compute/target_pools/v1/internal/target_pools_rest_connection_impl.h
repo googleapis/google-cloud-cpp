@@ -97,58 +97,29 @@ class TargetPoolsRestConnectionImpl
           request) override;
 
  private:
-  std::unique_ptr<compute_target_pools_v1::TargetPoolsRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_target_pools_v1::TargetPoolsRetryPolicyOption>()) {
-      return options
-          .get<compute_target_pools_v1::TargetPoolsRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<compute_target_pools_v1::TargetPoolsRetryPolicyOption>()
+  static std::unique_ptr<compute_target_pools_v1::TargetPoolsRetryPolicy>
+  retry_policy(Options const& options) {
+    return options.get<compute_target_pools_v1::TargetPoolsRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<compute_target_pools_v1::TargetPoolsBackoffPolicyOption>()) {
-      return options
-          .get<compute_target_pools_v1::TargetPoolsBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options
         .get<compute_target_pools_v1::TargetPoolsBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<
+  static std::unique_ptr<
       compute_target_pools_v1::TargetPoolsConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_target_pools_v1::
-                        TargetPoolsConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<compute_target_pools_v1::
-                   TargetPoolsConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  idempotency_policy(Options const& options) {
+    return options
         .get<compute_target_pools_v1::
                  TargetPoolsConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<compute_target_pools_v1::TargetPoolsPollingPolicyOption>()) {
-      return options
-          .get<compute_target_pools_v1::TargetPoolsPollingPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options
         .get<compute_target_pools_v1::TargetPoolsPollingPolicyOption>()
         ->clone();
   }

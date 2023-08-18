@@ -181,62 +181,31 @@ class AccessContextManagerConnectionImpl
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
  private:
-  std::unique_ptr<accesscontextmanager_v1::AccessContextManagerRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            accesscontextmanager_v1::AccessContextManagerRetryPolicyOption>()) {
-      return options
-          .get<accesscontextmanager_v1::AccessContextManagerRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<
+      accesscontextmanager_v1::AccessContextManagerRetryPolicy>
+  retry_policy(Options const& options) {
+    return options
         .get<accesscontextmanager_v1::AccessContextManagerRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<accesscontextmanager_v1::
-                        AccessContextManagerBackoffPolicyOption>()) {
-      return options
-          .get<accesscontextmanager_v1::
-                   AccessContextManagerBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options
         .get<accesscontextmanager_v1::AccessContextManagerBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<
+  static std::unique_ptr<
       accesscontextmanager_v1::AccessContextManagerConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<accesscontextmanager_v1::
-                     AccessContextManagerConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<accesscontextmanager_v1::
-                   AccessContextManagerConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  idempotency_policy(Options const& options) {
+    return options
         .get<accesscontextmanager_v1::
                  AccessContextManagerConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<accesscontextmanager_v1::
-                        AccessContextManagerPollingPolicyOption>()) {
-      return options
-          .get<accesscontextmanager_v1::
-                   AccessContextManagerPollingPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options
         .get<accesscontextmanager_v1::AccessContextManagerPollingPolicyOption>()
         ->clone();
   }

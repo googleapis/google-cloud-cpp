@@ -43,17 +43,16 @@ StreamRange<google::cloud::workflows::executions::v1::Execution>
 ExecutionsConnectionImpl::ListExecutions(
     google::cloud::workflows::executions::v1::ListExecutionsRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<workflows_executions_v1::ExecutionsRetryPolicy const>(
-          retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListExecutions(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListExecutions(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::workflows::executions::v1::Execution>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<workflows_executions_v1::ExecutionsRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::workflows::executions::v1::ListExecutionsRequest const&
               r) {
         return google::cloud::internal::RetryLoop(
@@ -78,9 +77,10 @@ StatusOr<google::cloud::workflows::executions::v1::Execution>
 ExecutionsConnectionImpl::CreateExecution(
     google::cloud::workflows::executions::v1::CreateExecutionRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateExecution(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateExecution(request),
       [this](grpc::ClientContext& context,
              google::cloud::workflows::executions::v1::
                  CreateExecutionRequest const& request) {
@@ -93,9 +93,10 @@ StatusOr<google::cloud::workflows::executions::v1::Execution>
 ExecutionsConnectionImpl::GetExecution(
     google::cloud::workflows::executions::v1::GetExecutionRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetExecution(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetExecution(request),
       [this](
           grpc::ClientContext& context,
           google::cloud::workflows::executions::v1::GetExecutionRequest const&
@@ -107,9 +108,10 @@ StatusOr<google::cloud::workflows::executions::v1::Execution>
 ExecutionsConnectionImpl::CancelExecution(
     google::cloud::workflows::executions::v1::CancelExecutionRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CancelExecution(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CancelExecution(request),
       [this](grpc::ClientContext& context,
              google::cloud::workflows::executions::v1::
                  CancelExecutionRequest const& request) {

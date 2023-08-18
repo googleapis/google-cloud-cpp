@@ -40,9 +40,10 @@ CompletionConnectionImpl::CompletionConnectionImpl(
 StatusOr<google::cloud::talent::v4::CompleteQueryResponse>
 CompletionConnectionImpl::CompleteQuery(
     google::cloud::talent::v4::CompleteQueryRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CompleteQuery(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CompleteQuery(request),
       [this](grpc::ClientContext& context,
              google::cloud::talent::v4::CompleteQueryRequest const& request) {
         return stub_->CompleteQuery(context, request);

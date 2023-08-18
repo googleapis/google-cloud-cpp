@@ -47,9 +47,10 @@ StatusOr<google::cloud::cpp::compute::v1::NetworkAttachmentAggregatedList>
 NetworkAttachmentsRestConnectionImpl::AggregatedListNetworkAttachments(
     google::cloud::cpp::compute::network_attachments::v1::
         AggregatedListNetworkAttachmentsRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->AggregatedListNetworkAttachments(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->AggregatedListNetworkAttachments(request),
       [this](rest_internal::RestContext& rest_context,
              google::cloud::cpp::compute::network_attachments::v1::
                  AggregatedListNetworkAttachmentsRequest const& request) {
@@ -62,7 +63,7 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NetworkAttachmentsRestConnectionImpl::DeleteNetworkAttachments(
     google::cloud::cpp::compute::network_attachments::v1::
         DeleteNetworkAttachmentsRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestLongRunningOperation<
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::v1::Operation,
@@ -71,30 +72,30 @@ NetworkAttachmentsRestConnectionImpl::DeleteNetworkAttachments(
       google::cloud::cpp::compute::region_operations::v1::
           DeleteRegionOperationsRequest>(
       background_->cq(), request,
-      [stub](CompletionQueue& cq,
-             std::unique_ptr<rest_internal::RestContext> context,
-             google::cloud::cpp::compute::network_attachments::v1::
-                 DeleteNetworkAttachmentsRequest const& request) {
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::cpp::compute::network_attachments::v1::
+                         DeleteNetworkAttachmentsRequest const& request) {
         return stub->AsyncDeleteNetworkAttachments(cq, std::move(context),
                                                    request);
       },
-      [stub](CompletionQueue& cq,
-             std::unique_ptr<rest_internal::RestContext> context,
-             google::cloud::cpp::compute::region_operations::v1::
-                 GetRegionOperationsRequest const& request) {
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::cpp::compute::region_operations::v1::
+                         GetRegionOperationsRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](CompletionQueue& cq,
-             std::unique_ptr<rest_internal::RestContext> context,
-             google::cloud::cpp::compute::region_operations::v1::
-                 DeleteRegionOperationsRequest const& request) {
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::cpp::compute::region_operations::v1::
+                         DeleteRegionOperationsRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
          std::string const&) { return op; },
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteNetworkAttachments(request), polling_policy(),
-      __func__,
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteNetworkAttachments(request),
+      polling_policy(*current), __func__,
       [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
       },
@@ -118,9 +119,10 @@ StatusOr<google::cloud::cpp::compute::v1::NetworkAttachment>
 NetworkAttachmentsRestConnectionImpl::GetNetworkAttachments(
     google::cloud::cpp::compute::network_attachments::v1::
         GetNetworkAttachmentsRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetNetworkAttachments(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetNetworkAttachments(request),
       [this](rest_internal::RestContext& rest_context,
              google::cloud::cpp::compute::network_attachments::v1::
                  GetNetworkAttachmentsRequest const& request) {
@@ -133,9 +135,10 @@ StatusOr<google::cloud::cpp::compute::v1::Policy>
 NetworkAttachmentsRestConnectionImpl::GetIamPolicy(
     google::cloud::cpp::compute::network_attachments::v1::
         GetIamPolicyRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetIamPolicy(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetIamPolicy(request),
       [this](rest_internal::RestContext& rest_context,
              google::cloud::cpp::compute::network_attachments::v1::
                  GetIamPolicyRequest const& request) {
@@ -148,7 +151,7 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NetworkAttachmentsRestConnectionImpl::InsertNetworkAttachments(
     google::cloud::cpp::compute::network_attachments::v1::
         InsertNetworkAttachmentsRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestLongRunningOperation<
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::v1::Operation,
@@ -157,30 +160,30 @@ NetworkAttachmentsRestConnectionImpl::InsertNetworkAttachments(
       google::cloud::cpp::compute::region_operations::v1::
           DeleteRegionOperationsRequest>(
       background_->cq(), request,
-      [stub](CompletionQueue& cq,
-             std::unique_ptr<rest_internal::RestContext> context,
-             google::cloud::cpp::compute::network_attachments::v1::
-                 InsertNetworkAttachmentsRequest const& request) {
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::cpp::compute::network_attachments::v1::
+                         InsertNetworkAttachmentsRequest const& request) {
         return stub->AsyncInsertNetworkAttachments(cq, std::move(context),
                                                    request);
       },
-      [stub](CompletionQueue& cq,
-             std::unique_ptr<rest_internal::RestContext> context,
-             google::cloud::cpp::compute::region_operations::v1::
-                 GetRegionOperationsRequest const& request) {
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::cpp::compute::region_operations::v1::
+                         GetRegionOperationsRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](CompletionQueue& cq,
-             std::unique_ptr<rest_internal::RestContext> context,
-             google::cloud::cpp::compute::region_operations::v1::
-                 DeleteRegionOperationsRequest const& request) {
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::cpp::compute::region_operations::v1::
+                         DeleteRegionOperationsRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
          std::string const&) { return op; },
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->InsertNetworkAttachments(request), polling_policy(),
-      __func__,
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->InsertNetworkAttachments(request),
+      polling_policy(*current), __func__,
       [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
       },
@@ -205,19 +208,20 @@ NetworkAttachmentsRestConnectionImpl::ListNetworkAttachments(
     google::cloud::cpp::compute::network_attachments::v1::
         ListNetworkAttachmentsRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<
-      compute_network_attachments_v1::NetworkAttachmentsRetryPolicy const>(
-      retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListNetworkAttachments(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency =
+      idempotency_policy(*current)->ListNetworkAttachments(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::cpp::compute::v1::NetworkAttachment>>(
       std::move(request),
-      [stub, retry, backoff, idempotency,
-       function_name](google::cloud::cpp::compute::network_attachments::v1::
-                          ListNetworkAttachmentsRequest const& r) {
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<
+           compute_network_attachments_v1::NetworkAttachmentsRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          google::cloud::cpp::compute::network_attachments::v1::
+              ListNetworkAttachmentsRequest const& r) {
         return google::cloud::rest_internal::RestRetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](rest_internal::RestContext& rest_context,
@@ -240,9 +244,10 @@ StatusOr<google::cloud::cpp::compute::v1::Policy>
 NetworkAttachmentsRestConnectionImpl::SetIamPolicy(
     google::cloud::cpp::compute::network_attachments::v1::
         SetIamPolicyRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->SetIamPolicy(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->SetIamPolicy(request),
       [this](rest_internal::RestContext& rest_context,
              google::cloud::cpp::compute::network_attachments::v1::
                  SetIamPolicyRequest const& request) {
@@ -255,9 +260,10 @@ StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
 NetworkAttachmentsRestConnectionImpl::TestIamPermissions(
     google::cloud::cpp::compute::network_attachments::v1::
         TestIamPermissionsRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->TestIamPermissions(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->TestIamPermissions(request),
       [this](rest_internal::RestContext& rest_context,
              google::cloud::cpp::compute::network_attachments::v1::
                  TestIamPermissionsRequest const& request) {

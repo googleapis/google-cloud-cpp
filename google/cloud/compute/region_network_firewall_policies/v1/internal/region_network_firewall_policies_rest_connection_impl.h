@@ -132,68 +132,35 @@ class RegionNetworkFirewallPoliciesRestConnectionImpl
           TestIamPermissionsRequest const& request) override;
 
  private:
-  std::unique_ptr<compute_region_network_firewall_policies_v1::
-                      RegionNetworkFirewallPoliciesRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_region_network_firewall_policies_v1::
-                        RegionNetworkFirewallPoliciesRetryPolicyOption>()) {
-      return options
-          .get<compute_region_network_firewall_policies_v1::
-                   RegionNetworkFirewallPoliciesRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<compute_region_network_firewall_policies_v1::
+                             RegionNetworkFirewallPoliciesRetryPolicy>
+  retry_policy(Options const& options) {
+    return options
         .get<compute_region_network_firewall_policies_v1::
                  RegionNetworkFirewallPoliciesRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_region_network_firewall_policies_v1::
-                        RegionNetworkFirewallPoliciesBackoffPolicyOption>()) {
-      return options
-          .get<compute_region_network_firewall_policies_v1::
-                   RegionNetworkFirewallPoliciesBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options
         .get<compute_region_network_firewall_policies_v1::
                  RegionNetworkFirewallPoliciesBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<compute_region_network_firewall_policies_v1::
-                      RegionNetworkFirewallPoliciesConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            compute_region_network_firewall_policies_v1::
-                RegionNetworkFirewallPoliciesConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<
-              compute_region_network_firewall_policies_v1::
-                  RegionNetworkFirewallPoliciesConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<
+      compute_region_network_firewall_policies_v1::
+          RegionNetworkFirewallPoliciesConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<
             compute_region_network_firewall_policies_v1::
                 RegionNetworkFirewallPoliciesConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_region_network_firewall_policies_v1::
-                        RegionNetworkFirewallPoliciesPollingPolicyOption>()) {
-      return options
-          .get<compute_region_network_firewall_policies_v1::
-                   RegionNetworkFirewallPoliciesPollingPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options
         .get<compute_region_network_firewall_policies_v1::
                  RegionNetworkFirewallPoliciesPollingPolicyOption>()
         ->clone();

@@ -43,16 +43,16 @@ StreamRange<google::cloud::dialogflow::v2::AnswerRecord>
 AnswerRecordsConnectionImpl::ListAnswerRecords(
     google::cloud::dialogflow::v2::ListAnswerRecordsRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<dialogflow_es::AnswerRecordsRetryPolicy const>(
-      retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListAnswerRecords(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListAnswerRecords(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::dialogflow::v2::AnswerRecord>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<dialogflow_es::AnswerRecordsRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::dialogflow::v2::ListAnswerRecordsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
@@ -76,9 +76,10 @@ AnswerRecordsConnectionImpl::ListAnswerRecords(
 StatusOr<google::cloud::dialogflow::v2::AnswerRecord>
 AnswerRecordsConnectionImpl::UpdateAnswerRecord(
     google::cloud::dialogflow::v2::UpdateAnswerRecordRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UpdateAnswerRecord(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateAnswerRecord(request),
       [this](grpc::ClientContext& context,
              google::cloud::dialogflow::v2::UpdateAnswerRecordRequest const&
                  request) {

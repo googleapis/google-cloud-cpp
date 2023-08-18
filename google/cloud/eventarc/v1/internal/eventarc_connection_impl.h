@@ -123,41 +123,24 @@ class EventarcConnectionImpl : public eventarc_v1::EventarcConnection {
           request) override;
 
  private:
-  std::unique_ptr<eventarc_v1::EventarcRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<eventarc_v1::EventarcRetryPolicyOption>()) {
-      return options.get<eventarc_v1::EventarcRetryPolicyOption>()->clone();
-    }
-    return options_.get<eventarc_v1::EventarcRetryPolicyOption>()->clone();
+  static std::unique_ptr<eventarc_v1::EventarcRetryPolicy> retry_policy(
+      Options const& options) {
+    return options.get<eventarc_v1::EventarcRetryPolicyOption>()->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<eventarc_v1::EventarcBackoffPolicyOption>()) {
-      return options.get<eventarc_v1::EventarcBackoffPolicyOption>()->clone();
-    }
-    return options_.get<eventarc_v1::EventarcBackoffPolicyOption>()->clone();
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<eventarc_v1::EventarcBackoffPolicyOption>()->clone();
   }
 
-  std::unique_ptr<eventarc_v1::EventarcConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<eventarc_v1::EventarcConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<eventarc_v1::EventarcConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<eventarc_v1::EventarcConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<eventarc_v1::EventarcConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<eventarc_v1::EventarcPollingPolicyOption>()) {
-      return options.get<eventarc_v1::EventarcPollingPolicyOption>()->clone();
-    }
-    return options_.get<eventarc_v1::EventarcPollingPolicyOption>()->clone();
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options.get<eventarc_v1::EventarcPollingPolicyOption>()->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
