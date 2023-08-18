@@ -230,6 +230,8 @@ set(external_googleapis_installed_libraries_list
     google_cloud_cpp_iam_v1_iam_policy_protos
     google_cloud_cpp_iam_v1_options_protos
     google_cloud_cpp_iam_v1_policy_protos
+    google_cloud_cpp_iam_v2_deny_protos
+    google_cloud_cpp_iam_v2_policy_protos
     google_cloud_cpp_logging_protos
     google_cloud_cpp_longrunning_operations_protos
     google_cloud_cpp_monitoring_protos
@@ -331,6 +333,10 @@ external_googleapis_add_library("google/rpc/status.proto"
                                 rpc_error_details_protos)
 
 external_googleapis_add_library(
+    "google/longrunning/operations.proto" api_annotations_protos
+    api_client_protos rpc_status_protos)
+
+external_googleapis_add_library(
     "google/iam/v1/iam_policy.proto"
     api_annotations_protos
     api_client_protos
@@ -339,9 +345,11 @@ external_googleapis_add_library(
     iam_v1_options_protos
     iam_v1_policy_protos)
 
+external_googleapis_add_library("google/iam/v2/deny.proto" type_expr_protos)
+
 external_googleapis_add_library(
-    "google/longrunning/operations.proto" api_annotations_protos
-    api_client_protos rpc_status_protos)
+    "google/iam/v2/policy.proto" api_annotations_protos api_client_protos
+    api_field_behavior_protos iam_v2_deny_protos longrunning_operations_protos)
 
 google_cloud_cpp_load_protolist(cloud_common_list "protolists/common.list")
 google_cloud_cpp_load_protodeps(cloud_common_deps "protodeps/common.deps")
