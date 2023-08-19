@@ -32,8 +32,8 @@ namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-inline std::string const& app_profile_id() {
-  return internal::CurrentOptions().get<bigtable::AppProfileIdOption>();
+inline std::string const& app_profile_id(Options const& options) {
+  return options.get<bigtable::AppProfileIdOption>();
 }
 
 inline std::unique_ptr<bigtable::DataRetryPolicy> retry_policy(
@@ -84,7 +84,7 @@ Status DataConnectionImpl::Apply(std::string const& table_name,
                                  bigtable::SingleRowMutation mut) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   google::bigtable::v2::MutateRowRequest request;
-  request.set_app_profile_id(app_profile_id());
+  request.set_app_profile_id(app_profile_id(*current));
   request.set_table_name(table_name);
   mut.MoveTo(request);
 
@@ -111,7 +111,7 @@ future<Status> DataConnectionImpl::AsyncApply(std::string const& table_name,
                                               bigtable::SingleRowMutation mut) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   google::bigtable::v2::MutateRowRequest request;
-  request.set_app_profile_id(app_profile_id());
+  request.set_app_profile_id(app_profile_id(*current));
   request.set_table_name(table_name);
   mut.MoveTo(request);
 
@@ -145,7 +145,7 @@ std::vector<bigtable::FailedMutation> DataConnectionImpl::BulkApply(
     std::string const& table_name, bigtable::BulkMutation mut) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (mut.empty()) return {};
-  bigtable::internal::BulkMutator mutator(app_profile_id(), table_name,
+  bigtable::internal::BulkMutator mutator(app_profile_id(*current), table_name,
                                           *idempotency_policy(*current),
                                           std::move(mut));
   // We wait to allocate the policies until they are needed as a
@@ -170,8 +170,8 @@ DataConnectionImpl::AsyncBulkApply(std::string const& table_name,
   auto current = google::cloud::internal::SaveCurrentOptions();
   return AsyncBulkApplier::Create(
       background_->cq(), stub_, retry_policy(*current),
-      backoff_policy(*current), *idempotency_policy(*current), app_profile_id(),
-      table_name, std::move(mut));
+      backoff_policy(*current), *idempotency_policy(*current),
+      app_profile_id(*current), table_name, std::move(mut));
 }
 
 bigtable::RowReader DataConnectionImpl::ReadRowsFull(
@@ -190,9 +190,9 @@ StatusOr<std::pair<bool, bigtable::Row>> DataConnectionImpl::ReadRow(
   auto current = google::cloud::internal::SaveCurrentOptions();
   bigtable::RowSet row_set(std::move(row_key));
   std::int64_t const rows_limit = 1;
-  auto reader = ReadRowsFull(
-      bigtable::ReadRowsParams{table_name, app_profile_id(), std::move(row_set),
-                               rows_limit, std::move(filter)});
+  auto reader = ReadRowsFull(bigtable::ReadRowsParams{
+      table_name, app_profile_id(*current), std::move(row_set), rows_limit,
+      std::move(filter)});
 
   auto it = reader.begin();
   if (it == reader.end()) return std::make_pair(false, bigtable::Row("", {}));
@@ -212,7 +212,7 @@ StatusOr<bigtable::MutationBranch> DataConnectionImpl::CheckAndMutateRow(
     std::vector<bigtable::Mutation> false_mutations) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   google::bigtable::v2::CheckAndMutateRowRequest request;
-  request.set_app_profile_id(app_profile_id());
+  request.set_app_profile_id(app_profile_id(*current));
   request.set_table_name(table_name);
   request.set_row_key(std::move(row_key));
   *request.mutable_predicate_filter() = std::move(filter).as_proto();
@@ -246,7 +246,7 @@ DataConnectionImpl::AsyncCheckAndMutateRow(
     std::vector<bigtable::Mutation> false_mutations) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   google::bigtable::v2::CheckAndMutateRowRequest request;
-  request.set_app_profile_id(app_profile_id());
+  request.set_app_profile_id(app_profile_id(*current));
   request.set_table_name(table_name);
   request.set_row_key(std::move(row_key));
   *request.mutable_predicate_filter() = std::move(filter).as_proto();
@@ -287,7 +287,7 @@ StatusOr<std::vector<bigtable::RowKeySample>> DataConnectionImpl::SampleRows(
     std::string const& table_name) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   google::bigtable::v2::SampleRowKeysRequest request;
-  request.set_app_profile_id(app_profile_id());
+  request.set_app_profile_id(app_profile_id(*current));
   request.set_table_name(table_name);
 
   Status status;
@@ -338,7 +338,7 @@ DataConnectionImpl::AsyncSampleRows(std::string const& table_name) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return AsyncRowSampler::Create(
       background_->cq(), stub_, retry_policy(*current),
-      backoff_policy(*current), app_profile_id(), table_name);
+      backoff_policy(*current), app_profile_id(*current), table_name);
 }
 
 StatusOr<bigtable::Row> DataConnectionImpl::ReadModifyWriteRow(
@@ -388,9 +388,10 @@ void DataConnectionImpl::AsyncReadRows(
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto reverse = internal::CurrentOptions().get<bigtable::ReverseScanOption>();
   bigtable_internal::AsyncRowReader::Create(
-      background_->cq(), stub_, app_profile_id(), table_name, std::move(on_row),
-      std::move(on_finish), std::move(row_set), rows_limit, std::move(filter),
-      reverse, retry_policy(*current), backoff_policy(*current));
+      background_->cq(), stub_, app_profile_id(*current), table_name,
+      std::move(on_row), std::move(on_finish), std::move(row_set), rows_limit,
+      std::move(filter), reverse, retry_policy(*current),
+      backoff_policy(*current));
 }
 
 future<StatusOr<std::pair<bool, bigtable::Row>>>
