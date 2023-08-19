@@ -62,6 +62,7 @@ future<Status> MultipartitionPublisher::Start() {
 }
 
 future<StatusOr<std::uint32_t>> MultipartitionPublisher::GetNumPartitions() {
+  google::cloud::internal::OptionsSpan span(admin_connection_->options());
   return admin_connection_->AsyncGetTopicPartitions(topic_partitions_request_)
       .then([](future<StatusOr<TopicPartitions>> f) -> StatusOr<std::uint32_t> {
         auto partitions = f.get();
