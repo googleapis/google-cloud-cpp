@@ -106,7 +106,7 @@ class PublisherIntegrationTest : public testing_util::IntegrationTest {
     topic_name_ = topic.FullName();
 
     google::cloud::pubsublite::v1::Topic t;
-    t.mutable_partition_config()->set_count(3);
+    t.mutable_partition_config()->set_count(1);
     t.mutable_retention_config()->set_per_partition_bytes(kPartitionStorage);
     auto& capacity = *t.mutable_partition_config()->mutable_capacity();
     capacity.set_publish_mib_per_sec(kThroughputCapacityMiB);

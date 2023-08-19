@@ -46,9 +46,7 @@ function (google_cloud_cpp_pubsublite_define_integration_tests)
                     GTest::gtest)
         google_cloud_cpp_add_common_options(${target})
         add_test(NAME ${target} COMMAND ${target})
-        set_tests_properties(
-            ${target} PROPERTIES LABELS
-                                 "integration-test;integration-test-emulator")
+        set_tests_properties(${target} PROPERTIES LABELS "integration-test")
         add_dependencies(pubsublite-client-integration-tests ${target})
     endforeach ()
 
