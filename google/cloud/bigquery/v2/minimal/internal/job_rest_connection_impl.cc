@@ -24,6 +24,22 @@ namespace google {
 namespace cloud {
 namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<BigQueryJobRetryPolicy> retry_policy(Options const& options) {
+  return options.get<BigQueryJobRetryPolicyOption>()->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options.get<BigQueryJobBackoffPolicyOption>()->clone();
+}
+
+std::unique_ptr<BigQueryJobIdempotencyPolicy> idempotency_policy(
+    Options const& options) {
+  return options.get<BigQueryJobIdempotencyPolicyOption>()->clone();
+}
+
+}  // namespace
 
 BigQueryJobRestConnectionImpl::BigQueryJobRestConnectionImpl(
     std::shared_ptr<BigQueryJobRestStub> stub, Options options)
@@ -33,8 +49,10 @@ BigQueryJobRestConnectionImpl::BigQueryJobRestConnectionImpl(
 
 StatusOr<Job> BigQueryJobRestConnectionImpl::GetJob(
     GetJobRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   auto result = rest_internal::RestRetryLoop(
-      retry_policy(), backoff_policy(), idempotency_policy()->GetJob(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetJob(request),
       [this](rest_internal::RestContext& rest_context,
              GetJobRequest const& request) {
         return stub_->GetJob(rest_context, request);
@@ -46,19 +64,20 @@ StatusOr<Job> BigQueryJobRestConnectionImpl::GetJob(
 
 StreamRange<ListFormatJob> BigQueryJobRestConnectionImpl::ListJobs(
     ListJobsRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   auto req = request;
   req.set_page_token("");
 
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<BigQueryJobRetryPolicy const>(retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListJobs(req);
+  auto retry =
+      std::shared_ptr<BigQueryJobRetryPolicy const>(retry_policy(*current));
+  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy(*current));
+  auto idempotency = idempotency_policy(*current)->ListJobs(req);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<ListFormatJob>>(
       std::move(req),
-      [stub, retry, backoff, idempotency,
-       function_name](ListJobsRequest const& r) {
+      [stub = stub_, retry = std::move(retry), backoff = std::move(backoff),
+       idempotency, function_name](ListJobsRequest const& r) {
         return rest_internal::RestRetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](rest_internal::RestContext& context,
@@ -77,9 +96,10 @@ StreamRange<ListFormatJob> BigQueryJobRestConnectionImpl::ListJobs(
 
 StatusOr<Job> BigQueryJobRestConnectionImpl::InsertJob(
     InsertJobRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   auto result = rest_internal::RestRetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->InsertJob(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->InsertJob(request),
       [this](rest_internal::RestContext& rest_context,
              InsertJobRequest const& request) {
         return stub_->InsertJob(rest_context, request);
@@ -91,9 +111,10 @@ StatusOr<Job> BigQueryJobRestConnectionImpl::InsertJob(
 
 StatusOr<Job> BigQueryJobRestConnectionImpl::CancelJob(
     CancelJobRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   auto result = rest_internal::RestRetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CancelJob(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CancelJob(request),
       [this](rest_internal::RestContext& rest_context,
              CancelJobRequest const& request) {
         return stub_->CancelJob(rest_context, request);
@@ -105,8 +126,10 @@ StatusOr<Job> BigQueryJobRestConnectionImpl::CancelJob(
 
 StatusOr<PostQueryResults> BigQueryJobRestConnectionImpl::Query(
     PostQueryRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   auto result = rest_internal::RestRetryLoop(
-      retry_policy(), backoff_policy(), idempotency_policy()->Query(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->Query(request),
       [this](rest_internal::RestContext& rest_context,
              PostQueryRequest const& request) {
         return stub_->Query(rest_context, request);
@@ -118,9 +141,10 @@ StatusOr<PostQueryResults> BigQueryJobRestConnectionImpl::Query(
 
 StatusOr<GetQueryResults> BigQueryJobRestConnectionImpl::QueryResults(
     GetQueryResultsRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   auto result = rest_internal::RestRetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetQueryResults(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetQueryResults(request),
       [this](rest_internal::RestContext& rest_context,
              GetQueryResultsRequest const& request) {
         return stub_->GetQueryResults(rest_context, request);

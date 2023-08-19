@@ -24,6 +24,22 @@ namespace google {
 namespace cloud {
 namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<TableRetryPolicy> retry_policy(Options const& options) {
+  return options.get<TableRetryPolicyOption>()->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options.get<TableBackoffPolicyOption>()->clone();
+}
+
+std::unique_ptr<TableIdempotencyPolicy> idempotency_policy(
+    Options const& options) {
+  return options.get<TableIdempotencyPolicyOption>()->clone();
+}
+
+}  // namespace
 
 TableRestConnectionImpl::TableRestConnectionImpl(
     std::shared_ptr<TableRestStub> stub, Options options)
@@ -33,8 +49,10 @@ TableRestConnectionImpl::TableRestConnectionImpl(
 
 StatusOr<Table> TableRestConnectionImpl::GetTable(
     GetTableRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   auto result = rest_internal::RestRetryLoop(
-      retry_policy(), backoff_policy(), idempotency_policy()->GetTable(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetTable(request),
       [this](rest_internal::RestContext& rest_context,
              GetTableRequest const& request) {
         return stub_->GetTable(rest_context, request);
@@ -46,19 +64,19 @@ StatusOr<Table> TableRestConnectionImpl::GetTable(
 
 StreamRange<ListFormatTable> TableRestConnectionImpl::ListTables(
     ListTablesRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   auto req = request;
   req.set_page_token("");
 
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<TableRetryPolicy const>(retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListTables(req);
+  auto retry = std::shared_ptr<TableRetryPolicy const>(retry_policy(*current));
+  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy(*current));
+  auto idempotency = idempotency_policy(*current)->ListTables(req);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<ListFormatTable>>(
       std::move(req),
-      [stub, retry, backoff, idempotency,
-       function_name](ListTablesRequest const& r) {
+      [stub = stub_, retry = std::move(retry), backoff = std::move(backoff),
+       idempotency, function_name](ListTablesRequest const& r) {
         return rest_internal::RestRetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](rest_internal::RestContext& context,

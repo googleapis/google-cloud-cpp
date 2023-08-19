@@ -82,6 +82,7 @@ TEST(DatasetConnectionTest, GetDatasetSuccess) {
   request.set_project_id("test-project-id");
   request.set_dataset_id("test-dataset-id");
 
+  google::cloud::internal::OptionsSpan span(conn->options());
   auto dataset_result = conn->GetDataset(request);
 
   ASSERT_STATUS_OK(dataset_result);
@@ -138,6 +139,7 @@ TEST(DatasetConnectionTest, ListDatasetsSuccess) {
   ListDatasetsRequest request;
   request.set_project_id("test-project-id");
 
+  google::cloud::internal::OptionsSpan span(conn->options());
   for (auto const& dataset : conn->ListDatasets(request)) {
     ASSERT_STATUS_OK(dataset);
     actual_dataset_ids.push_back(dataset->id);
@@ -155,6 +157,7 @@ TEST(DatasetConnectionTest, GetDatasetPermanentError) {
   auto conn = CreateTestingConnection(std::move(mock));
 
   GetDatasetRequest request;
+  google::cloud::internal::OptionsSpan span(conn->options());
   auto result = conn->GetDataset(request);
   EXPECT_THAT(result, StatusIs(StatusCode::kPermissionDenied,
                                HasSubstr("permission-denied")));
@@ -168,6 +171,7 @@ TEST(DatasetConnectionTest, ListDatasetsPermanentError) {
   auto conn = CreateTestingConnection(std::move(mock));
 
   ListDatasetsRequest request;
+  google::cloud::internal::OptionsSpan span(conn->options());
   auto range = conn->ListDatasets(request);
   auto begin = range.begin();
   ASSERT_NE(begin, range.end());
@@ -184,6 +188,7 @@ TEST(DatasetConnectionTest, GetDatasetTooManyTransients) {
   auto conn = CreateTestingConnection(std::move(mock));
 
   GetDatasetRequest request;
+  google::cloud::internal::OptionsSpan span(conn->options());
   auto result = conn->GetDataset(request);
   EXPECT_THAT(result,
               StatusIs(StatusCode::kResourceExhausted, HasSubstr("try-again")));
@@ -198,6 +203,7 @@ TEST(DatasetConnectionTest, ListDatasetsTooManyTransients) {
   auto conn = CreateTestingConnection(std::move(mock));
 
   ListDatasetsRequest request;
+  google::cloud::internal::OptionsSpan span(conn->options());
   auto range = conn->ListDatasets(request);
   auto begin = range.begin();
   ASSERT_NE(begin, range.end());

@@ -98,6 +98,7 @@ TEST(JobConnectionTest, GetJobSuccess) {
   request.set_job_id("test-job-id");
 
   auto job = MakePartialJob();
+  google::cloud::internal::OptionsSpan span(conn->options());
   auto job_result = conn->GetJob(request);
 
   ASSERT_STATUS_OK(job_result);
@@ -148,6 +149,7 @@ TEST(JobConnectionTest, ListJobsSuccess) {
   ListJobsRequest request;
   request.set_project_id("test-project-id");
 
+  google::cloud::internal::OptionsSpan span(conn->options());
   for (auto const& job : conn->ListJobs(request)) {
     ASSERT_STATUS_OK(job);
     actual_job_ids.push_back(job->id);
@@ -187,6 +189,7 @@ TEST(JobConnectionTest, InsertJobSuccess) {
   auto job = MakePartialJob();
   InsertJobRequest request("test-project-id", job);
 
+  google::cloud::internal::OptionsSpan span(conn->options());
   auto job_result = conn->InsertJob(request);
 
   ASSERT_STATUS_OK(job_result);
@@ -227,6 +230,7 @@ TEST(JobConnectionTest, CancelJobSuccess) {
   auto job = MakePartialJob();
   CancelJobRequest request("p123", "j123");
 
+  google::cloud::internal::OptionsSpan span(conn->options());
   auto job_result = conn->CancelJob(request);
 
   ASSERT_STATUS_OK(job_result);
@@ -255,6 +259,7 @@ TEST(JobConnectionTest, QuerySuccess) {
   job_request.set_project_id("p123");
   job_request.set_query_request(MakeQueryRequest());
 
+  google::cloud::internal::OptionsSpan span(conn->options());
   auto job_result = conn->Query(job_request);
   ASSERT_STATUS_OK(job_result);
 
@@ -285,6 +290,7 @@ TEST(JobConnectionTest, QueryResultsSuccess) {
 
   GetQueryResultsRequest job_request = MakeFullGetQueryResultsRequest();
 
+  google::cloud::internal::OptionsSpan span(conn->options());
   auto job_result = conn->QueryResults(job_request);
   ASSERT_STATUS_OK(job_result);
 
@@ -303,6 +309,7 @@ TEST(JobConnectionTest, GetJobPermanentError) {
   auto conn = CreateTestingConnection(std::move(mock));
 
   GetJobRequest request;
+  google::cloud::internal::OptionsSpan span(conn->options());
   auto result = conn->GetJob(request);
   EXPECT_THAT(result, StatusIs(StatusCode::kPermissionDenied,
                                HasSubstr("permission-denied")));
@@ -316,6 +323,7 @@ TEST(JobConnectionTest, ListJobsPermanentError) {
   auto conn = CreateTestingConnection(std::move(mock));
 
   ListJobsRequest request;
+  google::cloud::internal::OptionsSpan span(conn->options());
   auto range = conn->ListJobs(request);
   auto begin = range.begin();
   ASSERT_NE(begin, range.end());
@@ -330,6 +338,7 @@ TEST(JobConnectionTest, InsertJobPermanentError) {
   auto conn = CreateTestingConnection(std::move(mock));
 
   InsertJobRequest request;
+  google::cloud::internal::OptionsSpan span(conn->options());
   auto result = conn->InsertJob(request);
   EXPECT_THAT(result, StatusIs(StatusCode::kPermissionDenied,
                                HasSubstr("permission-denied")));
@@ -343,6 +352,7 @@ TEST(JobConnectionTest, CancelJobPermanentError) {
   auto conn = CreateTestingConnection(std::move(mock));
 
   CancelJobRequest request;
+  google::cloud::internal::OptionsSpan span(conn->options());
   auto result = conn->CancelJob(request);
   EXPECT_THAT(result, StatusIs(StatusCode::kPermissionDenied,
                                HasSubstr("permission-denied")));
@@ -356,6 +366,7 @@ TEST(JobConnectionTest, QueryPermanentError) {
   auto conn = CreateTestingConnection(std::move(mock));
 
   PostQueryRequest request;
+  google::cloud::internal::OptionsSpan span(conn->options());
   auto result = conn->Query(request);
   EXPECT_THAT(result, StatusIs(StatusCode::kPermissionDenied,
                                HasSubstr("permission-denied")));
@@ -369,6 +380,7 @@ TEST(JobConnectionTest, QueryResultsPermanentError) {
   auto conn = CreateTestingConnection(std::move(mock));
 
   GetQueryResultsRequest request;
+  google::cloud::internal::OptionsSpan span(conn->options());
   auto result = conn->QueryResults(request);
   EXPECT_THAT(result, StatusIs(StatusCode::kPermissionDenied,
                                HasSubstr("permission-denied")));
@@ -384,6 +396,7 @@ TEST(JobConnectionTest, GetJobTooManyTransients) {
   auto conn = CreateTestingConnection(std::move(mock));
 
   GetJobRequest request;
+  google::cloud::internal::OptionsSpan span(conn->options());
   auto result = conn->GetJob(request);
   EXPECT_THAT(result,
               StatusIs(StatusCode::kDeadlineExceeded, HasSubstr("try-again")));
@@ -398,6 +411,7 @@ TEST(JobConnectionTest, ListJobsTooManyTransients) {
   auto conn = CreateTestingConnection(std::move(mock));
 
   ListJobsRequest request;
+  google::cloud::internal::OptionsSpan span(conn->options());
   auto range = conn->ListJobs(request);
   auto begin = range.begin();
   ASSERT_NE(begin, range.end());
@@ -411,6 +425,7 @@ TEST(JobConnectionTest, InsertJobNonIdempotentCalledOnce) {
   auto conn = CreateTestingConnection(std::move(mock));
 
   InsertJobRequest request;
+  google::cloud::internal::OptionsSpan span(conn->options());
   auto result = conn->InsertJob(request);
   EXPECT_THAT(result,
               StatusIs(StatusCode::kDeadlineExceeded, HasSubstr("try-again")));
@@ -423,6 +438,7 @@ TEST(JobConnectionTest, CancelJobNonIdempotentCalledOnce) {
   auto conn = CreateTestingConnection(std::move(mock));
 
   CancelJobRequest request;
+  google::cloud::internal::OptionsSpan span(conn->options());
   auto result = conn->CancelJob(request);
   EXPECT_THAT(result,
               StatusIs(StatusCode::kDeadlineExceeded, HasSubstr("try-again")));
@@ -435,6 +451,7 @@ TEST(JobConnectionTest, QueryWithoutRequestIdNonIdempotentCalledOnce) {
   auto conn = CreateTestingConnection(std::move(mock));
 
   PostQueryRequest request;
+  google::cloud::internal::OptionsSpan span(conn->options());
   auto result = conn->Query(request);
   EXPECT_THAT(result,
               StatusIs(StatusCode::kDeadlineExceeded, HasSubstr("try-again")));
@@ -454,6 +471,7 @@ TEST(JobConnectionTest, QueryWithRequestIdIdempotentTooManyTransients) {
   PostQueryRequest request;
   request.set_query_request(query_request);
 
+  google::cloud::internal::OptionsSpan span(conn->options());
   auto result = conn->Query(request);
   EXPECT_THAT(result,
               StatusIs(StatusCode::kDeadlineExceeded, HasSubstr("try-again")));
@@ -469,6 +487,7 @@ TEST(JobConnectionTest, QueryResultsTooManyTransients) {
 
   GetQueryResultsRequest request;
 
+  google::cloud::internal::OptionsSpan span(conn->options());
   auto result = conn->QueryResults(request);
   EXPECT_THAT(result,
               StatusIs(StatusCode::kDeadlineExceeded, HasSubstr("try-again")));

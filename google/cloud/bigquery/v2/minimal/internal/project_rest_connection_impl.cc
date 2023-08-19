@@ -24,6 +24,22 @@ namespace google {
 namespace cloud {
 namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<ProjectRetryPolicy> retry_policy(Options const& options) {
+  return options.get<ProjectRetryPolicyOption>()->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options.get<ProjectBackoffPolicyOption>()->clone();
+}
+
+std::unique_ptr<ProjectIdempotencyPolicy> idempotency_policy(
+    Options const& options) {
+  return options.get<ProjectIdempotencyPolicyOption>()->clone();
+}
+
+}  // namespace
 
 ProjectRestConnectionImpl::ProjectRestConnectionImpl(
     std::shared_ptr<ProjectRestStub> stub, Options options)
@@ -33,18 +49,19 @@ ProjectRestConnectionImpl::ProjectRestConnectionImpl(
 
 StreamRange<Project> ProjectRestConnectionImpl::ListProjects(
     ListProjectsRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   auto req = request;
   req.set_page_token("");
 
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<ProjectRetryPolicy const>(retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListProjects(req);
+  auto retry =
+      std::shared_ptr<ProjectRetryPolicy const>(retry_policy(*current));
+  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy(*current));
+  auto idempotency = idempotency_policy(*current)->ListProjects(req);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<StreamRange<Project>>(
       std::move(req),
-      [stub, retry, backoff, idempotency,
-       function_name](ListProjectsRequest const& r) {
+      [stub = stub_, retry = std::move(retry), backoff = std::move(backoff),
+       idempotency, function_name](ListProjectsRequest const& r) {
         return rest_internal::RestRetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](rest_internal::RestContext& context,
