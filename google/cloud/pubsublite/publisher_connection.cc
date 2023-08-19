@@ -182,6 +182,15 @@ StatusOr<std::unique_ptr<PublisherConnection>> MakePublisherConnection(
               transformer)));
 }
 
+StatusOr<std::unique_ptr<google::cloud::pubsub::PublisherConnection>>
+MakePublisherConnection(
+    Topic topic,
+    Options opts) {
+  auto admin = MakeAdminServiceConnection(opts);
+  return MakePublisherConnection(std::move(admin), std::move(topic),
+                                 std::move(opts));
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsublite
 }  // namespace cloud

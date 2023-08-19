@@ -44,6 +44,25 @@ MakePublisherConnection(
     std::shared_ptr<AdminServiceConnection> admin_connection, Topic topic,
     Options opts);
 
+/**
+ * Creates a new `PublisherConnection` object to work with `Publisher`.
+ *
+ * @param topic the Cloud Pub/Sub Lite topic used by the returned
+ *     `PublisherConnection`.
+ * @param opts The options to use for this call. Expected options are any of
+ *     the types in the following option lists and in
+ * google/cloud/pubsublite/options.h.
+ *       - `google::cloud::CommonOptionList`
+ *       - `google::cloud::GrpcOptionList`
+ *
+ * @deprecated Use the overload consuming an `AdminServiceConnection`.
+ */
+// clang-format off
+[[deprecated("Use the overload consuming an AdminServiceConnection")]]
+StatusOr<std::unique_ptr<google::cloud::pubsub::PublisherConnection>>
+// clang-format on
+MakePublisherConnection(Topic topic, Options opts);
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsublite
 }  // namespace cloud
