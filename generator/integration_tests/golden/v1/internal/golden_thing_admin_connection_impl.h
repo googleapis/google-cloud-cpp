@@ -113,25 +113,6 @@ class GoldenThingAdminConnectionImpl
   AsyncDropDatabase(google::test::admin::database::v1::DropDatabaseRequest const& request) override;
 
  private:
-  static std::unique_ptr<golden_v1::GoldenThingAdminRetryPolicy>
-  retry_policy(Options const& options) {
-    return options.get<golden_v1::GoldenThingAdminRetryPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy>
-  backoff_policy(Options const& options) {
-    return options.get<golden_v1::GoldenThingAdminBackoffPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<golden_v1::GoldenThingAdminConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options.get<golden_v1::GoldenThingAdminConnectionIdempotencyPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-    return options.get<golden_v1::GoldenThingAdminPollingPolicyOption>()->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<golden_v1_internal::GoldenThingAdminStub> stub_;
   Options options_;

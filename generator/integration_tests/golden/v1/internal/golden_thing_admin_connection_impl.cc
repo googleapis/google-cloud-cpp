@@ -31,6 +31,28 @@ namespace google {
 namespace cloud {
 namespace golden_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<golden_v1::GoldenThingAdminRetryPolicy>
+retry_policy(Options const& options) {
+  return options.get<golden_v1::GoldenThingAdminRetryPolicyOption>()->clone();
+}
+
+std::unique_ptr<BackoffPolicy>
+backoff_policy(Options const& options) {
+  return options.get<golden_v1::GoldenThingAdminBackoffPolicyOption>()->clone();
+}
+
+std::unique_ptr<golden_v1::GoldenThingAdminConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options.get<golden_v1::GoldenThingAdminConnectionIdempotencyPolicyOption>()->clone();
+}
+
+std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+  return options.get<golden_v1::GoldenThingAdminPollingPolicyOption>()->clone();
+}
+
+} // namespace
 
 GoldenThingAdminConnectionImpl::GoldenThingAdminConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
