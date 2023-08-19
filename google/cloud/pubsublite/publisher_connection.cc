@@ -183,9 +183,7 @@ StatusOr<std::unique_ptr<PublisherConnection>> MakePublisherConnection(
 }
 
 StatusOr<std::unique_ptr<google::cloud::pubsub::PublisherConnection>>
-MakePublisherConnection(
-    Topic topic,
-    Options opts) {
+MakePublisherConnection(Topic topic, Options opts) {
   auto admin = MakeAdminServiceConnection(opts);
   return MakePublisherConnection(std::move(admin), std::move(topic),
                                  std::move(opts));
