@@ -45,9 +45,10 @@ StatusOr<google::cloud::cpp::compute::v1::DiskType>
 RegionDiskTypesRestConnectionImpl::GetRegionDiskTypes(
     google::cloud::cpp::compute::region_disk_types::v1::
         GetRegionDiskTypesRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetRegionDiskTypes(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetRegionDiskTypes(request),
       [this](rest_internal::RestContext& rest_context,
              google::cloud::cpp::compute::region_disk_types::v1::
                  GetRegionDiskTypesRequest const& request) {
@@ -61,19 +62,19 @@ RegionDiskTypesRestConnectionImpl::ListRegionDiskTypes(
     google::cloud::cpp::compute::region_disk_types::v1::
         ListRegionDiskTypesRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<
-      compute_region_disk_types_v1::RegionDiskTypesRetryPolicy const>(
-      retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListRegionDiskTypes(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListRegionDiskTypes(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::cpp::compute::v1::DiskType>>(
       std::move(request),
-      [stub, retry, backoff, idempotency,
-       function_name](google::cloud::cpp::compute::region_disk_types::v1::
-                          ListRegionDiskTypesRequest const& r) {
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<
+           compute_region_disk_types_v1::RegionDiskTypesRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          google::cloud::cpp::compute::region_disk_types::v1::
+              ListRegionDiskTypesRequest const& r) {
         return google::cloud::rest_internal::RestRetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](rest_internal::RestContext& rest_context,

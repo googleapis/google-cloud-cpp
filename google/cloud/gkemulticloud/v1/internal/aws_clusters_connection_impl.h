@@ -109,50 +109,6 @@ class AwsClustersConnectionImpl
           request) override;
 
  private:
-  std::unique_ptr<gkemulticloud_v1::AwsClustersRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<gkemulticloud_v1::AwsClustersRetryPolicyOption>()) {
-      return options.get<gkemulticloud_v1::AwsClustersRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<gkemulticloud_v1::AwsClustersRetryPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<gkemulticloud_v1::AwsClustersBackoffPolicyOption>()) {
-      return options.get<gkemulticloud_v1::AwsClustersBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<gkemulticloud_v1::AwsClustersBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<gkemulticloud_v1::AwsClustersConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            gkemulticloud_v1::AwsClustersConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<gkemulticloud_v1::AwsClustersConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<gkemulticloud_v1::AwsClustersConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<gkemulticloud_v1::AwsClustersPollingPolicyOption>()) {
-      return options.get<gkemulticloud_v1::AwsClustersPollingPolicyOption>()
-          ->clone();
-    }
-    return options_.get<gkemulticloud_v1::AwsClustersPollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<gkemulticloud_v1_internal::AwsClustersStub> stub_;
   Options options_;

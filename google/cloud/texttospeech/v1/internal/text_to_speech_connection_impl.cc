@@ -28,6 +28,26 @@ namespace google {
 namespace cloud {
 namespace texttospeech_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<texttospeech_v1::TextToSpeechRetryPolicy> retry_policy(
+    Options const& options) {
+  return options.get<texttospeech_v1::TextToSpeechRetryPolicyOption>()->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options.get<texttospeech_v1::TextToSpeechBackoffPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<texttospeech_v1::TextToSpeechConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options
+      .get<texttospeech_v1::TextToSpeechConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 TextToSpeechConnectionImpl::TextToSpeechConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
@@ -41,9 +61,10 @@ TextToSpeechConnectionImpl::TextToSpeechConnectionImpl(
 StatusOr<google::cloud::texttospeech::v1::ListVoicesResponse>
 TextToSpeechConnectionImpl::ListVoices(
     google::cloud::texttospeech::v1::ListVoicesRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->ListVoices(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ListVoices(request),
       [this](
           grpc::ClientContext& context,
           google::cloud::texttospeech::v1::ListVoicesRequest const& request) {
@@ -55,9 +76,10 @@ TextToSpeechConnectionImpl::ListVoices(
 StatusOr<google::cloud::texttospeech::v1::SynthesizeSpeechResponse>
 TextToSpeechConnectionImpl::SynthesizeSpeech(
     google::cloud::texttospeech::v1::SynthesizeSpeechRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->SynthesizeSpeech(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->SynthesizeSpeech(request),
       [this](grpc::ClientContext& context,
              google::cloud::texttospeech::v1::SynthesizeSpeechRequest const&
                  request) { return stub_->SynthesizeSpeech(context, request); },

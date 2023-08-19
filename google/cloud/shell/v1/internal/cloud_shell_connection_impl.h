@@ -71,50 +71,6 @@ class CloudShellServiceConnectionImpl
       google::cloud::shell::v1::RemovePublicKeyRequest const& request) override;
 
  private:
-  std::unique_ptr<shell_v1::CloudShellServiceRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<shell_v1::CloudShellServiceRetryPolicyOption>()) {
-      return options.get<shell_v1::CloudShellServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<shell_v1::CloudShellServiceRetryPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<shell_v1::CloudShellServiceBackoffPolicyOption>()) {
-      return options.get<shell_v1::CloudShellServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<shell_v1::CloudShellServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<shell_v1::CloudShellServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            shell_v1::CloudShellServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<shell_v1::CloudShellServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<shell_v1::CloudShellServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<shell_v1::CloudShellServicePollingPolicyOption>()) {
-      return options.get<shell_v1::CloudShellServicePollingPolicyOption>()
-          ->clone();
-    }
-    return options_.get<shell_v1::CloudShellServicePollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<shell_v1_internal::CloudShellServiceStub> stub_;
   Options options_;

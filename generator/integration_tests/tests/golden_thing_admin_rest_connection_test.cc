@@ -136,6 +136,8 @@ TEST(GoldenThingAdminConnectionTest, ListDatabases) {
   std::vector<std::string> actual_names;
   ::google::test::admin::database::v1::ListDatabasesRequest request;
   request.set_parent("projects/test-project/instances/test-instance");
+  google::cloud::internal::OptionsSpan span(
+      google::cloud::internal::MergeOptions(Options{}, conn->options()));
   for (auto const& database : conn->ListDatabases(request)) {
     ASSERT_STATUS_OK(database);
     actual_names.push_back(database->name());
@@ -151,6 +153,8 @@ TEST(GoldenThingAdminConnectionTest, ListDatabasesPermanentFailure) {
   auto conn = CreateTestingConnection(std::move(mock));
   ::google::test::admin::database::v1::ListDatabasesRequest request;
   request.set_parent("projects/test-project/instances/test-instance");
+  google::cloud::internal::OptionsSpan span(
+      google::cloud::internal::MergeOptions(Options{}, conn->options()));
   auto range = conn->ListDatabases(request);
   auto begin = range.begin();
   ASSERT_NE(begin, range.end());
@@ -166,6 +170,8 @@ TEST(GoldenThingAdminConnectionTest, ListDatabasesTooManyFailures) {
   auto conn = CreateTestingConnection(std::move(mock));
   ::google::test::admin::database::v1::ListDatabasesRequest request;
   request.set_parent("projects/test-project/instances/test-instance");
+  google::cloud::internal::OptionsSpan span(
+      google::cloud::internal::MergeOptions(Options{}, conn->options()));
   auto range = conn->ListDatabases(request);
   auto begin = range.begin();
   ASSERT_NE(begin, range.end());
@@ -200,6 +206,8 @@ TEST(GoldenThingAdminConnectionTest, CreateDatabaseSuccess) {
       });
   auto conn = CreateTestingConnection(std::move(mock));
   ::google::test::admin::database::v1::CreateDatabaseRequest dbase;
+  google::cloud::internal::OptionsSpan span(
+      google::cloud::internal::MergeOptions(Options{}, conn->options()));
   auto fut = conn->CreateDatabase(dbase);
   ASSERT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(10)));
   auto db = fut.get();
@@ -236,6 +244,8 @@ TEST(GoldenThingAdminConnectionTest, CreateDatabaseCancel) {
       });
   auto conn = CreateTestingConnection(std::move(mock));
   ::google::test::admin::database::v1::CreateDatabaseRequest request;
+  google::cloud::internal::OptionsSpan span(
+      google::cloud::internal::MergeOptions(Options{}, conn->options()));
   auto fut = conn->CreateDatabase(request);
   get.PopFront().set_value(op);
   auto g = get.PopFront();
@@ -268,6 +278,8 @@ TEST(GoldenThingAdminConnectionTest, GetDatabaseSuccess) {
   ::google::test::admin::database::v1::GetDatabaseRequest request;
   request.set_name(
       "projects/test-project/instances/test-instance/databases/test-database");
+  google::cloud::internal::OptionsSpan span(
+      google::cloud::internal::MergeOptions(Options{}, conn->options()));
   auto response = conn->GetDatabase(request);
   EXPECT_STATUS_OK(response);
   EXPECT_EQ(::google::test::admin::database::v1::Database::READY,
@@ -284,6 +296,8 @@ TEST(GoldenThingAdminConnectionTest, GetDatabasePermanentError) {
   ::google::test::admin::database::v1::GetDatabaseRequest request;
   request.set_name(
       "projects/test-project/instances/test-instance/databases/test-database");
+  google::cloud::internal::OptionsSpan span(
+      google::cloud::internal::MergeOptions(Options{}, conn->options()));
   auto response = conn->GetDatabase(request);
   EXPECT_EQ(StatusCode::kPermissionDenied, response.status().code());
 }
@@ -299,6 +313,8 @@ TEST(GoldenThingAdminConnectionTest, GetDatabaseTooManyTransients) {
   ::google::test::admin::database::v1::GetDatabaseRequest request;
   request.set_name(
       "projects/test-project/instances/test-instance/databases/test-database");
+  google::cloud::internal::OptionsSpan span(
+      google::cloud::internal::MergeOptions(Options{}, conn->options()));
   auto response = conn->GetDatabase(request);
   EXPECT_EQ(StatusCode::kDeadlineExceeded, response.status().code());
 }
@@ -337,6 +353,8 @@ TEST(GoldenThingAdminConnectionTest, UpdateDatabaseDdlSuccess) {
       "projects/test-project/instances/test-instance/databases/test-database");
   *request.add_statements() =
       "ALTER TABLE Albums ADD COLUMN MarketingBudget INT64";
+  google::cloud::internal::OptionsSpan span(
+      google::cloud::internal::MergeOptions(Options{}, conn->options()));
   auto fut = conn->UpdateDatabaseDdl(request);
   ASSERT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(10)));
   auto metadata = fut.get();
@@ -373,6 +391,8 @@ TEST(GoldenThingAdminConnectionTest, UpdateDatabaseDdlCancel) {
       });
   auto conn = CreateTestingConnection(std::move(mock));
   ::google::test::admin::database::v1::UpdateDatabaseDdlRequest request;
+  google::cloud::internal::OptionsSpan span(
+      google::cloud::internal::MergeOptions(Options{}, conn->options()));
   auto fut = conn->UpdateDatabaseDdl(request);
   get.PopFront().set_value(op);
   auto g = get.PopFront();
@@ -401,6 +421,8 @@ TEST(GoldenThingAdminConnectionTest, DropDatabaseSuccess) {
   ::google::test::admin::database::v1::DropDatabaseRequest request;
   request.set_database(
       "projects/test-project/instances/test-instance/databases/test-database");
+  google::cloud::internal::OptionsSpan span(
+      google::cloud::internal::MergeOptions(Options{}, conn->options()));
   auto response = conn->DropDatabase(request);
   EXPECT_STATUS_OK(response);
 }
@@ -414,6 +436,8 @@ TEST(GoldenThingAdminConnectionTest, DropDatabaseTooManyTransients) {
   ::google::test::admin::database::v1::DropDatabaseRequest request;
   request.set_database(
       "projects/test-project/instances/test-instance/databases/test-database");
+  google::cloud::internal::OptionsSpan span(
+      google::cloud::internal::MergeOptions(Options{}, conn->options()));
   auto response = conn->DropDatabase(request);
   EXPECT_EQ(StatusCode::kUnavailable, response.code());
 }
@@ -427,6 +451,8 @@ TEST(GoldenThingAdminConnectionTest, DropDatabasePermanentError) {
   ::google::test::admin::database::v1::DropDatabaseRequest request;
   request.set_database(
       "projects/test-project/instances/test-instance/databases/test-database");
+  google::cloud::internal::OptionsSpan span(
+      google::cloud::internal::MergeOptions(Options{}, conn->options()));
   auto response = conn->DropDatabase(request);
   EXPECT_EQ(StatusCode::kPermissionDenied, response.code());
 }
@@ -450,6 +476,8 @@ TEST(GoldenThingAdminConnectionTest, GetDatabaseDdlSuccess) {
   ::google::test::admin::database::v1::GetDatabaseDdlRequest request;
   request.set_database(
       "projects/test-project/instances/test-instance/databases/test-database");
+  google::cloud::internal::OptionsSpan span(
+      google::cloud::internal::MergeOptions(Options{}, conn->options()));
   auto response = conn->GetDatabaseDdl(request);
   EXPECT_STATUS_OK(response);
   ASSERT_EQ(1, response->statements_size());
@@ -465,6 +493,8 @@ TEST(GoldenThingAdminConnectionTest, GetDatabaseDdlPermanentError) {
   ::google::test::admin::database::v1::GetDatabaseDdlRequest request;
   request.set_database(
       "projects/test-project/instances/test-instance/databases/test-database");
+  google::cloud::internal::OptionsSpan span(
+      google::cloud::internal::MergeOptions(Options{}, conn->options()));
   auto response = conn->GetDatabaseDdl(request);
   EXPECT_EQ(StatusCode::kPermissionDenied, response.status().code());
 }
@@ -480,6 +510,8 @@ TEST(GoldenThingAdminConnectionTest, GetDatabaseDdlTooManyTransients) {
   ::google::test::admin::database::v1::GetDatabaseDdlRequest request;
   request.set_database(
       "projects/test-project/instances/test-instance/databases/test-database");
+  google::cloud::internal::OptionsSpan span(
+      google::cloud::internal::MergeOptions(Options{}, conn->options()));
   auto response = conn->GetDatabaseDdl(request);
   EXPECT_EQ(StatusCode::kDeadlineExceeded, response.status().code());
 }
@@ -515,6 +547,8 @@ TEST(GoldenThingAdminConnectionTest, SetIamPolicySuccess) {
   request.set_resource(
       "projects/test-project/instances/test-instance/databases/test-database");
   *request.mutable_policy() = expected_policy;
+  google::cloud::internal::OptionsSpan span(
+      google::cloud::internal::MergeOptions(Options{}, conn->options()));
   auto response = conn->SetIamPolicy(request);
   EXPECT_STATUS_OK(response);
   expected_policy.set_etag("response-etag");
@@ -532,6 +566,8 @@ TEST(GoldenThingAdminConnectionTest, SetIamPolicyPermanentError) {
   request.set_resource(
       "projects/test-project/instances/test-instance/databases/test-database");
   *request.mutable_policy() = policy;
+  google::cloud::internal::OptionsSpan span(
+      google::cloud::internal::MergeOptions(Options{}, conn->options()));
   auto response = conn->SetIamPolicy(request);
   EXPECT_EQ(StatusCode::kPermissionDenied, response.status().code());
 }
@@ -548,6 +584,8 @@ TEST(GoldenThingAdminConnectionTest, SetIamPolicyNonIdempotent) {
   request.set_resource(
       "projects/test-project/instances/test-instance/databases/test-database");
   *request.mutable_policy() = policy;
+  google::cloud::internal::OptionsSpan span(
+      google::cloud::internal::MergeOptions(Options{}, conn->options()));
   auto response = conn->SetIamPolicy(request);
   EXPECT_EQ(StatusCode::kDeadlineExceeded, response.status().code());
 }
@@ -574,6 +612,8 @@ TEST(GoldenThingAdminConnectionTest, GetIamPolicySuccess) {
   google::iam::v1::GetIamPolicyRequest request;
   request.set_resource(
       "projects/test-project/instances/test-instance/databases/test-database");
+  google::cloud::internal::OptionsSpan span(
+      google::cloud::internal::MergeOptions(Options{}, conn->options()));
   auto response = conn->GetIamPolicy(request);
   EXPECT_STATUS_OK(response);
   ASSERT_EQ(1, response->bindings().size());
@@ -591,6 +631,8 @@ TEST(GoldenThingAdminConnectionTest, GetIamPolicyPermanentError) {
   google::iam::v1::GetIamPolicyRequest request;
   request.set_resource(
       "projects/test-project/instances/test-instance/databases/test-database");
+  google::cloud::internal::OptionsSpan span(
+      google::cloud::internal::MergeOptions(Options{}, conn->options()));
   auto response = conn->GetIamPolicy(request);
   EXPECT_EQ(StatusCode::kPermissionDenied, response.status().code());
 }
@@ -605,6 +647,8 @@ TEST(GoldenThingAdminConnectionTest, GetIamPolicyTooManyTransients) {
   google::iam::v1::GetIamPolicyRequest request;
   request.set_resource(
       "projects/test-project/instances/test-instance/databases/test-database");
+  google::cloud::internal::OptionsSpan span(
+      google::cloud::internal::MergeOptions(Options{}, conn->options()));
   auto response = conn->GetIamPolicy(request);
   EXPECT_EQ(StatusCode::kDeadlineExceeded, response.status().code());
 }
@@ -631,6 +675,8 @@ TEST(GoldenThingAdminConnectionTest, TestIamPermissionsSuccess) {
   request.set_resource(
       "projects/test-project/instances/test-instance/databases/test-database");
   request.add_permissions(expected_permission);
+  google::cloud::internal::OptionsSpan span(
+      google::cloud::internal::MergeOptions(Options{}, conn->options()));
   auto response = conn->TestIamPermissions(request);
   EXPECT_STATUS_OK(response);
   ASSERT_EQ(1, response->permissions_size());
@@ -646,6 +692,8 @@ TEST(GoldenThingAdminConnectionTest, TestIamPermissionsPermanentError) {
   google::iam::v1::TestIamPermissionsRequest request;
   request.set_resource(
       "projects/test-project/instances/test-instance/databases/test-database");
+  google::cloud::internal::OptionsSpan span(
+      google::cloud::internal::MergeOptions(Options{}, conn->options()));
   auto response = conn->TestIamPermissions(request);
   EXPECT_EQ(StatusCode::kPermissionDenied, response.status().code());
 }
@@ -660,6 +708,8 @@ TEST(GoldenThingAdminConnectionTest, TestIamPermissionsTooManyTransients) {
   google::iam::v1::TestIamPermissionsRequest request;
   request.set_resource(
       "projects/test-project/instances/test-instance/databases/test-database");
+  google::cloud::internal::OptionsSpan span(
+      google::cloud::internal::MergeOptions(Options{}, conn->options()));
   auto response = conn->TestIamPermissions(request);
   EXPECT_EQ(StatusCode::kDeadlineExceeded, response.status().code());
 }
@@ -694,6 +744,8 @@ TEST(GoldenThingAdminConnectionTest, CreateBackupSuccess) {
   request.set_parent("projects/test-project/instances/test-instance");
   request.set_backup_id("test-backup");
   request.mutable_backup()->set_name("test-backup");
+  google::cloud::internal::OptionsSpan span(
+      google::cloud::internal::MergeOptions(Options{}, conn->options()));
   auto fut = conn->CreateBackup(request);
   ASSERT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(10)));
   auto backup = fut.get();
@@ -729,6 +781,8 @@ TEST(GoldenThingAdminConnectionTest, CreateBackupCancel) {
       });
   auto conn = CreateTestingConnection(std::move(mock));
   ::google::test::admin::database::v1::CreateBackupRequest request;
+  google::cloud::internal::OptionsSpan span(
+      google::cloud::internal::MergeOptions(Options{}, conn->options()));
   auto fut = conn->CreateBackup(request);
   get.PopFront().set_value(op);
   auto g = get.PopFront();
@@ -758,6 +812,8 @@ TEST(GoldenThingAdminConnectionTest, GetBackupSuccess) {
   auto conn = CreateTestingConnection(std::move(mock));
   ::google::test::admin::database::v1::GetBackupRequest request;
   request.set_name(expected_name);
+  google::cloud::internal::OptionsSpan span(
+      google::cloud::internal::MergeOptions(Options{}, conn->options()));
   auto response = conn->GetBackup(request);
   EXPECT_STATUS_OK(response);
   EXPECT_EQ(::google::test::admin::database::v1::Backup::READY,
@@ -772,6 +828,8 @@ TEST(GoldenThingAdminConnectionTest, GetBackupPermanentError) {
       .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
   auto conn = CreateTestingConnection(std::move(mock));
   ::google::test::admin::database::v1::GetBackupRequest request;
+  google::cloud::internal::OptionsSpan span(
+      google::cloud::internal::MergeOptions(Options{}, conn->options()));
   auto response = conn->GetBackup(request);
   EXPECT_EQ(StatusCode::kPermissionDenied, response.status().code());
 }
@@ -785,6 +843,8 @@ TEST(GoldenThingAdminConnectionTest, GetBackupTooManyTransients) {
           Return(Status(StatusCode::kDeadlineExceeded, "try-again")));
   auto conn = CreateTestingConnection(std::move(mock));
   ::google::test::admin::database::v1::GetBackupRequest request;
+  google::cloud::internal::OptionsSpan span(
+      google::cloud::internal::MergeOptions(Options{}, conn->options()));
   auto response = conn->GetBackup(request);
   EXPECT_EQ(StatusCode::kDeadlineExceeded, response.status().code());
 }
@@ -811,6 +871,8 @@ TEST(GoldenThingAdminConnectionTest, UpdateBackupSuccess) {
   google::test::admin::database::v1::UpdateBackupRequest request;
   request.mutable_backup()->set_name(
       "projects/test-project/instances/test-instance/backups/test-backup");
+  google::cloud::internal::OptionsSpan span(
+      google::cloud::internal::MergeOptions(Options{}, conn->options()));
   auto response = conn->UpdateBackup(request);
   EXPECT_STATUS_OK(response);
   EXPECT_EQ(::google::test::admin::database::v1::Backup::READY,
@@ -825,6 +887,8 @@ TEST(GoldenThingAdminConnectionTest, UpdateBackupPermanentError) {
       .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
   auto conn = CreateTestingConnection(std::move(mock));
   google::test::admin::database::v1::UpdateBackupRequest request;
+  google::cloud::internal::OptionsSpan span(
+      google::cloud::internal::MergeOptions(Options{}, conn->options()));
   auto response = conn->UpdateBackup(request);
   EXPECT_EQ(StatusCode::kPermissionDenied, response.status().code());
 }
@@ -837,6 +901,8 @@ TEST(GoldenThingAdminConnectionTest, UpdateBackupTooManyTransients) {
           Return(Status(StatusCode::kDeadlineExceeded, "try-again")));
   auto conn = CreateTestingConnection(std::move(mock));
   google::test::admin::database::v1::UpdateBackupRequest request;
+  google::cloud::internal::OptionsSpan span(
+      google::cloud::internal::MergeOptions(Options{}, conn->options()));
   auto response = conn->UpdateBackup(request);
   EXPECT_EQ(StatusCode::kDeadlineExceeded, response.status().code());
 }
@@ -858,6 +924,8 @@ TEST(GoldenThingAdminConnectionTest, DeleteBackupSuccess) {
   auto conn = CreateTestingConnection(std::move(mock));
   ::google::test::admin::database::v1::DeleteBackupRequest request;
   request.set_name(expected_name);
+  google::cloud::internal::OptionsSpan span(
+      google::cloud::internal::MergeOptions(Options{}, conn->options()));
   auto status = conn->DeleteBackup(request);
   EXPECT_STATUS_OK(status);
 }
@@ -871,6 +939,8 @@ TEST(GoldenThingAdminConnectionTest, DeleteBackupPermanentError) {
   ::google::test::admin::database::v1::DeleteBackupRequest request;
   request.set_name(
       "projects/test-project/instances/test-instance/backups/test-backup");
+  google::cloud::internal::OptionsSpan span(
+      google::cloud::internal::MergeOptions(Options{}, conn->options()));
   auto status = conn->DeleteBackup(request);
   EXPECT_EQ(StatusCode::kPermissionDenied, status.code());
 }
@@ -885,6 +955,8 @@ TEST(GoldenThingAdminConnectionTest, DeleteBackupTooManyTransients) {
   ::google::test::admin::database::v1::DeleteBackupRequest request;
   request.set_name(
       "projects/test-project/instances/test-instance/backups/test-backup");
+  google::cloud::internal::OptionsSpan span(
+      google::cloud::internal::MergeOptions(Options{}, conn->options()));
   auto status = conn->DeleteBackup(request);
   EXPECT_EQ(StatusCode::kDeadlineExceeded, status.code());
 }
@@ -937,6 +1009,8 @@ TEST(GoldenThingAdminConnectionTest, ListBackups) {
   ::google::test::admin::database::v1::ListBackupsRequest request;
   request.set_parent("projects/test-project/instances/test-instance");
   std::vector<std::string> actual_names;
+  google::cloud::internal::OptionsSpan span(
+      google::cloud::internal::MergeOptions(Options{}, conn->options()));
   for (auto const& backup : conn->ListBackups(request)) {
     ASSERT_STATUS_OK(backup);
     actual_names.push_back(backup->name());
@@ -952,6 +1026,8 @@ TEST(GoldenThingAdminConnectionTest, ListBackupsPermanentFailure) {
   auto conn = CreateTestingConnection(std::move(mock));
   ::google::test::admin::database::v1::ListBackupsRequest request;
   request.set_parent("projects/test-project/instances/test-instance");
+  google::cloud::internal::OptionsSpan span(
+      google::cloud::internal::MergeOptions(Options{}, conn->options()));
   auto range = conn->ListBackups(request);
   auto begin = range.begin();
   ASSERT_NE(begin, range.end());
@@ -967,6 +1043,8 @@ TEST(GoldenThingAdminConnectionTest, ListBackupsTooManyFailures) {
   auto conn = CreateTestingConnection(std::move(mock));
   ::google::test::admin::database::v1::ListBackupsRequest request;
   request.set_parent("projects/test-project/instances/test-instance");
+  google::cloud::internal::OptionsSpan span(
+      google::cloud::internal::MergeOptions(Options{}, conn->options()));
   auto range = conn->ListBackups(request);
   auto begin = range.begin();
   ASSERT_NE(begin, range.end());
@@ -1006,6 +1084,8 @@ TEST(GoldenThingAdminConnectionTest, RestoreDatabaseSuccess) {
       "projects/test-project/instances/test-instance/databases/test-database");
   request.set_backup(
       "projects/test-project/instances/test-instance/backups/test-backup");
+  google::cloud::internal::OptionsSpan span(
+      google::cloud::internal::MergeOptions(Options{}, conn->options()));
   auto fut = conn->RestoreDatabase(request);
   ASSERT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(10)));
   auto db = fut.get();
@@ -1042,6 +1122,8 @@ TEST(GoldenThingAdminConnectionTest, RestoreBackupCancel) {
       });
   auto conn = CreateTestingConnection(std::move(mock));
   ::google::test::admin::database::v1::RestoreDatabaseRequest request;
+  google::cloud::internal::OptionsSpan span(
+      google::cloud::internal::MergeOptions(Options{}, conn->options()));
   auto fut = conn->RestoreDatabase(request);
   get.PopFront().set_value(op);
   auto g = get.PopFront();
@@ -1102,6 +1184,8 @@ TEST(GoldenThingAdminConnectionTest, ListDatabaseOperations) {
   ::google::test::admin::database::v1::ListDatabaseOperationsRequest request;
   request.set_parent("projects/test-project/instances/test-instance");
   std::vector<std::string> actual_names;
+  google::cloud::internal::OptionsSpan span(
+      google::cloud::internal::MergeOptions(Options{}, conn->options()));
   for (auto const& operation : conn->ListDatabaseOperations(request)) {
     ASSERT_STATUS_OK(operation);
     actual_names.push_back(operation->name());
@@ -1117,6 +1201,8 @@ TEST(GoldenThingAdminConnectionTest, ListDatabaseOperationsPermanentFailure) {
   auto conn = CreateTestingConnection(std::move(mock));
   ::google::test::admin::database::v1::ListDatabaseOperationsRequest request;
   request.set_parent("projects/test-project/instances/test-instance");
+  google::cloud::internal::OptionsSpan span(
+      google::cloud::internal::MergeOptions(Options{}, conn->options()));
   auto range = conn->ListDatabaseOperations(request);
   auto begin = range.begin();
   ASSERT_NE(begin, range.end());
@@ -1132,6 +1218,8 @@ TEST(GoldenThingAdminConnectionTest, ListDatabaseOperationsTooManyFailures) {
   auto conn = CreateTestingConnection(std::move(mock));
   ::google::test::admin::database::v1::ListDatabaseOperationsRequest request;
   request.set_parent("projects/test-project/instances/test-instance");
+  google::cloud::internal::OptionsSpan span(
+      google::cloud::internal::MergeOptions(Options{}, conn->options()));
   auto range = conn->ListDatabaseOperations(request);
   auto begin = range.begin();
   ASSERT_NE(begin, range.end());
@@ -1184,6 +1272,8 @@ TEST(GoldenThingAdminConnectionTest, ListBackupOperations) {
   ::google::test::admin::database::v1::ListBackupOperationsRequest request;
   request.set_parent("projects/test-project/instances/test-instance");
   std::vector<std::string> actual_names;
+  google::cloud::internal::OptionsSpan span(
+      google::cloud::internal::MergeOptions(Options{}, conn->options()));
   for (auto const& operation : conn->ListBackupOperations(request)) {
     ASSERT_STATUS_OK(operation);
     actual_names.push_back(operation->name());
@@ -1199,6 +1289,8 @@ TEST(GoldenThingAdminConnectionTest, ListBackupOperationsPermanentFailure) {
   auto conn = CreateTestingConnection(std::move(mock));
   ::google::test::admin::database::v1::ListBackupOperationsRequest request;
   request.set_parent("projects/test-project/instances/test-instance");
+  google::cloud::internal::OptionsSpan span(
+      google::cloud::internal::MergeOptions(Options{}, conn->options()));
   auto range = conn->ListBackupOperations(request);
   auto begin = range.begin();
   ASSERT_NE(begin, range.end());
@@ -1214,6 +1306,8 @@ TEST(GoldenThingAdminConnectionTest, ListBackupOperationsTooManyFailures) {
   auto conn = CreateTestingConnection(std::move(mock));
   ::google::test::admin::database::v1::ListBackupOperationsRequest request;
   request.set_parent("projects/test-project/instances/test-instance");
+  google::cloud::internal::OptionsSpan span(
+      google::cloud::internal::MergeOptions(Options{}, conn->options()));
   auto range = conn->ListBackupOperations(request);
   auto begin = range.begin();
   ASSERT_NE(begin, range.end());
@@ -1232,6 +1326,8 @@ TEST(GoldenThingAdminConnectionTest, AsyncGetDatabaseSuccess) {
           });
   auto conn = CreateTestingConnection(std::move(mock));
   ::google::test::admin::database::v1::GetDatabaseRequest dbase;
+  google::cloud::internal::OptionsSpan span(
+      google::cloud::internal::MergeOptions(Options{}, conn->options()));
   auto fut = conn->AsyncGetDatabase(dbase);
   ASSERT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(10)));
   auto db = fut.get();
@@ -1253,6 +1349,8 @@ TEST(GoldenThingAdminConnectionTest, AsyncGetDatabaseTooManyFailures) {
 
   auto conn = CreateTestingConnection(std::move(mock));
   ::google::test::admin::database::v1::GetDatabaseRequest dbase;
+  google::cloud::internal::OptionsSpan span(
+      google::cloud::internal::MergeOptions(Options{}, conn->options()));
   auto fut = conn->AsyncGetDatabase(dbase);
   ASSERT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(10)));
   auto db = fut.get();
@@ -1283,6 +1381,8 @@ TEST(GoldenThingAdminConnectionTest, AsyncGetDatabaseCancel) {
 
   auto conn = CreateTestingConnection(std::move(mock));
   ::google::test::admin::database::v1::GetDatabaseRequest dbase;
+  google::cloud::internal::OptionsSpan span(
+      google::cloud::internal::MergeOptions(Options{}, conn->options()));
   auto fut = conn->AsyncGetDatabase(dbase);
   ASSERT_EQ(std::future_status::timeout,
             fut.wait_for(std::chrono::milliseconds(10)));
@@ -1314,6 +1414,8 @@ TEST(GoldenThingAdminConnectionTest, AsyncDropDatabaseSuccess) {
   ::google::test::admin::database::v1::DropDatabaseRequest request;
   request.set_database(
       "projects/test-project/instances/test-instance/databases/test-database");
+  google::cloud::internal::OptionsSpan span(
+      google::cloud::internal::MergeOptions(Options{}, conn->options()));
   auto fut = conn->AsyncDropDatabase(request);
   ASSERT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(10)));
   auto status = fut.get();
@@ -1340,6 +1442,8 @@ TEST(GoldenThingAdminConnectionTest, AsyncDropDatabaseFailure) {
   ::google::test::admin::database::v1::DropDatabaseRequest request;
   request.set_database(
       "projects/test-project/instances/test-instance/databases/test-database");
+  google::cloud::internal::OptionsSpan span(
+      google::cloud::internal::MergeOptions(Options{}, conn->options()));
   auto fut = conn->AsyncDropDatabase(request);
   ASSERT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(10)));
   auto status = fut.get();
@@ -1376,6 +1480,8 @@ TEST(GoldenThingAdminConnectionTest, AsyncDropDatabaseCancel) {
   ::google::test::admin::database::v1::DropDatabaseRequest request;
   request.set_database(
       "projects/test-project/instances/test-instance/databases/test-database");
+  google::cloud::internal::OptionsSpan span(
+      google::cloud::internal::MergeOptions(Options{}, conn->options()));
   auto fut = conn->AsyncDropDatabase(request);
   ASSERT_EQ(std::future_status::timeout,
             fut.wait_for(std::chrono::milliseconds(10)));
@@ -1423,6 +1529,8 @@ TEST(GoldenThingAdminConnectionTest, TracingEnabled) {
           .set<GoldenThingAdminRetryPolicyOption>(
               GoldenThingAdminLimitedErrorCountRetryPolicy(0).clone()));
   auto conn = MakeGoldenThingAdminConnectionRest(std::move(options));
+  google::cloud::internal::OptionsSpan span(
+      google::cloud::internal::MergeOptions(Options{}, conn->options()));
   // Make a call, which should fail fast. The error itself is not important.
   (void)conn->DeleteBackup({});
 
@@ -1441,6 +1549,8 @@ TEST(GoldenThingAdminConnectionTest, TracingDisabled) {
           .set<GoldenThingAdminRetryPolicyOption>(
               GoldenThingAdminLimitedErrorCountRetryPolicy(0).clone()));
   auto conn = MakeGoldenThingAdminConnectionRest(std::move(options));
+  google::cloud::internal::OptionsSpan span(
+      google::cloud::internal::MergeOptions(Options{}, conn->options()));
   // Make a call, which should fail fast. The error itself is not important.
   (void)conn->DeleteBackup({});
 

@@ -52,29 +52,18 @@ class GoldenRestOnlyRestConnectionImpl
   Noop(google::protobuf::Empty const& request) override;
 
  private:
-  std::unique_ptr<golden_v1::GoldenRestOnlyRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<golden_v1::GoldenRestOnlyRetryPolicyOption>()) {
-      return options.get<golden_v1::GoldenRestOnlyRetryPolicyOption>()->clone();
-    }
-    return options_.get<golden_v1::GoldenRestOnlyRetryPolicyOption>()->clone();
+  static std::unique_ptr<golden_v1::GoldenRestOnlyRetryPolicy>
+  retry_policy(Options const& options) {
+    return options.get<golden_v1::GoldenRestOnlyRetryPolicyOption>()->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<golden_v1::GoldenRestOnlyBackoffPolicyOption>()) {
-      return options.get<golden_v1::GoldenRestOnlyBackoffPolicyOption>()->clone();
-    }
-    return options_.get<golden_v1::GoldenRestOnlyBackoffPolicyOption>()->clone();
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<golden_v1::GoldenRestOnlyBackoffPolicyOption>()->clone();
   }
 
-  std::unique_ptr<golden_v1::GoldenRestOnlyConnectionIdempotencyPolicy> idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<golden_v1::GoldenRestOnlyConnectionIdempotencyPolicyOption>()) {
-      return options.get<golden_v1::GoldenRestOnlyConnectionIdempotencyPolicyOption>()->clone();
-    }
-    return options_.get<golden_v1::GoldenRestOnlyConnectionIdempotencyPolicyOption>()->
-clone();
+  static std::unique_ptr<golden_v1::GoldenRestOnlyConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options.get<golden_v1::GoldenRestOnlyConnectionIdempotencyPolicyOption>()->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

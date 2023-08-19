@@ -85,43 +85,6 @@ class JobServiceConnectionImpl : public talent_v4::JobServiceConnection {
       google::cloud::talent::v4::SearchJobsRequest const& request) override;
 
  private:
-  std::unique_ptr<talent_v4::JobServiceRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<talent_v4::JobServiceRetryPolicyOption>()) {
-      return options.get<talent_v4::JobServiceRetryPolicyOption>()->clone();
-    }
-    return options_.get<talent_v4::JobServiceRetryPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<talent_v4::JobServiceBackoffPolicyOption>()) {
-      return options.get<talent_v4::JobServiceBackoffPolicyOption>()->clone();
-    }
-    return options_.get<talent_v4::JobServiceBackoffPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<talent_v4::JobServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<talent_v4::JobServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<talent_v4::JobServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<talent_v4::JobServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<talent_v4::JobServicePollingPolicyOption>()) {
-      return options.get<talent_v4::JobServicePollingPolicyOption>()->clone();
-    }
-    return options_.get<talent_v4::JobServicePollingPolicyOption>()->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<talent_v4_internal::JobServiceStub> stub_;
   Options options_;

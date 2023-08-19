@@ -90,51 +90,6 @@ class ServiceMonitoringServiceConnectionImpl
       override;
 
  private:
-  std::unique_ptr<monitoring_v3::ServiceMonitoringServiceRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<monitoring_v3::ServiceMonitoringServiceRetryPolicyOption>()) {
-      return options
-          .get<monitoring_v3::ServiceMonitoringServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<monitoring_v3::ServiceMonitoringServiceRetryPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            monitoring_v3::ServiceMonitoringServiceBackoffPolicyOption>()) {
-      return options
-          .get<monitoring_v3::ServiceMonitoringServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<monitoring_v3::ServiceMonitoringServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<
-      monitoring_v3::ServiceMonitoringServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            monitoring_v3::
-                ServiceMonitoringServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<monitoring_v3::
-                   ServiceMonitoringServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<monitoring_v3::
-                 ServiceMonitoringServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<monitoring_v3_internal::ServiceMonitoringServiceStub> stub_;
   Options options_;

@@ -113,39 +113,6 @@ class GoldenThingAdminConnectionImpl
   AsyncDropDatabase(google::test::admin::database::v1::DropDatabaseRequest const& request) override;
 
  private:
-  std::unique_ptr<golden_v1::GoldenThingAdminRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<golden_v1::GoldenThingAdminRetryPolicyOption>()) {
-      return options.get<golden_v1::GoldenThingAdminRetryPolicyOption>()->clone();
-    }
-    return options_.get<golden_v1::GoldenThingAdminRetryPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<golden_v1::GoldenThingAdminBackoffPolicyOption>()) {
-      return options.get<golden_v1::GoldenThingAdminBackoffPolicyOption>()->clone();
-    }
-    return options_.get<golden_v1::GoldenThingAdminBackoffPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<golden_v1::GoldenThingAdminConnectionIdempotencyPolicy> idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<golden_v1::GoldenThingAdminConnectionIdempotencyPolicyOption>()) {
-      return options.get<golden_v1::GoldenThingAdminConnectionIdempotencyPolicyOption>()->clone();
-    }
-    return options_.get<golden_v1::GoldenThingAdminConnectionIdempotencyPolicyOption>()->
-clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<golden_v1::GoldenThingAdminPollingPolicyOption>()) {
-      return options.get<golden_v1::GoldenThingAdminPollingPolicyOption>()->clone();
-    }
-    return options_.get<golden_v1::GoldenThingAdminPollingPolicyOption>()->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<golden_v1_internal::GoldenThingAdminStub> stub_;
   Options options_;

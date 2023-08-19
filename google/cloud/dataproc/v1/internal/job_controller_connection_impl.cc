@@ -30,6 +30,29 @@ namespace google {
 namespace cloud {
 namespace dataproc_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<dataproc_v1::JobControllerRetryPolicy> retry_policy(
+    Options const& options) {
+  return options.get<dataproc_v1::JobControllerRetryPolicyOption>()->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options.get<dataproc_v1::JobControllerBackoffPolicyOption>()->clone();
+}
+
+std::unique_ptr<dataproc_v1::JobControllerConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options
+      .get<dataproc_v1::JobControllerConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+  return options.get<dataproc_v1::JobControllerPollingPolicyOption>()->clone();
+}
+
+}  // namespace
 
 JobControllerConnectionImpl::JobControllerConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
@@ -43,9 +66,10 @@ JobControllerConnectionImpl::JobControllerConnectionImpl(
 StatusOr<google::cloud::dataproc::v1::Job>
 JobControllerConnectionImpl::SubmitJob(
     google::cloud::dataproc::v1::SubmitJobRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->SubmitJob(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->SubmitJob(request),
       [this](grpc::ClientContext& context,
              google::cloud::dataproc::v1::SubmitJobRequest const& request) {
         return stub_->SubmitJob(context, request);
@@ -56,36 +80,40 @@ JobControllerConnectionImpl::SubmitJob(
 future<StatusOr<google::cloud::dataproc::v1::Job>>
 JobControllerConnectionImpl::SubmitJobAsOperation(
     google::cloud::dataproc::v1::SubmitJobRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::dataproc::v1::Job>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::dataproc::v1::SubmitJobRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::dataproc::v1::SubmitJobRequest const& request) {
         return stub->AsyncSubmitJobAsOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::dataproc::v1::Job>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->SubmitJobAsOperation(request), polling_policy(),
-      __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->SubmitJobAsOperation(request),
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::cloud::dataproc::v1::Job> JobControllerConnectionImpl::GetJob(
     google::cloud::dataproc::v1::GetJobRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(), idempotency_policy()->GetJob(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetJob(request),
       [this](grpc::ClientContext& context,
              google::cloud::dataproc::v1::GetJobRequest const& request) {
         return stub_->GetJob(context, request);
@@ -97,17 +125,17 @@ StreamRange<google::cloud::dataproc::v1::Job>
 JobControllerConnectionImpl::ListJobs(
     google::cloud::dataproc::v1::ListJobsRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<dataproc_v1::JobControllerRetryPolicy const>(
-      retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListJobs(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListJobs(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::dataproc::v1::Job>>(
       std::move(request),
-      [stub, retry, backoff, idempotency,
-       function_name](google::cloud::dataproc::v1::ListJobsRequest const& r) {
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<dataproc_v1::JobControllerRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          google::cloud::dataproc::v1::ListJobsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
@@ -128,9 +156,10 @@ JobControllerConnectionImpl::ListJobs(
 StatusOr<google::cloud::dataproc::v1::Job>
 JobControllerConnectionImpl::UpdateJob(
     google::cloud::dataproc::v1::UpdateJobRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UpdateJob(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateJob(request),
       [this](grpc::ClientContext& context,
              google::cloud::dataproc::v1::UpdateJobRequest const& request) {
         return stub_->UpdateJob(context, request);
@@ -141,9 +170,10 @@ JobControllerConnectionImpl::UpdateJob(
 StatusOr<google::cloud::dataproc::v1::Job>
 JobControllerConnectionImpl::CancelJob(
     google::cloud::dataproc::v1::CancelJobRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CancelJob(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CancelJob(request),
       [this](grpc::ClientContext& context,
              google::cloud::dataproc::v1::CancelJobRequest const& request) {
         return stub_->CancelJob(context, request);
@@ -153,9 +183,10 @@ JobControllerConnectionImpl::CancelJob(
 
 Status JobControllerConnectionImpl::DeleteJob(
     google::cloud::dataproc::v1::DeleteJobRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteJob(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteJob(request),
       [this](grpc::ClientContext& context,
              google::cloud::dataproc::v1::DeleteJobRequest const& request) {
         return stub_->DeleteJob(context, request);

@@ -28,6 +28,31 @@ namespace google {
 namespace cloud {
 namespace confidentialcomputing_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<confidentialcomputing_v1::ConfidentialComputingRetryPolicy>
+retry_policy(Options const& options) {
+  return options
+      .get<confidentialcomputing_v1::ConfidentialComputingRetryPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options
+      .get<confidentialcomputing_v1::ConfidentialComputingBackoffPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<
+    confidentialcomputing_v1::ConfidentialComputingConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options
+      .get<confidentialcomputing_v1::
+               ConfidentialComputingConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 ConfidentialComputingConnectionImpl::ConfidentialComputingConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
@@ -44,9 +69,10 @@ StatusOr<google::cloud::confidentialcomputing::v1::Challenge>
 ConfidentialComputingConnectionImpl::CreateChallenge(
     google::cloud::confidentialcomputing::v1::CreateChallengeRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateChallenge(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateChallenge(request),
       [this](grpc::ClientContext& context,
              google::cloud::confidentialcomputing::v1::
                  CreateChallengeRequest const& request) {
@@ -59,9 +85,10 @@ StatusOr<google::cloud::confidentialcomputing::v1::VerifyAttestationResponse>
 ConfidentialComputingConnectionImpl::VerifyAttestation(
     google::cloud::confidentialcomputing::v1::VerifyAttestationRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->VerifyAttestation(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->VerifyAttestation(request),
       [this](grpc::ClientContext& context,
              google::cloud::confidentialcomputing::v1::
                  VerifyAttestationRequest const& request) {

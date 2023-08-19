@@ -29,6 +29,25 @@ namespace google {
 namespace cloud {
 namespace retail_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<retail_v2::ControlServiceRetryPolicy> retry_policy(
+    Options const& options) {
+  return options.get<retail_v2::ControlServiceRetryPolicyOption>()->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options.get<retail_v2::ControlServiceBackoffPolicyOption>()->clone();
+}
+
+std::unique_ptr<retail_v2::ControlServiceConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options
+      .get<retail_v2::ControlServiceConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 ControlServiceConnectionImpl::ControlServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
@@ -42,9 +61,10 @@ ControlServiceConnectionImpl::ControlServiceConnectionImpl(
 StatusOr<google::cloud::retail::v2::Control>
 ControlServiceConnectionImpl::CreateControl(
     google::cloud::retail::v2::CreateControlRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateControl(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateControl(request),
       [this](grpc::ClientContext& context,
              google::cloud::retail::v2::CreateControlRequest const& request) {
         return stub_->CreateControl(context, request);
@@ -54,9 +74,10 @@ ControlServiceConnectionImpl::CreateControl(
 
 Status ControlServiceConnectionImpl::DeleteControl(
     google::cloud::retail::v2::DeleteControlRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteControl(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteControl(request),
       [this](grpc::ClientContext& context,
              google::cloud::retail::v2::DeleteControlRequest const& request) {
         return stub_->DeleteControl(context, request);
@@ -67,9 +88,10 @@ Status ControlServiceConnectionImpl::DeleteControl(
 StatusOr<google::cloud::retail::v2::Control>
 ControlServiceConnectionImpl::UpdateControl(
     google::cloud::retail::v2::UpdateControlRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UpdateControl(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateControl(request),
       [this](grpc::ClientContext& context,
              google::cloud::retail::v2::UpdateControlRequest const& request) {
         return stub_->UpdateControl(context, request);
@@ -80,9 +102,10 @@ ControlServiceConnectionImpl::UpdateControl(
 StatusOr<google::cloud::retail::v2::Control>
 ControlServiceConnectionImpl::GetControl(
     google::cloud::retail::v2::GetControlRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetControl(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetControl(request),
       [this](grpc::ClientContext& context,
              google::cloud::retail::v2::GetControlRequest const& request) {
         return stub_->GetControl(context, request);
@@ -94,17 +117,17 @@ StreamRange<google::cloud::retail::v2::Control>
 ControlServiceConnectionImpl::ListControls(
     google::cloud::retail::v2::ListControlsRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<retail_v2::ControlServiceRetryPolicy const>(
-      retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListControls(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListControls(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::retail::v2::Control>>(
       std::move(request),
-      [stub, retry, backoff, idempotency,
-       function_name](google::cloud::retail::v2::ListControlsRequest const& r) {
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<retail_v2::ControlServiceRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          google::cloud::retail::v2::ListControlsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](

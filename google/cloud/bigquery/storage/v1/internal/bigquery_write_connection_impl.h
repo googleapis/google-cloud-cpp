@@ -78,45 +78,6 @@ class BigQueryWriteConnectionImpl
       override;
 
  private:
-  std::unique_ptr<bigquery_storage_v1::BigQueryWriteRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<bigquery_storage_v1::BigQueryWriteRetryPolicyOption>()) {
-      return options.get<bigquery_storage_v1::BigQueryWriteRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<bigquery_storage_v1::BigQueryWriteRetryPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<bigquery_storage_v1::BigQueryWriteBackoffPolicyOption>()) {
-      return options
-          .get<bigquery_storage_v1::BigQueryWriteBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<bigquery_storage_v1::BigQueryWriteBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<bigquery_storage_v1::BigQueryWriteConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<bigquery_storage_v1::
-                        BigQueryWriteConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<bigquery_storage_v1::
-                   BigQueryWriteConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<bigquery_storage_v1::
-                 BigQueryWriteConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<bigquery_storage_v1_internal::BigQueryWriteStub> stub_;
   Options options_;

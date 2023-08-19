@@ -88,64 +88,33 @@ class InstanceTemplatesRestConnectionImpl
                          TestIamPermissionsRequest const& request) override;
 
  private:
-  std::unique_ptr<compute_instance_templates_v1::InstanceTemplatesRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_instance_templates_v1::
-                        InstanceTemplatesRetryPolicyOption>()) {
-      return options
-          .get<compute_instance_templates_v1::
-                   InstanceTemplatesRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<
+      compute_instance_templates_v1::InstanceTemplatesRetryPolicy>
+  retry_policy(Options const& options) {
+    return options
         .get<
             compute_instance_templates_v1::InstanceTemplatesRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_instance_templates_v1::
-                        InstanceTemplatesBackoffPolicyOption>()) {
-      return options
-          .get<compute_instance_templates_v1::
-                   InstanceTemplatesBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options
         .get<compute_instance_templates_v1::
                  InstanceTemplatesBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<compute_instance_templates_v1::
-                      InstanceTemplatesConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_instance_templates_v1::
-                        InstanceTemplatesConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<compute_instance_templates_v1::
-                   InstanceTemplatesConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<compute_instance_templates_v1::
+                             InstanceTemplatesConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<compute_instance_templates_v1::
                  InstanceTemplatesConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_instance_templates_v1::
-                        InstanceTemplatesPollingPolicyOption>()) {
-      return options
-          .get<compute_instance_templates_v1::
-                   InstanceTemplatesPollingPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options
         .get<compute_instance_templates_v1::
                  InstanceTemplatesPollingPolicyOption>()
         ->clone();

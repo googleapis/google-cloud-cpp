@@ -86,58 +86,29 @@ class VpnGatewaysRestConnectionImpl
                          TestIamPermissionsRequest const& request) override;
 
  private:
-  std::unique_ptr<compute_vpn_gateways_v1::VpnGatewaysRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_vpn_gateways_v1::VpnGatewaysRetryPolicyOption>()) {
-      return options
-          .get<compute_vpn_gateways_v1::VpnGatewaysRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<compute_vpn_gateways_v1::VpnGatewaysRetryPolicyOption>()
+  static std::unique_ptr<compute_vpn_gateways_v1::VpnGatewaysRetryPolicy>
+  retry_policy(Options const& options) {
+    return options.get<compute_vpn_gateways_v1::VpnGatewaysRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<compute_vpn_gateways_v1::VpnGatewaysBackoffPolicyOption>()) {
-      return options
-          .get<compute_vpn_gateways_v1::VpnGatewaysBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options
         .get<compute_vpn_gateways_v1::VpnGatewaysBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<
+  static std::unique_ptr<
       compute_vpn_gateways_v1::VpnGatewaysConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_vpn_gateways_v1::
-                        VpnGatewaysConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<compute_vpn_gateways_v1::
-                   VpnGatewaysConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  idempotency_policy(Options const& options) {
+    return options
         .get<compute_vpn_gateways_v1::
                  VpnGatewaysConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<compute_vpn_gateways_v1::VpnGatewaysPollingPolicyOption>()) {
-      return options
-          .get<compute_vpn_gateways_v1::VpnGatewaysPollingPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options
         .get<compute_vpn_gateways_v1::VpnGatewaysPollingPolicyOption>()
         ->clone();
   }

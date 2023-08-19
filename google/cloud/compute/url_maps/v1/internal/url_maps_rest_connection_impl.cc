@@ -45,9 +45,10 @@ StatusOr<google::cloud::cpp::compute::v1::UrlMapsAggregatedList>
 UrlMapsRestConnectionImpl::AggregatedListUrlMaps(
     google::cloud::cpp::compute::url_maps::v1::
         AggregatedListUrlMapsRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->AggregatedListUrlMaps(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->AggregatedListUrlMaps(request),
       [this](rest_internal::RestContext& rest_context,
              google::cloud::cpp::compute::url_maps::v1::
                  AggregatedListUrlMapsRequest const& request) {
@@ -60,7 +61,7 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 UrlMapsRestConnectionImpl::DeleteUrlMaps(
     google::cloud::cpp::compute::url_maps::v1::DeleteUrlMapsRequest const&
         request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestLongRunningOperation<
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::v1::Operation,
@@ -69,29 +70,30 @@ UrlMapsRestConnectionImpl::DeleteUrlMaps(
       google::cloud::cpp::compute::global_operations::v1::
           DeleteGlobalOperationsRequest>(
       background_->cq(), request,
-      [stub](
+      [stub = stub_](
           CompletionQueue& cq,
           std::unique_ptr<rest_internal::RestContext> context,
           google::cloud::cpp::compute::url_maps::v1::DeleteUrlMapsRequest const&
               request) {
         return stub->AsyncDeleteUrlMaps(cq, std::move(context), request);
       },
-      [stub](CompletionQueue& cq,
-             std::unique_ptr<rest_internal::RestContext> context,
-             google::cloud::cpp::compute::global_operations::v1::
-                 GetGlobalOperationsRequest const& request) {
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::cpp::compute::global_operations::v1::
+                         GetGlobalOperationsRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](CompletionQueue& cq,
-             std::unique_ptr<rest_internal::RestContext> context,
-             google::cloud::cpp::compute::global_operations::v1::
-                 DeleteGlobalOperationsRequest const& request) {
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::cpp::compute::global_operations::v1::
+                         DeleteGlobalOperationsRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
          std::string const&) { return op; },
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteUrlMaps(request), polling_policy(), __func__,
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteUrlMaps(request),
+      polling_policy(*current), __func__,
       [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
       },
@@ -113,9 +115,10 @@ StatusOr<google::cloud::cpp::compute::v1::UrlMap>
 UrlMapsRestConnectionImpl::GetUrlMaps(
     google::cloud::cpp::compute::url_maps::v1::GetUrlMapsRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetUrlMaps(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetUrlMaps(request),
       [this](rest_internal::RestContext& rest_context,
              google::cloud::cpp::compute::url_maps::v1::GetUrlMapsRequest const&
                  request) { return stub_->GetUrlMaps(rest_context, request); },
@@ -126,7 +129,7 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 UrlMapsRestConnectionImpl::InsertUrlMaps(
     google::cloud::cpp::compute::url_maps::v1::InsertUrlMapsRequest const&
         request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestLongRunningOperation<
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::v1::Operation,
@@ -135,29 +138,30 @@ UrlMapsRestConnectionImpl::InsertUrlMaps(
       google::cloud::cpp::compute::global_operations::v1::
           DeleteGlobalOperationsRequest>(
       background_->cq(), request,
-      [stub](
+      [stub = stub_](
           CompletionQueue& cq,
           std::unique_ptr<rest_internal::RestContext> context,
           google::cloud::cpp::compute::url_maps::v1::InsertUrlMapsRequest const&
               request) {
         return stub->AsyncInsertUrlMaps(cq, std::move(context), request);
       },
-      [stub](CompletionQueue& cq,
-             std::unique_ptr<rest_internal::RestContext> context,
-             google::cloud::cpp::compute::global_operations::v1::
-                 GetGlobalOperationsRequest const& request) {
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::cpp::compute::global_operations::v1::
+                         GetGlobalOperationsRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](CompletionQueue& cq,
-             std::unique_ptr<rest_internal::RestContext> context,
-             google::cloud::cpp::compute::global_operations::v1::
-                 DeleteGlobalOperationsRequest const& request) {
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::cpp::compute::global_operations::v1::
+                         DeleteGlobalOperationsRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
          std::string const&) { return op; },
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->InsertUrlMaps(request), polling_policy(), __func__,
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->InsertUrlMaps(request),
+      polling_policy(*current), __func__,
       [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
       },
@@ -179,7 +183,7 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 UrlMapsRestConnectionImpl::InvalidateCache(
     google::cloud::cpp::compute::url_maps::v1::InvalidateCacheRequest const&
         request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestLongRunningOperation<
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::v1::Operation,
@@ -188,29 +192,29 @@ UrlMapsRestConnectionImpl::InvalidateCache(
       google::cloud::cpp::compute::global_operations::v1::
           DeleteGlobalOperationsRequest>(
       background_->cq(), request,
-      [stub](CompletionQueue& cq,
-             std::unique_ptr<rest_internal::RestContext> context,
-             google::cloud::cpp::compute::url_maps::v1::
-                 InvalidateCacheRequest const& request) {
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::cpp::compute::url_maps::v1::
+                         InvalidateCacheRequest const& request) {
         return stub->AsyncInvalidateCache(cq, std::move(context), request);
       },
-      [stub](CompletionQueue& cq,
-             std::unique_ptr<rest_internal::RestContext> context,
-             google::cloud::cpp::compute::global_operations::v1::
-                 GetGlobalOperationsRequest const& request) {
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::cpp::compute::global_operations::v1::
+                         GetGlobalOperationsRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](CompletionQueue& cq,
-             std::unique_ptr<rest_internal::RestContext> context,
-             google::cloud::cpp::compute::global_operations::v1::
-                 DeleteGlobalOperationsRequest const& request) {
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::cpp::compute::global_operations::v1::
+                         DeleteGlobalOperationsRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
          std::string const&) { return op; },
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->InvalidateCache(request), polling_policy(),
-      __func__,
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->InvalidateCache(request),
+      polling_policy(*current), __func__,
       [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
       },
@@ -232,16 +236,16 @@ StreamRange<google::cloud::cpp::compute::v1::UrlMap>
 UrlMapsRestConnectionImpl::ListUrlMaps(
     google::cloud::cpp::compute::url_maps::v1::ListUrlMapsRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<compute_url_maps_v1::UrlMapsRetryPolicy const>(
-      retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListUrlMaps(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListUrlMaps(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::cpp::compute::v1::UrlMap>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<compute_url_maps_v1::UrlMapsRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::cpp::compute::url_maps::v1::ListUrlMapsRequest const&
               r) {
         return google::cloud::rest_internal::RestRetryLoop(
@@ -266,7 +270,7 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 UrlMapsRestConnectionImpl::PatchUrlMaps(
     google::cloud::cpp::compute::url_maps::v1::PatchUrlMapsRequest const&
         request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestLongRunningOperation<
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::v1::Operation,
@@ -275,29 +279,30 @@ UrlMapsRestConnectionImpl::PatchUrlMaps(
       google::cloud::cpp::compute::global_operations::v1::
           DeleteGlobalOperationsRequest>(
       background_->cq(), request,
-      [stub](
+      [stub = stub_](
           CompletionQueue& cq,
           std::unique_ptr<rest_internal::RestContext> context,
           google::cloud::cpp::compute::url_maps::v1::PatchUrlMapsRequest const&
               request) {
         return stub->AsyncPatchUrlMaps(cq, std::move(context), request);
       },
-      [stub](CompletionQueue& cq,
-             std::unique_ptr<rest_internal::RestContext> context,
-             google::cloud::cpp::compute::global_operations::v1::
-                 GetGlobalOperationsRequest const& request) {
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::cpp::compute::global_operations::v1::
+                         GetGlobalOperationsRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](CompletionQueue& cq,
-             std::unique_ptr<rest_internal::RestContext> context,
-             google::cloud::cpp::compute::global_operations::v1::
-                 DeleteGlobalOperationsRequest const& request) {
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::cpp::compute::global_operations::v1::
+                         DeleteGlobalOperationsRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
          std::string const&) { return op; },
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->PatchUrlMaps(request), polling_policy(), __func__,
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->PatchUrlMaps(request),
+      polling_policy(*current), __func__,
       [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
       },
@@ -319,7 +324,7 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 UrlMapsRestConnectionImpl::UpdateUrlMaps(
     google::cloud::cpp::compute::url_maps::v1::UpdateUrlMapsRequest const&
         request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestLongRunningOperation<
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::v1::Operation,
@@ -328,29 +333,30 @@ UrlMapsRestConnectionImpl::UpdateUrlMaps(
       google::cloud::cpp::compute::global_operations::v1::
           DeleteGlobalOperationsRequest>(
       background_->cq(), request,
-      [stub](
+      [stub = stub_](
           CompletionQueue& cq,
           std::unique_ptr<rest_internal::RestContext> context,
           google::cloud::cpp::compute::url_maps::v1::UpdateUrlMapsRequest const&
               request) {
         return stub->AsyncUpdateUrlMaps(cq, std::move(context), request);
       },
-      [stub](CompletionQueue& cq,
-             std::unique_ptr<rest_internal::RestContext> context,
-             google::cloud::cpp::compute::global_operations::v1::
-                 GetGlobalOperationsRequest const& request) {
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::cpp::compute::global_operations::v1::
+                         GetGlobalOperationsRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](CompletionQueue& cq,
-             std::unique_ptr<rest_internal::RestContext> context,
-             google::cloud::cpp::compute::global_operations::v1::
-                 DeleteGlobalOperationsRequest const& request) {
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::cpp::compute::global_operations::v1::
+                         DeleteGlobalOperationsRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
          std::string const&) { return op; },
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UpdateUrlMaps(request), polling_policy(), __func__,
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateUrlMaps(request),
+      polling_policy(*current), __func__,
       [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
       },
@@ -371,8 +377,10 @@ UrlMapsRestConnectionImpl::UpdateUrlMaps(
 StatusOr<google::cloud::cpp::compute::v1::UrlMapsValidateResponse>
 UrlMapsRestConnectionImpl::Validate(
     google::cloud::cpp::compute::url_maps::v1::ValidateRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
-      retry_policy(), backoff_policy(), idempotency_policy()->Validate(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->Validate(request),
       [this](rest_internal::RestContext& rest_context,
              google::cloud::cpp::compute::url_maps::v1::ValidateRequest const&
                  request) { return stub_->Validate(rest_context, request); },

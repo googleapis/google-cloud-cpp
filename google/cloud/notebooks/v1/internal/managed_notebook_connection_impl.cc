@@ -30,6 +30,33 @@ namespace google {
 namespace cloud {
 namespace notebooks_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<notebooks_v1::ManagedNotebookServiceRetryPolicy> retry_policy(
+    Options const& options) {
+  return options.get<notebooks_v1::ManagedNotebookServiceRetryPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options.get<notebooks_v1::ManagedNotebookServiceBackoffPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<notebooks_v1::ManagedNotebookServiceConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options
+      .get<notebooks_v1::
+               ManagedNotebookServiceConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+  return options.get<notebooks_v1::ManagedNotebookServicePollingPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 ManagedNotebookServiceConnectionImpl::ManagedNotebookServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
@@ -44,17 +71,16 @@ StreamRange<google::cloud::notebooks::v1::Runtime>
 ManagedNotebookServiceConnectionImpl::ListRuntimes(
     google::cloud::notebooks::v1::ListRuntimesRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<notebooks_v1::ManagedNotebookServiceRetryPolicy const>(
-          retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListRuntimes(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListRuntimes(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::notebooks::v1::Runtime>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<notebooks_v1::ManagedNotebookServiceRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::notebooks::v1::ListRuntimesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
@@ -77,9 +103,10 @@ ManagedNotebookServiceConnectionImpl::ListRuntimes(
 StatusOr<google::cloud::notebooks::v1::Runtime>
 ManagedNotebookServiceConnectionImpl::GetRuntime(
     google::cloud::notebooks::v1::GetRuntimeRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetRuntime(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetRuntime(request),
       [this](grpc::ClientContext& context,
              google::cloud::notebooks::v1::GetRuntimeRequest const& request) {
         return stub_->GetRuntime(context, request);
@@ -90,270 +117,291 @@ ManagedNotebookServiceConnectionImpl::GetRuntime(
 future<StatusOr<google::cloud::notebooks::v1::Runtime>>
 ManagedNotebookServiceConnectionImpl::CreateRuntime(
     google::cloud::notebooks::v1::CreateRuntimeRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::notebooks::v1::Runtime>(
       background_->cq(), request,
-      [stub](
+      [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context,
           google::cloud::notebooks::v1::CreateRuntimeRequest const& request) {
         return stub->AsyncCreateRuntime(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::notebooks::v1::Runtime>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateRuntime(request), polling_policy(), __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateRuntime(request),
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::notebooks::v1::Runtime>>
 ManagedNotebookServiceConnectionImpl::UpdateRuntime(
     google::cloud::notebooks::v1::UpdateRuntimeRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::notebooks::v1::Runtime>(
       background_->cq(), request,
-      [stub](
+      [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context,
           google::cloud::notebooks::v1::UpdateRuntimeRequest const& request) {
         return stub->AsyncUpdateRuntime(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::notebooks::v1::Runtime>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UpdateRuntime(request), polling_policy(), __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateRuntime(request),
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::notebooks::v1::OperationMetadata>>
 ManagedNotebookServiceConnectionImpl::DeleteRuntime(
     google::cloud::notebooks::v1::DeleteRuntimeRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::notebooks::v1::OperationMetadata>(
       background_->cq(), request,
-      [stub](
+      [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context,
           google::cloud::notebooks::v1::DeleteRuntimeRequest const& request) {
         return stub->AsyncDeleteRuntime(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::notebooks::v1::OperationMetadata>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteRuntime(request), polling_policy(), __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteRuntime(request),
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::notebooks::v1::Runtime>>
 ManagedNotebookServiceConnectionImpl::StartRuntime(
     google::cloud::notebooks::v1::StartRuntimeRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::notebooks::v1::Runtime>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::notebooks::v1::StartRuntimeRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::notebooks::v1::StartRuntimeRequest const& request) {
         return stub->AsyncStartRuntime(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::notebooks::v1::Runtime>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->StartRuntime(request), polling_policy(), __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->StartRuntime(request),
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::notebooks::v1::Runtime>>
 ManagedNotebookServiceConnectionImpl::StopRuntime(
     google::cloud::notebooks::v1::StopRuntimeRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::notebooks::v1::Runtime>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::notebooks::v1::StopRuntimeRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::notebooks::v1::StopRuntimeRequest const& request) {
         return stub->AsyncStopRuntime(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::notebooks::v1::Runtime>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->StopRuntime(request), polling_policy(), __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->StopRuntime(request),
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::notebooks::v1::Runtime>>
 ManagedNotebookServiceConnectionImpl::SwitchRuntime(
     google::cloud::notebooks::v1::SwitchRuntimeRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::notebooks::v1::Runtime>(
       background_->cq(), request,
-      [stub](
+      [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context,
           google::cloud::notebooks::v1::SwitchRuntimeRequest const& request) {
         return stub->AsyncSwitchRuntime(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::notebooks::v1::Runtime>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->SwitchRuntime(request), polling_policy(), __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->SwitchRuntime(request),
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::notebooks::v1::Runtime>>
 ManagedNotebookServiceConnectionImpl::ResetRuntime(
     google::cloud::notebooks::v1::ResetRuntimeRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::notebooks::v1::Runtime>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::notebooks::v1::ResetRuntimeRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::notebooks::v1::ResetRuntimeRequest const& request) {
         return stub->AsyncResetRuntime(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::notebooks::v1::Runtime>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->ResetRuntime(request), polling_policy(), __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ResetRuntime(request),
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::notebooks::v1::Runtime>>
 ManagedNotebookServiceConnectionImpl::UpgradeRuntime(
     google::cloud::notebooks::v1::UpgradeRuntimeRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::notebooks::v1::Runtime>(
       background_->cq(), request,
-      [stub](
+      [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context,
           google::cloud::notebooks::v1::UpgradeRuntimeRequest const& request) {
         return stub->AsyncUpgradeRuntime(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::notebooks::v1::Runtime>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UpgradeRuntime(request), polling_policy(),
-      __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpgradeRuntime(request),
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::notebooks::v1::Runtime>>
 ManagedNotebookServiceConnectionImpl::ReportRuntimeEvent(
     google::cloud::notebooks::v1::ReportRuntimeEventRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::notebooks::v1::Runtime>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::notebooks::v1::ReportRuntimeEventRequest const&
-                 request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::notebooks::v1::ReportRuntimeEventRequest const&
+              request) {
         return stub->AsyncReportRuntimeEvent(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::notebooks::v1::Runtime>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->ReportRuntimeEvent(request), polling_policy(),
-      __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ReportRuntimeEvent(request),
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::cloud::notebooks::v1::RefreshRuntimeTokenInternalResponse>
 ManagedNotebookServiceConnectionImpl::RefreshRuntimeTokenInternal(
     google::cloud::notebooks::v1::RefreshRuntimeTokenInternalRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->RefreshRuntimeTokenInternal(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->RefreshRuntimeTokenInternal(request),
       [this](grpc::ClientContext& context,
              google::cloud::notebooks::v1::
                  RefreshRuntimeTokenInternalRequest const& request) {
@@ -365,31 +413,32 @@ ManagedNotebookServiceConnectionImpl::RefreshRuntimeTokenInternal(
 future<StatusOr<google::cloud::notebooks::v1::Runtime>>
 ManagedNotebookServiceConnectionImpl::DiagnoseRuntime(
     google::cloud::notebooks::v1::DiagnoseRuntimeRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::notebooks::v1::Runtime>(
       background_->cq(), request,
-      [stub](
+      [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context,
           google::cloud::notebooks::v1::DiagnoseRuntimeRequest const& request) {
         return stub->AsyncDiagnoseRuntime(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::notebooks::v1::Runtime>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DiagnoseRuntime(request), polling_policy(),
-      __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DiagnoseRuntime(request),
+      polling_policy(*current), __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

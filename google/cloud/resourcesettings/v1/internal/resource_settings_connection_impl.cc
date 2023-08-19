@@ -29,6 +29,31 @@ namespace google {
 namespace cloud {
 namespace resourcesettings_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<resourcesettings_v1::ResourceSettingsServiceRetryPolicy>
+retry_policy(Options const& options) {
+  return options
+      .get<resourcesettings_v1::ResourceSettingsServiceRetryPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options
+      .get<resourcesettings_v1::ResourceSettingsServiceBackoffPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<
+    resourcesettings_v1::ResourceSettingsServiceConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options
+      .get<resourcesettings_v1::
+               ResourceSettingsServiceConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 ResourceSettingsServiceConnectionImpl::ResourceSettingsServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
@@ -44,17 +69,17 @@ StreamRange<google::cloud::resourcesettings::v1::Setting>
 ResourceSettingsServiceConnectionImpl::ListSettings(
     google::cloud::resourcesettings::v1::ListSettingsRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<
-      resourcesettings_v1::ResourceSettingsServiceRetryPolicy const>(
-      retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListSettings(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListSettings(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::resourcesettings::v1::Setting>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<
+           resourcesettings_v1::ResourceSettingsServiceRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::resourcesettings::v1::ListSettingsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
@@ -76,9 +101,10 @@ ResourceSettingsServiceConnectionImpl::ListSettings(
 StatusOr<google::cloud::resourcesettings::v1::Setting>
 ResourceSettingsServiceConnectionImpl::GetSetting(
     google::cloud::resourcesettings::v1::GetSettingRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetSetting(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetSetting(request),
       [this](grpc::ClientContext& context,
              google::cloud::resourcesettings::v1::GetSettingRequest const&
                  request) { return stub_->GetSetting(context, request); },
@@ -88,9 +114,10 @@ ResourceSettingsServiceConnectionImpl::GetSetting(
 StatusOr<google::cloud::resourcesettings::v1::Setting>
 ResourceSettingsServiceConnectionImpl::UpdateSetting(
     google::cloud::resourcesettings::v1::UpdateSettingRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UpdateSetting(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateSetting(request),
       [this](grpc::ClientContext& context,
              google::cloud::resourcesettings::v1::UpdateSettingRequest const&
                  request) { return stub_->UpdateSetting(context, request); },

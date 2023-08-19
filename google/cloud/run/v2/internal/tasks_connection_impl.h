@@ -54,33 +54,6 @@ class TasksConnectionImpl : public run_v2::TasksConnection {
       google::cloud::run::v2::ListTasksRequest request) override;
 
  private:
-  std::unique_ptr<run_v2::TasksRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<run_v2::TasksRetryPolicyOption>()) {
-      return options.get<run_v2::TasksRetryPolicyOption>()->clone();
-    }
-    return options_.get<run_v2::TasksRetryPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<run_v2::TasksBackoffPolicyOption>()) {
-      return options.get<run_v2::TasksBackoffPolicyOption>()->clone();
-    }
-    return options_.get<run_v2::TasksBackoffPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<run_v2::TasksConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<run_v2::TasksConnectionIdempotencyPolicyOption>()) {
-      return options.get<run_v2::TasksConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_.get<run_v2::TasksConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<run_v2_internal::TasksStub> stub_;
   Options options_;

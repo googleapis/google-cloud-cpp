@@ -30,6 +30,33 @@ namespace google {
 namespace cloud {
 namespace aiplatform_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<aiplatform_v1::SpecialistPoolServiceRetryPolicy> retry_policy(
+    Options const& options) {
+  return options.get<aiplatform_v1::SpecialistPoolServiceRetryPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options.get<aiplatform_v1::SpecialistPoolServiceBackoffPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<aiplatform_v1::SpecialistPoolServiceConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options
+      .get<aiplatform_v1::
+               SpecialistPoolServiceConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+  return options.get<aiplatform_v1::SpecialistPoolServicePollingPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 SpecialistPoolServiceConnectionImpl::SpecialistPoolServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
@@ -43,39 +70,42 @@ SpecialistPoolServiceConnectionImpl::SpecialistPoolServiceConnectionImpl(
 future<StatusOr<google::cloud::aiplatform::v1::SpecialistPool>>
 SpecialistPoolServiceConnectionImpl::CreateSpecialistPool(
     google::cloud::aiplatform::v1::CreateSpecialistPoolRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::aiplatform::v1::SpecialistPool>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::aiplatform::v1::CreateSpecialistPoolRequest const&
-                 request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::aiplatform::v1::CreateSpecialistPoolRequest const&
+              request) {
         return stub->AsyncCreateSpecialistPool(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::aiplatform::v1::SpecialistPool>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateSpecialistPool(request), polling_policy(),
-      __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateSpecialistPool(request),
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::cloud::aiplatform::v1::SpecialistPool>
 SpecialistPoolServiceConnectionImpl::GetSpecialistPool(
     google::cloud::aiplatform::v1::GetSpecialistPoolRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetSpecialistPool(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetSpecialistPool(request),
       [this](grpc::ClientContext& context,
              google::cloud::aiplatform::v1::GetSpecialistPoolRequest const&
                  request) {
@@ -88,17 +118,16 @@ StreamRange<google::cloud::aiplatform::v1::SpecialistPool>
 SpecialistPoolServiceConnectionImpl::ListSpecialistPools(
     google::cloud::aiplatform::v1::ListSpecialistPoolsRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<aiplatform_v1::SpecialistPoolServiceRetryPolicy const>(
-          retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListSpecialistPools(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListSpecialistPools(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::aiplatform::v1::SpecialistPool>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<aiplatform_v1::SpecialistPoolServiceRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::aiplatform::v1::ListSpecialistPoolsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
@@ -122,61 +151,65 @@ SpecialistPoolServiceConnectionImpl::ListSpecialistPools(
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 SpecialistPoolServiceConnectionImpl::DeleteSpecialistPool(
     google::cloud::aiplatform::v1::DeleteSpecialistPoolRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::aiplatform::v1::DeleteOperationMetadata>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::aiplatform::v1::DeleteSpecialistPoolRequest const&
-                 request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::aiplatform::v1::DeleteSpecialistPoolRequest const&
+              request) {
         return stub->AsyncDeleteSpecialistPool(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::aiplatform::v1::DeleteOperationMetadata>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteSpecialistPool(request), polling_policy(),
-      __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteSpecialistPool(request),
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::SpecialistPool>>
 SpecialistPoolServiceConnectionImpl::UpdateSpecialistPool(
     google::cloud::aiplatform::v1::UpdateSpecialistPoolRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::aiplatform::v1::SpecialistPool>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::aiplatform::v1::UpdateSpecialistPoolRequest const&
-                 request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::aiplatform::v1::UpdateSpecialistPoolRequest const&
+              request) {
         return stub->AsyncUpdateSpecialistPool(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::aiplatform::v1::SpecialistPool>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UpdateSpecialistPool(request), polling_policy(),
-      __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateSpecialistPool(request),
+      polling_policy(*current), __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

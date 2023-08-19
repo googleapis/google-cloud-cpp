@@ -65,48 +65,25 @@ class AcceleratorTypesRestConnectionImpl
                            ListAcceleratorTypesRequest request) override;
 
  private:
-  std::unique_ptr<compute_accelerator_types_v1::AcceleratorTypesRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_accelerator_types_v1::
-                        AcceleratorTypesRetryPolicyOption>()) {
-      return options
-          .get<
-              compute_accelerator_types_v1::AcceleratorTypesRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<
+      compute_accelerator_types_v1::AcceleratorTypesRetryPolicy>
+  retry_policy(Options const& options) {
+    return options
         .get<compute_accelerator_types_v1::AcceleratorTypesRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_accelerator_types_v1::
-                        AcceleratorTypesBackoffPolicyOption>()) {
-      return options
-          .get<compute_accelerator_types_v1::
-                   AcceleratorTypesBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options
         .get<
             compute_accelerator_types_v1::AcceleratorTypesBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<
+  static std::unique_ptr<
       compute_accelerator_types_v1::AcceleratorTypesConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_accelerator_types_v1::
-                        AcceleratorTypesConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<compute_accelerator_types_v1::
-                   AcceleratorTypesConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  idempotency_policy(Options const& options) {
+    return options
         .get<compute_accelerator_types_v1::
                  AcceleratorTypesConnectionIdempotencyPolicyOption>()
         ->clone();

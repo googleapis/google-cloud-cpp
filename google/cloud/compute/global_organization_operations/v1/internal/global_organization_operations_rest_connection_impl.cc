@@ -48,9 +48,10 @@ Status GlobalOrganizationOperationsRestConnectionImpl::
     DeleteGlobalOrganizationOperations(
         google::cloud::cpp::compute::global_organization_operations::v1::
             DeleteGlobalOrganizationOperationsRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteGlobalOrganizationOperations(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteGlobalOrganizationOperations(request),
       [this](rest_internal::RestContext& rest_context,
              google::cloud::cpp::compute::global_organization_operations::v1::
                  DeleteGlobalOrganizationOperationsRequest const& request) {
@@ -63,9 +64,10 @@ StatusOr<google::cloud::cpp::compute::v1::Operation>
 GlobalOrganizationOperationsRestConnectionImpl::GetGlobalOrganizationOperations(
     google::cloud::cpp::compute::global_organization_operations::v1::
         GetGlobalOrganizationOperationsRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetGlobalOrganizationOperations(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetGlobalOrganizationOperations(request),
       [this](rest_internal::RestContext& rest_context,
              google::cloud::cpp::compute::global_organization_operations::v1::
                  GetGlobalOrganizationOperationsRequest const& request) {
@@ -80,19 +82,18 @@ GlobalOrganizationOperationsRestConnectionImpl::
         google::cloud::cpp::compute::global_organization_operations::v1::
             ListGlobalOrganizationOperationsRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<compute_global_organization_operations_v1::
-                          GlobalOrganizationOperationsRetryPolicy const>(
-          retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+  auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency =
-      idempotency_policy()->ListGlobalOrganizationOperations(request);
+      idempotency_policy(*current)->ListGlobalOrganizationOperations(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::cpp::compute::v1::Operation>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<compute_global_organization_operations_v1::
+                                   GlobalOrganizationOperationsRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::cpp::compute::global_organization_operations::v1::
               ListGlobalOrganizationOperationsRequest const& r) {
         return google::cloud::rest_internal::RestRetryLoop(

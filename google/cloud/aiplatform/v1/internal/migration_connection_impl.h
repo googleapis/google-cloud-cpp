@@ -63,51 +63,6 @@ class MigrationServiceConnectionImpl
           request) override;
 
  private:
-  std::unique_ptr<aiplatform_v1::MigrationServiceRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<aiplatform_v1::MigrationServiceRetryPolicyOption>()) {
-      return options.get<aiplatform_v1::MigrationServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<aiplatform_v1::MigrationServiceRetryPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<aiplatform_v1::MigrationServiceBackoffPolicyOption>()) {
-      return options.get<aiplatform_v1::MigrationServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<aiplatform_v1::MigrationServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<aiplatform_v1::MigrationServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<aiplatform_v1::
-                        MigrationServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<aiplatform_v1::
-                   MigrationServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<aiplatform_v1::MigrationServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<aiplatform_v1::MigrationServicePollingPolicyOption>()) {
-      return options.get<aiplatform_v1::MigrationServicePollingPolicyOption>()
-          ->clone();
-    }
-    return options_.get<aiplatform_v1::MigrationServicePollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<aiplatform_v1_internal::MigrationServiceStub> stub_;
   Options options_;

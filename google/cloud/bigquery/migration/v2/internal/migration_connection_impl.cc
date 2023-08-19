@@ -29,6 +29,31 @@ namespace google {
 namespace cloud {
 namespace bigquery_migration_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<bigquery_migration_v2::MigrationServiceRetryPolicy>
+retry_policy(Options const& options) {
+  return options
+      .get<bigquery_migration_v2::MigrationServiceRetryPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options
+      .get<bigquery_migration_v2::MigrationServiceBackoffPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<
+    bigquery_migration_v2::MigrationServiceConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options
+      .get<bigquery_migration_v2::
+               MigrationServiceConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 MigrationServiceConnectionImpl::MigrationServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
@@ -43,9 +68,10 @@ StatusOr<google::cloud::bigquery::migration::v2::MigrationWorkflow>
 MigrationServiceConnectionImpl::CreateMigrationWorkflow(
     google::cloud::bigquery::migration::v2::
         CreateMigrationWorkflowRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateMigrationWorkflow(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateMigrationWorkflow(request),
       [this](grpc::ClientContext& context,
              google::cloud::bigquery::migration::v2::
                  CreateMigrationWorkflowRequest const& request) {
@@ -58,9 +84,10 @@ StatusOr<google::cloud::bigquery::migration::v2::MigrationWorkflow>
 MigrationServiceConnectionImpl::GetMigrationWorkflow(
     google::cloud::bigquery::migration::v2::GetMigrationWorkflowRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetMigrationWorkflow(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetMigrationWorkflow(request),
       [this](grpc::ClientContext& context,
              google::cloud::bigquery::migration::v2::
                  GetMigrationWorkflowRequest const& request) {
@@ -74,19 +101,20 @@ MigrationServiceConnectionImpl::ListMigrationWorkflows(
     google::cloud::bigquery::migration::v2::ListMigrationWorkflowsRequest
         request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<bigquery_migration_v2::MigrationServiceRetryPolicy const>(
-          retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListMigrationWorkflows(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency =
+      idempotency_policy(*current)->ListMigrationWorkflows(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::bigquery::migration::v2::MigrationWorkflow>>(
       std::move(request),
-      [stub, retry, backoff, idempotency,
-       function_name](google::cloud::bigquery::migration::v2::
-                          ListMigrationWorkflowsRequest const& r) {
+      [idempotency, function_name, stub = stub_,
+       retry =
+           std::shared_ptr<bigquery_migration_v2::MigrationServiceRetryPolicy>(
+               retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          google::cloud::bigquery::migration::v2::
+              ListMigrationWorkflowsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context,
@@ -109,9 +137,10 @@ MigrationServiceConnectionImpl::ListMigrationWorkflows(
 Status MigrationServiceConnectionImpl::DeleteMigrationWorkflow(
     google::cloud::bigquery::migration::v2::
         DeleteMigrationWorkflowRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteMigrationWorkflow(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteMigrationWorkflow(request),
       [this](grpc::ClientContext& context,
              google::cloud::bigquery::migration::v2::
                  DeleteMigrationWorkflowRequest const& request) {
@@ -123,9 +152,10 @@ Status MigrationServiceConnectionImpl::DeleteMigrationWorkflow(
 Status MigrationServiceConnectionImpl::StartMigrationWorkflow(
     google::cloud::bigquery::migration::v2::StartMigrationWorkflowRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->StartMigrationWorkflow(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->StartMigrationWorkflow(request),
       [this](grpc::ClientContext& context,
              google::cloud::bigquery::migration::v2::
                  StartMigrationWorkflowRequest const& request) {
@@ -138,9 +168,10 @@ StatusOr<google::cloud::bigquery::migration::v2::MigrationSubtask>
 MigrationServiceConnectionImpl::GetMigrationSubtask(
     google::cloud::bigquery::migration::v2::GetMigrationSubtaskRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetMigrationSubtask(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetMigrationSubtask(request),
       [this](grpc::ClientContext& context,
              google::cloud::bigquery::migration::v2::
                  GetMigrationSubtaskRequest const& request) {
@@ -154,19 +185,20 @@ MigrationServiceConnectionImpl::ListMigrationSubtasks(
     google::cloud::bigquery::migration::v2::ListMigrationSubtasksRequest
         request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<bigquery_migration_v2::MigrationServiceRetryPolicy const>(
-          retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListMigrationSubtasks(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency =
+      idempotency_policy(*current)->ListMigrationSubtasks(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::bigquery::migration::v2::MigrationSubtask>>(
       std::move(request),
-      [stub, retry, backoff, idempotency,
-       function_name](google::cloud::bigquery::migration::v2::
-                          ListMigrationSubtasksRequest const& r) {
+      [idempotency, function_name, stub = stub_,
+       retry =
+           std::shared_ptr<bigquery_migration_v2::MigrationServiceRetryPolicy>(
+               retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          google::cloud::bigquery::migration::v2::
+              ListMigrationSubtasksRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context,

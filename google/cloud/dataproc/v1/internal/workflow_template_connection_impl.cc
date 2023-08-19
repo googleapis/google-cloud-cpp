@@ -30,6 +30,33 @@ namespace google {
 namespace cloud {
 namespace dataproc_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<dataproc_v1::WorkflowTemplateServiceRetryPolicy> retry_policy(
+    Options const& options) {
+  return options.get<dataproc_v1::WorkflowTemplateServiceRetryPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options.get<dataproc_v1::WorkflowTemplateServiceBackoffPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<dataproc_v1::WorkflowTemplateServiceConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options
+      .get<dataproc_v1::
+               WorkflowTemplateServiceConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+  return options.get<dataproc_v1::WorkflowTemplateServicePollingPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 WorkflowTemplateServiceConnectionImpl::WorkflowTemplateServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
@@ -43,9 +70,10 @@ WorkflowTemplateServiceConnectionImpl::WorkflowTemplateServiceConnectionImpl(
 StatusOr<google::cloud::dataproc::v1::WorkflowTemplate>
 WorkflowTemplateServiceConnectionImpl::CreateWorkflowTemplate(
     google::cloud::dataproc::v1::CreateWorkflowTemplateRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateWorkflowTemplate(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateWorkflowTemplate(request),
       [this](grpc::ClientContext& context,
              google::cloud::dataproc::v1::CreateWorkflowTemplateRequest const&
                  request) {
@@ -57,9 +85,10 @@ WorkflowTemplateServiceConnectionImpl::CreateWorkflowTemplate(
 StatusOr<google::cloud::dataproc::v1::WorkflowTemplate>
 WorkflowTemplateServiceConnectionImpl::GetWorkflowTemplate(
     google::cloud::dataproc::v1::GetWorkflowTemplateRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetWorkflowTemplate(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetWorkflowTemplate(request),
       [this](grpc::ClientContext& context,
              google::cloud::dataproc::v1::GetWorkflowTemplateRequest const&
                  request) {
@@ -72,11 +101,11 @@ future<StatusOr<google::cloud::dataproc::v1::WorkflowMetadata>>
 WorkflowTemplateServiceConnectionImpl::InstantiateWorkflowTemplate(
     google::cloud::dataproc::v1::InstantiateWorkflowTemplateRequest const&
         request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::dataproc::v1::WorkflowMetadata>(
       background_->cq(), request,
-      [stub](
+      [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context,
           google::cloud::dataproc::v1::InstantiateWorkflowTemplateRequest const&
@@ -84,61 +113,65 @@ WorkflowTemplateServiceConnectionImpl::InstantiateWorkflowTemplate(
         return stub->AsyncInstantiateWorkflowTemplate(cq, std::move(context),
                                                       request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::dataproc::v1::WorkflowMetadata>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->InstantiateWorkflowTemplate(request),
-      polling_policy(), __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->InstantiateWorkflowTemplate(request),
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::dataproc::v1::WorkflowMetadata>>
 WorkflowTemplateServiceConnectionImpl::InstantiateInlineWorkflowTemplate(
     google::cloud::dataproc::v1::InstantiateInlineWorkflowTemplateRequest const&
         request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::dataproc::v1::WorkflowMetadata>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::dataproc::v1::
-                 InstantiateInlineWorkflowTemplateRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::dataproc::v1::
+              InstantiateInlineWorkflowTemplateRequest const& request) {
         return stub->AsyncInstantiateInlineWorkflowTemplate(
             cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::dataproc::v1::WorkflowMetadata>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->InstantiateInlineWorkflowTemplate(request),
-      polling_policy(), __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->InstantiateInlineWorkflowTemplate(request),
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::cloud::dataproc::v1::WorkflowTemplate>
 WorkflowTemplateServiceConnectionImpl::UpdateWorkflowTemplate(
     google::cloud::dataproc::v1::UpdateWorkflowTemplateRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UpdateWorkflowTemplate(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateWorkflowTemplate(request),
       [this](grpc::ClientContext& context,
              google::cloud::dataproc::v1::UpdateWorkflowTemplateRequest const&
                  request) {
@@ -151,17 +184,17 @@ StreamRange<google::cloud::dataproc::v1::WorkflowTemplate>
 WorkflowTemplateServiceConnectionImpl::ListWorkflowTemplates(
     google::cloud::dataproc::v1::ListWorkflowTemplatesRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<dataproc_v1::WorkflowTemplateServiceRetryPolicy const>(
-          retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListWorkflowTemplates(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency =
+      idempotency_policy(*current)->ListWorkflowTemplates(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::dataproc::v1::WorkflowTemplate>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<dataproc_v1::WorkflowTemplateServiceRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::dataproc::v1::ListWorkflowTemplatesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
@@ -184,9 +217,10 @@ WorkflowTemplateServiceConnectionImpl::ListWorkflowTemplates(
 
 Status WorkflowTemplateServiceConnectionImpl::DeleteWorkflowTemplate(
     google::cloud::dataproc::v1::DeleteWorkflowTemplateRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteWorkflowTemplate(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteWorkflowTemplate(request),
       [this](grpc::ClientContext& context,
              google::cloud::dataproc::v1::DeleteWorkflowTemplateRequest const&
                  request) {

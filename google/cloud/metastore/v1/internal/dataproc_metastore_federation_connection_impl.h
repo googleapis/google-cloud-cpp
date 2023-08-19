@@ -73,65 +73,6 @@ class DataprocMetastoreFederationConnectionImpl
                        request) override;
 
  private:
-  std::unique_ptr<metastore_v1::DataprocMetastoreFederationRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            metastore_v1::DataprocMetastoreFederationRetryPolicyOption>()) {
-      return options
-          .get<metastore_v1::DataprocMetastoreFederationRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<metastore_v1::DataprocMetastoreFederationRetryPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            metastore_v1::DataprocMetastoreFederationBackoffPolicyOption>()) {
-      return options
-          .get<metastore_v1::DataprocMetastoreFederationBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<metastore_v1::DataprocMetastoreFederationBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<
-      metastore_v1::DataprocMetastoreFederationConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            metastore_v1::
-                DataprocMetastoreFederationConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<
-              metastore_v1::
-                  DataprocMetastoreFederationConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<metastore_v1::
-                 DataprocMetastoreFederationConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            metastore_v1::DataprocMetastoreFederationPollingPolicyOption>()) {
-      return options
-          .get<metastore_v1::DataprocMetastoreFederationPollingPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<metastore_v1::DataprocMetastoreFederationPollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<metastore_v1_internal::DataprocMetastoreFederationStub> stub_;
   Options options_;

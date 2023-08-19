@@ -28,6 +28,25 @@ namespace google {
 namespace cloud {
 namespace dialogflow_es_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<dialogflow_es::FulfillmentsRetryPolicy> retry_policy(
+    Options const& options) {
+  return options.get<dialogflow_es::FulfillmentsRetryPolicyOption>()->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options.get<dialogflow_es::FulfillmentsBackoffPolicyOption>()->clone();
+}
+
+std::unique_ptr<dialogflow_es::FulfillmentsConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options
+      .get<dialogflow_es::FulfillmentsConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 FulfillmentsConnectionImpl::FulfillmentsConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
@@ -41,9 +60,10 @@ FulfillmentsConnectionImpl::FulfillmentsConnectionImpl(
 StatusOr<google::cloud::dialogflow::v2::Fulfillment>
 FulfillmentsConnectionImpl::GetFulfillment(
     google::cloud::dialogflow::v2::GetFulfillmentRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetFulfillment(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetFulfillment(request),
       [this](
           grpc::ClientContext& context,
           google::cloud::dialogflow::v2::GetFulfillmentRequest const& request) {
@@ -55,9 +75,10 @@ FulfillmentsConnectionImpl::GetFulfillment(
 StatusOr<google::cloud::dialogflow::v2::Fulfillment>
 FulfillmentsConnectionImpl::UpdateFulfillment(
     google::cloud::dialogflow::v2::UpdateFulfillmentRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UpdateFulfillment(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateFulfillment(request),
       [this](grpc::ClientContext& context,
              google::cloud::dialogflow::v2::UpdateFulfillmentRequest const&
                  request) {

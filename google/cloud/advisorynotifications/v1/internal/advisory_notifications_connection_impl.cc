@@ -29,6 +29,34 @@ namespace google {
 namespace cloud {
 namespace advisorynotifications_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<
+    advisorynotifications_v1::AdvisoryNotificationsServiceRetryPolicy>
+retry_policy(Options const& options) {
+  return options
+      .get<advisorynotifications_v1::
+               AdvisoryNotificationsServiceRetryPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options
+      .get<advisorynotifications_v1::
+               AdvisoryNotificationsServiceBackoffPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<advisorynotifications_v1::
+                    AdvisoryNotificationsServiceConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options
+      .get<advisorynotifications_v1::
+               AdvisoryNotificationsServiceConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 AdvisoryNotificationsServiceConnectionImpl::
     AdvisoryNotificationsServiceConnectionImpl(
@@ -48,19 +76,19 @@ AdvisoryNotificationsServiceConnectionImpl::ListNotifications(
     google::cloud::advisorynotifications::v1::ListNotificationsRequest
         request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<
-      advisorynotifications_v1::AdvisoryNotificationsServiceRetryPolicy const>(
-      retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListNotifications(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListNotifications(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::advisorynotifications::v1::Notification>>(
       std::move(request),
-      [stub, retry, backoff, idempotency,
-       function_name](google::cloud::advisorynotifications::v1::
-                          ListNotificationsRequest const& r) {
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<
+           advisorynotifications_v1::AdvisoryNotificationsServiceRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          google::cloud::advisorynotifications::v1::
+              ListNotificationsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context,
@@ -84,9 +112,10 @@ StatusOr<google::cloud::advisorynotifications::v1::Notification>
 AdvisoryNotificationsServiceConnectionImpl::GetNotification(
     google::cloud::advisorynotifications::v1::GetNotificationRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetNotification(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetNotification(request),
       [this](grpc::ClientContext& context,
              google::cloud::advisorynotifications::v1::
                  GetNotificationRequest const& request) {

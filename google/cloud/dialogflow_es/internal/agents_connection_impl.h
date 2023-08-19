@@ -83,43 +83,6 @@ class AgentsConnectionImpl : public dialogflow_es::AgentsConnection {
       override;
 
  private:
-  std::unique_ptr<dialogflow_es::AgentsRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<dialogflow_es::AgentsRetryPolicyOption>()) {
-      return options.get<dialogflow_es::AgentsRetryPolicyOption>()->clone();
-    }
-    return options_.get<dialogflow_es::AgentsRetryPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<dialogflow_es::AgentsBackoffPolicyOption>()) {
-      return options.get<dialogflow_es::AgentsBackoffPolicyOption>()->clone();
-    }
-    return options_.get<dialogflow_es::AgentsBackoffPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<dialogflow_es::AgentsConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<dialogflow_es::AgentsConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<dialogflow_es::AgentsConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<dialogflow_es::AgentsConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<dialogflow_es::AgentsPollingPolicyOption>()) {
-      return options.get<dialogflow_es::AgentsPollingPolicyOption>()->clone();
-    }
-    return options_.get<dialogflow_es::AgentsPollingPolicyOption>()->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<dialogflow_es_internal::AgentsStub> stub_;
   Options options_;

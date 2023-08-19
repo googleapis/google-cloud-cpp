@@ -121,51 +121,6 @@ class EdgeContainerConnectionImpl
           request) override;
 
  private:
-  std::unique_ptr<edgecontainer_v1::EdgeContainerRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<edgecontainer_v1::EdgeContainerRetryPolicyOption>()) {
-      return options.get<edgecontainer_v1::EdgeContainerRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<edgecontainer_v1::EdgeContainerRetryPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<edgecontainer_v1::EdgeContainerBackoffPolicyOption>()) {
-      return options.get<edgecontainer_v1::EdgeContainerBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<edgecontainer_v1::EdgeContainerBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<edgecontainer_v1::EdgeContainerConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<edgecontainer_v1::
-                        EdgeContainerConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<edgecontainer_v1::
-                   EdgeContainerConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<edgecontainer_v1::EdgeContainerConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<edgecontainer_v1::EdgeContainerPollingPolicyOption>()) {
-      return options.get<edgecontainer_v1::EdgeContainerPollingPolicyOption>()
-          ->clone();
-    }
-    return options_.get<edgecontainer_v1::EdgeContainerPollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<edgecontainer_v1_internal::EdgeContainerStub> stub_;
   Options options_;

@@ -49,7 +49,7 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 GlobalForwardingRulesRestConnectionImpl::DeleteGlobalForwardingRules(
     google::cloud::cpp::compute::global_forwarding_rules::v1::
         DeleteGlobalForwardingRulesRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestLongRunningOperation<
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::v1::Operation,
@@ -58,30 +58,30 @@ GlobalForwardingRulesRestConnectionImpl::DeleteGlobalForwardingRules(
       google::cloud::cpp::compute::global_operations::v1::
           DeleteGlobalOperationsRequest>(
       background_->cq(), request,
-      [stub](CompletionQueue& cq,
-             std::unique_ptr<rest_internal::RestContext> context,
-             google::cloud::cpp::compute::global_forwarding_rules::v1::
-                 DeleteGlobalForwardingRulesRequest const& request) {
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::cpp::compute::global_forwarding_rules::v1::
+                         DeleteGlobalForwardingRulesRequest const& request) {
         return stub->AsyncDeleteGlobalForwardingRules(cq, std::move(context),
                                                       request);
       },
-      [stub](CompletionQueue& cq,
-             std::unique_ptr<rest_internal::RestContext> context,
-             google::cloud::cpp::compute::global_operations::v1::
-                 GetGlobalOperationsRequest const& request) {
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::cpp::compute::global_operations::v1::
+                         GetGlobalOperationsRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](CompletionQueue& cq,
-             std::unique_ptr<rest_internal::RestContext> context,
-             google::cloud::cpp::compute::global_operations::v1::
-                 DeleteGlobalOperationsRequest const& request) {
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::cpp::compute::global_operations::v1::
+                         DeleteGlobalOperationsRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
          std::string const&) { return op; },
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteGlobalForwardingRules(request),
-      polling_policy(), __func__,
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteGlobalForwardingRules(request),
+      polling_policy(*current), __func__,
       [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
       },
@@ -103,9 +103,10 @@ StatusOr<google::cloud::cpp::compute::v1::ForwardingRule>
 GlobalForwardingRulesRestConnectionImpl::GetGlobalForwardingRules(
     google::cloud::cpp::compute::global_forwarding_rules::v1::
         GetGlobalForwardingRulesRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetGlobalForwardingRules(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetGlobalForwardingRules(request),
       [this](rest_internal::RestContext& rest_context,
              google::cloud::cpp::compute::global_forwarding_rules::v1::
                  GetGlobalForwardingRulesRequest const& request) {
@@ -118,7 +119,7 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 GlobalForwardingRulesRestConnectionImpl::InsertGlobalForwardingRules(
     google::cloud::cpp::compute::global_forwarding_rules::v1::
         InsertGlobalForwardingRulesRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestLongRunningOperation<
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::v1::Operation,
@@ -127,30 +128,30 @@ GlobalForwardingRulesRestConnectionImpl::InsertGlobalForwardingRules(
       google::cloud::cpp::compute::global_operations::v1::
           DeleteGlobalOperationsRequest>(
       background_->cq(), request,
-      [stub](CompletionQueue& cq,
-             std::unique_ptr<rest_internal::RestContext> context,
-             google::cloud::cpp::compute::global_forwarding_rules::v1::
-                 InsertGlobalForwardingRulesRequest const& request) {
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::cpp::compute::global_forwarding_rules::v1::
+                         InsertGlobalForwardingRulesRequest const& request) {
         return stub->AsyncInsertGlobalForwardingRules(cq, std::move(context),
                                                       request);
       },
-      [stub](CompletionQueue& cq,
-             std::unique_ptr<rest_internal::RestContext> context,
-             google::cloud::cpp::compute::global_operations::v1::
-                 GetGlobalOperationsRequest const& request) {
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::cpp::compute::global_operations::v1::
+                         GetGlobalOperationsRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](CompletionQueue& cq,
-             std::unique_ptr<rest_internal::RestContext> context,
-             google::cloud::cpp::compute::global_operations::v1::
-                 DeleteGlobalOperationsRequest const& request) {
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::cpp::compute::global_operations::v1::
+                         DeleteGlobalOperationsRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
          std::string const&) { return op; },
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->InsertGlobalForwardingRules(request),
-      polling_policy(), __func__,
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->InsertGlobalForwardingRules(request),
+      polling_policy(*current), __func__,
       [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
       },
@@ -173,19 +174,20 @@ GlobalForwardingRulesRestConnectionImpl::ListGlobalForwardingRules(
     google::cloud::cpp::compute::global_forwarding_rules::v1::
         ListGlobalForwardingRulesRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<compute_global_forwarding_rules_v1::
-                                   GlobalForwardingRulesRetryPolicy const>(
-      retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListGlobalForwardingRules(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency =
+      idempotency_policy(*current)->ListGlobalForwardingRules(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::cpp::compute::v1::ForwardingRule>>(
       std::move(request),
-      [stub, retry, backoff, idempotency,
-       function_name](google::cloud::cpp::compute::global_forwarding_rules::v1::
-                          ListGlobalForwardingRulesRequest const& r) {
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<compute_global_forwarding_rules_v1::
+                                   GlobalForwardingRulesRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          google::cloud::cpp::compute::global_forwarding_rules::v1::
+              ListGlobalForwardingRulesRequest const& r) {
         return google::cloud::rest_internal::RestRetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](rest_internal::RestContext& rest_context,
@@ -208,7 +210,7 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 GlobalForwardingRulesRestConnectionImpl::PatchGlobalForwardingRules(
     google::cloud::cpp::compute::global_forwarding_rules::v1::
         PatchGlobalForwardingRulesRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestLongRunningOperation<
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::v1::Operation,
@@ -217,30 +219,30 @@ GlobalForwardingRulesRestConnectionImpl::PatchGlobalForwardingRules(
       google::cloud::cpp::compute::global_operations::v1::
           DeleteGlobalOperationsRequest>(
       background_->cq(), request,
-      [stub](CompletionQueue& cq,
-             std::unique_ptr<rest_internal::RestContext> context,
-             google::cloud::cpp::compute::global_forwarding_rules::v1::
-                 PatchGlobalForwardingRulesRequest const& request) {
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::cpp::compute::global_forwarding_rules::v1::
+                         PatchGlobalForwardingRulesRequest const& request) {
         return stub->AsyncPatchGlobalForwardingRules(cq, std::move(context),
                                                      request);
       },
-      [stub](CompletionQueue& cq,
-             std::unique_ptr<rest_internal::RestContext> context,
-             google::cloud::cpp::compute::global_operations::v1::
-                 GetGlobalOperationsRequest const& request) {
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::cpp::compute::global_operations::v1::
+                         GetGlobalOperationsRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](CompletionQueue& cq,
-             std::unique_ptr<rest_internal::RestContext> context,
-             google::cloud::cpp::compute::global_operations::v1::
-                 DeleteGlobalOperationsRequest const& request) {
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::cpp::compute::global_operations::v1::
+                         DeleteGlobalOperationsRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
          std::string const&) { return op; },
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->PatchGlobalForwardingRules(request),
-      polling_policy(), __func__,
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->PatchGlobalForwardingRules(request),
+      polling_policy(*current), __func__,
       [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
       },
@@ -262,7 +264,7 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 GlobalForwardingRulesRestConnectionImpl::SetLabels(
     google::cloud::cpp::compute::global_forwarding_rules::v1::
         SetLabelsRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestLongRunningOperation<
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::v1::Operation,
@@ -271,28 +273,29 @@ GlobalForwardingRulesRestConnectionImpl::SetLabels(
       google::cloud::cpp::compute::global_operations::v1::
           DeleteGlobalOperationsRequest>(
       background_->cq(), request,
-      [stub](CompletionQueue& cq,
-             std::unique_ptr<rest_internal::RestContext> context,
-             google::cloud::cpp::compute::global_forwarding_rules::v1::
-                 SetLabelsRequest const& request) {
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::cpp::compute::global_forwarding_rules::v1::
+                         SetLabelsRequest const& request) {
         return stub->AsyncSetLabels(cq, std::move(context), request);
       },
-      [stub](CompletionQueue& cq,
-             std::unique_ptr<rest_internal::RestContext> context,
-             google::cloud::cpp::compute::global_operations::v1::
-                 GetGlobalOperationsRequest const& request) {
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::cpp::compute::global_operations::v1::
+                         GetGlobalOperationsRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](CompletionQueue& cq,
-             std::unique_ptr<rest_internal::RestContext> context,
-             google::cloud::cpp::compute::global_operations::v1::
-                 DeleteGlobalOperationsRequest const& request) {
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::cpp::compute::global_operations::v1::
+                         DeleteGlobalOperationsRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
          std::string const&) { return op; },
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->SetLabels(request), polling_policy(), __func__,
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->SetLabels(request),
+      polling_policy(*current), __func__,
       [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
       },
@@ -314,7 +317,7 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 GlobalForwardingRulesRestConnectionImpl::SetTarget(
     google::cloud::cpp::compute::global_forwarding_rules::v1::
         SetTargetRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestLongRunningOperation<
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::v1::Operation,
@@ -323,28 +326,29 @@ GlobalForwardingRulesRestConnectionImpl::SetTarget(
       google::cloud::cpp::compute::global_operations::v1::
           DeleteGlobalOperationsRequest>(
       background_->cq(), request,
-      [stub](CompletionQueue& cq,
-             std::unique_ptr<rest_internal::RestContext> context,
-             google::cloud::cpp::compute::global_forwarding_rules::v1::
-                 SetTargetRequest const& request) {
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::cpp::compute::global_forwarding_rules::v1::
+                         SetTargetRequest const& request) {
         return stub->AsyncSetTarget(cq, std::move(context), request);
       },
-      [stub](CompletionQueue& cq,
-             std::unique_ptr<rest_internal::RestContext> context,
-             google::cloud::cpp::compute::global_operations::v1::
-                 GetGlobalOperationsRequest const& request) {
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::cpp::compute::global_operations::v1::
+                         GetGlobalOperationsRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](CompletionQueue& cq,
-             std::unique_ptr<rest_internal::RestContext> context,
-             google::cloud::cpp::compute::global_operations::v1::
-                 DeleteGlobalOperationsRequest const& request) {
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::cpp::compute::global_operations::v1::
+                         DeleteGlobalOperationsRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
          std::string const&) { return op; },
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->SetTarget(request), polling_policy(), __func__,
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->SetTarget(request),
+      polling_policy(*current), __func__,
       [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
       },

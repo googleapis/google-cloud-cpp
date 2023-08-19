@@ -103,40 +103,6 @@ class RecommenderConnectionImpl : public recommender_v1::RecommenderConnection {
           request) override;
 
  private:
-  std::unique_ptr<recommender_v1::RecommenderRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<recommender_v1::RecommenderRetryPolicyOption>()) {
-      return options.get<recommender_v1::RecommenderRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<recommender_v1::RecommenderRetryPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<recommender_v1::RecommenderBackoffPolicyOption>()) {
-      return options.get<recommender_v1::RecommenderBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<recommender_v1::RecommenderBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<recommender_v1::RecommenderConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            recommender_v1::RecommenderConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<recommender_v1::RecommenderConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<recommender_v1::RecommenderConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<recommender_v1_internal::RecommenderStub> stub_;
   Options options_;

@@ -29,6 +29,31 @@ namespace google {
 namespace cloud {
 namespace monitoring_dashboard_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<monitoring_dashboard_v1::DashboardsServiceRetryPolicy>
+retry_policy(Options const& options) {
+  return options
+      .get<monitoring_dashboard_v1::DashboardsServiceRetryPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options
+      .get<monitoring_dashboard_v1::DashboardsServiceBackoffPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<
+    monitoring_dashboard_v1::DashboardsServiceConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options
+      .get<monitoring_dashboard_v1::
+               DashboardsServiceConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 DashboardsServiceConnectionImpl::DashboardsServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
@@ -43,9 +68,10 @@ DashboardsServiceConnectionImpl::DashboardsServiceConnectionImpl(
 StatusOr<google::monitoring::dashboard::v1::Dashboard>
 DashboardsServiceConnectionImpl::CreateDashboard(
     google::monitoring::dashboard::v1::CreateDashboardRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateDashboard(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateDashboard(request),
       [this](grpc::ClientContext& context,
              google::monitoring::dashboard::v1::CreateDashboardRequest const&
                  request) { return stub_->CreateDashboard(context, request); },
@@ -56,17 +82,17 @@ StreamRange<google::monitoring::dashboard::v1::Dashboard>
 DashboardsServiceConnectionImpl::ListDashboards(
     google::monitoring::dashboard::v1::ListDashboardsRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<
-      monitoring_dashboard_v1::DashboardsServiceRetryPolicy const>(
-      retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListDashboards(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListDashboards(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::monitoring::dashboard::v1::Dashboard>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<
+           monitoring_dashboard_v1::DashboardsServiceRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::monitoring::dashboard::v1::ListDashboardsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
@@ -88,9 +114,10 @@ DashboardsServiceConnectionImpl::ListDashboards(
 StatusOr<google::monitoring::dashboard::v1::Dashboard>
 DashboardsServiceConnectionImpl::GetDashboard(
     google::monitoring::dashboard::v1::GetDashboardRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetDashboard(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetDashboard(request),
       [this](grpc::ClientContext& context,
              google::monitoring::dashboard::v1::GetDashboardRequest const&
                  request) { return stub_->GetDashboard(context, request); },
@@ -99,9 +126,10 @@ DashboardsServiceConnectionImpl::GetDashboard(
 
 Status DashboardsServiceConnectionImpl::DeleteDashboard(
     google::monitoring::dashboard::v1::DeleteDashboardRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteDashboard(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteDashboard(request),
       [this](grpc::ClientContext& context,
              google::monitoring::dashboard::v1::DeleteDashboardRequest const&
                  request) { return stub_->DeleteDashboard(context, request); },
@@ -111,9 +139,10 @@ Status DashboardsServiceConnectionImpl::DeleteDashboard(
 StatusOr<google::monitoring::dashboard::v1::Dashboard>
 DashboardsServiceConnectionImpl::UpdateDashboard(
     google::monitoring::dashboard::v1::UpdateDashboardRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UpdateDashboard(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateDashboard(request),
       [this](grpc::ClientContext& context,
              google::monitoring::dashboard::v1::UpdateDashboardRequest const&
                  request) { return stub_->UpdateDashboard(context, request); },

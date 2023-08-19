@@ -29,6 +29,25 @@ namespace google {
 namespace cloud {
 namespace composer_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<composer_v1::ImageVersionsRetryPolicy> retry_policy(
+    Options const& options) {
+  return options.get<composer_v1::ImageVersionsRetryPolicyOption>()->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options.get<composer_v1::ImageVersionsBackoffPolicyOption>()->clone();
+}
+
+std::unique_ptr<composer_v1::ImageVersionsConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options
+      .get<composer_v1::ImageVersionsConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 ImageVersionsConnectionImpl::ImageVersionsConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
@@ -44,18 +63,18 @@ ImageVersionsConnectionImpl::ListImageVersions(
     google::cloud::orchestration::airflow::service::v1::ListImageVersionsRequest
         request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<composer_v1::ImageVersionsRetryPolicy const>(
-      retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListImageVersions(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListImageVersions(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<StreamRange<
       google::cloud::orchestration::airflow::service::v1::ImageVersion>>(
       std::move(request),
-      [stub, retry, backoff, idempotency,
-       function_name](google::cloud::orchestration::airflow::service::v1::
-                          ListImageVersionsRequest const& r) {
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<composer_v1::ImageVersionsRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          google::cloud::orchestration::airflow::service::v1::
+              ListImageVersionsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context,

@@ -29,6 +29,24 @@ namespace google {
 namespace cloud {
 namespace dlp_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<dlp_v2::DlpServiceRetryPolicy> retry_policy(
+    Options const& options) {
+  return options.get<dlp_v2::DlpServiceRetryPolicyOption>()->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options.get<dlp_v2::DlpServiceBackoffPolicyOption>()->clone();
+}
+
+std::unique_ptr<dlp_v2::DlpServiceConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options.get<dlp_v2::DlpServiceConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 DlpServiceConnectionImpl::DlpServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
@@ -41,9 +59,10 @@ DlpServiceConnectionImpl::DlpServiceConnectionImpl(
 StatusOr<google::privacy::dlp::v2::InspectContentResponse>
 DlpServiceConnectionImpl::InspectContent(
     google::privacy::dlp::v2::InspectContentRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->InspectContent(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->InspectContent(request),
       [this](grpc::ClientContext& context,
              google::privacy::dlp::v2::InspectContentRequest const& request) {
         return stub_->InspectContent(context, request);
@@ -54,9 +73,10 @@ DlpServiceConnectionImpl::InspectContent(
 StatusOr<google::privacy::dlp::v2::RedactImageResponse>
 DlpServiceConnectionImpl::RedactImage(
     google::privacy::dlp::v2::RedactImageRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->RedactImage(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->RedactImage(request),
       [this](grpc::ClientContext& context,
              google::privacy::dlp::v2::RedactImageRequest const& request) {
         return stub_->RedactImage(context, request);
@@ -67,9 +87,10 @@ DlpServiceConnectionImpl::RedactImage(
 StatusOr<google::privacy::dlp::v2::DeidentifyContentResponse>
 DlpServiceConnectionImpl::DeidentifyContent(
     google::privacy::dlp::v2::DeidentifyContentRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeidentifyContent(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeidentifyContent(request),
       [this](
           grpc::ClientContext& context,
           google::privacy::dlp::v2::DeidentifyContentRequest const& request) {
@@ -81,9 +102,10 @@ DlpServiceConnectionImpl::DeidentifyContent(
 StatusOr<google::privacy::dlp::v2::ReidentifyContentResponse>
 DlpServiceConnectionImpl::ReidentifyContent(
     google::privacy::dlp::v2::ReidentifyContentRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->ReidentifyContent(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ReidentifyContent(request),
       [this](
           grpc::ClientContext& context,
           google::privacy::dlp::v2::ReidentifyContentRequest const& request) {
@@ -95,9 +117,10 @@ DlpServiceConnectionImpl::ReidentifyContent(
 StatusOr<google::privacy::dlp::v2::ListInfoTypesResponse>
 DlpServiceConnectionImpl::ListInfoTypes(
     google::privacy::dlp::v2::ListInfoTypesRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->ListInfoTypes(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ListInfoTypes(request),
       [this](grpc::ClientContext& context,
              google::privacy::dlp::v2::ListInfoTypesRequest const& request) {
         return stub_->ListInfoTypes(context, request);
@@ -108,9 +131,10 @@ DlpServiceConnectionImpl::ListInfoTypes(
 StatusOr<google::privacy::dlp::v2::InspectTemplate>
 DlpServiceConnectionImpl::CreateInspectTemplate(
     google::privacy::dlp::v2::CreateInspectTemplateRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateInspectTemplate(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateInspectTemplate(request),
       [this](grpc::ClientContext& context,
              google::privacy::dlp::v2::CreateInspectTemplateRequest const&
                  request) {
@@ -122,9 +146,10 @@ DlpServiceConnectionImpl::CreateInspectTemplate(
 StatusOr<google::privacy::dlp::v2::InspectTemplate>
 DlpServiceConnectionImpl::UpdateInspectTemplate(
     google::privacy::dlp::v2::UpdateInspectTemplateRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UpdateInspectTemplate(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateInspectTemplate(request),
       [this](grpc::ClientContext& context,
              google::privacy::dlp::v2::UpdateInspectTemplateRequest const&
                  request) {
@@ -136,9 +161,10 @@ DlpServiceConnectionImpl::UpdateInspectTemplate(
 StatusOr<google::privacy::dlp::v2::InspectTemplate>
 DlpServiceConnectionImpl::GetInspectTemplate(
     google::privacy::dlp::v2::GetInspectTemplateRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetInspectTemplate(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetInspectTemplate(request),
       [this](
           grpc::ClientContext& context,
           google::privacy::dlp::v2::GetInspectTemplateRequest const& request) {
@@ -151,16 +177,17 @@ StreamRange<google::privacy::dlp::v2::InspectTemplate>
 DlpServiceConnectionImpl::ListInspectTemplates(
     google::privacy::dlp::v2::ListInspectTemplatesRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<dlp_v2::DlpServiceRetryPolicy const>(retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListInspectTemplates(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency =
+      idempotency_policy(*current)->ListInspectTemplates(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::privacy::dlp::v2::InspectTemplate>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<dlp_v2::DlpServiceRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::privacy::dlp::v2::ListInspectTemplatesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
@@ -182,9 +209,10 @@ DlpServiceConnectionImpl::ListInspectTemplates(
 
 Status DlpServiceConnectionImpl::DeleteInspectTemplate(
     google::privacy::dlp::v2::DeleteInspectTemplateRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteInspectTemplate(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteInspectTemplate(request),
       [this](grpc::ClientContext& context,
              google::privacy::dlp::v2::DeleteInspectTemplateRequest const&
                  request) {
@@ -196,9 +224,10 @@ Status DlpServiceConnectionImpl::DeleteInspectTemplate(
 StatusOr<google::privacy::dlp::v2::DeidentifyTemplate>
 DlpServiceConnectionImpl::CreateDeidentifyTemplate(
     google::privacy::dlp::v2::CreateDeidentifyTemplateRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateDeidentifyTemplate(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateDeidentifyTemplate(request),
       [this](grpc::ClientContext& context,
              google::privacy::dlp::v2::CreateDeidentifyTemplateRequest const&
                  request) {
@@ -210,9 +239,10 @@ DlpServiceConnectionImpl::CreateDeidentifyTemplate(
 StatusOr<google::privacy::dlp::v2::DeidentifyTemplate>
 DlpServiceConnectionImpl::UpdateDeidentifyTemplate(
     google::privacy::dlp::v2::UpdateDeidentifyTemplateRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UpdateDeidentifyTemplate(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateDeidentifyTemplate(request),
       [this](grpc::ClientContext& context,
              google::privacy::dlp::v2::UpdateDeidentifyTemplateRequest const&
                  request) {
@@ -224,9 +254,10 @@ DlpServiceConnectionImpl::UpdateDeidentifyTemplate(
 StatusOr<google::privacy::dlp::v2::DeidentifyTemplate>
 DlpServiceConnectionImpl::GetDeidentifyTemplate(
     google::privacy::dlp::v2::GetDeidentifyTemplateRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetDeidentifyTemplate(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetDeidentifyTemplate(request),
       [this](grpc::ClientContext& context,
              google::privacy::dlp::v2::GetDeidentifyTemplateRequest const&
                  request) {
@@ -239,16 +270,17 @@ StreamRange<google::privacy::dlp::v2::DeidentifyTemplate>
 DlpServiceConnectionImpl::ListDeidentifyTemplates(
     google::privacy::dlp::v2::ListDeidentifyTemplatesRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<dlp_v2::DlpServiceRetryPolicy const>(retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListDeidentifyTemplates(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency =
+      idempotency_policy(*current)->ListDeidentifyTemplates(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::privacy::dlp::v2::DeidentifyTemplate>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<dlp_v2::DlpServiceRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::privacy::dlp::v2::ListDeidentifyTemplatesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
@@ -271,9 +303,10 @@ DlpServiceConnectionImpl::ListDeidentifyTemplates(
 
 Status DlpServiceConnectionImpl::DeleteDeidentifyTemplate(
     google::privacy::dlp::v2::DeleteDeidentifyTemplateRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteDeidentifyTemplate(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteDeidentifyTemplate(request),
       [this](grpc::ClientContext& context,
              google::privacy::dlp::v2::DeleteDeidentifyTemplateRequest const&
                  request) {
@@ -285,9 +318,10 @@ Status DlpServiceConnectionImpl::DeleteDeidentifyTemplate(
 StatusOr<google::privacy::dlp::v2::JobTrigger>
 DlpServiceConnectionImpl::CreateJobTrigger(
     google::privacy::dlp::v2::CreateJobTriggerRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateJobTrigger(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateJobTrigger(request),
       [this](grpc::ClientContext& context,
              google::privacy::dlp::v2::CreateJobTriggerRequest const& request) {
         return stub_->CreateJobTrigger(context, request);
@@ -298,9 +332,10 @@ DlpServiceConnectionImpl::CreateJobTrigger(
 StatusOr<google::privacy::dlp::v2::JobTrigger>
 DlpServiceConnectionImpl::UpdateJobTrigger(
     google::privacy::dlp::v2::UpdateJobTriggerRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UpdateJobTrigger(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateJobTrigger(request),
       [this](grpc::ClientContext& context,
              google::privacy::dlp::v2::UpdateJobTriggerRequest const& request) {
         return stub_->UpdateJobTrigger(context, request);
@@ -311,9 +346,10 @@ DlpServiceConnectionImpl::UpdateJobTrigger(
 StatusOr<google::privacy::dlp::v2::HybridInspectResponse>
 DlpServiceConnectionImpl::HybridInspectJobTrigger(
     google::privacy::dlp::v2::HybridInspectJobTriggerRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->HybridInspectJobTrigger(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->HybridInspectJobTrigger(request),
       [this](grpc::ClientContext& context,
              google::privacy::dlp::v2::HybridInspectJobTriggerRequest const&
                  request) {
@@ -325,9 +361,10 @@ DlpServiceConnectionImpl::HybridInspectJobTrigger(
 StatusOr<google::privacy::dlp::v2::JobTrigger>
 DlpServiceConnectionImpl::GetJobTrigger(
     google::privacy::dlp::v2::GetJobTriggerRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetJobTrigger(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetJobTrigger(request),
       [this](grpc::ClientContext& context,
              google::privacy::dlp::v2::GetJobTriggerRequest const& request) {
         return stub_->GetJobTrigger(context, request);
@@ -339,16 +376,16 @@ StreamRange<google::privacy::dlp::v2::JobTrigger>
 DlpServiceConnectionImpl::ListJobTriggers(
     google::privacy::dlp::v2::ListJobTriggersRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<dlp_v2::DlpServiceRetryPolicy const>(retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListJobTriggers(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListJobTriggers(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::privacy::dlp::v2::JobTrigger>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<dlp_v2::DlpServiceRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::privacy::dlp::v2::ListJobTriggersRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
@@ -370,9 +407,10 @@ DlpServiceConnectionImpl::ListJobTriggers(
 
 Status DlpServiceConnectionImpl::DeleteJobTrigger(
     google::privacy::dlp::v2::DeleteJobTriggerRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteJobTrigger(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteJobTrigger(request),
       [this](grpc::ClientContext& context,
              google::privacy::dlp::v2::DeleteJobTriggerRequest const& request) {
         return stub_->DeleteJobTrigger(context, request);
@@ -383,9 +421,10 @@ Status DlpServiceConnectionImpl::DeleteJobTrigger(
 StatusOr<google::privacy::dlp::v2::DlpJob>
 DlpServiceConnectionImpl::ActivateJobTrigger(
     google::privacy::dlp::v2::ActivateJobTriggerRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->ActivateJobTrigger(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ActivateJobTrigger(request),
       [this](
           grpc::ClientContext& context,
           google::privacy::dlp::v2::ActivateJobTriggerRequest const& request) {
@@ -397,9 +436,10 @@ DlpServiceConnectionImpl::ActivateJobTrigger(
 StatusOr<google::privacy::dlp::v2::DlpJob>
 DlpServiceConnectionImpl::CreateDlpJob(
     google::privacy::dlp::v2::CreateDlpJobRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateDlpJob(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateDlpJob(request),
       [this](grpc::ClientContext& context,
              google::privacy::dlp::v2::CreateDlpJobRequest const& request) {
         return stub_->CreateDlpJob(context, request);
@@ -411,17 +451,17 @@ StreamRange<google::privacy::dlp::v2::DlpJob>
 DlpServiceConnectionImpl::ListDlpJobs(
     google::privacy::dlp::v2::ListDlpJobsRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<dlp_v2::DlpServiceRetryPolicy const>(retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListDlpJobs(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListDlpJobs(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::privacy::dlp::v2::DlpJob>>(
       std::move(request),
-      [stub, retry, backoff, idempotency,
-       function_name](google::privacy::dlp::v2::ListDlpJobsRequest const& r) {
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<dlp_v2::DlpServiceRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          google::privacy::dlp::v2::ListDlpJobsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
@@ -441,9 +481,10 @@ DlpServiceConnectionImpl::ListDlpJobs(
 
 StatusOr<google::privacy::dlp::v2::DlpJob> DlpServiceConnectionImpl::GetDlpJob(
     google::privacy::dlp::v2::GetDlpJobRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetDlpJob(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetDlpJob(request),
       [this](grpc::ClientContext& context,
              google::privacy::dlp::v2::GetDlpJobRequest const& request) {
         return stub_->GetDlpJob(context, request);
@@ -453,9 +494,10 @@ StatusOr<google::privacy::dlp::v2::DlpJob> DlpServiceConnectionImpl::GetDlpJob(
 
 Status DlpServiceConnectionImpl::DeleteDlpJob(
     google::privacy::dlp::v2::DeleteDlpJobRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteDlpJob(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteDlpJob(request),
       [this](grpc::ClientContext& context,
              google::privacy::dlp::v2::DeleteDlpJobRequest const& request) {
         return stub_->DeleteDlpJob(context, request);
@@ -465,9 +507,10 @@ Status DlpServiceConnectionImpl::DeleteDlpJob(
 
 Status DlpServiceConnectionImpl::CancelDlpJob(
     google::privacy::dlp::v2::CancelDlpJobRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CancelDlpJob(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CancelDlpJob(request),
       [this](grpc::ClientContext& context,
              google::privacy::dlp::v2::CancelDlpJobRequest const& request) {
         return stub_->CancelDlpJob(context, request);
@@ -478,9 +521,10 @@ Status DlpServiceConnectionImpl::CancelDlpJob(
 StatusOr<google::privacy::dlp::v2::StoredInfoType>
 DlpServiceConnectionImpl::CreateStoredInfoType(
     google::privacy::dlp::v2::CreateStoredInfoTypeRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateStoredInfoType(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateStoredInfoType(request),
       [this](grpc::ClientContext& context,
              google::privacy::dlp::v2::CreateStoredInfoTypeRequest const&
                  request) {
@@ -492,9 +536,10 @@ DlpServiceConnectionImpl::CreateStoredInfoType(
 StatusOr<google::privacy::dlp::v2::StoredInfoType>
 DlpServiceConnectionImpl::UpdateStoredInfoType(
     google::privacy::dlp::v2::UpdateStoredInfoTypeRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UpdateStoredInfoType(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateStoredInfoType(request),
       [this](grpc::ClientContext& context,
              google::privacy::dlp::v2::UpdateStoredInfoTypeRequest const&
                  request) {
@@ -506,9 +551,10 @@ DlpServiceConnectionImpl::UpdateStoredInfoType(
 StatusOr<google::privacy::dlp::v2::StoredInfoType>
 DlpServiceConnectionImpl::GetStoredInfoType(
     google::privacy::dlp::v2::GetStoredInfoTypeRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetStoredInfoType(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetStoredInfoType(request),
       [this](
           grpc::ClientContext& context,
           google::privacy::dlp::v2::GetStoredInfoTypeRequest const& request) {
@@ -521,16 +567,16 @@ StreamRange<google::privacy::dlp::v2::StoredInfoType>
 DlpServiceConnectionImpl::ListStoredInfoTypes(
     google::privacy::dlp::v2::ListStoredInfoTypesRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<dlp_v2::DlpServiceRetryPolicy const>(retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListStoredInfoTypes(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListStoredInfoTypes(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::privacy::dlp::v2::StoredInfoType>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<dlp_v2::DlpServiceRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::privacy::dlp::v2::ListStoredInfoTypesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
@@ -552,9 +598,10 @@ DlpServiceConnectionImpl::ListStoredInfoTypes(
 
 Status DlpServiceConnectionImpl::DeleteStoredInfoType(
     google::privacy::dlp::v2::DeleteStoredInfoTypeRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteStoredInfoType(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteStoredInfoType(request),
       [this](grpc::ClientContext& context,
              google::privacy::dlp::v2::DeleteStoredInfoTypeRequest const&
                  request) {
@@ -566,9 +613,10 @@ Status DlpServiceConnectionImpl::DeleteStoredInfoType(
 StatusOr<google::privacy::dlp::v2::HybridInspectResponse>
 DlpServiceConnectionImpl::HybridInspectDlpJob(
     google::privacy::dlp::v2::HybridInspectDlpJobRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->HybridInspectDlpJob(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->HybridInspectDlpJob(request),
       [this](
           grpc::ClientContext& context,
           google::privacy::dlp::v2::HybridInspectDlpJobRequest const& request) {
@@ -579,9 +627,10 @@ DlpServiceConnectionImpl::HybridInspectDlpJob(
 
 Status DlpServiceConnectionImpl::FinishDlpJob(
     google::privacy::dlp::v2::FinishDlpJobRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->FinishDlpJob(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->FinishDlpJob(request),
       [this](grpc::ClientContext& context,
              google::privacy::dlp::v2::FinishDlpJobRequest const& request) {
         return stub_->FinishDlpJob(context, request);

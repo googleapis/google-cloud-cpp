@@ -224,64 +224,6 @@ class DataMigrationServiceConnectionImpl
       google::cloud::clouddms::v1::FetchStaticIpsRequest request) override;
 
  private:
-  std::unique_ptr<datamigration_v1::DataMigrationServiceRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<datamigration_v1::DataMigrationServiceRetryPolicyOption>()) {
-      return options
-          .get<datamigration_v1::DataMigrationServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<datamigration_v1::DataMigrationServiceRetryPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<datamigration_v1::DataMigrationServiceBackoffPolicyOption>()) {
-      return options
-          .get<datamigration_v1::DataMigrationServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<datamigration_v1::DataMigrationServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<
-      datamigration_v1::DataMigrationServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<datamigration_v1::
-                     DataMigrationServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<datamigration_v1::
-                   DataMigrationServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<datamigration_v1::
-                 DataMigrationServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<datamigration_v1::DataMigrationServicePollingPolicyOption>()) {
-      return options
-          .get<datamigration_v1::DataMigrationServicePollingPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<datamigration_v1::DataMigrationServicePollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<datamigration_v1_internal::DataMigrationServiceStub> stub_;
   Options options_;

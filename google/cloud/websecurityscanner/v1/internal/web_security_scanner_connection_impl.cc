@@ -29,6 +29,31 @@ namespace google {
 namespace cloud {
 namespace websecurityscanner_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<websecurityscanner_v1::WebSecurityScannerRetryPolicy>
+retry_policy(Options const& options) {
+  return options
+      .get<websecurityscanner_v1::WebSecurityScannerRetryPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options
+      .get<websecurityscanner_v1::WebSecurityScannerBackoffPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<
+    websecurityscanner_v1::WebSecurityScannerConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options
+      .get<websecurityscanner_v1::
+               WebSecurityScannerConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 WebSecurityScannerConnectionImpl::WebSecurityScannerConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
@@ -44,9 +69,10 @@ StatusOr<google::cloud::websecurityscanner::v1::ScanConfig>
 WebSecurityScannerConnectionImpl::CreateScanConfig(
     google::cloud::websecurityscanner::v1::CreateScanConfigRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateScanConfig(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateScanConfig(request),
       [this](
           grpc::ClientContext& context,
           google::cloud::websecurityscanner::v1::CreateScanConfigRequest const&
@@ -57,9 +83,10 @@ WebSecurityScannerConnectionImpl::CreateScanConfig(
 Status WebSecurityScannerConnectionImpl::DeleteScanConfig(
     google::cloud::websecurityscanner::v1::DeleteScanConfigRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteScanConfig(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteScanConfig(request),
       [this](
           grpc::ClientContext& context,
           google::cloud::websecurityscanner::v1::DeleteScanConfigRequest const&
@@ -71,9 +98,10 @@ StatusOr<google::cloud::websecurityscanner::v1::ScanConfig>
 WebSecurityScannerConnectionImpl::GetScanConfig(
     google::cloud::websecurityscanner::v1::GetScanConfigRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetScanConfig(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetScanConfig(request),
       [this](grpc::ClientContext& context,
              google::cloud::websecurityscanner::v1::GetScanConfigRequest const&
                  request) { return stub_->GetScanConfig(context, request); },
@@ -84,17 +112,17 @@ StreamRange<google::cloud::websecurityscanner::v1::ScanConfig>
 WebSecurityScannerConnectionImpl::ListScanConfigs(
     google::cloud::websecurityscanner::v1::ListScanConfigsRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<
-      websecurityscanner_v1::WebSecurityScannerRetryPolicy const>(
-      retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListScanConfigs(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListScanConfigs(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::websecurityscanner::v1::ScanConfig>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<
+           websecurityscanner_v1::WebSecurityScannerRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::websecurityscanner::v1::ListScanConfigsRequest const&
               r) {
         return google::cloud::internal::RetryLoop(
@@ -119,9 +147,10 @@ StatusOr<google::cloud::websecurityscanner::v1::ScanConfig>
 WebSecurityScannerConnectionImpl::UpdateScanConfig(
     google::cloud::websecurityscanner::v1::UpdateScanConfigRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UpdateScanConfig(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateScanConfig(request),
       [this](
           grpc::ClientContext& context,
           google::cloud::websecurityscanner::v1::UpdateScanConfigRequest const&
@@ -132,9 +161,10 @@ WebSecurityScannerConnectionImpl::UpdateScanConfig(
 StatusOr<google::cloud::websecurityscanner::v1::ScanRun>
 WebSecurityScannerConnectionImpl::StartScanRun(
     google::cloud::websecurityscanner::v1::StartScanRunRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->StartScanRun(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->StartScanRun(request),
       [this](grpc::ClientContext& context,
              google::cloud::websecurityscanner::v1::StartScanRunRequest const&
                  request) { return stub_->StartScanRun(context, request); },
@@ -144,9 +174,10 @@ WebSecurityScannerConnectionImpl::StartScanRun(
 StatusOr<google::cloud::websecurityscanner::v1::ScanRun>
 WebSecurityScannerConnectionImpl::GetScanRun(
     google::cloud::websecurityscanner::v1::GetScanRunRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetScanRun(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetScanRun(request),
       [this](grpc::ClientContext& context,
              google::cloud::websecurityscanner::v1::GetScanRunRequest const&
                  request) { return stub_->GetScanRun(context, request); },
@@ -157,17 +188,17 @@ StreamRange<google::cloud::websecurityscanner::v1::ScanRun>
 WebSecurityScannerConnectionImpl::ListScanRuns(
     google::cloud::websecurityscanner::v1::ListScanRunsRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<
-      websecurityscanner_v1::WebSecurityScannerRetryPolicy const>(
-      retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListScanRuns(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListScanRuns(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::websecurityscanner::v1::ScanRun>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<
+           websecurityscanner_v1::WebSecurityScannerRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::websecurityscanner::v1::ListScanRunsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
@@ -190,9 +221,10 @@ WebSecurityScannerConnectionImpl::ListScanRuns(
 StatusOr<google::cloud::websecurityscanner::v1::ScanRun>
 WebSecurityScannerConnectionImpl::StopScanRun(
     google::cloud::websecurityscanner::v1::StopScanRunRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->StopScanRun(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->StopScanRun(request),
       [this](grpc::ClientContext& context,
              google::cloud::websecurityscanner::v1::StopScanRunRequest const&
                  request) { return stub_->StopScanRun(context, request); },
@@ -203,17 +235,17 @@ StreamRange<google::cloud::websecurityscanner::v1::CrawledUrl>
 WebSecurityScannerConnectionImpl::ListCrawledUrls(
     google::cloud::websecurityscanner::v1::ListCrawledUrlsRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<
-      websecurityscanner_v1::WebSecurityScannerRetryPolicy const>(
-      retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListCrawledUrls(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListCrawledUrls(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::websecurityscanner::v1::CrawledUrl>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<
+           websecurityscanner_v1::WebSecurityScannerRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::websecurityscanner::v1::ListCrawledUrlsRequest const&
               r) {
         return google::cloud::internal::RetryLoop(
@@ -237,9 +269,10 @@ WebSecurityScannerConnectionImpl::ListCrawledUrls(
 StatusOr<google::cloud::websecurityscanner::v1::Finding>
 WebSecurityScannerConnectionImpl::GetFinding(
     google::cloud::websecurityscanner::v1::GetFindingRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetFinding(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetFinding(request),
       [this](grpc::ClientContext& context,
              google::cloud::websecurityscanner::v1::GetFindingRequest const&
                  request) { return stub_->GetFinding(context, request); },
@@ -250,17 +283,17 @@ StreamRange<google::cloud::websecurityscanner::v1::Finding>
 WebSecurityScannerConnectionImpl::ListFindings(
     google::cloud::websecurityscanner::v1::ListFindingsRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<
-      websecurityscanner_v1::WebSecurityScannerRetryPolicy const>(
-      retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListFindings(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListFindings(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::websecurityscanner::v1::Finding>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<
+           websecurityscanner_v1::WebSecurityScannerRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::websecurityscanner::v1::ListFindingsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
@@ -284,9 +317,10 @@ StatusOr<google::cloud::websecurityscanner::v1::ListFindingTypeStatsResponse>
 WebSecurityScannerConnectionImpl::ListFindingTypeStats(
     google::cloud::websecurityscanner::v1::ListFindingTypeStatsRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->ListFindingTypeStats(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ListFindingTypeStats(request),
       [this](grpc::ClientContext& context,
              google::cloud::websecurityscanner::v1::
                  ListFindingTypeStatsRequest const& request) {

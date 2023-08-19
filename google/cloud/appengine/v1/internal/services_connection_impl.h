@@ -64,44 +64,6 @@ class ServicesConnectionImpl : public appengine_v1::ServicesConnection {
       google::appengine::v1::DeleteServiceRequest const& request) override;
 
  private:
-  std::unique_ptr<appengine_v1::ServicesRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<appengine_v1::ServicesRetryPolicyOption>()) {
-      return options.get<appengine_v1::ServicesRetryPolicyOption>()->clone();
-    }
-    return options_.get<appengine_v1::ServicesRetryPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<appengine_v1::ServicesBackoffPolicyOption>()) {
-      return options.get<appengine_v1::ServicesBackoffPolicyOption>()->clone();
-    }
-    return options_.get<appengine_v1::ServicesBackoffPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<appengine_v1::ServicesConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<appengine_v1::ServicesConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<appengine_v1::ServicesConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<appengine_v1::ServicesConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<appengine_v1::ServicesPollingPolicyOption>()) {
-      return options.get<appengine_v1::ServicesPollingPolicyOption>()->clone();
-    }
-    return options_.get<appengine_v1::ServicesPollingPolicyOption>()->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<appengine_v1_internal::ServicesStub> stub_;
   Options options_;

@@ -55,36 +55,6 @@ class TraceServiceConnectionImpl : public trace_v2::TraceServiceConnection {
       google::devtools::cloudtrace::v2::Span const& request) override;
 
  private:
-  std::unique_ptr<trace_v2::TraceServiceRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<trace_v2::TraceServiceRetryPolicyOption>()) {
-      return options.get<trace_v2::TraceServiceRetryPolicyOption>()->clone();
-    }
-    return options_.get<trace_v2::TraceServiceRetryPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<trace_v2::TraceServiceBackoffPolicyOption>()) {
-      return options.get<trace_v2::TraceServiceBackoffPolicyOption>()->clone();
-    }
-    return options_.get<trace_v2::TraceServiceBackoffPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<trace_v2::TraceServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<trace_v2::TraceServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<trace_v2::TraceServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<trace_v2::TraceServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<trace_v2_internal::TraceServiceStub> stub_;
   Options options_;

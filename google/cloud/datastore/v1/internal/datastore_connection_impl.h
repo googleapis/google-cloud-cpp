@@ -73,36 +73,6 @@ class DatastoreConnectionImpl : public datastore_v1::DatastoreConnection {
       google::datastore::v1::ReserveIdsRequest const& request) override;
 
  private:
-  std::unique_ptr<datastore_v1::DatastoreRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<datastore_v1::DatastoreRetryPolicyOption>()) {
-      return options.get<datastore_v1::DatastoreRetryPolicyOption>()->clone();
-    }
-    return options_.get<datastore_v1::DatastoreRetryPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<datastore_v1::DatastoreBackoffPolicyOption>()) {
-      return options.get<datastore_v1::DatastoreBackoffPolicyOption>()->clone();
-    }
-    return options_.get<datastore_v1::DatastoreBackoffPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<datastore_v1::DatastoreConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<datastore_v1::DatastoreConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<datastore_v1::DatastoreConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<datastore_v1::DatastoreConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<datastore_v1_internal::DatastoreStub> stub_;
   Options options_;

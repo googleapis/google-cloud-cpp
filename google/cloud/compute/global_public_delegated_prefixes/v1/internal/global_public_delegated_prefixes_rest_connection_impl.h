@@ -80,68 +80,35 @@ class GlobalPublicDelegatedPrefixesRestConnectionImpl
           PatchGlobalPublicDelegatedPrefixesRequest const& request) override;
 
  private:
-  std::unique_ptr<compute_global_public_delegated_prefixes_v1::
-                      GlobalPublicDelegatedPrefixesRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_global_public_delegated_prefixes_v1::
-                        GlobalPublicDelegatedPrefixesRetryPolicyOption>()) {
-      return options
-          .get<compute_global_public_delegated_prefixes_v1::
-                   GlobalPublicDelegatedPrefixesRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<compute_global_public_delegated_prefixes_v1::
+                             GlobalPublicDelegatedPrefixesRetryPolicy>
+  retry_policy(Options const& options) {
+    return options
         .get<compute_global_public_delegated_prefixes_v1::
                  GlobalPublicDelegatedPrefixesRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_global_public_delegated_prefixes_v1::
-                        GlobalPublicDelegatedPrefixesBackoffPolicyOption>()) {
-      return options
-          .get<compute_global_public_delegated_prefixes_v1::
-                   GlobalPublicDelegatedPrefixesBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options
         .get<compute_global_public_delegated_prefixes_v1::
                  GlobalPublicDelegatedPrefixesBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<compute_global_public_delegated_prefixes_v1::
-                      GlobalPublicDelegatedPrefixesConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            compute_global_public_delegated_prefixes_v1::
-                GlobalPublicDelegatedPrefixesConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<
-              compute_global_public_delegated_prefixes_v1::
-                  GlobalPublicDelegatedPrefixesConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<
+      compute_global_public_delegated_prefixes_v1::
+          GlobalPublicDelegatedPrefixesConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<
             compute_global_public_delegated_prefixes_v1::
                 GlobalPublicDelegatedPrefixesConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_global_public_delegated_prefixes_v1::
-                        GlobalPublicDelegatedPrefixesPollingPolicyOption>()) {
-      return options
-          .get<compute_global_public_delegated_prefixes_v1::
-                   GlobalPublicDelegatedPrefixesPollingPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options
         .get<compute_global_public_delegated_prefixes_v1::
                  GlobalPublicDelegatedPrefixesPollingPolicyOption>()
         ->clone();

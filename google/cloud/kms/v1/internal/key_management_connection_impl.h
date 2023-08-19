@@ -142,40 +142,6 @@ class KeyManagementServiceConnectionImpl
                           request) override;
 
  private:
-  std::unique_ptr<kms_v1::KeyManagementServiceRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<kms_v1::KeyManagementServiceRetryPolicyOption>()) {
-      return options.get<kms_v1::KeyManagementServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<kms_v1::KeyManagementServiceRetryPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<kms_v1::KeyManagementServiceBackoffPolicyOption>()) {
-      return options.get<kms_v1::KeyManagementServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<kms_v1::KeyManagementServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<kms_v1::KeyManagementServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            kms_v1::KeyManagementServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<kms_v1::KeyManagementServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<kms_v1::KeyManagementServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<kms_v1_internal::KeyManagementServiceStub> stub_;
   Options options_;

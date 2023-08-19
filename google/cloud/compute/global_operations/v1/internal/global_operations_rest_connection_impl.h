@@ -73,48 +73,25 @@ class GlobalOperationsRestConnectionImpl
           request) override;
 
  private:
-  std::unique_ptr<compute_global_operations_v1::GlobalOperationsRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_global_operations_v1::
-                        GlobalOperationsRetryPolicyOption>()) {
-      return options
-          .get<
-              compute_global_operations_v1::GlobalOperationsRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<
+      compute_global_operations_v1::GlobalOperationsRetryPolicy>
+  retry_policy(Options const& options) {
+    return options
         .get<compute_global_operations_v1::GlobalOperationsRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_global_operations_v1::
-                        GlobalOperationsBackoffPolicyOption>()) {
-      return options
-          .get<compute_global_operations_v1::
-                   GlobalOperationsBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options
         .get<
             compute_global_operations_v1::GlobalOperationsBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<
+  static std::unique_ptr<
       compute_global_operations_v1::GlobalOperationsConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_global_operations_v1::
-                        GlobalOperationsConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<compute_global_operations_v1::
-                   GlobalOperationsConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  idempotency_policy(Options const& options) {
+    return options
         .get<compute_global_operations_v1::
                  GlobalOperationsConnectionIdempotencyPolicyOption>()
         ->clone();

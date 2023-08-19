@@ -30,6 +30,26 @@ namespace google {
 namespace cloud {
 namespace logging_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<logging_v2::LoggingServiceV2RetryPolicy> retry_policy(
+    Options const& options) {
+  return options.get<logging_v2::LoggingServiceV2RetryPolicyOption>()->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options.get<logging_v2::LoggingServiceV2BackoffPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<logging_v2::LoggingServiceV2ConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options
+      .get<logging_v2::LoggingServiceV2ConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 LoggingServiceV2ConnectionImpl::LoggingServiceV2ConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
@@ -42,9 +62,10 @@ LoggingServiceV2ConnectionImpl::LoggingServiceV2ConnectionImpl(
 
 Status LoggingServiceV2ConnectionImpl::DeleteLog(
     google::logging::v2::DeleteLogRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteLog(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteLog(request),
       [this](grpc::ClientContext& context,
              google::logging::v2::DeleteLogRequest const& request) {
         return stub_->DeleteLog(context, request);
@@ -55,9 +76,10 @@ Status LoggingServiceV2ConnectionImpl::DeleteLog(
 StatusOr<google::logging::v2::WriteLogEntriesResponse>
 LoggingServiceV2ConnectionImpl::WriteLogEntries(
     google::logging::v2::WriteLogEntriesRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->WriteLogEntries(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->WriteLogEntries(request),
       [this](grpc::ClientContext& context,
              google::logging::v2::WriteLogEntriesRequest const& request) {
         return stub_->WriteLogEntries(context, request);
@@ -69,17 +91,17 @@ StreamRange<google::logging::v2::LogEntry>
 LoggingServiceV2ConnectionImpl::ListLogEntries(
     google::logging::v2::ListLogEntriesRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<logging_v2::LoggingServiceV2RetryPolicy const>(
-      retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListLogEntries(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListLogEntries(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::logging::v2::LogEntry>>(
       std::move(request),
-      [stub, retry, backoff, idempotency,
-       function_name](google::logging::v2::ListLogEntriesRequest const& r) {
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<logging_v2::LoggingServiceV2RetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          google::logging::v2::ListLogEntriesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context,
@@ -100,17 +122,17 @@ StreamRange<google::api::MonitoredResourceDescriptor>
 LoggingServiceV2ConnectionImpl::ListMonitoredResourceDescriptors(
     google::logging::v2::ListMonitoredResourceDescriptorsRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<logging_v2::LoggingServiceV2RetryPolicy const>(
-      retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+  auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency =
-      idempotency_policy()->ListMonitoredResourceDescriptors(request);
+      idempotency_policy(*current)->ListMonitoredResourceDescriptors(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::api::MonitoredResourceDescriptor>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<logging_v2::LoggingServiceV2RetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::logging::v2::ListMonitoredResourceDescriptorsRequest const&
               r) {
         return google::cloud::internal::RetryLoop(
@@ -134,16 +156,16 @@ LoggingServiceV2ConnectionImpl::ListMonitoredResourceDescriptors(
 StreamRange<std::string> LoggingServiceV2ConnectionImpl::ListLogs(
     google::logging::v2::ListLogsRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<logging_v2::LoggingServiceV2RetryPolicy const>(
-      retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListLogs(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListLogs(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<StreamRange<std::string>>(
       std::move(request),
-      [stub, retry, backoff, idempotency,
-       function_name](google::logging::v2::ListLogsRequest const& r) {
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<logging_v2::LoggingServiceV2RetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          google::logging::v2::ListLogsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context,
@@ -163,12 +185,13 @@ StreamRange<std::string> LoggingServiceV2ConnectionImpl::ListLogs(
 future<StatusOr<google::logging::v2::WriteLogEntriesResponse>>
 LoggingServiceV2ConnectionImpl::AsyncWriteLogEntries(
     google::logging::v2::WriteLogEntriesRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncRetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->WriteLogEntries(request), background_->cq(),
-      [stub](CompletionQueue& cq, std::shared_ptr<grpc::ClientContext> context,
-             google::logging::v2::WriteLogEntriesRequest const& request) {
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->WriteLogEntries(request), background_->cq(),
+      [stub = stub_](
+          CompletionQueue& cq, std::shared_ptr<grpc::ClientContext> context,
+          google::logging::v2::WriteLogEntriesRequest const& request) {
         return stub->AsyncWriteLogEntries(cq, std::move(context), request);
       },
       request, __func__);

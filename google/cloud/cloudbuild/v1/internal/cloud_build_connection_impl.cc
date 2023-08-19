@@ -30,6 +30,29 @@ namespace google {
 namespace cloud {
 namespace cloudbuild_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<cloudbuild_v1::CloudBuildRetryPolicy> retry_policy(
+    Options const& options) {
+  return options.get<cloudbuild_v1::CloudBuildRetryPolicyOption>()->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options.get<cloudbuild_v1::CloudBuildBackoffPolicyOption>()->clone();
+}
+
+std::unique_ptr<cloudbuild_v1::CloudBuildConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options
+      .get<cloudbuild_v1::CloudBuildConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+  return options.get<cloudbuild_v1::CloudBuildPollingPolicyOption>()->clone();
+}
+
+}  // namespace
 
 CloudBuildConnectionImpl::CloudBuildConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
@@ -43,37 +66,41 @@ CloudBuildConnectionImpl::CloudBuildConnectionImpl(
 future<StatusOr<google::devtools::cloudbuild::v1::Build>>
 CloudBuildConnectionImpl::CreateBuild(
     google::devtools::cloudbuild::v1::CreateBuildRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::devtools::cloudbuild::v1::Build>(
       background_->cq(), request,
-      [stub](
+      [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context,
           google::devtools::cloudbuild::v1::CreateBuildRequest const& request) {
         return stub->AsyncCreateBuild(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::devtools::cloudbuild::v1::Build>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateBuild(request), polling_policy(), __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateBuild(request),
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::devtools::cloudbuild::v1::Build>
 CloudBuildConnectionImpl::GetBuild(
     google::devtools::cloudbuild::v1::GetBuildRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(), idempotency_policy()->GetBuild(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetBuild(request),
       [this](grpc::ClientContext& context,
              google::devtools::cloudbuild::v1::GetBuildRequest const& request) {
         return stub_->GetBuild(context, request);
@@ -85,16 +112,16 @@ StreamRange<google::devtools::cloudbuild::v1::Build>
 CloudBuildConnectionImpl::ListBuilds(
     google::devtools::cloudbuild::v1::ListBuildsRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<cloudbuild_v1::CloudBuildRetryPolicy const>(
-      retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListBuilds(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListBuilds(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::devtools::cloudbuild::v1::Build>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<cloudbuild_v1::CloudBuildRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::devtools::cloudbuild::v1::ListBuildsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
@@ -115,9 +142,10 @@ CloudBuildConnectionImpl::ListBuilds(
 StatusOr<google::devtools::cloudbuild::v1::Build>
 CloudBuildConnectionImpl::CancelBuild(
     google::devtools::cloudbuild::v1::CancelBuildRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CancelBuild(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CancelBuild(request),
       [this](
           grpc::ClientContext& context,
           google::devtools::cloudbuild::v1::CancelBuildRequest const& request) {
@@ -129,68 +157,74 @@ CloudBuildConnectionImpl::CancelBuild(
 future<StatusOr<google::devtools::cloudbuild::v1::Build>>
 CloudBuildConnectionImpl::RetryBuild(
     google::devtools::cloudbuild::v1::RetryBuildRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::devtools::cloudbuild::v1::Build>(
       background_->cq(), request,
-      [stub](
+      [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context,
           google::devtools::cloudbuild::v1::RetryBuildRequest const& request) {
         return stub->AsyncRetryBuild(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::devtools::cloudbuild::v1::Build>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->RetryBuild(request), polling_policy(), __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->RetryBuild(request),
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::devtools::cloudbuild::v1::Build>>
 CloudBuildConnectionImpl::ApproveBuild(
     google::devtools::cloudbuild::v1::ApproveBuildRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::devtools::cloudbuild::v1::Build>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::devtools::cloudbuild::v1::ApproveBuildRequest const&
-                 request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::devtools::cloudbuild::v1::ApproveBuildRequest const&
+              request) {
         return stub->AsyncApproveBuild(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::devtools::cloudbuild::v1::Build>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->ApproveBuild(request), polling_policy(), __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ApproveBuild(request),
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::devtools::cloudbuild::v1::BuildTrigger>
 CloudBuildConnectionImpl::CreateBuildTrigger(
     google::devtools::cloudbuild::v1::CreateBuildTriggerRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateBuildTrigger(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateBuildTrigger(request),
       [this](grpc::ClientContext& context,
              google::devtools::cloudbuild::v1::CreateBuildTriggerRequest const&
                  request) {
@@ -202,9 +236,10 @@ CloudBuildConnectionImpl::CreateBuildTrigger(
 StatusOr<google::devtools::cloudbuild::v1::BuildTrigger>
 CloudBuildConnectionImpl::GetBuildTrigger(
     google::devtools::cloudbuild::v1::GetBuildTriggerRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetBuildTrigger(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetBuildTrigger(request),
       [this](grpc::ClientContext& context,
              google::devtools::cloudbuild::v1::GetBuildTriggerRequest const&
                  request) { return stub_->GetBuildTrigger(context, request); },
@@ -215,16 +250,16 @@ StreamRange<google::devtools::cloudbuild::v1::BuildTrigger>
 CloudBuildConnectionImpl::ListBuildTriggers(
     google::devtools::cloudbuild::v1::ListBuildTriggersRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<cloudbuild_v1::CloudBuildRetryPolicy const>(
-      retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListBuildTriggers(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListBuildTriggers(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::devtools::cloudbuild::v1::BuildTrigger>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<cloudbuild_v1::CloudBuildRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::devtools::cloudbuild::v1::ListBuildTriggersRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
@@ -247,9 +282,10 @@ CloudBuildConnectionImpl::ListBuildTriggers(
 Status CloudBuildConnectionImpl::DeleteBuildTrigger(
     google::devtools::cloudbuild::v1::DeleteBuildTriggerRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteBuildTrigger(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteBuildTrigger(request),
       [this](grpc::ClientContext& context,
              google::devtools::cloudbuild::v1::DeleteBuildTriggerRequest const&
                  request) {
@@ -262,9 +298,10 @@ StatusOr<google::devtools::cloudbuild::v1::BuildTrigger>
 CloudBuildConnectionImpl::UpdateBuildTrigger(
     google::devtools::cloudbuild::v1::UpdateBuildTriggerRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UpdateBuildTrigger(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateBuildTrigger(request),
       [this](grpc::ClientContext& context,
              google::devtools::cloudbuild::v1::UpdateBuildTriggerRequest const&
                  request) {
@@ -276,40 +313,43 @@ CloudBuildConnectionImpl::UpdateBuildTrigger(
 future<StatusOr<google::devtools::cloudbuild::v1::Build>>
 CloudBuildConnectionImpl::RunBuildTrigger(
     google::devtools::cloudbuild::v1::RunBuildTriggerRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::devtools::cloudbuild::v1::Build>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::devtools::cloudbuild::v1::RunBuildTriggerRequest const&
-                 request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::devtools::cloudbuild::v1::RunBuildTriggerRequest const&
+              request) {
         return stub->AsyncRunBuildTrigger(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::devtools::cloudbuild::v1::Build>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->RunBuildTrigger(request), polling_policy(),
-      __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->RunBuildTrigger(request),
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::devtools::cloudbuild::v1::ReceiveTriggerWebhookResponse>
 CloudBuildConnectionImpl::ReceiveTriggerWebhook(
     google::devtools::cloudbuild::v1::ReceiveTriggerWebhookRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->ReceiveTriggerWebhook(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ReceiveTriggerWebhook(request),
       [this](
           grpc::ClientContext& context,
           google::devtools::cloudbuild::v1::ReceiveTriggerWebhookRequest const&
@@ -322,39 +362,42 @@ CloudBuildConnectionImpl::ReceiveTriggerWebhook(
 future<StatusOr<google::devtools::cloudbuild::v1::WorkerPool>>
 CloudBuildConnectionImpl::CreateWorkerPool(
     google::devtools::cloudbuild::v1::CreateWorkerPoolRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::devtools::cloudbuild::v1::WorkerPool>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::devtools::cloudbuild::v1::CreateWorkerPoolRequest const&
-                 request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::devtools::cloudbuild::v1::CreateWorkerPoolRequest const&
+              request) {
         return stub->AsyncCreateWorkerPool(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::devtools::cloudbuild::v1::WorkerPool>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateWorkerPool(request), polling_policy(),
-      __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateWorkerPool(request),
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::devtools::cloudbuild::v1::WorkerPool>
 CloudBuildConnectionImpl::GetWorkerPool(
     google::devtools::cloudbuild::v1::GetWorkerPoolRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetWorkerPool(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetWorkerPool(request),
       [this](grpc::ClientContext& context,
              google::devtools::cloudbuild::v1::GetWorkerPoolRequest const&
                  request) { return stub_->GetWorkerPool(context, request); },
@@ -365,77 +408,81 @@ future<StatusOr<
     google::devtools::cloudbuild::v1::DeleteWorkerPoolOperationMetadata>>
 CloudBuildConnectionImpl::DeleteWorkerPool(
     google::devtools::cloudbuild::v1::DeleteWorkerPoolRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::devtools::cloudbuild::v1::DeleteWorkerPoolOperationMetadata>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::devtools::cloudbuild::v1::DeleteWorkerPoolRequest const&
-                 request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::devtools::cloudbuild::v1::DeleteWorkerPoolRequest const&
+              request) {
         return stub->AsyncDeleteWorkerPool(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::devtools::cloudbuild::v1::DeleteWorkerPoolOperationMetadata>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteWorkerPool(request), polling_policy(),
-      __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteWorkerPool(request),
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::devtools::cloudbuild::v1::WorkerPool>>
 CloudBuildConnectionImpl::UpdateWorkerPool(
     google::devtools::cloudbuild::v1::UpdateWorkerPoolRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::devtools::cloudbuild::v1::WorkerPool>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::devtools::cloudbuild::v1::UpdateWorkerPoolRequest const&
-                 request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::devtools::cloudbuild::v1::UpdateWorkerPoolRequest const&
+              request) {
         return stub->AsyncUpdateWorkerPool(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::devtools::cloudbuild::v1::WorkerPool>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UpdateWorkerPool(request), polling_policy(),
-      __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateWorkerPool(request),
+      polling_policy(*current), __func__);
 }
 
 StreamRange<google::devtools::cloudbuild::v1::WorkerPool>
 CloudBuildConnectionImpl::ListWorkerPools(
     google::devtools::cloudbuild::v1::ListWorkerPoolsRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<cloudbuild_v1::CloudBuildRetryPolicy const>(
-      retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListWorkerPools(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListWorkerPools(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::devtools::cloudbuild::v1::WorkerPool>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<cloudbuild_v1::CloudBuildRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::devtools::cloudbuild::v1::ListWorkerPoolsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,

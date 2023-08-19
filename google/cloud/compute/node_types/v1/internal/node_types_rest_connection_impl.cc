@@ -43,9 +43,10 @@ StatusOr<google::cloud::cpp::compute::v1::NodeTypeAggregatedList>
 NodeTypesRestConnectionImpl::AggregatedListNodeTypes(
     google::cloud::cpp::compute::node_types::v1::
         AggregatedListNodeTypesRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->AggregatedListNodeTypes(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->AggregatedListNodeTypes(request),
       [this](rest_internal::RestContext& rest_context,
              google::cloud::cpp::compute::node_types::v1::
                  AggregatedListNodeTypesRequest const& request) {
@@ -58,9 +59,10 @@ StatusOr<google::cloud::cpp::compute::v1::NodeType>
 NodeTypesRestConnectionImpl::GetNodeTypes(
     google::cloud::cpp::compute::node_types::v1::GetNodeTypesRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetNodeTypes(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetNodeTypes(request),
       [this](rest_internal::RestContext& rest_context,
              google::cloud::cpp::compute::node_types::v1::
                  GetNodeTypesRequest const& request) {
@@ -73,19 +75,18 @@ StreamRange<google::cloud::cpp::compute::v1::NodeType>
 NodeTypesRestConnectionImpl::ListNodeTypes(
     google::cloud::cpp::compute::node_types::v1::ListNodeTypesRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<compute_node_types_v1::NodeTypesRetryPolicy const>(
-          retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListNodeTypes(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListNodeTypes(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::cpp::compute::v1::NodeType>>(
       std::move(request),
-      [stub, retry, backoff, idempotency,
-       function_name](google::cloud::cpp::compute::node_types::v1::
-                          ListNodeTypesRequest const& r) {
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<compute_node_types_v1::NodeTypesRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          google::cloud::cpp::compute::node_types::v1::
+              ListNodeTypesRequest const& r) {
         return google::cloud::rest_internal::RestRetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](rest_internal::RestContext& rest_context,

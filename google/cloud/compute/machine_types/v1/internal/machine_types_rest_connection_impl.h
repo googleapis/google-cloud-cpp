@@ -64,45 +64,23 @@ class MachineTypesRestConnectionImpl
           request) override;
 
  private:
-  std::unique_ptr<compute_machine_types_v1::MachineTypesRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<compute_machine_types_v1::MachineTypesRetryPolicyOption>()) {
-      return options
-          .get<compute_machine_types_v1::MachineTypesRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<compute_machine_types_v1::MachineTypesRetryPolicy>
+  retry_policy(Options const& options) {
+    return options
         .get<compute_machine_types_v1::MachineTypesRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<compute_machine_types_v1::MachineTypesBackoffPolicyOption>()) {
-      return options
-          .get<compute_machine_types_v1::MachineTypesBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options
         .get<compute_machine_types_v1::MachineTypesBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<
+  static std::unique_ptr<
       compute_machine_types_v1::MachineTypesConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_machine_types_v1::
-                        MachineTypesConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<compute_machine_types_v1::
-                   MachineTypesConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  idempotency_policy(Options const& options) {
+    return options
         .get<compute_machine_types_v1::
                  MachineTypesConnectionIdempotencyPolicyOption>()
         ->clone();

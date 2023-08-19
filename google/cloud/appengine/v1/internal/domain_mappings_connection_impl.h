@@ -71,50 +71,6 @@ class DomainMappingsConnectionImpl
                           request) override;
 
  private:
-  std::unique_ptr<appengine_v1::DomainMappingsRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<appengine_v1::DomainMappingsRetryPolicyOption>()) {
-      return options.get<appengine_v1::DomainMappingsRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<appengine_v1::DomainMappingsRetryPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<appengine_v1::DomainMappingsBackoffPolicyOption>()) {
-      return options.get<appengine_v1::DomainMappingsBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<appengine_v1::DomainMappingsBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<appengine_v1::DomainMappingsConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            appengine_v1::DomainMappingsConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<appengine_v1::DomainMappingsConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<appengine_v1::DomainMappingsConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<appengine_v1::DomainMappingsPollingPolicyOption>()) {
-      return options.get<appengine_v1::DomainMappingsPollingPolicyOption>()
-          ->clone();
-    }
-    return options_.get<appengine_v1::DomainMappingsPollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<appengine_v1_internal::DomainMappingsStub> stub_;
   Options options_;

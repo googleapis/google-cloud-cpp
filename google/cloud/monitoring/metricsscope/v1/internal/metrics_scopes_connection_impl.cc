@@ -29,6 +29,37 @@ namespace google {
 namespace cloud {
 namespace monitoring_metricsscope_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<monitoring_metricsscope_v1::MetricsScopesRetryPolicy>
+retry_policy(Options const& options) {
+  return options
+      .get<monitoring_metricsscope_v1::MetricsScopesRetryPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options
+      .get<monitoring_metricsscope_v1::MetricsScopesBackoffPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<
+    monitoring_metricsscope_v1::MetricsScopesConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options
+      .get<monitoring_metricsscope_v1::
+               MetricsScopesConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+  return options
+      .get<monitoring_metricsscope_v1::MetricsScopesPollingPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 MetricsScopesConnectionImpl::MetricsScopesConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
@@ -44,9 +75,10 @@ StatusOr<google::monitoring::metricsscope::v1::MetricsScope>
 MetricsScopesConnectionImpl::GetMetricsScope(
     google::monitoring::metricsscope::v1::GetMetricsScopeRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetMetricsScope(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetMetricsScope(request),
       [this](grpc::ClientContext& context,
              google::monitoring::metricsscope::v1::GetMetricsScopeRequest const&
                  request) { return stub_->GetMetricsScope(context, request); },
@@ -58,9 +90,11 @@ StatusOr<google::monitoring::metricsscope::v1::
 MetricsScopesConnectionImpl::ListMetricsScopesByMonitoredProject(
     google::monitoring::metricsscope::v1::
         ListMetricsScopesByMonitoredProjectRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->ListMetricsScopesByMonitoredProject(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ListMetricsScopesByMonitoredProject(
+          request),
       [this](grpc::ClientContext& context,
              google::monitoring::metricsscope::v1::
                  ListMetricsScopesByMonitoredProjectRequest const& request) {
@@ -73,64 +107,66 @@ future<StatusOr<google::monitoring::metricsscope::v1::MonitoredProject>>
 MetricsScopesConnectionImpl::CreateMonitoredProject(
     google::monitoring::metricsscope::v1::CreateMonitoredProjectRequest const&
         request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::monitoring::metricsscope::v1::MonitoredProject>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::monitoring::metricsscope::v1::
-                 CreateMonitoredProjectRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::monitoring::metricsscope::v1::
+                         CreateMonitoredProjectRequest const& request) {
         return stub->AsyncCreateMonitoredProject(cq, std::move(context),
                                                  request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::monitoring::metricsscope::v1::MonitoredProject>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateMonitoredProject(request), polling_policy(),
-      __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateMonitoredProject(request),
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::monitoring::metricsscope::v1::OperationMetadata>>
 MetricsScopesConnectionImpl::DeleteMonitoredProject(
     google::monitoring::metricsscope::v1::DeleteMonitoredProjectRequest const&
         request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::monitoring::metricsscope::v1::OperationMetadata>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::monitoring::metricsscope::v1::
-                 DeleteMonitoredProjectRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::monitoring::metricsscope::v1::
+                         DeleteMonitoredProjectRequest const& request) {
         return stub->AsyncDeleteMonitoredProject(cq, std::move(context),
                                                  request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::monitoring::metricsscope::v1::OperationMetadata>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteMonitoredProject(request), polling_policy(),
-      __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteMonitoredProject(request),
+      polling_policy(*current), __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

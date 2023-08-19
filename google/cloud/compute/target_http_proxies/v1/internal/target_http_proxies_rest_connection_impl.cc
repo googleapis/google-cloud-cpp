@@ -47,9 +47,10 @@ StatusOr<google::cloud::cpp::compute::v1::TargetHttpProxyAggregatedList>
 TargetHttpProxiesRestConnectionImpl::AggregatedListTargetHttpProxies(
     google::cloud::cpp::compute::target_http_proxies::v1::
         AggregatedListTargetHttpProxiesRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->AggregatedListTargetHttpProxies(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->AggregatedListTargetHttpProxies(request),
       [this](rest_internal::RestContext& rest_context,
              google::cloud::cpp::compute::target_http_proxies::v1::
                  AggregatedListTargetHttpProxiesRequest const& request) {
@@ -62,7 +63,7 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetHttpProxiesRestConnectionImpl::DeleteTargetHttpProxies(
     google::cloud::cpp::compute::target_http_proxies::v1::
         DeleteTargetHttpProxiesRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestLongRunningOperation<
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::v1::Operation,
@@ -71,30 +72,30 @@ TargetHttpProxiesRestConnectionImpl::DeleteTargetHttpProxies(
       google::cloud::cpp::compute::global_operations::v1::
           DeleteGlobalOperationsRequest>(
       background_->cq(), request,
-      [stub](CompletionQueue& cq,
-             std::unique_ptr<rest_internal::RestContext> context,
-             google::cloud::cpp::compute::target_http_proxies::v1::
-                 DeleteTargetHttpProxiesRequest const& request) {
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::cpp::compute::target_http_proxies::v1::
+                         DeleteTargetHttpProxiesRequest const& request) {
         return stub->AsyncDeleteTargetHttpProxies(cq, std::move(context),
                                                   request);
       },
-      [stub](CompletionQueue& cq,
-             std::unique_ptr<rest_internal::RestContext> context,
-             google::cloud::cpp::compute::global_operations::v1::
-                 GetGlobalOperationsRequest const& request) {
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::cpp::compute::global_operations::v1::
+                         GetGlobalOperationsRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](CompletionQueue& cq,
-             std::unique_ptr<rest_internal::RestContext> context,
-             google::cloud::cpp::compute::global_operations::v1::
-                 DeleteGlobalOperationsRequest const& request) {
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::cpp::compute::global_operations::v1::
+                         DeleteGlobalOperationsRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
          std::string const&) { return op; },
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteTargetHttpProxies(request), polling_policy(),
-      __func__,
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteTargetHttpProxies(request),
+      polling_policy(*current), __func__,
       [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
       },
@@ -116,9 +117,10 @@ StatusOr<google::cloud::cpp::compute::v1::TargetHttpProxy>
 TargetHttpProxiesRestConnectionImpl::GetTargetHttpProxies(
     google::cloud::cpp::compute::target_http_proxies::v1::
         GetTargetHttpProxiesRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetTargetHttpProxies(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetTargetHttpProxies(request),
       [this](rest_internal::RestContext& rest_context,
              google::cloud::cpp::compute::target_http_proxies::v1::
                  GetTargetHttpProxiesRequest const& request) {
@@ -131,7 +133,7 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetHttpProxiesRestConnectionImpl::InsertTargetHttpProxies(
     google::cloud::cpp::compute::target_http_proxies::v1::
         InsertTargetHttpProxiesRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestLongRunningOperation<
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::v1::Operation,
@@ -140,30 +142,30 @@ TargetHttpProxiesRestConnectionImpl::InsertTargetHttpProxies(
       google::cloud::cpp::compute::global_operations::v1::
           DeleteGlobalOperationsRequest>(
       background_->cq(), request,
-      [stub](CompletionQueue& cq,
-             std::unique_ptr<rest_internal::RestContext> context,
-             google::cloud::cpp::compute::target_http_proxies::v1::
-                 InsertTargetHttpProxiesRequest const& request) {
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::cpp::compute::target_http_proxies::v1::
+                         InsertTargetHttpProxiesRequest const& request) {
         return stub->AsyncInsertTargetHttpProxies(cq, std::move(context),
                                                   request);
       },
-      [stub](CompletionQueue& cq,
-             std::unique_ptr<rest_internal::RestContext> context,
-             google::cloud::cpp::compute::global_operations::v1::
-                 GetGlobalOperationsRequest const& request) {
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::cpp::compute::global_operations::v1::
+                         GetGlobalOperationsRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](CompletionQueue& cq,
-             std::unique_ptr<rest_internal::RestContext> context,
-             google::cloud::cpp::compute::global_operations::v1::
-                 DeleteGlobalOperationsRequest const& request) {
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::cpp::compute::global_operations::v1::
+                         DeleteGlobalOperationsRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
          std::string const&) { return op; },
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->InsertTargetHttpProxies(request), polling_policy(),
-      __func__,
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->InsertTargetHttpProxies(request),
+      polling_policy(*current), __func__,
       [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
       },
@@ -186,19 +188,20 @@ TargetHttpProxiesRestConnectionImpl::ListTargetHttpProxies(
     google::cloud::cpp::compute::target_http_proxies::v1::
         ListTargetHttpProxiesRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<
-      compute_target_http_proxies_v1::TargetHttpProxiesRetryPolicy const>(
-      retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListTargetHttpProxies(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency =
+      idempotency_policy(*current)->ListTargetHttpProxies(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::cpp::compute::v1::TargetHttpProxy>>(
       std::move(request),
-      [stub, retry, backoff, idempotency,
-       function_name](google::cloud::cpp::compute::target_http_proxies::v1::
-                          ListTargetHttpProxiesRequest const& r) {
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<
+           compute_target_http_proxies_v1::TargetHttpProxiesRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          google::cloud::cpp::compute::target_http_proxies::v1::
+              ListTargetHttpProxiesRequest const& r) {
         return google::cloud::rest_internal::RestRetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](rest_internal::RestContext& rest_context,
@@ -221,7 +224,7 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetHttpProxiesRestConnectionImpl::PatchTargetHttpProxies(
     google::cloud::cpp::compute::target_http_proxies::v1::
         PatchTargetHttpProxiesRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestLongRunningOperation<
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::v1::Operation,
@@ -230,30 +233,30 @@ TargetHttpProxiesRestConnectionImpl::PatchTargetHttpProxies(
       google::cloud::cpp::compute::global_operations::v1::
           DeleteGlobalOperationsRequest>(
       background_->cq(), request,
-      [stub](CompletionQueue& cq,
-             std::unique_ptr<rest_internal::RestContext> context,
-             google::cloud::cpp::compute::target_http_proxies::v1::
-                 PatchTargetHttpProxiesRequest const& request) {
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::cpp::compute::target_http_proxies::v1::
+                         PatchTargetHttpProxiesRequest const& request) {
         return stub->AsyncPatchTargetHttpProxies(cq, std::move(context),
                                                  request);
       },
-      [stub](CompletionQueue& cq,
-             std::unique_ptr<rest_internal::RestContext> context,
-             google::cloud::cpp::compute::global_operations::v1::
-                 GetGlobalOperationsRequest const& request) {
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::cpp::compute::global_operations::v1::
+                         GetGlobalOperationsRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](CompletionQueue& cq,
-             std::unique_ptr<rest_internal::RestContext> context,
-             google::cloud::cpp::compute::global_operations::v1::
-                 DeleteGlobalOperationsRequest const& request) {
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::cpp::compute::global_operations::v1::
+                         DeleteGlobalOperationsRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
          std::string const&) { return op; },
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->PatchTargetHttpProxies(request), polling_policy(),
-      __func__,
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->PatchTargetHttpProxies(request),
+      polling_policy(*current), __func__,
       [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
       },
@@ -275,7 +278,7 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetHttpProxiesRestConnectionImpl::SetUrlMap(
     google::cloud::cpp::compute::target_http_proxies::v1::
         SetUrlMapRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestLongRunningOperation<
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::v1::Operation,
@@ -284,28 +287,29 @@ TargetHttpProxiesRestConnectionImpl::SetUrlMap(
       google::cloud::cpp::compute::global_operations::v1::
           DeleteGlobalOperationsRequest>(
       background_->cq(), request,
-      [stub](CompletionQueue& cq,
-             std::unique_ptr<rest_internal::RestContext> context,
-             google::cloud::cpp::compute::target_http_proxies::v1::
-                 SetUrlMapRequest const& request) {
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::cpp::compute::target_http_proxies::v1::
+                         SetUrlMapRequest const& request) {
         return stub->AsyncSetUrlMap(cq, std::move(context), request);
       },
-      [stub](CompletionQueue& cq,
-             std::unique_ptr<rest_internal::RestContext> context,
-             google::cloud::cpp::compute::global_operations::v1::
-                 GetGlobalOperationsRequest const& request) {
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::cpp::compute::global_operations::v1::
+                         GetGlobalOperationsRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](CompletionQueue& cq,
-             std::unique_ptr<rest_internal::RestContext> context,
-             google::cloud::cpp::compute::global_operations::v1::
-                 DeleteGlobalOperationsRequest const& request) {
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::cpp::compute::global_operations::v1::
+                         DeleteGlobalOperationsRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
          std::string const&) { return op; },
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->SetUrlMap(request), polling_policy(), __func__,
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->SetUrlMap(request),
+      polling_policy(*current), __func__,
       [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
       },

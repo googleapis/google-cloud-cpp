@@ -55,48 +55,25 @@ class ImageFamilyViewsRestConnectionImpl
                           GetImageFamilyViewsRequest const& request) override;
 
  private:
-  std::unique_ptr<compute_image_family_views_v1::ImageFamilyViewsRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_image_family_views_v1::
-                        ImageFamilyViewsRetryPolicyOption>()) {
-      return options
-          .get<compute_image_family_views_v1::
-                   ImageFamilyViewsRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<
+      compute_image_family_views_v1::ImageFamilyViewsRetryPolicy>
+  retry_policy(Options const& options) {
+    return options
         .get<compute_image_family_views_v1::ImageFamilyViewsRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_image_family_views_v1::
-                        ImageFamilyViewsBackoffPolicyOption>()) {
-      return options
-          .get<compute_image_family_views_v1::
-                   ImageFamilyViewsBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options
         .get<compute_image_family_views_v1::
                  ImageFamilyViewsBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<compute_image_family_views_v1::
-                      ImageFamilyViewsConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_image_family_views_v1::
-                        ImageFamilyViewsConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<compute_image_family_views_v1::
-                   ImageFamilyViewsConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<compute_image_family_views_v1::
+                             ImageFamilyViewsConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<compute_image_family_views_v1::
                  ImageFamilyViewsConnectionIdempotencyPolicyOption>()
         ->clone();

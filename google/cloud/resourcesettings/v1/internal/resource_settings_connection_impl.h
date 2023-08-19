@@ -63,52 +63,6 @@ class ResourceSettingsServiceConnectionImpl
       override;
 
  private:
-  std::unique_ptr<resourcesettings_v1::ResourceSettingsServiceRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            resourcesettings_v1::ResourceSettingsServiceRetryPolicyOption>()) {
-      return options
-          .get<resourcesettings_v1::ResourceSettingsServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<resourcesettings_v1::ResourceSettingsServiceRetryPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<resourcesettings_v1::
-                        ResourceSettingsServiceBackoffPolicyOption>()) {
-      return options
-          .get<
-              resourcesettings_v1::ResourceSettingsServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<resourcesettings_v1::ResourceSettingsServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<
-      resourcesettings_v1::ResourceSettingsServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            resourcesettings_v1::
-                ResourceSettingsServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<resourcesettings_v1::
-                   ResourceSettingsServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<resourcesettings_v1::
-                 ResourceSettingsServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<resourcesettings_v1_internal::ResourceSettingsServiceStub>
       stub_;

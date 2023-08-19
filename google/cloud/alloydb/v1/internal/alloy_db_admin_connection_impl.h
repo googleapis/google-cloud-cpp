@@ -153,46 +153,6 @@ class AlloyDBAdminConnectionImpl : public alloydb_v1::AlloyDBAdminConnection {
       google::cloud::alloydb::v1::DeleteUserRequest const& request) override;
 
  private:
-  std::unique_ptr<alloydb_v1::AlloyDBAdminRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<alloydb_v1::AlloyDBAdminRetryPolicyOption>()) {
-      return options.get<alloydb_v1::AlloyDBAdminRetryPolicyOption>()->clone();
-    }
-    return options_.get<alloydb_v1::AlloyDBAdminRetryPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<alloydb_v1::AlloyDBAdminBackoffPolicyOption>()) {
-      return options.get<alloydb_v1::AlloyDBAdminBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<alloydb_v1::AlloyDBAdminBackoffPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<alloydb_v1::AlloyDBAdminConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<alloydb_v1::AlloyDBAdminConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<alloydb_v1::AlloyDBAdminConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<alloydb_v1::AlloyDBAdminConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<alloydb_v1::AlloyDBAdminPollingPolicyOption>()) {
-      return options.get<alloydb_v1::AlloyDBAdminPollingPolicyOption>()
-          ->clone();
-    }
-    return options_.get<alloydb_v1::AlloyDBAdminPollingPolicyOption>()->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<alloydb_v1_internal::AlloyDBAdminStub> stub_;
   Options options_;

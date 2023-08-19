@@ -122,52 +122,6 @@ class DataTransferServiceConnectionImpl
           request) override;
 
  private:
-  std::unique_ptr<bigquery_datatransfer_v1::DataTransferServiceRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            bigquery_datatransfer_v1::DataTransferServiceRetryPolicyOption>()) {
-      return options
-          .get<bigquery_datatransfer_v1::DataTransferServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<bigquery_datatransfer_v1::DataTransferServiceRetryPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<bigquery_datatransfer_v1::
-                        DataTransferServiceBackoffPolicyOption>()) {
-      return options
-          .get<bigquery_datatransfer_v1::
-                   DataTransferServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<bigquery_datatransfer_v1::DataTransferServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<
-      bigquery_datatransfer_v1::DataTransferServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<bigquery_datatransfer_v1::
-                     DataTransferServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<bigquery_datatransfer_v1::
-                   DataTransferServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<bigquery_datatransfer_v1::
-                 DataTransferServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<bigquery_datatransfer_v1_internal::DataTransferServiceStub>
       stub_;

@@ -30,6 +30,29 @@ namespace google {
 namespace cloud {
 namespace datacatalog_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<datacatalog_v1::DataCatalogRetryPolicy> retry_policy(
+    Options const& options) {
+  return options.get<datacatalog_v1::DataCatalogRetryPolicyOption>()->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options.get<datacatalog_v1::DataCatalogBackoffPolicyOption>()->clone();
+}
+
+std::unique_ptr<datacatalog_v1::DataCatalogConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options
+      .get<datacatalog_v1::DataCatalogConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+  return options.get<datacatalog_v1::DataCatalogPollingPolicyOption>()->clone();
+}
+
+}  // namespace
 
 DataCatalogConnectionImpl::DataCatalogConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
@@ -44,16 +67,16 @@ StreamRange<google::cloud::datacatalog::v1::SearchCatalogResult>
 DataCatalogConnectionImpl::SearchCatalog(
     google::cloud::datacatalog::v1::SearchCatalogRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<datacatalog_v1::DataCatalogRetryPolicy const>(
-      retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->SearchCatalog(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->SearchCatalog(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::datacatalog::v1::SearchCatalogResult>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<datacatalog_v1::DataCatalogRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::datacatalog::v1::SearchCatalogRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
@@ -76,9 +99,10 @@ DataCatalogConnectionImpl::SearchCatalog(
 StatusOr<google::cloud::datacatalog::v1::EntryGroup>
 DataCatalogConnectionImpl::CreateEntryGroup(
     google::cloud::datacatalog::v1::CreateEntryGroupRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateEntryGroup(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateEntryGroup(request),
       [this](grpc::ClientContext& context,
              google::cloud::datacatalog::v1::CreateEntryGroupRequest const&
                  request) { return stub_->CreateEntryGroup(context, request); },
@@ -88,9 +112,10 @@ DataCatalogConnectionImpl::CreateEntryGroup(
 StatusOr<google::cloud::datacatalog::v1::EntryGroup>
 DataCatalogConnectionImpl::GetEntryGroup(
     google::cloud::datacatalog::v1::GetEntryGroupRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetEntryGroup(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetEntryGroup(request),
       [this](
           grpc::ClientContext& context,
           google::cloud::datacatalog::v1::GetEntryGroupRequest const& request) {
@@ -102,9 +127,10 @@ DataCatalogConnectionImpl::GetEntryGroup(
 StatusOr<google::cloud::datacatalog::v1::EntryGroup>
 DataCatalogConnectionImpl::UpdateEntryGroup(
     google::cloud::datacatalog::v1::UpdateEntryGroupRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UpdateEntryGroup(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateEntryGroup(request),
       [this](grpc::ClientContext& context,
              google::cloud::datacatalog::v1::UpdateEntryGroupRequest const&
                  request) { return stub_->UpdateEntryGroup(context, request); },
@@ -113,9 +139,10 @@ DataCatalogConnectionImpl::UpdateEntryGroup(
 
 Status DataCatalogConnectionImpl::DeleteEntryGroup(
     google::cloud::datacatalog::v1::DeleteEntryGroupRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteEntryGroup(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteEntryGroup(request),
       [this](grpc::ClientContext& context,
              google::cloud::datacatalog::v1::DeleteEntryGroupRequest const&
                  request) { return stub_->DeleteEntryGroup(context, request); },
@@ -126,16 +153,16 @@ StreamRange<google::cloud::datacatalog::v1::EntryGroup>
 DataCatalogConnectionImpl::ListEntryGroups(
     google::cloud::datacatalog::v1::ListEntryGroupsRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<datacatalog_v1::DataCatalogRetryPolicy const>(
-      retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListEntryGroups(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListEntryGroups(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::datacatalog::v1::EntryGroup>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<datacatalog_v1::DataCatalogRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::datacatalog::v1::ListEntryGroupsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
@@ -158,9 +185,10 @@ DataCatalogConnectionImpl::ListEntryGroups(
 StatusOr<google::cloud::datacatalog::v1::Entry>
 DataCatalogConnectionImpl::CreateEntry(
     google::cloud::datacatalog::v1::CreateEntryRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateEntry(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateEntry(request),
       [this](
           grpc::ClientContext& context,
           google::cloud::datacatalog::v1::CreateEntryRequest const& request) {
@@ -172,9 +200,10 @@ DataCatalogConnectionImpl::CreateEntry(
 StatusOr<google::cloud::datacatalog::v1::Entry>
 DataCatalogConnectionImpl::UpdateEntry(
     google::cloud::datacatalog::v1::UpdateEntryRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UpdateEntry(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateEntry(request),
       [this](
           grpc::ClientContext& context,
           google::cloud::datacatalog::v1::UpdateEntryRequest const& request) {
@@ -185,9 +214,10 @@ DataCatalogConnectionImpl::UpdateEntry(
 
 Status DataCatalogConnectionImpl::DeleteEntry(
     google::cloud::datacatalog::v1::DeleteEntryRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteEntry(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteEntry(request),
       [this](
           grpc::ClientContext& context,
           google::cloud::datacatalog::v1::DeleteEntryRequest const& request) {
@@ -199,8 +229,10 @@ Status DataCatalogConnectionImpl::DeleteEntry(
 StatusOr<google::cloud::datacatalog::v1::Entry>
 DataCatalogConnectionImpl::GetEntry(
     google::cloud::datacatalog::v1::GetEntryRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(), idempotency_policy()->GetEntry(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetEntry(request),
       [this](grpc::ClientContext& context,
              google::cloud::datacatalog::v1::GetEntryRequest const& request) {
         return stub_->GetEntry(context, request);
@@ -211,9 +243,10 @@ DataCatalogConnectionImpl::GetEntry(
 StatusOr<google::cloud::datacatalog::v1::Entry>
 DataCatalogConnectionImpl::LookupEntry(
     google::cloud::datacatalog::v1::LookupEntryRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->LookupEntry(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->LookupEntry(request),
       [this](
           grpc::ClientContext& context,
           google::cloud::datacatalog::v1::LookupEntryRequest const& request) {
@@ -226,16 +259,16 @@ StreamRange<google::cloud::datacatalog::v1::Entry>
 DataCatalogConnectionImpl::ListEntries(
     google::cloud::datacatalog::v1::ListEntriesRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<datacatalog_v1::DataCatalogRetryPolicy const>(
-      retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListEntries(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListEntries(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::datacatalog::v1::Entry>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<datacatalog_v1::DataCatalogRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::datacatalog::v1::ListEntriesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
@@ -256,9 +289,10 @@ DataCatalogConnectionImpl::ListEntries(
 StatusOr<google::cloud::datacatalog::v1::EntryOverview>
 DataCatalogConnectionImpl::ModifyEntryOverview(
     google::cloud::datacatalog::v1::ModifyEntryOverviewRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->ModifyEntryOverview(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ModifyEntryOverview(request),
       [this](grpc::ClientContext& context,
              google::cloud::datacatalog::v1::ModifyEntryOverviewRequest const&
                  request) {
@@ -270,9 +304,10 @@ DataCatalogConnectionImpl::ModifyEntryOverview(
 StatusOr<google::cloud::datacatalog::v1::Contacts>
 DataCatalogConnectionImpl::ModifyEntryContacts(
     google::cloud::datacatalog::v1::ModifyEntryContactsRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->ModifyEntryContacts(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ModifyEntryContacts(request),
       [this](grpc::ClientContext& context,
              google::cloud::datacatalog::v1::ModifyEntryContactsRequest const&
                  request) {
@@ -284,9 +319,10 @@ DataCatalogConnectionImpl::ModifyEntryContacts(
 StatusOr<google::cloud::datacatalog::v1::TagTemplate>
 DataCatalogConnectionImpl::CreateTagTemplate(
     google::cloud::datacatalog::v1::CreateTagTemplateRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateTagTemplate(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateTagTemplate(request),
       [this](grpc::ClientContext& context,
              google::cloud::datacatalog::v1::CreateTagTemplateRequest const&
                  request) {
@@ -298,9 +334,10 @@ DataCatalogConnectionImpl::CreateTagTemplate(
 StatusOr<google::cloud::datacatalog::v1::TagTemplate>
 DataCatalogConnectionImpl::GetTagTemplate(
     google::cloud::datacatalog::v1::GetTagTemplateRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetTagTemplate(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetTagTemplate(request),
       [this](grpc::ClientContext& context,
              google::cloud::datacatalog::v1::GetTagTemplateRequest const&
                  request) { return stub_->GetTagTemplate(context, request); },
@@ -310,9 +347,10 @@ DataCatalogConnectionImpl::GetTagTemplate(
 StatusOr<google::cloud::datacatalog::v1::TagTemplate>
 DataCatalogConnectionImpl::UpdateTagTemplate(
     google::cloud::datacatalog::v1::UpdateTagTemplateRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UpdateTagTemplate(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateTagTemplate(request),
       [this](grpc::ClientContext& context,
              google::cloud::datacatalog::v1::UpdateTagTemplateRequest const&
                  request) {
@@ -323,9 +361,10 @@ DataCatalogConnectionImpl::UpdateTagTemplate(
 
 Status DataCatalogConnectionImpl::DeleteTagTemplate(
     google::cloud::datacatalog::v1::DeleteTagTemplateRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteTagTemplate(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteTagTemplate(request),
       [this](grpc::ClientContext& context,
              google::cloud::datacatalog::v1::DeleteTagTemplateRequest const&
                  request) {
@@ -338,9 +377,10 @@ StatusOr<google::cloud::datacatalog::v1::TagTemplateField>
 DataCatalogConnectionImpl::CreateTagTemplateField(
     google::cloud::datacatalog::v1::CreateTagTemplateFieldRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateTagTemplateField(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateTagTemplateField(request),
       [this](
           grpc::ClientContext& context,
           google::cloud::datacatalog::v1::CreateTagTemplateFieldRequest const&
@@ -354,9 +394,10 @@ StatusOr<google::cloud::datacatalog::v1::TagTemplateField>
 DataCatalogConnectionImpl::UpdateTagTemplateField(
     google::cloud::datacatalog::v1::UpdateTagTemplateFieldRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UpdateTagTemplateField(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateTagTemplateField(request),
       [this](
           grpc::ClientContext& context,
           google::cloud::datacatalog::v1::UpdateTagTemplateFieldRequest const&
@@ -370,9 +411,10 @@ StatusOr<google::cloud::datacatalog::v1::TagTemplateField>
 DataCatalogConnectionImpl::RenameTagTemplateField(
     google::cloud::datacatalog::v1::RenameTagTemplateFieldRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->RenameTagTemplateField(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->RenameTagTemplateField(request),
       [this](
           grpc::ClientContext& context,
           google::cloud::datacatalog::v1::RenameTagTemplateFieldRequest const&
@@ -386,9 +428,10 @@ StatusOr<google::cloud::datacatalog::v1::TagTemplateField>
 DataCatalogConnectionImpl::RenameTagTemplateFieldEnumValue(
     google::cloud::datacatalog::v1::
         RenameTagTemplateFieldEnumValueRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->RenameTagTemplateFieldEnumValue(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->RenameTagTemplateFieldEnumValue(request),
       [this](grpc::ClientContext& context,
              google::cloud::datacatalog::v1::
                  RenameTagTemplateFieldEnumValueRequest const& request) {
@@ -400,9 +443,10 @@ DataCatalogConnectionImpl::RenameTagTemplateFieldEnumValue(
 Status DataCatalogConnectionImpl::DeleteTagTemplateField(
     google::cloud::datacatalog::v1::DeleteTagTemplateFieldRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteTagTemplateField(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteTagTemplateField(request),
       [this](
           grpc::ClientContext& context,
           google::cloud::datacatalog::v1::DeleteTagTemplateFieldRequest const&
@@ -415,9 +459,10 @@ Status DataCatalogConnectionImpl::DeleteTagTemplateField(
 StatusOr<google::cloud::datacatalog::v1::Tag>
 DataCatalogConnectionImpl::CreateTag(
     google::cloud::datacatalog::v1::CreateTagRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateTag(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateTag(request),
       [this](grpc::ClientContext& context,
              google::cloud::datacatalog::v1::CreateTagRequest const& request) {
         return stub_->CreateTag(context, request);
@@ -428,9 +473,10 @@ DataCatalogConnectionImpl::CreateTag(
 StatusOr<google::cloud::datacatalog::v1::Tag>
 DataCatalogConnectionImpl::UpdateTag(
     google::cloud::datacatalog::v1::UpdateTagRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UpdateTag(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateTag(request),
       [this](grpc::ClientContext& context,
              google::cloud::datacatalog::v1::UpdateTagRequest const& request) {
         return stub_->UpdateTag(context, request);
@@ -440,9 +486,10 @@ DataCatalogConnectionImpl::UpdateTag(
 
 Status DataCatalogConnectionImpl::DeleteTag(
     google::cloud::datacatalog::v1::DeleteTagRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteTag(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteTag(request),
       [this](grpc::ClientContext& context,
              google::cloud::datacatalog::v1::DeleteTagRequest const& request) {
         return stub_->DeleteTag(context, request);
@@ -454,16 +501,16 @@ StreamRange<google::cloud::datacatalog::v1::Tag>
 DataCatalogConnectionImpl::ListTags(
     google::cloud::datacatalog::v1::ListTagsRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<datacatalog_v1::DataCatalogRetryPolicy const>(
-      retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListTags(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListTags(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::datacatalog::v1::Tag>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<datacatalog_v1::DataCatalogRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::datacatalog::v1::ListTagsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
@@ -484,38 +531,41 @@ DataCatalogConnectionImpl::ListTags(
 future<StatusOr<google::cloud::datacatalog::v1::ReconcileTagsResponse>>
 DataCatalogConnectionImpl::ReconcileTags(
     google::cloud::datacatalog::v1::ReconcileTagsRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::datacatalog::v1::ReconcileTagsResponse>(
       background_->cq(), request,
-      [stub](
+      [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context,
           google::cloud::datacatalog::v1::ReconcileTagsRequest const& request) {
         return stub->AsyncReconcileTags(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::datacatalog::v1::ReconcileTagsResponse>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->ReconcileTags(request), polling_policy(), __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ReconcileTags(request),
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::cloud::datacatalog::v1::StarEntryResponse>
 DataCatalogConnectionImpl::StarEntry(
     google::cloud::datacatalog::v1::StarEntryRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->StarEntry(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->StarEntry(request),
       [this](grpc::ClientContext& context,
              google::cloud::datacatalog::v1::StarEntryRequest const& request) {
         return stub_->StarEntry(context, request);
@@ -526,9 +576,10 @@ DataCatalogConnectionImpl::StarEntry(
 StatusOr<google::cloud::datacatalog::v1::UnstarEntryResponse>
 DataCatalogConnectionImpl::UnstarEntry(
     google::cloud::datacatalog::v1::UnstarEntryRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UnstarEntry(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UnstarEntry(request),
       [this](
           grpc::ClientContext& context,
           google::cloud::datacatalog::v1::UnstarEntryRequest const& request) {
@@ -539,9 +590,10 @@ DataCatalogConnectionImpl::UnstarEntry(
 
 StatusOr<google::iam::v1::Policy> DataCatalogConnectionImpl::SetIamPolicy(
     google::iam::v1::SetIamPolicyRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->SetIamPolicy(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->SetIamPolicy(request),
       [this](grpc::ClientContext& context,
              google::iam::v1::SetIamPolicyRequest const& request) {
         return stub_->SetIamPolicy(context, request);
@@ -551,9 +603,10 @@ StatusOr<google::iam::v1::Policy> DataCatalogConnectionImpl::SetIamPolicy(
 
 StatusOr<google::iam::v1::Policy> DataCatalogConnectionImpl::GetIamPolicy(
     google::iam::v1::GetIamPolicyRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetIamPolicy(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetIamPolicy(request),
       [this](grpc::ClientContext& context,
              google::iam::v1::GetIamPolicyRequest const& request) {
         return stub_->GetIamPolicy(context, request);
@@ -564,9 +617,10 @@ StatusOr<google::iam::v1::Policy> DataCatalogConnectionImpl::GetIamPolicy(
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 DataCatalogConnectionImpl::TestIamPermissions(
     google::iam::v1::TestIamPermissionsRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->TestIamPermissions(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->TestIamPermissions(request),
       [this](grpc::ClientContext& context,
              google::iam::v1::TestIamPermissionsRequest const& request) {
         return stub_->TestIamPermissions(context, request);
@@ -577,30 +631,32 @@ DataCatalogConnectionImpl::TestIamPermissions(
 future<StatusOr<google::cloud::datacatalog::v1::ImportEntriesResponse>>
 DataCatalogConnectionImpl::ImportEntries(
     google::cloud::datacatalog::v1::ImportEntriesRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::datacatalog::v1::ImportEntriesResponse>(
       background_->cq(), request,
-      [stub](
+      [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context,
           google::cloud::datacatalog::v1::ImportEntriesRequest const& request) {
         return stub->AsyncImportEntries(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::datacatalog::v1::ImportEntriesResponse>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->ImportEntries(request), polling_policy(), __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ImportEntries(request),
+      polling_policy(*current), __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -28,6 +28,27 @@ namespace google {
 namespace cloud {
 namespace aiplatform_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<aiplatform_v1::ModelGardenServiceRetryPolicy> retry_policy(
+    Options const& options) {
+  return options.get<aiplatform_v1::ModelGardenServiceRetryPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options.get<aiplatform_v1::ModelGardenServiceBackoffPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<aiplatform_v1::ModelGardenServiceConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options
+      .get<aiplatform_v1::ModelGardenServiceConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 ModelGardenServiceConnectionImpl::ModelGardenServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
@@ -41,9 +62,10 @@ ModelGardenServiceConnectionImpl::ModelGardenServiceConnectionImpl(
 StatusOr<google::cloud::aiplatform::v1::PublisherModel>
 ModelGardenServiceConnectionImpl::GetPublisherModel(
     google::cloud::aiplatform::v1::GetPublisherModelRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetPublisherModel(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetPublisherModel(request),
       [this](grpc::ClientContext& context,
              google::cloud::aiplatform::v1::GetPublisherModelRequest const&
                  request) {

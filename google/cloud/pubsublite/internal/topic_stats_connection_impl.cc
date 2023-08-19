@@ -28,6 +28,26 @@ namespace google {
 namespace cloud {
 namespace pubsublite_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<pubsublite::TopicStatsServiceRetryPolicy> retry_policy(
+    Options const& options) {
+  return options.get<pubsublite::TopicStatsServiceRetryPolicyOption>()->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options.get<pubsublite::TopicStatsServiceBackoffPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<pubsublite::TopicStatsServiceConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options
+      .get<pubsublite::TopicStatsServiceConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 TopicStatsServiceConnectionImpl::TopicStatsServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
@@ -41,9 +61,10 @@ TopicStatsServiceConnectionImpl::TopicStatsServiceConnectionImpl(
 StatusOr<google::cloud::pubsublite::v1::ComputeMessageStatsResponse>
 TopicStatsServiceConnectionImpl::ComputeMessageStats(
     google::cloud::pubsublite::v1::ComputeMessageStatsRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->ComputeMessageStats(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ComputeMessageStats(request),
       [this](grpc::ClientContext& context,
              google::cloud::pubsublite::v1::ComputeMessageStatsRequest const&
                  request) {
@@ -55,9 +76,10 @@ TopicStatsServiceConnectionImpl::ComputeMessageStats(
 StatusOr<google::cloud::pubsublite::v1::ComputeHeadCursorResponse>
 TopicStatsServiceConnectionImpl::ComputeHeadCursor(
     google::cloud::pubsublite::v1::ComputeHeadCursorRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->ComputeHeadCursor(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ComputeHeadCursor(request),
       [this](grpc::ClientContext& context,
              google::cloud::pubsublite::v1::ComputeHeadCursorRequest const&
                  request) {
@@ -69,9 +91,10 @@ TopicStatsServiceConnectionImpl::ComputeHeadCursor(
 StatusOr<google::cloud::pubsublite::v1::ComputeTimeCursorResponse>
 TopicStatsServiceConnectionImpl::ComputeTimeCursor(
     google::cloud::pubsublite::v1::ComputeTimeCursorRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->ComputeTimeCursor(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ComputeTimeCursor(request),
       [this](grpc::ClientContext& context,
              google::cloud::pubsublite::v1::ComputeTimeCursorRequest const&
                  request) {

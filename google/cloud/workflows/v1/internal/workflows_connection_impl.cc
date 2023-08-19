@@ -30,6 +30,29 @@ namespace google {
 namespace cloud {
 namespace workflows_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<workflows_v1::WorkflowsRetryPolicy> retry_policy(
+    Options const& options) {
+  return options.get<workflows_v1::WorkflowsRetryPolicyOption>()->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options.get<workflows_v1::WorkflowsBackoffPolicyOption>()->clone();
+}
+
+std::unique_ptr<workflows_v1::WorkflowsConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options
+      .get<workflows_v1::WorkflowsConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+  return options.get<workflows_v1::WorkflowsPollingPolicyOption>()->clone();
+}
+
+}  // namespace
 
 WorkflowsConnectionImpl::WorkflowsConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
@@ -43,16 +66,16 @@ StreamRange<google::cloud::workflows::v1::Workflow>
 WorkflowsConnectionImpl::ListWorkflows(
     google::cloud::workflows::v1::ListWorkflowsRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<workflows_v1::WorkflowsRetryPolicy const>(retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListWorkflows(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListWorkflows(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::workflows::v1::Workflow>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<workflows_v1::WorkflowsRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::workflows::v1::ListWorkflowsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
@@ -75,9 +98,10 @@ WorkflowsConnectionImpl::ListWorkflows(
 StatusOr<google::cloud::workflows::v1::Workflow>
 WorkflowsConnectionImpl::GetWorkflow(
     google::cloud::workflows::v1::GetWorkflowRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetWorkflow(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetWorkflow(request),
       [this](grpc::ClientContext& context,
              google::cloud::workflows::v1::GetWorkflowRequest const& request) {
         return stub_->GetWorkflow(context, request);
@@ -88,91 +112,94 @@ WorkflowsConnectionImpl::GetWorkflow(
 future<StatusOr<google::cloud::workflows::v1::Workflow>>
 WorkflowsConnectionImpl::CreateWorkflow(
     google::cloud::workflows::v1::CreateWorkflowRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::workflows::v1::Workflow>(
       background_->cq(), request,
-      [stub](
+      [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context,
           google::cloud::workflows::v1::CreateWorkflowRequest const& request) {
         return stub->AsyncCreateWorkflow(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::workflows::v1::Workflow>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateWorkflow(request), polling_policy(),
-      __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateWorkflow(request),
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::workflows::v1::OperationMetadata>>
 WorkflowsConnectionImpl::DeleteWorkflow(
     google::cloud::workflows::v1::DeleteWorkflowRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::workflows::v1::OperationMetadata>(
       background_->cq(), request,
-      [stub](
+      [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context,
           google::cloud::workflows::v1::DeleteWorkflowRequest const& request) {
         return stub->AsyncDeleteWorkflow(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::workflows::v1::OperationMetadata>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteWorkflow(request), polling_policy(),
-      __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteWorkflow(request),
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::workflows::v1::Workflow>>
 WorkflowsConnectionImpl::UpdateWorkflow(
     google::cloud::workflows::v1::UpdateWorkflowRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::workflows::v1::Workflow>(
       background_->cq(), request,
-      [stub](
+      [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context,
           google::cloud::workflows::v1::UpdateWorkflowRequest const& request) {
         return stub->AsyncUpdateWorkflow(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::workflows::v1::Workflow>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UpdateWorkflow(request), polling_policy(),
-      __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateWorkflow(request),
+      polling_policy(*current), __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

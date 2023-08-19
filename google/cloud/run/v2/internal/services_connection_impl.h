@@ -75,41 +75,6 @@ class ServicesConnectionImpl : public run_v2::ServicesConnection {
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
  private:
-  std::unique_ptr<run_v2::ServicesRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<run_v2::ServicesRetryPolicyOption>()) {
-      return options.get<run_v2::ServicesRetryPolicyOption>()->clone();
-    }
-    return options_.get<run_v2::ServicesRetryPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<run_v2::ServicesBackoffPolicyOption>()) {
-      return options.get<run_v2::ServicesBackoffPolicyOption>()->clone();
-    }
-    return options_.get<run_v2::ServicesBackoffPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<run_v2::ServicesConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<run_v2::ServicesConnectionIdempotencyPolicyOption>()) {
-      return options.get<run_v2::ServicesConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_.get<run_v2::ServicesConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<run_v2::ServicesPollingPolicyOption>()) {
-      return options.get<run_v2::ServicesPollingPolicyOption>()->clone();
-    }
-    return options_.get<run_v2::ServicesPollingPolicyOption>()->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<run_v2_internal::ServicesStub> stub_;
   Options options_;

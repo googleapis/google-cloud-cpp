@@ -49,7 +49,7 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 PublicAdvertisedPrefixesRestConnectionImpl::DeletePublicAdvertisedPrefixes(
     google::cloud::cpp::compute::public_advertised_prefixes::v1::
         DeletePublicAdvertisedPrefixesRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestLongRunningOperation<
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::v1::Operation,
@@ -58,30 +58,31 @@ PublicAdvertisedPrefixesRestConnectionImpl::DeletePublicAdvertisedPrefixes(
       google::cloud::cpp::compute::global_operations::v1::
           DeleteGlobalOperationsRequest>(
       background_->cq(), request,
-      [stub](CompletionQueue& cq,
-             std::unique_ptr<rest_internal::RestContext> context,
-             google::cloud::cpp::compute::public_advertised_prefixes::v1::
-                 DeletePublicAdvertisedPrefixesRequest const& request) {
+      [stub = stub_](
+          CompletionQueue& cq,
+          std::unique_ptr<rest_internal::RestContext> context,
+          google::cloud::cpp::compute::public_advertised_prefixes::v1::
+              DeletePublicAdvertisedPrefixesRequest const& request) {
         return stub->AsyncDeletePublicAdvertisedPrefixes(cq, std::move(context),
                                                          request);
       },
-      [stub](CompletionQueue& cq,
-             std::unique_ptr<rest_internal::RestContext> context,
-             google::cloud::cpp::compute::global_operations::v1::
-                 GetGlobalOperationsRequest const& request) {
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::cpp::compute::global_operations::v1::
+                         GetGlobalOperationsRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](CompletionQueue& cq,
-             std::unique_ptr<rest_internal::RestContext> context,
-             google::cloud::cpp::compute::global_operations::v1::
-                 DeleteGlobalOperationsRequest const& request) {
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::cpp::compute::global_operations::v1::
+                         DeleteGlobalOperationsRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
          std::string const&) { return op; },
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeletePublicAdvertisedPrefixes(request),
-      polling_policy(), __func__,
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeletePublicAdvertisedPrefixes(request),
+      polling_policy(*current), __func__,
       [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
       },
@@ -103,9 +104,10 @@ StatusOr<google::cloud::cpp::compute::v1::PublicAdvertisedPrefix>
 PublicAdvertisedPrefixesRestConnectionImpl::GetPublicAdvertisedPrefixes(
     google::cloud::cpp::compute::public_advertised_prefixes::v1::
         GetPublicAdvertisedPrefixesRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetPublicAdvertisedPrefixes(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetPublicAdvertisedPrefixes(request),
       [this](rest_internal::RestContext& rest_context,
              google::cloud::cpp::compute::public_advertised_prefixes::v1::
                  GetPublicAdvertisedPrefixesRequest const& request) {
@@ -118,7 +120,7 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 PublicAdvertisedPrefixesRestConnectionImpl::InsertPublicAdvertisedPrefixes(
     google::cloud::cpp::compute::public_advertised_prefixes::v1::
         InsertPublicAdvertisedPrefixesRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestLongRunningOperation<
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::v1::Operation,
@@ -127,30 +129,31 @@ PublicAdvertisedPrefixesRestConnectionImpl::InsertPublicAdvertisedPrefixes(
       google::cloud::cpp::compute::global_operations::v1::
           DeleteGlobalOperationsRequest>(
       background_->cq(), request,
-      [stub](CompletionQueue& cq,
-             std::unique_ptr<rest_internal::RestContext> context,
-             google::cloud::cpp::compute::public_advertised_prefixes::v1::
-                 InsertPublicAdvertisedPrefixesRequest const& request) {
+      [stub = stub_](
+          CompletionQueue& cq,
+          std::unique_ptr<rest_internal::RestContext> context,
+          google::cloud::cpp::compute::public_advertised_prefixes::v1::
+              InsertPublicAdvertisedPrefixesRequest const& request) {
         return stub->AsyncInsertPublicAdvertisedPrefixes(cq, std::move(context),
                                                          request);
       },
-      [stub](CompletionQueue& cq,
-             std::unique_ptr<rest_internal::RestContext> context,
-             google::cloud::cpp::compute::global_operations::v1::
-                 GetGlobalOperationsRequest const& request) {
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::cpp::compute::global_operations::v1::
+                         GetGlobalOperationsRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](CompletionQueue& cq,
-             std::unique_ptr<rest_internal::RestContext> context,
-             google::cloud::cpp::compute::global_operations::v1::
-                 DeleteGlobalOperationsRequest const& request) {
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::cpp::compute::global_operations::v1::
+                         DeleteGlobalOperationsRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
          std::string const&) { return op; },
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->InsertPublicAdvertisedPrefixes(request),
-      polling_policy(), __func__,
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->InsertPublicAdvertisedPrefixes(request),
+      polling_policy(*current), __func__,
       [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
       },
@@ -173,20 +176,20 @@ PublicAdvertisedPrefixesRestConnectionImpl::ListPublicAdvertisedPrefixes(
     google::cloud::cpp::compute::public_advertised_prefixes::v1::
         ListPublicAdvertisedPrefixesRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<compute_public_advertised_prefixes_v1::
-                                   PublicAdvertisedPrefixesRetryPolicy const>(
-      retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+  auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency =
-      idempotency_policy()->ListPublicAdvertisedPrefixes(request);
+      idempotency_policy(*current)->ListPublicAdvertisedPrefixes(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::cpp::compute::v1::PublicAdvertisedPrefix>>(
       std::move(request),
-      [stub, retry, backoff, idempotency,
-       function_name](google::cloud::cpp::compute::public_advertised_prefixes::
-                          v1::ListPublicAdvertisedPrefixesRequest const& r) {
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<compute_public_advertised_prefixes_v1::
+                                   PublicAdvertisedPrefixesRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          google::cloud::cpp::compute::public_advertised_prefixes::v1::
+              ListPublicAdvertisedPrefixesRequest const& r) {
         return google::cloud::rest_internal::RestRetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](rest_internal::RestContext& rest_context,
@@ -209,7 +212,7 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 PublicAdvertisedPrefixesRestConnectionImpl::PatchPublicAdvertisedPrefixes(
     google::cloud::cpp::compute::public_advertised_prefixes::v1::
         PatchPublicAdvertisedPrefixesRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestLongRunningOperation<
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::v1::Operation,
@@ -218,30 +221,31 @@ PublicAdvertisedPrefixesRestConnectionImpl::PatchPublicAdvertisedPrefixes(
       google::cloud::cpp::compute::global_operations::v1::
           DeleteGlobalOperationsRequest>(
       background_->cq(), request,
-      [stub](CompletionQueue& cq,
-             std::unique_ptr<rest_internal::RestContext> context,
-             google::cloud::cpp::compute::public_advertised_prefixes::v1::
-                 PatchPublicAdvertisedPrefixesRequest const& request) {
+      [stub = stub_](
+          CompletionQueue& cq,
+          std::unique_ptr<rest_internal::RestContext> context,
+          google::cloud::cpp::compute::public_advertised_prefixes::v1::
+              PatchPublicAdvertisedPrefixesRequest const& request) {
         return stub->AsyncPatchPublicAdvertisedPrefixes(cq, std::move(context),
                                                         request);
       },
-      [stub](CompletionQueue& cq,
-             std::unique_ptr<rest_internal::RestContext> context,
-             google::cloud::cpp::compute::global_operations::v1::
-                 GetGlobalOperationsRequest const& request) {
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::cpp::compute::global_operations::v1::
+                         GetGlobalOperationsRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](CompletionQueue& cq,
-             std::unique_ptr<rest_internal::RestContext> context,
-             google::cloud::cpp::compute::global_operations::v1::
-                 DeleteGlobalOperationsRequest const& request) {
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::cpp::compute::global_operations::v1::
+                         DeleteGlobalOperationsRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
          std::string const&) { return op; },
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->PatchPublicAdvertisedPrefixes(request),
-      polling_policy(), __func__,
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->PatchPublicAdvertisedPrefixes(request),
+      polling_policy(*current), __func__,
       [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
       },

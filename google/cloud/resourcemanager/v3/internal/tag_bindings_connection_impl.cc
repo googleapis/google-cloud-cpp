@@ -30,6 +30,32 @@ namespace google {
 namespace cloud {
 namespace resourcemanager_v3_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<resourcemanager_v3::TagBindingsRetryPolicy> retry_policy(
+    Options const& options) {
+  return options.get<resourcemanager_v3::TagBindingsRetryPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options.get<resourcemanager_v3::TagBindingsBackoffPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<resourcemanager_v3::TagBindingsConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options
+      .get<resourcemanager_v3::TagBindingsConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+  return options.get<resourcemanager_v3::TagBindingsPollingPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 TagBindingsConnectionImpl::TagBindingsConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
@@ -44,17 +70,16 @@ StreamRange<google::cloud::resourcemanager::v3::TagBinding>
 TagBindingsConnectionImpl::ListTagBindings(
     google::cloud::resourcemanager::v3::ListTagBindingsRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<resourcemanager_v3::TagBindingsRetryPolicy const>(
-          retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListTagBindings(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListTagBindings(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::resourcemanager::v3::TagBinding>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<resourcemanager_v3::TagBindingsRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::resourcemanager::v3::ListTagBindingsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
@@ -78,79 +103,82 @@ future<StatusOr<google::cloud::resourcemanager::v3::TagBinding>>
 TagBindingsConnectionImpl::CreateTagBinding(
     google::cloud::resourcemanager::v3::CreateTagBindingRequest const&
         request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::resourcemanager::v3::TagBinding>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::resourcemanager::v3::CreateTagBindingRequest const&
-                 request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::resourcemanager::v3::CreateTagBindingRequest const&
+              request) {
         return stub->AsyncCreateTagBinding(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::resourcemanager::v3::TagBinding>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateTagBinding(request), polling_policy(),
-      __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateTagBinding(request),
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::DeleteTagBindingMetadata>>
 TagBindingsConnectionImpl::DeleteTagBinding(
     google::cloud::resourcemanager::v3::DeleteTagBindingRequest const&
         request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::resourcemanager::v3::DeleteTagBindingMetadata>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::resourcemanager::v3::DeleteTagBindingRequest const&
-                 request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::resourcemanager::v3::DeleteTagBindingRequest const&
+              request) {
         return stub->AsyncDeleteTagBinding(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::resourcemanager::v3::DeleteTagBindingMetadata>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteTagBinding(request), polling_policy(),
-      __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteTagBinding(request),
+      polling_policy(*current), __func__);
 }
 
 StreamRange<google::cloud::resourcemanager::v3::EffectiveTag>
 TagBindingsConnectionImpl::ListEffectiveTags(
     google::cloud::resourcemanager::v3::ListEffectiveTagsRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<resourcemanager_v3::TagBindingsRetryPolicy const>(
-          retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListEffectiveTags(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListEffectiveTags(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::resourcemanager::v3::EffectiveTag>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<resourcemanager_v3::TagBindingsRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::resourcemanager::v3::ListEffectiveTagsRequest const&
               r) {
         return google::cloud::internal::RetryLoop(

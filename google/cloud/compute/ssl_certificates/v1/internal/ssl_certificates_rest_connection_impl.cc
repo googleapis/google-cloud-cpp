@@ -47,9 +47,10 @@ StatusOr<google::cloud::cpp::compute::v1::SslCertificateAggregatedList>
 SslCertificatesRestConnectionImpl::AggregatedListSslCertificates(
     google::cloud::cpp::compute::ssl_certificates::v1::
         AggregatedListSslCertificatesRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->AggregatedListSslCertificates(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->AggregatedListSslCertificates(request),
       [this](rest_internal::RestContext& rest_context,
              google::cloud::cpp::compute::ssl_certificates::v1::
                  AggregatedListSslCertificatesRequest const& request) {
@@ -62,7 +63,7 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 SslCertificatesRestConnectionImpl::DeleteSslCertificates(
     google::cloud::cpp::compute::ssl_certificates::v1::
         DeleteSslCertificatesRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestLongRunningOperation<
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::v1::Operation,
@@ -71,30 +72,30 @@ SslCertificatesRestConnectionImpl::DeleteSslCertificates(
       google::cloud::cpp::compute::global_operations::v1::
           DeleteGlobalOperationsRequest>(
       background_->cq(), request,
-      [stub](CompletionQueue& cq,
-             std::unique_ptr<rest_internal::RestContext> context,
-             google::cloud::cpp::compute::ssl_certificates::v1::
-                 DeleteSslCertificatesRequest const& request) {
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::cpp::compute::ssl_certificates::v1::
+                         DeleteSslCertificatesRequest const& request) {
         return stub->AsyncDeleteSslCertificates(cq, std::move(context),
                                                 request);
       },
-      [stub](CompletionQueue& cq,
-             std::unique_ptr<rest_internal::RestContext> context,
-             google::cloud::cpp::compute::global_operations::v1::
-                 GetGlobalOperationsRequest const& request) {
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::cpp::compute::global_operations::v1::
+                         GetGlobalOperationsRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](CompletionQueue& cq,
-             std::unique_ptr<rest_internal::RestContext> context,
-             google::cloud::cpp::compute::global_operations::v1::
-                 DeleteGlobalOperationsRequest const& request) {
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::cpp::compute::global_operations::v1::
+                         DeleteGlobalOperationsRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
          std::string const&) { return op; },
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteSslCertificates(request), polling_policy(),
-      __func__,
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteSslCertificates(request),
+      polling_policy(*current), __func__,
       [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
       },
@@ -116,9 +117,10 @@ StatusOr<google::cloud::cpp::compute::v1::SslCertificate>
 SslCertificatesRestConnectionImpl::GetSslCertificates(
     google::cloud::cpp::compute::ssl_certificates::v1::
         GetSslCertificatesRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetSslCertificates(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetSslCertificates(request),
       [this](rest_internal::RestContext& rest_context,
              google::cloud::cpp::compute::ssl_certificates::v1::
                  GetSslCertificatesRequest const& request) {
@@ -131,7 +133,7 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 SslCertificatesRestConnectionImpl::InsertSslCertificates(
     google::cloud::cpp::compute::ssl_certificates::v1::
         InsertSslCertificatesRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestLongRunningOperation<
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::v1::Operation,
@@ -140,30 +142,30 @@ SslCertificatesRestConnectionImpl::InsertSslCertificates(
       google::cloud::cpp::compute::global_operations::v1::
           DeleteGlobalOperationsRequest>(
       background_->cq(), request,
-      [stub](CompletionQueue& cq,
-             std::unique_ptr<rest_internal::RestContext> context,
-             google::cloud::cpp::compute::ssl_certificates::v1::
-                 InsertSslCertificatesRequest const& request) {
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::cpp::compute::ssl_certificates::v1::
+                         InsertSslCertificatesRequest const& request) {
         return stub->AsyncInsertSslCertificates(cq, std::move(context),
                                                 request);
       },
-      [stub](CompletionQueue& cq,
-             std::unique_ptr<rest_internal::RestContext> context,
-             google::cloud::cpp::compute::global_operations::v1::
-                 GetGlobalOperationsRequest const& request) {
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::cpp::compute::global_operations::v1::
+                         GetGlobalOperationsRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](CompletionQueue& cq,
-             std::unique_ptr<rest_internal::RestContext> context,
-             google::cloud::cpp::compute::global_operations::v1::
-                 DeleteGlobalOperationsRequest const& request) {
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::cpp::compute::global_operations::v1::
+                         DeleteGlobalOperationsRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
          std::string const&) { return op; },
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->InsertSslCertificates(request), polling_policy(),
-      __func__,
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->InsertSslCertificates(request),
+      polling_policy(*current), __func__,
       [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
       },
@@ -186,19 +188,19 @@ SslCertificatesRestConnectionImpl::ListSslCertificates(
     google::cloud::cpp::compute::ssl_certificates::v1::
         ListSslCertificatesRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<
-      compute_ssl_certificates_v1::SslCertificatesRetryPolicy const>(
-      retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListSslCertificates(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListSslCertificates(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::cpp::compute::v1::SslCertificate>>(
       std::move(request),
-      [stub, retry, backoff, idempotency,
-       function_name](google::cloud::cpp::compute::ssl_certificates::v1::
-                          ListSslCertificatesRequest const& r) {
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<
+           compute_ssl_certificates_v1::SslCertificatesRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          google::cloud::cpp::compute::ssl_certificates::v1::
+              ListSslCertificatesRequest const& r) {
         return google::cloud::rest_internal::RestRetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](rest_internal::RestContext& rest_context,

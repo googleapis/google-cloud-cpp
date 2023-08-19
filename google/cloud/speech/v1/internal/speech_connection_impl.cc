@@ -29,6 +29,28 @@ namespace google {
 namespace cloud {
 namespace speech_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<speech_v1::SpeechRetryPolicy> retry_policy(
+    Options const& options) {
+  return options.get<speech_v1::SpeechRetryPolicyOption>()->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options.get<speech_v1::SpeechBackoffPolicyOption>()->clone();
+}
+
+std::unique_ptr<speech_v1::SpeechConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options.get<speech_v1::SpeechConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+  return options.get<speech_v1::SpeechPollingPolicyOption>()->clone();
+}
+
+}  // namespace
 
 SpeechConnectionImpl::SpeechConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
@@ -41,9 +63,10 @@ SpeechConnectionImpl::SpeechConnectionImpl(
 StatusOr<google::cloud::speech::v1::RecognizeResponse>
 SpeechConnectionImpl::Recognize(
     google::cloud::speech::v1::RecognizeRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->Recognize(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->Recognize(request),
       [this](grpc::ClientContext& context,
              google::cloud::speech::v1::RecognizeRequest const& request) {
         return stub_->Recognize(context, request);
@@ -54,31 +77,33 @@ SpeechConnectionImpl::Recognize(
 future<StatusOr<google::cloud::speech::v1::LongRunningRecognizeResponse>>
 SpeechConnectionImpl::LongRunningRecognize(
     google::cloud::speech::v1::LongRunningRecognizeRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::speech::v1::LongRunningRecognizeResponse>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::speech::v1::LongRunningRecognizeRequest const&
-                 request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::speech::v1::LongRunningRecognizeRequest const&
+              request) {
         return stub->AsyncLongRunningRecognize(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::speech::v1::LongRunningRecognizeResponse>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->LongRunningRecognize(request), polling_policy(),
-      __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->LongRunningRecognize(request),
+      polling_policy(*current), __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

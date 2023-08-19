@@ -29,6 +29,31 @@ namespace google {
 namespace cloud {
 namespace iap_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<iap_v1::IdentityAwareProxyAdminServiceRetryPolicy> retry_policy(
+    Options const& options) {
+  return options.get<iap_v1::IdentityAwareProxyAdminServiceRetryPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options
+      .get<iap_v1::IdentityAwareProxyAdminServiceBackoffPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<
+    iap_v1::IdentityAwareProxyAdminServiceConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options
+      .get<
+          iap_v1::
+              IdentityAwareProxyAdminServiceConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 IdentityAwareProxyAdminServiceConnectionImpl::
     IdentityAwareProxyAdminServiceConnectionImpl(
@@ -45,9 +70,10 @@ IdentityAwareProxyAdminServiceConnectionImpl::
 StatusOr<google::iam::v1::Policy>
 IdentityAwareProxyAdminServiceConnectionImpl::SetIamPolicy(
     google::iam::v1::SetIamPolicyRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->SetIamPolicy(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->SetIamPolicy(request),
       [this](grpc::ClientContext& context,
              google::iam::v1::SetIamPolicyRequest const& request) {
         return stub_->SetIamPolicy(context, request);
@@ -58,9 +84,10 @@ IdentityAwareProxyAdminServiceConnectionImpl::SetIamPolicy(
 StatusOr<google::iam::v1::Policy>
 IdentityAwareProxyAdminServiceConnectionImpl::GetIamPolicy(
     google::iam::v1::GetIamPolicyRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetIamPolicy(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetIamPolicy(request),
       [this](grpc::ClientContext& context,
              google::iam::v1::GetIamPolicyRequest const& request) {
         return stub_->GetIamPolicy(context, request);
@@ -71,9 +98,10 @@ IdentityAwareProxyAdminServiceConnectionImpl::GetIamPolicy(
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 IdentityAwareProxyAdminServiceConnectionImpl::TestIamPermissions(
     google::iam::v1::TestIamPermissionsRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->TestIamPermissions(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->TestIamPermissions(request),
       [this](grpc::ClientContext& context,
              google::iam::v1::TestIamPermissionsRequest const& request) {
         return stub_->TestIamPermissions(context, request);
@@ -84,9 +112,10 @@ IdentityAwareProxyAdminServiceConnectionImpl::TestIamPermissions(
 StatusOr<google::cloud::iap::v1::IapSettings>
 IdentityAwareProxyAdminServiceConnectionImpl::GetIapSettings(
     google::cloud::iap::v1::GetIapSettingsRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetIapSettings(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetIapSettings(request),
       [this](grpc::ClientContext& context,
              google::cloud::iap::v1::GetIapSettingsRequest const& request) {
         return stub_->GetIapSettings(context, request);
@@ -97,9 +126,10 @@ IdentityAwareProxyAdminServiceConnectionImpl::GetIapSettings(
 StatusOr<google::cloud::iap::v1::IapSettings>
 IdentityAwareProxyAdminServiceConnectionImpl::UpdateIapSettings(
     google::cloud::iap::v1::UpdateIapSettingsRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UpdateIapSettings(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateIapSettings(request),
       [this](grpc::ClientContext& context,
              google::cloud::iap::v1::UpdateIapSettingsRequest const& request) {
         return stub_->UpdateIapSettings(context, request);
@@ -111,17 +141,18 @@ StreamRange<google::cloud::iap::v1::TunnelDestGroup>
 IdentityAwareProxyAdminServiceConnectionImpl::ListTunnelDestGroups(
     google::cloud::iap::v1::ListTunnelDestGroupsRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<iap_v1::IdentityAwareProxyAdminServiceRetryPolicy const>(
-          retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListTunnelDestGroups(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency =
+      idempotency_policy(*current)->ListTunnelDestGroups(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::iap::v1::TunnelDestGroup>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry =
+           std::shared_ptr<iap_v1::IdentityAwareProxyAdminServiceRetryPolicy>(
+               retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::iap::v1::ListTunnelDestGroupsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
@@ -144,9 +175,10 @@ IdentityAwareProxyAdminServiceConnectionImpl::ListTunnelDestGroups(
 StatusOr<google::cloud::iap::v1::TunnelDestGroup>
 IdentityAwareProxyAdminServiceConnectionImpl::CreateTunnelDestGroup(
     google::cloud::iap::v1::CreateTunnelDestGroupRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateTunnelDestGroup(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateTunnelDestGroup(request),
       [this](
           grpc::ClientContext& context,
           google::cloud::iap::v1::CreateTunnelDestGroupRequest const& request) {
@@ -158,9 +190,10 @@ IdentityAwareProxyAdminServiceConnectionImpl::CreateTunnelDestGroup(
 StatusOr<google::cloud::iap::v1::TunnelDestGroup>
 IdentityAwareProxyAdminServiceConnectionImpl::GetTunnelDestGroup(
     google::cloud::iap::v1::GetTunnelDestGroupRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetTunnelDestGroup(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetTunnelDestGroup(request),
       [this](grpc::ClientContext& context,
              google::cloud::iap::v1::GetTunnelDestGroupRequest const& request) {
         return stub_->GetTunnelDestGroup(context, request);
@@ -170,9 +203,10 @@ IdentityAwareProxyAdminServiceConnectionImpl::GetTunnelDestGroup(
 
 Status IdentityAwareProxyAdminServiceConnectionImpl::DeleteTunnelDestGroup(
     google::cloud::iap::v1::DeleteTunnelDestGroupRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteTunnelDestGroup(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteTunnelDestGroup(request),
       [this](
           grpc::ClientContext& context,
           google::cloud::iap::v1::DeleteTunnelDestGroupRequest const& request) {
@@ -184,9 +218,10 @@ Status IdentityAwareProxyAdminServiceConnectionImpl::DeleteTunnelDestGroup(
 StatusOr<google::cloud::iap::v1::TunnelDestGroup>
 IdentityAwareProxyAdminServiceConnectionImpl::UpdateTunnelDestGroup(
     google::cloud::iap::v1::UpdateTunnelDestGroupRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UpdateTunnelDestGroup(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateTunnelDestGroup(request),
       [this](
           grpc::ClientContext& context,
           google::cloud::iap::v1::UpdateTunnelDestGroupRequest const& request) {

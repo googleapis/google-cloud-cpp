@@ -79,35 +79,6 @@ class SchemaServiceConnectionImpl : public pubsub::SchemaServiceConnection {
       google::pubsub::v1::ValidateMessageRequest const& request) override;
 
  private:
-  std::unique_ptr<pubsub::SchemaServiceRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<pubsub::SchemaServiceRetryPolicyOption>()) {
-      return options.get<pubsub::SchemaServiceRetryPolicyOption>()->clone();
-    }
-    return options_.get<pubsub::SchemaServiceRetryPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<pubsub::SchemaServiceBackoffPolicyOption>()) {
-      return options.get<pubsub::SchemaServiceBackoffPolicyOption>()->clone();
-    }
-    return options_.get<pubsub::SchemaServiceBackoffPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<pubsub::SchemaServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<pubsub::SchemaServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<pubsub::SchemaServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<pubsub::SchemaServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<pubsub_internal::SchemaServiceStub> stub_;
   Options options_;

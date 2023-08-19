@@ -28,6 +28,31 @@ namespace google {
 namespace cloud {
 namespace datacatalog_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<datacatalog_v1::PolicyTagManagerSerializationRetryPolicy>
+retry_policy(Options const& options) {
+  return options
+      .get<datacatalog_v1::PolicyTagManagerSerializationRetryPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options
+      .get<datacatalog_v1::PolicyTagManagerSerializationBackoffPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<
+    datacatalog_v1::PolicyTagManagerSerializationConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options
+      .get<datacatalog_v1::
+               PolicyTagManagerSerializationConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 PolicyTagManagerSerializationConnectionImpl::
     PolicyTagManagerSerializationConnectionImpl(
@@ -45,9 +70,10 @@ PolicyTagManagerSerializationConnectionImpl::
 StatusOr<google::cloud::datacatalog::v1::Taxonomy>
 PolicyTagManagerSerializationConnectionImpl::ReplaceTaxonomy(
     google::cloud::datacatalog::v1::ReplaceTaxonomyRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->ReplaceTaxonomy(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ReplaceTaxonomy(request),
       [this](grpc::ClientContext& context,
              google::cloud::datacatalog::v1::ReplaceTaxonomyRequest const&
                  request) { return stub_->ReplaceTaxonomy(context, request); },
@@ -57,9 +83,10 @@ PolicyTagManagerSerializationConnectionImpl::ReplaceTaxonomy(
 StatusOr<google::cloud::datacatalog::v1::ImportTaxonomiesResponse>
 PolicyTagManagerSerializationConnectionImpl::ImportTaxonomies(
     google::cloud::datacatalog::v1::ImportTaxonomiesRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->ImportTaxonomies(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ImportTaxonomies(request),
       [this](grpc::ClientContext& context,
              google::cloud::datacatalog::v1::ImportTaxonomiesRequest const&
                  request) { return stub_->ImportTaxonomies(context, request); },
@@ -69,9 +96,10 @@ PolicyTagManagerSerializationConnectionImpl::ImportTaxonomies(
 StatusOr<google::cloud::datacatalog::v1::ExportTaxonomiesResponse>
 PolicyTagManagerSerializationConnectionImpl::ExportTaxonomies(
     google::cloud::datacatalog::v1::ExportTaxonomiesRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->ExportTaxonomies(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ExportTaxonomies(request),
       [this](grpc::ClientContext& context,
              google::cloud::datacatalog::v1::ExportTaxonomiesRequest const&
                  request) { return stub_->ExportTaxonomies(context, request); },

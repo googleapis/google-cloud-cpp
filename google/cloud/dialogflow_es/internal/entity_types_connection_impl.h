@@ -93,49 +93,6 @@ class EntityTypesConnectionImpl : public dialogflow_es::EntityTypesConnection {
       override;
 
  private:
-  std::unique_ptr<dialogflow_es::EntityTypesRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<dialogflow_es::EntityTypesRetryPolicyOption>()) {
-      return options.get<dialogflow_es::EntityTypesRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<dialogflow_es::EntityTypesRetryPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<dialogflow_es::EntityTypesBackoffPolicyOption>()) {
-      return options.get<dialogflow_es::EntityTypesBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<dialogflow_es::EntityTypesBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<dialogflow_es::EntityTypesConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            dialogflow_es::EntityTypesConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<dialogflow_es::EntityTypesConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<dialogflow_es::EntityTypesConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<dialogflow_es::EntityTypesPollingPolicyOption>()) {
-      return options.get<dialogflow_es::EntityTypesPollingPolicyOption>()
-          ->clone();
-    }
-    return options_.get<dialogflow_es::EntityTypesPollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<dialogflow_es_internal::EntityTypesStub> stub_;
   Options options_;

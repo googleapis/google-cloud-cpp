@@ -68,42 +68,6 @@ class PredictionServiceConnectionImpl
       google::cloud::aiplatform::v1::ExplainRequest const& request) override;
 
  private:
-  std::unique_ptr<aiplatform_v1::PredictionServiceRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<aiplatform_v1::PredictionServiceRetryPolicyOption>()) {
-      return options.get<aiplatform_v1::PredictionServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<aiplatform_v1::PredictionServiceRetryPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<aiplatform_v1::PredictionServiceBackoffPolicyOption>()) {
-      return options.get<aiplatform_v1::PredictionServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<aiplatform_v1::PredictionServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<aiplatform_v1::PredictionServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<aiplatform_v1::
-                        PredictionServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<aiplatform_v1::
-                   PredictionServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<
-            aiplatform_v1::PredictionServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<aiplatform_v1_internal::PredictionServiceStub> stub_;
   Options options_;

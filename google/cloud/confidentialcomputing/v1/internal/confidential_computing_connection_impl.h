@@ -60,54 +60,6 @@ class ConfidentialComputingConnectionImpl
           request) override;
 
  private:
-  std::unique_ptr<confidentialcomputing_v1::ConfidentialComputingRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<confidentialcomputing_v1::
-                        ConfidentialComputingRetryPolicyOption>()) {
-      return options
-          .get<confidentialcomputing_v1::
-                   ConfidentialComputingRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<confidentialcomputing_v1::ConfidentialComputingRetryPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<confidentialcomputing_v1::
-                        ConfidentialComputingBackoffPolicyOption>()) {
-      return options
-          .get<confidentialcomputing_v1::
-                   ConfidentialComputingBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<confidentialcomputing_v1::
-                 ConfidentialComputingBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<confidentialcomputing_v1::
-                      ConfidentialComputingConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            confidentialcomputing_v1::
-                ConfidentialComputingConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<confidentialcomputing_v1::
-                   ConfidentialComputingConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<confidentialcomputing_v1::
-                 ConfidentialComputingConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<confidentialcomputing_v1_internal::ConfidentialComputingStub>
       stub_;

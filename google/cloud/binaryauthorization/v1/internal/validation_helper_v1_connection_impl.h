@@ -56,51 +56,6 @@ class ValidationHelperV1ConnectionImpl
           ValidateAttestationOccurrenceRequest const& request) override;
 
  private:
-  std::unique_ptr<binaryauthorization_v1::ValidationHelperV1RetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            binaryauthorization_v1::ValidationHelperV1RetryPolicyOption>()) {
-      return options
-          .get<binaryauthorization_v1::ValidationHelperV1RetryPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<binaryauthorization_v1::ValidationHelperV1RetryPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            binaryauthorization_v1::ValidationHelperV1BackoffPolicyOption>()) {
-      return options
-          .get<binaryauthorization_v1::ValidationHelperV1BackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<binaryauthorization_v1::ValidationHelperV1BackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<
-      binaryauthorization_v1::ValidationHelperV1ConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<binaryauthorization_v1::
-                     ValidationHelperV1ConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<binaryauthorization_v1::
-                   ValidationHelperV1ConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<binaryauthorization_v1::
-                 ValidationHelperV1ConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<binaryauthorization_v1_internal::ValidationHelperV1Stub>
       stub_;

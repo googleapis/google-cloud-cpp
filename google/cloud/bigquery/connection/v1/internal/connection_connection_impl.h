@@ -83,50 +83,6 @@ class ConnectionServiceConnectionImpl
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
  private:
-  std::unique_ptr<bigquery_connection_v1::ConnectionServiceRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            bigquery_connection_v1::ConnectionServiceRetryPolicyOption>()) {
-      return options
-          .get<bigquery_connection_v1::ConnectionServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<bigquery_connection_v1::ConnectionServiceRetryPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            bigquery_connection_v1::ConnectionServiceBackoffPolicyOption>()) {
-      return options
-          .get<bigquery_connection_v1::ConnectionServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<bigquery_connection_v1::ConnectionServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<
-      bigquery_connection_v1::ConnectionServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<bigquery_connection_v1::
-                        ConnectionServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<bigquery_connection_v1::
-                   ConnectionServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<bigquery_connection_v1::
-                 ConnectionServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<bigquery_connection_v1_internal::ConnectionServiceStub> stub_;
   Options options_;

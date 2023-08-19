@@ -156,50 +156,6 @@ class DataplexServiceConnectionImpl
       google::cloud::dataplex::v1::ListSessionsRequest request) override;
 
  private:
-  std::unique_ptr<dataplex_v1::DataplexServiceRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<dataplex_v1::DataplexServiceRetryPolicyOption>()) {
-      return options.get<dataplex_v1::DataplexServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<dataplex_v1::DataplexServiceRetryPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<dataplex_v1::DataplexServiceBackoffPolicyOption>()) {
-      return options.get<dataplex_v1::DataplexServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<dataplex_v1::DataplexServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<dataplex_v1::DataplexServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            dataplex_v1::DataplexServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<dataplex_v1::DataplexServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<dataplex_v1::DataplexServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<dataplex_v1::DataplexServicePollingPolicyOption>()) {
-      return options.get<dataplex_v1::DataplexServicePollingPolicyOption>()
-          ->clone();
-    }
-    return options_.get<dataplex_v1::DataplexServicePollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<dataplex_v1_internal::DataplexServiceStub> stub_;
   Options options_;

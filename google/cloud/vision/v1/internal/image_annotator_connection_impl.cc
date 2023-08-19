@@ -29,6 +29,29 @@ namespace google {
 namespace cloud {
 namespace vision_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<vision_v1::ImageAnnotatorRetryPolicy> retry_policy(
+    Options const& options) {
+  return options.get<vision_v1::ImageAnnotatorRetryPolicyOption>()->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options.get<vision_v1::ImageAnnotatorBackoffPolicyOption>()->clone();
+}
+
+std::unique_ptr<vision_v1::ImageAnnotatorConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options
+      .get<vision_v1::ImageAnnotatorConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+  return options.get<vision_v1::ImageAnnotatorPollingPolicyOption>()->clone();
+}
+
+}  // namespace
 
 ImageAnnotatorConnectionImpl::ImageAnnotatorConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
@@ -42,9 +65,10 @@ ImageAnnotatorConnectionImpl::ImageAnnotatorConnectionImpl(
 StatusOr<google::cloud::vision::v1::BatchAnnotateImagesResponse>
 ImageAnnotatorConnectionImpl::BatchAnnotateImages(
     google::cloud::vision::v1::BatchAnnotateImagesRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->BatchAnnotateImages(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->BatchAnnotateImages(request),
       [this](grpc::ClientContext& context,
              google::cloud::vision::v1::BatchAnnotateImagesRequest const&
                  request) {
@@ -56,9 +80,10 @@ ImageAnnotatorConnectionImpl::BatchAnnotateImages(
 StatusOr<google::cloud::vision::v1::BatchAnnotateFilesResponse>
 ImageAnnotatorConnectionImpl::BatchAnnotateFiles(
     google::cloud::vision::v1::BatchAnnotateFilesRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->BatchAnnotateFiles(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->BatchAnnotateFiles(request),
       [this](
           grpc::ClientContext& context,
           google::cloud::vision::v1::BatchAnnotateFilesRequest const& request) {
@@ -70,63 +95,67 @@ ImageAnnotatorConnectionImpl::BatchAnnotateFiles(
 future<StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateImagesResponse>>
 ImageAnnotatorConnectionImpl::AsyncBatchAnnotateImages(
     google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::vision::v1::AsyncBatchAnnotateImagesResponse>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const&
-                 request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const&
+              request) {
         return stub->AsyncAsyncBatchAnnotateImages(cq, std::move(context),
                                                    request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::vision::v1::AsyncBatchAnnotateImagesResponse>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->AsyncBatchAnnotateImages(request), polling_policy(),
-      __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->AsyncBatchAnnotateImages(request),
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateFilesResponse>>
 ImageAnnotatorConnectionImpl::AsyncBatchAnnotateFiles(
     google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::vision::v1::AsyncBatchAnnotateFilesResponse>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const&
-                 request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const&
+              request) {
         return stub->AsyncAsyncBatchAnnotateFiles(cq, std::move(context),
                                                   request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::vision::v1::AsyncBatchAnnotateFilesResponse>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->AsyncBatchAnnotateFiles(request), polling_policy(),
-      __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->AsyncBatchAnnotateFiles(request),
+      polling_policy(*current), __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

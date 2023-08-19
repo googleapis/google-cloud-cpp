@@ -29,6 +29,27 @@ namespace google {
 namespace cloud {
 namespace monitoring_v3_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<monitoring_v3::AlertPolicyServiceRetryPolicy> retry_policy(
+    Options const& options) {
+  return options.get<monitoring_v3::AlertPolicyServiceRetryPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options.get<monitoring_v3::AlertPolicyServiceBackoffPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<monitoring_v3::AlertPolicyServiceConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options
+      .get<monitoring_v3::AlertPolicyServiceConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 AlertPolicyServiceConnectionImpl::AlertPolicyServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
@@ -43,17 +64,16 @@ StreamRange<google::monitoring::v3::AlertPolicy>
 AlertPolicyServiceConnectionImpl::ListAlertPolicies(
     google::monitoring::v3::ListAlertPoliciesRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<monitoring_v3::AlertPolicyServiceRetryPolicy const>(
-          retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListAlertPolicies(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListAlertPolicies(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::monitoring::v3::AlertPolicy>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<monitoring_v3::AlertPolicyServiceRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::monitoring::v3::ListAlertPoliciesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
@@ -76,9 +96,10 @@ AlertPolicyServiceConnectionImpl::ListAlertPolicies(
 StatusOr<google::monitoring::v3::AlertPolicy>
 AlertPolicyServiceConnectionImpl::GetAlertPolicy(
     google::monitoring::v3::GetAlertPolicyRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetAlertPolicy(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetAlertPolicy(request),
       [this](grpc::ClientContext& context,
              google::monitoring::v3::GetAlertPolicyRequest const& request) {
         return stub_->GetAlertPolicy(context, request);
@@ -89,9 +110,10 @@ AlertPolicyServiceConnectionImpl::GetAlertPolicy(
 StatusOr<google::monitoring::v3::AlertPolicy>
 AlertPolicyServiceConnectionImpl::CreateAlertPolicy(
     google::monitoring::v3::CreateAlertPolicyRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateAlertPolicy(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateAlertPolicy(request),
       [this](grpc::ClientContext& context,
              google::monitoring::v3::CreateAlertPolicyRequest const& request) {
         return stub_->CreateAlertPolicy(context, request);
@@ -101,9 +123,10 @@ AlertPolicyServiceConnectionImpl::CreateAlertPolicy(
 
 Status AlertPolicyServiceConnectionImpl::DeleteAlertPolicy(
     google::monitoring::v3::DeleteAlertPolicyRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteAlertPolicy(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteAlertPolicy(request),
       [this](grpc::ClientContext& context,
              google::monitoring::v3::DeleteAlertPolicyRequest const& request) {
         return stub_->DeleteAlertPolicy(context, request);
@@ -114,9 +137,10 @@ Status AlertPolicyServiceConnectionImpl::DeleteAlertPolicy(
 StatusOr<google::monitoring::v3::AlertPolicy>
 AlertPolicyServiceConnectionImpl::UpdateAlertPolicy(
     google::monitoring::v3::UpdateAlertPolicyRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UpdateAlertPolicy(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateAlertPolicy(request),
       [this](grpc::ClientContext& context,
              google::monitoring::v3::UpdateAlertPolicyRequest const& request) {
         return stub_->UpdateAlertPolicy(context, request);

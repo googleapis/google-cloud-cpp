@@ -63,37 +63,21 @@ class NodeTypesRestConnectionImpl
       override;
 
  private:
-  std::unique_ptr<compute_node_types_v1::NodeTypesRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_node_types_v1::NodeTypesRetryPolicyOption>()) {
-      return options.get<compute_node_types_v1::NodeTypesRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<compute_node_types_v1::NodeTypesRetryPolicyOption>()
+  static std::unique_ptr<compute_node_types_v1::NodeTypesRetryPolicy>
+  retry_policy(Options const& options) {
+    return options.get<compute_node_types_v1::NodeTypesRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_node_types_v1::NodeTypesBackoffPolicyOption>()) {
-      return options.get<compute_node_types_v1::NodeTypesBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<compute_node_types_v1::NodeTypesBackoffPolicyOption>()
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<compute_node_types_v1::NodeTypesBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<compute_node_types_v1::NodeTypesConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_node_types_v1::
-                        NodeTypesConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<compute_node_types_v1::
-                   NodeTypesConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<
+      compute_node_types_v1::NodeTypesConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<
             compute_node_types_v1::NodeTypesConnectionIdempotencyPolicyOption>()
         ->clone();

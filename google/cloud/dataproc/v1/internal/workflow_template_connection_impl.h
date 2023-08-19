@@ -86,63 +86,6 @@ class WorkflowTemplateServiceConnectionImpl
       override;
 
  private:
-  std::unique_ptr<dataproc_v1::WorkflowTemplateServiceRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<dataproc_v1::WorkflowTemplateServiceRetryPolicyOption>()) {
-      return options
-          .get<dataproc_v1::WorkflowTemplateServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<dataproc_v1::WorkflowTemplateServiceRetryPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<dataproc_v1::WorkflowTemplateServiceBackoffPolicyOption>()) {
-      return options
-          .get<dataproc_v1::WorkflowTemplateServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<dataproc_v1::WorkflowTemplateServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<
-      dataproc_v1::WorkflowTemplateServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            dataproc_v1::
-                WorkflowTemplateServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<dataproc_v1::
-                   WorkflowTemplateServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<dataproc_v1::
-                 WorkflowTemplateServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<dataproc_v1::WorkflowTemplateServicePollingPolicyOption>()) {
-      return options
-          .get<dataproc_v1::WorkflowTemplateServicePollingPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<dataproc_v1::WorkflowTemplateServicePollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<dataproc_v1_internal::WorkflowTemplateServiceStub> stub_;
   Options options_;

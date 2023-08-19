@@ -93,47 +93,25 @@ class RoutersRestConnectionImpl : public compute_routers_v1::RoutersConnection {
           request) override;
 
  private:
-  std::unique_ptr<compute_routers_v1::RoutersRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_routers_v1::RoutersRetryPolicyOption>()) {
-      return options.get<compute_routers_v1::RoutersRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<compute_routers_v1::RoutersRetryPolicyOption>()
+  static std::unique_ptr<compute_routers_v1::RoutersRetryPolicy> retry_policy(
+      Options const& options) {
+    return options.get<compute_routers_v1::RoutersRetryPolicyOption>()->clone();
+  }
+
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<compute_routers_v1::RoutersBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_routers_v1::RoutersBackoffPolicyOption>()) {
-      return options.get<compute_routers_v1::RoutersBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<compute_routers_v1::RoutersBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<compute_routers_v1::RoutersConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            compute_routers_v1::RoutersConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<compute_routers_v1::RoutersConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<compute_routers_v1::RoutersConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<compute_routers_v1::RoutersConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_routers_v1::RoutersPollingPolicyOption>()) {
-      return options.get<compute_routers_v1::RoutersPollingPolicyOption>()
-          ->clone();
-    }
-    return options_.get<compute_routers_v1::RoutersPollingPolicyOption>()
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options.get<compute_routers_v1::RoutersPollingPolicyOption>()
         ->clone();
   }
 

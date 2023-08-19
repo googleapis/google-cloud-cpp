@@ -45,9 +45,10 @@ StatusOr<google::cloud::cpp::compute::v1::AcceleratorTypeAggregatedList>
 AcceleratorTypesRestConnectionImpl::AggregatedListAcceleratorTypes(
     google::cloud::cpp::compute::accelerator_types::v1::
         AggregatedListAcceleratorTypesRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->AggregatedListAcceleratorTypes(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->AggregatedListAcceleratorTypes(request),
       [this](rest_internal::RestContext& rest_context,
              google::cloud::cpp::compute::accelerator_types::v1::
                  AggregatedListAcceleratorTypesRequest const& request) {
@@ -60,9 +61,10 @@ StatusOr<google::cloud::cpp::compute::v1::AcceleratorType>
 AcceleratorTypesRestConnectionImpl::GetAcceleratorTypes(
     google::cloud::cpp::compute::accelerator_types::v1::
         GetAcceleratorTypesRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetAcceleratorTypes(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetAcceleratorTypes(request),
       [this](rest_internal::RestContext& rest_context,
              google::cloud::cpp::compute::accelerator_types::v1::
                  GetAcceleratorTypesRequest const& request) {
@@ -76,19 +78,20 @@ AcceleratorTypesRestConnectionImpl::ListAcceleratorTypes(
     google::cloud::cpp::compute::accelerator_types::v1::
         ListAcceleratorTypesRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<
-      compute_accelerator_types_v1::AcceleratorTypesRetryPolicy const>(
-      retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListAcceleratorTypes(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency =
+      idempotency_policy(*current)->ListAcceleratorTypes(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::cpp::compute::v1::AcceleratorType>>(
       std::move(request),
-      [stub, retry, backoff, idempotency,
-       function_name](google::cloud::cpp::compute::accelerator_types::v1::
-                          ListAcceleratorTypesRequest const& r) {
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<
+           compute_accelerator_types_v1::AcceleratorTypesRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          google::cloud::cpp::compute::accelerator_types::v1::
+              ListAcceleratorTypesRequest const& r) {
         return google::cloud::rest_internal::RestRetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](rest_internal::RestContext& rest_context,

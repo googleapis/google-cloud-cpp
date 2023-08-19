@@ -30,6 +30,29 @@ namespace google {
 namespace cloud {
 namespace gkebackup_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<gkebackup_v1::BackupForGKERetryPolicy> retry_policy(
+    Options const& options) {
+  return options.get<gkebackup_v1::BackupForGKERetryPolicyOption>()->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options.get<gkebackup_v1::BackupForGKEBackoffPolicyOption>()->clone();
+}
+
+std::unique_ptr<gkebackup_v1::BackupForGKEConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options
+      .get<gkebackup_v1::BackupForGKEConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+  return options.get<gkebackup_v1::BackupForGKEPollingPolicyOption>()->clone();
+}
+
+}  // namespace
 
 BackupForGKEConnectionImpl::BackupForGKEConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
@@ -43,47 +66,49 @@ BackupForGKEConnectionImpl::BackupForGKEConnectionImpl(
 future<StatusOr<google::cloud::gkebackup::v1::BackupPlan>>
 BackupForGKEConnectionImpl::CreateBackupPlan(
     google::cloud::gkebackup::v1::CreateBackupPlanRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::gkebackup::v1::BackupPlan>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::gkebackup::v1::CreateBackupPlanRequest const&
-                 request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::gkebackup::v1::CreateBackupPlanRequest const&
+              request) {
         return stub->AsyncCreateBackupPlan(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::gkebackup::v1::BackupPlan>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateBackupPlan(request), polling_policy(),
-      __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateBackupPlan(request),
+      polling_policy(*current), __func__);
 }
 
 StreamRange<google::cloud::gkebackup::v1::BackupPlan>
 BackupForGKEConnectionImpl::ListBackupPlans(
     google::cloud::gkebackup::v1::ListBackupPlansRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<gkebackup_v1::BackupForGKERetryPolicy const>(
-      retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListBackupPlans(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListBackupPlans(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::gkebackup::v1::BackupPlan>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<gkebackup_v1::BackupForGKERetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::gkebackup::v1::ListBackupPlansRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
@@ -106,9 +131,10 @@ BackupForGKEConnectionImpl::ListBackupPlans(
 StatusOr<google::cloud::gkebackup::v1::BackupPlan>
 BackupForGKEConnectionImpl::GetBackupPlan(
     google::cloud::gkebackup::v1::GetBackupPlanRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetBackupPlan(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetBackupPlan(request),
       [this](
           grpc::ClientContext& context,
           google::cloud::gkebackup::v1::GetBackupPlanRequest const& request) {
@@ -120,105 +146,112 @@ BackupForGKEConnectionImpl::GetBackupPlan(
 future<StatusOr<google::cloud::gkebackup::v1::BackupPlan>>
 BackupForGKEConnectionImpl::UpdateBackupPlan(
     google::cloud::gkebackup::v1::UpdateBackupPlanRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::gkebackup::v1::BackupPlan>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::gkebackup::v1::UpdateBackupPlanRequest const&
-                 request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::gkebackup::v1::UpdateBackupPlanRequest const&
+              request) {
         return stub->AsyncUpdateBackupPlan(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::gkebackup::v1::BackupPlan>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UpdateBackupPlan(request), polling_policy(),
-      __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateBackupPlan(request),
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
 BackupForGKEConnectionImpl::DeleteBackupPlan(
     google::cloud::gkebackup::v1::DeleteBackupPlanRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::gkebackup::v1::OperationMetadata>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::gkebackup::v1::DeleteBackupPlanRequest const&
-                 request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::gkebackup::v1::DeleteBackupPlanRequest const&
+              request) {
         return stub->AsyncDeleteBackupPlan(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::gkebackup::v1::OperationMetadata>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteBackupPlan(request), polling_policy(),
-      __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteBackupPlan(request),
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::gkebackup::v1::Backup>>
 BackupForGKEConnectionImpl::CreateBackup(
     google::cloud::gkebackup::v1::CreateBackupRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::gkebackup::v1::Backup>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::gkebackup::v1::CreateBackupRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::gkebackup::v1::CreateBackupRequest const& request) {
         return stub->AsyncCreateBackup(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::gkebackup::v1::Backup>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateBackup(request), polling_policy(), __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateBackup(request),
+      polling_policy(*current), __func__);
 }
 
 StreamRange<google::cloud::gkebackup::v1::Backup>
 BackupForGKEConnectionImpl::ListBackups(
     google::cloud::gkebackup::v1::ListBackupsRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<gkebackup_v1::BackupForGKERetryPolicy const>(
-      retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListBackups(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListBackups(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::gkebackup::v1::Backup>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<gkebackup_v1::BackupForGKERetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::gkebackup::v1::ListBackupsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
@@ -239,9 +272,10 @@ BackupForGKEConnectionImpl::ListBackups(
 StatusOr<google::cloud::gkebackup::v1::Backup>
 BackupForGKEConnectionImpl::GetBackup(
     google::cloud::gkebackup::v1::GetBackupRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetBackup(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetBackup(request),
       [this](grpc::ClientContext& context,
              google::cloud::gkebackup::v1::GetBackupRequest const& request) {
         return stub_->GetBackup(context, request);
@@ -252,73 +286,79 @@ BackupForGKEConnectionImpl::GetBackup(
 future<StatusOr<google::cloud::gkebackup::v1::Backup>>
 BackupForGKEConnectionImpl::UpdateBackup(
     google::cloud::gkebackup::v1::UpdateBackupRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::gkebackup::v1::Backup>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::gkebackup::v1::UpdateBackupRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::gkebackup::v1::UpdateBackupRequest const& request) {
         return stub->AsyncUpdateBackup(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::gkebackup::v1::Backup>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UpdateBackup(request), polling_policy(), __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateBackup(request),
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
 BackupForGKEConnectionImpl::DeleteBackup(
     google::cloud::gkebackup::v1::DeleteBackupRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::gkebackup::v1::OperationMetadata>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::gkebackup::v1::DeleteBackupRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::gkebackup::v1::DeleteBackupRequest const& request) {
         return stub->AsyncDeleteBackup(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::gkebackup::v1::OperationMetadata>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteBackup(request), polling_policy(), __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteBackup(request),
+      polling_policy(*current), __func__);
 }
 
 StreamRange<google::cloud::gkebackup::v1::VolumeBackup>
 BackupForGKEConnectionImpl::ListVolumeBackups(
     google::cloud::gkebackup::v1::ListVolumeBackupsRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<gkebackup_v1::BackupForGKERetryPolicy const>(
-      retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListVolumeBackups(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListVolumeBackups(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::gkebackup::v1::VolumeBackup>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<gkebackup_v1::BackupForGKERetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::gkebackup::v1::ListVolumeBackupsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
@@ -341,9 +381,10 @@ BackupForGKEConnectionImpl::ListVolumeBackups(
 StatusOr<google::cloud::gkebackup::v1::VolumeBackup>
 BackupForGKEConnectionImpl::GetVolumeBackup(
     google::cloud::gkebackup::v1::GetVolumeBackupRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetVolumeBackup(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetVolumeBackup(request),
       [this](
           grpc::ClientContext& context,
           google::cloud::gkebackup::v1::GetVolumeBackupRequest const& request) {
@@ -355,47 +396,49 @@ BackupForGKEConnectionImpl::GetVolumeBackup(
 future<StatusOr<google::cloud::gkebackup::v1::RestorePlan>>
 BackupForGKEConnectionImpl::CreateRestorePlan(
     google::cloud::gkebackup::v1::CreateRestorePlanRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::gkebackup::v1::RestorePlan>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::gkebackup::v1::CreateRestorePlanRequest const&
-                 request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::gkebackup::v1::CreateRestorePlanRequest const&
+              request) {
         return stub->AsyncCreateRestorePlan(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::gkebackup::v1::RestorePlan>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateRestorePlan(request), polling_policy(),
-      __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateRestorePlan(request),
+      polling_policy(*current), __func__);
 }
 
 StreamRange<google::cloud::gkebackup::v1::RestorePlan>
 BackupForGKEConnectionImpl::ListRestorePlans(
     google::cloud::gkebackup::v1::ListRestorePlansRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<gkebackup_v1::BackupForGKERetryPolicy const>(
-      retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListRestorePlans(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListRestorePlans(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::gkebackup::v1::RestorePlan>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<gkebackup_v1::BackupForGKERetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::gkebackup::v1::ListRestorePlansRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
@@ -418,9 +461,10 @@ BackupForGKEConnectionImpl::ListRestorePlans(
 StatusOr<google::cloud::gkebackup::v1::RestorePlan>
 BackupForGKEConnectionImpl::GetRestorePlan(
     google::cloud::gkebackup::v1::GetRestorePlanRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetRestorePlan(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetRestorePlan(request),
       [this](
           grpc::ClientContext& context,
           google::cloud::gkebackup::v1::GetRestorePlanRequest const& request) {
@@ -432,106 +476,112 @@ BackupForGKEConnectionImpl::GetRestorePlan(
 future<StatusOr<google::cloud::gkebackup::v1::RestorePlan>>
 BackupForGKEConnectionImpl::UpdateRestorePlan(
     google::cloud::gkebackup::v1::UpdateRestorePlanRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::gkebackup::v1::RestorePlan>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::gkebackup::v1::UpdateRestorePlanRequest const&
-                 request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::gkebackup::v1::UpdateRestorePlanRequest const&
+              request) {
         return stub->AsyncUpdateRestorePlan(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::gkebackup::v1::RestorePlan>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UpdateRestorePlan(request), polling_policy(),
-      __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateRestorePlan(request),
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
 BackupForGKEConnectionImpl::DeleteRestorePlan(
     google::cloud::gkebackup::v1::DeleteRestorePlanRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::gkebackup::v1::OperationMetadata>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::gkebackup::v1::DeleteRestorePlanRequest const&
-                 request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::gkebackup::v1::DeleteRestorePlanRequest const&
+              request) {
         return stub->AsyncDeleteRestorePlan(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::gkebackup::v1::OperationMetadata>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteRestorePlan(request), polling_policy(),
-      __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteRestorePlan(request),
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::gkebackup::v1::Restore>>
 BackupForGKEConnectionImpl::CreateRestore(
     google::cloud::gkebackup::v1::CreateRestoreRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::gkebackup::v1::Restore>(
       background_->cq(), request,
-      [stub](
+      [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context,
           google::cloud::gkebackup::v1::CreateRestoreRequest const& request) {
         return stub->AsyncCreateRestore(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::gkebackup::v1::Restore>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateRestore(request), polling_policy(), __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateRestore(request),
+      polling_policy(*current), __func__);
 }
 
 StreamRange<google::cloud::gkebackup::v1::Restore>
 BackupForGKEConnectionImpl::ListRestores(
     google::cloud::gkebackup::v1::ListRestoresRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<gkebackup_v1::BackupForGKERetryPolicy const>(
-      retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListRestores(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListRestores(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::gkebackup::v1::Restore>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<gkebackup_v1::BackupForGKERetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::gkebackup::v1::ListRestoresRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
@@ -554,9 +604,10 @@ BackupForGKEConnectionImpl::ListRestores(
 StatusOr<google::cloud::gkebackup::v1::Restore>
 BackupForGKEConnectionImpl::GetRestore(
     google::cloud::gkebackup::v1::GetRestoreRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetRestore(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetRestore(request),
       [this](grpc::ClientContext& context,
              google::cloud::gkebackup::v1::GetRestoreRequest const& request) {
         return stub_->GetRestore(context, request);
@@ -567,75 +618,79 @@ BackupForGKEConnectionImpl::GetRestore(
 future<StatusOr<google::cloud::gkebackup::v1::Restore>>
 BackupForGKEConnectionImpl::UpdateRestore(
     google::cloud::gkebackup::v1::UpdateRestoreRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::gkebackup::v1::Restore>(
       background_->cq(), request,
-      [stub](
+      [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context,
           google::cloud::gkebackup::v1::UpdateRestoreRequest const& request) {
         return stub->AsyncUpdateRestore(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::gkebackup::v1::Restore>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UpdateRestore(request), polling_policy(), __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateRestore(request),
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
 BackupForGKEConnectionImpl::DeleteRestore(
     google::cloud::gkebackup::v1::DeleteRestoreRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::gkebackup::v1::OperationMetadata>(
       background_->cq(), request,
-      [stub](
+      [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context,
           google::cloud::gkebackup::v1::DeleteRestoreRequest const& request) {
         return stub->AsyncDeleteRestore(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::gkebackup::v1::OperationMetadata>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteRestore(request), polling_policy(), __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteRestore(request),
+      polling_policy(*current), __func__);
 }
 
 StreamRange<google::cloud::gkebackup::v1::VolumeRestore>
 BackupForGKEConnectionImpl::ListVolumeRestores(
     google::cloud::gkebackup::v1::ListVolumeRestoresRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<gkebackup_v1::BackupForGKERetryPolicy const>(
-      retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListVolumeRestores(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListVolumeRestores(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::gkebackup::v1::VolumeRestore>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<gkebackup_v1::BackupForGKERetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::gkebackup::v1::ListVolumeRestoresRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
@@ -659,9 +714,10 @@ BackupForGKEConnectionImpl::ListVolumeRestores(
 StatusOr<google::cloud::gkebackup::v1::VolumeRestore>
 BackupForGKEConnectionImpl::GetVolumeRestore(
     google::cloud::gkebackup::v1::GetVolumeRestoreRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetVolumeRestore(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetVolumeRestore(request),
       [this](grpc::ClientContext& context,
              google::cloud::gkebackup::v1::GetVolumeRestoreRequest const&
                  request) { return stub_->GetVolumeRestore(context, request); },

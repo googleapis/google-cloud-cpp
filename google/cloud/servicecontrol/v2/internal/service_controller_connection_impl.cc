@@ -28,6 +28,28 @@ namespace google {
 namespace cloud {
 namespace servicecontrol_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<servicecontrol_v2::ServiceControllerRetryPolicy> retry_policy(
+    Options const& options) {
+  return options.get<servicecontrol_v2::ServiceControllerRetryPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options.get<servicecontrol_v2::ServiceControllerBackoffPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<servicecontrol_v2::ServiceControllerConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options
+      .get<servicecontrol_v2::
+               ServiceControllerConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 ServiceControllerConnectionImpl::ServiceControllerConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
@@ -41,8 +63,10 @@ ServiceControllerConnectionImpl::ServiceControllerConnectionImpl(
 StatusOr<google::api::servicecontrol::v2::CheckResponse>
 ServiceControllerConnectionImpl::Check(
     google::api::servicecontrol::v2::CheckRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(), idempotency_policy()->Check(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->Check(request),
       [this](grpc::ClientContext& context,
              google::api::servicecontrol::v2::CheckRequest const& request) {
         return stub_->Check(context, request);
@@ -53,8 +77,10 @@ ServiceControllerConnectionImpl::Check(
 StatusOr<google::api::servicecontrol::v2::ReportResponse>
 ServiceControllerConnectionImpl::Report(
     google::api::servicecontrol::v2::ReportRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(), idempotency_policy()->Report(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->Report(request),
       [this](grpc::ClientContext& context,
              google::api::servicecontrol::v2::ReportRequest const& request) {
         return stub_->Report(context, request);

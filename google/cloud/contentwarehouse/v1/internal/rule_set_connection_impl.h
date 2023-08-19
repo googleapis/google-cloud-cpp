@@ -70,47 +70,6 @@ class RuleSetServiceConnectionImpl
       override;
 
  private:
-  std::unique_ptr<contentwarehouse_v1::RuleSetServiceRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<contentwarehouse_v1::RuleSetServiceRetryPolicyOption>()) {
-      return options
-          .get<contentwarehouse_v1::RuleSetServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<contentwarehouse_v1::RuleSetServiceRetryPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<contentwarehouse_v1::RuleSetServiceBackoffPolicyOption>()) {
-      return options
-          .get<contentwarehouse_v1::RuleSetServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<contentwarehouse_v1::RuleSetServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<
-      contentwarehouse_v1::RuleSetServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<contentwarehouse_v1::
-                        RuleSetServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<contentwarehouse_v1::
-                   RuleSetServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<contentwarehouse_v1::
-                 RuleSetServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<contentwarehouse_v1_internal::RuleSetServiceStub> stub_;
   Options options_;

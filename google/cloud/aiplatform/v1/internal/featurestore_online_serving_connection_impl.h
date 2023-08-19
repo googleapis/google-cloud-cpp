@@ -71,58 +71,6 @@ class FeaturestoreOnlineServingServiceConnectionImpl
       override;
 
  private:
-  std::unique_ptr<aiplatform_v1::FeaturestoreOnlineServingServiceRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<aiplatform_v1::
-                        FeaturestoreOnlineServingServiceRetryPolicyOption>()) {
-      return options
-          .get<aiplatform_v1::
-                   FeaturestoreOnlineServingServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<aiplatform_v1::FeaturestoreOnlineServingServiceRetryPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<aiplatform_v1::
-                     FeaturestoreOnlineServingServiceBackoffPolicyOption>()) {
-      return options
-          .get<aiplatform_v1::
-                   FeaturestoreOnlineServingServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<aiplatform_v1::
-                 FeaturestoreOnlineServingServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<
-      aiplatform_v1::
-          FeaturestoreOnlineServingServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            aiplatform_v1::
-                FeaturestoreOnlineServingServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<
-              aiplatform_v1::
-                  FeaturestoreOnlineServingServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<
-            aiplatform_v1::
-                FeaturestoreOnlineServingServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<aiplatform_v1_internal::FeaturestoreOnlineServingServiceStub>
       stub_;

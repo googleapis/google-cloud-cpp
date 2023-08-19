@@ -32,6 +32,24 @@ namespace google {
 namespace cloud {
 namespace golden_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<golden_v1::GoldenKitchenSinkRetryPolicy>
+retry_policy(Options const& options) {
+  return options.get<golden_v1::GoldenKitchenSinkRetryPolicyOption>()->clone();
+}
+
+std::unique_ptr<BackoffPolicy>
+backoff_policy(Options const& options) {
+  return options.get<golden_v1::GoldenKitchenSinkBackoffPolicyOption>()->clone();
+}
+
+std::unique_ptr<golden_v1::GoldenKitchenSinkConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options.get<golden_v1::GoldenKitchenSinkConnectionIdempotencyPolicyOption>()->clone();
+}
+
+} // namespace
 
 GoldenKitchenSinkConnectionImpl::GoldenKitchenSinkConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
@@ -44,11 +62,12 @@ GoldenKitchenSinkConnectionImpl::GoldenKitchenSinkConnectionImpl(
 
 StatusOr<google::test::admin::database::v1::GenerateAccessTokenResponse>
 GoldenKitchenSinkConnectionImpl::GenerateAccessToken(google::test::admin::database::v1::GenerateAccessTokenRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GenerateAccessToken(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GenerateAccessToken(request),
       [this](grpc::ClientContext& context,
-          google::test::admin::database::v1::GenerateAccessTokenRequest const& request) {
+             google::test::admin::database::v1::GenerateAccessTokenRequest const& request) {
         return stub_->GenerateAccessToken(context, request);
       },
       request, __func__);
@@ -56,11 +75,12 @@ GoldenKitchenSinkConnectionImpl::GenerateAccessToken(google::test::admin::databa
 
 StatusOr<google::test::admin::database::v1::GenerateIdTokenResponse>
 GoldenKitchenSinkConnectionImpl::GenerateIdToken(google::test::admin::database::v1::GenerateIdTokenRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GenerateIdToken(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GenerateIdToken(request),
       [this](grpc::ClientContext& context,
-          google::test::admin::database::v1::GenerateIdTokenRequest const& request) {
+             google::test::admin::database::v1::GenerateIdTokenRequest const& request) {
         return stub_->GenerateIdToken(context, request);
       },
       request, __func__);
@@ -68,11 +88,12 @@ GoldenKitchenSinkConnectionImpl::GenerateIdToken(google::test::admin::database::
 
 StatusOr<google::test::admin::database::v1::WriteLogEntriesResponse>
 GoldenKitchenSinkConnectionImpl::WriteLogEntries(google::test::admin::database::v1::WriteLogEntriesRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->WriteLogEntries(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->WriteLogEntries(request),
       [this](grpc::ClientContext& context,
-          google::test::admin::database::v1::WriteLogEntriesRequest const& request) {
+             google::test::admin::database::v1::WriteLogEntriesRequest const& request) {
         return stub_->WriteLogEntries(context, request);
       },
       request, __func__);
@@ -81,15 +102,15 @@ GoldenKitchenSinkConnectionImpl::WriteLogEntries(google::test::admin::database::
 StreamRange<std::string>
 GoldenKitchenSinkConnectionImpl::ListLogs(google::test::admin::database::v1::ListLogsRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<golden_v1::GoldenKitchenSinkRetryPolicy const>(retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListLogs(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListLogs(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<StreamRange<std::string>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name]
-        (google::test::admin::database::v1::ListLogsRequest const& r) {
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<golden_v1::GoldenKitchenSinkRetryPolicy>(retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          google::test::admin::database::v1::ListLogsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, google::test::admin::database::v1::ListLogsRequest const& request) {
@@ -107,11 +128,12 @@ GoldenKitchenSinkConnectionImpl::ListLogs(google::test::admin::database::v1::Lis
 
 StatusOr<google::test::admin::database::v1::ListServiceAccountKeysResponse>
 GoldenKitchenSinkConnectionImpl::ListServiceAccountKeys(google::test::admin::database::v1::ListServiceAccountKeysRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->ListServiceAccountKeys(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ListServiceAccountKeys(request),
       [this](grpc::ClientContext& context,
-          google::test::admin::database::v1::ListServiceAccountKeysRequest const& request) {
+             google::test::admin::database::v1::ListServiceAccountKeysRequest const& request) {
         return stub_->ListServiceAccountKeys(context, request);
       },
       request, __func__);
@@ -119,11 +141,12 @@ GoldenKitchenSinkConnectionImpl::ListServiceAccountKeys(google::test::admin::dat
 
 Status
 GoldenKitchenSinkConnectionImpl::DoNothing(google::protobuf::Empty const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DoNothing(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DoNothing(request),
       [this](grpc::ClientContext& context,
-          google::protobuf::Empty const& request) {
+             google::protobuf::Empty const& request) {
         return stub_->DoNothing(context, request);
       },
       request, __func__);
@@ -131,11 +154,12 @@ GoldenKitchenSinkConnectionImpl::DoNothing(google::protobuf::Empty const& reques
 
 Status
 GoldenKitchenSinkConnectionImpl::Deprecated2(google::test::admin::database::v1::GenerateAccessTokenRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->Deprecated2(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->Deprecated2(request),
       [this](grpc::ClientContext& context,
-          google::test::admin::database::v1::GenerateAccessTokenRequest const& request) {
+             google::test::admin::database::v1::GenerateAccessTokenRequest const& request) {
         return stub_->Deprecated2(context, request);
       },
       request, __func__);
@@ -143,29 +167,26 @@ GoldenKitchenSinkConnectionImpl::Deprecated2(google::test::admin::database::v1::
 
 StreamRange<google::test::admin::database::v1::Response>
 GoldenKitchenSinkConnectionImpl::StreamingRead(google::test::admin::database::v1::Request const& request) {
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<golden_v1::GoldenKitchenSinkRetryPolicy const>(retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-
-  auto factory = [stub](google::test::admin::database::v1::Request const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto factory = [stub = stub_](google::test::admin::database::v1::Request const& request) {
     return stub->StreamingRead(std::make_shared<grpc::ClientContext>(), request);
   };
   auto resumable =
       internal::MakeResumableStreamingReadRpc<google::test::admin::database::v1::Response, google::test::admin::database::v1::Request>(
-          retry->clone(), backoff->clone(), [](std::chrono::milliseconds) {},
-          factory,
-          GoldenKitchenSinkStreamingReadStreamingUpdater,
-          request);
+          retry_policy(*current), backoff_policy(*current),
+          [](std::chrono::milliseconds) {}, factory,
+          GoldenKitchenSinkStreamingReadStreamingUpdater, request);
   return internal::MakeStreamRange(internal::StreamReader<google::test::admin::database::v1::Response>(
-      [resumable]{return resumable->Read();}));
+      [resumable] { return resumable->Read(); }));
 }
 Status
 GoldenKitchenSinkConnectionImpl::ExplicitRouting1(google::test::admin::database::v1::ExplicitRoutingRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->ExplicitRouting1(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ExplicitRouting1(request),
       [this](grpc::ClientContext& context,
-          google::test::admin::database::v1::ExplicitRoutingRequest const& request) {
+             google::test::admin::database::v1::ExplicitRoutingRequest const& request) {
         return stub_->ExplicitRouting1(context, request);
       },
       request, __func__);
@@ -173,11 +194,12 @@ GoldenKitchenSinkConnectionImpl::ExplicitRouting1(google::test::admin::database:
 
 Status
 GoldenKitchenSinkConnectionImpl::ExplicitRouting2(google::test::admin::database::v1::ExplicitRoutingRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->ExplicitRouting2(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ExplicitRouting2(request),
       [this](grpc::ClientContext& context,
-          google::test::admin::database::v1::ExplicitRoutingRequest const& request) {
+             google::test::admin::database::v1::ExplicitRoutingRequest const& request) {
         return stub_->ExplicitRouting2(context, request);
       },
       request, __func__);

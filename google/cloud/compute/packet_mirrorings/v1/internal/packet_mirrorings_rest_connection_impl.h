@@ -85,63 +85,32 @@ class PacketMirroringsRestConnectionImpl
                          TestIamPermissionsRequest const& request) override;
 
  private:
-  std::unique_ptr<compute_packet_mirrorings_v1::PacketMirroringsRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_packet_mirrorings_v1::
-                        PacketMirroringsRetryPolicyOption>()) {
-      return options
-          .get<
-              compute_packet_mirrorings_v1::PacketMirroringsRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<
+      compute_packet_mirrorings_v1::PacketMirroringsRetryPolicy>
+  retry_policy(Options const& options) {
+    return options
         .get<compute_packet_mirrorings_v1::PacketMirroringsRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_packet_mirrorings_v1::
-                        PacketMirroringsBackoffPolicyOption>()) {
-      return options
-          .get<compute_packet_mirrorings_v1::
-                   PacketMirroringsBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options
         .get<
             compute_packet_mirrorings_v1::PacketMirroringsBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<
+  static std::unique_ptr<
       compute_packet_mirrorings_v1::PacketMirroringsConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_packet_mirrorings_v1::
-                        PacketMirroringsConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<compute_packet_mirrorings_v1::
-                   PacketMirroringsConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  idempotency_policy(Options const& options) {
+    return options
         .get<compute_packet_mirrorings_v1::
                  PacketMirroringsConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_packet_mirrorings_v1::
-                        PacketMirroringsPollingPolicyOption>()) {
-      return options
-          .get<compute_packet_mirrorings_v1::
-                   PacketMirroringsPollingPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options
         .get<
             compute_packet_mirrorings_v1::PacketMirroringsPollingPolicyOption>()
         ->clone();

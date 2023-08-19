@@ -132,50 +132,6 @@ class ModelServiceConnectionImpl
       override;
 
  private:
-  std::unique_ptr<aiplatform_v1::ModelServiceRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<aiplatform_v1::ModelServiceRetryPolicyOption>()) {
-      return options.get<aiplatform_v1::ModelServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<aiplatform_v1::ModelServiceRetryPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<aiplatform_v1::ModelServiceBackoffPolicyOption>()) {
-      return options.get<aiplatform_v1::ModelServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<aiplatform_v1::ModelServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<aiplatform_v1::ModelServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            aiplatform_v1::ModelServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<aiplatform_v1::ModelServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<aiplatform_v1::ModelServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<aiplatform_v1::ModelServicePollingPolicyOption>()) {
-      return options.get<aiplatform_v1::ModelServicePollingPolicyOption>()
-          ->clone();
-    }
-    return options_.get<aiplatform_v1::ModelServicePollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<aiplatform_v1_internal::ModelServiceStub> stub_;
   Options options_;

@@ -29,6 +29,33 @@ namespace google {
 namespace cloud {
 namespace recaptchaenterprise_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<recaptchaenterprise_v1::RecaptchaEnterpriseServiceRetryPolicy>
+retry_policy(Options const& options) {
+  return options
+      .get<
+          recaptchaenterprise_v1::RecaptchaEnterpriseServiceRetryPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options
+      .get<recaptchaenterprise_v1::
+               RecaptchaEnterpriseServiceBackoffPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<recaptchaenterprise_v1::
+                    RecaptchaEnterpriseServiceConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options
+      .get<recaptchaenterprise_v1::
+               RecaptchaEnterpriseServiceConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 RecaptchaEnterpriseServiceConnectionImpl::
     RecaptchaEnterpriseServiceConnectionImpl(
@@ -47,9 +74,10 @@ StatusOr<google::cloud::recaptchaenterprise::v1::Assessment>
 RecaptchaEnterpriseServiceConnectionImpl::CreateAssessment(
     google::cloud::recaptchaenterprise::v1::CreateAssessmentRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateAssessment(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateAssessment(request),
       [this](
           grpc::ClientContext& context,
           google::cloud::recaptchaenterprise::v1::CreateAssessmentRequest const&
@@ -61,9 +89,10 @@ StatusOr<google::cloud::recaptchaenterprise::v1::AnnotateAssessmentResponse>
 RecaptchaEnterpriseServiceConnectionImpl::AnnotateAssessment(
     google::cloud::recaptchaenterprise::v1::AnnotateAssessmentRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->AnnotateAssessment(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->AnnotateAssessment(request),
       [this](grpc::ClientContext& context,
              google::cloud::recaptchaenterprise::v1::
                  AnnotateAssessmentRequest const& request) {
@@ -75,9 +104,10 @@ RecaptchaEnterpriseServiceConnectionImpl::AnnotateAssessment(
 StatusOr<google::cloud::recaptchaenterprise::v1::Key>
 RecaptchaEnterpriseServiceConnectionImpl::CreateKey(
     google::cloud::recaptchaenterprise::v1::CreateKeyRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateKey(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateKey(request),
       [this](grpc::ClientContext& context,
              google::cloud::recaptchaenterprise::v1::CreateKeyRequest const&
                  request) { return stub_->CreateKey(context, request); },
@@ -88,17 +118,17 @@ StreamRange<google::cloud::recaptchaenterprise::v1::Key>
 RecaptchaEnterpriseServiceConnectionImpl::ListKeys(
     google::cloud::recaptchaenterprise::v1::ListKeysRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<
-      recaptchaenterprise_v1::RecaptchaEnterpriseServiceRetryPolicy const>(
-      retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListKeys(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListKeys(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::recaptchaenterprise::v1::Key>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<
+           recaptchaenterprise_v1::RecaptchaEnterpriseServiceRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::recaptchaenterprise::v1::ListKeysRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
@@ -122,9 +152,10 @@ StatusOr<
 RecaptchaEnterpriseServiceConnectionImpl::RetrieveLegacySecretKey(
     google::cloud::recaptchaenterprise::v1::
         RetrieveLegacySecretKeyRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->RetrieveLegacySecretKey(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->RetrieveLegacySecretKey(request),
       [this](grpc::ClientContext& context,
              google::cloud::recaptchaenterprise::v1::
                  RetrieveLegacySecretKeyRequest const& request) {
@@ -136,8 +167,10 @@ RecaptchaEnterpriseServiceConnectionImpl::RetrieveLegacySecretKey(
 StatusOr<google::cloud::recaptchaenterprise::v1::Key>
 RecaptchaEnterpriseServiceConnectionImpl::GetKey(
     google::cloud::recaptchaenterprise::v1::GetKeyRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(), idempotency_policy()->GetKey(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetKey(request),
       [this](grpc::ClientContext& context,
              google::cloud::recaptchaenterprise::v1::GetKeyRequest const&
                  request) { return stub_->GetKey(context, request); },
@@ -147,9 +180,10 @@ RecaptchaEnterpriseServiceConnectionImpl::GetKey(
 StatusOr<google::cloud::recaptchaenterprise::v1::Key>
 RecaptchaEnterpriseServiceConnectionImpl::UpdateKey(
     google::cloud::recaptchaenterprise::v1::UpdateKeyRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UpdateKey(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateKey(request),
       [this](grpc::ClientContext& context,
              google::cloud::recaptchaenterprise::v1::UpdateKeyRequest const&
                  request) { return stub_->UpdateKey(context, request); },
@@ -158,9 +192,10 @@ RecaptchaEnterpriseServiceConnectionImpl::UpdateKey(
 
 Status RecaptchaEnterpriseServiceConnectionImpl::DeleteKey(
     google::cloud::recaptchaenterprise::v1::DeleteKeyRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteKey(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteKey(request),
       [this](grpc::ClientContext& context,
              google::cloud::recaptchaenterprise::v1::DeleteKeyRequest const&
                  request) { return stub_->DeleteKey(context, request); },
@@ -170,9 +205,10 @@ Status RecaptchaEnterpriseServiceConnectionImpl::DeleteKey(
 StatusOr<google::cloud::recaptchaenterprise::v1::Key>
 RecaptchaEnterpriseServiceConnectionImpl::MigrateKey(
     google::cloud::recaptchaenterprise::v1::MigrateKeyRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->MigrateKey(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->MigrateKey(request),
       [this](grpc::ClientContext& context,
              google::cloud::recaptchaenterprise::v1::MigrateKeyRequest const&
                  request) { return stub_->MigrateKey(context, request); },
@@ -182,9 +218,10 @@ RecaptchaEnterpriseServiceConnectionImpl::MigrateKey(
 StatusOr<google::cloud::recaptchaenterprise::v1::Metrics>
 RecaptchaEnterpriseServiceConnectionImpl::GetMetrics(
     google::cloud::recaptchaenterprise::v1::GetMetricsRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetMetrics(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetMetrics(request),
       [this](grpc::ClientContext& context,
              google::cloud::recaptchaenterprise::v1::GetMetricsRequest const&
                  request) { return stub_->GetMetrics(context, request); },
@@ -196,19 +233,20 @@ RecaptchaEnterpriseServiceConnectionImpl::ListRelatedAccountGroups(
     google::cloud::recaptchaenterprise::v1::ListRelatedAccountGroupsRequest
         request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<
-      recaptchaenterprise_v1::RecaptchaEnterpriseServiceRetryPolicy const>(
-      retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListRelatedAccountGroups(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency =
+      idempotency_policy(*current)->ListRelatedAccountGroups(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::recaptchaenterprise::v1::RelatedAccountGroup>>(
       std::move(request),
-      [stub, retry, backoff, idempotency,
-       function_name](google::cloud::recaptchaenterprise::v1::
-                          ListRelatedAccountGroupsRequest const& r) {
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<
+           recaptchaenterprise_v1::RecaptchaEnterpriseServiceRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          google::cloud::recaptchaenterprise::v1::
+              ListRelatedAccountGroupsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context,
@@ -234,20 +272,20 @@ RecaptchaEnterpriseServiceConnectionImpl::ListRelatedAccountGroupMemberships(
     google::cloud::recaptchaenterprise::v1::
         ListRelatedAccountGroupMembershipsRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<
-      recaptchaenterprise_v1::RecaptchaEnterpriseServiceRetryPolicy const>(
-      retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+  auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency =
-      idempotency_policy()->ListRelatedAccountGroupMemberships(request);
+      idempotency_policy(*current)->ListRelatedAccountGroupMemberships(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<StreamRange<
       google::cloud::recaptchaenterprise::v1::RelatedAccountGroupMembership>>(
       std::move(request),
-      [stub, retry, backoff, idempotency,
-       function_name](google::cloud::recaptchaenterprise::v1::
-                          ListRelatedAccountGroupMembershipsRequest const& r) {
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<
+           recaptchaenterprise_v1::RecaptchaEnterpriseServiceRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          google::cloud::recaptchaenterprise::v1::
+              ListRelatedAccountGroupMembershipsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
@@ -275,18 +313,19 @@ RecaptchaEnterpriseServiceConnectionImpl::SearchRelatedAccountGroupMemberships(
     google::cloud::recaptchaenterprise::v1::
         SearchRelatedAccountGroupMembershipsRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<
-      recaptchaenterprise_v1::RecaptchaEnterpriseServiceRetryPolicy const>(
-      retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+  auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency =
-      idempotency_policy()->SearchRelatedAccountGroupMemberships(request);
+      idempotency_policy(*current)->SearchRelatedAccountGroupMemberships(
+          request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<StreamRange<
       google::cloud::recaptchaenterprise::v1::RelatedAccountGroupMembership>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<
+           recaptchaenterprise_v1::RecaptchaEnterpriseServiceRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::recaptchaenterprise::v1::
               SearchRelatedAccountGroupMembershipsRequest const& r) {
         return google::cloud::internal::RetryLoop(

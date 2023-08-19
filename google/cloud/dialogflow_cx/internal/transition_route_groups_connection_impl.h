@@ -74,50 +74,6 @@ class TransitionRouteGroupsConnectionImpl
           DeleteTransitionRouteGroupRequest const& request) override;
 
  private:
-  std::unique_ptr<dialogflow_cx::TransitionRouteGroupsRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<dialogflow_cx::TransitionRouteGroupsRetryPolicyOption>()) {
-      return options
-          .get<dialogflow_cx::TransitionRouteGroupsRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<dialogflow_cx::TransitionRouteGroupsRetryPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<dialogflow_cx::TransitionRouteGroupsBackoffPolicyOption>()) {
-      return options
-          .get<dialogflow_cx::TransitionRouteGroupsBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<dialogflow_cx::TransitionRouteGroupsBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<
-      dialogflow_cx::TransitionRouteGroupsConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            dialogflow_cx::
-                TransitionRouteGroupsConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<dialogflow_cx::
-                   TransitionRouteGroupsConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<dialogflow_cx::
-                 TransitionRouteGroupsConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<dialogflow_cx_internal::TransitionRouteGroupsStub> stub_;
   Options options_;

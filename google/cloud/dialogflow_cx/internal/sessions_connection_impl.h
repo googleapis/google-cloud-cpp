@@ -66,36 +66,6 @@ class SessionsConnectionImpl : public dialogflow_cx::SessionsConnection {
                     request) override;
 
  private:
-  std::unique_ptr<dialogflow_cx::SessionsRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<dialogflow_cx::SessionsRetryPolicyOption>()) {
-      return options.get<dialogflow_cx::SessionsRetryPolicyOption>()->clone();
-    }
-    return options_.get<dialogflow_cx::SessionsRetryPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<dialogflow_cx::SessionsBackoffPolicyOption>()) {
-      return options.get<dialogflow_cx::SessionsBackoffPolicyOption>()->clone();
-    }
-    return options_.get<dialogflow_cx::SessionsBackoffPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<dialogflow_cx::SessionsConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<dialogflow_cx::SessionsConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<dialogflow_cx::SessionsConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<dialogflow_cx::SessionsConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<dialogflow_cx_internal::SessionsStub> stub_;
   Options options_;

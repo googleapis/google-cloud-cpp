@@ -29,6 +29,31 @@ namespace google {
 namespace cloud {
 namespace bigquery_connection_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<bigquery_connection_v1::ConnectionServiceRetryPolicy>
+retry_policy(Options const& options) {
+  return options
+      .get<bigquery_connection_v1::ConnectionServiceRetryPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options
+      .get<bigquery_connection_v1::ConnectionServiceBackoffPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<
+    bigquery_connection_v1::ConnectionServiceConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options
+      .get<bigquery_connection_v1::
+               ConnectionServiceConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 ConnectionServiceConnectionImpl::ConnectionServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
@@ -44,9 +69,10 @@ StatusOr<google::cloud::bigquery::connection::v1::Connection>
 ConnectionServiceConnectionImpl::CreateConnection(
     google::cloud::bigquery::connection::v1::CreateConnectionRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateConnection(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateConnection(request),
       [this](grpc::ClientContext& context,
              google::cloud::bigquery::connection::v1::
                  CreateConnectionRequest const& request) {
@@ -59,9 +85,10 @@ StatusOr<google::cloud::bigquery::connection::v1::Connection>
 ConnectionServiceConnectionImpl::GetConnection(
     google::cloud::bigquery::connection::v1::GetConnectionRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetConnection(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetConnection(request),
       [this](
           grpc::ClientContext& context,
           google::cloud::bigquery::connection::v1::GetConnectionRequest const&
@@ -73,17 +100,17 @@ StreamRange<google::cloud::bigquery::connection::v1::Connection>
 ConnectionServiceConnectionImpl::ListConnections(
     google::cloud::bigquery::connection::v1::ListConnectionsRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<
-      bigquery_connection_v1::ConnectionServiceRetryPolicy const>(
-      retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListConnections(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListConnections(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::bigquery::connection::v1::Connection>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<
+           bigquery_connection_v1::ConnectionServiceRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::bigquery::connection::v1::ListConnectionsRequest const&
               r) {
         return google::cloud::internal::RetryLoop(
@@ -108,9 +135,10 @@ StatusOr<google::cloud::bigquery::connection::v1::Connection>
 ConnectionServiceConnectionImpl::UpdateConnection(
     google::cloud::bigquery::connection::v1::UpdateConnectionRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UpdateConnection(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateConnection(request),
       [this](grpc::ClientContext& context,
              google::cloud::bigquery::connection::v1::
                  UpdateConnectionRequest const& request) {
@@ -122,9 +150,10 @@ ConnectionServiceConnectionImpl::UpdateConnection(
 Status ConnectionServiceConnectionImpl::DeleteConnection(
     google::cloud::bigquery::connection::v1::DeleteConnectionRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteConnection(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteConnection(request),
       [this](grpc::ClientContext& context,
              google::cloud::bigquery::connection::v1::
                  DeleteConnectionRequest const& request) {
@@ -135,9 +164,10 @@ Status ConnectionServiceConnectionImpl::DeleteConnection(
 
 StatusOr<google::iam::v1::Policy> ConnectionServiceConnectionImpl::GetIamPolicy(
     google::iam::v1::GetIamPolicyRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetIamPolicy(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetIamPolicy(request),
       [this](grpc::ClientContext& context,
              google::iam::v1::GetIamPolicyRequest const& request) {
         return stub_->GetIamPolicy(context, request);
@@ -147,9 +177,10 @@ StatusOr<google::iam::v1::Policy> ConnectionServiceConnectionImpl::GetIamPolicy(
 
 StatusOr<google::iam::v1::Policy> ConnectionServiceConnectionImpl::SetIamPolicy(
     google::iam::v1::SetIamPolicyRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->SetIamPolicy(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->SetIamPolicy(request),
       [this](grpc::ClientContext& context,
              google::iam::v1::SetIamPolicyRequest const& request) {
         return stub_->SetIamPolicy(context, request);
@@ -160,9 +191,10 @@ StatusOr<google::iam::v1::Policy> ConnectionServiceConnectionImpl::SetIamPolicy(
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 ConnectionServiceConnectionImpl::TestIamPermissions(
     google::iam::v1::TestIamPermissionsRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->TestIamPermissions(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->TestIamPermissions(request),
       [this](grpc::ClientContext& context,
              google::iam::v1::TestIamPermissionsRequest const& request) {
         return stub_->TestIamPermissions(context, request);

@@ -63,40 +63,6 @@ class IDSConnectionImpl : public ids_v1::IDSConnection {
       google::cloud::ids::v1::DeleteEndpointRequest const& request) override;
 
  private:
-  std::unique_ptr<ids_v1::IDSRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<ids_v1::IDSRetryPolicyOption>()) {
-      return options.get<ids_v1::IDSRetryPolicyOption>()->clone();
-    }
-    return options_.get<ids_v1::IDSRetryPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<ids_v1::IDSBackoffPolicyOption>()) {
-      return options.get<ids_v1::IDSBackoffPolicyOption>()->clone();
-    }
-    return options_.get<ids_v1::IDSBackoffPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<ids_v1::IDSConnectionIdempotencyPolicy> idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<ids_v1::IDSConnectionIdempotencyPolicyOption>()) {
-      return options.get<ids_v1::IDSConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_.get<ids_v1::IDSConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<ids_v1::IDSPollingPolicyOption>()) {
-      return options.get<ids_v1::IDSPollingPolicyOption>()->clone();
-    }
-    return options_.get<ids_v1::IDSPollingPolicyOption>()->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<ids_v1_internal::IDSStub> stub_;
   Options options_;

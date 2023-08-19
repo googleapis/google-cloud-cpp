@@ -29,6 +29,31 @@ namespace google {
 namespace cloud {
 namespace bigquery_datatransfer_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<bigquery_datatransfer_v1::DataTransferServiceRetryPolicy>
+retry_policy(Options const& options) {
+  return options
+      .get<bigquery_datatransfer_v1::DataTransferServiceRetryPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options
+      .get<bigquery_datatransfer_v1::DataTransferServiceBackoffPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<
+    bigquery_datatransfer_v1::DataTransferServiceConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options
+      .get<bigquery_datatransfer_v1::
+               DataTransferServiceConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 DataTransferServiceConnectionImpl::DataTransferServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
@@ -44,9 +69,10 @@ StatusOr<google::cloud::bigquery::datatransfer::v1::DataSource>
 DataTransferServiceConnectionImpl::GetDataSource(
     google::cloud::bigquery::datatransfer::v1::GetDataSourceRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetDataSource(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetDataSource(request),
       [this](
           grpc::ClientContext& context,
           google::cloud::bigquery::datatransfer::v1::GetDataSourceRequest const&
@@ -58,19 +84,19 @@ StreamRange<google::cloud::bigquery::datatransfer::v1::DataSource>
 DataTransferServiceConnectionImpl::ListDataSources(
     google::cloud::bigquery::datatransfer::v1::ListDataSourcesRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<
-      bigquery_datatransfer_v1::DataTransferServiceRetryPolicy const>(
-      retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListDataSources(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListDataSources(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::bigquery::datatransfer::v1::DataSource>>(
       std::move(request),
-      [stub, retry, backoff, idempotency,
-       function_name](google::cloud::bigquery::datatransfer::v1::
-                          ListDataSourcesRequest const& r) {
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<
+           bigquery_datatransfer_v1::DataTransferServiceRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          google::cloud::bigquery::datatransfer::v1::
+              ListDataSourcesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context,
@@ -93,9 +119,10 @@ StatusOr<google::cloud::bigquery::datatransfer::v1::TransferConfig>
 DataTransferServiceConnectionImpl::CreateTransferConfig(
     google::cloud::bigquery::datatransfer::v1::
         CreateTransferConfigRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateTransferConfig(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateTransferConfig(request),
       [this](grpc::ClientContext& context,
              google::cloud::bigquery::datatransfer::v1::
                  CreateTransferConfigRequest const& request) {
@@ -108,9 +135,10 @@ StatusOr<google::cloud::bigquery::datatransfer::v1::TransferConfig>
 DataTransferServiceConnectionImpl::UpdateTransferConfig(
     google::cloud::bigquery::datatransfer::v1::
         UpdateTransferConfigRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UpdateTransferConfig(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateTransferConfig(request),
       [this](grpc::ClientContext& context,
              google::cloud::bigquery::datatransfer::v1::
                  UpdateTransferConfigRequest const& request) {
@@ -122,9 +150,10 @@ DataTransferServiceConnectionImpl::UpdateTransferConfig(
 Status DataTransferServiceConnectionImpl::DeleteTransferConfig(
     google::cloud::bigquery::datatransfer::v1::
         DeleteTransferConfigRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteTransferConfig(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteTransferConfig(request),
       [this](grpc::ClientContext& context,
              google::cloud::bigquery::datatransfer::v1::
                  DeleteTransferConfigRequest const& request) {
@@ -137,9 +166,10 @@ StatusOr<google::cloud::bigquery::datatransfer::v1::TransferConfig>
 DataTransferServiceConnectionImpl::GetTransferConfig(
     google::cloud::bigquery::datatransfer::v1::GetTransferConfigRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetTransferConfig(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetTransferConfig(request),
       [this](grpc::ClientContext& context,
              google::cloud::bigquery::datatransfer::v1::
                  GetTransferConfigRequest const& request) {
@@ -153,19 +183,19 @@ DataTransferServiceConnectionImpl::ListTransferConfigs(
     google::cloud::bigquery::datatransfer::v1::ListTransferConfigsRequest
         request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<
-      bigquery_datatransfer_v1::DataTransferServiceRetryPolicy const>(
-      retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListTransferConfigs(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListTransferConfigs(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::bigquery::datatransfer::v1::TransferConfig>>(
       std::move(request),
-      [stub, retry, backoff, idempotency,
-       function_name](google::cloud::bigquery::datatransfer::v1::
-                          ListTransferConfigsRequest const& r) {
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<
+           bigquery_datatransfer_v1::DataTransferServiceRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          google::cloud::bigquery::datatransfer::v1::
+              ListTransferConfigsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context,
@@ -190,9 +220,10 @@ StatusOr<
 DataTransferServiceConnectionImpl::ScheduleTransferRuns(
     google::cloud::bigquery::datatransfer::v1::
         ScheduleTransferRunsRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->ScheduleTransferRuns(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ScheduleTransferRuns(request),
       [this](grpc::ClientContext& context,
              google::cloud::bigquery::datatransfer::v1::
                  ScheduleTransferRunsRequest const& request) {
@@ -206,9 +237,10 @@ StatusOr<
 DataTransferServiceConnectionImpl::StartManualTransferRuns(
     google::cloud::bigquery::datatransfer::v1::
         StartManualTransferRunsRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->StartManualTransferRuns(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->StartManualTransferRuns(request),
       [this](grpc::ClientContext& context,
              google::cloud::bigquery::datatransfer::v1::
                  StartManualTransferRunsRequest const& request) {
@@ -221,9 +253,10 @@ StatusOr<google::cloud::bigquery::datatransfer::v1::TransferRun>
 DataTransferServiceConnectionImpl::GetTransferRun(
     google::cloud::bigquery::datatransfer::v1::GetTransferRunRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetTransferRun(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetTransferRun(request),
       [this](grpc::ClientContext& context,
              google::cloud::bigquery::datatransfer::v1::
                  GetTransferRunRequest const& request) {
@@ -235,9 +268,10 @@ DataTransferServiceConnectionImpl::GetTransferRun(
 Status DataTransferServiceConnectionImpl::DeleteTransferRun(
     google::cloud::bigquery::datatransfer::v1::DeleteTransferRunRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteTransferRun(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteTransferRun(request),
       [this](grpc::ClientContext& context,
              google::cloud::bigquery::datatransfer::v1::
                  DeleteTransferRunRequest const& request) {
@@ -251,19 +285,19 @@ DataTransferServiceConnectionImpl::ListTransferRuns(
     google::cloud::bigquery::datatransfer::v1::ListTransferRunsRequest
         request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<
-      bigquery_datatransfer_v1::DataTransferServiceRetryPolicy const>(
-      retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListTransferRuns(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListTransferRuns(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::bigquery::datatransfer::v1::TransferRun>>(
       std::move(request),
-      [stub, retry, backoff, idempotency,
-       function_name](google::cloud::bigquery::datatransfer::v1::
-                          ListTransferRunsRequest const& r) {
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<
+           bigquery_datatransfer_v1::DataTransferServiceRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          google::cloud::bigquery::datatransfer::v1::
+              ListTransferRunsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context,
@@ -288,19 +322,19 @@ DataTransferServiceConnectionImpl::ListTransferLogs(
     google::cloud::bigquery::datatransfer::v1::ListTransferLogsRequest
         request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<
-      bigquery_datatransfer_v1::DataTransferServiceRetryPolicy const>(
-      retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListTransferLogs(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListTransferLogs(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::bigquery::datatransfer::v1::TransferMessage>>(
       std::move(request),
-      [stub, retry, backoff, idempotency,
-       function_name](google::cloud::bigquery::datatransfer::v1::
-                          ListTransferLogsRequest const& r) {
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<
+           bigquery_datatransfer_v1::DataTransferServiceRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          google::cloud::bigquery::datatransfer::v1::
+              ListTransferLogsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context,
@@ -324,9 +358,10 @@ StatusOr<google::cloud::bigquery::datatransfer::v1::CheckValidCredsResponse>
 DataTransferServiceConnectionImpl::CheckValidCreds(
     google::cloud::bigquery::datatransfer::v1::CheckValidCredsRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CheckValidCreds(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CheckValidCreds(request),
       [this](grpc::ClientContext& context,
              google::cloud::bigquery::datatransfer::v1::
                  CheckValidCredsRequest const& request) {
@@ -338,9 +373,10 @@ DataTransferServiceConnectionImpl::CheckValidCreds(
 Status DataTransferServiceConnectionImpl::EnrollDataSources(
     google::cloud::bigquery::datatransfer::v1::EnrollDataSourcesRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->EnrollDataSources(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->EnrollDataSources(request),
       [this](grpc::ClientContext& context,
              google::cloud::bigquery::datatransfer::v1::
                  EnrollDataSourcesRequest const& request) {

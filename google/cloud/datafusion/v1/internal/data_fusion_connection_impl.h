@@ -79,48 +79,6 @@ class DataFusionConnectionImpl : public datafusion_v1::DataFusionConnection {
       override;
 
  private:
-  std::unique_ptr<datafusion_v1::DataFusionRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<datafusion_v1::DataFusionRetryPolicyOption>()) {
-      return options.get<datafusion_v1::DataFusionRetryPolicyOption>()->clone();
-    }
-    return options_.get<datafusion_v1::DataFusionRetryPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<datafusion_v1::DataFusionBackoffPolicyOption>()) {
-      return options.get<datafusion_v1::DataFusionBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<datafusion_v1::DataFusionBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<datafusion_v1::DataFusionConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            datafusion_v1::DataFusionConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<datafusion_v1::DataFusionConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<datafusion_v1::DataFusionConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<datafusion_v1::DataFusionPollingPolicyOption>()) {
-      return options.get<datafusion_v1::DataFusionPollingPolicyOption>()
-          ->clone();
-    }
-    return options_.get<datafusion_v1::DataFusionPollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<datafusion_v1_internal::DataFusionStub> stub_;
   Options options_;

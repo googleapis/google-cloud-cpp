@@ -29,6 +29,30 @@ namespace google {
 namespace cloud {
 namespace bigquery_biglake_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<bigquery_biglake_v1::MetastoreServiceRetryPolicy> retry_policy(
+    Options const& options) {
+  return options.get<bigquery_biglake_v1::MetastoreServiceRetryPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options
+      .get<bigquery_biglake_v1::MetastoreServiceBackoffPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<
+    bigquery_biglake_v1::MetastoreServiceConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options
+      .get<bigquery_biglake_v1::
+               MetastoreServiceConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 MetastoreServiceConnectionImpl::MetastoreServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
@@ -42,9 +66,10 @@ MetastoreServiceConnectionImpl::MetastoreServiceConnectionImpl(
 StatusOr<google::cloud::bigquery::biglake::v1::Catalog>
 MetastoreServiceConnectionImpl::CreateCatalog(
     google::cloud::bigquery::biglake::v1::CreateCatalogRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateCatalog(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateCatalog(request),
       [this](grpc::ClientContext& context,
              google::cloud::bigquery::biglake::v1::CreateCatalogRequest const&
                  request) { return stub_->CreateCatalog(context, request); },
@@ -54,9 +79,10 @@ MetastoreServiceConnectionImpl::CreateCatalog(
 StatusOr<google::cloud::bigquery::biglake::v1::Catalog>
 MetastoreServiceConnectionImpl::DeleteCatalog(
     google::cloud::bigquery::biglake::v1::DeleteCatalogRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteCatalog(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteCatalog(request),
       [this](grpc::ClientContext& context,
              google::cloud::bigquery::biglake::v1::DeleteCatalogRequest const&
                  request) { return stub_->DeleteCatalog(context, request); },
@@ -66,9 +92,10 @@ MetastoreServiceConnectionImpl::DeleteCatalog(
 StatusOr<google::cloud::bigquery::biglake::v1::Catalog>
 MetastoreServiceConnectionImpl::GetCatalog(
     google::cloud::bigquery::biglake::v1::GetCatalogRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetCatalog(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetCatalog(request),
       [this](grpc::ClientContext& context,
              google::cloud::bigquery::biglake::v1::GetCatalogRequest const&
                  request) { return stub_->GetCatalog(context, request); },
@@ -79,17 +106,17 @@ StreamRange<google::cloud::bigquery::biglake::v1::Catalog>
 MetastoreServiceConnectionImpl::ListCatalogs(
     google::cloud::bigquery::biglake::v1::ListCatalogsRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<bigquery_biglake_v1::MetastoreServiceRetryPolicy const>(
-          retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListCatalogs(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListCatalogs(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::bigquery::biglake::v1::Catalog>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry =
+           std::shared_ptr<bigquery_biglake_v1::MetastoreServiceRetryPolicy>(
+               retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::bigquery::biglake::v1::ListCatalogsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
@@ -112,9 +139,10 @@ StatusOr<google::cloud::bigquery::biglake::v1::Database>
 MetastoreServiceConnectionImpl::CreateDatabase(
     google::cloud::bigquery::biglake::v1::CreateDatabaseRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateDatabase(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateDatabase(request),
       [this](grpc::ClientContext& context,
              google::cloud::bigquery::biglake::v1::CreateDatabaseRequest const&
                  request) { return stub_->CreateDatabase(context, request); },
@@ -125,9 +153,10 @@ StatusOr<google::cloud::bigquery::biglake::v1::Database>
 MetastoreServiceConnectionImpl::DeleteDatabase(
     google::cloud::bigquery::biglake::v1::DeleteDatabaseRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteDatabase(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteDatabase(request),
       [this](grpc::ClientContext& context,
              google::cloud::bigquery::biglake::v1::DeleteDatabaseRequest const&
                  request) { return stub_->DeleteDatabase(context, request); },
@@ -138,9 +167,10 @@ StatusOr<google::cloud::bigquery::biglake::v1::Database>
 MetastoreServiceConnectionImpl::UpdateDatabase(
     google::cloud::bigquery::biglake::v1::UpdateDatabaseRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UpdateDatabase(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateDatabase(request),
       [this](grpc::ClientContext& context,
              google::cloud::bigquery::biglake::v1::UpdateDatabaseRequest const&
                  request) { return stub_->UpdateDatabase(context, request); },
@@ -150,9 +180,10 @@ MetastoreServiceConnectionImpl::UpdateDatabase(
 StatusOr<google::cloud::bigquery::biglake::v1::Database>
 MetastoreServiceConnectionImpl::GetDatabase(
     google::cloud::bigquery::biglake::v1::GetDatabaseRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetDatabase(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetDatabase(request),
       [this](grpc::ClientContext& context,
              google::cloud::bigquery::biglake::v1::GetDatabaseRequest const&
                  request) { return stub_->GetDatabase(context, request); },
@@ -163,17 +194,17 @@ StreamRange<google::cloud::bigquery::biglake::v1::Database>
 MetastoreServiceConnectionImpl::ListDatabases(
     google::cloud::bigquery::biglake::v1::ListDatabasesRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<bigquery_biglake_v1::MetastoreServiceRetryPolicy const>(
-          retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListDatabases(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListDatabases(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::bigquery::biglake::v1::Database>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry =
+           std::shared_ptr<bigquery_biglake_v1::MetastoreServiceRetryPolicy>(
+               retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::bigquery::biglake::v1::ListDatabasesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
@@ -196,9 +227,10 @@ MetastoreServiceConnectionImpl::ListDatabases(
 StatusOr<google::cloud::bigquery::biglake::v1::Table>
 MetastoreServiceConnectionImpl::CreateTable(
     google::cloud::bigquery::biglake::v1::CreateTableRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateTable(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateTable(request),
       [this](grpc::ClientContext& context,
              google::cloud::bigquery::biglake::v1::CreateTableRequest const&
                  request) { return stub_->CreateTable(context, request); },
@@ -208,9 +240,10 @@ MetastoreServiceConnectionImpl::CreateTable(
 StatusOr<google::cloud::bigquery::biglake::v1::Table>
 MetastoreServiceConnectionImpl::DeleteTable(
     google::cloud::bigquery::biglake::v1::DeleteTableRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteTable(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteTable(request),
       [this](grpc::ClientContext& context,
              google::cloud::bigquery::biglake::v1::DeleteTableRequest const&
                  request) { return stub_->DeleteTable(context, request); },
@@ -220,9 +253,10 @@ MetastoreServiceConnectionImpl::DeleteTable(
 StatusOr<google::cloud::bigquery::biglake::v1::Table>
 MetastoreServiceConnectionImpl::UpdateTable(
     google::cloud::bigquery::biglake::v1::UpdateTableRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UpdateTable(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateTable(request),
       [this](grpc::ClientContext& context,
              google::cloud::bigquery::biglake::v1::UpdateTableRequest const&
                  request) { return stub_->UpdateTable(context, request); },
@@ -232,9 +266,10 @@ MetastoreServiceConnectionImpl::UpdateTable(
 StatusOr<google::cloud::bigquery::biglake::v1::Table>
 MetastoreServiceConnectionImpl::RenameTable(
     google::cloud::bigquery::biglake::v1::RenameTableRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->RenameTable(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->RenameTable(request),
       [this](grpc::ClientContext& context,
              google::cloud::bigquery::biglake::v1::RenameTableRequest const&
                  request) { return stub_->RenameTable(context, request); },
@@ -244,8 +279,10 @@ MetastoreServiceConnectionImpl::RenameTable(
 StatusOr<google::cloud::bigquery::biglake::v1::Table>
 MetastoreServiceConnectionImpl::GetTable(
     google::cloud::bigquery::biglake::v1::GetTableRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(), idempotency_policy()->GetTable(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetTable(request),
       [this](grpc::ClientContext& context,
              google::cloud::bigquery::biglake::v1::GetTableRequest const&
                  request) { return stub_->GetTable(context, request); },
@@ -256,17 +293,17 @@ StreamRange<google::cloud::bigquery::biglake::v1::Table>
 MetastoreServiceConnectionImpl::ListTables(
     google::cloud::bigquery::biglake::v1::ListTablesRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<bigquery_biglake_v1::MetastoreServiceRetryPolicy const>(
-          retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListTables(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListTables(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::bigquery::biglake::v1::Table>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry =
+           std::shared_ptr<bigquery_biglake_v1::MetastoreServiceRetryPolicy>(
+               retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::bigquery::biglake::v1::ListTablesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,

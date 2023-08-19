@@ -81,63 +81,32 @@ class HttpHealthChecksRestConnectionImpl
           UpdateHttpHealthChecksRequest const& request) override;
 
  private:
-  std::unique_ptr<compute_http_health_checks_v1::HttpHealthChecksRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_http_health_checks_v1::
-                        HttpHealthChecksRetryPolicyOption>()) {
-      return options
-          .get<compute_http_health_checks_v1::
-                   HttpHealthChecksRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<
+      compute_http_health_checks_v1::HttpHealthChecksRetryPolicy>
+  retry_policy(Options const& options) {
+    return options
         .get<compute_http_health_checks_v1::HttpHealthChecksRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_http_health_checks_v1::
-                        HttpHealthChecksBackoffPolicyOption>()) {
-      return options
-          .get<compute_http_health_checks_v1::
-                   HttpHealthChecksBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options
         .get<compute_http_health_checks_v1::
                  HttpHealthChecksBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<compute_http_health_checks_v1::
-                      HttpHealthChecksConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_http_health_checks_v1::
-                        HttpHealthChecksConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<compute_http_health_checks_v1::
-                   HttpHealthChecksConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<compute_http_health_checks_v1::
+                             HttpHealthChecksConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<compute_http_health_checks_v1::
                  HttpHealthChecksConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_http_health_checks_v1::
-                        HttpHealthChecksPollingPolicyOption>()) {
-      return options
-          .get<compute_http_health_checks_v1::
-                   HttpHealthChecksPollingPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options
         .get<compute_http_health_checks_v1::
                  HttpHealthChecksPollingPolicyOption>()
         ->clone();

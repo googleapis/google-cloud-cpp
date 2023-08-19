@@ -69,36 +69,6 @@ class FirewallConnectionImpl : public appengine_v1::FirewallConnection {
       google::appengine::v1::DeleteIngressRuleRequest const& request) override;
 
  private:
-  std::unique_ptr<appengine_v1::FirewallRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<appengine_v1::FirewallRetryPolicyOption>()) {
-      return options.get<appengine_v1::FirewallRetryPolicyOption>()->clone();
-    }
-    return options_.get<appengine_v1::FirewallRetryPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<appengine_v1::FirewallBackoffPolicyOption>()) {
-      return options.get<appengine_v1::FirewallBackoffPolicyOption>()->clone();
-    }
-    return options_.get<appengine_v1::FirewallBackoffPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<appengine_v1::FirewallConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<appengine_v1::FirewallConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<appengine_v1::FirewallConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<appengine_v1::FirewallConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<appengine_v1_internal::FirewallStub> stub_;
   Options options_;

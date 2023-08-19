@@ -29,6 +29,24 @@ namespace google {
 namespace cloud {
 namespace trace_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<trace_v1::TraceServiceRetryPolicy> retry_policy(
+    Options const& options) {
+  return options.get<trace_v1::TraceServiceRetryPolicyOption>()->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options.get<trace_v1::TraceServiceBackoffPolicyOption>()->clone();
+}
+
+std::unique_ptr<trace_v1::TraceServiceConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options.get<trace_v1::TraceServiceConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 TraceServiceConnectionImpl::TraceServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
@@ -42,16 +60,16 @@ StreamRange<google::devtools::cloudtrace::v1::Trace>
 TraceServiceConnectionImpl::ListTraces(
     google::devtools::cloudtrace::v1::ListTracesRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<trace_v1::TraceServiceRetryPolicy const>(retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListTraces(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListTraces(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::devtools::cloudtrace::v1::Trace>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<trace_v1::TraceServiceRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::devtools::cloudtrace::v1::ListTracesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
@@ -72,8 +90,10 @@ TraceServiceConnectionImpl::ListTraces(
 StatusOr<google::devtools::cloudtrace::v1::Trace>
 TraceServiceConnectionImpl::GetTrace(
     google::devtools::cloudtrace::v1::GetTraceRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(), idempotency_policy()->GetTrace(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetTrace(request),
       [this](grpc::ClientContext& context,
              google::devtools::cloudtrace::v1::GetTraceRequest const& request) {
         return stub_->GetTrace(context, request);
@@ -83,9 +103,10 @@ TraceServiceConnectionImpl::GetTrace(
 
 Status TraceServiceConnectionImpl::PatchTraces(
     google::devtools::cloudtrace::v1::PatchTracesRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->PatchTraces(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->PatchTraces(request),
       [this](
           grpc::ClientContext& context,
           google::devtools::cloudtrace::v1::PatchTracesRequest const& request) {

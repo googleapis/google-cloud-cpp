@@ -55,47 +55,6 @@ class IamCheckerConnectionImpl
           TroubleshootIamPolicyRequest const& request) override;
 
  private:
-  std::unique_ptr<policytroubleshooter_v1::IamCheckerRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<policytroubleshooter_v1::IamCheckerRetryPolicyOption>()) {
-      return options
-          .get<policytroubleshooter_v1::IamCheckerRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<policytroubleshooter_v1::IamCheckerRetryPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<policytroubleshooter_v1::IamCheckerBackoffPolicyOption>()) {
-      return options
-          .get<policytroubleshooter_v1::IamCheckerBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<policytroubleshooter_v1::IamCheckerBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<
-      policytroubleshooter_v1::IamCheckerConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<policytroubleshooter_v1::
-                        IamCheckerConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<policytroubleshooter_v1::
-                   IamCheckerConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<policytroubleshooter_v1::
-                 IamCheckerConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<policytroubleshooter_v1_internal::IamCheckerStub> stub_;
   Options options_;

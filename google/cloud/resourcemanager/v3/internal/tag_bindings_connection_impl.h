@@ -71,51 +71,6 @@ class TagBindingsConnectionImpl
                         request) override;
 
  private:
-  std::unique_ptr<resourcemanager_v3::TagBindingsRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<resourcemanager_v3::TagBindingsRetryPolicyOption>()) {
-      return options.get<resourcemanager_v3::TagBindingsRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<resourcemanager_v3::TagBindingsRetryPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<resourcemanager_v3::TagBindingsBackoffPolicyOption>()) {
-      return options.get<resourcemanager_v3::TagBindingsBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<resourcemanager_v3::TagBindingsBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<resourcemanager_v3::TagBindingsConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<resourcemanager_v3::
-                        TagBindingsConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<resourcemanager_v3::
-                   TagBindingsConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<resourcemanager_v3::TagBindingsConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<resourcemanager_v3::TagBindingsPollingPolicyOption>()) {
-      return options.get<resourcemanager_v3::TagBindingsPollingPolicyOption>()
-          ->clone();
-    }
-    return options_.get<resourcemanager_v3::TagBindingsPollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<resourcemanager_v3_internal::TagBindingsStub> stub_;
   Options options_;

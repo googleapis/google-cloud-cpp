@@ -83,48 +83,27 @@ class SnapshotsRestConnectionImpl
                          TestIamPermissionsRequest const& request) override;
 
  private:
-  std::unique_ptr<compute_snapshots_v1::SnapshotsRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_snapshots_v1::SnapshotsRetryPolicyOption>()) {
-      return options.get<compute_snapshots_v1::SnapshotsRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<compute_snapshots_v1::SnapshotsRetryPolicyOption>()
+  static std::unique_ptr<compute_snapshots_v1::SnapshotsRetryPolicy>
+  retry_policy(Options const& options) {
+    return options.get<compute_snapshots_v1::SnapshotsRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_snapshots_v1::SnapshotsBackoffPolicyOption>()) {
-      return options.get<compute_snapshots_v1::SnapshotsBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<compute_snapshots_v1::SnapshotsBackoffPolicyOption>()
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<compute_snapshots_v1::SnapshotsBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<compute_snapshots_v1::SnapshotsConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_snapshots_v1::
-                        SnapshotsConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<compute_snapshots_v1::
-                   SnapshotsConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<
+      compute_snapshots_v1::SnapshotsConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<compute_snapshots_v1::SnapshotsConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_snapshots_v1::SnapshotsPollingPolicyOption>()) {
-      return options.get<compute_snapshots_v1::SnapshotsPollingPolicyOption>()
-          ->clone();
-    }
-    return options_.get<compute_snapshots_v1::SnapshotsPollingPolicyOption>()
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options.get<compute_snapshots_v1::SnapshotsPollingPolicyOption>()
         ->clone();
   }
 

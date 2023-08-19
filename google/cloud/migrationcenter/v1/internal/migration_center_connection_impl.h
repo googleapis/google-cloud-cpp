@@ -259,59 +259,6 @@ class MigrationCenterConnectionImpl
                    request) override;
 
  private:
-  std::unique_ptr<migrationcenter_v1::MigrationCenterRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<migrationcenter_v1::MigrationCenterRetryPolicyOption>()) {
-      return options
-          .get<migrationcenter_v1::MigrationCenterRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<migrationcenter_v1::MigrationCenterRetryPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<migrationcenter_v1::MigrationCenterBackoffPolicyOption>()) {
-      return options
-          .get<migrationcenter_v1::MigrationCenterBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<migrationcenter_v1::MigrationCenterBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<
-      migrationcenter_v1::MigrationCenterConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<migrationcenter_v1::
-                        MigrationCenterConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<migrationcenter_v1::
-                   MigrationCenterConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<migrationcenter_v1::
-                 MigrationCenterConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<migrationcenter_v1::MigrationCenterPollingPolicyOption>()) {
-      return options
-          .get<migrationcenter_v1::MigrationCenterPollingPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<migrationcenter_v1::MigrationCenterPollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<migrationcenter_v1_internal::MigrationCenterStub> stub_;
   Options options_;

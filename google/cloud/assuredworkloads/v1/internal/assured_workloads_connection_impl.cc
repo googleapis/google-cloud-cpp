@@ -30,6 +30,37 @@ namespace google {
 namespace cloud {
 namespace assuredworkloads_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<assuredworkloads_v1::AssuredWorkloadsServiceRetryPolicy>
+retry_policy(Options const& options) {
+  return options
+      .get<assuredworkloads_v1::AssuredWorkloadsServiceRetryPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options
+      .get<assuredworkloads_v1::AssuredWorkloadsServiceBackoffPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<
+    assuredworkloads_v1::AssuredWorkloadsServiceConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options
+      .get<assuredworkloads_v1::
+               AssuredWorkloadsServiceConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+  return options
+      .get<assuredworkloads_v1::AssuredWorkloadsServicePollingPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 AssuredWorkloadsServiceConnectionImpl::AssuredWorkloadsServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
@@ -44,39 +75,42 @@ AssuredWorkloadsServiceConnectionImpl::AssuredWorkloadsServiceConnectionImpl(
 future<StatusOr<google::cloud::assuredworkloads::v1::Workload>>
 AssuredWorkloadsServiceConnectionImpl::CreateWorkload(
     google::cloud::assuredworkloads::v1::CreateWorkloadRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::assuredworkloads::v1::Workload>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::assuredworkloads::v1::CreateWorkloadRequest const&
-                 request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::assuredworkloads::v1::CreateWorkloadRequest const&
+              request) {
         return stub->AsyncCreateWorkload(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::assuredworkloads::v1::Workload>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateWorkload(request), polling_policy(),
-      __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateWorkload(request),
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::cloud::assuredworkloads::v1::Workload>
 AssuredWorkloadsServiceConnectionImpl::UpdateWorkload(
     google::cloud::assuredworkloads::v1::UpdateWorkloadRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UpdateWorkload(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateWorkload(request),
       [this](grpc::ClientContext& context,
              google::cloud::assuredworkloads::v1::UpdateWorkloadRequest const&
                  request) { return stub_->UpdateWorkload(context, request); },
@@ -87,9 +121,10 @@ StatusOr<google::cloud::assuredworkloads::v1::RestrictAllowedResourcesResponse>
 AssuredWorkloadsServiceConnectionImpl::RestrictAllowedResources(
     google::cloud::assuredworkloads::v1::RestrictAllowedResourcesRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->RestrictAllowedResources(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->RestrictAllowedResources(request),
       [this](grpc::ClientContext& context,
              google::cloud::assuredworkloads::v1::
                  RestrictAllowedResourcesRequest const& request) {
@@ -100,9 +135,10 @@ AssuredWorkloadsServiceConnectionImpl::RestrictAllowedResources(
 
 Status AssuredWorkloadsServiceConnectionImpl::DeleteWorkload(
     google::cloud::assuredworkloads::v1::DeleteWorkloadRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteWorkload(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteWorkload(request),
       [this](grpc::ClientContext& context,
              google::cloud::assuredworkloads::v1::DeleteWorkloadRequest const&
                  request) { return stub_->DeleteWorkload(context, request); },
@@ -112,9 +148,10 @@ Status AssuredWorkloadsServiceConnectionImpl::DeleteWorkload(
 StatusOr<google::cloud::assuredworkloads::v1::Workload>
 AssuredWorkloadsServiceConnectionImpl::GetWorkload(
     google::cloud::assuredworkloads::v1::GetWorkloadRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetWorkload(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetWorkload(request),
       [this](grpc::ClientContext& context,
              google::cloud::assuredworkloads::v1::GetWorkloadRequest const&
                  request) { return stub_->GetWorkload(context, request); },
@@ -125,17 +162,17 @@ StreamRange<google::cloud::assuredworkloads::v1::Workload>
 AssuredWorkloadsServiceConnectionImpl::ListWorkloads(
     google::cloud::assuredworkloads::v1::ListWorkloadsRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<
-      assuredworkloads_v1::AssuredWorkloadsServiceRetryPolicy const>(
-      retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListWorkloads(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListWorkloads(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::assuredworkloads::v1::Workload>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<
+           assuredworkloads_v1::AssuredWorkloadsServiceRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::assuredworkloads::v1::ListWorkloadsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
@@ -158,17 +195,17 @@ StreamRange<google::cloud::assuredworkloads::v1::Violation>
 AssuredWorkloadsServiceConnectionImpl::ListViolations(
     google::cloud::assuredworkloads::v1::ListViolationsRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<
-      assuredworkloads_v1::AssuredWorkloadsServiceRetryPolicy const>(
-      retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListViolations(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListViolations(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::assuredworkloads::v1::Violation>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<
+           assuredworkloads_v1::AssuredWorkloadsServiceRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::assuredworkloads::v1::ListViolationsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
@@ -191,9 +228,10 @@ AssuredWorkloadsServiceConnectionImpl::ListViolations(
 StatusOr<google::cloud::assuredworkloads::v1::Violation>
 AssuredWorkloadsServiceConnectionImpl::GetViolation(
     google::cloud::assuredworkloads::v1::GetViolationRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetViolation(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetViolation(request),
       [this](grpc::ClientContext& context,
              google::cloud::assuredworkloads::v1::GetViolationRequest const&
                  request) { return stub_->GetViolation(context, request); },
@@ -204,9 +242,10 @@ StatusOr<google::cloud::assuredworkloads::v1::AcknowledgeViolationResponse>
 AssuredWorkloadsServiceConnectionImpl::AcknowledgeViolation(
     google::cloud::assuredworkloads::v1::AcknowledgeViolationRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->AcknowledgeViolation(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->AcknowledgeViolation(request),
       [this](grpc::ClientContext& context,
              google::cloud::assuredworkloads::v1::
                  AcknowledgeViolationRequest const& request) {

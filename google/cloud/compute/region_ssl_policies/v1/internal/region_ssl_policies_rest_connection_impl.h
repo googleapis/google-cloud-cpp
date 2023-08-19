@@ -82,64 +82,33 @@ class RegionSslPoliciesRestConnectionImpl
           PatchRegionSslPoliciesRequest const& request) override;
 
  private:
-  std::unique_ptr<compute_region_ssl_policies_v1::RegionSslPoliciesRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_region_ssl_policies_v1::
-                        RegionSslPoliciesRetryPolicyOption>()) {
-      return options
-          .get<compute_region_ssl_policies_v1::
-                   RegionSslPoliciesRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<
+      compute_region_ssl_policies_v1::RegionSslPoliciesRetryPolicy>
+  retry_policy(Options const& options) {
+    return options
         .get<compute_region_ssl_policies_v1::
                  RegionSslPoliciesRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_region_ssl_policies_v1::
-                        RegionSslPoliciesBackoffPolicyOption>()) {
-      return options
-          .get<compute_region_ssl_policies_v1::
-                   RegionSslPoliciesBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options
         .get<compute_region_ssl_policies_v1::
                  RegionSslPoliciesBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<compute_region_ssl_policies_v1::
-                      RegionSslPoliciesConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_region_ssl_policies_v1::
-                        RegionSslPoliciesConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<compute_region_ssl_policies_v1::
-                   RegionSslPoliciesConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<compute_region_ssl_policies_v1::
+                             RegionSslPoliciesConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<compute_region_ssl_policies_v1::
                  RegionSslPoliciesConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_region_ssl_policies_v1::
-                        RegionSslPoliciesPollingPolicyOption>()) {
-      return options
-          .get<compute_region_ssl_policies_v1::
-                   RegionSslPoliciesPollingPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options
         .get<compute_region_ssl_policies_v1::
                  RegionSslPoliciesPollingPolicyOption>()
         ->clone();

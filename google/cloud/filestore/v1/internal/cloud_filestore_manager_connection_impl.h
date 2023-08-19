@@ -111,60 +111,6 @@ class CloudFilestoreManagerConnectionImpl
       override;
 
  private:
-  std::unique_ptr<filestore_v1::CloudFilestoreManagerRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<filestore_v1::CloudFilestoreManagerRetryPolicyOption>()) {
-      return options
-          .get<filestore_v1::CloudFilestoreManagerRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<filestore_v1::CloudFilestoreManagerRetryPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<filestore_v1::CloudFilestoreManagerBackoffPolicyOption>()) {
-      return options
-          .get<filestore_v1::CloudFilestoreManagerBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<filestore_v1::CloudFilestoreManagerBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<
-      filestore_v1::CloudFilestoreManagerConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            filestore_v1::
-                CloudFilestoreManagerConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<filestore_v1::
-                   CloudFilestoreManagerConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<filestore_v1::
-                 CloudFilestoreManagerConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<filestore_v1::CloudFilestoreManagerPollingPolicyOption>()) {
-      return options
-          .get<filestore_v1::CloudFilestoreManagerPollingPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<filestore_v1::CloudFilestoreManagerPollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<filestore_v1_internal::CloudFilestoreManagerStub> stub_;
   Options options_;

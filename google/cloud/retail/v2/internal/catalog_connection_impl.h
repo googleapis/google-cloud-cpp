@@ -92,38 +92,6 @@ class CatalogServiceConnectionImpl
       override;
 
  private:
-  std::unique_ptr<retail_v2::CatalogServiceRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<retail_v2::CatalogServiceRetryPolicyOption>()) {
-      return options.get<retail_v2::CatalogServiceRetryPolicyOption>()->clone();
-    }
-    return options_.get<retail_v2::CatalogServiceRetryPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<retail_v2::CatalogServiceBackoffPolicyOption>()) {
-      return options.get<retail_v2::CatalogServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<retail_v2::CatalogServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<retail_v2::CatalogServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            retail_v2::CatalogServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<retail_v2::CatalogServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<retail_v2::CatalogServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<retail_v2_internal::CatalogServiceStub> stub_;
   Options options_;

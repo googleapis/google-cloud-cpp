@@ -30,6 +30,29 @@ namespace google {
 namespace cloud {
 namespace vmmigration_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<vmmigration_v1::VmMigrationRetryPolicy> retry_policy(
+    Options const& options) {
+  return options.get<vmmigration_v1::VmMigrationRetryPolicyOption>()->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options.get<vmmigration_v1::VmMigrationBackoffPolicyOption>()->clone();
+}
+
+std::unique_ptr<vmmigration_v1::VmMigrationConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options
+      .get<vmmigration_v1::VmMigrationConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+  return options.get<vmmigration_v1::VmMigrationPollingPolicyOption>()->clone();
+}
+
+}  // namespace
 
 VmMigrationConnectionImpl::VmMigrationConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
@@ -44,16 +67,16 @@ StreamRange<google::cloud::vmmigration::v1::Source>
 VmMigrationConnectionImpl::ListSources(
     google::cloud::vmmigration::v1::ListSourcesRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<vmmigration_v1::VmMigrationRetryPolicy const>(
-      retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListSources(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListSources(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::vmmigration::v1::Source>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<vmmigration_v1::VmMigrationRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::vmmigration::v1::ListSourcesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
@@ -74,9 +97,10 @@ VmMigrationConnectionImpl::ListSources(
 StatusOr<google::cloud::vmmigration::v1::Source>
 VmMigrationConnectionImpl::GetSource(
     google::cloud::vmmigration::v1::GetSourceRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetSource(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetSource(request),
       [this](grpc::ClientContext& context,
              google::cloud::vmmigration::v1::GetSourceRequest const& request) {
         return stub_->GetSource(context, request);
@@ -87,96 +111,103 @@ VmMigrationConnectionImpl::GetSource(
 future<StatusOr<google::cloud::vmmigration::v1::Source>>
 VmMigrationConnectionImpl::CreateSource(
     google::cloud::vmmigration::v1::CreateSourceRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::vmmigration::v1::Source>(
       background_->cq(), request,
-      [stub](
+      [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context,
           google::cloud::vmmigration::v1::CreateSourceRequest const& request) {
         return stub->AsyncCreateSource(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::vmmigration::v1::Source>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateSource(request), polling_policy(), __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateSource(request),
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::Source>>
 VmMigrationConnectionImpl::UpdateSource(
     google::cloud::vmmigration::v1::UpdateSourceRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::vmmigration::v1::Source>(
       background_->cq(), request,
-      [stub](
+      [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context,
           google::cloud::vmmigration::v1::UpdateSourceRequest const& request) {
         return stub->AsyncUpdateSource(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::vmmigration::v1::Source>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UpdateSource(request), polling_policy(), __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateSource(request),
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
 VmMigrationConnectionImpl::DeleteSource(
     google::cloud::vmmigration::v1::DeleteSourceRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::vmmigration::v1::OperationMetadata>(
       background_->cq(), request,
-      [stub](
+      [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context,
           google::cloud::vmmigration::v1::DeleteSourceRequest const& request) {
         return stub->AsyncDeleteSource(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::vmmigration::v1::OperationMetadata>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteSource(request), polling_policy(), __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteSource(request),
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::cloud::vmmigration::v1::FetchInventoryResponse>
 VmMigrationConnectionImpl::FetchInventory(
     google::cloud::vmmigration::v1::FetchInventoryRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->FetchInventory(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->FetchInventory(request),
       [this](grpc::ClientContext& context,
              google::cloud::vmmigration::v1::FetchInventoryRequest const&
                  request) { return stub_->FetchInventory(context, request); },
@@ -187,16 +218,17 @@ StreamRange<google::cloud::vmmigration::v1::UtilizationReport>
 VmMigrationConnectionImpl::ListUtilizationReports(
     google::cloud::vmmigration::v1::ListUtilizationReportsRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<vmmigration_v1::VmMigrationRetryPolicy const>(
-      retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListUtilizationReports(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency =
+      idempotency_policy(*current)->ListUtilizationReports(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::vmmigration::v1::UtilizationReport>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<vmmigration_v1::VmMigrationRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::vmmigration::v1::ListUtilizationReportsRequest const&
               r) {
         return google::cloud::internal::RetryLoop(
@@ -221,9 +253,10 @@ StatusOr<google::cloud::vmmigration::v1::UtilizationReport>
 VmMigrationConnectionImpl::GetUtilizationReport(
     google::cloud::vmmigration::v1::GetUtilizationReportRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetUtilizationReport(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetUtilizationReport(request),
       [this](grpc::ClientContext& context,
              google::cloud::vmmigration::v1::GetUtilizationReportRequest const&
                  request) {
@@ -236,11 +269,11 @@ future<StatusOr<google::cloud::vmmigration::v1::UtilizationReport>>
 VmMigrationConnectionImpl::CreateUtilizationReport(
     google::cloud::vmmigration::v1::CreateUtilizationReportRequest const&
         request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::vmmigration::v1::UtilizationReport>(
       background_->cq(), request,
-      [stub](
+      [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context,
           google::cloud::vmmigration::v1::CreateUtilizationReportRequest const&
@@ -248,32 +281,33 @@ VmMigrationConnectionImpl::CreateUtilizationReport(
         return stub->AsyncCreateUtilizationReport(cq, std::move(context),
                                                   request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::vmmigration::v1::UtilizationReport>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateUtilizationReport(request), polling_policy(),
-      __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateUtilizationReport(request),
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
 VmMigrationConnectionImpl::DeleteUtilizationReport(
     google::cloud::vmmigration::v1::DeleteUtilizationReportRequest const&
         request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::vmmigration::v1::OperationMetadata>(
       background_->cq(), request,
-      [stub](
+      [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context,
           google::cloud::vmmigration::v1::DeleteUtilizationReportRequest const&
@@ -281,37 +315,39 @@ VmMigrationConnectionImpl::DeleteUtilizationReport(
         return stub->AsyncDeleteUtilizationReport(cq, std::move(context),
                                                   request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::vmmigration::v1::OperationMetadata>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteUtilizationReport(request), polling_policy(),
-      __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteUtilizationReport(request),
+      polling_policy(*current), __func__);
 }
 
 StreamRange<google::cloud::vmmigration::v1::DatacenterConnector>
 VmMigrationConnectionImpl::ListDatacenterConnectors(
     google::cloud::vmmigration::v1::ListDatacenterConnectorsRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<vmmigration_v1::VmMigrationRetryPolicy const>(
-      retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListDatacenterConnectors(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency =
+      idempotency_policy(*current)->ListDatacenterConnectors(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::vmmigration::v1::DatacenterConnector>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<vmmigration_v1::VmMigrationRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::vmmigration::v1::ListDatacenterConnectorsRequest const&
               r) {
         return google::cloud::internal::RetryLoop(
@@ -336,9 +372,10 @@ StatusOr<google::cloud::vmmigration::v1::DatacenterConnector>
 VmMigrationConnectionImpl::GetDatacenterConnector(
     google::cloud::vmmigration::v1::GetDatacenterConnectorRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetDatacenterConnector(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetDatacenterConnector(request),
       [this](
           grpc::ClientContext& context,
           google::cloud::vmmigration::v1::GetDatacenterConnectorRequest const&
@@ -352,140 +389,146 @@ future<StatusOr<google::cloud::vmmigration::v1::DatacenterConnector>>
 VmMigrationConnectionImpl::CreateDatacenterConnector(
     google::cloud::vmmigration::v1::CreateDatacenterConnectorRequest const&
         request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::vmmigration::v1::DatacenterConnector>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::vmmigration::v1::
-                 CreateDatacenterConnectorRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::vmmigration::v1::
+                         CreateDatacenterConnectorRequest const& request) {
         return stub->AsyncCreateDatacenterConnector(cq, std::move(context),
                                                     request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::vmmigration::v1::DatacenterConnector>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateDatacenterConnector(request),
-      polling_policy(), __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateDatacenterConnector(request),
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
 VmMigrationConnectionImpl::DeleteDatacenterConnector(
     google::cloud::vmmigration::v1::DeleteDatacenterConnectorRequest const&
         request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::vmmigration::v1::OperationMetadata>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::vmmigration::v1::
-                 DeleteDatacenterConnectorRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::vmmigration::v1::
+                         DeleteDatacenterConnectorRequest const& request) {
         return stub->AsyncDeleteDatacenterConnector(cq, std::move(context),
                                                     request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::vmmigration::v1::OperationMetadata>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteDatacenterConnector(request),
-      polling_policy(), __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteDatacenterConnector(request),
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::UpgradeApplianceResponse>>
 VmMigrationConnectionImpl::UpgradeAppliance(
     google::cloud::vmmigration::v1::UpgradeApplianceRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::vmmigration::v1::UpgradeApplianceResponse>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::vmmigration::v1::UpgradeApplianceRequest const&
-                 request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::vmmigration::v1::UpgradeApplianceRequest const&
+              request) {
         return stub->AsyncUpgradeAppliance(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::vmmigration::v1::UpgradeApplianceResponse>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UpgradeAppliance(request), polling_policy(),
-      __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpgradeAppliance(request),
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::MigratingVm>>
 VmMigrationConnectionImpl::CreateMigratingVm(
     google::cloud::vmmigration::v1::CreateMigratingVmRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::vmmigration::v1::MigratingVm>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::vmmigration::v1::CreateMigratingVmRequest const&
-                 request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::vmmigration::v1::CreateMigratingVmRequest const&
+              request) {
         return stub->AsyncCreateMigratingVm(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::vmmigration::v1::MigratingVm>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateMigratingVm(request), polling_policy(),
-      __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateMigratingVm(request),
+      polling_policy(*current), __func__);
 }
 
 StreamRange<google::cloud::vmmigration::v1::MigratingVm>
 VmMigrationConnectionImpl::ListMigratingVms(
     google::cloud::vmmigration::v1::ListMigratingVmsRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<vmmigration_v1::VmMigrationRetryPolicy const>(
-      retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListMigratingVms(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListMigratingVms(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::vmmigration::v1::MigratingVm>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<vmmigration_v1::VmMigrationRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::vmmigration::v1::ListMigratingVmsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
@@ -509,9 +552,10 @@ VmMigrationConnectionImpl::ListMigratingVms(
 StatusOr<google::cloud::vmmigration::v1::MigratingVm>
 VmMigrationConnectionImpl::GetMigratingVm(
     google::cloud::vmmigration::v1::GetMigratingVmRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetMigratingVm(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetMigratingVm(request),
       [this](grpc::ClientContext& context,
              google::cloud::vmmigration::v1::GetMigratingVmRequest const&
                  request) { return stub_->GetMigratingVm(context, request); },
@@ -521,257 +565,273 @@ VmMigrationConnectionImpl::GetMigratingVm(
 future<StatusOr<google::cloud::vmmigration::v1::MigratingVm>>
 VmMigrationConnectionImpl::UpdateMigratingVm(
     google::cloud::vmmigration::v1::UpdateMigratingVmRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::vmmigration::v1::MigratingVm>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::vmmigration::v1::UpdateMigratingVmRequest const&
-                 request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::vmmigration::v1::UpdateMigratingVmRequest const&
+              request) {
         return stub->AsyncUpdateMigratingVm(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::vmmigration::v1::MigratingVm>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UpdateMigratingVm(request), polling_policy(),
-      __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateMigratingVm(request),
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
 VmMigrationConnectionImpl::DeleteMigratingVm(
     google::cloud::vmmigration::v1::DeleteMigratingVmRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::vmmigration::v1::OperationMetadata>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::vmmigration::v1::DeleteMigratingVmRequest const&
-                 request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::vmmigration::v1::DeleteMigratingVmRequest const&
+              request) {
         return stub->AsyncDeleteMigratingVm(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::vmmigration::v1::OperationMetadata>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteMigratingVm(request), polling_policy(),
-      __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteMigratingVm(request),
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::StartMigrationResponse>>
 VmMigrationConnectionImpl::StartMigration(
     google::cloud::vmmigration::v1::StartMigrationRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::vmmigration::v1::StartMigrationResponse>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::vmmigration::v1::StartMigrationRequest const&
-                 request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::vmmigration::v1::StartMigrationRequest const&
+              request) {
         return stub->AsyncStartMigration(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::vmmigration::v1::StartMigrationResponse>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->StartMigration(request), polling_policy(),
-      __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->StartMigration(request),
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::ResumeMigrationResponse>>
 VmMigrationConnectionImpl::ResumeMigration(
     google::cloud::vmmigration::v1::ResumeMigrationRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::vmmigration::v1::ResumeMigrationResponse>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::vmmigration::v1::ResumeMigrationRequest const&
-                 request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::vmmigration::v1::ResumeMigrationRequest const&
+              request) {
         return stub->AsyncResumeMigration(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::vmmigration::v1::ResumeMigrationResponse>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->ResumeMigration(request), polling_policy(),
-      __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ResumeMigration(request),
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::PauseMigrationResponse>>
 VmMigrationConnectionImpl::PauseMigration(
     google::cloud::vmmigration::v1::PauseMigrationRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::vmmigration::v1::PauseMigrationResponse>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::vmmigration::v1::PauseMigrationRequest const&
-                 request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::vmmigration::v1::PauseMigrationRequest const&
+              request) {
         return stub->AsyncPauseMigration(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::vmmigration::v1::PauseMigrationResponse>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->PauseMigration(request), polling_policy(),
-      __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->PauseMigration(request),
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::FinalizeMigrationResponse>>
 VmMigrationConnectionImpl::FinalizeMigration(
     google::cloud::vmmigration::v1::FinalizeMigrationRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::vmmigration::v1::FinalizeMigrationResponse>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::vmmigration::v1::FinalizeMigrationRequest const&
-                 request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::vmmigration::v1::FinalizeMigrationRequest const&
+              request) {
         return stub->AsyncFinalizeMigration(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::vmmigration::v1::FinalizeMigrationResponse>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->FinalizeMigration(request), polling_policy(),
-      __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->FinalizeMigration(request),
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::CloneJob>>
 VmMigrationConnectionImpl::CreateCloneJob(
     google::cloud::vmmigration::v1::CreateCloneJobRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::vmmigration::v1::CloneJob>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::vmmigration::v1::CreateCloneJobRequest const&
-                 request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::vmmigration::v1::CreateCloneJobRequest const&
+              request) {
         return stub->AsyncCreateCloneJob(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::vmmigration::v1::CloneJob>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateCloneJob(request), polling_policy(),
-      __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateCloneJob(request),
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::CancelCloneJobResponse>>
 VmMigrationConnectionImpl::CancelCloneJob(
     google::cloud::vmmigration::v1::CancelCloneJobRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::vmmigration::v1::CancelCloneJobResponse>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::vmmigration::v1::CancelCloneJobRequest const&
-                 request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::vmmigration::v1::CancelCloneJobRequest const&
+              request) {
         return stub->AsyncCancelCloneJob(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::vmmigration::v1::CancelCloneJobResponse>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CancelCloneJob(request), polling_policy(),
-      __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CancelCloneJob(request),
+      polling_policy(*current), __func__);
 }
 
 StreamRange<google::cloud::vmmigration::v1::CloneJob>
 VmMigrationConnectionImpl::ListCloneJobs(
     google::cloud::vmmigration::v1::ListCloneJobsRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<vmmigration_v1::VmMigrationRetryPolicy const>(
-      retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListCloneJobs(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListCloneJobs(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::vmmigration::v1::CloneJob>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<vmmigration_v1::VmMigrationRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::vmmigration::v1::ListCloneJobsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
@@ -794,9 +854,10 @@ VmMigrationConnectionImpl::ListCloneJobs(
 StatusOr<google::cloud::vmmigration::v1::CloneJob>
 VmMigrationConnectionImpl::GetCloneJob(
     google::cloud::vmmigration::v1::GetCloneJobRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetCloneJob(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetCloneJob(request),
       [this](
           grpc::ClientContext& context,
           google::cloud::vmmigration::v1::GetCloneJobRequest const& request) {
@@ -808,77 +869,81 @@ VmMigrationConnectionImpl::GetCloneJob(
 future<StatusOr<google::cloud::vmmigration::v1::CutoverJob>>
 VmMigrationConnectionImpl::CreateCutoverJob(
     google::cloud::vmmigration::v1::CreateCutoverJobRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::vmmigration::v1::CutoverJob>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::vmmigration::v1::CreateCutoverJobRequest const&
-                 request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::vmmigration::v1::CreateCutoverJobRequest const&
+              request) {
         return stub->AsyncCreateCutoverJob(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::vmmigration::v1::CutoverJob>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateCutoverJob(request), polling_policy(),
-      __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateCutoverJob(request),
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::CancelCutoverJobResponse>>
 VmMigrationConnectionImpl::CancelCutoverJob(
     google::cloud::vmmigration::v1::CancelCutoverJobRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::vmmigration::v1::CancelCutoverJobResponse>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::vmmigration::v1::CancelCutoverJobRequest const&
-                 request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::vmmigration::v1::CancelCutoverJobRequest const&
+              request) {
         return stub->AsyncCancelCutoverJob(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::vmmigration::v1::CancelCutoverJobResponse>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CancelCutoverJob(request), polling_policy(),
-      __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CancelCutoverJob(request),
+      polling_policy(*current), __func__);
 }
 
 StreamRange<google::cloud::vmmigration::v1::CutoverJob>
 VmMigrationConnectionImpl::ListCutoverJobs(
     google::cloud::vmmigration::v1::ListCutoverJobsRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<vmmigration_v1::VmMigrationRetryPolicy const>(
-      retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListCutoverJobs(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListCutoverJobs(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::vmmigration::v1::CutoverJob>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<vmmigration_v1::VmMigrationRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::vmmigration::v1::ListCutoverJobsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
@@ -901,9 +966,10 @@ VmMigrationConnectionImpl::ListCutoverJobs(
 StatusOr<google::cloud::vmmigration::v1::CutoverJob>
 VmMigrationConnectionImpl::GetCutoverJob(
     google::cloud::vmmigration::v1::GetCutoverJobRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetCutoverJob(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetCutoverJob(request),
       [this](
           grpc::ClientContext& context,
           google::cloud::vmmigration::v1::GetCutoverJobRequest const& request) {
@@ -916,16 +982,16 @@ StreamRange<google::cloud::vmmigration::v1::Group>
 VmMigrationConnectionImpl::ListGroups(
     google::cloud::vmmigration::v1::ListGroupsRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<vmmigration_v1::VmMigrationRetryPolicy const>(
-      retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListGroups(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListGroups(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::vmmigration::v1::Group>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<vmmigration_v1::VmMigrationRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::vmmigration::v1::ListGroupsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
@@ -946,8 +1012,10 @@ VmMigrationConnectionImpl::ListGroups(
 StatusOr<google::cloud::vmmigration::v1::Group>
 VmMigrationConnectionImpl::GetGroup(
     google::cloud::vmmigration::v1::GetGroupRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(), idempotency_policy()->GetGroup(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetGroup(request),
       [this](grpc::ClientContext& context,
              google::cloud::vmmigration::v1::GetGroupRequest const& request) {
         return stub_->GetGroup(context, request);
@@ -958,165 +1026,175 @@ VmMigrationConnectionImpl::GetGroup(
 future<StatusOr<google::cloud::vmmigration::v1::Group>>
 VmMigrationConnectionImpl::CreateGroup(
     google::cloud::vmmigration::v1::CreateGroupRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::vmmigration::v1::Group>(
       background_->cq(), request,
-      [stub](
+      [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context,
           google::cloud::vmmigration::v1::CreateGroupRequest const& request) {
         return stub->AsyncCreateGroup(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::vmmigration::v1::Group>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateGroup(request), polling_policy(), __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateGroup(request),
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::Group>>
 VmMigrationConnectionImpl::UpdateGroup(
     google::cloud::vmmigration::v1::UpdateGroupRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::vmmigration::v1::Group>(
       background_->cq(), request,
-      [stub](
+      [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context,
           google::cloud::vmmigration::v1::UpdateGroupRequest const& request) {
         return stub->AsyncUpdateGroup(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::vmmigration::v1::Group>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UpdateGroup(request), polling_policy(), __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateGroup(request),
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
 VmMigrationConnectionImpl::DeleteGroup(
     google::cloud::vmmigration::v1::DeleteGroupRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::vmmigration::v1::OperationMetadata>(
       background_->cq(), request,
-      [stub](
+      [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context,
           google::cloud::vmmigration::v1::DeleteGroupRequest const& request) {
         return stub->AsyncDeleteGroup(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::vmmigration::v1::OperationMetadata>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteGroup(request), polling_policy(), __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteGroup(request),
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::AddGroupMigrationResponse>>
 VmMigrationConnectionImpl::AddGroupMigration(
     google::cloud::vmmigration::v1::AddGroupMigrationRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::vmmigration::v1::AddGroupMigrationResponse>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::vmmigration::v1::AddGroupMigrationRequest const&
-                 request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::vmmigration::v1::AddGroupMigrationRequest const&
+              request) {
         return stub->AsyncAddGroupMigration(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::vmmigration::v1::AddGroupMigrationResponse>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->AddGroupMigration(request), polling_policy(),
-      __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->AddGroupMigration(request),
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::RemoveGroupMigrationResponse>>
 VmMigrationConnectionImpl::RemoveGroupMigration(
     google::cloud::vmmigration::v1::RemoveGroupMigrationRequest const&
         request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::vmmigration::v1::RemoveGroupMigrationResponse>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::vmmigration::v1::RemoveGroupMigrationRequest const&
-                 request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::vmmigration::v1::RemoveGroupMigrationRequest const&
+              request) {
         return stub->AsyncRemoveGroupMigration(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::vmmigration::v1::RemoveGroupMigrationResponse>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->RemoveGroupMigration(request), polling_policy(),
-      __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->RemoveGroupMigration(request),
+      polling_policy(*current), __func__);
 }
 
 StreamRange<google::cloud::vmmigration::v1::TargetProject>
 VmMigrationConnectionImpl::ListTargetProjects(
     google::cloud::vmmigration::v1::ListTargetProjectsRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<vmmigration_v1::VmMigrationRetryPolicy const>(
-      retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListTargetProjects(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListTargetProjects(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::vmmigration::v1::TargetProject>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<vmmigration_v1::VmMigrationRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::vmmigration::v1::ListTargetProjectsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
@@ -1140,9 +1218,10 @@ VmMigrationConnectionImpl::ListTargetProjects(
 StatusOr<google::cloud::vmmigration::v1::TargetProject>
 VmMigrationConnectionImpl::GetTargetProject(
     google::cloud::vmmigration::v1::GetTargetProjectRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetTargetProject(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetTargetProject(request),
       [this](grpc::ClientContext& context,
              google::cloud::vmmigration::v1::GetTargetProjectRequest const&
                  request) { return stub_->GetTargetProject(context, request); },
@@ -1152,107 +1231,114 @@ VmMigrationConnectionImpl::GetTargetProject(
 future<StatusOr<google::cloud::vmmigration::v1::TargetProject>>
 VmMigrationConnectionImpl::CreateTargetProject(
     google::cloud::vmmigration::v1::CreateTargetProjectRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::vmmigration::v1::TargetProject>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::vmmigration::v1::CreateTargetProjectRequest const&
-                 request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::vmmigration::v1::CreateTargetProjectRequest const&
+              request) {
         return stub->AsyncCreateTargetProject(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::vmmigration::v1::TargetProject>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateTargetProject(request), polling_policy(),
-      __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateTargetProject(request),
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::TargetProject>>
 VmMigrationConnectionImpl::UpdateTargetProject(
     google::cloud::vmmigration::v1::UpdateTargetProjectRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::vmmigration::v1::TargetProject>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::vmmigration::v1::UpdateTargetProjectRequest const&
-                 request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::vmmigration::v1::UpdateTargetProjectRequest const&
+              request) {
         return stub->AsyncUpdateTargetProject(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::vmmigration::v1::TargetProject>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UpdateTargetProject(request), polling_policy(),
-      __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateTargetProject(request),
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
 VmMigrationConnectionImpl::DeleteTargetProject(
     google::cloud::vmmigration::v1::DeleteTargetProjectRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::vmmigration::v1::OperationMetadata>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::vmmigration::v1::DeleteTargetProjectRequest const&
-                 request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::vmmigration::v1::DeleteTargetProjectRequest const&
+              request) {
         return stub->AsyncDeleteTargetProject(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::vmmigration::v1::OperationMetadata>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteTargetProject(request), polling_policy(),
-      __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteTargetProject(request),
+      polling_policy(*current), __func__);
 }
 
 StreamRange<google::cloud::vmmigration::v1::ReplicationCycle>
 VmMigrationConnectionImpl::ListReplicationCycles(
     google::cloud::vmmigration::v1::ListReplicationCyclesRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<vmmigration_v1::VmMigrationRetryPolicy const>(
-      retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListReplicationCycles(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency =
+      idempotency_policy(*current)->ListReplicationCycles(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::vmmigration::v1::ReplicationCycle>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<vmmigration_v1::VmMigrationRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::vmmigration::v1::ListReplicationCyclesRequest const&
               r) {
         return google::cloud::internal::RetryLoop(
@@ -1276,9 +1362,10 @@ VmMigrationConnectionImpl::ListReplicationCycles(
 StatusOr<google::cloud::vmmigration::v1::ReplicationCycle>
 VmMigrationConnectionImpl::GetReplicationCycle(
     google::cloud::vmmigration::v1::GetReplicationCycleRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetReplicationCycle(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetReplicationCycle(request),
       [this](grpc::ClientContext& context,
              google::cloud::vmmigration::v1::GetReplicationCycleRequest const&
                  request) {

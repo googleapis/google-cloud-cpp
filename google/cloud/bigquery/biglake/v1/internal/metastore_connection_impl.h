@@ -109,49 +109,6 @@ class MetastoreServiceConnectionImpl
       google::cloud::bigquery::biglake::v1::ListTablesRequest request) override;
 
  private:
-  std::unique_ptr<bigquery_biglake_v1::MetastoreServiceRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<bigquery_biglake_v1::MetastoreServiceRetryPolicyOption>()) {
-      return options
-          .get<bigquery_biglake_v1::MetastoreServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<bigquery_biglake_v1::MetastoreServiceRetryPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<bigquery_biglake_v1::MetastoreServiceBackoffPolicyOption>()) {
-      return options
-          .get<bigquery_biglake_v1::MetastoreServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<bigquery_biglake_v1::MetastoreServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<
-      bigquery_biglake_v1::MetastoreServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<bigquery_biglake_v1::
-                        MetastoreServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<bigquery_biglake_v1::
-                   MetastoreServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<bigquery_biglake_v1::
-                 MetastoreServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<bigquery_biglake_v1_internal::MetastoreServiceStub> stub_;
   Options options_;

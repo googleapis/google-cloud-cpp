@@ -156,64 +156,6 @@ class VideoStitcherServiceConnectionImpl
           request) override;
 
  private:
-  std::unique_ptr<video_stitcher_v1::VideoStitcherServiceRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<video_stitcher_v1::VideoStitcherServiceRetryPolicyOption>()) {
-      return options
-          .get<video_stitcher_v1::VideoStitcherServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<video_stitcher_v1::VideoStitcherServiceRetryPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            video_stitcher_v1::VideoStitcherServiceBackoffPolicyOption>()) {
-      return options
-          .get<video_stitcher_v1::VideoStitcherServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<video_stitcher_v1::VideoStitcherServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<
-      video_stitcher_v1::VideoStitcherServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<video_stitcher_v1::
-                     VideoStitcherServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<video_stitcher_v1::
-                   VideoStitcherServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<video_stitcher_v1::
-                 VideoStitcherServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            video_stitcher_v1::VideoStitcherServicePollingPolicyOption>()) {
-      return options
-          .get<video_stitcher_v1::VideoStitcherServicePollingPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<video_stitcher_v1::VideoStitcherServicePollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<video_stitcher_v1_internal::VideoStitcherServiceStub> stub_;
   Options options_;

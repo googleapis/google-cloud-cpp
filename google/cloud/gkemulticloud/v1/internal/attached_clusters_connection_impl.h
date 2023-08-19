@@ -95,57 +95,6 @@ class AttachedClustersConnectionImpl
       override;
 
  private:
-  std::unique_ptr<gkemulticloud_v1::AttachedClustersRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<gkemulticloud_v1::AttachedClustersRetryPolicyOption>()) {
-      return options.get<gkemulticloud_v1::AttachedClustersRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<gkemulticloud_v1::AttachedClustersRetryPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<gkemulticloud_v1::AttachedClustersBackoffPolicyOption>()) {
-      return options
-          .get<gkemulticloud_v1::AttachedClustersBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<gkemulticloud_v1::AttachedClustersBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<gkemulticloud_v1::AttachedClustersConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<gkemulticloud_v1::
-                        AttachedClustersConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<gkemulticloud_v1::
-                   AttachedClustersConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<gkemulticloud_v1::
-                 AttachedClustersConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<gkemulticloud_v1::AttachedClustersPollingPolicyOption>()) {
-      return options
-          .get<gkemulticloud_v1::AttachedClustersPollingPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<gkemulticloud_v1::AttachedClustersPollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<gkemulticloud_v1_internal::AttachedClustersStub> stub_;
   Options options_;

@@ -126,51 +126,6 @@ class DataprocMetastoreConnectionImpl
           request) override;
 
  private:
-  std::unique_ptr<metastore_v1::DataprocMetastoreRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<metastore_v1::DataprocMetastoreRetryPolicyOption>()) {
-      return options.get<metastore_v1::DataprocMetastoreRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<metastore_v1::DataprocMetastoreRetryPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<metastore_v1::DataprocMetastoreBackoffPolicyOption>()) {
-      return options.get<metastore_v1::DataprocMetastoreBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<metastore_v1::DataprocMetastoreBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<metastore_v1::DataprocMetastoreConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<metastore_v1::
-                        DataprocMetastoreConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<metastore_v1::
-                   DataprocMetastoreConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<metastore_v1::DataprocMetastoreConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<metastore_v1::DataprocMetastorePollingPolicyOption>()) {
-      return options.get<metastore_v1::DataprocMetastorePollingPolicyOption>()
-          ->clone();
-    }
-    return options_.get<metastore_v1::DataprocMetastorePollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<metastore_v1_internal::DataprocMetastoreStub> stub_;
   Options options_;

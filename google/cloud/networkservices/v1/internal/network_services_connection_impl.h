@@ -224,59 +224,6 @@ class NetworkServicesConnectionImpl
                  request) override;
 
  private:
-  std::unique_ptr<networkservices_v1::NetworkServicesRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<networkservices_v1::NetworkServicesRetryPolicyOption>()) {
-      return options
-          .get<networkservices_v1::NetworkServicesRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<networkservices_v1::NetworkServicesRetryPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<networkservices_v1::NetworkServicesBackoffPolicyOption>()) {
-      return options
-          .get<networkservices_v1::NetworkServicesBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<networkservices_v1::NetworkServicesBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<
-      networkservices_v1::NetworkServicesConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<networkservices_v1::
-                        NetworkServicesConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<networkservices_v1::
-                   NetworkServicesConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<networkservices_v1::
-                 NetworkServicesConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<networkservices_v1::NetworkServicesPollingPolicyOption>()) {
-      return options
-          .get<networkservices_v1::NetworkServicesPollingPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<networkservices_v1::NetworkServicesPollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<networkservices_v1_internal::NetworkServicesStub> stub_;
   Options options_;

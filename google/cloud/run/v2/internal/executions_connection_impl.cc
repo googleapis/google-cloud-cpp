@@ -30,6 +30,28 @@ namespace google {
 namespace cloud {
 namespace run_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<run_v2::ExecutionsRetryPolicy> retry_policy(
+    Options const& options) {
+  return options.get<run_v2::ExecutionsRetryPolicyOption>()->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options.get<run_v2::ExecutionsBackoffPolicyOption>()->clone();
+}
+
+std::unique_ptr<run_v2::ExecutionsConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options.get<run_v2::ExecutionsConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+  return options.get<run_v2::ExecutionsPollingPolicyOption>()->clone();
+}
+
+}  // namespace
 
 ExecutionsConnectionImpl::ExecutionsConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
@@ -42,9 +64,10 @@ ExecutionsConnectionImpl::ExecutionsConnectionImpl(
 StatusOr<google::cloud::run::v2::Execution>
 ExecutionsConnectionImpl::GetExecution(
     google::cloud::run::v2::GetExecutionRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetExecution(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetExecution(request),
       [this](grpc::ClientContext& context,
              google::cloud::run::v2::GetExecutionRequest const& request) {
         return stub_->GetExecution(context, request);
@@ -56,17 +79,17 @@ StreamRange<google::cloud::run::v2::Execution>
 ExecutionsConnectionImpl::ListExecutions(
     google::cloud::run::v2::ListExecutionsRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<run_v2::ExecutionsRetryPolicy const>(retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListExecutions(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListExecutions(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::run::v2::Execution>>(
       std::move(request),
-      [stub, retry, backoff, idempotency,
-       function_name](google::cloud::run::v2::ListExecutionsRequest const& r) {
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<run_v2::ExecutionsRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          google::cloud::run::v2::ListExecutionsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
@@ -88,30 +111,32 @@ ExecutionsConnectionImpl::ListExecutions(
 future<StatusOr<google::cloud::run::v2::Execution>>
 ExecutionsConnectionImpl::DeleteExecution(
     google::cloud::run::v2::DeleteExecutionRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::run::v2::Execution>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::run::v2::DeleteExecutionRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::run::v2::DeleteExecutionRequest const& request) {
         return stub->AsyncDeleteExecution(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::run::v2::Execution>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteExecution(request), polling_policy(),
-      __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteExecution(request),
+      polling_policy(*current), __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

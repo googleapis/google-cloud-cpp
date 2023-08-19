@@ -70,50 +70,6 @@ class SynonymSetServiceConnectionImpl
       override;
 
  private:
-  std::unique_ptr<contentwarehouse_v1::SynonymSetServiceRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<contentwarehouse_v1::SynonymSetServiceRetryPolicyOption>()) {
-      return options
-          .get<contentwarehouse_v1::SynonymSetServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<contentwarehouse_v1::SynonymSetServiceRetryPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<contentwarehouse_v1::SynonymSetServiceBackoffPolicyOption>()) {
-      return options
-          .get<contentwarehouse_v1::SynonymSetServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<contentwarehouse_v1::SynonymSetServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<
-      contentwarehouse_v1::SynonymSetServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<contentwarehouse_v1::
-                        SynonymSetServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<contentwarehouse_v1::
-                   SynonymSetServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<contentwarehouse_v1::
-                 SynonymSetServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<contentwarehouse_v1_internal::SynonymSetServiceStub> stub_;
   Options options_;

@@ -141,63 +141,6 @@ class LivestreamServiceConnectionImpl
       override;
 
  private:
-  std::unique_ptr<video_livestream_v1::LivestreamServiceRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<video_livestream_v1::LivestreamServiceRetryPolicyOption>()) {
-      return options
-          .get<video_livestream_v1::LivestreamServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<video_livestream_v1::LivestreamServiceRetryPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<video_livestream_v1::LivestreamServiceBackoffPolicyOption>()) {
-      return options
-          .get<video_livestream_v1::LivestreamServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<video_livestream_v1::LivestreamServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<
-      video_livestream_v1::LivestreamServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<video_livestream_v1::
-                        LivestreamServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<video_livestream_v1::
-                   LivestreamServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<video_livestream_v1::
-                 LivestreamServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<video_livestream_v1::LivestreamServicePollingPolicyOption>()) {
-      return options
-          .get<video_livestream_v1::LivestreamServicePollingPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<video_livestream_v1::LivestreamServicePollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<video_livestream_v1_internal::LivestreamServiceStub> stub_;
   Options options_;

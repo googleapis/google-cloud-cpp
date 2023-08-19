@@ -90,40 +90,6 @@ class GrafeasConnectionImpl : public containeranalysis_v1::GrafeasConnection {
       grafeas::v1::ListNoteOccurrencesRequest request) override;
 
  private:
-  std::unique_ptr<containeranalysis_v1::GrafeasRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<containeranalysis_v1::GrafeasRetryPolicyOption>()) {
-      return options.get<containeranalysis_v1::GrafeasRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<containeranalysis_v1::GrafeasRetryPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<containeranalysis_v1::GrafeasBackoffPolicyOption>()) {
-      return options.get<containeranalysis_v1::GrafeasBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<containeranalysis_v1::GrafeasBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<containeranalysis_v1::GrafeasConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            containeranalysis_v1::GrafeasConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<containeranalysis_v1::GrafeasConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<containeranalysis_v1::GrafeasConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<containeranalysis_v1_internal::GrafeasStub> stub_;
   Options options_;

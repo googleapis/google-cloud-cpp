@@ -30,6 +30,33 @@ namespace google {
 namespace cloud {
 namespace aiplatform_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<aiplatform_v1::IndexEndpointServiceRetryPolicy> retry_policy(
+    Options const& options) {
+  return options.get<aiplatform_v1::IndexEndpointServiceRetryPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options.get<aiplatform_v1::IndexEndpointServiceBackoffPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<aiplatform_v1::IndexEndpointServiceConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options
+      .get<aiplatform_v1::
+               IndexEndpointServiceConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+  return options.get<aiplatform_v1::IndexEndpointServicePollingPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 IndexEndpointServiceConnectionImpl::IndexEndpointServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
@@ -43,39 +70,42 @@ IndexEndpointServiceConnectionImpl::IndexEndpointServiceConnectionImpl(
 future<StatusOr<google::cloud::aiplatform::v1::IndexEndpoint>>
 IndexEndpointServiceConnectionImpl::CreateIndexEndpoint(
     google::cloud::aiplatform::v1::CreateIndexEndpointRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::aiplatform::v1::IndexEndpoint>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::aiplatform::v1::CreateIndexEndpointRequest const&
-                 request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::aiplatform::v1::CreateIndexEndpointRequest const&
+              request) {
         return stub->AsyncCreateIndexEndpoint(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::aiplatform::v1::IndexEndpoint>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateIndexEndpoint(request), polling_policy(),
-      __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateIndexEndpoint(request),
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::cloud::aiplatform::v1::IndexEndpoint>
 IndexEndpointServiceConnectionImpl::GetIndexEndpoint(
     google::cloud::aiplatform::v1::GetIndexEndpointRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetIndexEndpoint(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetIndexEndpoint(request),
       [this](grpc::ClientContext& context,
              google::cloud::aiplatform::v1::GetIndexEndpointRequest const&
                  request) { return stub_->GetIndexEndpoint(context, request); },
@@ -86,17 +116,16 @@ StreamRange<google::cloud::aiplatform::v1::IndexEndpoint>
 IndexEndpointServiceConnectionImpl::ListIndexEndpoints(
     google::cloud::aiplatform::v1::ListIndexEndpointsRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<aiplatform_v1::IndexEndpointServiceRetryPolicy const>(
-          retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListIndexEndpoints(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListIndexEndpoints(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::aiplatform::v1::IndexEndpoint>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<aiplatform_v1::IndexEndpointServiceRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::aiplatform::v1::ListIndexEndpointsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
@@ -120,9 +149,10 @@ IndexEndpointServiceConnectionImpl::ListIndexEndpoints(
 StatusOr<google::cloud::aiplatform::v1::IndexEndpoint>
 IndexEndpointServiceConnectionImpl::UpdateIndexEndpoint(
     google::cloud::aiplatform::v1::UpdateIndexEndpointRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UpdateIndexEndpoint(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateIndexEndpoint(request),
       [this](grpc::ClientContext& context,
              google::cloud::aiplatform::v1::UpdateIndexEndpointRequest const&
                  request) {
@@ -134,118 +164,127 @@ IndexEndpointServiceConnectionImpl::UpdateIndexEndpoint(
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 IndexEndpointServiceConnectionImpl::DeleteIndexEndpoint(
     google::cloud::aiplatform::v1::DeleteIndexEndpointRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::aiplatform::v1::DeleteOperationMetadata>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::aiplatform::v1::DeleteIndexEndpointRequest const&
-                 request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::aiplatform::v1::DeleteIndexEndpointRequest const&
+              request) {
         return stub->AsyncDeleteIndexEndpoint(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::aiplatform::v1::DeleteOperationMetadata>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteIndexEndpoint(request), polling_policy(),
-      __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteIndexEndpoint(request),
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeployIndexResponse>>
 IndexEndpointServiceConnectionImpl::DeployIndex(
     google::cloud::aiplatform::v1::DeployIndexRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::aiplatform::v1::DeployIndexResponse>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::aiplatform::v1::DeployIndexRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::aiplatform::v1::DeployIndexRequest const& request) {
         return stub->AsyncDeployIndex(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::aiplatform::v1::DeployIndexResponse>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeployIndex(request), polling_policy(), __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeployIndex(request),
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::UndeployIndexResponse>>
 IndexEndpointServiceConnectionImpl::UndeployIndex(
     google::cloud::aiplatform::v1::UndeployIndexRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::aiplatform::v1::UndeployIndexResponse>(
       background_->cq(), request,
-      [stub](
+      [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context,
           google::cloud::aiplatform::v1::UndeployIndexRequest const& request) {
         return stub->AsyncUndeployIndex(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::aiplatform::v1::UndeployIndexResponse>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UndeployIndex(request), polling_policy(), __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UndeployIndex(request),
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::MutateDeployedIndexResponse>>
 IndexEndpointServiceConnectionImpl::MutateDeployedIndex(
     google::cloud::aiplatform::v1::MutateDeployedIndexRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::aiplatform::v1::MutateDeployedIndexResponse>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::aiplatform::v1::MutateDeployedIndexRequest const&
-                 request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::aiplatform::v1::MutateDeployedIndexRequest const&
+              request) {
         return stub->AsyncMutateDeployedIndex(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::aiplatform::v1::MutateDeployedIndexResponse>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->MutateDeployedIndex(request), polling_policy(),
-      __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->MutateDeployedIndex(request),
+      polling_policy(*current), __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

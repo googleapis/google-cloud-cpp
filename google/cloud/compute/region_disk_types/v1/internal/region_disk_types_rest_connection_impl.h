@@ -60,46 +60,24 @@ class RegionDiskTypesRestConnectionImpl
           ListRegionDiskTypesRequest request) override;
 
  private:
-  std::unique_ptr<compute_region_disk_types_v1::RegionDiskTypesRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            compute_region_disk_types_v1::RegionDiskTypesRetryPolicyOption>()) {
-      return options
-          .get<compute_region_disk_types_v1::RegionDiskTypesRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<
+      compute_region_disk_types_v1::RegionDiskTypesRetryPolicy>
+  retry_policy(Options const& options) {
+    return options
         .get<compute_region_disk_types_v1::RegionDiskTypesRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_region_disk_types_v1::
-                        RegionDiskTypesBackoffPolicyOption>()) {
-      return options
-          .get<compute_region_disk_types_v1::
-                   RegionDiskTypesBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options
         .get<compute_region_disk_types_v1::RegionDiskTypesBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<
+  static std::unique_ptr<
       compute_region_disk_types_v1::RegionDiskTypesConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_region_disk_types_v1::
-                        RegionDiskTypesConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<compute_region_disk_types_v1::
-                   RegionDiskTypesConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  idempotency_policy(Options const& options) {
+    return options
         .get<compute_region_disk_types_v1::
                  RegionDiskTypesConnectionIdempotencyPolicyOption>()
         ->clone();

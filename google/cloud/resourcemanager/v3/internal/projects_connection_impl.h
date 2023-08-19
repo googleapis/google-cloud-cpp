@@ -92,50 +92,6 @@ class ProjectsConnectionImpl : public resourcemanager_v3::ProjectsConnection {
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
  private:
-  std::unique_ptr<resourcemanager_v3::ProjectsRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<resourcemanager_v3::ProjectsRetryPolicyOption>()) {
-      return options.get<resourcemanager_v3::ProjectsRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<resourcemanager_v3::ProjectsRetryPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<resourcemanager_v3::ProjectsBackoffPolicyOption>()) {
-      return options.get<resourcemanager_v3::ProjectsBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<resourcemanager_v3::ProjectsBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<resourcemanager_v3::ProjectsConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            resourcemanager_v3::ProjectsConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<resourcemanager_v3::ProjectsConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<resourcemanager_v3::ProjectsConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<resourcemanager_v3::ProjectsPollingPolicyOption>()) {
-      return options.get<resourcemanager_v3::ProjectsPollingPolicyOption>()
-          ->clone();
-    }
-    return options_.get<resourcemanager_v3::ProjectsPollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<resourcemanager_v3_internal::ProjectsStub> stub_;
   Options options_;

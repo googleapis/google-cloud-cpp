@@ -58,45 +58,23 @@ class LicenseCodesRestConnectionImpl
                          TestIamPermissionsRequest const& request) override;
 
  private:
-  std::unique_ptr<compute_license_codes_v1::LicenseCodesRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<compute_license_codes_v1::LicenseCodesRetryPolicyOption>()) {
-      return options
-          .get<compute_license_codes_v1::LicenseCodesRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<compute_license_codes_v1::LicenseCodesRetryPolicy>
+  retry_policy(Options const& options) {
+    return options
         .get<compute_license_codes_v1::LicenseCodesRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<compute_license_codes_v1::LicenseCodesBackoffPolicyOption>()) {
-      return options
-          .get<compute_license_codes_v1::LicenseCodesBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options
         .get<compute_license_codes_v1::LicenseCodesBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<
+  static std::unique_ptr<
       compute_license_codes_v1::LicenseCodesConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_license_codes_v1::
-                        LicenseCodesConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<compute_license_codes_v1::
-                   LicenseCodesConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  idempotency_policy(Options const& options) {
+    return options
         .get<compute_license_codes_v1::
                  LicenseCodesConnectionIdempotencyPolicyOption>()
         ->clone();

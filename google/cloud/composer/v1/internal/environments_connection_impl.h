@@ -112,48 +112,6 @@ class EnvironmentsConnectionImpl : public composer_v1::EnvironmentsConnection {
           FetchDatabasePropertiesRequest const& request) override;
 
  private:
-  std::unique_ptr<composer_v1::EnvironmentsRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<composer_v1::EnvironmentsRetryPolicyOption>()) {
-      return options.get<composer_v1::EnvironmentsRetryPolicyOption>()->clone();
-    }
-    return options_.get<composer_v1::EnvironmentsRetryPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<composer_v1::EnvironmentsBackoffPolicyOption>()) {
-      return options.get<composer_v1::EnvironmentsBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<composer_v1::EnvironmentsBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<composer_v1::EnvironmentsConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            composer_v1::EnvironmentsConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<composer_v1::EnvironmentsConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<composer_v1::EnvironmentsConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<composer_v1::EnvironmentsPollingPolicyOption>()) {
-      return options.get<composer_v1::EnvironmentsPollingPolicyOption>()
-          ->clone();
-    }
-    return options_.get<composer_v1::EnvironmentsPollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<composer_v1_internal::EnvironmentsStub> stub_;
   Options options_;

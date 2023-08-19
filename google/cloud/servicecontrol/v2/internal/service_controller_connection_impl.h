@@ -55,49 +55,6 @@ class ServiceControllerConnectionImpl
       google::api::servicecontrol::v2::ReportRequest const& request) override;
 
  private:
-  std::unique_ptr<servicecontrol_v2::ServiceControllerRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<servicecontrol_v2::ServiceControllerRetryPolicyOption>()) {
-      return options
-          .get<servicecontrol_v2::ServiceControllerRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<servicecontrol_v2::ServiceControllerRetryPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<servicecontrol_v2::ServiceControllerBackoffPolicyOption>()) {
-      return options
-          .get<servicecontrol_v2::ServiceControllerBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<servicecontrol_v2::ServiceControllerBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<
-      servicecontrol_v2::ServiceControllerConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<servicecontrol_v2::
-                        ServiceControllerConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<servicecontrol_v2::
-                   ServiceControllerConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<servicecontrol_v2::
-                 ServiceControllerConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<servicecontrol_v2_internal::ServiceControllerStub> stub_;
   Options options_;

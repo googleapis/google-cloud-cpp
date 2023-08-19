@@ -136,41 +136,6 @@ class SpeechConnectionImpl : public speech_v2::SpeechConnection {
       override;
 
  private:
-  std::unique_ptr<speech_v2::SpeechRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<speech_v2::SpeechRetryPolicyOption>()) {
-      return options.get<speech_v2::SpeechRetryPolicyOption>()->clone();
-    }
-    return options_.get<speech_v2::SpeechRetryPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<speech_v2::SpeechBackoffPolicyOption>()) {
-      return options.get<speech_v2::SpeechBackoffPolicyOption>()->clone();
-    }
-    return options_.get<speech_v2::SpeechBackoffPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<speech_v2::SpeechConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<speech_v2::SpeechConnectionIdempotencyPolicyOption>()) {
-      return options.get<speech_v2::SpeechConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_.get<speech_v2::SpeechConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<speech_v2::SpeechPollingPolicyOption>()) {
-      return options.get<speech_v2::SpeechPollingPolicyOption>()->clone();
-    }
-    return options_.get<speech_v2::SpeechPollingPolicyOption>()->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<speech_v2_internal::SpeechStub> stub_;
   Options options_;

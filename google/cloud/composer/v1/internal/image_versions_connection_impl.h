@@ -54,39 +54,6 @@ class ImageVersionsConnectionImpl
                         ListImageVersionsRequest request) override;
 
  private:
-  std::unique_ptr<composer_v1::ImageVersionsRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<composer_v1::ImageVersionsRetryPolicyOption>()) {
-      return options.get<composer_v1::ImageVersionsRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<composer_v1::ImageVersionsRetryPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<composer_v1::ImageVersionsBackoffPolicyOption>()) {
-      return options.get<composer_v1::ImageVersionsBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<composer_v1::ImageVersionsBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<composer_v1::ImageVersionsConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            composer_v1::ImageVersionsConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<composer_v1::ImageVersionsConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<composer_v1::ImageVersionsConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<composer_v1_internal::ImageVersionsStub> stub_;
   Options options_;

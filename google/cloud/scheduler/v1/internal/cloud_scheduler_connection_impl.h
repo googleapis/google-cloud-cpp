@@ -74,40 +74,6 @@ class CloudSchedulerConnectionImpl
       google::cloud::scheduler::v1::RunJobRequest const& request) override;
 
  private:
-  std::unique_ptr<scheduler_v1::CloudSchedulerRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<scheduler_v1::CloudSchedulerRetryPolicyOption>()) {
-      return options.get<scheduler_v1::CloudSchedulerRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<scheduler_v1::CloudSchedulerRetryPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<scheduler_v1::CloudSchedulerBackoffPolicyOption>()) {
-      return options.get<scheduler_v1::CloudSchedulerBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<scheduler_v1::CloudSchedulerBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<scheduler_v1::CloudSchedulerConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            scheduler_v1::CloudSchedulerConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<scheduler_v1::CloudSchedulerConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<scheduler_v1::CloudSchedulerConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<scheduler_v1_internal::CloudSchedulerStub> stub_;
   Options options_;

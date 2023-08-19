@@ -94,60 +94,6 @@ class CloudFunctionsServiceConnectionImpl
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
  private:
-  std::unique_ptr<functions_v1::CloudFunctionsServiceRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<functions_v1::CloudFunctionsServiceRetryPolicyOption>()) {
-      return options
-          .get<functions_v1::CloudFunctionsServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<functions_v1::CloudFunctionsServiceRetryPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<functions_v1::CloudFunctionsServiceBackoffPolicyOption>()) {
-      return options
-          .get<functions_v1::CloudFunctionsServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<functions_v1::CloudFunctionsServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<
-      functions_v1::CloudFunctionsServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            functions_v1::
-                CloudFunctionsServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<functions_v1::
-                   CloudFunctionsServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<functions_v1::
-                 CloudFunctionsServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<functions_v1::CloudFunctionsServicePollingPolicyOption>()) {
-      return options
-          .get<functions_v1::CloudFunctionsServicePollingPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<functions_v1::CloudFunctionsServicePollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<functions_v1_internal::CloudFunctionsServiceStub> stub_;
   Options options_;

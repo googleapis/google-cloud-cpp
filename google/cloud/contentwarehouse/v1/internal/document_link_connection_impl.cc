@@ -29,6 +29,31 @@ namespace google {
 namespace cloud {
 namespace contentwarehouse_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<contentwarehouse_v1::DocumentLinkServiceRetryPolicy>
+retry_policy(Options const& options) {
+  return options
+      .get<contentwarehouse_v1::DocumentLinkServiceRetryPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options
+      .get<contentwarehouse_v1::DocumentLinkServiceBackoffPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<
+    contentwarehouse_v1::DocumentLinkServiceConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options
+      .get<contentwarehouse_v1::
+               DocumentLinkServiceConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 DocumentLinkServiceConnectionImpl::DocumentLinkServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
@@ -43,9 +68,10 @@ StatusOr<google::cloud::contentwarehouse::v1::ListLinkedTargetsResponse>
 DocumentLinkServiceConnectionImpl::ListLinkedTargets(
     google::cloud::contentwarehouse::v1::ListLinkedTargetsRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->ListLinkedTargets(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ListLinkedTargets(request),
       [this](
           grpc::ClientContext& context,
           google::cloud::contentwarehouse::v1::ListLinkedTargetsRequest const&
@@ -57,17 +83,17 @@ StreamRange<google::cloud::contentwarehouse::v1::DocumentLink>
 DocumentLinkServiceConnectionImpl::ListLinkedSources(
     google::cloud::contentwarehouse::v1::ListLinkedSourcesRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<
-      contentwarehouse_v1::DocumentLinkServiceRetryPolicy const>(
-      retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListLinkedSources(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListLinkedSources(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::contentwarehouse::v1::DocumentLink>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry =
+           std::shared_ptr<contentwarehouse_v1::DocumentLinkServiceRetryPolicy>(
+               retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::contentwarehouse::v1::ListLinkedSourcesRequest const&
               r) {
         return google::cloud::internal::RetryLoop(
@@ -92,9 +118,10 @@ StatusOr<google::cloud::contentwarehouse::v1::DocumentLink>
 DocumentLinkServiceConnectionImpl::CreateDocumentLink(
     google::cloud::contentwarehouse::v1::CreateDocumentLinkRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateDocumentLink(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateDocumentLink(request),
       [this](
           grpc::ClientContext& context,
           google::cloud::contentwarehouse::v1::CreateDocumentLinkRequest const&
@@ -105,9 +132,10 @@ DocumentLinkServiceConnectionImpl::CreateDocumentLink(
 Status DocumentLinkServiceConnectionImpl::DeleteDocumentLink(
     google::cloud::contentwarehouse::v1::DeleteDocumentLinkRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteDocumentLink(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteDocumentLink(request),
       [this](
           grpc::ClientContext& context,
           google::cloud::contentwarehouse::v1::DeleteDocumentLinkRequest const&

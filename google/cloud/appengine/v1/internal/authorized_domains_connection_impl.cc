@@ -29,6 +29,27 @@ namespace google {
 namespace cloud {
 namespace appengine_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<appengine_v1::AuthorizedDomainsRetryPolicy> retry_policy(
+    Options const& options) {
+  return options.get<appengine_v1::AuthorizedDomainsRetryPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options.get<appengine_v1::AuthorizedDomainsBackoffPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<appengine_v1::AuthorizedDomainsConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options
+      .get<appengine_v1::AuthorizedDomainsConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 AuthorizedDomainsConnectionImpl::AuthorizedDomainsConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
@@ -43,17 +64,17 @@ StreamRange<google::appengine::v1::AuthorizedDomain>
 AuthorizedDomainsConnectionImpl::ListAuthorizedDomains(
     google::appengine::v1::ListAuthorizedDomainsRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<appengine_v1::AuthorizedDomainsRetryPolicy const>(
-          retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListAuthorizedDomains(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency =
+      idempotency_policy(*current)->ListAuthorizedDomains(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::appengine::v1::AuthorizedDomain>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<appengine_v1::AuthorizedDomainsRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::appengine::v1::ListAuthorizedDomainsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,

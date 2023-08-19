@@ -29,6 +29,25 @@ namespace google {
 namespace cloud {
 namespace dialogflow_es_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<dialogflow_es::ParticipantsRetryPolicy> retry_policy(
+    Options const& options) {
+  return options.get<dialogflow_es::ParticipantsRetryPolicyOption>()->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options.get<dialogflow_es::ParticipantsBackoffPolicyOption>()->clone();
+}
+
+std::unique_ptr<dialogflow_es::ParticipantsConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options
+      .get<dialogflow_es::ParticipantsConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 ParticipantsConnectionImpl::ParticipantsConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
@@ -42,9 +61,10 @@ ParticipantsConnectionImpl::ParticipantsConnectionImpl(
 StatusOr<google::cloud::dialogflow::v2::Participant>
 ParticipantsConnectionImpl::CreateParticipant(
     google::cloud::dialogflow::v2::CreateParticipantRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateParticipant(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateParticipant(request),
       [this](grpc::ClientContext& context,
              google::cloud::dialogflow::v2::CreateParticipantRequest const&
                  request) {
@@ -56,9 +76,10 @@ ParticipantsConnectionImpl::CreateParticipant(
 StatusOr<google::cloud::dialogflow::v2::Participant>
 ParticipantsConnectionImpl::GetParticipant(
     google::cloud::dialogflow::v2::GetParticipantRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetParticipant(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetParticipant(request),
       [this](
           grpc::ClientContext& context,
           google::cloud::dialogflow::v2::GetParticipantRequest const& request) {
@@ -71,16 +92,16 @@ StreamRange<google::cloud::dialogflow::v2::Participant>
 ParticipantsConnectionImpl::ListParticipants(
     google::cloud::dialogflow::v2::ListParticipantsRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<dialogflow_es::ParticipantsRetryPolicy const>(
-      retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListParticipants(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListParticipants(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::dialogflow::v2::Participant>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<dialogflow_es::ParticipantsRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::dialogflow::v2::ListParticipantsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
@@ -103,9 +124,10 @@ ParticipantsConnectionImpl::ListParticipants(
 StatusOr<google::cloud::dialogflow::v2::Participant>
 ParticipantsConnectionImpl::UpdateParticipant(
     google::cloud::dialogflow::v2::UpdateParticipantRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UpdateParticipant(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateParticipant(request),
       [this](grpc::ClientContext& context,
              google::cloud::dialogflow::v2::UpdateParticipantRequest const&
                  request) {
@@ -117,9 +139,10 @@ ParticipantsConnectionImpl::UpdateParticipant(
 StatusOr<google::cloud::dialogflow::v2::AnalyzeContentResponse>
 ParticipantsConnectionImpl::AnalyzeContent(
     google::cloud::dialogflow::v2::AnalyzeContentRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->AnalyzeContent(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->AnalyzeContent(request),
       [this](
           grpc::ClientContext& context,
           google::cloud::dialogflow::v2::AnalyzeContentRequest const& request) {
@@ -131,9 +154,10 @@ ParticipantsConnectionImpl::AnalyzeContent(
 StatusOr<google::cloud::dialogflow::v2::SuggestArticlesResponse>
 ParticipantsConnectionImpl::SuggestArticles(
     google::cloud::dialogflow::v2::SuggestArticlesRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->SuggestArticles(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->SuggestArticles(request),
       [this](grpc::ClientContext& context,
              google::cloud::dialogflow::v2::SuggestArticlesRequest const&
                  request) { return stub_->SuggestArticles(context, request); },
@@ -143,9 +167,10 @@ ParticipantsConnectionImpl::SuggestArticles(
 StatusOr<google::cloud::dialogflow::v2::SuggestFaqAnswersResponse>
 ParticipantsConnectionImpl::SuggestFaqAnswers(
     google::cloud::dialogflow::v2::SuggestFaqAnswersRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->SuggestFaqAnswers(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->SuggestFaqAnswers(request),
       [this](grpc::ClientContext& context,
              google::cloud::dialogflow::v2::SuggestFaqAnswersRequest const&
                  request) {
@@ -157,9 +182,10 @@ ParticipantsConnectionImpl::SuggestFaqAnswers(
 StatusOr<google::cloud::dialogflow::v2::SuggestSmartRepliesResponse>
 ParticipantsConnectionImpl::SuggestSmartReplies(
     google::cloud::dialogflow::v2::SuggestSmartRepliesRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->SuggestSmartReplies(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->SuggestSmartReplies(request),
       [this](grpc::ClientContext& context,
              google::cloud::dialogflow::v2::SuggestSmartRepliesRequest const&
                  request) {

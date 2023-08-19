@@ -76,6 +76,8 @@ TEST(GoldenKitchenSinkConnectionTest, GenerateAccessTokenSuccess) {
       });
   auto conn = CreateTestingConnection(std::move(mock));
   ::google::test::admin::database::v1::GenerateAccessTokenRequest request;
+  google::cloud::internal::OptionsSpan span(
+      google::cloud::internal::MergeOptions(Options{}, conn->options()));
   auto response = conn->GenerateAccessToken(request);
   EXPECT_STATUS_OK(response);
 }
@@ -86,6 +88,8 @@ TEST(GoldenKitchenSinkConnectionTest, GenerateAccessTokenPermanentError) {
       .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
   auto conn = CreateTestingConnection(std::move(mock));
   ::google::test::admin::database::v1::GenerateAccessTokenRequest request;
+  google::cloud::internal::OptionsSpan span(
+      google::cloud::internal::MergeOptions(Options{}, conn->options()));
   auto response = conn->GenerateAccessToken(request);
   EXPECT_EQ(StatusCode::kPermissionDenied, response.status().code());
 }
@@ -98,6 +102,8 @@ TEST(GoldenKitchenSinkConnectionTest, GenerateAccessTokenTooManyTransients) {
       .WillRepeatedly(Return(Status(StatusCode::kUnavailable, "try-again")));
   auto conn = CreateTestingConnection(std::move(mock));
   ::google::test::admin::database::v1::GenerateAccessTokenRequest request;
+  google::cloud::internal::OptionsSpan span(
+      google::cloud::internal::MergeOptions(Options{}, conn->options()));
   auto response = conn->GenerateAccessToken(request);
   EXPECT_EQ(StatusCode::kUnavailable, response.status().code());
 }
@@ -113,6 +119,8 @@ TEST(GoldenKitchenSinkConnectionTest, GenerateIdTokenSuccess) {
       });
   auto conn = CreateTestingConnection(std::move(mock));
   ::google::test::admin::database::v1::GenerateIdTokenRequest request;
+  google::cloud::internal::OptionsSpan span(
+      google::cloud::internal::MergeOptions(Options{}, conn->options()));
   auto response = conn->GenerateIdToken(request);
   EXPECT_STATUS_OK(response);
 }
@@ -123,6 +131,8 @@ TEST(GoldenKitchenSinkConnectionTest, GenerateIdTokenPermanentError) {
       .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
   auto conn = CreateTestingConnection(std::move(mock));
   ::google::test::admin::database::v1::GenerateIdTokenRequest request;
+  google::cloud::internal::OptionsSpan span(
+      google::cloud::internal::MergeOptions(Options{}, conn->options()));
   auto response = conn->GenerateIdToken(request);
   EXPECT_EQ(StatusCode::kPermissionDenied, response.status().code());
 }
@@ -135,6 +145,8 @@ TEST(GoldenKitchenSinkConnectionTest, GenerateIdTokenTooManyTransients) {
       .WillRepeatedly(Return(Status(StatusCode::kUnavailable, "try-again")));
   auto conn = CreateTestingConnection(std::move(mock));
   ::google::test::admin::database::v1::GenerateIdTokenRequest request;
+  google::cloud::internal::OptionsSpan span(
+      google::cloud::internal::MergeOptions(Options{}, conn->options()));
   auto response = conn->GenerateIdToken(request);
   EXPECT_EQ(StatusCode::kUnavailable, response.status().code());
 }
@@ -150,6 +162,8 @@ TEST(GoldenKitchenSinkConnectionTest, WriteLogEntriesSuccess) {
       });
   auto conn = CreateTestingConnection(std::move(mock));
   ::google::test::admin::database::v1::WriteLogEntriesRequest request;
+  google::cloud::internal::OptionsSpan span(
+      google::cloud::internal::MergeOptions(Options{}, conn->options()));
   auto response = conn->WriteLogEntries(request);
   EXPECT_STATUS_OK(response);
 }
@@ -160,6 +174,8 @@ TEST(GoldenKitchenSinkConnectionTest, WriteLogEntriesPermanentError) {
       .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
   auto conn = CreateTestingConnection(std::move(mock));
   ::google::test::admin::database::v1::WriteLogEntriesRequest request;
+  google::cloud::internal::OptionsSpan span(
+      google::cloud::internal::MergeOptions(Options{}, conn->options()));
   auto response = conn->WriteLogEntries(request);
   EXPECT_EQ(StatusCode::kPermissionDenied, response.status().code());
 }
@@ -172,6 +188,8 @@ TEST(GoldenKitchenSinkConnectionTest, WriteLogEntriesTooManyTransients) {
       .WillRepeatedly(Return(Status(StatusCode::kUnavailable, "try-again")));
   auto conn = CreateTestingConnection(std::move(mock));
   ::google::test::admin::database::v1::WriteLogEntriesRequest request;
+  google::cloud::internal::OptionsSpan span(
+      google::cloud::internal::MergeOptions(Options{}, conn->options()));
   auto response = conn->WriteLogEntries(request);
   EXPECT_EQ(StatusCode::kUnavailable, response.status().code());
 }
@@ -217,6 +235,8 @@ TEST(GoldenKitchenSinkConnectionTest, ListLogsSuccess) {
   std::vector<std::string> actual_log_names;
   ::google::test::admin::database::v1::ListLogsRequest request;
   request.set_parent("projects/my-project");
+  google::cloud::internal::OptionsSpan span(
+      google::cloud::internal::MergeOptions(Options{}, conn->options()));
   for (auto const& log_name : conn->ListLogs(request)) {
     ASSERT_STATUS_OK(log_name);
     actual_log_names.push_back(*log_name);
@@ -231,6 +251,8 @@ TEST(GoldenKitchenSinkConnectionTest, ListLogsPermanentError) {
   auto conn = CreateTestingConnection(std::move(mock));
   ::google::test::admin::database::v1::ListLogsRequest request;
   request.set_parent("projects/my-project");
+  google::cloud::internal::OptionsSpan span(
+      google::cloud::internal::MergeOptions(Options{}, conn->options()));
   auto range = conn->ListLogs(request);
   auto begin = range.begin();
   ASSERT_NE(begin, range.end());
@@ -244,6 +266,8 @@ TEST(GoldenKitchenSinkConnectionTest, ListLogsTooManyTransients) {
   auto conn = CreateTestingConnection(std::move(mock));
   ::google::test::admin::database::v1::ListLogsRequest request;
   request.set_parent("projects/my-project");
+  google::cloud::internal::OptionsSpan span(
+      google::cloud::internal::MergeOptions(Options{}, conn->options()));
   auto range = conn->ListLogs(request);
   auto begin = range.begin();
   ASSERT_NE(begin, range.end());
@@ -263,6 +287,8 @@ TEST(GoldenKitchenSinkConnectionTest, ListServiceAccountKeysSuccess) {
       });
   auto conn = CreateTestingConnection(std::move(mock));
   ::google::test::admin::database::v1::ListServiceAccountKeysRequest request;
+  google::cloud::internal::OptionsSpan span(
+      google::cloud::internal::MergeOptions(Options{}, conn->options()));
   auto response = conn->ListServiceAccountKeys(request);
   EXPECT_STATUS_OK(response);
 }
@@ -274,6 +300,8 @@ TEST(GoldenKitchenSinkConnectionTest, ListServiceAccountKeysTooManyTransients) {
       .WillRepeatedly(Return(Status(StatusCode::kUnavailable, "try-again")));
   auto conn = CreateTestingConnection(std::move(mock));
   ::google::test::admin::database::v1::ListServiceAccountKeysRequest request;
+  google::cloud::internal::OptionsSpan span(
+      google::cloud::internal::MergeOptions(Options{}, conn->options()));
   auto response = conn->ListServiceAccountKeys(request);
   EXPECT_EQ(StatusCode::kUnavailable, response.status().code());
 }
@@ -284,6 +312,8 @@ TEST(GoldenKitchenSinkConnectionTest, ListServiceAccountKeysPermanentError) {
       .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
   auto conn = CreateTestingConnection(std::move(mock));
   ::google::test::admin::database::v1::ListServiceAccountKeysRequest request;
+  google::cloud::internal::OptionsSpan span(
+      google::cloud::internal::MergeOptions(Options{}, conn->options()));
   auto response = conn->ListServiceAccountKeys(request);
   EXPECT_EQ(StatusCode::kPermissionDenied, response.status().code());
 }
@@ -314,6 +344,8 @@ TEST(GoldenKitchenSinkConnectionTest, TracingEnabled) {
           .set<GoldenKitchenSinkRetryPolicyOption>(
               GoldenKitchenSinkLimitedErrorCountRetryPolicy(0).clone()));
   auto conn = MakeGoldenKitchenSinkConnectionRest(std::move(options));
+  google::cloud::internal::OptionsSpan span(
+      google::cloud::internal::MergeOptions(Options{}, conn->options()));
   // Make a call, which should fail fast. The error itself is not important.
   (void)conn->DoNothing({});
 
@@ -332,6 +364,8 @@ TEST(GoldenKitchenSinkConnectionTest, TracingDisabled) {
           .set<GoldenKitchenSinkRetryPolicyOption>(
               GoldenKitchenSinkLimitedErrorCountRetryPolicy(0).clone()));
   auto conn = MakeGoldenKitchenSinkConnectionRest(std::move(options));
+  google::cloud::internal::OptionsSpan span(
+      google::cloud::internal::MergeOptions(Options{}, conn->options()));
   // Make a call, which should fail fast. The error itself is not important.
   (void)conn->DoNothing({});
 

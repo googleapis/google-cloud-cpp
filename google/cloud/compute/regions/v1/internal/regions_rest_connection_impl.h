@@ -57,36 +57,19 @@ class RegionsRestConnectionImpl : public compute_regions_v1::RegionsConnection {
       override;
 
  private:
-  std::unique_ptr<compute_regions_v1::RegionsRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_regions_v1::RegionsRetryPolicyOption>()) {
-      return options.get<compute_regions_v1::RegionsRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<compute_regions_v1::RegionsRetryPolicyOption>()
+  static std::unique_ptr<compute_regions_v1::RegionsRetryPolicy> retry_policy(
+      Options const& options) {
+    return options.get<compute_regions_v1::RegionsRetryPolicyOption>()->clone();
+  }
+
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<compute_regions_v1::RegionsBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_regions_v1::RegionsBackoffPolicyOption>()) {
-      return options.get<compute_regions_v1::RegionsBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<compute_regions_v1::RegionsBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<compute_regions_v1::RegionsConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            compute_regions_v1::RegionsConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<compute_regions_v1::RegionsConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<compute_regions_v1::RegionsConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<compute_regions_v1::RegionsConnectionIdempotencyPolicyOption>()
         ->clone();
   }

@@ -69,43 +69,6 @@ class BudgetServiceConnectionImpl
       override;
 
  private:
-  std::unique_ptr<billing_budgets_v1::BudgetServiceRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<billing_budgets_v1::BudgetServiceRetryPolicyOption>()) {
-      return options.get<billing_budgets_v1::BudgetServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<billing_budgets_v1::BudgetServiceRetryPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<billing_budgets_v1::BudgetServiceBackoffPolicyOption>()) {
-      return options
-          .get<billing_budgets_v1::BudgetServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<billing_budgets_v1::BudgetServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<billing_budgets_v1::BudgetServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<billing_budgets_v1::
-                        BudgetServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<billing_budgets_v1::
-                   BudgetServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<billing_budgets_v1::
-                 BudgetServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<billing_budgets_v1_internal::BudgetServiceStub> stub_;
   Options options_;

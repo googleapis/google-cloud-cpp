@@ -150,50 +150,6 @@ class WorkstationsConnectionImpl
           request) override;
 
  private:
-  std::unique_ptr<workstations_v1::WorkstationsRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<workstations_v1::WorkstationsRetryPolicyOption>()) {
-      return options.get<workstations_v1::WorkstationsRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<workstations_v1::WorkstationsRetryPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<workstations_v1::WorkstationsBackoffPolicyOption>()) {
-      return options.get<workstations_v1::WorkstationsBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<workstations_v1::WorkstationsBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<workstations_v1::WorkstationsConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            workstations_v1::WorkstationsConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<workstations_v1::WorkstationsConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<workstations_v1::WorkstationsConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<workstations_v1::WorkstationsPollingPolicyOption>()) {
-      return options.get<workstations_v1::WorkstationsPollingPolicyOption>()
-          ->clone();
-    }
-    return options_.get<workstations_v1::WorkstationsPollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<workstations_v1_internal::WorkstationsStub> stub_;
   Options options_;

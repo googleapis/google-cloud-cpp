@@ -74,29 +74,18 @@ class GoldenKitchenSinkRestConnectionImpl
   ExplicitRouting2(google::test::admin::database::v1::ExplicitRoutingRequest const& request) override;
 
  private:
-  std::unique_ptr<golden_v1::GoldenKitchenSinkRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<golden_v1::GoldenKitchenSinkRetryPolicyOption>()) {
-      return options.get<golden_v1::GoldenKitchenSinkRetryPolicyOption>()->clone();
-    }
-    return options_.get<golden_v1::GoldenKitchenSinkRetryPolicyOption>()->clone();
+  static std::unique_ptr<golden_v1::GoldenKitchenSinkRetryPolicy>
+  retry_policy(Options const& options) {
+    return options.get<golden_v1::GoldenKitchenSinkRetryPolicyOption>()->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<golden_v1::GoldenKitchenSinkBackoffPolicyOption>()) {
-      return options.get<golden_v1::GoldenKitchenSinkBackoffPolicyOption>()->clone();
-    }
-    return options_.get<golden_v1::GoldenKitchenSinkBackoffPolicyOption>()->clone();
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options.get<golden_v1::GoldenKitchenSinkBackoffPolicyOption>()->clone();
   }
 
-  std::unique_ptr<golden_v1::GoldenKitchenSinkConnectionIdempotencyPolicy> idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<golden_v1::GoldenKitchenSinkConnectionIdempotencyPolicyOption>()) {
-      return options.get<golden_v1::GoldenKitchenSinkConnectionIdempotencyPolicyOption>()->clone();
-    }
-    return options_.get<golden_v1::GoldenKitchenSinkConnectionIdempotencyPolicyOption>()->
-clone();
+  static std::unique_ptr<golden_v1::GoldenKitchenSinkConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options.get<golden_v1::GoldenKitchenSinkConnectionIdempotencyPolicyOption>()->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

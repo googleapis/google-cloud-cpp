@@ -81,64 +81,33 @@ class RegionAutoscalersRestConnectionImpl
           UpdateRegionAutoscalersRequest const& request) override;
 
  private:
-  std::unique_ptr<compute_region_autoscalers_v1::RegionAutoscalersRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_region_autoscalers_v1::
-                        RegionAutoscalersRetryPolicyOption>()) {
-      return options
-          .get<compute_region_autoscalers_v1::
-                   RegionAutoscalersRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<
+      compute_region_autoscalers_v1::RegionAutoscalersRetryPolicy>
+  retry_policy(Options const& options) {
+    return options
         .get<
             compute_region_autoscalers_v1::RegionAutoscalersRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_region_autoscalers_v1::
-                        RegionAutoscalersBackoffPolicyOption>()) {
-      return options
-          .get<compute_region_autoscalers_v1::
-                   RegionAutoscalersBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options
         .get<compute_region_autoscalers_v1::
                  RegionAutoscalersBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<compute_region_autoscalers_v1::
-                      RegionAutoscalersConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_region_autoscalers_v1::
-                        RegionAutoscalersConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<compute_region_autoscalers_v1::
-                   RegionAutoscalersConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<compute_region_autoscalers_v1::
+                             RegionAutoscalersConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<compute_region_autoscalers_v1::
                  RegionAutoscalersConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_region_autoscalers_v1::
-                        RegionAutoscalersPollingPolicyOption>()) {
-      return options
-          .get<compute_region_autoscalers_v1::
-                   RegionAutoscalersPollingPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options
         .get<compute_region_autoscalers_v1::
                  RegionAutoscalersPollingPolicyOption>()
         ->clone();

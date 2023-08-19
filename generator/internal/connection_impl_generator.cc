@@ -113,50 +113,8 @@ class $connection_class_name$Impl
                       AsyncMethodDeclaration(method));
   }
 
-  // `CurrentOptions()` may not have the service default options because we
-  // could be running in a test that calls the ConnectionImpl layer directly,
-  // and it does not create an `internal::OptionsSpan` like the Client layer.
-  // So, we have to fallback to `options_`.
   HeaderPrint(R"""(
  private:
-  std::unique_ptr<$product_namespace$::$retry_policy_name$> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<$product_namespace$::$retry_policy_name$Option>()) {
-      return options.get<$product_namespace$::$retry_policy_name$Option>()->clone();
-    }
-    return options_.get<$product_namespace$::$retry_policy_name$Option>()->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<$product_namespace$::$service_name$BackoffPolicyOption>()) {
-      return options.get<$product_namespace$::$service_name$BackoffPolicyOption>()->clone();
-    }
-    return options_.get<$product_namespace$::$service_name$BackoffPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<$product_namespace$::$idempotency_class_name$> idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<$product_namespace$::$idempotency_class_name$Option>()) {
-      return options.get<$product_namespace$::$idempotency_class_name$Option>()->clone();
-    }
-    return options_.get<$product_namespace$::$idempotency_class_name$Option>()->
-clone();
-  }
-)""");
-  if (HasLongrunningMethod()) {
-    HeaderPrint(R"""(
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<$product_namespace$::$service_name$PollingPolicyOption>()) {
-      return options.get<$product_namespace$::$service_name$PollingPolicyOption>()->clone();
-    }
-    return options_.get<$product_namespace$::$service_name$PollingPolicyOption>()->clone();
-  }
-)""");
-  }
-
-  HeaderPrint(R"""(
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<$product_internal_namespace$::$stub_class_name$> stub_;
   Options options_;
@@ -203,6 +161,39 @@ Status ConnectionImplGenerator::GenerateCc() {
 
   auto result = CcOpenNamespaces(NamespaceType::kInternal);
   if (!result.ok()) return result;
+
+  // `CurrentOptions()` may not have the service default options because we
+  // could be running in a test that calls the ConnectionImpl layer directly,
+  // and it does not create an `internal::OptionsSpan` like the Client layer.
+  // So, we have to fallback to `options_`.
+  CcPrint(R"""(namespace {
+
+std::unique_ptr<$product_namespace$::$retry_policy_name$>
+retry_policy(Options const& options) {
+  return options.get<$product_namespace$::$retry_policy_name$Option>()->clone();
+}
+
+std::unique_ptr<BackoffPolicy>
+backoff_policy(Options const& options) {
+  return options.get<$product_namespace$::$service_name$BackoffPolicyOption>()->clone();
+}
+
+std::unique_ptr<$product_namespace$::$idempotency_class_name$>
+idempotency_policy(Options const& options) {
+  return options.get<$product_namespace$::$idempotency_class_name$Option>()->clone();
+}
+)""");
+  if (HasLongrunningMethod()) {
+    CcPrint(R"""(
+std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+  return options.get<$product_namespace$::$service_name$PollingPolicyOption>()->clone();
+}
+)""");
+  }
+
+  CcPrint(R"""(
+} // namespace
+)""");
 
   CcPrint(R"""(
 $connection_class_name$Impl::$connection_class_name$Impl(
@@ -313,21 +304,17 @@ std::string ConnectionImplGenerator::MethodDefinition(
     return R"""(
 StreamRange<$response_type$>
 $connection_class_name$Impl::$method_name$($request_type$ const& request) {
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<$product_namespace$::$retry_policy_name$ const>(retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-
-  auto factory = [stub]($request_type$ const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto factory = [stub = stub_]($request_type$ const& request) {
     return stub->$method_name$(std::make_shared<grpc::ClientContext>(), request);
   };
   auto resumable =
       internal::MakeResumableStreamingReadRpc<$response_type$, $request_type$>(
-          retry->clone(), backoff->clone(), [](std::chrono::milliseconds) {},
-          factory,
-          $service_name$$method_name$StreamingUpdater,
-          request);
+          retry_policy(*current), backoff_policy(*current),
+          [](std::chrono::milliseconds) {}, factory,
+          $service_name$$method_name$StreamingUpdater, request);
   return internal::MakeStreamRange(internal::StreamReader<$response_type$>(
-      [resumable]{return resumable->Read();}));
+      [resumable] { return resumable->Read(); }));
 })""";
   }
 
@@ -342,15 +329,15 @@ $connection_class_name$Impl::$method_name$($request_type$ const& request) {
 StreamRange<$range_output_type$>
 $connection_class_name$Impl::$method_name$($request_type$ request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<$product_namespace$::$retry_policy_name$ const>(retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->$method_name$(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->$method_name$(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<StreamRange<$range_output_type$>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name]
-        ($request_type$ const& r) {
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<$product_namespace$::$retry_policy_name$>(retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          $request_type$ const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, $request_type$ const& request) {
@@ -383,22 +370,22 @@ future<StatusOr<$longrunning_deduced_response_type$>>)""",
         // `google::cloud::internal`.
         R"""(
 $connection_class_name$Impl::$method_name$($request_type$ const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<$longrunning_deduced_response_type$>(
     background_->cq(), request,
-    [stub](google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          $request_type$ const& request) {
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   $request_type$ const& request) {
      return stub->Async$method_name$(cq, std::move(context), request);
     },
-    [stub](google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::longrunning::GetOperationRequest const& request) {
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::longrunning::GetOperationRequest const& request) {
      return stub->AsyncGetOperation(cq, std::move(context), request);
     },
-    [stub](google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::longrunning::CancelOperationRequest const& request) {
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::longrunning::CancelOperationRequest const& request) {
      return stub->AsyncCancelOperation(cq, std::move(context), request);
     },)""",
         // One of the variations is how to extract the value from the operation
@@ -411,9 +398,9 @@ $connection_class_name$Impl::$method_name$($request_type$ const& request) {
                                                         R"""(
     &google::cloud::internal::ExtractLongRunningResultResponse<$longrunning_deduced_response_type$>,)""",
         R"""(
-    retry_policy(), backoff_policy(),
-    idempotency_policy()->$method_name$(request),
-    polling_policy(), __func__))""",
+    retry_policy(*current), backoff_policy(*current),
+    idempotency_policy(*current)->$method_name$(request),
+    polling_policy(*current), __func__))""",
         // Finally, the internal::AsyncLongRunningOperation helper may return
         // `future<StatusOr<google::protobuf::Empty>>`, in this case we add a
         // bit of code to drop the `protobuf::Empty`:
@@ -435,11 +422,12 @@ Status)"""
 StatusOr<$response_type$>)""",
                       R"""(
 $connection_class_name$Impl::$method_name$($request_type$ const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->$method_name$(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->$method_name$(request),
       [this](grpc::ClientContext& context,
-          $request_type$ const& request) {
+             $request_type$ const& request) {
         return stub_->$method_name$(context, request);
       },
       request, __func__);
@@ -455,14 +443,14 @@ future<Status>)"""
 future<StatusOr<$response_type$>>)""",
                       R"""(
 $connection_class_name$Impl::Async$method_name$($request_type$ const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncRetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->$method_name$(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->$method_name$(request),
       background_->cq(),
-      [stub](CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             $request_type$ const& request) {
+      [stub = stub_](CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     $request_type$ const& request) {
         return stub->Async$method_name$(cq, std::move(context), request);
       },
       request, __func__);

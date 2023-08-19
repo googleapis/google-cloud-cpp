@@ -29,6 +29,25 @@ namespace google {
 namespace cloud {
 namespace dialogflow_es_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<dialogflow_es::ContextsRetryPolicy> retry_policy(
+    Options const& options) {
+  return options.get<dialogflow_es::ContextsRetryPolicyOption>()->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options.get<dialogflow_es::ContextsBackoffPolicyOption>()->clone();
+}
+
+std::unique_ptr<dialogflow_es::ContextsConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options
+      .get<dialogflow_es::ContextsConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 ContextsConnectionImpl::ContextsConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
@@ -42,16 +61,16 @@ StreamRange<google::cloud::dialogflow::v2::Context>
 ContextsConnectionImpl::ListContexts(
     google::cloud::dialogflow::v2::ListContextsRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<dialogflow_es::ContextsRetryPolicy const>(retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListContexts(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListContexts(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::dialogflow::v2::Context>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<dialogflow_es::ContextsRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::dialogflow::v2::ListContextsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
@@ -74,9 +93,10 @@ ContextsConnectionImpl::ListContexts(
 StatusOr<google::cloud::dialogflow::v2::Context>
 ContextsConnectionImpl::GetContext(
     google::cloud::dialogflow::v2::GetContextRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetContext(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetContext(request),
       [this](grpc::ClientContext& context,
              google::cloud::dialogflow::v2::GetContextRequest const& request) {
         return stub_->GetContext(context, request);
@@ -87,9 +107,10 @@ ContextsConnectionImpl::GetContext(
 StatusOr<google::cloud::dialogflow::v2::Context>
 ContextsConnectionImpl::CreateContext(
     google::cloud::dialogflow::v2::CreateContextRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateContext(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateContext(request),
       [this](
           grpc::ClientContext& context,
           google::cloud::dialogflow::v2::CreateContextRequest const& request) {
@@ -101,9 +122,10 @@ ContextsConnectionImpl::CreateContext(
 StatusOr<google::cloud::dialogflow::v2::Context>
 ContextsConnectionImpl::UpdateContext(
     google::cloud::dialogflow::v2::UpdateContextRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UpdateContext(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateContext(request),
       [this](
           grpc::ClientContext& context,
           google::cloud::dialogflow::v2::UpdateContextRequest const& request) {
@@ -114,9 +136,10 @@ ContextsConnectionImpl::UpdateContext(
 
 Status ContextsConnectionImpl::DeleteContext(
     google::cloud::dialogflow::v2::DeleteContextRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteContext(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteContext(request),
       [this](
           grpc::ClientContext& context,
           google::cloud::dialogflow::v2::DeleteContextRequest const& request) {
@@ -127,9 +150,10 @@ Status ContextsConnectionImpl::DeleteContext(
 
 Status ContextsConnectionImpl::DeleteAllContexts(
     google::cloud::dialogflow::v2::DeleteAllContextsRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteAllContexts(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteAllContexts(request),
       [this](grpc::ClientContext& context,
              google::cloud::dialogflow::v2::DeleteAllContextsRequest const&
                  request) {

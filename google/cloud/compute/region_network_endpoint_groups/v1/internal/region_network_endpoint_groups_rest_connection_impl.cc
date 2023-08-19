@@ -51,7 +51,7 @@ RegionNetworkEndpointGroupsRestConnectionImpl::
     DeleteRegionNetworkEndpointGroups(
         google::cloud::cpp::compute::region_network_endpoint_groups::v1::
             DeleteRegionNetworkEndpointGroupsRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestLongRunningOperation<
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::v1::Operation,
@@ -60,30 +60,31 @@ RegionNetworkEndpointGroupsRestConnectionImpl::
       google::cloud::cpp::compute::region_operations::v1::
           DeleteRegionOperationsRequest>(
       background_->cq(), request,
-      [stub](CompletionQueue& cq,
-             std::unique_ptr<rest_internal::RestContext> context,
-             google::cloud::cpp::compute::region_network_endpoint_groups::v1::
-                 DeleteRegionNetworkEndpointGroupsRequest const& request) {
+      [stub = stub_](
+          CompletionQueue& cq,
+          std::unique_ptr<rest_internal::RestContext> context,
+          google::cloud::cpp::compute::region_network_endpoint_groups::v1::
+              DeleteRegionNetworkEndpointGroupsRequest const& request) {
         return stub->AsyncDeleteRegionNetworkEndpointGroups(
             cq, std::move(context), request);
       },
-      [stub](CompletionQueue& cq,
-             std::unique_ptr<rest_internal::RestContext> context,
-             google::cloud::cpp::compute::region_operations::v1::
-                 GetRegionOperationsRequest const& request) {
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::cpp::compute::region_operations::v1::
+                         GetRegionOperationsRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](CompletionQueue& cq,
-             std::unique_ptr<rest_internal::RestContext> context,
-             google::cloud::cpp::compute::region_operations::v1::
-                 DeleteRegionOperationsRequest const& request) {
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::cpp::compute::region_operations::v1::
+                         DeleteRegionOperationsRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
          std::string const&) { return op; },
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteRegionNetworkEndpointGroups(request),
-      polling_policy(), __func__,
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteRegionNetworkEndpointGroups(request),
+      polling_policy(*current), __func__,
       [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
       },
@@ -107,9 +108,10 @@ StatusOr<google::cloud::cpp::compute::v1::NetworkEndpointGroup>
 RegionNetworkEndpointGroupsRestConnectionImpl::GetRegionNetworkEndpointGroups(
     google::cloud::cpp::compute::region_network_endpoint_groups::v1::
         GetRegionNetworkEndpointGroupsRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetRegionNetworkEndpointGroups(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetRegionNetworkEndpointGroups(request),
       [this](rest_internal::RestContext& rest_context,
              google::cloud::cpp::compute::region_network_endpoint_groups::v1::
                  GetRegionNetworkEndpointGroupsRequest const& request) {
@@ -123,7 +125,7 @@ RegionNetworkEndpointGroupsRestConnectionImpl::
     InsertRegionNetworkEndpointGroups(
         google::cloud::cpp::compute::region_network_endpoint_groups::v1::
             InsertRegionNetworkEndpointGroupsRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestLongRunningOperation<
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::v1::Operation,
@@ -132,30 +134,31 @@ RegionNetworkEndpointGroupsRestConnectionImpl::
       google::cloud::cpp::compute::region_operations::v1::
           DeleteRegionOperationsRequest>(
       background_->cq(), request,
-      [stub](CompletionQueue& cq,
-             std::unique_ptr<rest_internal::RestContext> context,
-             google::cloud::cpp::compute::region_network_endpoint_groups::v1::
-                 InsertRegionNetworkEndpointGroupsRequest const& request) {
+      [stub = stub_](
+          CompletionQueue& cq,
+          std::unique_ptr<rest_internal::RestContext> context,
+          google::cloud::cpp::compute::region_network_endpoint_groups::v1::
+              InsertRegionNetworkEndpointGroupsRequest const& request) {
         return stub->AsyncInsertRegionNetworkEndpointGroups(
             cq, std::move(context), request);
       },
-      [stub](CompletionQueue& cq,
-             std::unique_ptr<rest_internal::RestContext> context,
-             google::cloud::cpp::compute::region_operations::v1::
-                 GetRegionOperationsRequest const& request) {
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::cpp::compute::region_operations::v1::
+                         GetRegionOperationsRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](CompletionQueue& cq,
-             std::unique_ptr<rest_internal::RestContext> context,
-             google::cloud::cpp::compute::region_operations::v1::
-                 DeleteRegionOperationsRequest const& request) {
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::cpp::compute::region_operations::v1::
+                         DeleteRegionOperationsRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
          std::string const&) { return op; },
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->InsertRegionNetworkEndpointGroups(request),
-      polling_policy(), __func__,
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->InsertRegionNetworkEndpointGroups(request),
+      polling_policy(*current), __func__,
       [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
       },
@@ -180,19 +183,18 @@ RegionNetworkEndpointGroupsRestConnectionImpl::ListRegionNetworkEndpointGroups(
     google::cloud::cpp::compute::region_network_endpoint_groups::v1::
         ListRegionNetworkEndpointGroupsRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<compute_region_network_endpoint_groups_v1::
-                          RegionNetworkEndpointGroupsRetryPolicy const>(
-          retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+  auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency =
-      idempotency_policy()->ListRegionNetworkEndpointGroups(request);
+      idempotency_policy(*current)->ListRegionNetworkEndpointGroups(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::cpp::compute::v1::NetworkEndpointGroup>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<compute_region_network_endpoint_groups_v1::
+                                   RegionNetworkEndpointGroupsRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::cpp::compute::region_network_endpoint_groups::v1::
               ListRegionNetworkEndpointGroupsRequest const& r) {
         return google::cloud::rest_internal::RestRetryLoop(

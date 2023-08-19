@@ -111,56 +111,6 @@ class RecaptchaEnterpriseServiceConnectionImpl
           SearchRelatedAccountGroupMembershipsRequest request) override;
 
  private:
-  std::unique_ptr<recaptchaenterprise_v1::RecaptchaEnterpriseServiceRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<recaptchaenterprise_v1::
-                        RecaptchaEnterpriseServiceRetryPolicyOption>()) {
-      return options
-          .get<recaptchaenterprise_v1::
-                   RecaptchaEnterpriseServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<recaptchaenterprise_v1::
-                 RecaptchaEnterpriseServiceRetryPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<recaptchaenterprise_v1::
-                        RecaptchaEnterpriseServiceBackoffPolicyOption>()) {
-      return options
-          .get<recaptchaenterprise_v1::
-                   RecaptchaEnterpriseServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<recaptchaenterprise_v1::
-                 RecaptchaEnterpriseServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<recaptchaenterprise_v1::
-                      RecaptchaEnterpriseServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            recaptchaenterprise_v1::
-                RecaptchaEnterpriseServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<
-              recaptchaenterprise_v1::
-                  RecaptchaEnterpriseServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<recaptchaenterprise_v1::
-                 RecaptchaEnterpriseServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<
       recaptchaenterprise_v1_internal::RecaptchaEnterpriseServiceStub>

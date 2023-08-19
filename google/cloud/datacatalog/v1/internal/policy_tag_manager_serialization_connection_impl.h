@@ -65,54 +65,6 @@ class PolicyTagManagerSerializationConnectionImpl
       override;
 
  private:
-  std::unique_ptr<datacatalog_v1::PolicyTagManagerSerializationRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            datacatalog_v1::PolicyTagManagerSerializationRetryPolicyOption>()) {
-      return options
-          .get<datacatalog_v1::PolicyTagManagerSerializationRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<datacatalog_v1::PolicyTagManagerSerializationRetryPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<datacatalog_v1::
-                        PolicyTagManagerSerializationBackoffPolicyOption>()) {
-      return options
-          .get<datacatalog_v1::
-                   PolicyTagManagerSerializationBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<datacatalog_v1::PolicyTagManagerSerializationBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<
-      datacatalog_v1::PolicyTagManagerSerializationConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            datacatalog_v1::
-                PolicyTagManagerSerializationConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<
-              datacatalog_v1::
-                  PolicyTagManagerSerializationConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<
-            datacatalog_v1::
-                PolicyTagManagerSerializationConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<datacatalog_v1_internal::PolicyTagManagerSerializationStub>
       stub_;

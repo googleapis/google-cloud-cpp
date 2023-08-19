@@ -73,57 +73,6 @@ class DatastoreAdminConnectionImpl
       google::datastore::admin::v1::ListIndexesRequest request) override;
 
  private:
-  std::unique_ptr<datastore_admin_v1::DatastoreAdminRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<datastore_admin_v1::DatastoreAdminRetryPolicyOption>()) {
-      return options.get<datastore_admin_v1::DatastoreAdminRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<datastore_admin_v1::DatastoreAdminRetryPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<datastore_admin_v1::DatastoreAdminBackoffPolicyOption>()) {
-      return options
-          .get<datastore_admin_v1::DatastoreAdminBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<datastore_admin_v1::DatastoreAdminBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<datastore_admin_v1::DatastoreAdminConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<datastore_admin_v1::
-                        DatastoreAdminConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<datastore_admin_v1::
-                   DatastoreAdminConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<datastore_admin_v1::
-                 DatastoreAdminConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<datastore_admin_v1::DatastoreAdminPollingPolicyOption>()) {
-      return options
-          .get<datastore_admin_v1::DatastoreAdminPollingPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<datastore_admin_v1::DatastoreAdminPollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<datastore_admin_v1_internal::DatastoreAdminStub> stub_;
   Options options_;

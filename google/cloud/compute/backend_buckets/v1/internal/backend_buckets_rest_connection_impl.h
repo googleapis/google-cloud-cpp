@@ -90,59 +90,30 @@ class BackendBucketsRestConnectionImpl
                            UpdateBackendBucketsRequest const& request) override;
 
  private:
-  std::unique_ptr<compute_backend_buckets_v1::BackendBucketsRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            compute_backend_buckets_v1::BackendBucketsRetryPolicyOption>()) {
-      return options
-          .get<compute_backend_buckets_v1::BackendBucketsRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<compute_backend_buckets_v1::BackendBucketsRetryPolicy>
+  retry_policy(Options const& options) {
+    return options
         .get<compute_backend_buckets_v1::BackendBucketsRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            compute_backend_buckets_v1::BackendBucketsBackoffPolicyOption>()) {
-      return options
-          .get<compute_backend_buckets_v1::BackendBucketsBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options
         .get<compute_backend_buckets_v1::BackendBucketsBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<
+  static std::unique_ptr<
       compute_backend_buckets_v1::BackendBucketsConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_backend_buckets_v1::
-                        BackendBucketsConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<compute_backend_buckets_v1::
-                   BackendBucketsConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  idempotency_policy(Options const& options) {
+    return options
         .get<compute_backend_buckets_v1::
                  BackendBucketsConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            compute_backend_buckets_v1::BackendBucketsPollingPolicyOption>()) {
-      return options
-          .get<compute_backend_buckets_v1::BackendBucketsPollingPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options
         .get<compute_backend_buckets_v1::BackendBucketsPollingPolicyOption>()
         ->clone();
   }

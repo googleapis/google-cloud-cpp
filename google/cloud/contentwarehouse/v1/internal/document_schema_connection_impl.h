@@ -75,51 +75,6 @@ class DocumentSchemaServiceConnectionImpl
       override;
 
  private:
-  std::unique_ptr<contentwarehouse_v1::DocumentSchemaServiceRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            contentwarehouse_v1::DocumentSchemaServiceRetryPolicyOption>()) {
-      return options
-          .get<contentwarehouse_v1::DocumentSchemaServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<contentwarehouse_v1::DocumentSchemaServiceRetryPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            contentwarehouse_v1::DocumentSchemaServiceBackoffPolicyOption>()) {
-      return options
-          .get<contentwarehouse_v1::DocumentSchemaServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<contentwarehouse_v1::DocumentSchemaServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<
-      contentwarehouse_v1::DocumentSchemaServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            contentwarehouse_v1::
-                DocumentSchemaServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<contentwarehouse_v1::
-                   DocumentSchemaServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<contentwarehouse_v1::
-                 DocumentSchemaServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<contentwarehouse_v1_internal::DocumentSchemaServiceStub>
       stub_;

@@ -29,6 +29,25 @@ namespace google {
 namespace cloud {
 namespace billing_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<billing_v1::CloudCatalogRetryPolicy> retry_policy(
+    Options const& options) {
+  return options.get<billing_v1::CloudCatalogRetryPolicyOption>()->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options.get<billing_v1::CloudCatalogBackoffPolicyOption>()->clone();
+}
+
+std::unique_ptr<billing_v1::CloudCatalogConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options
+      .get<billing_v1::CloudCatalogConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 CloudCatalogConnectionImpl::CloudCatalogConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
@@ -43,16 +62,16 @@ StreamRange<google::cloud::billing::v1::Service>
 CloudCatalogConnectionImpl::ListServices(
     google::cloud::billing::v1::ListServicesRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<billing_v1::CloudCatalogRetryPolicy const>(
-      retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListServices(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListServices(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::billing::v1::Service>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<billing_v1::CloudCatalogRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::billing::v1::ListServicesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
@@ -76,17 +95,17 @@ StreamRange<google::cloud::billing::v1::Sku>
 CloudCatalogConnectionImpl::ListSkus(
     google::cloud::billing::v1::ListSkusRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<billing_v1::CloudCatalogRetryPolicy const>(
-      retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListSkus(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListSkus(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::billing::v1::Sku>>(
       std::move(request),
-      [stub, retry, backoff, idempotency,
-       function_name](google::cloud::billing::v1::ListSkusRequest const& r) {
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<billing_v1::CloudCatalogRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          google::cloud::billing::v1::ListSkusRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context,

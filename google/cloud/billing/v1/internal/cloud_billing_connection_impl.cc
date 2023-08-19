@@ -29,6 +29,25 @@ namespace google {
 namespace cloud {
 namespace billing_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<billing_v1::CloudBillingRetryPolicy> retry_policy(
+    Options const& options) {
+  return options.get<billing_v1::CloudBillingRetryPolicyOption>()->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options.get<billing_v1::CloudBillingBackoffPolicyOption>()->clone();
+}
+
+std::unique_ptr<billing_v1::CloudBillingConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options
+      .get<billing_v1::CloudBillingConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 CloudBillingConnectionImpl::CloudBillingConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
@@ -42,9 +61,10 @@ CloudBillingConnectionImpl::CloudBillingConnectionImpl(
 StatusOr<google::cloud::billing::v1::BillingAccount>
 CloudBillingConnectionImpl::GetBillingAccount(
     google::cloud::billing::v1::GetBillingAccountRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetBillingAccount(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetBillingAccount(request),
       [this](
           grpc::ClientContext& context,
           google::cloud::billing::v1::GetBillingAccountRequest const& request) {
@@ -57,16 +77,16 @@ StreamRange<google::cloud::billing::v1::BillingAccount>
 CloudBillingConnectionImpl::ListBillingAccounts(
     google::cloud::billing::v1::ListBillingAccountsRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<billing_v1::CloudBillingRetryPolicy const>(
-      retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListBillingAccounts(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListBillingAccounts(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::billing::v1::BillingAccount>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<billing_v1::CloudBillingRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::billing::v1::ListBillingAccountsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
@@ -89,9 +109,10 @@ CloudBillingConnectionImpl::ListBillingAccounts(
 StatusOr<google::cloud::billing::v1::BillingAccount>
 CloudBillingConnectionImpl::UpdateBillingAccount(
     google::cloud::billing::v1::UpdateBillingAccountRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UpdateBillingAccount(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateBillingAccount(request),
       [this](grpc::ClientContext& context,
              google::cloud::billing::v1::UpdateBillingAccountRequest const&
                  request) {
@@ -103,9 +124,10 @@ CloudBillingConnectionImpl::UpdateBillingAccount(
 StatusOr<google::cloud::billing::v1::BillingAccount>
 CloudBillingConnectionImpl::CreateBillingAccount(
     google::cloud::billing::v1::CreateBillingAccountRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateBillingAccount(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateBillingAccount(request),
       [this](grpc::ClientContext& context,
              google::cloud::billing::v1::CreateBillingAccountRequest const&
                  request) {
@@ -118,16 +140,17 @@ StreamRange<google::cloud::billing::v1::ProjectBillingInfo>
 CloudBillingConnectionImpl::ListProjectBillingInfo(
     google::cloud::billing::v1::ListProjectBillingInfoRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<billing_v1::CloudBillingRetryPolicy const>(
-      retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListProjectBillingInfo(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency =
+      idempotency_policy(*current)->ListProjectBillingInfo(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::billing::v1::ProjectBillingInfo>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<billing_v1::CloudBillingRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::billing::v1::ListProjectBillingInfoRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
@@ -151,9 +174,10 @@ CloudBillingConnectionImpl::ListProjectBillingInfo(
 StatusOr<google::cloud::billing::v1::ProjectBillingInfo>
 CloudBillingConnectionImpl::GetProjectBillingInfo(
     google::cloud::billing::v1::GetProjectBillingInfoRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetProjectBillingInfo(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetProjectBillingInfo(request),
       [this](grpc::ClientContext& context,
              google::cloud::billing::v1::GetProjectBillingInfoRequest const&
                  request) {
@@ -166,9 +190,10 @@ StatusOr<google::cloud::billing::v1::ProjectBillingInfo>
 CloudBillingConnectionImpl::UpdateProjectBillingInfo(
     google::cloud::billing::v1::UpdateProjectBillingInfoRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UpdateProjectBillingInfo(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateProjectBillingInfo(request),
       [this](grpc::ClientContext& context,
              google::cloud::billing::v1::UpdateProjectBillingInfoRequest const&
                  request) {
@@ -179,9 +204,10 @@ CloudBillingConnectionImpl::UpdateProjectBillingInfo(
 
 StatusOr<google::iam::v1::Policy> CloudBillingConnectionImpl::GetIamPolicy(
     google::iam::v1::GetIamPolicyRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetIamPolicy(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetIamPolicy(request),
       [this](grpc::ClientContext& context,
              google::iam::v1::GetIamPolicyRequest const& request) {
         return stub_->GetIamPolicy(context, request);
@@ -191,9 +217,10 @@ StatusOr<google::iam::v1::Policy> CloudBillingConnectionImpl::GetIamPolicy(
 
 StatusOr<google::iam::v1::Policy> CloudBillingConnectionImpl::SetIamPolicy(
     google::iam::v1::SetIamPolicyRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->SetIamPolicy(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->SetIamPolicy(request),
       [this](grpc::ClientContext& context,
              google::iam::v1::SetIamPolicyRequest const& request) {
         return stub_->SetIamPolicy(context, request);
@@ -204,9 +231,10 @@ StatusOr<google::iam::v1::Policy> CloudBillingConnectionImpl::SetIamPolicy(
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 CloudBillingConnectionImpl::TestIamPermissions(
     google::iam::v1::TestIamPermissionsRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->TestIamPermissions(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->TestIamPermissions(request),
       [this](grpc::ClientContext& context,
              google::iam::v1::TestIamPermissionsRequest const& request) {
         return stub_->TestIamPermissions(context, request);

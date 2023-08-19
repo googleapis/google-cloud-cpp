@@ -57,38 +57,6 @@ class ChangelogsConnectionImpl : public dialogflow_cx::ChangelogsConnection {
       override;
 
  private:
-  std::unique_ptr<dialogflow_cx::ChangelogsRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<dialogflow_cx::ChangelogsRetryPolicyOption>()) {
-      return options.get<dialogflow_cx::ChangelogsRetryPolicyOption>()->clone();
-    }
-    return options_.get<dialogflow_cx::ChangelogsRetryPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<dialogflow_cx::ChangelogsBackoffPolicyOption>()) {
-      return options.get<dialogflow_cx::ChangelogsBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<dialogflow_cx::ChangelogsBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<dialogflow_cx::ChangelogsConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            dialogflow_cx::ChangelogsConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<dialogflow_cx::ChangelogsConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<dialogflow_cx::ChangelogsConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<dialogflow_cx_internal::ChangelogsStub> stub_;
   Options options_;

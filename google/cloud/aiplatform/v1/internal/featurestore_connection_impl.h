@@ -141,58 +141,6 @@ class FeaturestoreServiceConnectionImpl
       google::cloud::aiplatform::v1::SearchFeaturesRequest request) override;
 
  private:
-  std::unique_ptr<aiplatform_v1::FeaturestoreServiceRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<aiplatform_v1::FeaturestoreServiceRetryPolicyOption>()) {
-      return options.get<aiplatform_v1::FeaturestoreServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<aiplatform_v1::FeaturestoreServiceRetryPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<aiplatform_v1::FeaturestoreServiceBackoffPolicyOption>()) {
-      return options
-          .get<aiplatform_v1::FeaturestoreServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<aiplatform_v1::FeaturestoreServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<aiplatform_v1::FeaturestoreServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<aiplatform_v1::
-                     FeaturestoreServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<aiplatform_v1::
-                   FeaturestoreServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<aiplatform_v1::
-                 FeaturestoreServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<aiplatform_v1::FeaturestoreServicePollingPolicyOption>()) {
-      return options
-          .get<aiplatform_v1::FeaturestoreServicePollingPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<aiplatform_v1::FeaturestoreServicePollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<aiplatform_v1_internal::FeaturestoreServiceStub> stub_;
   Options options_;

@@ -28,6 +28,25 @@ namespace google {
 namespace cloud {
 namespace dialogflow_es_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<dialogflow_es::SessionsRetryPolicy> retry_policy(
+    Options const& options) {
+  return options.get<dialogflow_es::SessionsRetryPolicyOption>()->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options.get<dialogflow_es::SessionsBackoffPolicyOption>()->clone();
+}
+
+std::unique_ptr<dialogflow_es::SessionsConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options
+      .get<dialogflow_es::SessionsConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 SessionsConnectionImpl::SessionsConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
@@ -40,9 +59,10 @@ SessionsConnectionImpl::SessionsConnectionImpl(
 StatusOr<google::cloud::dialogflow::v2::DetectIntentResponse>
 SessionsConnectionImpl::DetectIntent(
     google::cloud::dialogflow::v2::DetectIntentRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DetectIntent(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DetectIntent(request),
       [this](
           grpc::ClientContext& context,
           google::cloud::dialogflow::v2::DetectIntentRequest const& request) {

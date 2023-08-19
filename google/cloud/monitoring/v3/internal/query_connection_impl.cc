@@ -29,6 +29,25 @@ namespace google {
 namespace cloud {
 namespace monitoring_v3_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<monitoring_v3::QueryServiceRetryPolicy> retry_policy(
+    Options const& options) {
+  return options.get<monitoring_v3::QueryServiceRetryPolicyOption>()->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options.get<monitoring_v3::QueryServiceBackoffPolicyOption>()->clone();
+}
+
+std::unique_ptr<monitoring_v3::QueryServiceConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options
+      .get<monitoring_v3::QueryServiceConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 QueryServiceConnectionImpl::QueryServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
@@ -43,17 +62,17 @@ StreamRange<google::monitoring::v3::TimeSeriesData>
 QueryServiceConnectionImpl::QueryTimeSeries(
     google::monitoring::v3::QueryTimeSeriesRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<monitoring_v3::QueryServiceRetryPolicy const>(
-      retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->QueryTimeSeries(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->QueryTimeSeries(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::monitoring::v3::TimeSeriesData>>(
       std::move(request),
-      [stub, retry, backoff, idempotency,
-       function_name](google::monitoring::v3::QueryTimeSeriesRequest const& r) {
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<monitoring_v3::QueryServiceRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          google::monitoring::v3::QueryTimeSeriesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](

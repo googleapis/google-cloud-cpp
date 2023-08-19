@@ -69,39 +69,6 @@ class EntityTypesConnectionImpl : public dialogflow_cx::EntityTypesConnection {
       override;
 
  private:
-  std::unique_ptr<dialogflow_cx::EntityTypesRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<dialogflow_cx::EntityTypesRetryPolicyOption>()) {
-      return options.get<dialogflow_cx::EntityTypesRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<dialogflow_cx::EntityTypesRetryPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<dialogflow_cx::EntityTypesBackoffPolicyOption>()) {
-      return options.get<dialogflow_cx::EntityTypesBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<dialogflow_cx::EntityTypesBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<dialogflow_cx::EntityTypesConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            dialogflow_cx::EntityTypesConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<dialogflow_cx::EntityTypesConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<dialogflow_cx::EntityTypesConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<dialogflow_cx_internal::EntityTypesStub> stub_;
   Options options_;

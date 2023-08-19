@@ -88,66 +88,33 @@ class GlobalForwardingRulesRestConnectionImpl
           SetTargetRequest const& request) override;
 
  private:
-  std::unique_ptr<
+  static std::unique_ptr<
       compute_global_forwarding_rules_v1::GlobalForwardingRulesRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_global_forwarding_rules_v1::
-                        GlobalForwardingRulesRetryPolicyOption>()) {
-      return options
-          .get<compute_global_forwarding_rules_v1::
-                   GlobalForwardingRulesRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
+  retry_policy(Options const& options) {
+    return options
         .get<compute_global_forwarding_rules_v1::
                  GlobalForwardingRulesRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_global_forwarding_rules_v1::
-                        GlobalForwardingRulesBackoffPolicyOption>()) {
-      return options
-          .get<compute_global_forwarding_rules_v1::
-                   GlobalForwardingRulesBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options
         .get<compute_global_forwarding_rules_v1::
                  GlobalForwardingRulesBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<compute_global_forwarding_rules_v1::
-                      GlobalForwardingRulesConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            compute_global_forwarding_rules_v1::
-                GlobalForwardingRulesConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<compute_global_forwarding_rules_v1::
-                   GlobalForwardingRulesConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<compute_global_forwarding_rules_v1::
+                             GlobalForwardingRulesConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<compute_global_forwarding_rules_v1::
                  GlobalForwardingRulesConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_global_forwarding_rules_v1::
-                        GlobalForwardingRulesPollingPolicyOption>()) {
-      return options
-          .get<compute_global_forwarding_rules_v1::
-                   GlobalForwardingRulesPollingPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options
         .get<compute_global_forwarding_rules_v1::
                  GlobalForwardingRulesPollingPolicyOption>()
         ->clone();

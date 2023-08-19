@@ -104,46 +104,6 @@ class TestCasesConnectionImpl : public dialogflow_cx::TestCasesConnection {
           request) override;
 
  private:
-  std::unique_ptr<dialogflow_cx::TestCasesRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<dialogflow_cx::TestCasesRetryPolicyOption>()) {
-      return options.get<dialogflow_cx::TestCasesRetryPolicyOption>()->clone();
-    }
-    return options_.get<dialogflow_cx::TestCasesRetryPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<dialogflow_cx::TestCasesBackoffPolicyOption>()) {
-      return options.get<dialogflow_cx::TestCasesBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<dialogflow_cx::TestCasesBackoffPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<dialogflow_cx::TestCasesConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<dialogflow_cx::TestCasesConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<dialogflow_cx::TestCasesConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<dialogflow_cx::TestCasesConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<dialogflow_cx::TestCasesPollingPolicyOption>()) {
-      return options.get<dialogflow_cx::TestCasesPollingPolicyOption>()
-          ->clone();
-    }
-    return options_.get<dialogflow_cx::TestCasesPollingPolicyOption>()->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<dialogflow_cx_internal::TestCasesStub> stub_;
   Options options_;

@@ -63,50 +63,6 @@ class TagHoldsConnectionImpl : public resourcemanager_v3::TagHoldsConnection {
       google::cloud::resourcemanager::v3::ListTagHoldsRequest request) override;
 
  private:
-  std::unique_ptr<resourcemanager_v3::TagHoldsRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<resourcemanager_v3::TagHoldsRetryPolicyOption>()) {
-      return options.get<resourcemanager_v3::TagHoldsRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<resourcemanager_v3::TagHoldsRetryPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<resourcemanager_v3::TagHoldsBackoffPolicyOption>()) {
-      return options.get<resourcemanager_v3::TagHoldsBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<resourcemanager_v3::TagHoldsBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<resourcemanager_v3::TagHoldsConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            resourcemanager_v3::TagHoldsConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<resourcemanager_v3::TagHoldsConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<resourcemanager_v3::TagHoldsConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<resourcemanager_v3::TagHoldsPollingPolicyOption>()) {
-      return options.get<resourcemanager_v3::TagHoldsPollingPolicyOption>()
-          ->clone();
-    }
-    return options_.get<resourcemanager_v3::TagHoldsPollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<resourcemanager_v3_internal::TagHoldsStub> stub_;
   Options options_;

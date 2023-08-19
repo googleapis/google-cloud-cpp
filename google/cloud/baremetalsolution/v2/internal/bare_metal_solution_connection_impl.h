@@ -250,63 +250,6 @@ class BareMetalSolutionConnectionImpl
       override;
 
  private:
-  std::unique_ptr<baremetalsolution_v2::BareMetalSolutionRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<baremetalsolution_v2::BareMetalSolutionRetryPolicyOption>()) {
-      return options
-          .get<baremetalsolution_v2::BareMetalSolutionRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<baremetalsolution_v2::BareMetalSolutionRetryPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            baremetalsolution_v2::BareMetalSolutionBackoffPolicyOption>()) {
-      return options
-          .get<baremetalsolution_v2::BareMetalSolutionBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<baremetalsolution_v2::BareMetalSolutionBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<
-      baremetalsolution_v2::BareMetalSolutionConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<baremetalsolution_v2::
-                        BareMetalSolutionConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<baremetalsolution_v2::
-                   BareMetalSolutionConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<baremetalsolution_v2::
-                 BareMetalSolutionConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            baremetalsolution_v2::BareMetalSolutionPollingPolicyOption>()) {
-      return options
-          .get<baremetalsolution_v2::BareMetalSolutionPollingPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<baremetalsolution_v2::BareMetalSolutionPollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<baremetalsolution_v2_internal::BareMetalSolutionStub> stub_;
   Options options_;

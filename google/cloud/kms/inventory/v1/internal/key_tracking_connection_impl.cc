@@ -29,6 +29,28 @@ namespace google {
 namespace cloud {
 namespace kms_inventory_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<kms_inventory_v1::KeyTrackingServiceRetryPolicy> retry_policy(
+    Options const& options) {
+  return options.get<kms_inventory_v1::KeyTrackingServiceRetryPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options.get<kms_inventory_v1::KeyTrackingServiceBackoffPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<kms_inventory_v1::KeyTrackingServiceConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options
+      .get<kms_inventory_v1::
+               KeyTrackingServiceConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 KeyTrackingServiceConnectionImpl::KeyTrackingServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
@@ -43,9 +65,10 @@ StatusOr<google::cloud::kms::inventory::v1::ProtectedResourcesSummary>
 KeyTrackingServiceConnectionImpl::GetProtectedResourcesSummary(
     google::cloud::kms::inventory::v1::
         GetProtectedResourcesSummaryRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetProtectedResourcesSummary(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetProtectedResourcesSummary(request),
       [this](grpc::ClientContext& context,
              google::cloud::kms::inventory::v1::
                  GetProtectedResourcesSummaryRequest const& request) {
@@ -59,19 +82,19 @@ KeyTrackingServiceConnectionImpl::SearchProtectedResources(
     google::cloud::kms::inventory::v1::SearchProtectedResourcesRequest
         request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<kms_inventory_v1::KeyTrackingServiceRetryPolicy const>(
-          retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->SearchProtectedResources(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency =
+      idempotency_policy(*current)->SearchProtectedResources(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::kms::inventory::v1::ProtectedResource>>(
       std::move(request),
-      [stub, retry, backoff, idempotency,
-       function_name](google::cloud::kms::inventory::v1::
-                          SearchProtectedResourcesRequest const& r) {
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<kms_inventory_v1::KeyTrackingServiceRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          google::cloud::kms::inventory::v1::
+              SearchProtectedResourcesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context,

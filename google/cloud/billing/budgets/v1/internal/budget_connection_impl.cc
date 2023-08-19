@@ -29,6 +29,27 @@ namespace google {
 namespace cloud {
 namespace billing_budgets_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<billing_budgets_v1::BudgetServiceRetryPolicy> retry_policy(
+    Options const& options) {
+  return options.get<billing_budgets_v1::BudgetServiceRetryPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options.get<billing_budgets_v1::BudgetServiceBackoffPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<billing_budgets_v1::BudgetServiceConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options
+      .get<billing_budgets_v1::BudgetServiceConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 BudgetServiceConnectionImpl::BudgetServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
@@ -42,9 +63,10 @@ BudgetServiceConnectionImpl::BudgetServiceConnectionImpl(
 StatusOr<google::cloud::billing::budgets::v1::Budget>
 BudgetServiceConnectionImpl::CreateBudget(
     google::cloud::billing::budgets::v1::CreateBudgetRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateBudget(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateBudget(request),
       [this](grpc::ClientContext& context,
              google::cloud::billing::budgets::v1::CreateBudgetRequest const&
                  request) { return stub_->CreateBudget(context, request); },
@@ -54,9 +76,10 @@ BudgetServiceConnectionImpl::CreateBudget(
 StatusOr<google::cloud::billing::budgets::v1::Budget>
 BudgetServiceConnectionImpl::UpdateBudget(
     google::cloud::billing::budgets::v1::UpdateBudgetRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UpdateBudget(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateBudget(request),
       [this](grpc::ClientContext& context,
              google::cloud::billing::budgets::v1::UpdateBudgetRequest const&
                  request) { return stub_->UpdateBudget(context, request); },
@@ -66,9 +89,10 @@ BudgetServiceConnectionImpl::UpdateBudget(
 StatusOr<google::cloud::billing::budgets::v1::Budget>
 BudgetServiceConnectionImpl::GetBudget(
     google::cloud::billing::budgets::v1::GetBudgetRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetBudget(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetBudget(request),
       [this](grpc::ClientContext& context,
              google::cloud::billing::budgets::v1::GetBudgetRequest const&
                  request) { return stub_->GetBudget(context, request); },
@@ -79,17 +103,16 @@ StreamRange<google::cloud::billing::budgets::v1::Budget>
 BudgetServiceConnectionImpl::ListBudgets(
     google::cloud::billing::budgets::v1::ListBudgetsRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<billing_budgets_v1::BudgetServiceRetryPolicy const>(
-          retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListBudgets(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListBudgets(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::billing::budgets::v1::Budget>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<billing_budgets_v1::BudgetServiceRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::billing::budgets::v1::ListBudgetsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
@@ -110,9 +133,10 @@ BudgetServiceConnectionImpl::ListBudgets(
 
 Status BudgetServiceConnectionImpl::DeleteBudget(
     google::cloud::billing::budgets::v1::DeleteBudgetRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteBudget(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteBudget(request),
       [this](grpc::ClientContext& context,
              google::cloud::billing::budgets::v1::DeleteBudgetRequest const&
                  request) { return stub_->DeleteBudget(context, request); },

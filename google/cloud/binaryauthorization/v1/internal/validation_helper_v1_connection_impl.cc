@@ -28,6 +28,31 @@ namespace google {
 namespace cloud {
 namespace binaryauthorization_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<binaryauthorization_v1::ValidationHelperV1RetryPolicy>
+retry_policy(Options const& options) {
+  return options
+      .get<binaryauthorization_v1::ValidationHelperV1RetryPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options
+      .get<binaryauthorization_v1::ValidationHelperV1BackoffPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<
+    binaryauthorization_v1::ValidationHelperV1ConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options
+      .get<binaryauthorization_v1::
+               ValidationHelperV1ConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 ValidationHelperV1ConnectionImpl::ValidationHelperV1ConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
@@ -44,9 +69,10 @@ StatusOr<google::cloud::binaryauthorization::v1::
 ValidationHelperV1ConnectionImpl::ValidateAttestationOccurrence(
     google::cloud::binaryauthorization::v1::
         ValidateAttestationOccurrenceRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->ValidateAttestationOccurrence(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ValidateAttestationOccurrence(request),
       [this](grpc::ClientContext& context,
              google::cloud::binaryauthorization::v1::
                  ValidateAttestationOccurrenceRequest const& request) {

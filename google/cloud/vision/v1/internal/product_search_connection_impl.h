@@ -120,46 +120,6 @@ class ProductSearchConnectionImpl : public vision_v1::ProductSearchConnection {
       google::cloud::vision::v1::PurgeProductsRequest const& request) override;
 
  private:
-  std::unique_ptr<vision_v1::ProductSearchRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<vision_v1::ProductSearchRetryPolicyOption>()) {
-      return options.get<vision_v1::ProductSearchRetryPolicyOption>()->clone();
-    }
-    return options_.get<vision_v1::ProductSearchRetryPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<vision_v1::ProductSearchBackoffPolicyOption>()) {
-      return options.get<vision_v1::ProductSearchBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<vision_v1::ProductSearchBackoffPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<vision_v1::ProductSearchConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<vision_v1::ProductSearchConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<vision_v1::ProductSearchConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<vision_v1::ProductSearchConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<vision_v1::ProductSearchPollingPolicyOption>()) {
-      return options.get<vision_v1::ProductSearchPollingPolicyOption>()
-          ->clone();
-    }
-    return options_.get<vision_v1::ProductSearchPollingPolicyOption>()->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<vision_v1_internal::ProductSearchStub> stub_;
   Options options_;

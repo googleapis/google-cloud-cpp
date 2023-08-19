@@ -30,6 +30,32 @@ namespace google {
 namespace cloud {
 namespace aiplatform_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<aiplatform_v1::PipelineServiceRetryPolicy> retry_policy(
+    Options const& options) {
+  return options.get<aiplatform_v1::PipelineServiceRetryPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options.get<aiplatform_v1::PipelineServiceBackoffPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<aiplatform_v1::PipelineServiceConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options
+      .get<aiplatform_v1::PipelineServiceConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+  return options.get<aiplatform_v1::PipelineServicePollingPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 PipelineServiceConnectionImpl::PipelineServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
@@ -44,9 +70,10 @@ StatusOr<google::cloud::aiplatform::v1::TrainingPipeline>
 PipelineServiceConnectionImpl::CreateTrainingPipeline(
     google::cloud::aiplatform::v1::CreateTrainingPipelineRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateTrainingPipeline(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateTrainingPipeline(request),
       [this](grpc::ClientContext& context,
              google::cloud::aiplatform::v1::CreateTrainingPipelineRequest const&
                  request) {
@@ -58,9 +85,10 @@ PipelineServiceConnectionImpl::CreateTrainingPipeline(
 StatusOr<google::cloud::aiplatform::v1::TrainingPipeline>
 PipelineServiceConnectionImpl::GetTrainingPipeline(
     google::cloud::aiplatform::v1::GetTrainingPipelineRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetTrainingPipeline(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetTrainingPipeline(request),
       [this](grpc::ClientContext& context,
              google::cloud::aiplatform::v1::GetTrainingPipelineRequest const&
                  request) {
@@ -73,16 +101,17 @@ StreamRange<google::cloud::aiplatform::v1::TrainingPipeline>
 PipelineServiceConnectionImpl::ListTrainingPipelines(
     google::cloud::aiplatform::v1::ListTrainingPipelinesRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<aiplatform_v1::PipelineServiceRetryPolicy const>(
-      retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListTrainingPipelines(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency =
+      idempotency_policy(*current)->ListTrainingPipelines(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::aiplatform::v1::TrainingPipeline>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<aiplatform_v1::PipelineServiceRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::aiplatform::v1::ListTrainingPipelinesRequest const&
               r) {
         return google::cloud::internal::RetryLoop(
@@ -107,40 +136,43 @@ future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 PipelineServiceConnectionImpl::DeleteTrainingPipeline(
     google::cloud::aiplatform::v1::DeleteTrainingPipelineRequest const&
         request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::aiplatform::v1::DeleteOperationMetadata>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::aiplatform::v1::DeleteTrainingPipelineRequest const&
-                 request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::aiplatform::v1::DeleteTrainingPipelineRequest const&
+              request) {
         return stub->AsyncDeleteTrainingPipeline(cq, std::move(context),
                                                  request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::aiplatform::v1::DeleteOperationMetadata>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteTrainingPipeline(request), polling_policy(),
-      __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteTrainingPipeline(request),
+      polling_policy(*current), __func__);
 }
 
 Status PipelineServiceConnectionImpl::CancelTrainingPipeline(
     google::cloud::aiplatform::v1::CancelTrainingPipelineRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CancelTrainingPipeline(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CancelTrainingPipeline(request),
       [this](grpc::ClientContext& context,
              google::cloud::aiplatform::v1::CancelTrainingPipelineRequest const&
                  request) {
@@ -152,9 +184,10 @@ Status PipelineServiceConnectionImpl::CancelTrainingPipeline(
 StatusOr<google::cloud::aiplatform::v1::PipelineJob>
 PipelineServiceConnectionImpl::CreatePipelineJob(
     google::cloud::aiplatform::v1::CreatePipelineJobRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreatePipelineJob(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreatePipelineJob(request),
       [this](grpc::ClientContext& context,
              google::cloud::aiplatform::v1::CreatePipelineJobRequest const&
                  request) {
@@ -166,9 +199,10 @@ PipelineServiceConnectionImpl::CreatePipelineJob(
 StatusOr<google::cloud::aiplatform::v1::PipelineJob>
 PipelineServiceConnectionImpl::GetPipelineJob(
     google::cloud::aiplatform::v1::GetPipelineJobRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetPipelineJob(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetPipelineJob(request),
       [this](
           grpc::ClientContext& context,
           google::cloud::aiplatform::v1::GetPipelineJobRequest const& request) {
@@ -181,16 +215,16 @@ StreamRange<google::cloud::aiplatform::v1::PipelineJob>
 PipelineServiceConnectionImpl::ListPipelineJobs(
     google::cloud::aiplatform::v1::ListPipelineJobsRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<aiplatform_v1::PipelineServiceRetryPolicy const>(
-      retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListPipelineJobs(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListPipelineJobs(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::aiplatform::v1::PipelineJob>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<aiplatform_v1::PipelineServiceRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::aiplatform::v1::ListPipelineJobsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
@@ -213,38 +247,41 @@ PipelineServiceConnectionImpl::ListPipelineJobs(
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 PipelineServiceConnectionImpl::DeletePipelineJob(
     google::cloud::aiplatform::v1::DeletePipelineJobRequest const& request) {
-  auto& stub = stub_;
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::aiplatform::v1::DeleteOperationMetadata>(
       background_->cq(), request,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::aiplatform::v1::DeletePipelineJobRequest const&
-                 request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::aiplatform::v1::DeletePipelineJobRequest const&
+              request) {
         return stub->AsyncDeletePipelineJob(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::GetOperationRequest const& request) {
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
-      [stub](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::longrunning::CancelOperationRequest const& request) {
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::aiplatform::v1::DeleteOperationMetadata>,
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeletePipelineJob(request), polling_policy(),
-      __func__);
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeletePipelineJob(request),
+      polling_policy(*current), __func__);
 }
 
 Status PipelineServiceConnectionImpl::CancelPipelineJob(
     google::cloud::aiplatform::v1::CancelPipelineJobRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CancelPipelineJob(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CancelPipelineJob(request),
       [this](grpc::ClientContext& context,
              google::cloud::aiplatform::v1::CancelPipelineJobRequest const&
                  request) {

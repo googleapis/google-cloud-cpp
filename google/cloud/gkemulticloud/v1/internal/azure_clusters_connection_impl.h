@@ -127,51 +127,6 @@ class AzureClustersConnectionImpl
           request) override;
 
  private:
-  std::unique_ptr<gkemulticloud_v1::AzureClustersRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<gkemulticloud_v1::AzureClustersRetryPolicyOption>()) {
-      return options.get<gkemulticloud_v1::AzureClustersRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<gkemulticloud_v1::AzureClustersRetryPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<gkemulticloud_v1::AzureClustersBackoffPolicyOption>()) {
-      return options.get<gkemulticloud_v1::AzureClustersBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<gkemulticloud_v1::AzureClustersBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<gkemulticloud_v1::AzureClustersConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<gkemulticloud_v1::
-                        AzureClustersConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<gkemulticloud_v1::
-                   AzureClustersConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<gkemulticloud_v1::AzureClustersConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<gkemulticloud_v1::AzureClustersPollingPolicyOption>()) {
-      return options.get<gkemulticloud_v1::AzureClustersPollingPolicyOption>()
-          ->clone();
-    }
-    return options_.get<gkemulticloud_v1::AzureClustersPollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<gkemulticloud_v1_internal::AzureClustersStub> stub_;
   Options options_;

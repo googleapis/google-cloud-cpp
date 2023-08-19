@@ -28,6 +28,28 @@ namespace google {
 namespace cloud {
 namespace iam_credentials_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<iam_credentials_v1::IAMCredentialsRetryPolicy> retry_policy(
+    Options const& options) {
+  return options.get<iam_credentials_v1::IAMCredentialsRetryPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options.get<iam_credentials_v1::IAMCredentialsBackoffPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<iam_credentials_v1::IAMCredentialsConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options
+      .get<
+          iam_credentials_v1::IAMCredentialsConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 IAMCredentialsConnectionImpl::IAMCredentialsConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
@@ -41,9 +63,10 @@ IAMCredentialsConnectionImpl::IAMCredentialsConnectionImpl(
 StatusOr<google::iam::credentials::v1::GenerateAccessTokenResponse>
 IAMCredentialsConnectionImpl::GenerateAccessToken(
     google::iam::credentials::v1::GenerateAccessTokenRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GenerateAccessToken(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GenerateAccessToken(request),
       [this](grpc::ClientContext& context,
              google::iam::credentials::v1::GenerateAccessTokenRequest const&
                  request) {
@@ -55,9 +78,10 @@ IAMCredentialsConnectionImpl::GenerateAccessToken(
 StatusOr<google::iam::credentials::v1::GenerateIdTokenResponse>
 IAMCredentialsConnectionImpl::GenerateIdToken(
     google::iam::credentials::v1::GenerateIdTokenRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GenerateIdToken(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GenerateIdToken(request),
       [this](
           grpc::ClientContext& context,
           google::iam::credentials::v1::GenerateIdTokenRequest const& request) {
@@ -69,8 +93,10 @@ IAMCredentialsConnectionImpl::GenerateIdToken(
 StatusOr<google::iam::credentials::v1::SignBlobResponse>
 IAMCredentialsConnectionImpl::SignBlob(
     google::iam::credentials::v1::SignBlobRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(), idempotency_policy()->SignBlob(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->SignBlob(request),
       [this](grpc::ClientContext& context,
              google::iam::credentials::v1::SignBlobRequest const& request) {
         return stub_->SignBlob(context, request);
@@ -81,8 +107,10 @@ IAMCredentialsConnectionImpl::SignBlob(
 StatusOr<google::iam::credentials::v1::SignJwtResponse>
 IAMCredentialsConnectionImpl::SignJwt(
     google::iam::credentials::v1::SignJwtRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(), idempotency_policy()->SignJwt(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->SignJwt(request),
       [this](grpc::ClientContext& context,
              google::iam::credentials::v1::SignJwtRequest const& request) {
         return stub_->SignJwt(context, request);

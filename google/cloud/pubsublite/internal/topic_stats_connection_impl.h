@@ -64,40 +64,6 @@ class TopicStatsServiceConnectionImpl
       override;
 
  private:
-  std::unique_ptr<pubsublite::TopicStatsServiceRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<pubsublite::TopicStatsServiceRetryPolicyOption>()) {
-      return options.get<pubsublite::TopicStatsServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<pubsublite::TopicStatsServiceRetryPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<pubsublite::TopicStatsServiceBackoffPolicyOption>()) {
-      return options.get<pubsublite::TopicStatsServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<pubsublite::TopicStatsServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<pubsublite::TopicStatsServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            pubsublite::TopicStatsServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<pubsublite::TopicStatsServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<pubsublite::TopicStatsServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<pubsublite_internal::TopicStatsServiceStub> stub_;
   Options options_;

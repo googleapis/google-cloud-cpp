@@ -97,53 +97,6 @@ class TranslationServiceConnectionImpl
                      request) override;
 
  private:
-  std::unique_ptr<translate_v3::TranslationServiceRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<translate_v3::TranslationServiceRetryPolicyOption>()) {
-      return options.get<translate_v3::TranslationServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<translate_v3::TranslationServiceRetryPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<translate_v3::TranslationServiceBackoffPolicyOption>()) {
-      return options.get<translate_v3::TranslationServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<translate_v3::TranslationServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<translate_v3::TranslationServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<translate_v3::
-                     TranslationServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<translate_v3::
-                   TranslationServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<
-            translate_v3::TranslationServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<translate_v3::TranslationServicePollingPolicyOption>()) {
-      return options.get<translate_v3::TranslationServicePollingPolicyOption>()
-          ->clone();
-    }
-    return options_.get<translate_v3::TranslationServicePollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<translate_v3_internal::TranslationServiceStub> stub_;
   Options options_;

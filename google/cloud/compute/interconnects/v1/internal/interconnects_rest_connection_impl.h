@@ -80,59 +80,30 @@ class InterconnectsRestConnectionImpl
           request) override;
 
  private:
-  std::unique_ptr<compute_interconnects_v1::InterconnectsRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<compute_interconnects_v1::InterconnectsRetryPolicyOption>()) {
-      return options
-          .get<compute_interconnects_v1::InterconnectsRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<compute_interconnects_v1::InterconnectsRetryPolicy>
+  retry_policy(Options const& options) {
+    return options
         .get<compute_interconnects_v1::InterconnectsRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            compute_interconnects_v1::InterconnectsBackoffPolicyOption>()) {
-      return options
-          .get<compute_interconnects_v1::InterconnectsBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options
         .get<compute_interconnects_v1::InterconnectsBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<
+  static std::unique_ptr<
       compute_interconnects_v1::InterconnectsConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_interconnects_v1::
-                        InterconnectsConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<compute_interconnects_v1::
-                   InterconnectsConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  idempotency_policy(Options const& options) {
+    return options
         .get<compute_interconnects_v1::
                  InterconnectsConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            compute_interconnects_v1::InterconnectsPollingPolicyOption>()) {
-      return options
-          .get<compute_interconnects_v1::InterconnectsPollingPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options
         .get<compute_interconnects_v1::InterconnectsPollingPolicyOption>()
         ->clone();
   }

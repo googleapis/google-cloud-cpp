@@ -28,6 +28,31 @@ namespace google {
 namespace cloud {
 namespace containeranalysis_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<containeranalysis_v1::ContainerAnalysisRetryPolicy>
+retry_policy(Options const& options) {
+  return options
+      .get<containeranalysis_v1::ContainerAnalysisRetryPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options
+      .get<containeranalysis_v1::ContainerAnalysisBackoffPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<
+    containeranalysis_v1::ContainerAnalysisConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options
+      .get<containeranalysis_v1::
+               ContainerAnalysisConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 ContainerAnalysisConnectionImpl::ContainerAnalysisConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
@@ -40,9 +65,10 @@ ContainerAnalysisConnectionImpl::ContainerAnalysisConnectionImpl(
 
 StatusOr<google::iam::v1::Policy> ContainerAnalysisConnectionImpl::SetIamPolicy(
     google::iam::v1::SetIamPolicyRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->SetIamPolicy(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->SetIamPolicy(request),
       [this](grpc::ClientContext& context,
              google::iam::v1::SetIamPolicyRequest const& request) {
         return stub_->SetIamPolicy(context, request);
@@ -52,9 +78,10 @@ StatusOr<google::iam::v1::Policy> ContainerAnalysisConnectionImpl::SetIamPolicy(
 
 StatusOr<google::iam::v1::Policy> ContainerAnalysisConnectionImpl::GetIamPolicy(
     google::iam::v1::GetIamPolicyRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetIamPolicy(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetIamPolicy(request),
       [this](grpc::ClientContext& context,
              google::iam::v1::GetIamPolicyRequest const& request) {
         return stub_->GetIamPolicy(context, request);
@@ -65,9 +92,10 @@ StatusOr<google::iam::v1::Policy> ContainerAnalysisConnectionImpl::GetIamPolicy(
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 ContainerAnalysisConnectionImpl::TestIamPermissions(
     google::iam::v1::TestIamPermissionsRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->TestIamPermissions(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->TestIamPermissions(request),
       [this](grpc::ClientContext& context,
              google::iam::v1::TestIamPermissionsRequest const& request) {
         return stub_->TestIamPermissions(context, request);
@@ -80,9 +108,10 @@ StatusOr<
 ContainerAnalysisConnectionImpl::GetVulnerabilityOccurrencesSummary(
     google::devtools::containeranalysis::v1::
         GetVulnerabilityOccurrencesSummaryRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetVulnerabilityOccurrencesSummary(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetVulnerabilityOccurrencesSummary(request),
       [this](grpc::ClientContext& context,
              google::devtools::containeranalysis::v1::
                  GetVulnerabilityOccurrencesSummaryRequest const& request) {

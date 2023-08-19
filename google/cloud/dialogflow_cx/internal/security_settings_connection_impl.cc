@@ -29,6 +29,30 @@ namespace google {
 namespace cloud {
 namespace dialogflow_cx_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<dialogflow_cx::SecuritySettingsServiceRetryPolicy> retry_policy(
+    Options const& options) {
+  return options.get<dialogflow_cx::SecuritySettingsServiceRetryPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options
+      .get<dialogflow_cx::SecuritySettingsServiceBackoffPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<
+    dialogflow_cx::SecuritySettingsServiceConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options
+      .get<dialogflow_cx::
+               SecuritySettingsServiceConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 SecuritySettingsServiceConnectionImpl::SecuritySettingsServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
@@ -43,9 +67,10 @@ StatusOr<google::cloud::dialogflow::cx::v3::SecuritySettings>
 SecuritySettingsServiceConnectionImpl::CreateSecuritySettings(
     google::cloud::dialogflow::cx::v3::CreateSecuritySettingsRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->CreateSecuritySettings(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateSecuritySettings(request),
       [this](grpc::ClientContext& context,
              google::cloud::dialogflow::cx::v3::
                  CreateSecuritySettingsRequest const& request) {
@@ -58,9 +83,10 @@ StatusOr<google::cloud::dialogflow::cx::v3::SecuritySettings>
 SecuritySettingsServiceConnectionImpl::GetSecuritySettings(
     google::cloud::dialogflow::cx::v3::GetSecuritySettingsRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetSecuritySettings(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetSecuritySettings(request),
       [this](
           grpc::ClientContext& context,
           google::cloud::dialogflow::cx::v3::GetSecuritySettingsRequest const&
@@ -72,9 +98,10 @@ StatusOr<google::cloud::dialogflow::cx::v3::SecuritySettings>
 SecuritySettingsServiceConnectionImpl::UpdateSecuritySettings(
     google::cloud::dialogflow::cx::v3::UpdateSecuritySettingsRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UpdateSecuritySettings(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateSecuritySettings(request),
       [this](grpc::ClientContext& context,
              google::cloud::dialogflow::cx::v3::
                  UpdateSecuritySettingsRequest const& request) {
@@ -87,17 +114,18 @@ StreamRange<google::cloud::dialogflow::cx::v3::SecuritySettings>
 SecuritySettingsServiceConnectionImpl::ListSecuritySettings(
     google::cloud::dialogflow::cx::v3::ListSecuritySettingsRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<dialogflow_cx::SecuritySettingsServiceRetryPolicy const>(
-          retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListSecuritySettings(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency =
+      idempotency_policy(*current)->ListSecuritySettings(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::dialogflow::cx::v3::SecuritySettings>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
+      [idempotency, function_name, stub = stub_,
+       retry =
+           std::shared_ptr<dialogflow_cx::SecuritySettingsServiceRetryPolicy>(
+               retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::dialogflow::cx::v3::ListSecuritySettingsRequest const&
               r) {
         return google::cloud::internal::RetryLoop(
@@ -121,9 +149,10 @@ SecuritySettingsServiceConnectionImpl::ListSecuritySettings(
 Status SecuritySettingsServiceConnectionImpl::DeleteSecuritySettings(
     google::cloud::dialogflow::cx::v3::DeleteSecuritySettingsRequest const&
         request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DeleteSecuritySettings(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteSecuritySettings(request),
       [this](grpc::ClientContext& context,
              google::cloud::dialogflow::cx::v3::
                  DeleteSecuritySettingsRequest const& request) {

@@ -41,9 +41,10 @@ SqlConnectServiceRestConnectionImpl::SqlConnectServiceRestConnectionImpl(
 StatusOr<google::cloud::sql::v1::ConnectSettings>
 SqlConnectServiceRestConnectionImpl::GetConnectSettings(
     google::cloud::sql::v1::GetConnectSettingsRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetConnectSettings(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetConnectSettings(request),
       [this](rest_internal::RestContext& rest_context,
              google::cloud::sql::v1::GetConnectSettingsRequest const& request) {
         return stub_->GetConnectSettings(rest_context, request);
@@ -54,9 +55,10 @@ SqlConnectServiceRestConnectionImpl::GetConnectSettings(
 StatusOr<google::cloud::sql::v1::GenerateEphemeralCertResponse>
 SqlConnectServiceRestConnectionImpl::GenerateEphemeralCert(
     google::cloud::sql::v1::GenerateEphemeralCertRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GenerateEphemeralCert(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GenerateEphemeralCert(request),
       [this](
           rest_internal::RestContext& rest_context,
           google::cloud::sql::v1::GenerateEphemeralCertRequest const& request) {

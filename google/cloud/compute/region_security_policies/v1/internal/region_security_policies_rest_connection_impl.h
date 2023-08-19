@@ -80,66 +80,33 @@ class RegionSecurityPoliciesRestConnectionImpl
           PatchRegionSecurityPoliciesRequest const& request) override;
 
  private:
-  std::unique_ptr<
+  static std::unique_ptr<
       compute_region_security_policies_v1::RegionSecurityPoliciesRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_region_security_policies_v1::
-                        RegionSecurityPoliciesRetryPolicyOption>()) {
-      return options
-          .get<compute_region_security_policies_v1::
-                   RegionSecurityPoliciesRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
+  retry_policy(Options const& options) {
+    return options
         .get<compute_region_security_policies_v1::
                  RegionSecurityPoliciesRetryPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_region_security_policies_v1::
-                        RegionSecurityPoliciesBackoffPolicyOption>()) {
-      return options
-          .get<compute_region_security_policies_v1::
-                   RegionSecurityPoliciesBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options
         .get<compute_region_security_policies_v1::
                  RegionSecurityPoliciesBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<compute_region_security_policies_v1::
-                      RegionSecurityPoliciesConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            compute_region_security_policies_v1::
-                RegionSecurityPoliciesConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<compute_region_security_policies_v1::
-                   RegionSecurityPoliciesConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<compute_region_security_policies_v1::
+                             RegionSecurityPoliciesConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
         .get<compute_region_security_policies_v1::
                  RegionSecurityPoliciesConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<compute_region_security_policies_v1::
-                        RegionSecurityPoliciesPollingPolicyOption>()) {
-      return options
-          .get<compute_region_security_policies_v1::
-                   RegionSecurityPoliciesPollingPolicyOption>()
-          ->clone();
-    }
-    return options_
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options
         .get<compute_region_security_policies_v1::
                  RegionSecurityPoliciesPollingPolicyOption>()
         ->clone();

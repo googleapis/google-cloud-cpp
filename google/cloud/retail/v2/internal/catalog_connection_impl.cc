@@ -29,6 +29,25 @@ namespace google {
 namespace cloud {
 namespace retail_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<retail_v2::CatalogServiceRetryPolicy> retry_policy(
+    Options const& options) {
+  return options.get<retail_v2::CatalogServiceRetryPolicyOption>()->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options.get<retail_v2::CatalogServiceBackoffPolicyOption>()->clone();
+}
+
+std::unique_ptr<retail_v2::CatalogServiceConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options
+      .get<retail_v2::CatalogServiceConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 CatalogServiceConnectionImpl::CatalogServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
@@ -43,17 +62,17 @@ StreamRange<google::cloud::retail::v2::Catalog>
 CatalogServiceConnectionImpl::ListCatalogs(
     google::cloud::retail::v2::ListCatalogsRequest request) {
   request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<retail_v2::CatalogServiceRetryPolicy const>(
-      retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListCatalogs(request);
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListCatalogs(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::retail::v2::Catalog>>(
       std::move(request),
-      [stub, retry, backoff, idempotency,
-       function_name](google::cloud::retail::v2::ListCatalogsRequest const& r) {
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<retail_v2::CatalogServiceRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          google::cloud::retail::v2::ListCatalogsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
@@ -75,9 +94,10 @@ CatalogServiceConnectionImpl::ListCatalogs(
 StatusOr<google::cloud::retail::v2::Catalog>
 CatalogServiceConnectionImpl::UpdateCatalog(
     google::cloud::retail::v2::UpdateCatalogRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UpdateCatalog(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateCatalog(request),
       [this](grpc::ClientContext& context,
              google::cloud::retail::v2::UpdateCatalogRequest const& request) {
         return stub_->UpdateCatalog(context, request);
@@ -87,9 +107,10 @@ CatalogServiceConnectionImpl::UpdateCatalog(
 
 Status CatalogServiceConnectionImpl::SetDefaultBranch(
     google::cloud::retail::v2::SetDefaultBranchRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->SetDefaultBranch(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->SetDefaultBranch(request),
       [this](
           grpc::ClientContext& context,
           google::cloud::retail::v2::SetDefaultBranchRequest const& request) {
@@ -101,9 +122,10 @@ Status CatalogServiceConnectionImpl::SetDefaultBranch(
 StatusOr<google::cloud::retail::v2::GetDefaultBranchResponse>
 CatalogServiceConnectionImpl::GetDefaultBranch(
     google::cloud::retail::v2::GetDefaultBranchRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetDefaultBranch(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetDefaultBranch(request),
       [this](
           grpc::ClientContext& context,
           google::cloud::retail::v2::GetDefaultBranchRequest const& request) {
@@ -115,9 +137,10 @@ CatalogServiceConnectionImpl::GetDefaultBranch(
 StatusOr<google::cloud::retail::v2::CompletionConfig>
 CatalogServiceConnectionImpl::GetCompletionConfig(
     google::cloud::retail::v2::GetCompletionConfigRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetCompletionConfig(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetCompletionConfig(request),
       [this](grpc::ClientContext& context,
              google::cloud::retail::v2::GetCompletionConfigRequest const&
                  request) {
@@ -129,9 +152,10 @@ CatalogServiceConnectionImpl::GetCompletionConfig(
 StatusOr<google::cloud::retail::v2::CompletionConfig>
 CatalogServiceConnectionImpl::UpdateCompletionConfig(
     google::cloud::retail::v2::UpdateCompletionConfigRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UpdateCompletionConfig(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateCompletionConfig(request),
       [this](grpc::ClientContext& context,
              google::cloud::retail::v2::UpdateCompletionConfigRequest const&
                  request) {
@@ -143,9 +167,10 @@ CatalogServiceConnectionImpl::UpdateCompletionConfig(
 StatusOr<google::cloud::retail::v2::AttributesConfig>
 CatalogServiceConnectionImpl::GetAttributesConfig(
     google::cloud::retail::v2::GetAttributesConfigRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetAttributesConfig(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetAttributesConfig(request),
       [this](grpc::ClientContext& context,
              google::cloud::retail::v2::GetAttributesConfigRequest const&
                  request) {
@@ -157,9 +182,10 @@ CatalogServiceConnectionImpl::GetAttributesConfig(
 StatusOr<google::cloud::retail::v2::AttributesConfig>
 CatalogServiceConnectionImpl::UpdateAttributesConfig(
     google::cloud::retail::v2::UpdateAttributesConfigRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->UpdateAttributesConfig(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateAttributesConfig(request),
       [this](grpc::ClientContext& context,
              google::cloud::retail::v2::UpdateAttributesConfigRequest const&
                  request) {
@@ -171,9 +197,10 @@ CatalogServiceConnectionImpl::UpdateAttributesConfig(
 StatusOr<google::cloud::retail::v2::AttributesConfig>
 CatalogServiceConnectionImpl::AddCatalogAttribute(
     google::cloud::retail::v2::AddCatalogAttributeRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->AddCatalogAttribute(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->AddCatalogAttribute(request),
       [this](grpc::ClientContext& context,
              google::cloud::retail::v2::AddCatalogAttributeRequest const&
                  request) {
@@ -185,9 +212,10 @@ CatalogServiceConnectionImpl::AddCatalogAttribute(
 StatusOr<google::cloud::retail::v2::AttributesConfig>
 CatalogServiceConnectionImpl::RemoveCatalogAttribute(
     google::cloud::retail::v2::RemoveCatalogAttributeRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->RemoveCatalogAttribute(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->RemoveCatalogAttribute(request),
       [this](grpc::ClientContext& context,
              google::cloud::retail::v2::RemoveCatalogAttributeRequest const&
                  request) {
@@ -199,9 +227,10 @@ CatalogServiceConnectionImpl::RemoveCatalogAttribute(
 StatusOr<google::cloud::retail::v2::AttributesConfig>
 CatalogServiceConnectionImpl::ReplaceCatalogAttribute(
     google::cloud::retail::v2::ReplaceCatalogAttributeRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->ReplaceCatalogAttribute(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ReplaceCatalogAttribute(request),
       [this](grpc::ClientContext& context,
              google::cloud::retail::v2::ReplaceCatalogAttributeRequest const&
                  request) {

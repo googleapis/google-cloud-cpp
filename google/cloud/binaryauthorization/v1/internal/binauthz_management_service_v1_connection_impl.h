@@ -80,57 +80,6 @@ class BinauthzManagementServiceV1ConnectionImpl
           request) override;
 
  private:
-  std::unique_ptr<
-      binaryauthorization_v1::BinauthzManagementServiceV1RetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<binaryauthorization_v1::
-                        BinauthzManagementServiceV1RetryPolicyOption>()) {
-      return options
-          .get<binaryauthorization_v1::
-                   BinauthzManagementServiceV1RetryPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<binaryauthorization_v1::
-                 BinauthzManagementServiceV1RetryPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<binaryauthorization_v1::
-                        BinauthzManagementServiceV1BackoffPolicyOption>()) {
-      return options
-          .get<binaryauthorization_v1::
-                   BinauthzManagementServiceV1BackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<binaryauthorization_v1::
-                 BinauthzManagementServiceV1BackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<binaryauthorization_v1::
-                      BinauthzManagementServiceV1ConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            binaryauthorization_v1::
-                BinauthzManagementServiceV1ConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<
-              binaryauthorization_v1::
-                  BinauthzManagementServiceV1ConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<binaryauthorization_v1::
-                 BinauthzManagementServiceV1ConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<
       binaryauthorization_v1_internal::BinauthzManagementServiceV1Stub>

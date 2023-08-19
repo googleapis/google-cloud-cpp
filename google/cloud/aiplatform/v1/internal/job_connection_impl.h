@@ -206,48 +206,6 @@ class JobServiceConnectionImpl : public aiplatform_v1::JobServiceConnection {
           ResumeModelDeploymentMonitoringJobRequest const& request) override;
 
  private:
-  std::unique_ptr<aiplatform_v1::JobServiceRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<aiplatform_v1::JobServiceRetryPolicyOption>()) {
-      return options.get<aiplatform_v1::JobServiceRetryPolicyOption>()->clone();
-    }
-    return options_.get<aiplatform_v1::JobServiceRetryPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<aiplatform_v1::JobServiceBackoffPolicyOption>()) {
-      return options.get<aiplatform_v1::JobServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<aiplatform_v1::JobServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<aiplatform_v1::JobServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            aiplatform_v1::JobServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<aiplatform_v1::JobServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<aiplatform_v1::JobServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<aiplatform_v1::JobServicePollingPolicyOption>()) {
-      return options.get<aiplatform_v1::JobServicePollingPolicyOption>()
-          ->clone();
-    }
-    return options_.get<aiplatform_v1::JobServicePollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<aiplatform_v1_internal::JobServiceStub> stub_;
   Options options_;

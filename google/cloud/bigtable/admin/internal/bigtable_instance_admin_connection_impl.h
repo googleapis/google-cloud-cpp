@@ -126,63 +126,6 @@ class BigtableInstanceAdminConnectionImpl
       google::bigtable::admin::v2::ListHotTabletsRequest request) override;
 
  private:
-  std::unique_ptr<bigtable_admin::BigtableInstanceAdminRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<bigtable_admin::BigtableInstanceAdminRetryPolicyOption>()) {
-      return options
-          .get<bigtable_admin::BigtableInstanceAdminRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<bigtable_admin::BigtableInstanceAdminRetryPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<bigtable_admin::BigtableInstanceAdminBackoffPolicyOption>()) {
-      return options
-          .get<bigtable_admin::BigtableInstanceAdminBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<bigtable_admin::BigtableInstanceAdminBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<
-      bigtable_admin::BigtableInstanceAdminConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            bigtable_admin::
-                BigtableInstanceAdminConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<bigtable_admin::
-                   BigtableInstanceAdminConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<bigtable_admin::
-                 BigtableInstanceAdminConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<bigtable_admin::BigtableInstanceAdminPollingPolicyOption>()) {
-      return options
-          .get<bigtable_admin::BigtableInstanceAdminPollingPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<bigtable_admin::BigtableInstanceAdminPollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<bigtable_admin_internal::BigtableInstanceAdminStub> stub_;
   Options options_;
