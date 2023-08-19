@@ -34,6 +34,14 @@ namespace {
 using ::google::cloud::Idempotency;
 using ::google::cloud::internal::RetryLoop;
 
+std::unique_ptr<pubsub::RetryPolicy> retry_policy(Options const& options) {
+  return options.get<pubsub::RetryPolicyOption>()->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options.get<pubsub::BackoffPolicyOption>()->clone();
+}
+
 class SubscriptionAdminConnectionImpl
     : public pubsub::SubscriptionAdminConnection {
  public:
@@ -48,8 +56,10 @@ class SubscriptionAdminConnectionImpl
 
   StatusOr<google::pubsub::v1::Subscription> CreateSubscription(
       CreateSubscriptionParams p) override {
+    auto current = google::cloud::internal::SaveCurrentOptions();
     return RetryLoop(
-        retry_policy(), backoff_policy(), Idempotency::kIdempotent,
+        retry_policy(*current), backoff_policy(*current),
+        Idempotency::kIdempotent,
         [this](grpc::ClientContext& context,
                google::pubsub::v1::Subscription const& request) {
           return stub_->CreateSubscription(context, request);
@@ -59,10 +69,12 @@ class SubscriptionAdminConnectionImpl
 
   StatusOr<google::pubsub::v1::Subscription> GetSubscription(
       GetSubscriptionParams p) override {
+    auto current = google::cloud::internal::SaveCurrentOptions();
     google::pubsub::v1::GetSubscriptionRequest request;
     request.set_subscription(p.subscription.FullName());
     return RetryLoop(
-        retry_policy(), backoff_policy(), Idempotency::kIdempotent,
+        retry_policy(*current), backoff_policy(*current),
+        Idempotency::kIdempotent,
         [this](grpc::ClientContext& context,
                google::pubsub::v1::GetSubscriptionRequest const& request) {
           return stub_->GetSubscription(context, request);
@@ -72,8 +84,10 @@ class SubscriptionAdminConnectionImpl
 
   StatusOr<google::pubsub::v1::Subscription> UpdateSubscription(
       UpdateSubscriptionParams p) override {
+    auto current = google::cloud::internal::SaveCurrentOptions();
     return RetryLoop(
-        retry_policy(), backoff_policy(), Idempotency::kIdempotent,
+        retry_policy(*current), backoff_policy(*current),
+        Idempotency::kIdempotent,
         [this](grpc::ClientContext& context,
                google::pubsub::v1::UpdateSubscriptionRequest const& request) {
           return stub_->UpdateSubscription(context, request);
@@ -83,17 +97,19 @@ class SubscriptionAdminConnectionImpl
 
   pubsub::ListSubscriptionsRange ListSubscriptions(
       ListSubscriptionsParams p) override {
+    auto current = google::cloud::internal::SaveCurrentOptions();
     google::pubsub::v1::ListSubscriptionsRequest request;
     request.set_project(std::move(p.project_id));
-    auto& stub = stub_;
-    // Because we do not have C++14 generalized lambda captures we cannot just
-    // use the unique_ptr<> here, so convert to shared_ptr<> instead.
-    auto retry = std::shared_ptr<pubsub::RetryPolicy const>(retry_policy());
+    // The lambda must be copyable to use in MakePaginationRange<>(). We need
+    // to wrap the policies in shared pointers.
+    auto retry =
+        std::shared_ptr<pubsub::RetryPolicy const>(retry_policy(*current));
     auto backoff =
-        std::shared_ptr<pubsub::BackoffPolicy const>(backoff_policy());
+        std::shared_ptr<pubsub::BackoffPolicy const>(backoff_policy(*current));
     char const* function_name = __func__;
     auto list_functor =
-        [stub, retry, backoff, function_name](
+        [stub = stub_, retry = std::move(retry), backoff = std::move(backoff),
+         function_name](
             google::pubsub::v1::ListSubscriptionsRequest const& request) {
           return RetryLoop(
               retry->clone(), backoff->clone(), Idempotency::kIdempotent,
@@ -117,10 +133,12 @@ class SubscriptionAdminConnectionImpl
   }
 
   Status DeleteSubscription(DeleteSubscriptionParams p) override {
+    auto current = google::cloud::internal::SaveCurrentOptions();
     google::pubsub::v1::DeleteSubscriptionRequest request;
     request.set_subscription(p.subscription.FullName());
     return RetryLoop(
-        retry_policy(), backoff_policy(), Idempotency::kIdempotent,
+        retry_policy(*current), backoff_policy(*current),
+        Idempotency::kIdempotent,
         [this](grpc::ClientContext& context,
                google::pubsub::v1::DeleteSubscriptionRequest const& request) {
           return stub_->DeleteSubscription(context, request);
@@ -129,8 +147,10 @@ class SubscriptionAdminConnectionImpl
   }
 
   Status ModifyPushConfig(ModifyPushConfigParams p) override {
+    auto current = google::cloud::internal::SaveCurrentOptions();
     return RetryLoop(
-        retry_policy(), backoff_policy(), Idempotency::kIdempotent,
+        retry_policy(*current), backoff_policy(*current),
+        Idempotency::kIdempotent,
         [this](grpc::ClientContext& context,
                google::pubsub::v1::ModifyPushConfigRequest const& request) {
           return stub_->ModifyPushConfig(context, request);
@@ -140,11 +160,12 @@ class SubscriptionAdminConnectionImpl
 
   StatusOr<google::pubsub::v1::Snapshot> CreateSnapshot(
       CreateSnapshotParams p) override {
+    auto current = google::cloud::internal::SaveCurrentOptions();
     auto const idempotency = p.request.name().empty()
                                  ? Idempotency::kNonIdempotent
                                  : Idempotency::kIdempotent;
     return RetryLoop(
-        retry_policy(), backoff_policy(), idempotency,
+        retry_policy(*current), backoff_policy(*current), idempotency,
         [this](grpc::ClientContext& context,
                google::pubsub::v1::CreateSnapshotRequest const& request) {
           return stub_->CreateSnapshot(context, request);
@@ -154,10 +175,12 @@ class SubscriptionAdminConnectionImpl
 
   StatusOr<google::pubsub::v1::Snapshot> GetSnapshot(
       GetSnapshotParams p) override {
+    auto current = google::cloud::internal::SaveCurrentOptions();
     google::pubsub::v1::GetSnapshotRequest request;
     request.set_snapshot(p.snapshot.FullName());
     return RetryLoop(
-        retry_policy(), backoff_policy(), Idempotency::kIdempotent,
+        retry_policy(*current), backoff_policy(*current),
+        Idempotency::kIdempotent,
         [this](grpc::ClientContext& context,
                google::pubsub::v1::GetSnapshotRequest const& request) {
           return stub_->GetSnapshot(context, request);
@@ -166,17 +189,19 @@ class SubscriptionAdminConnectionImpl
   }
 
   pubsub::ListSnapshotsRange ListSnapshots(ListSnapshotsParams p) override {
+    auto current = google::cloud::internal::SaveCurrentOptions();
     google::pubsub::v1::ListSnapshotsRequest request;
     request.set_project(std::move(p.project_id));
-    auto& stub = stub_;
-    // Because we do not have C++14 generalized lambda captures we cannot just
-    // use the unique_ptr<> here, so convert to shared_ptr<> instead.
-    auto retry = std::shared_ptr<pubsub::RetryPolicy const>(retry_policy());
+    // The lambda must be copyable to use in MakePaginationRange<>(). We need
+    // to wrap the policies in shared pointers.
+    auto retry =
+        std::shared_ptr<pubsub::RetryPolicy const>(retry_policy(*current));
     auto backoff =
-        std::shared_ptr<pubsub::BackoffPolicy const>(backoff_policy());
+        std::shared_ptr<pubsub::BackoffPolicy const>(backoff_policy(*current));
     char const* function_name = __func__;
     auto list_functor =
-        [stub, retry, backoff, function_name](
+        [stub = stub_, retry = std::move(retry), backoff = std::move(backoff),
+         function_name](
             google::pubsub::v1::ListSnapshotsRequest const& request) {
           return RetryLoop(
               retry->clone(), backoff->clone(), Idempotency::kIdempotent,
@@ -201,8 +226,10 @@ class SubscriptionAdminConnectionImpl
 
   StatusOr<google::pubsub::v1::Snapshot> UpdateSnapshot(
       UpdateSnapshotParams p) override {
+    auto current = google::cloud::internal::SaveCurrentOptions();
     return RetryLoop(
-        retry_policy(), backoff_policy(), Idempotency::kIdempotent,
+        retry_policy(*current), backoff_policy(*current),
+        Idempotency::kIdempotent,
         [this](grpc::ClientContext& context,
                google::pubsub::v1::UpdateSnapshotRequest const& request) {
           return stub_->UpdateSnapshot(context, request);
@@ -211,10 +238,12 @@ class SubscriptionAdminConnectionImpl
   }
 
   Status DeleteSnapshot(DeleteSnapshotParams p) override {
+    auto current = google::cloud::internal::SaveCurrentOptions();
     google::pubsub::v1::DeleteSnapshotRequest request;
     request.set_snapshot(p.snapshot.FullName());
     return RetryLoop(
-        retry_policy(), backoff_policy(), Idempotency::kIdempotent,
+        retry_policy(*current), backoff_policy(*current),
+        Idempotency::kIdempotent,
         [this](grpc::ClientContext& context,
                google::pubsub::v1::DeleteSnapshotRequest const& request) {
           return stub_->DeleteSnapshot(context, request);
@@ -223,8 +252,10 @@ class SubscriptionAdminConnectionImpl
   }
 
   StatusOr<google::pubsub::v1::SeekResponse> Seek(SeekParams p) override {
+    auto current = google::cloud::internal::SaveCurrentOptions();
     return RetryLoop(
-        retry_policy(), backoff_policy(), Idempotency::kIdempotent,
+        retry_policy(*current), backoff_policy(*current),
+        Idempotency::kIdempotent,
         [this](grpc::ClientContext& context,
                google::pubsub::v1::SeekRequest const& request) {
           return stub_->Seek(context, request);
@@ -235,22 +266,6 @@ class SubscriptionAdminConnectionImpl
   Options options() const override { return options_; }
 
  private:
-  std::unique_ptr<pubsub::RetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<pubsub::RetryPolicyOption>()) {
-      return options.get<pubsub::RetryPolicyOption>()->clone();
-    }
-    return options_.get<pubsub::RetryPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<pubsub::BackoffPolicyOption>()) {
-      return options.get<pubsub::BackoffPolicyOption>()->clone();
-    }
-    return options_.get<pubsub::BackoffPolicyOption>()->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<pubsub_internal::SubscriberStub> stub_;
   Options options_;

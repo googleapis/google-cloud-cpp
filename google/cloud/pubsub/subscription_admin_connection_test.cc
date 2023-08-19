@@ -60,6 +60,7 @@ TEST(SubscriptionAdminConnectionTest, Create) {
       });
 
   auto subscription_admin = MakeTestSubscriptionAdminConnection(mock);
+  internal::OptionsSpan span(subscription_admin->options());
   google::pubsub::v1::Subscription expected;
   expected.set_topic("test-topic-name");
   expected.set_name(subscription.FullName());
@@ -86,6 +87,7 @@ TEST(SubscriptionAdminConnectionTest, CreateWithMetadata) {
       });
 
   auto subscription_admin = MakeTestSubscriptionAdminConnection(mock);
+  internal::OptionsSpan span(subscription_admin->options());
   google::pubsub::v1::Subscription expected;
   expected.set_topic("test-topic-name");
   expected.set_name(subscription.FullName());
@@ -111,6 +113,7 @@ TEST(SubscriptionAdminConnectionTest, List) {
           });
 
   auto subscription_admin = MakeTestSubscriptionAdminConnection(mock);
+  internal::OptionsSpan span(subscription_admin->options());
   std::vector<std::string> topic_names;
   for (auto& t :
        subscription_admin->ListSubscriptions({"projects/test-project-id"})) {
@@ -137,6 +140,7 @@ TEST(SubscriptionAdminConnectionTest, Get) {
       });
 
   auto subscription_admin = MakeTestSubscriptionAdminConnection(mock);
+  internal::OptionsSpan span(subscription_admin->options());
   auto response = subscription_admin->GetSubscription({subscription});
   ASSERT_STATUS_OK(response);
   EXPECT_THAT(*response, IsProtoEqual(expected));
@@ -158,6 +162,7 @@ TEST(SubscriptionAdminConnectionTest, Update) {
           });
 
   auto subscription_admin = MakeTestSubscriptionAdminConnection(mock);
+  internal::OptionsSpan span(subscription_admin->options());
   google::pubsub::v1::Subscription expected;
   expected.set_name(subscription.FullName());
   expected.set_ack_deadline_seconds(1);
@@ -192,6 +197,7 @@ TEST(SubscriptionAdminConnectionTest, DeleteWithLogging) {
 
   auto subscription_admin = MakeTestSubscriptionAdminConnection(
       mock, Options{}.set<TracingComponentsOption>({"rpc"}));
+  internal::OptionsSpan span(subscription_admin->options());
   auto response = subscription_admin->DeleteSubscription({subscription});
   ASSERT_STATUS_OK(response);
 
@@ -214,6 +220,7 @@ TEST(SubscriptionAdminConnectionTest, ModifyPushConfig) {
 
   auto subscription_admin = MakeTestSubscriptionAdminConnection(
       mock, Options{}.set<TracingComponentsOption>({"rpc"}));
+  internal::OptionsSpan span(subscription_admin->options());
   google::pubsub::v1::ModifyPushConfigRequest request;
   request.set_subscription(subscription.FullName());
   auto response = subscription_admin->ModifyPushConfig({request});
@@ -241,6 +248,7 @@ TEST(SubscriptionAdminConnectionTest, CreateSnapshot) {
       });
 
   auto subscription_admin = MakeTestSubscriptionAdminConnection(mock);
+  internal::OptionsSpan span(subscription_admin->options());
   auto response = subscription_admin->CreateSnapshot(
       {SnapshotBuilder{}.BuildCreateRequest(subscription, snapshot)});
   ASSERT_STATUS_OK(response);
@@ -260,6 +268,7 @@ TEST(SubscriptionAdminConnectionTest, CreateSnapshotNotIdempotent) {
       .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")));
 
   auto subscription_admin = MakeTestSubscriptionAdminConnection(mock);
+  internal::OptionsSpan span(subscription_admin->options());
   auto response = subscription_admin->CreateSnapshot(
       {SnapshotBuilder{}.BuildCreateRequest(subscription)});
   EXPECT_THAT(response,
@@ -284,6 +293,7 @@ TEST(SubscriptionAdminConnectionTest, GetSnapshot) {
       });
 
   auto subscription_admin = MakeTestSubscriptionAdminConnection(mock);
+  internal::OptionsSpan span(subscription_admin->options());
   auto response = subscription_admin->GetSnapshot({snapshot});
   ASSERT_STATUS_OK(response);
   EXPECT_THAT(*response, IsProtoEqual(expected));
@@ -305,6 +315,7 @@ TEST(SubscriptionAdminConnectionTest, ListSnapshots) {
       });
 
   auto snapshot_admin = MakeTestSubscriptionAdminConnection(mock);
+  internal::OptionsSpan span(snapshot_admin->options());
   std::vector<std::string> names;
   for (auto& t : snapshot_admin->ListSnapshots({"projects/test-project-id"})) {
     ASSERT_STATUS_OK(t);
@@ -331,6 +342,7 @@ TEST(SubscriptionAdminConnectionTest, UpdateSnapshot) {
       });
 
   auto subscription_admin = MakeTestSubscriptionAdminConnection(mock);
+  internal::OptionsSpan span(subscription_admin->options());
   auto response = subscription_admin->UpdateSnapshot(
       {SnapshotBuilder{}.BuildUpdateRequest(snapshot)});
   ASSERT_STATUS_OK(response);
@@ -351,6 +363,7 @@ TEST(SubscriptionAdminConnectionTest, DeleteSnapshot) {
 
   auto snapshot_admin = MakeTestSubscriptionAdminConnection(
       mock, Options{}.set<TracingComponentsOption>({"rpc"}));
+  internal::OptionsSpan span(snapshot_admin->options());
   auto response = snapshot_admin->DeleteSnapshot({snapshot});
   ASSERT_STATUS_OK(response);
 }
@@ -371,6 +384,7 @@ TEST(SubscriptionAdminConnectionTest, Seek) {
 
   auto snapshot_admin = MakeTestSubscriptionAdminConnection(
       mock, Options{}.set<TracingComponentsOption>({"rpc"}));
+  internal::OptionsSpan span(snapshot_admin->options());
   google::pubsub::v1::SeekRequest request;
   request.set_subscription(subscription.FullName());
   request.set_snapshot(snapshot.FullName());

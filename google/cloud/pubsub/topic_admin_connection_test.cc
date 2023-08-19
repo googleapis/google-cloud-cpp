@@ -57,6 +57,7 @@ TEST(TopicAdminConnectionTest, Create) {
           });
 
   auto topic_admin = MakeTestTopicAdminConnection(mock);
+  internal::OptionsSpan span(topic_admin->options());
   auto const expected = TopicBuilder(topic).BuildCreateRequest();
   auto response = topic_admin->CreateTopic({expected});
   ASSERT_STATUS_OK(response);
@@ -80,6 +81,7 @@ TEST(TopicAdminConnectionTest, Metadata) {
       });
 
   auto topic_admin = MakeTestTopicAdminConnection(mock);
+  internal::OptionsSpan span(topic_admin->options());
   auto const expected = TopicBuilder(topic).BuildCreateRequest();
   auto response = topic_admin->CreateTopic({expected});
   ASSERT_STATUS_OK(response);
@@ -101,6 +103,7 @@ TEST(TopicAdminConnectionTest, Get) {
       });
 
   auto topic_admin = MakeTestTopicAdminConnection(mock);
+  internal::OptionsSpan span(topic_admin->options());
   auto response = topic_admin->GetTopic({topic});
   ASSERT_STATUS_OK(response);
   EXPECT_THAT(*response, IsProtoEqual(expected));
@@ -122,6 +125,7 @@ TEST(TopicAdminConnectionTest, Update) {
       });
 
   auto topic_admin = MakeTestTopicAdminConnection(mock);
+  internal::OptionsSpan span(topic_admin->options());
   auto response =
       topic_admin->UpdateTopic({TopicBuilder(topic)
                                     .add_label("test-key", "test-value")
@@ -146,6 +150,7 @@ TEST(TopicAdminConnectionTest, List) {
       });
 
   auto topic_admin = MakeTestTopicAdminConnection(mock);
+  internal::OptionsSpan span(topic_admin->options());
   std::vector<std::string> topic_names;
   for (auto& t : topic_admin->ListTopics({"projects/test-project-id"})) {
     ASSERT_STATUS_OK(t);
@@ -175,6 +180,7 @@ TEST(TopicAdminConnectionTest, DeleteWithLogging) {
 
   auto topic_admin = MakeTestTopicAdminConnection(
       mock, Options{}.set<TracingComponentsOption>({"rpc"}));
+  internal::OptionsSpan span(topic_admin->options());
   auto response = topic_admin->DeleteTopic({topic});
   ASSERT_STATUS_OK(response);
 
@@ -197,6 +203,7 @@ TEST(TopicAdminConnectionTest, DetachSubscription) {
 
   auto topic_admin = MakeTestTopicAdminConnection(
       mock, Options{}.set<TracingComponentsOption>({"rpc"}));
+  internal::OptionsSpan span(topic_admin->options());
   auto response = topic_admin->DetachSubscription({subscription});
   ASSERT_STATUS_OK(response);
 }
@@ -218,6 +225,7 @@ TEST(TopicAdminConnectionTest, ListSubscriptions) {
       });
 
   auto topic_admin = MakeTestTopicAdminConnection(mock);
+  internal::OptionsSpan span(topic_admin->options());
   std::vector<std::string> names;
   for (auto& t : topic_admin->ListTopicSubscriptions({topic_name})) {
     ASSERT_STATUS_OK(t);
@@ -244,6 +252,7 @@ TEST(TopicAdminConnectionTest, ListSnapshots) {
           });
 
   auto topic_admin = MakeTestTopicAdminConnection(mock);
+  internal::OptionsSpan span(topic_admin->options());
   std::vector<std::string> names;
   for (auto& t : topic_admin->ListTopicSnapshots({topic_name})) {
     ASSERT_STATUS_OK(t);
