@@ -105,7 +105,8 @@ ClientMetadata MakeClientMetadata(Topic const& topic, std::uint32_t partition) {
 }
 
 StatusOr<std::unique_ptr<PublisherConnection>> MakePublisherConnection(
-    Topic topic, Options opts) {
+    std::shared_ptr<AdminServiceConnection> admin_connection, Topic topic,
+    Options opts) {
   if (!opts.has<GrpcNumChannelsOption>()) {
     // Each channel has a limit of 100 outstanding RPCs, so 20 allows up to 2000
     // partitions without reaching this limit
@@ -175,10 +176,17 @@ StatusOr<std::unique_ptr<PublisherConnection>> MakePublisherConnection(
           std::move(background_threads),
           std::make_unique<PublisherConnectionImpl>(
               std::make_unique<MultipartitionPublisher>(
-                  partition_publisher_factory, MakeAdminServiceConnection(opts),
+                  partition_publisher_factory, std::move(admin_connection),
                   alarm_registry, std::make_unique<DefaultRoutingPolicy>(),
                   std::move(topic)),
               transformer)));
+}
+
+StatusOr<std::unique_ptr<google::cloud::pubsub::PublisherConnection>>
+MakePublisherConnection(Topic topic, Options opts) {
+  auto admin = MakeAdminServiceConnection(opts);
+  return MakePublisherConnection(std::move(admin), std::move(topic),
+                                 std::move(opts));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

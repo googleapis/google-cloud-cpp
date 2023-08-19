@@ -114,7 +114,7 @@ class PublisherIntegrationTest : public testing_util::IntegrationTest {
     ASSERT_STATUS_OK(client.CreateTopic(parent, t, topic_id));
 
     auto publisher_connection = MakePublisherConnection(
-        std::move(topic),
+        admin_connection_, std::move(topic),
         Options{}.set<MaxBatchMessagesOption>(kMaxNumMessagesPerBatch));
     ASSERT_STATUS_OK(publisher_connection);
     publisher_connection_ = *std::move(publisher_connection);
