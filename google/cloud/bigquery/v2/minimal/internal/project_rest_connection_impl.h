@@ -45,30 +45,6 @@ class ProjectRestConnectionImpl : public ProjectConnection {
       ListProjectsRequest const& request) override;
 
  private:
-  std::unique_ptr<ProjectRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<ProjectRetryPolicyOption>()) {
-      return options.get<ProjectRetryPolicyOption>()->clone();
-    }
-    return options_.get<ProjectRetryPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<ProjectBackoffPolicyOption>()) {
-      return options.get<ProjectBackoffPolicyOption>()->clone();
-    }
-    return options_.get<ProjectBackoffPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<ProjectIdempotencyPolicy> idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<ProjectIdempotencyPolicyOption>()) {
-      return options.get<ProjectIdempotencyPolicyOption>()->clone();
-    }
-    return options_.get<ProjectIdempotencyPolicyOption>()->clone();
-  }
-
   std::shared_ptr<ProjectRestStub> stub_;
   Options options_;
 };

@@ -96,6 +96,7 @@ TEST(ProjectConnectionTest, ListProjectsSuccess) {
   ListProjectsRequest request;
   request.set_max_results(1);
 
+  google::cloud::internal::OptionsSpan span(conn->options());
   for (auto const& project : conn->ListProjects(request)) {
     ASSERT_STATUS_OK(project);
     actual_project_ids.push_back(project->id);
@@ -112,6 +113,7 @@ TEST(ProjectConnectionTest, ListProjectsPermanentError) {
   auto conn = CreateTestingConnection(std::move(mock));
 
   ListProjectsRequest request;
+  google::cloud::internal::OptionsSpan span(conn->options());
   auto range = conn->ListProjects(request);
   auto begin = range.begin();
   ASSERT_NE(begin, range.end());
@@ -127,6 +129,7 @@ TEST(ProjectConnectionTest, ListProjectsTooManyTransients) {
   auto conn = CreateTestingConnection(std::move(mock));
 
   ListProjectsRequest request;
+  google::cloud::internal::OptionsSpan span(conn->options());
   auto range = conn->ListProjects(request);
   auto begin = range.begin();
   ASSERT_NE(begin, range.end());

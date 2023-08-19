@@ -50,30 +50,6 @@ class BigQueryJobRestConnectionImpl : public BigQueryJobConnection {
       GetQueryResultsRequest const& request) override;
 
  private:
-  std::unique_ptr<BigQueryJobRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<BigQueryJobRetryPolicyOption>()) {
-      return options.get<BigQueryJobRetryPolicyOption>()->clone();
-    }
-    return options_.get<BigQueryJobRetryPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<BigQueryJobBackoffPolicyOption>()) {
-      return options.get<BigQueryJobBackoffPolicyOption>()->clone();
-    }
-    return options_.get<BigQueryJobBackoffPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<BigQueryJobIdempotencyPolicy> idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<BigQueryJobIdempotencyPolicyOption>()) {
-      return options.get<BigQueryJobIdempotencyPolicyOption>()->clone();
-    }
-    return options_.get<BigQueryJobIdempotencyPolicyOption>()->clone();
-  }
-
   std::shared_ptr<BigQueryJobRestStub> stub_;
   Options options_;
 };

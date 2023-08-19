@@ -24,6 +24,22 @@ namespace google {
 namespace cloud {
 namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<DatasetRetryPolicy> retry_policy(Options const& options) {
+  return options.get<DatasetRetryPolicyOption>()->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options.get<DatasetBackoffPolicyOption>()->clone();
+}
+
+std::unique_ptr<DatasetIdempotencyPolicy> idempotency_policy(
+    Options const& options) {
+  return options.get<DatasetIdempotencyPolicyOption>()->clone();
+}
+
+}  // namespace
 
 DatasetRestConnectionImpl::DatasetRestConnectionImpl(
     std::shared_ptr<DatasetRestStub> stub, Options options)
@@ -33,9 +49,10 @@ DatasetRestConnectionImpl::DatasetRestConnectionImpl(
 
 StatusOr<Dataset> DatasetRestConnectionImpl::GetDataset(
     GetDatasetRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   auto result = rest_internal::RestRetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetDataset(request),
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetDataset(request),
       [this](rest_internal::RestContext& rest_context,
              GetDatasetRequest const& request) {
         return stub_->GetDataset(rest_context, request);
@@ -47,13 +64,15 @@ StatusOr<Dataset> DatasetRestConnectionImpl::GetDataset(
 
 StreamRange<ListFormatDataset> DatasetRestConnectionImpl::ListDatasets(
     ListDatasetsRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   auto req = request;
   req.set_page_token("");
 
   auto& stub = stub_;
-  auto retry = std::shared_ptr<DatasetRetryPolicy const>(retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListDatasets(req);
+  auto retry =
+      std::shared_ptr<DatasetRetryPolicy const>(retry_policy(*current));
+  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy(*current));
+  auto idempotency = idempotency_policy(*current)->ListDatasets(req);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<ListFormatDataset>>(

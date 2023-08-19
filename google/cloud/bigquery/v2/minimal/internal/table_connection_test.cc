@@ -78,6 +78,7 @@ TEST(TableConnectionTest, GetTableSuccess) {
   GetTableRequest request = bigquery_v2_minimal_testing::MakeGetTableRequest();
   auto expected = bigquery_v2_minimal_testing::MakeTable();
 
+  google::cloud::internal::OptionsSpan span(conn->options());
   auto table_result = conn->GetTable(request);
 
   ASSERT_STATUS_OK(table_result);
@@ -132,6 +133,7 @@ TEST(TableConnectionTest, ListTablesSuccess) {
   request.set_project_id("test-project-id");
   request.set_dataset_id("test-dataset-id");
 
+  google::cloud::internal::OptionsSpan span(conn->options());
   for (auto const& table : conn->ListTables(request)) {
     ASSERT_STATUS_OK(table);
     actual_table_ids.push_back(table->id);
@@ -148,6 +150,7 @@ TEST(TableConnectionTest, GetTablePermanentError) {
   auto conn = CreateTestingConnection(std::move(mock));
 
   GetTableRequest request;
+  google::cloud::internal::OptionsSpan span(conn->options());
   auto result = conn->GetTable(request);
   EXPECT_THAT(result, StatusIs(StatusCode::kPermissionDenied,
                                HasSubstr("permission-denied")));
@@ -161,6 +164,7 @@ TEST(TableConnectionTest, ListTablesPermanentError) {
   auto conn = CreateTestingConnection(std::move(mock));
 
   ListTablesRequest request;
+  google::cloud::internal::OptionsSpan span(conn->options());
   auto range = conn->ListTables(request);
   auto begin = range.begin();
   ASSERT_NE(begin, range.end());
@@ -177,6 +181,7 @@ TEST(TableConnectionTest, GetTableTooManyTransients) {
   auto conn = CreateTestingConnection(std::move(mock));
 
   GetTableRequest request;
+  google::cloud::internal::OptionsSpan span(conn->options());
   auto result = conn->GetTable(request);
   EXPECT_THAT(result,
               StatusIs(StatusCode::kResourceExhausted, HasSubstr("try-again")));
@@ -191,6 +196,7 @@ TEST(TableConnectionTest, ListTablesTooManyTransients) {
   auto conn = CreateTestingConnection(std::move(mock));
 
   ListTablesRequest request;
+  google::cloud::internal::OptionsSpan span(conn->options());
   auto range = conn->ListTables(request);
   auto begin = range.begin();
   ASSERT_NE(begin, range.end());

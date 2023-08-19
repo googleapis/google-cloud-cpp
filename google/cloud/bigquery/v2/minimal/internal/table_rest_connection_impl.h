@@ -45,30 +45,6 @@ class TableRestConnectionImpl : public TableConnection {
       ListTablesRequest const& request) override;
 
  private:
-  std::unique_ptr<TableRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<TableRetryPolicyOption>()) {
-      return options.get<TableRetryPolicyOption>()->clone();
-    }
-    return options_.get<TableRetryPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<TableBackoffPolicyOption>()) {
-      return options.get<TableBackoffPolicyOption>()->clone();
-    }
-    return options_.get<TableBackoffPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<TableIdempotencyPolicy> idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<TableIdempotencyPolicyOption>()) {
-      return options.get<TableIdempotencyPolicyOption>()->clone();
-    }
-    return options_.get<TableIdempotencyPolicyOption>()->clone();
-  }
-
   std::shared_ptr<TableRestStub> stub_;
   Options options_;
 };

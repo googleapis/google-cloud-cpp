@@ -46,30 +46,6 @@ class DatasetRestConnectionImpl : public DatasetConnection {
       ListDatasetsRequest const& request) override;
 
  private:
-  std::unique_ptr<DatasetRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<DatasetRetryPolicyOption>()) {
-      return options.get<DatasetRetryPolicyOption>()->clone();
-    }
-    return options_.get<DatasetRetryPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<DatasetBackoffPolicyOption>()) {
-      return options.get<DatasetBackoffPolicyOption>()->clone();
-    }
-    return options_.get<DatasetBackoffPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<DatasetIdempotencyPolicy> idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<DatasetIdempotencyPolicyOption>()) {
-      return options.get<DatasetIdempotencyPolicyOption>()->clone();
-    }
-    return options_.get<DatasetIdempotencyPolicyOption>()->clone();
-  }
-
   std::shared_ptr<DatasetRestStub> stub_;
   Options options_;
 };
