@@ -94,26 +94,6 @@ class AccessApprovalConnectionImpl
           GetAccessApprovalServiceAccountMessage const& request) override;
 
  private:
-  static std::unique_ptr<accessapproval_v1::AccessApprovalRetryPolicy>
-  retry_policy(Options const& options) {
-    return options.get<accessapproval_v1::AccessApprovalRetryPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<accessapproval_v1::AccessApprovalBackoffPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<
-      accessapproval_v1::AccessApprovalConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<accessapproval_v1::
-                 AccessApprovalConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<accessapproval_v1_internal::AccessApprovalStub> stub_;
   Options options_;

@@ -111,33 +111,6 @@ class CloudFilestoreManagerConnectionImpl
       override;
 
  private:
-  static std::unique_ptr<filestore_v1::CloudFilestoreManagerRetryPolicy>
-  retry_policy(Options const& options) {
-    return options.get<filestore_v1::CloudFilestoreManagerRetryPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options
-        .get<filestore_v1::CloudFilestoreManagerBackoffPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<
-      filestore_v1::CloudFilestoreManagerConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<filestore_v1::
-                 CloudFilestoreManagerConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-    return options
-        .get<filestore_v1::CloudFilestoreManagerPollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<filestore_v1_internal::CloudFilestoreManagerStub> stub_;
   Options options_;

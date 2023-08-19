@@ -30,6 +30,31 @@ namespace google {
 namespace cloud {
 namespace spanner_admin_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<spanner_admin::DatabaseAdminRetryPolicy> retry_policy(
+    Options const& options) {
+  return options.get<spanner_admin::DatabaseAdminRetryPolicyOption>()->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options.get<spanner_admin::DatabaseAdminBackoffPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<spanner_admin::DatabaseAdminConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options
+      .get<spanner_admin::DatabaseAdminConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+  return options.get<spanner_admin::DatabaseAdminPollingPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 DatabaseAdminConnectionImpl::DatabaseAdminConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,

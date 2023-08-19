@@ -98,37 +98,6 @@ class ManagedIdentitiesServiceConnectionImpl
       override;
 
  private:
-  static std::unique_ptr<
-      managedidentities_v1::ManagedIdentitiesServiceRetryPolicy>
-  retry_policy(Options const& options) {
-    return options
-        .get<managedidentities_v1::ManagedIdentitiesServiceRetryPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options
-        .get<
-            managedidentities_v1::ManagedIdentitiesServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<
-      managedidentities_v1::ManagedIdentitiesServiceConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<managedidentities_v1::
-                 ManagedIdentitiesServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-    return options
-        .get<
-            managedidentities_v1::ManagedIdentitiesServicePollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<managedidentities_v1_internal::ManagedIdentitiesServiceStub>
       stub_;

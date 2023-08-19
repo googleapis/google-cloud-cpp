@@ -30,6 +30,28 @@ namespace google {
 namespace cloud {
 namespace run_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<run_v2::ExecutionsRetryPolicy> retry_policy(
+    Options const& options) {
+  return options.get<run_v2::ExecutionsRetryPolicyOption>()->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options.get<run_v2::ExecutionsBackoffPolicyOption>()->clone();
+}
+
+std::unique_ptr<run_v2::ExecutionsConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options.get<run_v2::ExecutionsConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+  return options.get<run_v2::ExecutionsPollingPolicyOption>()->clone();
+}
+
+}  // namespace
 
 ExecutionsConnectionImpl::ExecutionsConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,

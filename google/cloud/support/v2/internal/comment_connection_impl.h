@@ -56,23 +56,6 @@ class CommentServiceConnectionImpl
       google::cloud::support::v2::CreateCommentRequest const& request) override;
 
  private:
-  static std::unique_ptr<support_v2::CommentServiceRetryPolicy> retry_policy(
-      Options const& options) {
-    return options.get<support_v2::CommentServiceRetryPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<support_v2::CommentServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<support_v2::CommentServiceConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<support_v2::CommentServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<support_v2_internal::CommentServiceStub> stub_;
   Options options_;

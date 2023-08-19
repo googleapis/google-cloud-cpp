@@ -28,6 +28,24 @@ namespace google {
 namespace cloud {
 namespace talent_v4_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<talent_v4::CompletionRetryPolicy> retry_policy(
+    Options const& options) {
+  return options.get<talent_v4::CompletionRetryPolicyOption>()->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options.get<talent_v4::CompletionBackoffPolicyOption>()->clone();
+}
+
+std::unique_ptr<talent_v4::CompletionConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options.get<talent_v4::CompletionConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 CompletionConnectionImpl::CompletionConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,

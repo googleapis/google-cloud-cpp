@@ -29,6 +29,27 @@ namespace google {
 namespace cloud {
 namespace monitoring_v3_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<monitoring_v3::AlertPolicyServiceRetryPolicy> retry_policy(
+    Options const& options) {
+  return options.get<monitoring_v3::AlertPolicyServiceRetryPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options.get<monitoring_v3::AlertPolicyServiceBackoffPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<monitoring_v3::AlertPolicyServiceConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options
+      .get<monitoring_v3::AlertPolicyServiceConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 AlertPolicyServiceConnectionImpl::AlertPolicyServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,

@@ -117,25 +117,6 @@ class DomainsConnectionImpl : public domains_v1::DomainsConnection {
       override;
 
  private:
-  static std::unique_ptr<domains_v1::DomainsRetryPolicy> retry_policy(
-      Options const& options) {
-    return options.get<domains_v1::DomainsRetryPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<domains_v1::DomainsBackoffPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<domains_v1::DomainsConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options.get<domains_v1::DomainsConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-    return options.get<domains_v1::DomainsPollingPolicyOption>()->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<domains_v1_internal::DomainsStub> stub_;
   Options options_;

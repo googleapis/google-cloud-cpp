@@ -103,23 +103,6 @@ class RecommenderConnectionImpl : public recommender_v1::RecommenderConnection {
           request) override;
 
  private:
-  static std::unique_ptr<recommender_v1::RecommenderRetryPolicy> retry_policy(
-      Options const& options) {
-    return options.get<recommender_v1::RecommenderRetryPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<recommender_v1::RecommenderBackoffPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<recommender_v1::RecommenderConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<recommender_v1::RecommenderConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<recommender_v1_internal::RecommenderStub> stub_;
   Options options_;

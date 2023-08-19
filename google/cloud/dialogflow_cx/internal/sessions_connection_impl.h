@@ -66,22 +66,6 @@ class SessionsConnectionImpl : public dialogflow_cx::SessionsConnection {
                     request) override;
 
  private:
-  static std::unique_ptr<dialogflow_cx::SessionsRetryPolicy> retry_policy(
-      Options const& options) {
-    return options.get<dialogflow_cx::SessionsRetryPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<dialogflow_cx::SessionsBackoffPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<dialogflow_cx::SessionsConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<dialogflow_cx::SessionsConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<dialogflow_cx_internal::SessionsStub> stub_;
   Options options_;

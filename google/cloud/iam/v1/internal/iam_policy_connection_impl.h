@@ -56,21 +56,6 @@ class IAMPolicyConnectionImpl : public iam_v1::IAMPolicyConnection {
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
  private:
-  static std::unique_ptr<iam_v1::IAMPolicyRetryPolicy> retry_policy(
-      Options const& options) {
-    return options.get<iam_v1::IAMPolicyRetryPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<iam_v1::IAMPolicyBackoffPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<iam_v1::IAMPolicyConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options.get<iam_v1::IAMPolicyConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<iam_v1_internal::IAMPolicyStub> stub_;
   Options options_;

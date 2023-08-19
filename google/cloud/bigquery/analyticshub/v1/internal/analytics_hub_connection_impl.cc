@@ -29,6 +29,31 @@ namespace google {
 namespace cloud {
 namespace bigquery_analyticshub_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<bigquery_analyticshub_v1::AnalyticsHubServiceRetryPolicy>
+retry_policy(Options const& options) {
+  return options
+      .get<bigquery_analyticshub_v1::AnalyticsHubServiceRetryPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options
+      .get<bigquery_analyticshub_v1::AnalyticsHubServiceBackoffPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<
+    bigquery_analyticshub_v1::AnalyticsHubServiceConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options
+      .get<bigquery_analyticshub_v1::
+               AnalyticsHubServiceConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 AnalyticsHubServiceConnectionImpl::AnalyticsHubServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,

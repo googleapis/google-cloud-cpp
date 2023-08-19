@@ -66,25 +66,6 @@ class PoliciesConnectionImpl : public iam_v2::PoliciesConnection {
       google::iam::v2::DeletePolicyRequest const& request) override;
 
  private:
-  static std::unique_ptr<iam_v2::PoliciesRetryPolicy> retry_policy(
-      Options const& options) {
-    return options.get<iam_v2::PoliciesRetryPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<iam_v2::PoliciesBackoffPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<iam_v2::PoliciesConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options.get<iam_v2::PoliciesConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-    return options.get<iam_v2::PoliciesPollingPolicyOption>()->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<iam_v2_internal::PoliciesStub> stub_;
   Options options_;

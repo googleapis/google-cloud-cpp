@@ -30,6 +30,32 @@ namespace google {
 namespace cloud {
 namespace translate_v3_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<translate_v3::TranslationServiceRetryPolicy> retry_policy(
+    Options const& options) {
+  return options.get<translate_v3::TranslationServiceRetryPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options.get<translate_v3::TranslationServiceBackoffPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<translate_v3::TranslationServiceConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options
+      .get<translate_v3::TranslationServiceConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+  return options.get<translate_v3::TranslationServicePollingPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 TranslationServiceConnectionImpl::TranslationServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,

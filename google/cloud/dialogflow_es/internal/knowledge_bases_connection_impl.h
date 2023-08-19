@@ -70,25 +70,6 @@ class KnowledgeBasesConnectionImpl
       override;
 
  private:
-  static std::unique_ptr<dialogflow_es::KnowledgeBasesRetryPolicy> retry_policy(
-      Options const& options) {
-    return options.get<dialogflow_es::KnowledgeBasesRetryPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<dialogflow_es::KnowledgeBasesBackoffPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<
-      dialogflow_es::KnowledgeBasesConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<dialogflow_es::KnowledgeBasesConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<dialogflow_es_internal::KnowledgeBasesStub> stub_;
   Options options_;

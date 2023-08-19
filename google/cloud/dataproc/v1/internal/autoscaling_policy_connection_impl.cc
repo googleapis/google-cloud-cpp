@@ -29,6 +29,30 @@ namespace google {
 namespace cloud {
 namespace dataproc_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<dataproc_v1::AutoscalingPolicyServiceRetryPolicy> retry_policy(
+    Options const& options) {
+  return options.get<dataproc_v1::AutoscalingPolicyServiceRetryPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options
+      .get<dataproc_v1::AutoscalingPolicyServiceBackoffPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<
+    dataproc_v1::AutoscalingPolicyServiceConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options
+      .get<dataproc_v1::
+               AutoscalingPolicyServiceConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 AutoscalingPolicyServiceConnectionImpl::AutoscalingPolicyServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,

@@ -30,6 +30,29 @@ namespace google {
 namespace cloud {
 namespace resourcemanager_v3_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<resourcemanager_v3::FoldersRetryPolicy> retry_policy(
+    Options const& options) {
+  return options.get<resourcemanager_v3::FoldersRetryPolicyOption>()->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options.get<resourcemanager_v3::FoldersBackoffPolicyOption>()->clone();
+}
+
+std::unique_ptr<resourcemanager_v3::FoldersConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options
+      .get<resourcemanager_v3::FoldersConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+  return options.get<resourcemanager_v3::FoldersPollingPolicyOption>()->clone();
+}
+
+}  // namespace
 
 FoldersConnectionImpl::FoldersConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,

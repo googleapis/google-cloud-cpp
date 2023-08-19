@@ -31,6 +31,40 @@ namespace google {
 namespace cloud {
 namespace beyondcorp_appconnections_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<beyondcorp_appconnections_v1::AppConnectionsServiceRetryPolicy>
+retry_policy(Options const& options) {
+  return options
+      .get<beyondcorp_appconnections_v1::
+               AppConnectionsServiceRetryPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options
+      .get<beyondcorp_appconnections_v1::
+               AppConnectionsServiceBackoffPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<beyondcorp_appconnections_v1::
+                    AppConnectionsServiceConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options
+      .get<beyondcorp_appconnections_v1::
+               AppConnectionsServiceConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+  return options
+      .get<beyondcorp_appconnections_v1::
+               AppConnectionsServicePollingPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 AppConnectionsServiceConnectionImpl::AppConnectionsServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,

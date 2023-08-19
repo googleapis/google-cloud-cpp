@@ -92,31 +92,6 @@ class HubServiceConnectionImpl
                   request) override;
 
  private:
-  static std::unique_ptr<networkconnectivity_v1::HubServiceRetryPolicy>
-  retry_policy(Options const& options) {
-    return options.get<networkconnectivity_v1::HubServiceRetryPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<networkconnectivity_v1::HubServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<
-      networkconnectivity_v1::HubServiceConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<networkconnectivity_v1::
-                 HubServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-    return options.get<networkconnectivity_v1::HubServicePollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<networkconnectivity_v1_internal::HubServiceStub> stub_;
   Options options_;

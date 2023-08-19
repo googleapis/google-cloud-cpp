@@ -65,22 +65,6 @@ class CompanyServiceConnectionImpl
       google::cloud::talent::v4::ListCompaniesRequest request) override;
 
  private:
-  static std::unique_ptr<talent_v4::CompanyServiceRetryPolicy> retry_policy(
-      Options const& options) {
-    return options.get<talent_v4::CompanyServiceRetryPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<talent_v4::CompanyServiceBackoffPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<talent_v4::CompanyServiceConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<talent_v4::CompanyServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<talent_v4_internal::CompanyServiceStub> stub_;
   Options options_;

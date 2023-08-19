@@ -118,31 +118,6 @@ class RepositoryManagerConnectionImpl
       override;
 
  private:
-  static std::unique_ptr<cloudbuild_v2::RepositoryManagerRetryPolicy>
-  retry_policy(Options const& options) {
-    return options.get<cloudbuild_v2::RepositoryManagerRetryPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<cloudbuild_v2::RepositoryManagerBackoffPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<
-      cloudbuild_v2::RepositoryManagerConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<
-            cloudbuild_v2::RepositoryManagerConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-    return options.get<cloudbuild_v2::RepositoryManagerPollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<cloudbuild_v2_internal::RepositoryManagerStub> stub_;
   Options options_;

@@ -29,6 +29,33 @@ namespace google {
 namespace cloud {
 namespace binaryauthorization_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<binaryauthorization_v1::BinauthzManagementServiceV1RetryPolicy>
+retry_policy(Options const& options) {
+  return options
+      .get<binaryauthorization_v1::
+               BinauthzManagementServiceV1RetryPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options
+      .get<binaryauthorization_v1::
+               BinauthzManagementServiceV1BackoffPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<binaryauthorization_v1::
+                    BinauthzManagementServiceV1ConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options
+      .get<binaryauthorization_v1::
+               BinauthzManagementServiceV1ConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 BinauthzManagementServiceV1ConnectionImpl::
     BinauthzManagementServiceV1ConnectionImpl(

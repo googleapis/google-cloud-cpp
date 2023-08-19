@@ -28,6 +28,31 @@ namespace google {
 namespace cloud {
 namespace confidentialcomputing_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<confidentialcomputing_v1::ConfidentialComputingRetryPolicy>
+retry_policy(Options const& options) {
+  return options
+      .get<confidentialcomputing_v1::ConfidentialComputingRetryPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options
+      .get<confidentialcomputing_v1::ConfidentialComputingBackoffPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<
+    confidentialcomputing_v1::ConfidentialComputingConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options
+      .get<confidentialcomputing_v1::
+               ConfidentialComputingConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 ConfidentialComputingConnectionImpl::ConfidentialComputingConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,

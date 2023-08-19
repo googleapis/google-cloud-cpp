@@ -123,26 +123,6 @@ class EventarcConnectionImpl : public eventarc_v1::EventarcConnection {
           request) override;
 
  private:
-  static std::unique_ptr<eventarc_v1::EventarcRetryPolicy> retry_policy(
-      Options const& options) {
-    return options.get<eventarc_v1::EventarcRetryPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<eventarc_v1::EventarcBackoffPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<eventarc_v1::EventarcConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<eventarc_v1::EventarcConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-    return options.get<eventarc_v1::EventarcPollingPolicyOption>()->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<eventarc_v1_internal::EventarcStub> stub_;
   Options options_;

@@ -80,30 +80,6 @@ class EssentialContactsServiceConnectionImpl
           request) override;
 
  private:
-  static std::unique_ptr<
-      essentialcontacts_v1::EssentialContactsServiceRetryPolicy>
-  retry_policy(Options const& options) {
-    return options
-        .get<essentialcontacts_v1::EssentialContactsServiceRetryPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options
-        .get<
-            essentialcontacts_v1::EssentialContactsServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<
-      essentialcontacts_v1::EssentialContactsServiceConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<essentialcontacts_v1::
-                 EssentialContactsServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<essentialcontacts_v1_internal::EssentialContactsServiceStub>
       stub_;

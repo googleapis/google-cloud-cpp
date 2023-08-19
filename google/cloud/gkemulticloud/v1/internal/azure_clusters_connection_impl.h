@@ -127,30 +127,6 @@ class AzureClustersConnectionImpl
           request) override;
 
  private:
-  static std::unique_ptr<gkemulticloud_v1::AzureClustersRetryPolicy>
-  retry_policy(Options const& options) {
-    return options.get<gkemulticloud_v1::AzureClustersRetryPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<gkemulticloud_v1::AzureClustersBackoffPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<
-      gkemulticloud_v1::AzureClustersConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<gkemulticloud_v1::AzureClustersConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-    return options.get<gkemulticloud_v1::AzureClustersPollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<gkemulticloud_v1_internal::AzureClustersStub> stub_;
   Options options_;

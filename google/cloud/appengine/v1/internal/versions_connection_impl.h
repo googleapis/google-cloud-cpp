@@ -67,26 +67,6 @@ class VersionsConnectionImpl : public appengine_v1::VersionsConnection {
       google::appengine::v1::DeleteVersionRequest const& request) override;
 
  private:
-  static std::unique_ptr<appengine_v1::VersionsRetryPolicy> retry_policy(
-      Options const& options) {
-    return options.get<appengine_v1::VersionsRetryPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<appengine_v1::VersionsBackoffPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<appengine_v1::VersionsConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<appengine_v1::VersionsConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-    return options.get<appengine_v1::VersionsPollingPolicyOption>()->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<appengine_v1_internal::VersionsStub> stub_;
   Options options_;

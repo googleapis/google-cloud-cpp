@@ -87,40 +87,6 @@ class ClientConnectorServicesServiceConnectionImpl
           DeleteClientConnectorServiceRequest const& request) override;
 
  private:
-  static std::unique_ptr<beyondcorp_clientconnectorservices_v1::
-                             ClientConnectorServicesServiceRetryPolicy>
-  retry_policy(Options const& options) {
-    return options
-        .get<beyondcorp_clientconnectorservices_v1::
-                 ClientConnectorServicesServiceRetryPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options
-        .get<beyondcorp_clientconnectorservices_v1::
-                 ClientConnectorServicesServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<
-      beyondcorp_clientconnectorservices_v1::
-          ClientConnectorServicesServiceConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<
-            beyondcorp_clientconnectorservices_v1::
-                ClientConnectorServicesServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-    return options
-        .get<beyondcorp_clientconnectorservices_v1::
-                 ClientConnectorServicesServicePollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<beyondcorp_clientconnectorservices_v1_internal::
                       ClientConnectorServicesServiceStub>

@@ -175,21 +175,6 @@ class DlpServiceConnectionImpl : public dlp_v2::DlpServiceConnection {
       google::privacy::dlp::v2::FinishDlpJobRequest const& request) override;
 
  private:
-  static std::unique_ptr<dlp_v2::DlpServiceRetryPolicy> retry_policy(
-      Options const& options) {
-    return options.get<dlp_v2::DlpServiceRetryPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<dlp_v2::DlpServiceBackoffPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<dlp_v2::DlpServiceConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options.get<dlp_v2::DlpServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<dlp_v2_internal::DlpServiceStub> stub_;
   Options options_;

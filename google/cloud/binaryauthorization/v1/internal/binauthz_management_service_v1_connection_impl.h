@@ -80,32 +80,6 @@ class BinauthzManagementServiceV1ConnectionImpl
           request) override;
 
  private:
-  static std::unique_ptr<
-      binaryauthorization_v1::BinauthzManagementServiceV1RetryPolicy>
-  retry_policy(Options const& options) {
-    return options
-        .get<binaryauthorization_v1::
-                 BinauthzManagementServiceV1RetryPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options
-        .get<binaryauthorization_v1::
-                 BinauthzManagementServiceV1BackoffPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<
-      binaryauthorization_v1::
-          BinauthzManagementServiceV1ConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<binaryauthorization_v1::
-                 BinauthzManagementServiceV1ConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<
       binaryauthorization_v1_internal::BinauthzManagementServiceV1Stub>

@@ -28,6 +28,25 @@ namespace google {
 namespace cloud {
 namespace oslogin_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<oslogin_v1::OsLoginServiceRetryPolicy> retry_policy(
+    Options const& options) {
+  return options.get<oslogin_v1::OsLoginServiceRetryPolicyOption>()->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options.get<oslogin_v1::OsLoginServiceBackoffPolicyOption>()->clone();
+}
+
+std::unique_ptr<oslogin_v1::OsLoginServiceConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options
+      .get<oslogin_v1::OsLoginServiceConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 OsLoginServiceConnectionImpl::OsLoginServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,

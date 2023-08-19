@@ -29,6 +29,27 @@ namespace google {
 namespace cloud {
 namespace accessapproval_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<accessapproval_v1::AccessApprovalRetryPolicy> retry_policy(
+    Options const& options) {
+  return options.get<accessapproval_v1::AccessApprovalRetryPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options.get<accessapproval_v1::AccessApprovalBackoffPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<accessapproval_v1::AccessApprovalConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options
+      .get<accessapproval_v1::AccessApprovalConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 AccessApprovalConnectionImpl::AccessApprovalConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,

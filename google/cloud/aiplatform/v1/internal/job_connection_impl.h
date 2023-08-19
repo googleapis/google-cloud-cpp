@@ -206,26 +206,6 @@ class JobServiceConnectionImpl : public aiplatform_v1::JobServiceConnection {
           ResumeModelDeploymentMonitoringJobRequest const& request) override;
 
  private:
-  static std::unique_ptr<aiplatform_v1::JobServiceRetryPolicy> retry_policy(
-      Options const& options) {
-    return options.get<aiplatform_v1::JobServiceRetryPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<aiplatform_v1::JobServiceBackoffPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<aiplatform_v1::JobServiceConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<aiplatform_v1::JobServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-    return options.get<aiplatform_v1::JobServicePollingPolicyOption>()->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<aiplatform_v1_internal::JobServiceStub> stub_;
   Options options_;

@@ -96,21 +96,6 @@ class CloudTasksConnectionImpl : public tasks_v2::CloudTasksConnection {
       google::cloud::tasks::v2::RunTaskRequest const& request) override;
 
  private:
-  static std::unique_ptr<tasks_v2::CloudTasksRetryPolicy> retry_policy(
-      Options const& options) {
-    return options.get<tasks_v2::CloudTasksRetryPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<tasks_v2::CloudTasksBackoffPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<tasks_v2::CloudTasksConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options.get<tasks_v2::CloudTasksConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<tasks_v2_internal::CloudTasksStub> stub_;
   Options options_;

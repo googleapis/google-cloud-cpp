@@ -76,30 +76,6 @@ class ServiceUsageConnectionImpl
                        request) override;
 
  private:
-  static std::unique_ptr<serviceusage_v1::ServiceUsageRetryPolicy> retry_policy(
-      Options const& options) {
-    return options.get<serviceusage_v1::ServiceUsageRetryPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<serviceusage_v1::ServiceUsageBackoffPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<
-      serviceusage_v1::ServiceUsageConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<serviceusage_v1::ServiceUsageConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-    return options.get<serviceusage_v1::ServiceUsagePollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<serviceusage_v1_internal::ServiceUsageStub> stub_;
   Options options_;

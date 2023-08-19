@@ -30,6 +30,31 @@ namespace google {
 namespace cloud {
 namespace policysimulator_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<policysimulator_v1::SimulatorRetryPolicy> retry_policy(
+    Options const& options) {
+  return options.get<policysimulator_v1::SimulatorRetryPolicyOption>()->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options.get<policysimulator_v1::SimulatorBackoffPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<policysimulator_v1::SimulatorConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options
+      .get<policysimulator_v1::SimulatorConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+  return options.get<policysimulator_v1::SimulatorPollingPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 SimulatorConnectionImpl::SimulatorConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,

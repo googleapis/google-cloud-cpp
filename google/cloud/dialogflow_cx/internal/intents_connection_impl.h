@@ -68,22 +68,6 @@ class IntentsConnectionImpl : public dialogflow_cx::IntentsConnection {
       override;
 
  private:
-  static std::unique_ptr<dialogflow_cx::IntentsRetryPolicy> retry_policy(
-      Options const& options) {
-    return options.get<dialogflow_cx::IntentsRetryPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<dialogflow_cx::IntentsBackoffPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<dialogflow_cx::IntentsConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<dialogflow_cx::IntentsConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<dialogflow_cx_internal::IntentsStub> stub_;
   Options options_;

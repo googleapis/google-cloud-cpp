@@ -28,6 +28,28 @@ namespace google {
 namespace cloud {
 namespace servicedirectory_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<servicedirectory_v1::LookupServiceRetryPolicy> retry_policy(
+    Options const& options) {
+  return options.get<servicedirectory_v1::LookupServiceRetryPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options.get<servicedirectory_v1::LookupServiceBackoffPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<servicedirectory_v1::LookupServiceConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options
+      .get<
+          servicedirectory_v1::LookupServiceConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 LookupServiceConnectionImpl::LookupServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,

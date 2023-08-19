@@ -31,6 +31,29 @@ namespace google {
 namespace cloud {
 namespace pubsublite_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<pubsublite::AdminServiceRetryPolicy> retry_policy(
+    Options const& options) {
+  return options.get<pubsublite::AdminServiceRetryPolicyOption>()->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options.get<pubsublite::AdminServiceBackoffPolicyOption>()->clone();
+}
+
+std::unique_ptr<pubsublite::AdminServiceConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options
+      .get<pubsublite::AdminServiceConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+  return options.get<pubsublite::AdminServicePollingPolicyOption>()->clone();
+}
+
+}  // namespace
 
 AdminServiceConnectionImpl::AdminServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,

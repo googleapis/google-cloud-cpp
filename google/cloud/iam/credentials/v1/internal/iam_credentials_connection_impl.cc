@@ -28,6 +28,28 @@ namespace google {
 namespace cloud {
 namespace iam_credentials_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<iam_credentials_v1::IAMCredentialsRetryPolicy> retry_policy(
+    Options const& options) {
+  return options.get<iam_credentials_v1::IAMCredentialsRetryPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options.get<iam_credentials_v1::IAMCredentialsBackoffPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<iam_credentials_v1::IAMCredentialsConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options
+      .get<
+          iam_credentials_v1::IAMCredentialsConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 IAMCredentialsConnectionImpl::IAMCredentialsConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,

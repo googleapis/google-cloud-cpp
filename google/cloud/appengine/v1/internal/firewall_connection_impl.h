@@ -69,22 +69,6 @@ class FirewallConnectionImpl : public appengine_v1::FirewallConnection {
       google::appengine::v1::DeleteIngressRuleRequest const& request) override;
 
  private:
-  static std::unique_ptr<appengine_v1::FirewallRetryPolicy> retry_policy(
-      Options const& options) {
-    return options.get<appengine_v1::FirewallRetryPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<appengine_v1::FirewallBackoffPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<appengine_v1::FirewallConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<appengine_v1::FirewallConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<appengine_v1_internal::FirewallStub> stub_;
   Options options_;

@@ -75,22 +75,6 @@ class CaseServiceConnectionImpl : public support_v2::CaseServiceConnection {
       override;
 
  private:
-  static std::unique_ptr<support_v2::CaseServiceRetryPolicy> retry_policy(
-      Options const& options) {
-    return options.get<support_v2::CaseServiceRetryPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<support_v2::CaseServiceBackoffPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<support_v2::CaseServiceConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<support_v2::CaseServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<support_v2_internal::CaseServiceStub> stub_;
   Options options_;

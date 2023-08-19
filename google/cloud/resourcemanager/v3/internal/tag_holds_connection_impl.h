@@ -63,30 +63,6 @@ class TagHoldsConnectionImpl : public resourcemanager_v3::TagHoldsConnection {
       google::cloud::resourcemanager::v3::ListTagHoldsRequest request) override;
 
  private:
-  static std::unique_ptr<resourcemanager_v3::TagHoldsRetryPolicy> retry_policy(
-      Options const& options) {
-    return options.get<resourcemanager_v3::TagHoldsRetryPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<resourcemanager_v3::TagHoldsBackoffPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<
-      resourcemanager_v3::TagHoldsConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<resourcemanager_v3::TagHoldsConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-    return options.get<resourcemanager_v3::TagHoldsPollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<resourcemanager_v3_internal::TagHoldsStub> stub_;
   Options options_;

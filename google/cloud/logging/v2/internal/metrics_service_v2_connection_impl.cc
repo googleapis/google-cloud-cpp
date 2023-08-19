@@ -29,6 +29,26 @@ namespace google {
 namespace cloud {
 namespace logging_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<logging_v2::MetricsServiceV2RetryPolicy> retry_policy(
+    Options const& options) {
+  return options.get<logging_v2::MetricsServiceV2RetryPolicyOption>()->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options.get<logging_v2::MetricsServiceV2BackoffPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<logging_v2::MetricsServiceV2ConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options
+      .get<logging_v2::MetricsServiceV2ConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 MetricsServiceV2ConnectionImpl::MetricsServiceV2ConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,

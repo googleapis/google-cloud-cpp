@@ -88,28 +88,6 @@ class DataPolicyServiceConnectionImpl
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
  private:
-  static std::unique_ptr<bigquery_datapolicies_v1::DataPolicyServiceRetryPolicy>
-  retry_policy(Options const& options) {
-    return options
-        .get<bigquery_datapolicies_v1::DataPolicyServiceRetryPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options
-        .get<bigquery_datapolicies_v1::DataPolicyServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<
-      bigquery_datapolicies_v1::DataPolicyServiceConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<bigquery_datapolicies_v1::
-                 DataPolicyServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<bigquery_datapolicies_v1_internal::DataPolicyServiceStub>
       stub_;

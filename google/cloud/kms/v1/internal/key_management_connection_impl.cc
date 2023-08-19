@@ -29,6 +29,26 @@ namespace google {
 namespace cloud {
 namespace kms_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<kms_v1::KeyManagementServiceRetryPolicy> retry_policy(
+    Options const& options) {
+  return options.get<kms_v1::KeyManagementServiceRetryPolicyOption>()->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options.get<kms_v1::KeyManagementServiceBackoffPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<kms_v1::KeyManagementServiceConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options
+      .get<kms_v1::KeyManagementServiceConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 KeyManagementServiceConnectionImpl::KeyManagementServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,

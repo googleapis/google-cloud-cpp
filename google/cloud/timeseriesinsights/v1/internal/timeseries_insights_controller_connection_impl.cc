@@ -29,6 +29,33 @@ namespace google {
 namespace cloud {
 namespace timeseriesinsights_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<timeseriesinsights_v1::TimeseriesInsightsControllerRetryPolicy>
+retry_policy(Options const& options) {
+  return options
+      .get<timeseriesinsights_v1::
+               TimeseriesInsightsControllerRetryPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options
+      .get<timeseriesinsights_v1::
+               TimeseriesInsightsControllerBackoffPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<timeseriesinsights_v1::
+                    TimeseriesInsightsControllerConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options
+      .get<timeseriesinsights_v1::
+               TimeseriesInsightsControllerConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 TimeseriesInsightsControllerConnectionImpl::
     TimeseriesInsightsControllerConnectionImpl(

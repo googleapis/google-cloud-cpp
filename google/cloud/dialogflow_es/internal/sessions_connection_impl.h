@@ -58,22 +58,6 @@ class SessionsConnectionImpl : public dialogflow_es::SessionsConnection {
   AsyncStreamingDetectIntent() override;
 
  private:
-  static std::unique_ptr<dialogflow_es::SessionsRetryPolicy> retry_policy(
-      Options const& options) {
-    return options.get<dialogflow_es::SessionsRetryPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<dialogflow_es::SessionsBackoffPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<dialogflow_es::SessionsConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<dialogflow_es::SessionsConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<dialogflow_es_internal::SessionsStub> stub_;
   Options options_;

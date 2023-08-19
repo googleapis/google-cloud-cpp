@@ -90,25 +90,6 @@ class FlowsConnectionImpl : public dialogflow_cx::FlowsConnection {
                  request) override;
 
  private:
-  static std::unique_ptr<dialogflow_cx::FlowsRetryPolicy> retry_policy(
-      Options const& options) {
-    return options.get<dialogflow_cx::FlowsRetryPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<dialogflow_cx::FlowsBackoffPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<dialogflow_cx::FlowsConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options.get<dialogflow_cx::FlowsConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-    return options.get<dialogflow_cx::FlowsPollingPolicyOption>()->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<dialogflow_cx_internal::FlowsStub> stub_;
   Options options_;

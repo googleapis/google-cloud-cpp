@@ -29,6 +29,30 @@ namespace google {
 namespace cloud {
 namespace kms_inventory_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<kms_inventory_v1::KeyDashboardServiceRetryPolicy> retry_policy(
+    Options const& options) {
+  return options.get<kms_inventory_v1::KeyDashboardServiceRetryPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options
+      .get<kms_inventory_v1::KeyDashboardServiceBackoffPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<
+    kms_inventory_v1::KeyDashboardServiceConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options
+      .get<kms_inventory_v1::
+               KeyDashboardServiceConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 KeyDashboardServiceConnectionImpl::KeyDashboardServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,

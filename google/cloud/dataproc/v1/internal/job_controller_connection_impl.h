@@ -74,28 +74,6 @@ class JobControllerConnectionImpl
       google::cloud::dataproc::v1::DeleteJobRequest const& request) override;
 
  private:
-  static std::unique_ptr<dataproc_v1::JobControllerRetryPolicy> retry_policy(
-      Options const& options) {
-    return options.get<dataproc_v1::JobControllerRetryPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<dataproc_v1::JobControllerBackoffPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<dataproc_v1::JobControllerConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<dataproc_v1::JobControllerConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-    return options.get<dataproc_v1::JobControllerPollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<dataproc_v1_internal::JobControllerStub> stub_;
   Options options_;

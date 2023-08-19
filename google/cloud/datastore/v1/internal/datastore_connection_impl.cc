@@ -28,6 +28,25 @@ namespace google {
 namespace cloud {
 namespace datastore_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<datastore_v1::DatastoreRetryPolicy> retry_policy(
+    Options const& options) {
+  return options.get<datastore_v1::DatastoreRetryPolicyOption>()->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options.get<datastore_v1::DatastoreBackoffPolicyOption>()->clone();
+}
+
+std::unique_ptr<datastore_v1::DatastoreConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options
+      .get<datastore_v1::DatastoreConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 DatastoreConnectionImpl::DatastoreConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,

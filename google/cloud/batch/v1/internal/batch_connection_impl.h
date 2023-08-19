@@ -70,26 +70,6 @@ class BatchServiceConnectionImpl : public batch_v1::BatchServiceConnection {
       google::cloud::batch::v1::ListTasksRequest request) override;
 
  private:
-  static std::unique_ptr<batch_v1::BatchServiceRetryPolicy> retry_policy(
-      Options const& options) {
-    return options.get<batch_v1::BatchServiceRetryPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<batch_v1::BatchServiceBackoffPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<batch_v1::BatchServiceConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<batch_v1::BatchServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-    return options.get<batch_v1::BatchServicePollingPolicyOption>()->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<batch_v1_internal::BatchServiceStub> stub_;
   Options options_;

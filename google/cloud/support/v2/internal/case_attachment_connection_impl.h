@@ -53,26 +53,6 @@ class CaseAttachmentServiceConnectionImpl
       google::cloud::support::v2::ListAttachmentsRequest request) override;
 
  private:
-  static std::unique_ptr<support_v2::CaseAttachmentServiceRetryPolicy>
-  retry_policy(Options const& options) {
-    return options.get<support_v2::CaseAttachmentServiceRetryPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<support_v2::CaseAttachmentServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<
-      support_v2::CaseAttachmentServiceConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<support_v2::
-                 CaseAttachmentServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<support_v2_internal::CaseAttachmentServiceStub> stub_;
   Options options_;

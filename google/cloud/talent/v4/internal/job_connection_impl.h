@@ -85,26 +85,6 @@ class JobServiceConnectionImpl : public talent_v4::JobServiceConnection {
       google::cloud::talent::v4::SearchJobsRequest const& request) override;
 
  private:
-  static std::unique_ptr<talent_v4::JobServiceRetryPolicy> retry_policy(
-      Options const& options) {
-    return options.get<talent_v4::JobServiceRetryPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<talent_v4::JobServiceBackoffPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<talent_v4::JobServiceConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<talent_v4::JobServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-    return options.get<talent_v4::JobServicePollingPolicyOption>()->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<talent_v4_internal::JobServiceStub> stub_;
   Options options_;

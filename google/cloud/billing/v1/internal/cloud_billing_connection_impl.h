@@ -88,22 +88,6 @@ class CloudBillingConnectionImpl : public billing_v1::CloudBillingConnection {
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
  private:
-  static std::unique_ptr<billing_v1::CloudBillingRetryPolicy> retry_policy(
-      Options const& options) {
-    return options.get<billing_v1::CloudBillingRetryPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<billing_v1::CloudBillingBackoffPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<billing_v1::CloudBillingConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<billing_v1::CloudBillingConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<billing_v1_internal::CloudBillingStub> stub_;
   Options options_;

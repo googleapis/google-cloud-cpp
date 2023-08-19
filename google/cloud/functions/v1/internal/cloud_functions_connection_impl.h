@@ -94,33 +94,6 @@ class CloudFunctionsServiceConnectionImpl
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
  private:
-  static std::unique_ptr<functions_v1::CloudFunctionsServiceRetryPolicy>
-  retry_policy(Options const& options) {
-    return options.get<functions_v1::CloudFunctionsServiceRetryPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options
-        .get<functions_v1::CloudFunctionsServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<
-      functions_v1::CloudFunctionsServiceConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<functions_v1::
-                 CloudFunctionsServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-    return options
-        .get<functions_v1::CloudFunctionsServicePollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<functions_v1_internal::CloudFunctionsServiceStub> stub_;
   Options options_;

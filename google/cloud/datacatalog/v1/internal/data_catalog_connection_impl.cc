@@ -30,6 +30,29 @@ namespace google {
 namespace cloud {
 namespace datacatalog_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<datacatalog_v1::DataCatalogRetryPolicy> retry_policy(
+    Options const& options) {
+  return options.get<datacatalog_v1::DataCatalogRetryPolicyOption>()->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options.get<datacatalog_v1::DataCatalogBackoffPolicyOption>()->clone();
+}
+
+std::unique_ptr<datacatalog_v1::DataCatalogConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options
+      .get<datacatalog_v1::DataCatalogConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+  return options.get<datacatalog_v1::DataCatalogPollingPolicyOption>()->clone();
+}
+
+}  // namespace
 
 DataCatalogConnectionImpl::DataCatalogConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,

@@ -65,25 +65,6 @@ class MetricsServiceV2ConnectionImpl
       google::logging::v2::DeleteLogMetricRequest const& request) override;
 
  private:
-  static std::unique_ptr<logging_v2::MetricsServiceV2RetryPolicy> retry_policy(
-      Options const& options) {
-    return options.get<logging_v2::MetricsServiceV2RetryPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<logging_v2::MetricsServiceV2BackoffPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<
-      logging_v2::MetricsServiceV2ConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<logging_v2::MetricsServiceV2ConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<logging_v2_internal::MetricsServiceV2Stub> stub_;
   Options options_;

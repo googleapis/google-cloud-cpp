@@ -109,28 +109,6 @@ class MetastoreServiceConnectionImpl
       google::cloud::bigquery::biglake::v1::ListTablesRequest request) override;
 
  private:
-  static std::unique_ptr<bigquery_biglake_v1::MetastoreServiceRetryPolicy>
-  retry_policy(Options const& options) {
-    return options
-        .get<bigquery_biglake_v1::MetastoreServiceRetryPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options
-        .get<bigquery_biglake_v1::MetastoreServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<
-      bigquery_biglake_v1::MetastoreServiceConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<bigquery_biglake_v1::
-                 MetastoreServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<bigquery_biglake_v1_internal::MetastoreServiceStub> stub_;
   Options options_;

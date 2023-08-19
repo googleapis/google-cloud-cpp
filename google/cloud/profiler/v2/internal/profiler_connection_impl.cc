@@ -28,6 +28,26 @@ namespace google {
 namespace cloud {
 namespace profiler_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<profiler_v2::ProfilerServiceRetryPolicy> retry_policy(
+    Options const& options) {
+  return options.get<profiler_v2::ProfilerServiceRetryPolicyOption>()->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options.get<profiler_v2::ProfilerServiceBackoffPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<profiler_v2::ProfilerServiceConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options
+      .get<profiler_v2::ProfilerServiceConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 ProfilerServiceConnectionImpl::ProfilerServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,

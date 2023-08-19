@@ -29,6 +29,31 @@ namespace google {
 namespace cloud {
 namespace optimization_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<optimization_v1::FleetRoutingRetryPolicy> retry_policy(
+    Options const& options) {
+  return options.get<optimization_v1::FleetRoutingRetryPolicyOption>()->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options.get<optimization_v1::FleetRoutingBackoffPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<optimization_v1::FleetRoutingConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options
+      .get<optimization_v1::FleetRoutingConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+  return options.get<optimization_v1::FleetRoutingPollingPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 FleetRoutingConnectionImpl::FleetRoutingConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,

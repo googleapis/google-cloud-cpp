@@ -29,6 +29,25 @@ namespace google {
 namespace cloud {
 namespace support_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<support_v2::CaseServiceRetryPolicy> retry_policy(
+    Options const& options) {
+  return options.get<support_v2::CaseServiceRetryPolicyOption>()->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options.get<support_v2::CaseServiceBackoffPolicyOption>()->clone();
+}
+
+std::unique_ptr<support_v2::CaseServiceConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options
+      .get<support_v2::CaseServiceConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 CaseServiceConnectionImpl::CaseServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,

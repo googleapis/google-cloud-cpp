@@ -70,26 +70,6 @@ class WorkflowsConnectionImpl : public workflows_v1::WorkflowsConnection {
       override;
 
  private:
-  static std::unique_ptr<workflows_v1::WorkflowsRetryPolicy> retry_policy(
-      Options const& options) {
-    return options.get<workflows_v1::WorkflowsRetryPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<workflows_v1::WorkflowsBackoffPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<workflows_v1::WorkflowsConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<workflows_v1::WorkflowsConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-    return options.get<workflows_v1::WorkflowsPollingPolicyOption>()->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<workflows_v1_internal::WorkflowsStub> stub_;
   Options options_;

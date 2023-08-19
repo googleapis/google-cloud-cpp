@@ -97,31 +97,6 @@ class TranslationServiceConnectionImpl
                      request) override;
 
  private:
-  static std::unique_ptr<translate_v3::TranslationServiceRetryPolicy>
-  retry_policy(Options const& options) {
-    return options.get<translate_v3::TranslationServiceRetryPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<translate_v3::TranslationServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<
-      translate_v3::TranslationServiceConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<
-            translate_v3::TranslationServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-    return options.get<translate_v3::TranslationServicePollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<translate_v3_internal::TranslationServiceStub> stub_;
   Options options_;

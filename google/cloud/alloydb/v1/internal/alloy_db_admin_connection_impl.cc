@@ -30,6 +30,29 @@ namespace google {
 namespace cloud {
 namespace alloydb_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<alloydb_v1::AlloyDBAdminRetryPolicy> retry_policy(
+    Options const& options) {
+  return options.get<alloydb_v1::AlloyDBAdminRetryPolicyOption>()->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options.get<alloydb_v1::AlloyDBAdminBackoffPolicyOption>()->clone();
+}
+
+std::unique_ptr<alloydb_v1::AlloyDBAdminConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options
+      .get<alloydb_v1::AlloyDBAdminConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+  return options.get<alloydb_v1::AlloyDBAdminPollingPolicyOption>()->clone();
+}
+
+}  // namespace
 
 AlloyDBAdminConnectionImpl::AlloyDBAdminConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,

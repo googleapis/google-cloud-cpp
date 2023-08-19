@@ -74,27 +74,6 @@ class TransitionRouteGroupsConnectionImpl
           DeleteTransitionRouteGroupRequest const& request) override;
 
  private:
-  static std::unique_ptr<dialogflow_cx::TransitionRouteGroupsRetryPolicy>
-  retry_policy(Options const& options) {
-    return options.get<dialogflow_cx::TransitionRouteGroupsRetryPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options
-        .get<dialogflow_cx::TransitionRouteGroupsBackoffPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<
-      dialogflow_cx::TransitionRouteGroupsConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<dialogflow_cx::
-                 TransitionRouteGroupsConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<dialogflow_cx_internal::TransitionRouteGroupsStub> stub_;
   Options options_;

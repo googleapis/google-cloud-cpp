@@ -53,26 +53,6 @@ class QuotaControllerConnectionImpl
                     request) override;
 
  private:
-  static std::unique_ptr<servicecontrol_v1::QuotaControllerRetryPolicy>
-  retry_policy(Options const& options) {
-    return options.get<servicecontrol_v1::QuotaControllerRetryPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<servicecontrol_v1::QuotaControllerBackoffPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<
-      servicecontrol_v1::QuotaControllerConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<servicecontrol_v1::
-                 QuotaControllerConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<servicecontrol_v1_internal::QuotaControllerStub> stub_;
   Options options_;

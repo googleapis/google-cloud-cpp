@@ -108,34 +108,6 @@ class StorageTransferServiceConnectionImpl
       override;
 
  private:
-  static std::unique_ptr<storagetransfer_v1::StorageTransferServiceRetryPolicy>
-  retry_policy(Options const& options) {
-    return options
-        .get<storagetransfer_v1::StorageTransferServiceRetryPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options
-        .get<storagetransfer_v1::StorageTransferServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<
-      storagetransfer_v1::StorageTransferServiceConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<storagetransfer_v1::
-                 StorageTransferServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-    return options
-        .get<storagetransfer_v1::StorageTransferServicePollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<storagetransfer_v1_internal::StorageTransferServiceStub>
       stub_;

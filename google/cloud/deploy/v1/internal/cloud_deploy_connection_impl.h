@@ -139,26 +139,6 @@ class CloudDeployConnectionImpl : public deploy_v1::CloudDeployConnection {
       google::cloud::deploy::v1::GetConfigRequest const& request) override;
 
  private:
-  static std::unique_ptr<deploy_v1::CloudDeployRetryPolicy> retry_policy(
-      Options const& options) {
-    return options.get<deploy_v1::CloudDeployRetryPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<deploy_v1::CloudDeployBackoffPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<deploy_v1::CloudDeployConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<deploy_v1::CloudDeployConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-    return options.get<deploy_v1::CloudDeployPollingPolicyOption>()->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<deploy_v1_internal::CloudDeployStub> stub_;
   Options options_;

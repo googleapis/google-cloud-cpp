@@ -60,30 +60,6 @@ class CompletionServiceConnectionImpl
       override;
 
  private:
-  static std::unique_ptr<retail_v2::CompletionServiceRetryPolicy> retry_policy(
-      Options const& options) {
-    return options.get<retail_v2::CompletionServiceRetryPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<retail_v2::CompletionServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<
-      retail_v2::CompletionServiceConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<retail_v2::CompletionServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-    return options.get<retail_v2::CompletionServicePollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<retail_v2_internal::CompletionServiceStub> stub_;
   Options options_;

@@ -230,30 +230,6 @@ class VmwareEngineConnectionImpl
           request) override;
 
  private:
-  static std::unique_ptr<vmwareengine_v1::VmwareEngineRetryPolicy> retry_policy(
-      Options const& options) {
-    return options.get<vmwareengine_v1::VmwareEngineRetryPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<vmwareengine_v1::VmwareEngineBackoffPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<
-      vmwareengine_v1::VmwareEngineConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<vmwareengine_v1::VmwareEngineConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-    return options.get<vmwareengine_v1::VmwareEnginePollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<vmwareengine_v1_internal::VmwareEngineStub> stub_;
   Options options_;

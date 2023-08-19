@@ -107,25 +107,6 @@ class AutoMlConnectionImpl : public automl_v1::AutoMlConnection {
       google::cloud::automl::v1::ListModelEvaluationsRequest request) override;
 
  private:
-  static std::unique_ptr<automl_v1::AutoMlRetryPolicy> retry_policy(
-      Options const& options) {
-    return options.get<automl_v1::AutoMlRetryPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<automl_v1::AutoMlBackoffPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<automl_v1::AutoMlConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options.get<automl_v1::AutoMlConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-    return options.get<automl_v1::AutoMlPollingPolicyOption>()->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<automl_v1_internal::AutoMlStub> stub_;
   Options options_;

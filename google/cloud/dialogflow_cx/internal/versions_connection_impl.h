@@ -80,26 +80,6 @@ class VersionsConnectionImpl : public dialogflow_cx::VersionsConnection {
       override;
 
  private:
-  static std::unique_ptr<dialogflow_cx::VersionsRetryPolicy> retry_policy(
-      Options const& options) {
-    return options.get<dialogflow_cx::VersionsRetryPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<dialogflow_cx::VersionsBackoffPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<dialogflow_cx::VersionsConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<dialogflow_cx::VersionsConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-    return options.get<dialogflow_cx::VersionsPollingPolicyOption>()->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<dialogflow_cx_internal::VersionsStub> stub_;
   Options options_;

@@ -30,6 +30,29 @@ namespace google {
 namespace cloud {
 namespace gkebackup_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<gkebackup_v1::BackupForGKERetryPolicy> retry_policy(
+    Options const& options) {
+  return options.get<gkebackup_v1::BackupForGKERetryPolicyOption>()->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options.get<gkebackup_v1::BackupForGKEBackoffPolicyOption>()->clone();
+}
+
+std::unique_ptr<gkebackup_v1::BackupForGKEConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options
+      .get<gkebackup_v1::BackupForGKEConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+  return options.get<gkebackup_v1::BackupForGKEPollingPolicyOption>()->clone();
+}
+
+}  // namespace
 
 BackupForGKEConnectionImpl::BackupForGKEConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,

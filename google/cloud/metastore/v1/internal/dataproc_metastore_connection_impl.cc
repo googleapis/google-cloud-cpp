@@ -30,6 +30,32 @@ namespace google {
 namespace cloud {
 namespace metastore_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<metastore_v1::DataprocMetastoreRetryPolicy> retry_policy(
+    Options const& options) {
+  return options.get<metastore_v1::DataprocMetastoreRetryPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options.get<metastore_v1::DataprocMetastoreBackoffPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<metastore_v1::DataprocMetastoreConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options
+      .get<metastore_v1::DataprocMetastoreConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+  return options.get<metastore_v1::DataprocMetastorePollingPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 DataprocMetastoreConnectionImpl::DataprocMetastoreConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,

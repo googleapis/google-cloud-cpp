@@ -109,28 +109,6 @@ class SecretManagerServiceConnectionImpl
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
  private:
-  static std::unique_ptr<secretmanager_v1::SecretManagerServiceRetryPolicy>
-  retry_policy(Options const& options) {
-    return options
-        .get<secretmanager_v1::SecretManagerServiceRetryPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options
-        .get<secretmanager_v1::SecretManagerServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<
-      secretmanager_v1::SecretManagerServiceConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<secretmanager_v1::
-                 SecretManagerServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<secretmanager_v1_internal::SecretManagerServiceStub> stub_;
   Options options_;

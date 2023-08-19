@@ -85,30 +85,6 @@ class TagValuesConnectionImpl : public resourcemanager_v3::TagValuesConnection {
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
  private:
-  static std::unique_ptr<resourcemanager_v3::TagValuesRetryPolicy> retry_policy(
-      Options const& options) {
-    return options.get<resourcemanager_v3::TagValuesRetryPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<resourcemanager_v3::TagValuesBackoffPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<
-      resourcemanager_v3::TagValuesConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<resourcemanager_v3::TagValuesConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-    return options.get<resourcemanager_v3::TagValuesPollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<resourcemanager_v3_internal::TagValuesStub> stub_;
   Options options_;

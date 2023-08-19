@@ -64,25 +64,6 @@ class SpeechConnectionImpl : public speech_v1::SpeechConnection {
   AsyncStreamingRecognize() override;
 
  private:
-  static std::unique_ptr<speech_v1::SpeechRetryPolicy> retry_policy(
-      Options const& options) {
-    return options.get<speech_v1::SpeechRetryPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<speech_v1::SpeechBackoffPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<speech_v1::SpeechConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options.get<speech_v1::SpeechConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-    return options.get<speech_v1::SpeechPollingPolicyOption>()->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<speech_v1_internal::SpeechStub> stub_;
   Options options_;

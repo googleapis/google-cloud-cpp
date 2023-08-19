@@ -87,33 +87,6 @@ class ConversationProfilesConnectionImpl
           request) override;
 
  private:
-  static std::unique_ptr<dialogflow_es::ConversationProfilesRetryPolicy>
-  retry_policy(Options const& options) {
-    return options.get<dialogflow_es::ConversationProfilesRetryPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options
-        .get<dialogflow_es::ConversationProfilesBackoffPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<
-      dialogflow_es::ConversationProfilesConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<dialogflow_es::
-                 ConversationProfilesConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-    return options
-        .get<dialogflow_es::ConversationProfilesPollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<dialogflow_es_internal::ConversationProfilesStub> stub_;
   Options options_;

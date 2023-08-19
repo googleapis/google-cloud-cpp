@@ -65,26 +65,6 @@ class AlertPolicyServiceConnectionImpl
       google::monitoring::v3::UpdateAlertPolicyRequest const& request) override;
 
  private:
-  static std::unique_ptr<monitoring_v3::AlertPolicyServiceRetryPolicy>
-  retry_policy(Options const& options) {
-    return options.get<monitoring_v3::AlertPolicyServiceRetryPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<monitoring_v3::AlertPolicyServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<
-      monitoring_v3::AlertPolicyServiceConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<monitoring_v3::
-                 AlertPolicyServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<monitoring_v3_internal::AlertPolicyServiceStub> stub_;
   Options options_;

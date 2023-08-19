@@ -78,25 +78,6 @@ class JobsConnectionImpl : public run_v2::JobsConnection {
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
  private:
-  static std::unique_ptr<run_v2::JobsRetryPolicy> retry_policy(
-      Options const& options) {
-    return options.get<run_v2::JobsRetryPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<run_v2::JobsBackoffPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<run_v2::JobsConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options.get<run_v2::JobsConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-    return options.get<run_v2::JobsPollingPolicyOption>()->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<run_v2_internal::JobsStub> stub_;
   Options options_;

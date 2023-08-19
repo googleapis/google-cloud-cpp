@@ -65,30 +65,6 @@ class BatchControllerConnectionImpl
       google::cloud::dataproc::v1::DeleteBatchRequest const& request) override;
 
  private:
-  static std::unique_ptr<dataproc_v1::BatchControllerRetryPolicy> retry_policy(
-      Options const& options) {
-    return options.get<dataproc_v1::BatchControllerRetryPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<dataproc_v1::BatchControllerBackoffPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<
-      dataproc_v1::BatchControllerConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<dataproc_v1::BatchControllerConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-    return options.get<dataproc_v1::BatchControllerPollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<dataproc_v1_internal::BatchControllerStub> stub_;
   Options options_;

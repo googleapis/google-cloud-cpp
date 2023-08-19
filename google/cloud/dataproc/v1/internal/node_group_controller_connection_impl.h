@@ -63,31 +63,6 @@ class NodeGroupControllerConnectionImpl
       google::cloud::dataproc::v1::GetNodeGroupRequest const& request) override;
 
  private:
-  static std::unique_ptr<dataproc_v1::NodeGroupControllerRetryPolicy>
-  retry_policy(Options const& options) {
-    return options.get<dataproc_v1::NodeGroupControllerRetryPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<dataproc_v1::NodeGroupControllerBackoffPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<
-      dataproc_v1::NodeGroupControllerConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<
-            dataproc_v1::NodeGroupControllerConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-    return options.get<dataproc_v1::NodeGroupControllerPollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<dataproc_v1_internal::NodeGroupControllerStub> stub_;
   Options options_;

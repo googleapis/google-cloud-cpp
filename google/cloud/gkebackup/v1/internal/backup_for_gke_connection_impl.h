@@ -141,28 +141,6 @@ class BackupForGKEConnectionImpl : public gkebackup_v1::BackupForGKEConnection {
       override;
 
  private:
-  static std::unique_ptr<gkebackup_v1::BackupForGKERetryPolicy> retry_policy(
-      Options const& options) {
-    return options.get<gkebackup_v1::BackupForGKERetryPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<gkebackup_v1::BackupForGKEBackoffPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<gkebackup_v1::BackupForGKEConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<gkebackup_v1::BackupForGKEConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-    return options.get<gkebackup_v1::BackupForGKEPollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<gkebackup_v1_internal::BackupForGKEStub> stub_;
   Options options_;

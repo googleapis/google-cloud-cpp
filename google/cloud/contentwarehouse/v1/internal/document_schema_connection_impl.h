@@ -75,28 +75,6 @@ class DocumentSchemaServiceConnectionImpl
       override;
 
  private:
-  static std::unique_ptr<contentwarehouse_v1::DocumentSchemaServiceRetryPolicy>
-  retry_policy(Options const& options) {
-    return options
-        .get<contentwarehouse_v1::DocumentSchemaServiceRetryPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options
-        .get<contentwarehouse_v1::DocumentSchemaServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<
-      contentwarehouse_v1::DocumentSchemaServiceConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<contentwarehouse_v1::
-                 DocumentSchemaServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<contentwarehouse_v1_internal::DocumentSchemaServiceStub>
       stub_;

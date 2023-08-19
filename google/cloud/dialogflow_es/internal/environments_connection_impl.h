@@ -74,23 +74,6 @@ class EnvironmentsConnectionImpl
       override;
 
  private:
-  static std::unique_ptr<dialogflow_es::EnvironmentsRetryPolicy> retry_policy(
-      Options const& options) {
-    return options.get<dialogflow_es::EnvironmentsRetryPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<dialogflow_es::EnvironmentsBackoffPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<dialogflow_es::EnvironmentsConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<dialogflow_es::EnvironmentsConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<dialogflow_es_internal::EnvironmentsStub> stub_;
   Options options_;

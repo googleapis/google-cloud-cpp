@@ -30,6 +30,28 @@ namespace google {
 namespace cloud {
 namespace asset_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<asset_v1::AssetServiceRetryPolicy> retry_policy(
+    Options const& options) {
+  return options.get<asset_v1::AssetServiceRetryPolicyOption>()->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options.get<asset_v1::AssetServiceBackoffPolicyOption>()->clone();
+}
+
+std::unique_ptr<asset_v1::AssetServiceConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options.get<asset_v1::AssetServiceConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+  return options.get<asset_v1::AssetServicePollingPolicyOption>()->clone();
+}
+
+}  // namespace
 
 AssetServiceConnectionImpl::AssetServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,

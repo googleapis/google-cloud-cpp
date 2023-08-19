@@ -71,28 +71,6 @@ class CloudShellServiceConnectionImpl
       google::cloud::shell::v1::RemovePublicKeyRequest const& request) override;
 
  private:
-  static std::unique_ptr<shell_v1::CloudShellServiceRetryPolicy> retry_policy(
-      Options const& options) {
-    return options.get<shell_v1::CloudShellServiceRetryPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<shell_v1::CloudShellServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<shell_v1::CloudShellServiceConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<shell_v1::CloudShellServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-    return options.get<shell_v1::CloudShellServicePollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<shell_v1_internal::CloudShellServiceStub> stub_;
   Options options_;

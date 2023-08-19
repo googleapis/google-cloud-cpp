@@ -65,28 +65,6 @@ class ContainerAnalysisConnectionImpl
           GetVulnerabilityOccurrencesSummaryRequest const& request) override;
 
  private:
-  static std::unique_ptr<containeranalysis_v1::ContainerAnalysisRetryPolicy>
-  retry_policy(Options const& options) {
-    return options
-        .get<containeranalysis_v1::ContainerAnalysisRetryPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options
-        .get<containeranalysis_v1::ContainerAnalysisBackoffPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<
-      containeranalysis_v1::ContainerAnalysisConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<containeranalysis_v1::
-                 ContainerAnalysisConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<containeranalysis_v1_internal::ContainerAnalysisStub> stub_;
   Options options_;

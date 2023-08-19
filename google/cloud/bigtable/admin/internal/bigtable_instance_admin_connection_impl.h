@@ -126,34 +126,6 @@ class BigtableInstanceAdminConnectionImpl
       google::bigtable::admin::v2::ListHotTabletsRequest request) override;
 
  private:
-  static std::unique_ptr<bigtable_admin::BigtableInstanceAdminRetryPolicy>
-  retry_policy(Options const& options) {
-    return options
-        .get<bigtable_admin::BigtableInstanceAdminRetryPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options
-        .get<bigtable_admin::BigtableInstanceAdminBackoffPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<
-      bigtable_admin::BigtableInstanceAdminConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<bigtable_admin::
-                 BigtableInstanceAdminConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-    return options
-        .get<bigtable_admin::BigtableInstanceAdminPollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<bigtable_admin_internal::BigtableInstanceAdminStub> stub_;
   Options options_;

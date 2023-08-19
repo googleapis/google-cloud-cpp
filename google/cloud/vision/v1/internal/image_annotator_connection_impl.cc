@@ -29,6 +29,29 @@ namespace google {
 namespace cloud {
 namespace vision_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<vision_v1::ImageAnnotatorRetryPolicy> retry_policy(
+    Options const& options) {
+  return options.get<vision_v1::ImageAnnotatorRetryPolicyOption>()->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options.get<vision_v1::ImageAnnotatorBackoffPolicyOption>()->clone();
+}
+
+std::unique_ptr<vision_v1::ImageAnnotatorConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options
+      .get<vision_v1::ImageAnnotatorConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+  return options.get<vision_v1::ImageAnnotatorPollingPolicyOption>()->clone();
+}
+
+}  // namespace
 
 ImageAnnotatorConnectionImpl::ImageAnnotatorConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,

@@ -128,33 +128,6 @@ class NetworkSecurityConnectionImpl
           request) override;
 
  private:
-  static std::unique_ptr<networksecurity_v1::NetworkSecurityRetryPolicy>
-  retry_policy(Options const& options) {
-    return options.get<networksecurity_v1::NetworkSecurityRetryPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options
-        .get<networksecurity_v1::NetworkSecurityBackoffPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<
-      networksecurity_v1::NetworkSecurityConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<networksecurity_v1::
-                 NetworkSecurityConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-    return options
-        .get<networksecurity_v1::NetworkSecurityPollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<networksecurity_v1_internal::NetworkSecurityStub> stub_;
   Options options_;

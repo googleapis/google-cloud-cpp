@@ -83,28 +83,6 @@ class CloudMemcacheConnectionImpl
       override;
 
  private:
-  static std::unique_ptr<memcache_v1::CloudMemcacheRetryPolicy> retry_policy(
-      Options const& options) {
-    return options.get<memcache_v1::CloudMemcacheRetryPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<memcache_v1::CloudMemcacheBackoffPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<memcache_v1::CloudMemcacheConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<memcache_v1::CloudMemcacheConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-    return options.get<memcache_v1::CloudMemcachePollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<memcache_v1_internal::CloudMemcacheStub> stub_;
   Options options_;

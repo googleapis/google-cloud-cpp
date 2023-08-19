@@ -30,6 +30,37 @@ namespace google {
 namespace cloud {
 namespace video_stitcher_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<video_stitcher_v1::VideoStitcherServiceRetryPolicy>
+retry_policy(Options const& options) {
+  return options
+      .get<video_stitcher_v1::VideoStitcherServiceRetryPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options
+      .get<video_stitcher_v1::VideoStitcherServiceBackoffPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<
+    video_stitcher_v1::VideoStitcherServiceConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options
+      .get<video_stitcher_v1::
+               VideoStitcherServiceConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+  return options
+      .get<video_stitcher_v1::VideoStitcherServicePollingPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 VideoStitcherServiceConnectionImpl::VideoStitcherServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,

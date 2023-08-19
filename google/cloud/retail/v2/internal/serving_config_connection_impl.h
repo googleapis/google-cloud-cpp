@@ -75,25 +75,6 @@ class ServingConfigServiceConnectionImpl
       google::cloud::retail::v2::RemoveControlRequest const& request) override;
 
  private:
-  static std::unique_ptr<retail_v2::ServingConfigServiceRetryPolicy>
-  retry_policy(Options const& options) {
-    return options.get<retail_v2::ServingConfigServiceRetryPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<retail_v2::ServingConfigServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<
-      retail_v2::ServingConfigServiceConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<retail_v2::ServingConfigServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<retail_v2_internal::ServingConfigServiceStub> stub_;
   Options options_;

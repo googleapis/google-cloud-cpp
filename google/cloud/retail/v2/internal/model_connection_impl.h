@@ -76,26 +76,6 @@ class ModelServiceConnectionImpl : public retail_v2::ModelServiceConnection {
       google::cloud::retail::v2::TuneModelRequest const& request) override;
 
  private:
-  static std::unique_ptr<retail_v2::ModelServiceRetryPolicy> retry_policy(
-      Options const& options) {
-    return options.get<retail_v2::ModelServiceRetryPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<retail_v2::ModelServiceBackoffPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<retail_v2::ModelServiceConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<retail_v2::ModelServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-    return options.get<retail_v2::ModelServicePollingPolicyOption>()->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<retail_v2_internal::ModelServiceStub> stub_;
   Options options_;

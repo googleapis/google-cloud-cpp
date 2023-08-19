@@ -85,22 +85,6 @@ class AdaptationConnectionImpl : public speech_v1::AdaptationConnection {
       override;
 
  private:
-  static std::unique_ptr<speech_v1::AdaptationRetryPolicy> retry_policy(
-      Options const& options) {
-    return options.get<speech_v1::AdaptationRetryPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<speech_v1::AdaptationBackoffPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<speech_v1::AdaptationConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<speech_v1::AdaptationConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<speech_v1_internal::AdaptationStub> stub_;
   Options options_;

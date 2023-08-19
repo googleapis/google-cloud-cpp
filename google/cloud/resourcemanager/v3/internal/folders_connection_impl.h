@@ -92,28 +92,6 @@ class FoldersConnectionImpl : public resourcemanager_v3::FoldersConnection {
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
  private:
-  static std::unique_ptr<resourcemanager_v3::FoldersRetryPolicy> retry_policy(
-      Options const& options) {
-    return options.get<resourcemanager_v3::FoldersRetryPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<resourcemanager_v3::FoldersBackoffPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<resourcemanager_v3::FoldersConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<resourcemanager_v3::FoldersConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-    return options.get<resourcemanager_v3::FoldersPollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<resourcemanager_v3_internal::FoldersStub> stub_;
   Options options_;

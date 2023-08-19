@@ -68,26 +68,6 @@ class OrganizationsConnectionImpl
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
  private:
-  static std::unique_ptr<resourcemanager_v3::OrganizationsRetryPolicy>
-  retry_policy(Options const& options) {
-    return options.get<resourcemanager_v3::OrganizationsRetryPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<resourcemanager_v3::OrganizationsBackoffPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<
-      resourcemanager_v3::OrganizationsConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<resourcemanager_v3::
-                 OrganizationsConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<resourcemanager_v3_internal::OrganizationsStub> stub_;
   Options options_;

@@ -121,30 +121,6 @@ class LineageConnectionImpl : public datacatalog_lineage_v1::LineageConnection {
           request) override;
 
  private:
-  static std::unique_ptr<datacatalog_lineage_v1::LineageRetryPolicy>
-  retry_policy(Options const& options) {
-    return options.get<datacatalog_lineage_v1::LineageRetryPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<datacatalog_lineage_v1::LineageBackoffPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<
-      datacatalog_lineage_v1::LineageConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<datacatalog_lineage_v1::LineageConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-    return options.get<datacatalog_lineage_v1::LineagePollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<datacatalog_lineage_v1_internal::LineageStub> stub_;
   Options options_;

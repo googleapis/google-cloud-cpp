@@ -62,25 +62,6 @@ class SnoozeServiceConnectionImpl
       google::monitoring::v3::UpdateSnoozeRequest const& request) override;
 
  private:
-  static std::unique_ptr<monitoring_v3::SnoozeServiceRetryPolicy> retry_policy(
-      Options const& options) {
-    return options.get<monitoring_v3::SnoozeServiceRetryPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<monitoring_v3::SnoozeServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<
-      monitoring_v3::SnoozeServiceConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<monitoring_v3::SnoozeServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<monitoring_v3_internal::SnoozeServiceStub> stub_;
   Options options_;

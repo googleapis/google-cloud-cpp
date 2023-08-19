@@ -126,30 +126,6 @@ class DataprocMetastoreConnectionImpl
           request) override;
 
  private:
-  static std::unique_ptr<metastore_v1::DataprocMetastoreRetryPolicy>
-  retry_policy(Options const& options) {
-    return options.get<metastore_v1::DataprocMetastoreRetryPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<metastore_v1::DataprocMetastoreBackoffPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<
-      metastore_v1::DataprocMetastoreConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<metastore_v1::DataprocMetastoreConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-    return options.get<metastore_v1::DataprocMetastorePollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<metastore_v1_internal::DataprocMetastoreStub> stub_;
   Options options_;

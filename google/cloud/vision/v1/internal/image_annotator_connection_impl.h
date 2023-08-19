@@ -71,26 +71,6 @@ class ImageAnnotatorConnectionImpl
       override;
 
  private:
-  static std::unique_ptr<vision_v1::ImageAnnotatorRetryPolicy> retry_policy(
-      Options const& options) {
-    return options.get<vision_v1::ImageAnnotatorRetryPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<vision_v1::ImageAnnotatorBackoffPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<vision_v1::ImageAnnotatorConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<vision_v1::ImageAnnotatorConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-    return options.get<vision_v1::ImageAnnotatorPollingPolicyOption>()->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<vision_v1_internal::ImageAnnotatorStub> stub_;
   Options options_;

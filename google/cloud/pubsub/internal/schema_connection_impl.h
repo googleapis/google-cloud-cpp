@@ -79,22 +79,6 @@ class SchemaServiceConnectionImpl : public pubsub::SchemaServiceConnection {
       google::pubsub::v1::ValidateMessageRequest const& request) override;
 
  private:
-  static std::unique_ptr<pubsub::SchemaServiceRetryPolicy> retry_policy(
-      Options const& options) {
-    return options.get<pubsub::SchemaServiceRetryPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<pubsub::SchemaServiceBackoffPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<pubsub::SchemaServiceConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<pubsub::SchemaServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<pubsub_internal::SchemaServiceStub> stub_;
   Options options_;

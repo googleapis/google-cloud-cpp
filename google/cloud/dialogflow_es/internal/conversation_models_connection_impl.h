@@ -101,31 +101,6 @@ class ConversationModelsConnectionImpl
           CreateConversationModelEvaluationRequest const& request) override;
 
  private:
-  static std::unique_ptr<dialogflow_es::ConversationModelsRetryPolicy>
-  retry_policy(Options const& options) {
-    return options.get<dialogflow_es::ConversationModelsRetryPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<dialogflow_es::ConversationModelsBackoffPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<
-      dialogflow_es::ConversationModelsConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<dialogflow_es::
-                 ConversationModelsConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-    return options.get<dialogflow_es::ConversationModelsPollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<dialogflow_es_internal::ConversationModelsStub> stub_;
   Options options_;

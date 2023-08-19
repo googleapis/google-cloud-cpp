@@ -60,25 +60,6 @@ class ExecutionsConnectionImpl : public run_v2::ExecutionsConnection {
       google::cloud::run::v2::DeleteExecutionRequest const& request) override;
 
  private:
-  static std::unique_ptr<run_v2::ExecutionsRetryPolicy> retry_policy(
-      Options const& options) {
-    return options.get<run_v2::ExecutionsRetryPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<run_v2::ExecutionsBackoffPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<run_v2::ExecutionsConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options.get<run_v2::ExecutionsConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-    return options.get<run_v2::ExecutionsPollingPolicyOption>()->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<run_v2_internal::ExecutionsStub> stub_;
   Options options_;

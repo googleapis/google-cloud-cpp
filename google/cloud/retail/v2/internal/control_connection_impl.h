@@ -65,22 +65,6 @@ class ControlServiceConnectionImpl
       google::cloud::retail::v2::ListControlsRequest request) override;
 
  private:
-  static std::unique_ptr<retail_v2::ControlServiceRetryPolicy> retry_policy(
-      Options const& options) {
-    return options.get<retail_v2::ControlServiceRetryPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<retail_v2::ControlServiceBackoffPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<retail_v2::ControlServiceConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<retail_v2::ControlServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<retail_v2_internal::ControlServiceStub> stub_;
   Options options_;

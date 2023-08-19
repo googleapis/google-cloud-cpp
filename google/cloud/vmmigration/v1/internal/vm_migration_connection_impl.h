@@ -250,28 +250,6 @@ class VmMigrationConnectionImpl : public vmmigration_v1::VmMigrationConnection {
       override;
 
  private:
-  static std::unique_ptr<vmmigration_v1::VmMigrationRetryPolicy> retry_policy(
-      Options const& options) {
-    return options.get<vmmigration_v1::VmMigrationRetryPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<vmmigration_v1::VmMigrationBackoffPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<vmmigration_v1::VmMigrationConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<vmmigration_v1::VmMigrationConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-    return options.get<vmmigration_v1::VmMigrationPollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<vmmigration_v1_internal::VmMigrationStub> stub_;
   Options options_;

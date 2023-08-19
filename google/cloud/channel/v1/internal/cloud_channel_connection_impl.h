@@ -252,30 +252,6 @@ class CloudChannelServiceConnectionImpl
       override;
 
  private:
-  static std::unique_ptr<channel_v1::CloudChannelServiceRetryPolicy>
-  retry_policy(Options const& options) {
-    return options.get<channel_v1::CloudChannelServiceRetryPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<channel_v1::CloudChannelServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<
-      channel_v1::CloudChannelServiceConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<channel_v1::CloudChannelServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-    return options.get<channel_v1::CloudChannelServicePollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<channel_v1_internal::CloudChannelServiceStub> stub_;
   Options options_;

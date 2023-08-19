@@ -84,28 +84,6 @@ class MigrationServiceConnectionImpl
           request) override;
 
  private:
-  static std::unique_ptr<bigquery_migration_v2::MigrationServiceRetryPolicy>
-  retry_policy(Options const& options) {
-    return options
-        .get<bigquery_migration_v2::MigrationServiceRetryPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options
-        .get<bigquery_migration_v2::MigrationServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<
-      bigquery_migration_v2::MigrationServiceConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<bigquery_migration_v2::
-                 MigrationServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<bigquery_migration_v2_internal::MigrationServiceStub> stub_;
   Options options_;

@@ -58,25 +58,6 @@ class TextToSpeechConnectionImpl
       override;
 
  private:
-  static std::unique_ptr<texttospeech_v1::TextToSpeechRetryPolicy> retry_policy(
-      Options const& options) {
-    return options.get<texttospeech_v1::TextToSpeechRetryPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<texttospeech_v1::TextToSpeechBackoffPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<
-      texttospeech_v1::TextToSpeechConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<texttospeech_v1::TextToSpeechConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<texttospeech_v1_internal::TextToSpeechStub> stub_;
   Options options_;

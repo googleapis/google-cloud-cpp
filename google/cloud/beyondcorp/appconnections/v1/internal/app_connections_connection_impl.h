@@ -83,38 +83,6 @@ class AppConnectionsServiceConnectionImpl
                             ResolveAppConnectionsRequest request) override;
 
  private:
-  static std::unique_ptr<
-      beyondcorp_appconnections_v1::AppConnectionsServiceRetryPolicy>
-  retry_policy(Options const& options) {
-    return options
-        .get<beyondcorp_appconnections_v1::
-                 AppConnectionsServiceRetryPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options
-        .get<beyondcorp_appconnections_v1::
-                 AppConnectionsServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<beyondcorp_appconnections_v1::
-                             AppConnectionsServiceConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<beyondcorp_appconnections_v1::
-                 AppConnectionsServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-    return options
-        .get<beyondcorp_appconnections_v1::
-                 AppConnectionsServicePollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<
       beyondcorp_appconnections_v1_internal::AppConnectionsServiceStub>

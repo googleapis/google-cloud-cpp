@@ -29,6 +29,29 @@ namespace google {
 namespace cloud {
 namespace shell_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<shell_v1::CloudShellServiceRetryPolicy> retry_policy(
+    Options const& options) {
+  return options.get<shell_v1::CloudShellServiceRetryPolicyOption>()->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options.get<shell_v1::CloudShellServiceBackoffPolicyOption>()->clone();
+}
+
+std::unique_ptr<shell_v1::CloudShellServiceConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options
+      .get<shell_v1::CloudShellServiceConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+  return options.get<shell_v1::CloudShellServicePollingPolicyOption>()->clone();
+}
+
+}  // namespace
 
 CloudShellServiceConnectionImpl::CloudShellServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,

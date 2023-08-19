@@ -29,6 +29,24 @@ namespace google {
 namespace cloud {
 namespace dlp_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<dlp_v2::DlpServiceRetryPolicy> retry_policy(
+    Options const& options) {
+  return options.get<dlp_v2::DlpServiceRetryPolicyOption>()->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options.get<dlp_v2::DlpServiceBackoffPolicyOption>()->clone();
+}
+
+std::unique_ptr<dlp_v2::DlpServiceConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options.get<dlp_v2::DlpServiceConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 DlpServiceConnectionImpl::DlpServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,

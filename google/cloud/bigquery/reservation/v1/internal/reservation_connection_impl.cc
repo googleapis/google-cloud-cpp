@@ -29,6 +29,31 @@ namespace google {
 namespace cloud {
 namespace bigquery_reservation_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<bigquery_reservation_v1::ReservationServiceRetryPolicy>
+retry_policy(Options const& options) {
+  return options
+      .get<bigquery_reservation_v1::ReservationServiceRetryPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options
+      .get<bigquery_reservation_v1::ReservationServiceBackoffPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<
+    bigquery_reservation_v1::ReservationServiceConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options
+      .get<bigquery_reservation_v1::
+               ReservationServiceConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 ReservationServiceConnectionImpl::ReservationServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,

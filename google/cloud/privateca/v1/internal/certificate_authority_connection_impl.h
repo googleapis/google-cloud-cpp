@@ -196,34 +196,6 @@ class CertificateAuthorityServiceConnectionImpl
           UpdateCertificateTemplateRequest const& request) override;
 
  private:
-  static std::unique_ptr<privateca_v1::CertificateAuthorityServiceRetryPolicy>
-  retry_policy(Options const& options) {
-    return options
-        .get<privateca_v1::CertificateAuthorityServiceRetryPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options
-        .get<privateca_v1::CertificateAuthorityServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<
-      privateca_v1::CertificateAuthorityServiceConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<privateca_v1::
-                 CertificateAuthorityServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-    return options
-        .get<privateca_v1::CertificateAuthorityServicePollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<privateca_v1_internal::CertificateAuthorityServiceStub> stub_;
   Options options_;

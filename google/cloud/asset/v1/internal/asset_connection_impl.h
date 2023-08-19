@@ -142,26 +142,6 @@ class AssetServiceConnectionImpl : public asset_v1::AssetServiceConnection {
       override;
 
  private:
-  static std::unique_ptr<asset_v1::AssetServiceRetryPolicy> retry_policy(
-      Options const& options) {
-    return options.get<asset_v1::AssetServiceRetryPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<asset_v1::AssetServiceBackoffPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<asset_v1::AssetServiceConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<asset_v1::AssetServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-    return options.get<asset_v1::AssetServicePollingPolicyOption>()->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<asset_v1_internal::AssetServiceStub> stub_;
   Options options_;

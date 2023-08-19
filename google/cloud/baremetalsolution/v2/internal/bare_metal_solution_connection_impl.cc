@@ -30,6 +30,37 @@ namespace google {
 namespace cloud {
 namespace baremetalsolution_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<baremetalsolution_v2::BareMetalSolutionRetryPolicy>
+retry_policy(Options const& options) {
+  return options
+      .get<baremetalsolution_v2::BareMetalSolutionRetryPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options
+      .get<baremetalsolution_v2::BareMetalSolutionBackoffPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<
+    baremetalsolution_v2::BareMetalSolutionConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options
+      .get<baremetalsolution_v2::
+               BareMetalSolutionConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+  return options
+      .get<baremetalsolution_v2::BareMetalSolutionPollingPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 BareMetalSolutionConnectionImpl::BareMetalSolutionConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,

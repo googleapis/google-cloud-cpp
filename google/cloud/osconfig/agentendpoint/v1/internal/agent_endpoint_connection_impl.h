@@ -89,30 +89,6 @@ class AgentEndpointServiceConnectionImpl
           request) override;
 
  private:
-  static std::unique_ptr<
-      osconfig_agentendpoint_v1::AgentEndpointServiceRetryPolicy>
-  retry_policy(Options const& options) {
-    return options
-        .get<osconfig_agentendpoint_v1::AgentEndpointServiceRetryPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options
-        .get<osconfig_agentendpoint_v1::
-                 AgentEndpointServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<osconfig_agentendpoint_v1::
-                             AgentEndpointServiceConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<osconfig_agentendpoint_v1::
-                 AgentEndpointServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<osconfig_agentendpoint_v1_internal::AgentEndpointServiceStub>
       stub_;

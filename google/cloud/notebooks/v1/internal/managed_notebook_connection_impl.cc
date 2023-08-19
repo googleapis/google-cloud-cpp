@@ -30,6 +30,33 @@ namespace google {
 namespace cloud {
 namespace notebooks_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<notebooks_v1::ManagedNotebookServiceRetryPolicy> retry_policy(
+    Options const& options) {
+  return options.get<notebooks_v1::ManagedNotebookServiceRetryPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options.get<notebooks_v1::ManagedNotebookServiceBackoffPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<notebooks_v1::ManagedNotebookServiceConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options
+      .get<notebooks_v1::
+               ManagedNotebookServiceConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+  return options.get<notebooks_v1::ManagedNotebookServicePollingPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 ManagedNotebookServiceConnectionImpl::ManagedNotebookServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,

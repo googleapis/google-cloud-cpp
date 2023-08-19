@@ -71,30 +71,6 @@ class DomainMappingsConnectionImpl
                           request) override;
 
  private:
-  static std::unique_ptr<appengine_v1::DomainMappingsRetryPolicy> retry_policy(
-      Options const& options) {
-    return options.get<appengine_v1::DomainMappingsRetryPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<appengine_v1::DomainMappingsBackoffPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<
-      appengine_v1::DomainMappingsConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<appengine_v1::DomainMappingsConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-    return options.get<appengine_v1::DomainMappingsPollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<appengine_v1_internal::DomainMappingsStub> stub_;
   Options options_;

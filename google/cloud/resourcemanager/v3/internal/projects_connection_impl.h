@@ -92,30 +92,6 @@ class ProjectsConnectionImpl : public resourcemanager_v3::ProjectsConnection {
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
  private:
-  static std::unique_ptr<resourcemanager_v3::ProjectsRetryPolicy> retry_policy(
-      Options const& options) {
-    return options.get<resourcemanager_v3::ProjectsRetryPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<resourcemanager_v3::ProjectsBackoffPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<
-      resourcemanager_v3::ProjectsConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<resourcemanager_v3::ProjectsConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-    return options.get<resourcemanager_v3::ProjectsPollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<resourcemanager_v3_internal::ProjectsStub> stub_;
   Options options_;

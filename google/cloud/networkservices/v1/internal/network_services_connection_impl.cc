@@ -30,6 +30,33 @@ namespace google {
 namespace cloud {
 namespace networkservices_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<networkservices_v1::NetworkServicesRetryPolicy> retry_policy(
+    Options const& options) {
+  return options.get<networkservices_v1::NetworkServicesRetryPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options.get<networkservices_v1::NetworkServicesBackoffPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<networkservices_v1::NetworkServicesConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options
+      .get<networkservices_v1::
+               NetworkServicesConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+  return options.get<networkservices_v1::NetworkServicesPollingPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 NetworkServicesConnectionImpl::NetworkServicesConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,

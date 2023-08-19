@@ -156,30 +156,6 @@ class DataplexServiceConnectionImpl
       google::cloud::dataplex::v1::ListSessionsRequest request) override;
 
  private:
-  static std::unique_ptr<dataplex_v1::DataplexServiceRetryPolicy> retry_policy(
-      Options const& options) {
-    return options.get<dataplex_v1::DataplexServiceRetryPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<dataplex_v1::DataplexServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<
-      dataplex_v1::DataplexServiceConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<dataplex_v1::DataplexServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-    return options.get<dataplex_v1::DataplexServicePollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<dataplex_v1_internal::DataplexServiceStub> stub_;
   Options options_;

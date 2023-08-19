@@ -75,25 +75,6 @@ class LanguageServiceConnectionImpl
       google::cloud::language::v1::AnnotateTextRequest const& request) override;
 
  private:
-  static std::unique_ptr<language_v1::LanguageServiceRetryPolicy> retry_policy(
-      Options const& options) {
-    return options.get<language_v1::LanguageServiceRetryPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<language_v1::LanguageServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<
-      language_v1::LanguageServiceConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<language_v1::LanguageServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<language_v1_internal::LanguageServiceStub> stub_;
   Options options_;

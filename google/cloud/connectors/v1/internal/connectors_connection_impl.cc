@@ -30,6 +30,29 @@ namespace google {
 namespace cloud {
 namespace connectors_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<connectors_v1::ConnectorsRetryPolicy> retry_policy(
+    Options const& options) {
+  return options.get<connectors_v1::ConnectorsRetryPolicyOption>()->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options.get<connectors_v1::ConnectorsBackoffPolicyOption>()->clone();
+}
+
+std::unique_ptr<connectors_v1::ConnectorsConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options
+      .get<connectors_v1::ConnectorsConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+  return options.get<connectors_v1::ConnectorsPollingPolicyOption>()->clone();
+}
+
+}  // namespace
 
 ConnectorsConnectionImpl::ConnectorsConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,

@@ -75,25 +75,6 @@ class ApiKeysConnectionImpl : public apikeys_v2::ApiKeysConnection {
       google::api::apikeys::v2::LookupKeyRequest const& request) override;
 
  private:
-  static std::unique_ptr<apikeys_v2::ApiKeysRetryPolicy> retry_policy(
-      Options const& options) {
-    return options.get<apikeys_v2::ApiKeysRetryPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<apikeys_v2::ApiKeysBackoffPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<apikeys_v2::ApiKeysConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options.get<apikeys_v2::ApiKeysConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-    return options.get<apikeys_v2::ApiKeysPollingPolicyOption>()->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<apikeys_v2_internal::ApiKeysStub> stub_;
   Options options_;

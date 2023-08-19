@@ -29,6 +29,31 @@ namespace google {
 namespace cloud {
 namespace essentialcontacts_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<essentialcontacts_v1::EssentialContactsServiceRetryPolicy>
+retry_policy(Options const& options) {
+  return options
+      .get<essentialcontacts_v1::EssentialContactsServiceRetryPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options
+      .get<essentialcontacts_v1::EssentialContactsServiceBackoffPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<
+    essentialcontacts_v1::EssentialContactsServiceConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options
+      .get<essentialcontacts_v1::
+               EssentialContactsServiceConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 EssentialContactsServiceConnectionImpl::EssentialContactsServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,

@@ -52,25 +52,6 @@ class PredictionServiceConnectionImpl
       google::cloud::retail::v2::PredictRequest const& request) override;
 
  private:
-  static std::unique_ptr<retail_v2::PredictionServiceRetryPolicy> retry_policy(
-      Options const& options) {
-    return options.get<retail_v2::PredictionServiceRetryPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<retail_v2::PredictionServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<
-      retail_v2::PredictionServiceConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<retail_v2::PredictionServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<retail_v2_internal::PredictionServiceStub> stub_;
   Options options_;

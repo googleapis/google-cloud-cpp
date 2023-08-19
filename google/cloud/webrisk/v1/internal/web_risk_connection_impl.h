@@ -70,28 +70,6 @@ class WebRiskServiceConnectionImpl
       google::cloud::webrisk::v1::SubmitUriRequest const& request) override;
 
  private:
-  static std::unique_ptr<webrisk_v1::WebRiskServiceRetryPolicy> retry_policy(
-      Options const& options) {
-    return options.get<webrisk_v1::WebRiskServiceRetryPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<webrisk_v1::WebRiskServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<webrisk_v1::WebRiskServiceConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<webrisk_v1::WebRiskServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-    return options.get<webrisk_v1::WebRiskServicePollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<webrisk_v1_internal::WebRiskServiceStub> stub_;
   Options options_;

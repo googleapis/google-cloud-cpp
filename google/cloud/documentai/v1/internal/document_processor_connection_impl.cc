@@ -30,6 +30,37 @@ namespace google {
 namespace cloud {
 namespace documentai_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<documentai_v1::DocumentProcessorServiceRetryPolicy>
+retry_policy(Options const& options) {
+  return options
+      .get<documentai_v1::DocumentProcessorServiceRetryPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options
+      .get<documentai_v1::DocumentProcessorServiceBackoffPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<
+    documentai_v1::DocumentProcessorServiceConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options
+      .get<documentai_v1::
+               DocumentProcessorServiceConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+  return options
+      .get<documentai_v1::DocumentProcessorServicePollingPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 DocumentProcessorServiceConnectionImpl::DocumentProcessorServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,

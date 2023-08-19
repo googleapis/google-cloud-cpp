@@ -141,31 +141,6 @@ class FeaturestoreServiceConnectionImpl
       google::cloud::aiplatform::v1::SearchFeaturesRequest request) override;
 
  private:
-  static std::unique_ptr<aiplatform_v1::FeaturestoreServiceRetryPolicy>
-  retry_policy(Options const& options) {
-    return options.get<aiplatform_v1::FeaturestoreServiceRetryPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<aiplatform_v1::FeaturestoreServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<
-      aiplatform_v1::FeaturestoreServiceConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<aiplatform_v1::
-                 FeaturestoreServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-    return options.get<aiplatform_v1::FeaturestoreServicePollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<aiplatform_v1_internal::FeaturestoreServiceStub> stub_;
   Options options_;

@@ -136,25 +136,6 @@ class SpeechConnectionImpl : public speech_v2::SpeechConnection {
       override;
 
  private:
-  static std::unique_ptr<speech_v2::SpeechRetryPolicy> retry_policy(
-      Options const& options) {
-    return options.get<speech_v2::SpeechRetryPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<speech_v2::SpeechBackoffPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<speech_v2::SpeechConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options.get<speech_v2::SpeechConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-    return options.get<speech_v2::SpeechPollingPolicyOption>()->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<speech_v2_internal::SpeechStub> stub_;
   Options options_;

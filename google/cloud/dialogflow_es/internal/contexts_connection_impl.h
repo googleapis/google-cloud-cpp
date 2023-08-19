@@ -71,22 +71,6 @@ class ContextsConnectionImpl : public dialogflow_es::ContextsConnection {
       override;
 
  private:
-  static std::unique_ptr<dialogflow_es::ContextsRetryPolicy> retry_policy(
-      Options const& options) {
-    return options.get<dialogflow_es::ContextsRetryPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<dialogflow_es::ContextsBackoffPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<dialogflow_es::ContextsConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<dialogflow_es::ContextsConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<dialogflow_es_internal::ContextsStub> stub_;
   Options options_;

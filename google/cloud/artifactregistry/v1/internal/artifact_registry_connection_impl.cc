@@ -30,6 +30,36 @@ namespace google {
 namespace cloud {
 namespace artifactregistry_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<artifactregistry_v1::ArtifactRegistryRetryPolicy> retry_policy(
+    Options const& options) {
+  return options.get<artifactregistry_v1::ArtifactRegistryRetryPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options
+      .get<artifactregistry_v1::ArtifactRegistryBackoffPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<
+    artifactregistry_v1::ArtifactRegistryConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options
+      .get<artifactregistry_v1::
+               ArtifactRegistryConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+  return options
+      .get<artifactregistry_v1::ArtifactRegistryPollingPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 ArtifactRegistryConnectionImpl::ArtifactRegistryConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,

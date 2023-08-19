@@ -69,26 +69,6 @@ class BudgetServiceConnectionImpl
       override;
 
  private:
-  static std::unique_ptr<billing_budgets_v1::BudgetServiceRetryPolicy>
-  retry_policy(Options const& options) {
-    return options.get<billing_budgets_v1::BudgetServiceRetryPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<billing_budgets_v1::BudgetServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<
-      billing_budgets_v1::BudgetServiceConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<billing_budgets_v1::
-                 BudgetServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<billing_budgets_v1_internal::BudgetServiceStub> stub_;
   Options options_;

@@ -259,33 +259,6 @@ class MigrationCenterConnectionImpl
                    request) override;
 
  private:
-  static std::unique_ptr<migrationcenter_v1::MigrationCenterRetryPolicy>
-  retry_policy(Options const& options) {
-    return options.get<migrationcenter_v1::MigrationCenterRetryPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options
-        .get<migrationcenter_v1::MigrationCenterBackoffPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<
-      migrationcenter_v1::MigrationCenterConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<migrationcenter_v1::
-                 MigrationCenterConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-    return options
-        .get<migrationcenter_v1::MigrationCenterPollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<migrationcenter_v1_internal::MigrationCenterStub> stub_;
   Options options_;

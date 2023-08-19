@@ -64,25 +64,6 @@ class TopicStatsServiceConnectionImpl
       override;
 
  private:
-  static std::unique_ptr<pubsublite::TopicStatsServiceRetryPolicy> retry_policy(
-      Options const& options) {
-    return options.get<pubsublite::TopicStatsServiceRetryPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<pubsublite::TopicStatsServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<
-      pubsublite::TopicStatsServiceConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<pubsublite::TopicStatsServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<pubsublite_internal::TopicStatsServiceStub> stub_;
   Options options_;

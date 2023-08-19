@@ -30,6 +30,37 @@ namespace google {
 namespace cloud {
 namespace certificatemanager_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<certificatemanager_v1::CertificateManagerRetryPolicy>
+retry_policy(Options const& options) {
+  return options
+      .get<certificatemanager_v1::CertificateManagerRetryPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options
+      .get<certificatemanager_v1::CertificateManagerBackoffPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<
+    certificatemanager_v1::CertificateManagerConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options
+      .get<certificatemanager_v1::
+               CertificateManagerConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+  return options
+      .get<certificatemanager_v1::CertificateManagerPollingPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 CertificateManagerConnectionImpl::CertificateManagerConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,

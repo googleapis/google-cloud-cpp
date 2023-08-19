@@ -78,27 +78,6 @@ class StorageInsightsConnectionImpl
       override;
 
  private:
-  static std::unique_ptr<storageinsights_v1::StorageInsightsRetryPolicy>
-  retry_policy(Options const& options) {
-    return options.get<storageinsights_v1::StorageInsightsRetryPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options
-        .get<storageinsights_v1::StorageInsightsBackoffPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<
-      storageinsights_v1::StorageInsightsConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<storageinsights_v1::
-                 StorageInsightsConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<storageinsights_v1_internal::StorageInsightsStub> stub_;
   Options options_;

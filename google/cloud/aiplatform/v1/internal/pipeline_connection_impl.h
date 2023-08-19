@@ -96,30 +96,6 @@ class PipelineServiceConnectionImpl
       override;
 
  private:
-  static std::unique_ptr<aiplatform_v1::PipelineServiceRetryPolicy>
-  retry_policy(Options const& options) {
-    return options.get<aiplatform_v1::PipelineServiceRetryPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<aiplatform_v1::PipelineServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<
-      aiplatform_v1::PipelineServiceConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<aiplatform_v1::PipelineServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-    return options.get<aiplatform_v1::PipelineServicePollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<aiplatform_v1_internal::PipelineServiceStub> stub_;
   Options options_;

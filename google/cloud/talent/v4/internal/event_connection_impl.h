@@ -52,22 +52,6 @@ class EventServiceConnectionImpl : public talent_v4::EventServiceConnection {
       override;
 
  private:
-  static std::unique_ptr<talent_v4::EventServiceRetryPolicy> retry_policy(
-      Options const& options) {
-    return options.get<talent_v4::EventServiceRetryPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<talent_v4::EventServiceBackoffPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<talent_v4::EventServiceConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<talent_v4::EventServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<talent_v4_internal::EventServiceStub> stub_;
   Options options_;

@@ -53,28 +53,6 @@ class SystemPolicyV1ConnectionImpl
           request) override;
 
  private:
-  static std::unique_ptr<binaryauthorization_v1::SystemPolicyV1RetryPolicy>
-  retry_policy(Options const& options) {
-    return options
-        .get<binaryauthorization_v1::SystemPolicyV1RetryPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options
-        .get<binaryauthorization_v1::SystemPolicyV1BackoffPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<
-      binaryauthorization_v1::SystemPolicyV1ConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<binaryauthorization_v1::
-                 SystemPolicyV1ConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<binaryauthorization_v1_internal::SystemPolicyV1Stub> stub_;
   Options options_;

@@ -191,30 +191,6 @@ class NotebookServiceConnectionImpl
       override;
 
  private:
-  static std::unique_ptr<notebooks_v1::NotebookServiceRetryPolicy> retry_policy(
-      Options const& options) {
-    return options.get<notebooks_v1::NotebookServiceRetryPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<notebooks_v1::NotebookServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<
-      notebooks_v1::NotebookServiceConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<notebooks_v1::NotebookServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-    return options.get<notebooks_v1::NotebookServicePollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<notebooks_v1_internal::NotebookServiceStub> stub_;
   Options options_;

@@ -89,23 +89,6 @@ class ParticipantsConnectionImpl
       override;
 
  private:
-  static std::unique_ptr<dialogflow_es::ParticipantsRetryPolicy> retry_policy(
-      Options const& options) {
-    return options.get<dialogflow_es::ParticipantsRetryPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<dialogflow_es::ParticipantsBackoffPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<dialogflow_es::ParticipantsConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<dialogflow_es::ParticipantsConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<dialogflow_es_internal::ParticipantsStub> stub_;
   Options options_;

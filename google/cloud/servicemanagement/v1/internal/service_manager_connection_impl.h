@@ -109,33 +109,6 @@ class ServiceManagerConnectionImpl
           request) override;
 
  private:
-  static std::unique_ptr<servicemanagement_v1::ServiceManagerRetryPolicy>
-  retry_policy(Options const& options) {
-    return options.get<servicemanagement_v1::ServiceManagerRetryPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options
-        .get<servicemanagement_v1::ServiceManagerBackoffPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<
-      servicemanagement_v1::ServiceManagerConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<servicemanagement_v1::
-                 ServiceManagerConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-    return options
-        .get<servicemanagement_v1::ServiceManagerPollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<servicemanagement_v1_internal::ServiceManagerStub> stub_;
   Options options_;

@@ -132,28 +132,6 @@ class ModelServiceConnectionImpl
       override;
 
  private:
-  static std::unique_ptr<aiplatform_v1::ModelServiceRetryPolicy> retry_policy(
-      Options const& options) {
-    return options.get<aiplatform_v1::ModelServiceRetryPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<aiplatform_v1::ModelServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<aiplatform_v1::ModelServiceConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<aiplatform_v1::ModelServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-    return options.get<aiplatform_v1::ModelServicePollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<aiplatform_v1_internal::ModelServiceStub> stub_;
   Options options_;

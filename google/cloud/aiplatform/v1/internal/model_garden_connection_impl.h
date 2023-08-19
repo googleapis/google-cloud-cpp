@@ -53,26 +53,6 @@ class ModelGardenServiceConnectionImpl
       override;
 
  private:
-  static std::unique_ptr<aiplatform_v1::ModelGardenServiceRetryPolicy>
-  retry_policy(Options const& options) {
-    return options.get<aiplatform_v1::ModelGardenServiceRetryPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<aiplatform_v1::ModelGardenServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<
-      aiplatform_v1::ModelGardenServiceConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<aiplatform_v1::
-                 ModelGardenServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<aiplatform_v1_internal::ModelGardenServiceStub> stub_;
   Options options_;

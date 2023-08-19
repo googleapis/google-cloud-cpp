@@ -76,23 +76,6 @@ class ContentServiceConnectionImpl
       google::cloud::dataplex::v1::ListContentRequest request) override;
 
  private:
-  static std::unique_ptr<dataplex_v1::ContentServiceRetryPolicy> retry_policy(
-      Options const& options) {
-    return options.get<dataplex_v1::ContentServiceRetryPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<dataplex_v1::ContentServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<dataplex_v1::ContentServiceConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<dataplex_v1::ContentServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<dataplex_v1_internal::ContentServiceStub> stub_;
   Options options_;

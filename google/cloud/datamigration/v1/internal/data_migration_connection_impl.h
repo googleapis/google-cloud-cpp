@@ -224,34 +224,6 @@ class DataMigrationServiceConnectionImpl
       google::cloud::clouddms::v1::FetchStaticIpsRequest request) override;
 
  private:
-  static std::unique_ptr<datamigration_v1::DataMigrationServiceRetryPolicy>
-  retry_policy(Options const& options) {
-    return options
-        .get<datamigration_v1::DataMigrationServiceRetryPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options
-        .get<datamigration_v1::DataMigrationServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<
-      datamigration_v1::DataMigrationServiceConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<datamigration_v1::
-                 DataMigrationServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-    return options
-        .get<datamigration_v1::DataMigrationServicePollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<datamigration_v1_internal::DataMigrationServiceStub> stub_;
   Options options_;

@@ -74,28 +74,6 @@ class SecuritySettingsServiceConnectionImpl
           request) override;
 
  private:
-  static std::unique_ptr<dialogflow_cx::SecuritySettingsServiceRetryPolicy>
-  retry_policy(Options const& options) {
-    return options
-        .get<dialogflow_cx::SecuritySettingsServiceRetryPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options
-        .get<dialogflow_cx::SecuritySettingsServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<
-      dialogflow_cx::SecuritySettingsServiceConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<dialogflow_cx::
-                 SecuritySettingsServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<dialogflow_cx_internal::SecuritySettingsServiceStub> stub_;
   Options options_;

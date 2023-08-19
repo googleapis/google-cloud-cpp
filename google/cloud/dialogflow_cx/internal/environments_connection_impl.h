@@ -94,28 +94,6 @@ class EnvironmentsConnectionImpl
                  request) override;
 
  private:
-  static std::unique_ptr<dialogflow_cx::EnvironmentsRetryPolicy> retry_policy(
-      Options const& options) {
-    return options.get<dialogflow_cx::EnvironmentsRetryPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<dialogflow_cx::EnvironmentsBackoffPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<dialogflow_cx::EnvironmentsConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<dialogflow_cx::EnvironmentsConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-    return options.get<dialogflow_cx::EnvironmentsPollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<dialogflow_cx_internal::EnvironmentsStub> stub_;
   Options options_;

@@ -72,26 +72,6 @@ class UptimeCheckServiceConnectionImpl
       google::monitoring::v3::ListUptimeCheckIpsRequest request) override;
 
  private:
-  static std::unique_ptr<monitoring_v3::UptimeCheckServiceRetryPolicy>
-  retry_policy(Options const& options) {
-    return options.get<monitoring_v3::UptimeCheckServiceRetryPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<monitoring_v3::UptimeCheckServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<
-      monitoring_v3::UptimeCheckServiceConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<monitoring_v3::
-                 UptimeCheckServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<monitoring_v3_internal::UptimeCheckServiceStub> stub_;
   Options options_;

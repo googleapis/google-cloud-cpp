@@ -51,22 +51,6 @@ class CompletionConnectionImpl : public talent_v4::CompletionConnection {
       google::cloud::talent::v4::CompleteQueryRequest const& request) override;
 
  private:
-  static std::unique_ptr<talent_v4::CompletionRetryPolicy> retry_policy(
-      Options const& options) {
-    return options.get<talent_v4::CompletionRetryPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<talent_v4::CompletionBackoffPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<talent_v4::CompletionConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<talent_v4::CompletionConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<talent_v4_internal::CompletionStub> stub_;
   Options options_;

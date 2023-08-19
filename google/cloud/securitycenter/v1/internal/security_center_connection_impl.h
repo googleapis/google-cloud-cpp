@@ -259,31 +259,6 @@ class SecurityCenterConnectionImpl
       override;
 
  private:
-  static std::unique_ptr<securitycenter_v1::SecurityCenterRetryPolicy>
-  retry_policy(Options const& options) {
-    return options.get<securitycenter_v1::SecurityCenterRetryPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<securitycenter_v1::SecurityCenterBackoffPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<
-      securitycenter_v1::SecurityCenterConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<securitycenter_v1::
-                 SecurityCenterConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-    return options.get<securitycenter_v1::SecurityCenterPollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<securitycenter_v1_internal::SecurityCenterStub> stub_;
   Options options_;

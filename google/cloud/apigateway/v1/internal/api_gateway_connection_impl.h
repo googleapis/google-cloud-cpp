@@ -105,31 +105,6 @@ class ApiGatewayServiceConnectionImpl
                       request) override;
 
  private:
-  static std::unique_ptr<apigateway_v1::ApiGatewayServiceRetryPolicy>
-  retry_policy(Options const& options) {
-    return options.get<apigateway_v1::ApiGatewayServiceRetryPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<apigateway_v1::ApiGatewayServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<
-      apigateway_v1::ApiGatewayServiceConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<
-            apigateway_v1::ApiGatewayServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-    return options.get<apigateway_v1::ApiGatewayServicePollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<apigateway_v1_internal::ApiGatewayServiceStub> stub_;
   Options options_;

@@ -92,22 +92,6 @@ class CatalogServiceConnectionImpl
       override;
 
  private:
-  static std::unique_ptr<retail_v2::CatalogServiceRetryPolicy> retry_policy(
-      Options const& options) {
-    return options.get<retail_v2::CatalogServiceRetryPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<retail_v2::CatalogServiceBackoffPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<retail_v2::CatalogServiceConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<retail_v2::CatalogServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<retail_v2_internal::CatalogServiceStub> stub_;
   Options options_;

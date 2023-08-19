@@ -30,6 +30,29 @@ namespace google {
 namespace cloud {
 namespace datafusion_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<datafusion_v1::DataFusionRetryPolicy> retry_policy(
+    Options const& options) {
+  return options.get<datafusion_v1::DataFusionRetryPolicyOption>()->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options.get<datafusion_v1::DataFusionBackoffPolicyOption>()->clone();
+}
+
+std::unique_ptr<datafusion_v1::DataFusionConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options
+      .get<datafusion_v1::DataFusionConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+  return options.get<datafusion_v1::DataFusionPollingPolicyOption>()->clone();
+}
+
+}  // namespace
 
 DataFusionConnectionImpl::DataFusionConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,

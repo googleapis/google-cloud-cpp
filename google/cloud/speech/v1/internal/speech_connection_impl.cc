@@ -29,6 +29,28 @@ namespace google {
 namespace cloud {
 namespace speech_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<speech_v1::SpeechRetryPolicy> retry_policy(
+    Options const& options) {
+  return options.get<speech_v1::SpeechRetryPolicyOption>()->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options.get<speech_v1::SpeechBackoffPolicyOption>()->clone();
+}
+
+std::unique_ptr<speech_v1::SpeechConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options.get<speech_v1::SpeechConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+  return options.get<speech_v1::SpeechPollingPolicyOption>()->clone();
+}
+
+}  // namespace
 
 SpeechConnectionImpl::SpeechConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,

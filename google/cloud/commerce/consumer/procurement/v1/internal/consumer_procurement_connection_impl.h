@@ -70,39 +70,6 @@ class ConsumerProcurementServiceConnectionImpl
           request) override;
 
  private:
-  static std::unique_ptr<
-      commerce_consumer_procurement_v1::ConsumerProcurementServiceRetryPolicy>
-  retry_policy(Options const& options) {
-    return options
-        .get<commerce_consumer_procurement_v1::
-                 ConsumerProcurementServiceRetryPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options
-        .get<commerce_consumer_procurement_v1::
-                 ConsumerProcurementServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<
-      commerce_consumer_procurement_v1::
-          ConsumerProcurementServiceConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<commerce_consumer_procurement_v1::
-                 ConsumerProcurementServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-    return options
-        .get<commerce_consumer_procurement_v1::
-                 ConsumerProcurementServicePollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<
       commerce_consumer_procurement_v1_internal::ConsumerProcurementServiceStub>

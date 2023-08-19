@@ -28,6 +28,27 @@ namespace google {
 namespace cloud {
 namespace eventarc_publishing_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<eventarc_publishing_v1::PublisherRetryPolicy> retry_policy(
+    Options const& options) {
+  return options.get<eventarc_publishing_v1::PublisherRetryPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options.get<eventarc_publishing_v1::PublisherBackoffPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<eventarc_publishing_v1::PublisherConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options
+      .get<eventarc_publishing_v1::PublisherConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 PublisherConnectionImpl::PublisherConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,

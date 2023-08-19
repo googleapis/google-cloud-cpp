@@ -87,25 +87,6 @@ class CloudRedisConnectionImpl : public redis_v1::CloudRedisConnection {
       override;
 
  private:
-  static std::unique_ptr<redis_v1::CloudRedisRetryPolicy> retry_policy(
-      Options const& options) {
-    return options.get<redis_v1::CloudRedisRetryPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<redis_v1::CloudRedisBackoffPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<redis_v1::CloudRedisConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options.get<redis_v1::CloudRedisConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-    return options.get<redis_v1::CloudRedisPollingPolicyOption>()->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<redis_v1_internal::CloudRedisStub> stub_;
   Options options_;

@@ -30,6 +30,37 @@ namespace google {
 namespace cloud {
 namespace contactcenterinsights_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<contactcenterinsights_v1::ContactCenterInsightsRetryPolicy>
+retry_policy(Options const& options) {
+  return options
+      .get<contactcenterinsights_v1::ContactCenterInsightsRetryPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options
+      .get<contactcenterinsights_v1::ContactCenterInsightsBackoffPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<
+    contactcenterinsights_v1::ContactCenterInsightsConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options
+      .get<contactcenterinsights_v1::
+               ContactCenterInsightsConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+  return options
+      .get<contactcenterinsights_v1::ContactCenterInsightsPollingPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 ContactCenterInsightsConnectionImpl::ContactCenterInsightsConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,

@@ -63,34 +63,6 @@ class CloudChannelReportsServiceConnectionImpl
       google::cloud::channel::v1::ListReportsRequest request) override;
 
  private:
-  static std::unique_ptr<channel_v1::CloudChannelReportsServiceRetryPolicy>
-  retry_policy(Options const& options) {
-    return options
-        .get<channel_v1::CloudChannelReportsServiceRetryPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options
-        .get<channel_v1::CloudChannelReportsServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<
-      channel_v1::CloudChannelReportsServiceConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<channel_v1::
-                 CloudChannelReportsServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-    return options
-        .get<channel_v1::CloudChannelReportsServicePollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<channel_v1_internal::CloudChannelReportsServiceStub> stub_;
   Options options_;

@@ -70,28 +70,6 @@ class SynonymSetServiceConnectionImpl
       override;
 
  private:
-  static std::unique_ptr<contentwarehouse_v1::SynonymSetServiceRetryPolicy>
-  retry_policy(Options const& options) {
-    return options
-        .get<contentwarehouse_v1::SynonymSetServiceRetryPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options
-        .get<contentwarehouse_v1::SynonymSetServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<
-      contentwarehouse_v1::SynonymSetServiceConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<contentwarehouse_v1::
-                 SynonymSetServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<contentwarehouse_v1_internal::SynonymSetServiceStub> stub_;
   Options options_;

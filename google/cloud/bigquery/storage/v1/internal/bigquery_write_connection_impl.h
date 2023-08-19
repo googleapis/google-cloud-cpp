@@ -78,26 +78,6 @@ class BigQueryWriteConnectionImpl
       override;
 
  private:
-  static std::unique_ptr<bigquery_storage_v1::BigQueryWriteRetryPolicy>
-  retry_policy(Options const& options) {
-    return options.get<bigquery_storage_v1::BigQueryWriteRetryPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<bigquery_storage_v1::BigQueryWriteBackoffPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<
-      bigquery_storage_v1::BigQueryWriteConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<bigquery_storage_v1::
-                 BigQueryWriteConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<bigquery_storage_v1_internal::BigQueryWriteStub> stub_;
   Options options_;

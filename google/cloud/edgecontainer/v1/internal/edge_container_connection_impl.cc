@@ -30,6 +30,32 @@ namespace google {
 namespace cloud {
 namespace edgecontainer_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<edgecontainer_v1::EdgeContainerRetryPolicy> retry_policy(
+    Options const& options) {
+  return options.get<edgecontainer_v1::EdgeContainerRetryPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options.get<edgecontainer_v1::EdgeContainerBackoffPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<edgecontainer_v1::EdgeContainerConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options
+      .get<edgecontainer_v1::EdgeContainerConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+  return options.get<edgecontainer_v1::EdgeContainerPollingPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 EdgeContainerConnectionImpl::EdgeContainerConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,

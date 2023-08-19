@@ -71,28 +71,6 @@ class UserEventServiceConnectionImpl
                        request) override;
 
  private:
-  static std::unique_ptr<retail_v2::UserEventServiceRetryPolicy> retry_policy(
-      Options const& options) {
-    return options.get<retail_v2::UserEventServiceRetryPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<retail_v2::UserEventServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<retail_v2::UserEventServiceConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<retail_v2::UserEventServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-    return options.get<retail_v2::UserEventServicePollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<retail_v2_internal::UserEventServiceStub> stub_;
   Options options_;

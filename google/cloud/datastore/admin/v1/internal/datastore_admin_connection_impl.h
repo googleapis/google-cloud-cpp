@@ -73,31 +73,6 @@ class DatastoreAdminConnectionImpl
       google::datastore::admin::v1::ListIndexesRequest request) override;
 
  private:
-  static std::unique_ptr<datastore_admin_v1::DatastoreAdminRetryPolicy>
-  retry_policy(Options const& options) {
-    return options.get<datastore_admin_v1::DatastoreAdminRetryPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<datastore_admin_v1::DatastoreAdminBackoffPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<
-      datastore_admin_v1::DatastoreAdminConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<datastore_admin_v1::
-                 DatastoreAdminConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-    return options.get<datastore_admin_v1::DatastoreAdminPollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<datastore_admin_v1_internal::DatastoreAdminStub> stub_;
   Options options_;

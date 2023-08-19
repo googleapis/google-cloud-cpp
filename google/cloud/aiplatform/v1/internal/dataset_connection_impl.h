@@ -99,30 +99,6 @@ class DatasetServiceConnectionImpl
       google::cloud::aiplatform::v1::ListAnnotationsRequest request) override;
 
  private:
-  static std::unique_ptr<aiplatform_v1::DatasetServiceRetryPolicy> retry_policy(
-      Options const& options) {
-    return options.get<aiplatform_v1::DatasetServiceRetryPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<aiplatform_v1::DatasetServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<
-      aiplatform_v1::DatasetServiceConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<aiplatform_v1::DatasetServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-    return options.get<aiplatform_v1::DatasetServicePollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<aiplatform_v1_internal::DatasetServiceStub> stub_;
   Options options_;

@@ -30,6 +30,28 @@ namespace google {
 namespace cloud {
 namespace batch_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<batch_v1::BatchServiceRetryPolicy> retry_policy(
+    Options const& options) {
+  return options.get<batch_v1::BatchServiceRetryPolicyOption>()->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options.get<batch_v1::BatchServiceBackoffPolicyOption>()->clone();
+}
+
+std::unique_ptr<batch_v1::BatchServiceConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options.get<batch_v1::BatchServiceConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+  return options.get<batch_v1::BatchServicePollingPolicyOption>()->clone();
+}
+
+}  // namespace
 
 BatchServiceConnectionImpl::BatchServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,

@@ -30,6 +30,33 @@ namespace google {
 namespace cloud {
 namespace aiplatform_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<aiplatform_v1::FeaturestoreServiceRetryPolicy> retry_policy(
+    Options const& options) {
+  return options.get<aiplatform_v1::FeaturestoreServiceRetryPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options.get<aiplatform_v1::FeaturestoreServiceBackoffPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<aiplatform_v1::FeaturestoreServiceConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options
+      .get<
+          aiplatform_v1::FeaturestoreServiceConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+  return options.get<aiplatform_v1::FeaturestoreServicePollingPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 FeaturestoreServiceConnectionImpl::FeaturestoreServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,

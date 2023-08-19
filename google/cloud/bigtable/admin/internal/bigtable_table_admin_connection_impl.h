@@ -120,31 +120,6 @@ class BigtableTableAdminConnectionImpl
       override;
 
  private:
-  static std::unique_ptr<bigtable_admin::BigtableTableAdminRetryPolicy>
-  retry_policy(Options const& options) {
-    return options.get<bigtable_admin::BigtableTableAdminRetryPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<bigtable_admin::BigtableTableAdminBackoffPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<
-      bigtable_admin::BigtableTableAdminConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<bigtable_admin::
-                 BigtableTableAdminConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-    return options.get<bigtable_admin::BigtableTableAdminPollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<bigtable_admin_internal::BigtableTableAdminStub> stub_;
   Options options_;

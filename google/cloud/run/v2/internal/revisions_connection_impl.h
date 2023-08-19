@@ -60,25 +60,6 @@ class RevisionsConnectionImpl : public run_v2::RevisionsConnection {
       google::cloud::run::v2::DeleteRevisionRequest const& request) override;
 
  private:
-  static std::unique_ptr<run_v2::RevisionsRetryPolicy> retry_policy(
-      Options const& options) {
-    return options.get<run_v2::RevisionsRetryPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<run_v2::RevisionsBackoffPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<run_v2::RevisionsConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options.get<run_v2::RevisionsConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-    return options.get<run_v2::RevisionsPollingPolicyOption>()->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<run_v2_internal::RevisionsStub> stub_;
   Options options_;

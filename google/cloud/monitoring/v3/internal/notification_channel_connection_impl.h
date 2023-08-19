@@ -100,28 +100,6 @@ class NotificationChannelServiceConnectionImpl
       override;
 
  private:
-  static std::unique_ptr<monitoring_v3::NotificationChannelServiceRetryPolicy>
-  retry_policy(Options const& options) {
-    return options
-        .get<monitoring_v3::NotificationChannelServiceRetryPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options
-        .get<monitoring_v3::NotificationChannelServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<
-      monitoring_v3::NotificationChannelServiceConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<monitoring_v3::
-                 NotificationChannelServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<monitoring_v3_internal::NotificationChannelServiceStub> stub_;
   Options options_;

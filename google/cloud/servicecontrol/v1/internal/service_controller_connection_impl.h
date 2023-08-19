@@ -55,27 +55,6 @@ class ServiceControllerConnectionImpl
       google::api::servicecontrol::v1::ReportRequest const& request) override;
 
  private:
-  static std::unique_ptr<servicecontrol_v1::ServiceControllerRetryPolicy>
-  retry_policy(Options const& options) {
-    return options.get<servicecontrol_v1::ServiceControllerRetryPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options
-        .get<servicecontrol_v1::ServiceControllerBackoffPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<
-      servicecontrol_v1::ServiceControllerConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<servicecontrol_v1::
-                 ServiceControllerConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<servicecontrol_v1_internal::ServiceControllerStub> stub_;
   Options options_;

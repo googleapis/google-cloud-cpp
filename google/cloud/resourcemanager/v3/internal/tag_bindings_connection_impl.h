@@ -71,30 +71,6 @@ class TagBindingsConnectionImpl
                         request) override;
 
  private:
-  static std::unique_ptr<resourcemanager_v3::TagBindingsRetryPolicy>
-  retry_policy(Options const& options) {
-    return options.get<resourcemanager_v3::TagBindingsRetryPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<resourcemanager_v3::TagBindingsBackoffPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<
-      resourcemanager_v3::TagBindingsConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<resourcemanager_v3::TagBindingsConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-    return options.get<resourcemanager_v3::TagBindingsPollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<resourcemanager_v3_internal::TagBindingsStub> stub_;
   Options options_;

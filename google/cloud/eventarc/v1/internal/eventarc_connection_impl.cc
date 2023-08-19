@@ -30,6 +30,28 @@ namespace google {
 namespace cloud {
 namespace eventarc_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<eventarc_v1::EventarcRetryPolicy> retry_policy(
+    Options const& options) {
+  return options.get<eventarc_v1::EventarcRetryPolicyOption>()->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options.get<eventarc_v1::EventarcBackoffPolicyOption>()->clone();
+}
+
+std::unique_ptr<eventarc_v1::EventarcConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options.get<eventarc_v1::EventarcConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+  return options.get<eventarc_v1::EventarcPollingPolicyOption>()->clone();
+}
+
+}  // namespace
 
 EventarcConnectionImpl::EventarcConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,

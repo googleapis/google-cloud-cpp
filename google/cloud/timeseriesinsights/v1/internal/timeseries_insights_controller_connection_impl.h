@@ -81,33 +81,6 @@ class TimeseriesInsightsControllerConnectionImpl
           request) override;
 
  private:
-  static std::unique_ptr<
-      timeseriesinsights_v1::TimeseriesInsightsControllerRetryPolicy>
-  retry_policy(Options const& options) {
-    return options
-        .get<timeseriesinsights_v1::
-                 TimeseriesInsightsControllerRetryPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options
-        .get<timeseriesinsights_v1::
-                 TimeseriesInsightsControllerBackoffPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<
-      timeseriesinsights_v1::
-          TimeseriesInsightsControllerConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<
-            timeseriesinsights_v1::
-                TimeseriesInsightsControllerConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<
       timeseriesinsights_v1_internal::TimeseriesInsightsControllerStub>

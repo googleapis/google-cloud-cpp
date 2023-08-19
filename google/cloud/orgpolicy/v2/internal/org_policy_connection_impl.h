@@ -73,22 +73,6 @@ class OrgPolicyConnectionImpl : public orgpolicy_v2::OrgPolicyConnection {
                           request) override;
 
  private:
-  static std::unique_ptr<orgpolicy_v2::OrgPolicyRetryPolicy> retry_policy(
-      Options const& options) {
-    return options.get<orgpolicy_v2::OrgPolicyRetryPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<orgpolicy_v2::OrgPolicyBackoffPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<orgpolicy_v2::OrgPolicyConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<orgpolicy_v2::OrgPolicyConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<orgpolicy_v2_internal::OrgPolicyStub> stub_;
   Options options_;

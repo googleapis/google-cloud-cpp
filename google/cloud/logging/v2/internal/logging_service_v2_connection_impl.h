@@ -77,25 +77,6 @@ class LoggingServiceV2ConnectionImpl
       google::logging::v2::WriteLogEntriesRequest const& request) override;
 
  private:
-  static std::unique_ptr<logging_v2::LoggingServiceV2RetryPolicy> retry_policy(
-      Options const& options) {
-    return options.get<logging_v2::LoggingServiceV2RetryPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<logging_v2::LoggingServiceV2BackoffPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<
-      logging_v2::LoggingServiceV2ConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<logging_v2::LoggingServiceV2ConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<logging_v2_internal::LoggingServiceV2Stub> stub_;
   Options options_;

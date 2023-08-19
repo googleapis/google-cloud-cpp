@@ -66,27 +66,6 @@ class ExecutionsConnectionImpl
           request) override;
 
  private:
-  static std::unique_ptr<workflows_executions_v1::ExecutionsRetryPolicy>
-  retry_policy(Options const& options) {
-    return options.get<workflows_executions_v1::ExecutionsRetryPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options
-        .get<workflows_executions_v1::ExecutionsBackoffPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<
-      workflows_executions_v1::ExecutionsConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<workflows_executions_v1::
-                 ExecutionsConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<workflows_executions_v1_internal::ExecutionsStub> stub_;
   Options options_;

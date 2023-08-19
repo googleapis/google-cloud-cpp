@@ -60,26 +60,6 @@ class PublisherConnectionImpl
           request) override;
 
  private:
-  static std::unique_ptr<eventarc_publishing_v1::PublisherRetryPolicy>
-  retry_policy(Options const& options) {
-    return options.get<eventarc_publishing_v1::PublisherRetryPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<eventarc_publishing_v1::PublisherBackoffPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<
-      eventarc_publishing_v1::PublisherConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<eventarc_publishing_v1::
-                 PublisherConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<eventarc_publishing_v1_internal::PublisherStub> stub_;
   Options options_;

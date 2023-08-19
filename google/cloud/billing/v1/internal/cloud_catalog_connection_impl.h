@@ -55,22 +55,6 @@ class CloudCatalogConnectionImpl : public billing_v1::CloudCatalogConnection {
       google::cloud::billing::v1::ListSkusRequest request) override;
 
  private:
-  static std::unique_ptr<billing_v1::CloudCatalogRetryPolicy> retry_policy(
-      Options const& options) {
-    return options.get<billing_v1::CloudCatalogRetryPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<billing_v1::CloudCatalogBackoffPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<billing_v1::CloudCatalogConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<billing_v1::CloudCatalogConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<billing_v1_internal::CloudCatalogStub> stub_;
   Options options_;

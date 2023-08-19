@@ -70,28 +70,6 @@ class DocumentLinkServiceConnectionImpl
           request) override;
 
  private:
-  static std::unique_ptr<contentwarehouse_v1::DocumentLinkServiceRetryPolicy>
-  retry_policy(Options const& options) {
-    return options
-        .get<contentwarehouse_v1::DocumentLinkServiceRetryPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options
-        .get<contentwarehouse_v1::DocumentLinkServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<
-      contentwarehouse_v1::DocumentLinkServiceConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<contentwarehouse_v1::
-                 DocumentLinkServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<contentwarehouse_v1_internal::DocumentLinkServiceStub> stub_;
   Options options_;

@@ -29,6 +29,33 @@ namespace google {
 namespace cloud {
 namespace recaptchaenterprise_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<recaptchaenterprise_v1::RecaptchaEnterpriseServiceRetryPolicy>
+retry_policy(Options const& options) {
+  return options
+      .get<
+          recaptchaenterprise_v1::RecaptchaEnterpriseServiceRetryPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options
+      .get<recaptchaenterprise_v1::
+               RecaptchaEnterpriseServiceBackoffPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<recaptchaenterprise_v1::
+                    RecaptchaEnterpriseServiceConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options
+      .get<recaptchaenterprise_v1::
+               RecaptchaEnterpriseServiceConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 RecaptchaEnterpriseServiceConnectionImpl::
     RecaptchaEnterpriseServiceConnectionImpl(

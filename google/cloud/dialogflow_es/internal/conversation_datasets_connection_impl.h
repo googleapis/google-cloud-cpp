@@ -80,33 +80,6 @@ class ConversationDatasetsConnectionImpl
           request) override;
 
  private:
-  static std::unique_ptr<dialogflow_es::ConversationDatasetsRetryPolicy>
-  retry_policy(Options const& options) {
-    return options.get<dialogflow_es::ConversationDatasetsRetryPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options
-        .get<dialogflow_es::ConversationDatasetsBackoffPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<
-      dialogflow_es::ConversationDatasetsConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<dialogflow_es::
-                 ConversationDatasetsConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-    return options
-        .get<dialogflow_es::ConversationDatasetsPollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<dialogflow_es_internal::ConversationDatasetsStub> stub_;
   Options options_;

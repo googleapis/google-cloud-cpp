@@ -121,30 +121,6 @@ class EdgeContainerConnectionImpl
           request) override;
 
  private:
-  static std::unique_ptr<edgecontainer_v1::EdgeContainerRetryPolicy>
-  retry_policy(Options const& options) {
-    return options.get<edgecontainer_v1::EdgeContainerRetryPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<edgecontainer_v1::EdgeContainerBackoffPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<
-      edgecontainer_v1::EdgeContainerConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<edgecontainer_v1::EdgeContainerConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-    return options.get<edgecontainer_v1::EdgeContainerPollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<edgecontainer_v1_internal::EdgeContainerStub> stub_;
   Options options_;

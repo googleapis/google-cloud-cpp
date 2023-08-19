@@ -59,22 +59,6 @@ class TraceServiceConnectionImpl : public trace_v1::TraceServiceConnection {
                          request) override;
 
  private:
-  static std::unique_ptr<trace_v1::TraceServiceRetryPolicy> retry_policy(
-      Options const& options) {
-    return options.get<trace_v1::TraceServiceRetryPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<trace_v1::TraceServiceBackoffPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<trace_v1::TraceServiceConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<trace_v1::TraceServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<trace_v1_internal::TraceServiceStub> stub_;
   Options options_;

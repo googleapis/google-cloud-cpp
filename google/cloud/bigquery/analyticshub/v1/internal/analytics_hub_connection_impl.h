@@ -113,29 +113,6 @@ class AnalyticsHubServiceConnectionImpl
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
  private:
-  static std::unique_ptr<
-      bigquery_analyticshub_v1::AnalyticsHubServiceRetryPolicy>
-  retry_policy(Options const& options) {
-    return options
-        .get<bigquery_analyticshub_v1::AnalyticsHubServiceRetryPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options
-        .get<bigquery_analyticshub_v1::AnalyticsHubServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<
-      bigquery_analyticshub_v1::AnalyticsHubServiceConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<bigquery_analyticshub_v1::
-                 AnalyticsHubServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<bigquery_analyticshub_v1_internal::AnalyticsHubServiceStub>
       stub_;

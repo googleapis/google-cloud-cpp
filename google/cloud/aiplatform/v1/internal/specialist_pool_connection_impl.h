@@ -76,33 +76,6 @@ class SpecialistPoolServiceConnectionImpl
       override;
 
  private:
-  static std::unique_ptr<aiplatform_v1::SpecialistPoolServiceRetryPolicy>
-  retry_policy(Options const& options) {
-    return options.get<aiplatform_v1::SpecialistPoolServiceRetryPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options
-        .get<aiplatform_v1::SpecialistPoolServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<
-      aiplatform_v1::SpecialistPoolServiceConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<aiplatform_v1::
-                 SpecialistPoolServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-    return options
-        .get<aiplatform_v1::SpecialistPoolServicePollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<aiplatform_v1_internal::SpecialistPoolServiceStub> stub_;
   Options options_;

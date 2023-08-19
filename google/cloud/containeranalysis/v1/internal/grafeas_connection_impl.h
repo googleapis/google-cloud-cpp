@@ -90,25 +90,6 @@ class GrafeasConnectionImpl : public containeranalysis_v1::GrafeasConnection {
       grafeas::v1::ListNoteOccurrencesRequest request) override;
 
  private:
-  static std::unique_ptr<containeranalysis_v1::GrafeasRetryPolicy> retry_policy(
-      Options const& options) {
-    return options.get<containeranalysis_v1::GrafeasRetryPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<containeranalysis_v1::GrafeasBackoffPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<
-      containeranalysis_v1::GrafeasConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<containeranalysis_v1::GrafeasConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<containeranalysis_v1_internal::GrafeasStub> stub_;
   Options options_;

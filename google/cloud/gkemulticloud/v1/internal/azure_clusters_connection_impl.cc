@@ -30,6 +30,32 @@ namespace google {
 namespace cloud {
 namespace gkemulticloud_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<gkemulticloud_v1::AzureClustersRetryPolicy> retry_policy(
+    Options const& options) {
+  return options.get<gkemulticloud_v1::AzureClustersRetryPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options.get<gkemulticloud_v1::AzureClustersBackoffPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<gkemulticloud_v1::AzureClustersConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options
+      .get<gkemulticloud_v1::AzureClustersConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+  return options.get<gkemulticloud_v1::AzureClustersPollingPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 AzureClustersConnectionImpl::AzureClustersConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,

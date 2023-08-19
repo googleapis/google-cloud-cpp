@@ -93,28 +93,6 @@ class EntityTypesConnectionImpl : public dialogflow_es::EntityTypesConnection {
       override;
 
  private:
-  static std::unique_ptr<dialogflow_es::EntityTypesRetryPolicy> retry_policy(
-      Options const& options) {
-    return options.get<dialogflow_es::EntityTypesRetryPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<dialogflow_es::EntityTypesBackoffPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<dialogflow_es::EntityTypesConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<dialogflow_es::EntityTypesConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-    return options.get<dialogflow_es::EntityTypesPollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<dialogflow_es_internal::EntityTypesStub> stub_;
   Options options_;

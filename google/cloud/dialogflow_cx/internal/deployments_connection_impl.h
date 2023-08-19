@@ -57,23 +57,6 @@ class DeploymentsConnectionImpl : public dialogflow_cx::DeploymentsConnection {
       override;
 
  private:
-  static std::unique_ptr<dialogflow_cx::DeploymentsRetryPolicy> retry_policy(
-      Options const& options) {
-    return options.get<dialogflow_cx::DeploymentsRetryPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<dialogflow_cx::DeploymentsBackoffPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<dialogflow_cx::DeploymentsConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<dialogflow_cx::DeploymentsConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<dialogflow_cx_internal::DeploymentsStub> stub_;
   Options options_;

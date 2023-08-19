@@ -77,23 +77,6 @@ class ExperimentsConnectionImpl : public dialogflow_cx::ExperimentsConnection {
       override;
 
  private:
-  static std::unique_ptr<dialogflow_cx::ExperimentsRetryPolicy> retry_policy(
-      Options const& options) {
-    return options.get<dialogflow_cx::ExperimentsRetryPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<dialogflow_cx::ExperimentsBackoffPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<dialogflow_cx::ExperimentsConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<dialogflow_cx::ExperimentsConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<dialogflow_cx_internal::ExperimentsStub> stub_;
   Options options_;

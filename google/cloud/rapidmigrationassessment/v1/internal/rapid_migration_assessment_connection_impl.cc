@@ -31,6 +31,41 @@ namespace google {
 namespace cloud {
 namespace rapidmigrationassessment_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<
+    rapidmigrationassessment_v1::RapidMigrationAssessmentRetryPolicy>
+retry_policy(Options const& options) {
+  return options
+      .get<rapidmigrationassessment_v1::
+               RapidMigrationAssessmentRetryPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options
+      .get<rapidmigrationassessment_v1::
+               RapidMigrationAssessmentBackoffPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<rapidmigrationassessment_v1::
+                    RapidMigrationAssessmentConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options
+      .get<rapidmigrationassessment_v1::
+               RapidMigrationAssessmentConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+  return options
+      .get<rapidmigrationassessment_v1::
+               RapidMigrationAssessmentPollingPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 RapidMigrationAssessmentConnectionImpl::RapidMigrationAssessmentConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,

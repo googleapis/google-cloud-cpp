@@ -76,35 +76,6 @@ class AppGatewaysServiceConnectionImpl
           request) override;
 
  private:
-  static std::unique_ptr<
-      beyondcorp_appgateways_v1::AppGatewaysServiceRetryPolicy>
-  retry_policy(Options const& options) {
-    return options
-        .get<beyondcorp_appgateways_v1::AppGatewaysServiceRetryPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options
-        .get<beyondcorp_appgateways_v1::AppGatewaysServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<
-      beyondcorp_appgateways_v1::AppGatewaysServiceConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<beyondcorp_appgateways_v1::
-                 AppGatewaysServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-    return options
-        .get<beyondcorp_appgateways_v1::AppGatewaysServicePollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<beyondcorp_appgateways_v1_internal::AppGatewaysServiceStub>
       stub_;

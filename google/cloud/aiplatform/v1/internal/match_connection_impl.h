@@ -58,23 +58,6 @@ class MatchServiceConnectionImpl
       override;
 
  private:
-  static std::unique_ptr<aiplatform_v1::MatchServiceRetryPolicy> retry_policy(
-      Options const& options) {
-    return options.get<aiplatform_v1::MatchServiceRetryPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<aiplatform_v1::MatchServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<aiplatform_v1::MatchServiceConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<aiplatform_v1::MatchServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<aiplatform_v1_internal::MatchServiceStub> stub_;
   Options options_;

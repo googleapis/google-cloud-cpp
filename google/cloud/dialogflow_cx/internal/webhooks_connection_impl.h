@@ -68,22 +68,6 @@ class WebhooksConnectionImpl : public dialogflow_cx::WebhooksConnection {
       override;
 
  private:
-  static std::unique_ptr<dialogflow_cx::WebhooksRetryPolicy> retry_policy(
-      Options const& options) {
-    return options.get<dialogflow_cx::WebhooksRetryPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<dialogflow_cx::WebhooksBackoffPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<dialogflow_cx::WebhooksConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<dialogflow_cx::WebhooksConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<dialogflow_cx_internal::WebhooksStub> stub_;
   Options options_;

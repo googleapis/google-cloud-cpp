@@ -29,6 +29,30 @@ namespace google {
 namespace cloud {
 namespace contentwarehouse_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<contentwarehouse_v1::SynonymSetServiceRetryPolicy> retry_policy(
+    Options const& options) {
+  return options.get<contentwarehouse_v1::SynonymSetServiceRetryPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options
+      .get<contentwarehouse_v1::SynonymSetServiceBackoffPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<
+    contentwarehouse_v1::SynonymSetServiceConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options
+      .get<contentwarehouse_v1::
+               SynonymSetServiceConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 SynonymSetServiceConnectionImpl::SynonymSetServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,

@@ -224,33 +224,6 @@ class NetworkServicesConnectionImpl
                  request) override;
 
  private:
-  static std::unique_ptr<networkservices_v1::NetworkServicesRetryPolicy>
-  retry_policy(Options const& options) {
-    return options.get<networkservices_v1::NetworkServicesRetryPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options
-        .get<networkservices_v1::NetworkServicesBackoffPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<
-      networkservices_v1::NetworkServicesConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<networkservices_v1::
-                 NetworkServicesConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-    return options
-        .get<networkservices_v1::NetworkServicesPollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<networkservices_v1_internal::NetworkServicesStub> stub_;
   Options options_;

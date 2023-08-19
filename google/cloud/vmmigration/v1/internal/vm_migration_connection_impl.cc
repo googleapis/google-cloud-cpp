@@ -30,6 +30,29 @@ namespace google {
 namespace cloud {
 namespace vmmigration_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<vmmigration_v1::VmMigrationRetryPolicy> retry_policy(
+    Options const& options) {
+  return options.get<vmmigration_v1::VmMigrationRetryPolicyOption>()->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options.get<vmmigration_v1::VmMigrationBackoffPolicyOption>()->clone();
+}
+
+std::unique_ptr<vmmigration_v1::VmMigrationConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options
+      .get<vmmigration_v1::VmMigrationConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+  return options.get<vmmigration_v1::VmMigrationPollingPolicyOption>()->clone();
+}
+
+}  // namespace
 
 VmMigrationConnectionImpl::VmMigrationConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,

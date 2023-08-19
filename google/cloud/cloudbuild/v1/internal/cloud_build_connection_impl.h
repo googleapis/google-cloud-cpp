@@ -128,26 +128,6 @@ class CloudBuildConnectionImpl : public cloudbuild_v1::CloudBuildConnection {
       override;
 
  private:
-  static std::unique_ptr<cloudbuild_v1::CloudBuildRetryPolicy> retry_policy(
-      Options const& options) {
-    return options.get<cloudbuild_v1::CloudBuildRetryPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<cloudbuild_v1::CloudBuildBackoffPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<cloudbuild_v1::CloudBuildConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<cloudbuild_v1::CloudBuildConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-    return options.get<cloudbuild_v1::CloudBuildPollingPolicyOption>()->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<cloudbuild_v1_internal::CloudBuildStub> stub_;
   Options options_;

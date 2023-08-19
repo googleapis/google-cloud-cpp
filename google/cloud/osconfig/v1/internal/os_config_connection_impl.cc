@@ -29,6 +29,26 @@ namespace google {
 namespace cloud {
 namespace osconfig_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<osconfig_v1::OsConfigServiceRetryPolicy> retry_policy(
+    Options const& options) {
+  return options.get<osconfig_v1::OsConfigServiceRetryPolicyOption>()->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options.get<osconfig_v1::OsConfigServiceBackoffPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<osconfig_v1::OsConfigServiceConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options
+      .get<osconfig_v1::OsConfigServiceConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 OsConfigServiceConnectionImpl::OsConfigServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,

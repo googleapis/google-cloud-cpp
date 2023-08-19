@@ -74,38 +74,6 @@ class ClientGatewaysServiceConnectionImpl
                           DeleteClientGatewayRequest const& request) override;
 
  private:
-  static std::unique_ptr<
-      beyondcorp_clientgateways_v1::ClientGatewaysServiceRetryPolicy>
-  retry_policy(Options const& options) {
-    return options
-        .get<beyondcorp_clientgateways_v1::
-                 ClientGatewaysServiceRetryPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options
-        .get<beyondcorp_clientgateways_v1::
-                 ClientGatewaysServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<beyondcorp_clientgateways_v1::
-                             ClientGatewaysServiceConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<beyondcorp_clientgateways_v1::
-                 ClientGatewaysServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-    return options
-        .get<beyondcorp_clientgateways_v1::
-                 ClientGatewaysServicePollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<
       beyondcorp_clientgateways_v1_internal::ClientGatewaysServiceStub>

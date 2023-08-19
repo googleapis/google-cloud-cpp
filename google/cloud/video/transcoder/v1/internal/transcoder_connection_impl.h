@@ -80,28 +80,6 @@ class TranscoderServiceConnectionImpl
           request) override;
 
  private:
-  static std::unique_ptr<video_transcoder_v1::TranscoderServiceRetryPolicy>
-  retry_policy(Options const& options) {
-    return options
-        .get<video_transcoder_v1::TranscoderServiceRetryPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options
-        .get<video_transcoder_v1::TranscoderServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<
-      video_transcoder_v1::TranscoderServiceConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<video_transcoder_v1::
-                 TranscoderServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<video_transcoder_v1_internal::TranscoderServiceStub> stub_;
   Options options_;

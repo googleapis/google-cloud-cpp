@@ -88,26 +88,6 @@ class AgentsConnectionImpl : public dialogflow_cx::AgentsConnection {
           request) override;
 
  private:
-  static std::unique_ptr<dialogflow_cx::AgentsRetryPolicy> retry_policy(
-      Options const& options) {
-    return options.get<dialogflow_cx::AgentsRetryPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<dialogflow_cx::AgentsBackoffPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<dialogflow_cx::AgentsConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<dialogflow_cx::AgentsConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-    return options.get<dialogflow_cx::AgentsPollingPolicyOption>()->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<dialogflow_cx_internal::AgentsStub> stub_;
   Options options_;

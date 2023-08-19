@@ -206,34 +206,6 @@ class ArtifactRegistryConnectionImpl
           request) override;
 
  private:
-  static std::unique_ptr<artifactregistry_v1::ArtifactRegistryRetryPolicy>
-  retry_policy(Options const& options) {
-    return options
-        .get<artifactregistry_v1::ArtifactRegistryRetryPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options
-        .get<artifactregistry_v1::ArtifactRegistryBackoffPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<
-      artifactregistry_v1::ArtifactRegistryConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<artifactregistry_v1::
-                 ArtifactRegistryConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-    return options
-        .get<artifactregistry_v1::ArtifactRegistryPollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<artifactregistry_v1_internal::ArtifactRegistryStub> stub_;
   Options options_;

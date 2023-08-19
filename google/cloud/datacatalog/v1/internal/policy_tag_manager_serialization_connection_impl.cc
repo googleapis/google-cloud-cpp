@@ -28,6 +28,31 @@ namespace google {
 namespace cloud {
 namespace datacatalog_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<datacatalog_v1::PolicyTagManagerSerializationRetryPolicy>
+retry_policy(Options const& options) {
+  return options
+      .get<datacatalog_v1::PolicyTagManagerSerializationRetryPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options
+      .get<datacatalog_v1::PolicyTagManagerSerializationBackoffPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<
+    datacatalog_v1::PolicyTagManagerSerializationConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options
+      .get<datacatalog_v1::
+               PolicyTagManagerSerializationConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 PolicyTagManagerSerializationConnectionImpl::
     PolicyTagManagerSerializationConnectionImpl(

@@ -89,25 +89,6 @@ class GkeHubConnectionImpl : public gkehub_v1::GkeHubConnection {
       override;
 
  private:
-  static std::unique_ptr<gkehub_v1::GkeHubRetryPolicy> retry_policy(
-      Options const& options) {
-    return options.get<gkehub_v1::GkeHubRetryPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<gkehub_v1::GkeHubBackoffPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<gkehub_v1::GkeHubConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options.get<gkehub_v1::GkeHubConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-    return options.get<gkehub_v1::GkeHubPollingPolicyOption>()->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<gkehub_v1_internal::GkeHubStub> stub_;
   Options options_;

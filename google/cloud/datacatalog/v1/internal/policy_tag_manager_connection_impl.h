@@ -97,26 +97,6 @@ class PolicyTagManagerConnectionImpl
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
  private:
-  static std::unique_ptr<datacatalog_v1::PolicyTagManagerRetryPolicy>
-  retry_policy(Options const& options) {
-    return options.get<datacatalog_v1::PolicyTagManagerRetryPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<datacatalog_v1::PolicyTagManagerBackoffPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<
-      datacatalog_v1::PolicyTagManagerConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<
-            datacatalog_v1::PolicyTagManagerConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<datacatalog_v1_internal::PolicyTagManagerStub> stub_;
   Options options_;

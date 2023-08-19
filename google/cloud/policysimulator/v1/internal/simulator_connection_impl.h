@@ -64,30 +64,6 @@ class SimulatorConnectionImpl : public policysimulator_v1::SimulatorConnection {
                         request) override;
 
  private:
-  static std::unique_ptr<policysimulator_v1::SimulatorRetryPolicy> retry_policy(
-      Options const& options) {
-    return options.get<policysimulator_v1::SimulatorRetryPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<policysimulator_v1::SimulatorBackoffPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<
-      policysimulator_v1::SimulatorConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<policysimulator_v1::SimulatorConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-    return options.get<policysimulator_v1::SimulatorPollingPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<policysimulator_v1_internal::SimulatorStub> stub_;
   Options options_;

@@ -30,6 +30,37 @@ namespace google {
 namespace cloud {
 namespace assuredworkloads_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<assuredworkloads_v1::AssuredWorkloadsServiceRetryPolicy>
+retry_policy(Options const& options) {
+  return options
+      .get<assuredworkloads_v1::AssuredWorkloadsServiceRetryPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options
+      .get<assuredworkloads_v1::AssuredWorkloadsServiceBackoffPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<
+    assuredworkloads_v1::AssuredWorkloadsServiceConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options
+      .get<assuredworkloads_v1::
+               AssuredWorkloadsServiceConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+  return options
+      .get<assuredworkloads_v1::AssuredWorkloadsServicePollingPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 AssuredWorkloadsServiceConnectionImpl::AssuredWorkloadsServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,

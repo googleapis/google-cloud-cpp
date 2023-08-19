@@ -31,6 +31,41 @@ namespace google {
 namespace cloud {
 namespace commerce_consumer_procurement_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<
+    commerce_consumer_procurement_v1::ConsumerProcurementServiceRetryPolicy>
+retry_policy(Options const& options) {
+  return options
+      .get<commerce_consumer_procurement_v1::
+               ConsumerProcurementServiceRetryPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options
+      .get<commerce_consumer_procurement_v1::
+               ConsumerProcurementServiceBackoffPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<commerce_consumer_procurement_v1::
+                    ConsumerProcurementServiceConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options
+      .get<commerce_consumer_procurement_v1::
+               ConsumerProcurementServiceConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+  return options
+      .get<commerce_consumer_procurement_v1::
+               ConsumerProcurementServicePollingPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 ConsumerProcurementServiceConnectionImpl::
     ConsumerProcurementServiceConnectionImpl(

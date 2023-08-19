@@ -78,23 +78,6 @@ class OsLoginServiceConnectionImpl
       override;
 
  private:
-  static std::unique_ptr<oslogin_v1::OsLoginServiceRetryPolicy> retry_policy(
-      Options const& options) {
-    return options.get<oslogin_v1::OsLoginServiceRetryPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<oslogin_v1::OsLoginServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  static std::unique_ptr<oslogin_v1::OsLoginServiceConnectionIdempotencyPolicy>
-  idempotency_policy(Options const& options) {
-    return options
-        .get<oslogin_v1::OsLoginServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<oslogin_v1_internal::OsLoginServiceStub> stub_;
   Options options_;

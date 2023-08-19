@@ -29,6 +29,30 @@ namespace google {
 namespace cloud {
 namespace video_transcoder_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::unique_ptr<video_transcoder_v1::TranscoderServiceRetryPolicy> retry_policy(
+    Options const& options) {
+  return options.get<video_transcoder_v1::TranscoderServiceRetryPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options
+      .get<video_transcoder_v1::TranscoderServiceBackoffPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<
+    video_transcoder_v1::TranscoderServiceConnectionIdempotencyPolicy>
+idempotency_policy(Options const& options) {
+  return options
+      .get<video_transcoder_v1::
+               TranscoderServiceConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+}  // namespace
 
 TranscoderServiceConnectionImpl::TranscoderServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
