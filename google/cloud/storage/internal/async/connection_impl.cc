@@ -30,20 +30,18 @@ namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-inline std::unique_ptr<storage::RetryPolicy> retry_policy() {
-  return internal::CurrentOptions().get<storage::RetryPolicyOption>()->clone();
+inline std::unique_ptr<storage::RetryPolicy> retry_policy(
+    Options const& options) {
+  return options.get<storage::RetryPolicyOption>()->clone();
 }
 
-inline std::unique_ptr<BackoffPolicy> backoff_policy() {
-  return internal::CurrentOptions()
-      .get<storage::BackoffPolicyOption>()
-      ->clone();
+inline std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options.get<storage::BackoffPolicyOption>()->clone();
 }
 
-inline std::unique_ptr<storage::IdempotencyPolicy> idempotency_policy() {
-  return internal::CurrentOptions()
-      .get<storage::IdempotencyPolicyOption>()
-      ->clone();
+inline std::unique_ptr<storage::IdempotencyPolicy> idempotency_policy(
+    Options const& options) {
+  return options.get<storage::IdempotencyPolicyOption>()->clone();
 }
 
 }  // namespace
@@ -59,6 +57,7 @@ AsyncConnectionImpl::AsyncConnectionImpl(
 future<storage_experimental::AsyncReadObjectRangeResponse>
 AsyncConnectionImpl::AsyncReadObjectRange(
     storage::internal::ReadObjectRangeRequest request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   auto proto = ToProto(request);
   if (!proto) {
     auto response = storage_experimental::AsyncReadObjectRangeResponse{};
@@ -72,58 +71,57 @@ AsyncConnectionImpl::AsyncReadObjectRange(
     ApplyQueryParameters(*context, options, request);
     return context;
   };
-  auto const& current = internal::CurrentOptions();
   return storage_internal::AsyncAccumulateReadObjectFull(
-             cq_, stub_, std::move(context_factory), *std::move(proto), current)
+             cq_, stub_, std::move(context_factory), *std::move(proto),
+             *current)
       .then([current](
                 future<storage_internal::AsyncAccumulateReadObjectResult> f) {
-        return ToResponse(f.get(), current);
+        return ToResponse(f.get(), *current);
       });
 }
 
 future<StatusOr<storage::ObjectMetadata>>
 AsyncConnectionImpl::AsyncComposeObject(
     storage::internal::ComposeObjectRequest request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   auto proto = ToProto(request);
   if (!proto) {
     return make_ready_future(
         StatusOr<storage::ObjectMetadata>(std::move(proto).status()));
   }
-  auto const idempotency = idempotency_policy()->IsIdempotent(request)
+  auto const idempotency = idempotency_policy(*current)->IsIdempotent(request)
                                ? Idempotency::kIdempotent
                                : Idempotency::kNonIdempotent;
-  auto call = [stub = stub_, options = internal::CurrentOptions(),
-               request = std::move(request)](
+  auto call = [stub = stub_, current, request = std::move(request)](
                   CompletionQueue& cq,
                   std::shared_ptr<grpc::ClientContext> context,
                   google::storage::v2::ComposeObjectRequest const& proto) {
-    ApplyQueryParameters(*context, options, request);
+    ApplyQueryParameters(*context, *current, request);
     return stub->AsyncComposeObject(cq, std::move(context), proto);
   };
-  auto const& current = internal::CurrentOptions();
   return google::cloud::internal::AsyncRetryLoop(
-             retry_policy(), backoff_policy(), idempotency, cq_,
+             retry_policy(*current), backoff_policy(*current), idempotency, cq_,
              std::move(call), *std::move(proto), __func__)
       .then([current](auto f) -> StatusOr<storage::ObjectMetadata> {
         auto response = f.get();
         if (!response) return std::move(response).status();
-        return FromProto(*response, current);
+        return FromProto(*response, *current);
       });
 }
 
 future<Status> AsyncConnectionImpl::AsyncDeleteObject(
     storage::internal::DeleteObjectRequest request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   auto proto = ToProto(request);
-  auto const idempotency = idempotency_policy()->IsIdempotent(request)
+  auto const idempotency = idempotency_policy(*current)->IsIdempotent(request)
                                ? Idempotency::kIdempotent
                                : Idempotency::kNonIdempotent;
   return google::cloud::internal::AsyncRetryLoop(
-      retry_policy(), backoff_policy(), idempotency, cq_,
-      [stub = stub_, options = internal::CurrentOptions(),
-       request = std::move(request)](
+      retry_policy(*current), backoff_policy(*current), idempotency, cq_,
+      [stub = stub_, current, request = std::move(request)](
           CompletionQueue& cq, std::shared_ptr<grpc::ClientContext> context,
           google::storage::v2::DeleteObjectRequest const& proto) {
-        ApplyQueryParameters(*context, options, request);
+        ApplyQueryParameters(*context, *current, request);
         return stub->AsyncDeleteObject(cq, std::move(context), proto);
       },
       proto, __func__);
@@ -131,6 +129,7 @@ future<Status> AsyncConnectionImpl::AsyncDeleteObject(
 
 future<StatusOr<std::string>> AsyncConnectionImpl::AsyncStartResumableWrite(
     storage::internal::ResumableUploadRequest request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
   auto proto = ToProto(request);
   if (!proto) {
     return make_ready_future(StatusOr<std::string>(std::move(proto).status()));
@@ -139,13 +138,12 @@ future<StatusOr<std::string>> AsyncConnectionImpl::AsyncStartResumableWrite(
   // details.
   auto const idempotency = Idempotency::kIdempotent;
   return google::cloud::internal::AsyncRetryLoop(
-             retry_policy(), backoff_policy(), idempotency, cq_,
-             [stub = stub_, options = internal::CurrentOptions(),
-              request = std::move(request)](
+             retry_policy(*current), backoff_policy(*current), idempotency, cq_,
+             [stub = stub_, current, request = std::move(request)](
                  CompletionQueue& cq,
                  std::shared_ptr<grpc::ClientContext> context,
                  google::storage::v2::StartResumableWriteRequest const& proto) {
-               ApplyQueryParameters(*context, options, request);
+               ApplyQueryParameters(*context, *current, request);
                return stub->AsyncStartResumableWrite(cq, std::move(context),
                                                      proto);
              },
