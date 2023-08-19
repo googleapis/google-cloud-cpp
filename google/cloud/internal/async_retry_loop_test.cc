@@ -37,7 +37,6 @@ using ::google::cloud::testing_util::AsyncSequencer;
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::MockBackoffPolicy;
 using ::google::cloud::testing_util::StatusIs;
-using ::testing::AllOf;
 using ::testing::Contains;
 using ::testing::HasSubstr;
 using ::testing::MockFunction;
