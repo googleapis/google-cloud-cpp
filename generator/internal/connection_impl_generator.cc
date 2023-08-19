@@ -113,36 +113,8 @@ class $connection_class_name$Impl
                       AsyncMethodDeclaration(method));
   }
 
-  // `CurrentOptions()` may not have the service default options because we
-  // could be running in a test that calls the ConnectionImpl layer directly,
-  // and it does not create an `internal::OptionsSpan` like the Client layer.
-  // So, we have to fallback to `options_`.
   HeaderPrint(R"""(
  private:
-  static std::unique_ptr<$product_namespace$::$retry_policy_name$>
-  retry_policy(Options const& options) {
-    return options.get<$product_namespace$::$retry_policy_name$Option>()->clone();
-  }
-
-  static std::unique_ptr<BackoffPolicy>
-  backoff_policy(Options const& options) {
-    return options.get<$product_namespace$::$service_name$BackoffPolicyOption>()->clone();
-  }
-
-  static std::unique_ptr<$product_namespace$::$idempotency_class_name$>
-  idempotency_policy(Options const& options) {
-    return options.get<$product_namespace$::$idempotency_class_name$Option>()->clone();
-  }
-)""");
-  if (HasLongrunningMethod()) {
-    HeaderPrint(R"""(
-  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-    return options.get<$product_namespace$::$service_name$PollingPolicyOption>()->clone();
-  }
-)""");
-  }
-
-  HeaderPrint(R"""(
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<$product_internal_namespace$::$stub_class_name$> stub_;
   Options options_;
@@ -189,6 +161,39 @@ Status ConnectionImplGenerator::GenerateCc() {
 
   auto result = CcOpenNamespaces(NamespaceType::kInternal);
   if (!result.ok()) return result;
+
+  // `CurrentOptions()` may not have the service default options because we
+  // could be running in a test that calls the ConnectionImpl layer directly,
+  // and it does not create an `internal::OptionsSpan` like the Client layer.
+  // So, we have to fallback to `options_`.
+  CcPrint(R"""(namespace {
+
+std::unique_ptr<$product_namespace$::$retry_policy_name$>
+retry_policy(Options const& options) {
+  return options.get<$product_namespace$::$retry_policy_name$Option>()->clone();
+}
+
+std::unique_ptr<BackoffPolicy>
+backoff_policy(Options const& options) {
+  return options.get<$product_namespace$::$service_name$BackoffPolicyOption>()->clone();
+}
+
+std::unique_ptr<$product_namespace$::$idempotency_class_name$>
+idempotency_policy(Options const& options) {
+  return options.get<$product_namespace$::$idempotency_class_name$Option>()->clone();
+}
+)""");
+  if (HasLongrunningMethod()) {
+    CcPrint(R"""(
+std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+  return options.get<$product_namespace$::$service_name$PollingPolicyOption>()->clone();
+}
+)""");
+  }
+
+  CcPrint(R"""(
+} // namespace
+)""");
 
   CcPrint(R"""(
 $connection_class_name$Impl::$connection_class_name$Impl(
