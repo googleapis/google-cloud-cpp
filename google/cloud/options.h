@@ -32,6 +32,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class Options;
 namespace internal {
 Options MergeOptions(Options, Options);
+Options RemoveOptionsImpl(std::set<std::type_index> const&, Options);
 void CheckExpectedOptionsImpl(std::set<std::type_index> const&, Options const&,
                               char const*);
 // TODO(#8800) - Remove when bigtable::Table no longer uses bigtable::DataClient
@@ -214,6 +215,8 @@ class Options {
 
  private:
   friend Options internal::MergeOptions(Options, Options);
+  friend Options internal::RemoveOptionsImpl(std::set<std::type_index> const&,
+                                             Options);
   friend void internal::CheckExpectedOptionsImpl(
       std::set<std::type_index> const&, Options const&, char const*);
   friend bool internal::IsEmpty(Options const&);
@@ -278,6 +281,11 @@ template <typename T>
 using WrapTypeListT = typename WrapTypeList<T>::Type;
 
 template <typename... T>
+Options RemoveOptionsImpl(OptionList<T...> const&, Options opts) {
+  return RemoveOptionsImpl({typeid(T)...}, std::move(opts));
+}
+
+template <typename... T>
 void CheckExpectedOptionsImpl(OptionList<T...> const&, Options const& opts,
                               char const* caller) {
   CheckExpectedOptionsImpl({typeid(T)...}, opts, caller);
@@ -339,6 +347,16 @@ absl::optional<typename T::Type> ExtractOption(Options& opts) {
   auto dh = std::move(it->second);
   opts.m_.erase(it);
   return std::move(*reinterpret_cast<typename T::Type*>(dh->data_address()));
+}
+
+/**
+ * Removes all options of the given types from @p opts, and returns the result.
+ * Option types may be specified directly or as a collection in an `OptionList`.
+ */
+template <typename... T>
+Options RemoveOptions(Options opts) {
+  using RemoveTypes = TypeListCatT<WrapTypeListT<T>...>;
+  return RemoveOptionsImpl(RemoveTypes{}, std::move(opts));
 }
 
 /**

@@ -272,6 +272,23 @@ TEST(MergeOptions, Basics) {
   EXPECT_EQ(a.get<IntOption>(), 42);           // From a
 }
 
+TEST(RemoveOptions, Basics) {
+  auto opts = Options{}.set<IntOption>(42);
+  EXPECT_EQ(opts.get<IntOption>(), 42);
+  opts = internal::RemoveOptions<IntOption>(std::move(opts));
+  EXPECT_FALSE(opts.has<IntOption>());
+}
+
+TEST(RemoveOptions, BasicOptionsList) {
+  auto opts =
+      Options{}.set<IntOption>(42).set<BoolOption>(true).set<StringOption>(
+          "foo");
+  EXPECT_FALSE(internal::IsEmpty(opts));
+  opts = internal::RemoveOptions<TestOptionList, TestOptionList, BoolOption>(
+      std::move(opts));
+  EXPECT_TRUE(internal::IsEmpty(opts));
+}
+
 TEST(ExtractOption, Basics) {
   auto opts = Options{}.set<StringOption>("foo").set<IntOption>(42);
 

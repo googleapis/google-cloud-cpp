@@ -25,6 +25,14 @@ namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
+Options RemoveOptionsImpl(std::set<std::type_index> const& remove,
+                          Options opts) {
+  for (auto ti : remove) {
+    opts.m_.erase(ti);
+  }
+  return opts;
+}
+
 void CheckExpectedOptionsImpl(std::set<std::type_index> const& expected,
                               Options const& opts, char const* const caller) {
   for (auto const& p : opts.m_) {
