@@ -84,6 +84,7 @@ class MultipartitionPublisherNoneInitializedTest : public ::testing::Test {
             StrictMock<MockAdminServiceConnection>>()},
         alarm_token_{*(new StrictMock<MockAlarmRegistryCancelToken>())},
         routing_policy_{*(new StrictMock<MockRoutingPolicy>())} {
+    EXPECT_CALL(*admin_connection_, options).WillRepeatedly(Return(Options{}));
     EXPECT_CALL(alarm_registry_, RegisterAlarm(kAlarmDuration, _))
         .WillOnce(WithArg<1>([&](std::function<void()> on_alarm) {
           on_alarm_ = std::move(on_alarm);
