@@ -191,8 +191,7 @@ install(
     DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_optimization"
     COMPONENT google_cloud_cpp_development)
 
-external_googleapis_install_pc("google_cloud_cpp_optimization_protos"
-                               "${PROJECT_SOURCE_DIR}/external/googleapis")
+external_googleapis_install_pc("google_cloud_cpp_optimization_protos")
 
 # google-cloud-cpp::optimization must be defined before we can add the samples.
 foreach (dir IN LISTS service_dirs)
