@@ -154,13 +154,7 @@ externalproject_add(
     BUILD_BYPRODUCTS ${EXTERNAL_GOOGLEAPIS_BYPRODUCTS}
     LOG_DOWNLOAD OFF)
 
-# Sometimes (this happens often with vcpkg) protobuf is installed in a non-
-# standard directory. We need to find out where, and then add that directory to
-# the search path for protos.
-find_path(PROTO_INCLUDE_DIR google/protobuf/descriptor.proto)
-if (PROTO_INCLUDE_DIR)
-    list(INSERT PROTOBUF_IMPORT_DIRS 0 "${PROTO_INCLUDE_DIR}")
-endif ()
+google_cloud_cpp_find_proto_include_dir(PROTO_INCLUDE_DIR)
 
 include(SelectMSVCRuntime)
 
