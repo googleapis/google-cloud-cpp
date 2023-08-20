@@ -41,7 +41,7 @@ function (google_cloud_cpp_add_ga_grpc_library library display_name)
         list(APPEND source_globs "${dir}*.h" "${dir}*.cc" "${dir}internal/*")
         list(APPEND mocks_globs "${dir}mocks/*.h")
         list(APPEND DOXYGEN_EXCLUDE_SYMBOLS "${library}_${ns}internal")
-        if (NOT dir STREQUAL "")
+        if (IS_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/${dir}samples")
             list(APPEND DOXYGEN_EXAMPLE_PATH
                  "${CMAKE_CURRENT_SOURCE_DIR}/${dir}samples")
         endif ()
@@ -141,16 +141,7 @@ function (google_cloud_cpp_add_ga_grpc_library library display_name)
                 COMPONENT google_cloud_cpp_runtime
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
                 COMPONENT google_cloud_cpp_runtime
-                NAMELINK_SKIP
-        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-                COMPONENT google_cloud_cpp_development)
-    # With CMake-3.12 and higher we could avoid this separate command (and the
-    # duplication).
-    install(
-        TARGETS ${library_target} ${protos_target}
-        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-                COMPONENT google_cloud_cpp_development
-                NAMELINK_ONLY
+                NAMELINK_COMPONENT google_cloud_cpp_development
         ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
                 COMPONENT google_cloud_cpp_development)
 
@@ -163,12 +154,9 @@ function (google_cloud_cpp_add_ga_grpc_library library display_name)
                                      "include/google/cloud/${library}")
 
     google_cloud_cpp_add_pkgconfig(
-        ${library}
-        "The ${display_name} C++ Client Library"
+        ${library} "The ${display_name} C++ Client Library"
         "Provides C++ APIs to use the ${display_name}"
-        "google_cloud_cpp_grpc_utils"
-        "google_cloud_cpp_common"
-        "${protos_target}")
+        "google_cloud_cpp_grpc_utils" "${protos_target}")
 
     # Create and install the CMake configuration files.
     include(CMakePackageConfigHelpers)
