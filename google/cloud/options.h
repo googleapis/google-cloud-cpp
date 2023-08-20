@@ -115,7 +115,7 @@ class Options {
   //     https://godbolt.org/z/j4EKjdrv4
   // I suspect this is the problem addressed by:
   //     https://github.com/gcc-mirror/gcc/commit/c2fb0a1a2e7a0fb15cf3cf876f621902ccd273f0
-  Options& operator=(Options&& rhs) noexcept  {
+  Options& operator=(Options&& rhs) noexcept {
     Options tmp(std::move(rhs));
     std::swap(m_, tmp.m_);
     return *this;
