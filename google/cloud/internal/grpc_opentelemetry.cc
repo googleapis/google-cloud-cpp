@@ -14,6 +14,8 @@
 
 #include "google/cloud/internal/grpc_opentelemetry.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
+#include "google/cloud/internal/noexcept_action.h"
+#include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include <grpcpp/grpcpp.h>
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -52,13 +54,16 @@ class GrpcClientCarrier
   // Unneeded by clients.
   opentelemetry::nostd::string_view Get(
       opentelemetry::nostd::string_view) const noexcept override {
-    return "";
+    GCP_LOG(FATAL) << __func__ << " should never be called";
+    return opentelemetry::nostd::string_view();
   }
 
   void Set(opentelemetry::nostd::string_view key,
            opentelemetry::nostd::string_view value) noexcept override {
-    context_.AddMetadata({key.data(), key.size()},
-                         {value.data(), value.size()});
+    internal::NoExceptAction([this, key, value] {
+      context_.AddMetadata({key.data(), key.size()},
+                           {value.data(), value.size()});
+    });
   }
 
  private:
