@@ -36,8 +36,7 @@ set(GOOGLE_CLOUD_CPP_EXPERIMENTAL_LIBRARIES
     "pubsublite" "sql")
 
 set(GOOGLE_CLOUD_CPP_TRANSITION_LIBRARIES # cmake-format: sorted
-    # Transitioned circa 2023-02-22
-    "apikeys")
+)
 
 set(GOOGLE_CLOUD_CPP_GA_LIBRARIES
     # cmake-format: sorted
@@ -48,6 +47,7 @@ set(GOOGLE_CLOUD_CPP_GA_LIBRARIES
     "alloydb"
     "apigateway"
     "apigeeconnect"
+    "apikeys"
     "appengine"
     "artifactregistry"
     "asset"

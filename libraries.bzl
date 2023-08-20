@@ -23,7 +23,6 @@ GOOGLE_CLOUD_CPP_EXPERIMENTAL_LIBRARIES = [
 ]
 
 GOOGLE_CLOUD_CPP_TRANSITION_LIBRARIES = [
-    "apikeys",
 ]
 
 GOOGLE_CLOUD_CPP_GA_LIBRARIES = [
@@ -34,6 +33,7 @@ GOOGLE_CLOUD_CPP_GA_LIBRARIES = [
     "alloydb",
     "apigateway",
     "apigeeconnect",
+    "apikeys",
     "appengine",
     "artifactregistry",
     "asset",
