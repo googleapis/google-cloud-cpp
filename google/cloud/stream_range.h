@@ -236,6 +236,7 @@ class StreamRange {
    * }
    * @endcode
    *
+   * @param options the options in effect during this pagination.
    * @param reader must not be nullptr.
    */
   explicit StreamRange(internal::ImmutableOptions options,
