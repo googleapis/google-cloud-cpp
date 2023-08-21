@@ -98,6 +98,26 @@ TEST(Options, Set) {
   EXPECT_EQ("foo", opts.get<StringOption>());
 }
 
+TEST(Options, SetRefRef) {
+  auto opts = Options{}.set<IntOption>({});
+  EXPECT_TRUE(opts.has<IntOption>());
+  EXPECT_EQ(0, opts.get<IntOption>());
+  opts = std::move(opts).set<IntOption>(123);
+  EXPECT_EQ(123, opts.get<IntOption>());
+
+  opts = Options{}.set<BoolOption>({});
+  EXPECT_TRUE(opts.has<BoolOption>());
+  EXPECT_EQ(false, opts.get<BoolOption>());
+  opts = std::move(opts).set<BoolOption>(true);
+  EXPECT_EQ(true, opts.get<BoolOption>());
+
+  opts = Options{}.set<StringOption>({});
+  EXPECT_TRUE(opts.has<StringOption>());
+  EXPECT_EQ("", opts.get<StringOption>());
+  opts = std::move(opts).set<StringOption>("foo");
+  EXPECT_EQ("foo", opts.get<StringOption>());
+}
+
 TEST(Options, Get) {
   Options opts;
 

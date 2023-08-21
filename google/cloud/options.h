@@ -108,8 +108,38 @@ class Options {
     std::swap(m_, tmp.m_);
     return *this;
   }
-  Options(Options&&) = default;
-  Options& operator=(Options&&) = default;
+  Options(Options&& rhs) noexcept = default;
+
+  // Older versions of GCC (or maybe libstdc++) crash with the default move
+  // assignment:
+  //     https://godbolt.org/z/j4EKjdrv4
+  // I suspect this is the problem addressed by:
+  //     https://github.com/gcc-mirror/gcc/commit/c2fb0a1a2e7a0fb15cf3cf876f621902ccd273f0
+  Options& operator=(Options&& rhs) noexcept {
+    Options tmp(std::move(rhs));
+    std::swap(m_, tmp.m_);
+    return *this;
+  }
+
+  /**
+   * Sets option `T` to the value @p v and returns a reference to `*this`.
+   *
+   * @code
+   * struct FooOption {
+   *   using Type = int;
+   * };
+   * auto opts = Options{};
+   * opts.set<FooOption>(123);
+   * @endcode
+   *
+   * @tparam T the option type
+   * @param v the value to set the option T
+   */
+  template <typename T>
+  Options& set(ValueTypeT<T> v) & {
+    m_[typeid(T)] = std::make_unique<Data<T>>(std::move(v));
+    return *this;
+  }
 
   /**
    * Sets option `T` to the value @p v and returns a reference to `*this`.
@@ -125,9 +155,9 @@ class Options {
    * @param v the value to set the option T
    */
   template <typename T>
-  Options& set(ValueTypeT<T> v) {
-    m_[typeid(T)] = std::make_unique<Data<T>>(std::move(v));
-    return *this;
+  Options&& set(ValueTypeT<T> v) && {
+    set<T>(std::move(v));
+    return std::move(*this);
   }
 
   /**

@@ -27,15 +27,17 @@ namespace {
 //   L1 Instruction 32 KiB (x64)
 //   L2 Unified 512 KiB (x64)
 //   L3 Unified 16384 KiB (x16)
-// Load Average: 1.26, 1.39, 2.94
+// Load Average: 2.20, 1.69, 2.13
 // --------------------------------------------------------------------------
 // Benchmark                                Time             CPU   Iterations
 // --------------------------------------------------------------------------
-// BM_OptionsOneElementDefault           18.4 ns         18.4 ns     38006008
-// BM_OptionsOneElementPresent           45.8 ns         45.8 ns     15266572
-// BM_SimulateRpc                       10721 ns        10721 ns        64131
-// BM_SimulateStreamingRpc             891912 ns       891888 ns          774
-// BM_SimulateStreamingRpcWithSave      12547 ns        12547 ns        54804
+// BM_OptionsOneElementDefault           17.6 ns         17.6 ns     39113305
+// BM_OptionsOneElementPresent           43.2 ns         43.2 ns     16252491
+// BM_SetOnTemporary                     9975 ns         9975 ns        70792
+// BM_SetOnRef                          18376 ns        18376 ns        37871
+// BM_SimulateRpc                       10422 ns        10422 ns        67269
+// BM_SimulateStreamingRpc             866456 ns       866442 ns          809
+// BM_SimulateStreamingRpcWithSave      12277 ns        12276 ns        57041
 
 struct StringOptionDefault {
   using Type = std::string;
@@ -96,6 +98,27 @@ struct ReadAllOptions {
 };
 
 auto constexpr kOptionCount = 64;
+
+std::string ConsumeOptions(Options o) {  // NOLINT
+  return o.get<StringOptionDefault>();
+}
+
+void BM_SetOnTemporary(benchmark::State& state) {
+  for (auto _ : state) {
+    benchmark::DoNotOptimize(ConsumeOptions(
+        PopulateOptions<kOptionCount>{}().set<TestOption<0>>(42)));
+  }
+}
+BENCHMARK(BM_SetOnTemporary);
+
+void BM_SetOnRef(benchmark::State& state) {
+  for (auto _ : state) {
+    auto opts = PopulateOptions<kOptionCount>{}();
+    benchmark::DoNotOptimize(ConsumeOptions(opts.set<TestOption<0>>(42)));
+  }
+}
+BENCHMARK(BM_SetOnRef);
+
 auto constexpr kMessageCount = 100;
 
 std::string SimulateRpc(Options overrides, Options const& client) {
