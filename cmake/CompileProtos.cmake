@@ -474,6 +474,10 @@ function (external_googleapis_install_pc target)
 endfunction ()
 
 # Find the proto include directory
+#
+# Sometimes (this happens often with vcpkg) protobuf is installed in a non-
+# standard directory. We need to find out where, and then add that directory to
+# the search path for protos.
 macro (google_cloud_cpp_find_proto_include_dir VAR)
     find_path(${VAR} google/protobuf/descriptor.proto)
     if (${VAR})
