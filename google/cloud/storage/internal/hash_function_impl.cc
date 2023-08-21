@@ -214,6 +214,31 @@ HashValues Crc32cHashFunction::Finish() {
   return HashValues{/*.crc32c=*/Base64Encode(hash), /*.md5=*/{}};
 }
 
+std::string PrecomputedHashFunction::Name() const {
+  return "precomputed(" + Format(precomputed_hash_) + ")";
+}
+
+void PrecomputedHashFunction::Update(absl::string_view /*buffer*/) {}
+
+Status PrecomputedHashFunction::Update(std::int64_t /*offset*/,
+                                       absl::string_view /*buffer*/) {
+  return Status{};
+}
+
+Status PrecomputedHashFunction::Update(std::int64_t /*offset*/,
+                                       absl::string_view /*buffer*/,
+                                       std::uint32_t /*buffer_crc*/) {
+  return Status{};
+}
+
+Status PrecomputedHashFunction::Update(std::int64_t /*offset*/,
+                                       absl::Cord const& /*buffer*/,
+                                       std::uint32_t /*buffer_crc*/) {
+  return Status{};
+}
+
+HashValues PrecomputedHashFunction::Finish() { return precomputed_hash_; }
+
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage

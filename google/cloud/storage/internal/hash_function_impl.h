@@ -122,6 +122,30 @@ class Crc32cHashFunction : public HashFunction {
   std::int64_t minimum_offset_ = 0;
 };
 
+/**
+ * A hash function returning a pre-computed hash.
+ */
+class PrecomputedHashFunction : public HashFunction {
+ public:
+  explicit PrecomputedHashFunction(HashValues p)
+      : precomputed_hash_(std::move(p)) {}
+
+  PrecomputedHashFunction(PrecomputedHashFunction const&) = delete;
+  PrecomputedHashFunction& operator=(PrecomputedHashFunction const&) = delete;
+
+  std::string Name() const override;
+  void Update(absl::string_view buffer) override;
+  Status Update(std::int64_t offset, absl::string_view buffer) override;
+  Status Update(std::int64_t offset, absl::string_view buffer,
+                std::uint32_t buffer_crc) override;
+  Status Update(std::int64_t offset, absl::Cord const& buffer,
+                std::uint32_t buffer_crc) override;
+  HashValues Finish() override;
+
+ private:
+  HashValues precomputed_hash_;
+};
+
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage
