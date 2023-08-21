@@ -474,12 +474,9 @@ function (external_googleapis_install_pc target)
 endfunction ()
 
 # Find the proto include directory
-function (google_cloud_cpp_find_proto_include_dir VAR)
-    find_path(dir google/protobuf/descriptor.proto)
-    if (dir)
-        list(INSERT PROTOBUF_IMPORT_DIRS 0 "${PROTO_INCLUDE_DIR}")
+macro (google_cloud_cpp_find_proto_include_dir VAR)
+    find_path(${VAR} google/protobuf/descriptor.proto)
+    if (${VAR})
+        list(INSERT PROTOBUF_IMPORT_DIRS 0 "${${VAR}}")
     endif ()
-    set(${VAR}
-        ${dir}
-        PARENT_SCOPE)
-endfunction ()
+endmacro ()
