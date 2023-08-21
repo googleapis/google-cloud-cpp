@@ -19,10 +19,21 @@
 # * library:      the short name of the library, e.g. `kms`.
 # * display_name: the display name of the library, e.g. "Cloud Key Management
 #   Service (KMS) API"
+#
+# Additionally, we must set the following **variable** in the parent scope. We
+# cannot use a `cmake_parse_arguments()` keyword because it will skip the empty
+# string when provided in a list. We often need to use the empty string.
+#
 # * GOOGLE_CLOUD_CPP_SERVICE_DIRS: a list of service directories within the
 #   library.
 #
+# The following **keywords** can be optionally supplied to handle edge cases:
+#
+# * ADDITIONAL_PROTO_LISTS: a list of proto files that may be used indirectly.
+#   `asset` sets this.
+#
 function (google_cloud_cpp_add_ga_grpc_library library display_name)
+    cmake_parse_arguments(_opt "" "" "ADDITIONAL_PROTO_LISTS" ${ARGN})
     set(library_target "google_cloud_cpp_${library}")
     set(mocks_target "google_cloud_cpp_${library}_mocks")
     set(protos_target "google_cloud_cpp_${library}_protos")
@@ -58,6 +69,9 @@ function (google_cloud_cpp_add_ga_grpc_library library display_name)
     google_cloud_cpp_load_protolist(
         proto_list
         "${PROJECT_SOURCE_DIR}/external/googleapis/protolists/${library}.list")
+    if (_opt_ADDITIONAL_PROTO_LISTS)
+        list(APPEND proto_list "${_opt_ADDITIONAL_PROTO_LISTS}")
+    endif ()
     google_cloud_cpp_load_protodeps(
         proto_deps
         "${PROJECT_SOURCE_DIR}/external/googleapis/protodeps/${library}.deps")
