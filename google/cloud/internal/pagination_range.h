@@ -67,6 +67,8 @@ using PaginationRange = StreamRange<T>;
 template <typename T, typename Request, typename Response>
 class PagedStreamReader {
  public:
+  using Loader =
+      std::function<StatusOr<Response>(Options const&, Request const&)>;
   /**
    * Create a new object.
    *
@@ -76,8 +78,7 @@ class PagedStreamReader {
    * @param extractor extracts the items from the response using native C++
    *     types (as opposed to the proto types used in `Response`).
    */
-  PagedStreamReader(Request request,
-                    std::function<StatusOr<Response>(Request const&)> loader,
+  PagedStreamReader(Request request, Loader loader,
                     std::function<std::vector<T>(Response)> extractor)
       : request_(std::move(request)),
         loader_(std::move(loader)),
@@ -92,10 +93,10 @@ class PagedStreamReader {
    *   a non-OK `Status` to indicate an error, and an OK `Status` to indicate a
    *   successful end of stream.
    */
-  typename StreamReader<T>::result_type GetNext() {
+  typename StreamReader<T>::result_type GetNext(Options const& options) {
     while (current_ == page_.end() && !last_page_) {
       request_.set_page_token(std::move(token_));
-      auto response = loader_(request_);
+      auto response = loader_(options, request_);
       if (!response.ok()) return std::move(response).status();
       token_ = ExtractPageToken(*response);
       if (token_.empty()) last_page_ = true;
@@ -187,7 +188,7 @@ class PagedStreamReader {
   }
 
   Request request_;
-  std::function<StatusOr<Response>(Request const&)> loader_;
+  Loader loader_;
   std::function<std::vector<T>(Response)> extractor_;
   std::vector<T> page_;
   typename std::vector<T>::iterator current_;
@@ -215,10 +216,14 @@ class PagedStreamReader {
  *      MyRequestProto{}, std::move(loader), std::move(extractor));
  * @endcode
  */
-template <typename Range, typename Request, typename Loader, typename Extractor>
-Range MakePaginationRange(Request request, Loader loader, Extractor extractor) {
+template <typename Range, typename Request, typename Loader, typename Extractor,
+          typename std::enable_if<
+              is_invocable<Loader, Options const&, Request const&>::value,
+              int>::type = 0>
+Range MakePaginationRange(ImmutableOptions options, Request request,
+                          Loader loader, Extractor extractor) {
   using ValueType = typename Range::value_type::value_type;
-  using LoaderResult = invoke_result_t<Loader, Request>;
+  using LoaderResult = invoke_result_t<Loader, Options const&, Request const&>;
   using Response = typename LoaderResult::value_type;
   using ExtractorResult = invoke_result_t<Extractor, Response>;
   // Some static asserts to make compiler errors easier to diagnose.
@@ -231,16 +236,33 @@ Range MakePaginationRange(Request request, Loader loader, Extractor extractor) {
   using ReaderType = PagedStreamReader<ValueType, Request, Response>;
   auto reader = std::make_shared<ReaderType>(
       std::move(request), std::move(loader), std::move(extractor));
-  return MakeStreamRange<ValueType>(
-      {[reader]() mutable { return reader->GetNext(); }});
+  return MakeStreamRange<ValueType>(std::move(options),
+                                    [reader](Options const& options) mutable {
+                                      return reader->GetNext(options);
+                                    });
+}
+
+template <typename Range, typename Request, typename Loader, typename Extractor,
+          typename std::enable_if<is_invocable<Loader, Request const&>::value,
+                                  int>::type = 0>
+Range MakePaginationRange(Request request, Loader&& loader,
+                          Extractor&& extractor) {
+  auto wrapper = [loader = std::forward<Loader>(loader)](
+                     Options const&, Request const& request) {
+    return loader(request);
+  };
+  return MakePaginationRange<Range>(SaveCurrentOptions(), std::move(request),
+                                    std::move(wrapper),
+                                    std::forward<Extractor>(extractor));
 }
 
 template <typename Range>
 Range MakeErrorPaginationRange(Status status) {
   using ValueType = typename Range::value_type::value_type;
   return MakeStreamRange<ValueType>(
-      [s = std::move(status)]() ->
-      typename StreamReader<ValueType>::result_type { return s; });
+      MakeImmutableOptions(Options{}),
+      [s = std::move(status)](Options const&) ->
+      typename StreamReaderExplicit<ValueType>::result_type { return s; });
 }
 
 /**

@@ -76,9 +76,15 @@ struct StructResponse {
 using ItemRange = PaginationRange<Item>;
 
 template <typename Response>
-class MockRpc {
+class MockRpcImplicit {
  public:
   MOCK_METHOD(StatusOr<Response>, Loader, (Request const&));
+};
+
+template <typename Response>
+class MockRpcExplicit {
+ public:
+  MOCK_METHOD(StatusOr<Response>, Loader, (Options const&, Request const&));
 };
 
 // A fixture for a "typed test". Each test below will be tested with a
@@ -88,25 +94,9 @@ class PaginationRangeTest : public testing::Test {};
 using ResponseTypes = ::testing::Types<ProtoResponse, StructResponse>;
 TYPED_TEST_SUITE(PaginationRangeTest, ResponseTypes);
 
-TYPED_TEST(PaginationRangeTest, TypedEmpty) {
+TYPED_TEST(PaginationRangeTest, SinglePageImplicit) {
   using ResponseType = TypeParam;
-  MockRpc<ResponseType> mock;
-  EXPECT_CALL(mock, Loader).WillOnce([](Request const& request) {
-    EXPECT_EQ(CurrentOptions().get<StringOption>(), "TypedEmpty");
-    EXPECT_TRUE(request.testonly_page_token.empty());
-    return ResponseType{};
-  });
-  OptionsSpan span(Options{}.set<StringOption>("TypedEmpty"));
-  auto range = MakePaginationRange<ItemRange>(
-      Request{}, [&mock](Request const& r) { return mock.Loader(r); },
-      [](ResponseType const& r) { return r.testonly_items; });
-  OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
-  EXPECT_TRUE(range.begin() == range.end());
-}
-
-TYPED_TEST(PaginationRangeTest, SinglePage) {
-  using ResponseType = TypeParam;
-  MockRpc<ResponseType> mock;
+  MockRpcImplicit<ResponseType> mock;
   EXPECT_CALL(mock, Loader).WillOnce([](Request const& request) {
     EXPECT_EQ(CurrentOptions().get<StringOption>(), "SinglePage");
     EXPECT_TRUE(request.testonly_page_token.empty());
@@ -129,22 +119,69 @@ TYPED_TEST(PaginationRangeTest, SinglePage) {
   EXPECT_THAT(names, ElementsAre("p1", "p2"));
 }
 
+TYPED_TEST(PaginationRangeTest, TypedEmpty) {
+  using ResponseType = TypeParam;
+  MockRpcExplicit<ResponseType> mock;
+  EXPECT_CALL(mock, Loader)
+      .WillOnce([](Options const& options, Request const& request) {
+        EXPECT_EQ(options.get<StringOption>(), "TypedEmpty");
+        EXPECT_TRUE(request.testonly_page_token.empty());
+        return ResponseType{};
+      });
+  auto range = MakePaginationRange<ItemRange>(
+      MakeImmutableOptions(Options{}.set<StringOption>("TypedEmpty")),
+      Request{},
+      [&mock](Options const& o, Request const& r) { return mock.Loader(o, r); },
+      [](ResponseType const& r) { return r.testonly_items; });
+  OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
+  EXPECT_TRUE(range.begin() == range.end());
+}
+
+TYPED_TEST(PaginationRangeTest, SinglePage) {
+  using ResponseType = TypeParam;
+  MockRpcExplicit<ResponseType> mock;
+  EXPECT_CALL(mock, Loader)
+      .WillOnce([](Options const& options, Request const& request) {
+        EXPECT_EQ(options.get<StringOption>(), "SinglePage");
+        EXPECT_TRUE(request.testonly_page_token.empty());
+        ResponseType response;
+        response.testonly_items.push_back(Item{"p1"});
+        response.testonly_items.push_back(Item{"p2"});
+        return response;
+      });
+
+  auto range = MakePaginationRange<ItemRange>(
+      MakeImmutableOptions(Options{}.set<StringOption>("SinglePage")),
+      Request{},
+      [&mock](Options const& o, Request const& r) { return mock.Loader(o, r); },
+      [](ResponseType const& r) { return r.testonly_items; });
+  OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
+  std::vector<std::string> names;
+  for (auto& p : range) {
+    if (!p) break;
+    names.push_back(p->data);
+  }
+  EXPECT_THAT(names, ElementsAre("p1", "p2"));
+}
+
 TYPED_TEST(PaginationRangeTest, NonProtoRange) {
   using ResponseType = TypeParam;
-  MockRpc<ResponseType> mock;
-  EXPECT_CALL(mock, Loader).WillOnce([](Request const& request) {
-    EXPECT_EQ(CurrentOptions().get<StringOption>(), "NonProtoRange");
-    EXPECT_TRUE(request.testonly_page_token.empty());
-    ResponseType response;
-    response.testonly_items.push_back(Item{"p1"});
-    response.testonly_items.push_back(Item{"p2"});
-    return response;
-  });
+  MockRpcExplicit<ResponseType> mock;
+  EXPECT_CALL(mock, Loader)
+      .WillOnce([](Options const& options, Request const& request) {
+        EXPECT_EQ(options.get<StringOption>(), "NonProtoRange");
+        EXPECT_TRUE(request.testonly_page_token.empty());
+        ResponseType response;
+        response.testonly_items.push_back(Item{"p1"});
+        response.testonly_items.push_back(Item{"p2"});
+        return response;
+      });
 
-  OptionsSpan span(Options{}.set<StringOption>("NonProtoRange"));
   using NonProtoRange = PaginationRange<std::string>;
   auto range = MakePaginationRange<NonProtoRange>(
-      Request{}, [&mock](Request const& r) { return mock.Loader(r); },
+      MakeImmutableOptions(Options{}.set<StringOption>("NonProtoRange")),
+      Request{},
+      [&mock](Options const& o, Request const& r) { return mock.Loader(o, r); },
       [](ResponseType const& r) {
         std::vector<std::string> v(r.testonly_items.size());
         std::transform(r.testonly_items.begin(), r.testonly_items.end(),
@@ -164,10 +201,10 @@ TYPED_TEST(PaginationRangeTest, NonProtoRange) {
 
 TYPED_TEST(PaginationRangeTest, TwoPages) {
   using ResponseType = TypeParam;
-  MockRpc<ResponseType> mock;
+  MockRpcExplicit<ResponseType> mock;
   EXPECT_CALL(mock, Loader)
-      .WillOnce([](Request const& request) {
-        EXPECT_EQ(CurrentOptions().get<StringOption>(), "TwoPages");
+      .WillOnce([](Options const& options, Request const& request) {
+        EXPECT_EQ(options.get<StringOption>(), "TwoPages");
         EXPECT_TRUE(request.testonly_page_token.empty());
         ResponseType response;
         response.testonly_set_page_token("t1");
@@ -175,8 +212,8 @@ TYPED_TEST(PaginationRangeTest, TwoPages) {
         response.testonly_items.push_back(Item{"p2"});
         return response;
       })
-      .WillOnce([](Request const& request) {
-        EXPECT_EQ(CurrentOptions().get<StringOption>(), "TwoPages");
+      .WillOnce([](Options const& options, Request const& request) {
+        EXPECT_EQ(options.get<StringOption>(), "TwoPages");
         EXPECT_EQ("t1", request.testonly_page_token);
         ResponseType response;
         response.testonly_items.push_back(Item{"p3"});
@@ -184,9 +221,9 @@ TYPED_TEST(PaginationRangeTest, TwoPages) {
         return response;
       });
 
-  OptionsSpan span(Options{}.set<StringOption>("TwoPages"));
   auto range = MakePaginationRange<ItemRange>(
-      Request{}, [&mock](Request const& r) { return mock.Loader(r); },
+      MakeImmutableOptions(Options{}.set<StringOption>("TwoPages")), Request{},
+      [&mock](Options const& o, Request const& r) { return mock.Loader(o, r); },
       [](ResponseType const& r) { return r.testonly_items; });
   OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
   std::vector<std::string> names;
@@ -199,24 +236,24 @@ TYPED_TEST(PaginationRangeTest, TwoPages) {
 
 TYPED_TEST(PaginationRangeTest, EmptyAndFullPages) {
   using ResponseType = TypeParam;
-  MockRpc<ResponseType> mock;
+  MockRpcExplicit<ResponseType> mock;
   EXPECT_CALL(mock, Loader)
-      .WillOnce([](Request const& request) {
-        EXPECT_EQ(CurrentOptions().get<StringOption>(), "EmptyAndFullPages");
+      .WillOnce([](Options const& options, Request const& request) {
+        EXPECT_EQ(options.get<StringOption>(), "EmptyAndFullPages");
         EXPECT_TRUE(request.testonly_page_token.empty());
         ResponseType response;
         response.testonly_set_page_token("t1");
         return response;
       })
-      .WillOnce([](Request const& request) {
-        EXPECT_EQ(CurrentOptions().get<StringOption>(), "EmptyAndFullPages");
+      .WillOnce([](Options const& options, Request const& request) {
+        EXPECT_EQ(options.get<StringOption>(), "EmptyAndFullPages");
         EXPECT_EQ("t1", request.testonly_page_token);
         ResponseType response;
         response.testonly_set_page_token("t2");
         return response;
       })
-      .WillOnce([](Request const& request) {
-        EXPECT_EQ(CurrentOptions().get<StringOption>(), "EmptyAndFullPages");
+      .WillOnce([](Options const& options, Request const& request) {
+        EXPECT_EQ(options.get<StringOption>(), "EmptyAndFullPages");
         EXPECT_EQ("t2", request.testonly_page_token);
         ResponseType response;
         response.testonly_items.push_back(Item{"p1"});
@@ -224,15 +261,15 @@ TYPED_TEST(PaginationRangeTest, EmptyAndFullPages) {
         response.testonly_set_page_token("t3");
         return response;
       })
-      .WillOnce([](Request const& request) {
-        EXPECT_EQ(CurrentOptions().get<StringOption>(), "EmptyAndFullPages");
+      .WillOnce([](Options const& options, Request const& request) {
+        EXPECT_EQ(options.get<StringOption>(), "EmptyAndFullPages");
         EXPECT_EQ("t3", request.testonly_page_token);
         ResponseType response;
         response.testonly_set_page_token("t4");
         return response;
       })
-      .WillOnce([](Request const& request) {
-        EXPECT_EQ(CurrentOptions().get<StringOption>(), "EmptyAndFullPages");
+      .WillOnce([](Options const& options, Request const& request) {
+        EXPECT_EQ(options.get<StringOption>(), "EmptyAndFullPages");
         EXPECT_EQ("t4", request.testonly_page_token);
         ResponseType response;
         response.testonly_items.push_back(Item{"p3"});
@@ -241,9 +278,10 @@ TYPED_TEST(PaginationRangeTest, EmptyAndFullPages) {
         return response;
       });
 
-  OptionsSpan span(Options{}.set<StringOption>("EmptyAndFullPages"));
   auto range = MakePaginationRange<ItemRange>(
-      Request{}, [&mock](Request const& r) { return mock.Loader(r); },
+      MakeImmutableOptions(Options{}.set<StringOption>("EmptyAndFullPages")),
+      Request{},
+      [&mock](Options const& o, Request const& r) { return mock.Loader(o, r); },
       [](ResponseType const& r) { return r.testonly_items; });
   OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
   std::vector<std::string> names;
@@ -256,10 +294,10 @@ TYPED_TEST(PaginationRangeTest, EmptyAndFullPages) {
 
 TYPED_TEST(PaginationRangeTest, TwoPagesWithError) {
   using ResponseType = TypeParam;
-  MockRpc<ResponseType> mock;
+  MockRpcExplicit<ResponseType> mock;
   EXPECT_CALL(mock, Loader)
-      .WillOnce([](Request const& request) {
-        EXPECT_EQ(CurrentOptions().get<StringOption>(), "TwoPagesWithError");
+      .WillOnce([](Options const& options, Request const& request) {
+        EXPECT_EQ(options.get<StringOption>(), "TwoPagesWithError");
         EXPECT_TRUE(request.testonly_page_token.empty());
         ResponseType response;
         response.testonly_set_page_token("t1");
@@ -267,8 +305,8 @@ TYPED_TEST(PaginationRangeTest, TwoPagesWithError) {
         response.testonly_items.push_back(Item{"p2"});
         return response;
       })
-      .WillOnce([](Request const& request) {
-        EXPECT_EQ(CurrentOptions().get<StringOption>(), "TwoPagesWithError");
+      .WillOnce([](Options const& options, Request const& request) {
+        EXPECT_EQ(options.get<StringOption>(), "TwoPagesWithError");
         EXPECT_EQ("t1", request.testonly_page_token);
         ResponseType response;
         response.testonly_set_page_token("t2");
@@ -276,15 +314,16 @@ TYPED_TEST(PaginationRangeTest, TwoPagesWithError) {
         response.testonly_items.push_back(Item{"p4"});
         return response;
       })
-      .WillOnce([](Request const& request) {
-        EXPECT_EQ(CurrentOptions().get<StringOption>(), "TwoPagesWithError");
+      .WillOnce([](Options const& options, Request const& request) {
+        EXPECT_EQ(options.get<StringOption>(), "TwoPagesWithError");
         EXPECT_EQ("t2", request.testonly_page_token);
         return Status(StatusCode::kAborted, "bad-luck");
       });
 
-  OptionsSpan span(Options{}.set<StringOption>("TwoPagesWithError"));
   auto range = MakePaginationRange<ItemRange>(
-      Request{}, [&mock](Request const& r) { return mock.Loader(r); },
+      MakeImmutableOptions(Options{}.set<StringOption>("TwoPagesWithError")),
+      Request{},
+      [&mock](Options const& o, Request const& r) { return mock.Loader(o, r); },
       [](ResponseType const& r) { return r.testonly_items; });
   OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
   std::vector<std::string> names;
@@ -301,25 +340,26 @@ TYPED_TEST(PaginationRangeTest, TwoPagesWithError) {
 
 TYPED_TEST(PaginationRangeTest, IteratorCoverage) {
   using ResponseType = TypeParam;
-  MockRpc<ResponseType> mock;
+  MockRpcExplicit<ResponseType> mock;
   EXPECT_CALL(mock, Loader)
-      .WillOnce([](Request const& request) {
-        EXPECT_EQ(CurrentOptions().get<StringOption>(), "IteratorCoverage");
+      .WillOnce([](Options const& options, Request const& request) {
+        EXPECT_EQ(options.get<StringOption>(), "IteratorCoverage");
         EXPECT_TRUE(request.testonly_page_token.empty());
         ResponseType response;
         response.testonly_set_page_token("t1");
         response.testonly_items.push_back(Item{"p1"});
         return response;
       })
-      .WillOnce([](Request const& request) {
-        EXPECT_EQ(CurrentOptions().get<StringOption>(), "IteratorCoverage");
+      .WillOnce([](Options const& options, Request const& request) {
+        EXPECT_EQ(options.get<StringOption>(), "IteratorCoverage");
         EXPECT_EQ("t1", request.testonly_page_token);
         return Status(StatusCode::kAborted, "bad-luck");
       });
 
-  OptionsSpan span(Options{}.set<StringOption>("IteratorCoverage"));
   auto range = MakePaginationRange<ItemRange>(
-      Request{}, [&mock](Request const& r) { return mock.Loader(r); },
+      MakeImmutableOptions(Options{}.set<StringOption>("IteratorCoverage")),
+      Request{},
+      [&mock](Options const& o, Request const& r) { return mock.Loader(o, r); },
       [](ResponseType const& r) { return r.testonly_items; });
   OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
   auto i0 = range.begin();
