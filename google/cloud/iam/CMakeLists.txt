@@ -54,7 +54,7 @@ target_link_libraries(
     google_cloud_cpp_iam
     PUBLIC google-cloud-cpp::grpc_utils google-cloud-cpp::common
            google-cloud-cpp::iam_protos google-cloud-cpp::iam_v1_policy_protos
-           google_cloud_cpp::iam_policy_protos)
+           google-cloud-cpp::iam_policy_protos)
 google_cloud_cpp_add_common_options(google_cloud_cpp_iam)
 set_target_properties(
     google_cloud_cpp_iam
