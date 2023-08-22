@@ -88,7 +88,7 @@ TEST(StreamRange, OneElementImplicit) {
   }();
 
   auto it = sr.begin();
-  EXPECT_NE(it, sr.end());
+  ASSERT_NE(it, sr.end());
   EXPECT_TRUE(*it);
   EXPECT_EQ(**it, 42);
   ++it;
@@ -108,7 +108,7 @@ TEST(StreamRange, OneElement) {
 
   auto sr = MakeStreamRange<int>(std::move(reader));
   auto it = sr.begin();
-  EXPECT_NE(it, sr.end());
+  ASSERT_NE(it, sr.end());
   EXPECT_TRUE(*it);
   EXPECT_EQ(**it, 42);
   ++it;
@@ -125,7 +125,7 @@ TEST(StreamRange, OneError) {
 
   auto sr = MakeStreamRange<int>(std::move(reader));
   auto it = sr.begin();
-  EXPECT_NE(it, sr.end());
+  ASSERT_NE(it, sr.end());
   EXPECT_FALSE(*it);
   EXPECT_THAT(*it, StatusIs(StatusCode::kUnknown, "oops"));
   ++it;
@@ -146,7 +146,7 @@ TEST(StreamRange, FiveElements) {
   auto sr = MakeStreamRange<int>(std::move(reader));
   std::vector<int> v;
   for (StatusOr<int>& x : sr) {
-    EXPECT_TRUE(x);
+    ASSERT_TRUE(x);
     v.push_back(*x);
   }
   EXPECT_THAT(v, ElementsAre(1, 2, 3, 4, 5));
@@ -167,7 +167,7 @@ TEST(StreamRange, PostFixIteration) {
   std::vector<int> v;
   // NOLINTNEXTLINE(modernize-loop-convert)
   for (auto it = sr.begin(); it != sr.end(); it++) {
-    EXPECT_TRUE(*it);
+    ASSERT_TRUE(*it);
     v.push_back(**it);
   }
   EXPECT_THAT(v, ElementsAre(1, 2, 3, 4, 5));
@@ -217,18 +217,18 @@ TEST(StreamRange, StreamError) {
   auto sr = MakeStreamRange<int>(std::move(reader));
 
   auto it = sr.begin();
-  EXPECT_NE(it, sr.end());
+  ASSERT_NE(it, sr.end());
   EXPECT_TRUE(*it);
   EXPECT_EQ(**it, 1);
 
   ++it;
-  EXPECT_NE(it, sr.end());
+  ASSERT_NE(it, sr.end());
   EXPECT_TRUE(*it);
   EXPECT_EQ(**it, 2);
 
   // Error, but we return the Status, not end of stream.
   ++it;
-  EXPECT_NE(it, sr.end());
+  ASSERT_NE(it, sr.end());
   EXPECT_FALSE(*it);
   EXPECT_THAT(*it, StatusIs(StatusCode::kUnknown, "oops"));
 
