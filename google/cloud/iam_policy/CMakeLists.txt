@@ -55,6 +55,15 @@ install(
             NAMELINK_SKIP
     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
             COMPONENT google_cloud_cpp_development)
+# With CMake-3.12 and higher we could avoid this separate command (and the
+# duplication).
+install(
+    TARGETS google_cloud_cpp_iam_policy_protos
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+            COMPONENT google_cloud_cpp_development
+            NAMELINK_ONLY
+    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+            COMPONENT google_cloud_cpp_development)
 
 google_cloud_cpp_install_proto_library_protos(
     "google_cloud_cpp_iam_policy_protos" "${EXTERNAL_GOOGLEAPIS_SOURCE}")
