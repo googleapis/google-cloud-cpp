@@ -34,8 +34,11 @@ foreach (dir IN LISTS service_dirs)
 endforeach ()
 
 include(GoogleCloudCppDoxygen)
-google_cloud_cpp_doxygen_targets("iam" DEPENDS cloud-docs
-                                 google-cloud-cpp::iam_protos)
+set(GOOGLE_CLOUD_CPP_DOXYGEN_EXTRA_INCLUDES
+    "${PROJECT_BINARY_DIR}/google/cloud/iam_policy")
+google_cloud_cpp_doxygen_targets(
+    "iam" DEPENDS cloud-docs google-cloud-cpp::iam_protos
+    google-cloud-cpp::iam_v1_policy_protos google-cloud-cpp::iam_policy_protos)
 
 include(GoogleCloudCppCommon)
 
