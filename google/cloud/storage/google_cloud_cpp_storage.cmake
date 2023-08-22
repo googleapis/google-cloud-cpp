@@ -435,6 +435,8 @@ if (BUILD_TESTING)
         testing/storage_integration_test.h
         testing/temp_file.cc
         testing/temp_file.h
+        testing/upload_hash_cases.cc
+        testing/upload_hash_cases.h
         testing/write_base64.cc
         testing/write_base64.h)
     target_link_libraries(

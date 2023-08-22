@@ -15,6 +15,7 @@
 #include "google/cloud/storage/internal/hash_function_impl.h"
 #include "google/cloud/storage/internal/crc32c.h"
 #include "google/cloud/storage/internal/object_requests.h"
+#include "google/cloud/storage/testing/upload_hash_cases.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 
@@ -231,6 +232,17 @@ TEST(HashFunctionImplTest, CompositeQuick) {
   EXPECT_THAT(actual.md5, kQuickFoxMD5Hash);
 }
 
+TEST(HashFunctionImplTest, PrecomputedQuick) {
+  PrecomputedHashFunction function{
+      HashValues{kEmptyStringCrc32cChecksum, kEmptyStringMD5Hash}};
+  function.Update("The quick");
+  function.Update(" brown");
+  function.Update(" fox jumps over the lazy dog");
+  auto const actual = std::move(function).Finish();
+  EXPECT_THAT(actual.crc32c, kEmptyStringCrc32cChecksum);
+  EXPECT_THAT(actual.md5, kEmptyStringMD5Hash);
+}
+
 TEST(HashFunctionImplTest, CreateHashFunctionRead) {
   struct Test {
     std::string crc32c_expected;
@@ -258,61 +270,19 @@ TEST(HashFunctionImplTest, CreateHashFunctionRead) {
   }
 }
 
+struct UploadTest {
+  std::string crc32c_expected;
+  std::string md5_expected;
+  DisableCrc32cChecksum crc32_disabled;
+  Crc32cChecksumValue crc32_value;
+  DisableMD5Hash md5_disabled;
+  MD5HashValue md5_value;
+};
+
 TEST(HashFunctionImplTest, CreateHashFunctionUpload) {
-  struct Test {
-    std::string crc32c_expected;
-    std::string md5_expected;
-    DisableCrc32cChecksum crc32_disabled;
-    Crc32cChecksumValue crc32_value;
-    DisableMD5Hash md5_disabled;
-    MD5HashValue md5_value;
-  } cases[]{
-      {"", "", DisableCrc32cChecksum(true), Crc32cChecksumValue(),
-       DisableMD5Hash(true), MD5HashValue()},
-      {"", "", DisableCrc32cChecksum(true), Crc32cChecksumValue(),
-       DisableMD5Hash(true), MD5HashValue(kEmptyStringMD5Hash)},
-      {"", kQuickFoxMD5Hash, DisableCrc32cChecksum(true), Crc32cChecksumValue(),
-       DisableMD5Hash(false), MD5HashValue()},
-      {"", "", DisableCrc32cChecksum(true), Crc32cChecksumValue(),
-       DisableMD5Hash(false), MD5HashValue(kEmptyStringMD5Hash)},
-      {"", "", DisableCrc32cChecksum(true),
-       Crc32cChecksumValue(kEmptyStringCrc32cChecksum), DisableMD5Hash(true),
-       MD5HashValue()},
-      {"", "", DisableCrc32cChecksum(true),
-       Crc32cChecksumValue(kEmptyStringMD5Hash), DisableMD5Hash(true),
-       MD5HashValue(kEmptyStringMD5Hash)},
-      {"", kQuickFoxMD5Hash, DisableCrc32cChecksum(true),
-       Crc32cChecksumValue(kEmptyStringMD5Hash), DisableMD5Hash(false),
-       MD5HashValue()},
-      {"", "", DisableCrc32cChecksum(true),
-       Crc32cChecksumValue(kEmptyStringMD5Hash), DisableMD5Hash(false),
-       MD5HashValue(kEmptyStringMD5Hash)},
+  auto const upload_cases = testing::UploadHashCases();
 
-      {kQuickFoxCrc32cChecksum, "", DisableCrc32cChecksum(false),
-       Crc32cChecksumValue(), DisableMD5Hash(true), MD5HashValue()},
-      {kQuickFoxCrc32cChecksum, "", DisableCrc32cChecksum(false),
-       Crc32cChecksumValue(), DisableMD5Hash(true),
-       MD5HashValue(kEmptyStringMD5Hash)},
-      {kQuickFoxCrc32cChecksum, kQuickFoxMD5Hash, DisableCrc32cChecksum(false),
-       Crc32cChecksumValue(), DisableMD5Hash(false), MD5HashValue()},
-      {kQuickFoxCrc32cChecksum, "", DisableCrc32cChecksum(false),
-       Crc32cChecksumValue(), DisableMD5Hash(false),
-       MD5HashValue(kEmptyStringMD5Hash)},
-      {"", "", DisableCrc32cChecksum(false),
-       Crc32cChecksumValue(kEmptyStringCrc32cChecksum), DisableMD5Hash(true),
-       MD5HashValue()},
-      {"", "", DisableCrc32cChecksum(false),
-       Crc32cChecksumValue(kEmptyStringCrc32cChecksum), DisableMD5Hash(true),
-       MD5HashValue(kEmptyStringMD5Hash)},
-      {"", kQuickFoxMD5Hash, DisableCrc32cChecksum(false),
-       Crc32cChecksumValue(kEmptyStringCrc32cChecksum), DisableMD5Hash(false),
-       MD5HashValue()},
-      {"", "", DisableCrc32cChecksum(false),
-       Crc32cChecksumValue(kEmptyStringCrc32cChecksum), DisableMD5Hash(false),
-       MD5HashValue(kEmptyStringMD5Hash)},
-  };
-
-  for (auto const& test : cases) {
+  for (auto const& test : upload_cases) {
     auto function = CreateHashFunction(
         ResumableUploadRequest("test-bucket", "test-object")
             .set_multiple_options(test.crc32_disabled, test.crc32_value,
@@ -337,27 +307,17 @@ TEST(HashFunctionImplTest, CreateHashFunctionUploadResumedSession) {
 }
 
 TEST(HashFunctionImplTest, CreateHashFunctionInsertObjectMedia) {
-  struct Test {
-    DisableCrc32cChecksum crc32c;
-    DisableMD5Hash md5;
-    HashValues expected;
-  } const cases[] = {
-      {DisableCrc32cChecksum(false), DisableMD5Hash(false),
-       HashValues{kQuickFoxCrc32cChecksum, kQuickFoxMD5Hash}},
-      {DisableCrc32cChecksum(false), DisableMD5Hash(true),
-       HashValues{kQuickFoxCrc32cChecksum, {}}},
-      {DisableCrc32cChecksum(true), DisableMD5Hash(false),
-       HashValues{{}, kQuickFoxMD5Hash}},
-      {DisableCrc32cChecksum(true), DisableMD5Hash(true), HashValues{{}, {}}},
-  };
-  for (auto const& test : cases) {
+  auto const upload_cases = testing::UploadHashCases();
+
+  for (auto const& test : upload_cases) {
     auto function = CreateHashFunction(
         InsertObjectMediaRequest("test-bucket", "test-object", kQuickFox)
-            .set_multiple_options(test.crc32c, test.md5));
+            .set_multiple_options(test.crc32_disabled, test.crc32_value,
+                                  test.md5_disabled, test.md5_value));
     ASSERT_STATUS_OK(function->Update(/*offset=*/0, kQuickFox));
     auto const actual = function->Finish();
-    EXPECT_EQ(actual.crc32c, test.expected.crc32c);
-    EXPECT_EQ(actual.md5, test.expected.md5);
+    EXPECT_EQ(test.crc32c_expected, actual.crc32c);
+    EXPECT_EQ(test.md5_expected, actual.md5);
   }
 }
 

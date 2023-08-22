@@ -194,14 +194,7 @@ void InsertObjectMediaRequest::set_contents(std::string v) {
 }
 
 HashValues FinishHashes(InsertObjectMediaRequest const& request) {
-  auto hashes = HashValues{
-      /*.crc32c=*/request.GetOption<Crc32cChecksumValue>().value_or(
-          std::string{}),
-      /*.md5=*/request.GetOption<MD5HashValue>().value_or(std::string{}),
-  };
-  // Prefer the hashes provided via *Value options in the request. If those
-  // are not set, use the computed hashes from the data.
-  return Merge(std::move(hashes), request.hash_function().Finish());
+  return request.hash_function().Finish();
 }
 
 std::ostream& operator<<(std::ostream& os, InsertObjectMediaRequest const& r) {

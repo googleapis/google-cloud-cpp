@@ -33,6 +33,36 @@ std::unique_ptr<HashFunction> CreateHashFunction(bool disable_crc32c,
       std::make_unique<Crc32cHashFunction>(),
       std::make_unique<MD5HashFunction>());
 }
+
+template <typename Request>
+std::unique_ptr<HashFunction> CreateUploadHashFunction(Request const& request) {
+  auto crc32c = std::unique_ptr<HashFunction>();
+  auto crc32c_value =
+      request.template GetOption<Crc32cChecksumValue>().value_or("");
+  if (!crc32c_value.empty()) {
+    crc32c = std::make_unique<PrecomputedHashFunction>(
+        HashValues{/*.crc32c=*/std::move(crc32c_value), /*md5=*/{}});
+  } else if (!request.template GetOption<DisableCrc32cChecksum>().value_or(
+                 false)) {
+    crc32c = std::make_unique<Crc32cHashFunction>();
+  }
+
+  auto md5 = std::unique_ptr<HashFunction>();
+  auto md5_value = request.template GetOption<MD5HashValue>().value_or("");
+  if (!md5_value.empty()) {
+    md5 = std::make_unique<PrecomputedHashFunction>(
+        HashValues{/*.crc32c=*/{}, /*.md5=*/std::move(md5_value)});
+  } else if (!request.template GetOption<DisableMD5Hash>().value_or(false)) {
+    md5 = std::make_unique<MD5HashFunction>();
+  }
+
+  if (!crc32c && !md5) return std::make_unique<NullHashFunction>();
+  if (!crc32c) return md5;
+  if (!md5) return crc32c;
+
+  return std::make_unique<CompositeFunction>(std::move(crc32c), std::move(md5));
+}
+
 }  // namespace
 
 std::unique_ptr<HashFunction> CreateNullHashFunction() {
@@ -54,30 +84,12 @@ std::unique_ptr<HashFunction> CreateHashFunction(
     // for previous values is lost.
     return CreateNullHashFunction();
   }
-  // Compute the hash only if (1) it is not disabled, and (2) the application
-  // did not provide a hash value. If the application provides a hash value
-  // we are going to use that. Typically such values come from a more trusted
-  // source, e.g. the storage system where the data is being read from, and
-  // we want the upload to fail if the data does not match the *source*.
-  return CreateHashFunction(
-      request.GetOption<DisableCrc32cChecksum>().value_or(false) ||
-          !request.GetOption<Crc32cChecksumValue>().value_or("").empty(),
-      request.GetOption<DisableMD5Hash>().value_or(false) ||
-          !request.GetOption<MD5HashValue>().value_or("").empty());
+  return CreateUploadHashFunction(request);
 }
 
 std::unique_ptr<HashFunction> CreateHashFunction(
     InsertObjectMediaRequest const& request) {
-  // Compute the hash only if (1) it is not disabled, and (2) the application
-  // did not provide a hash value. If the application provides a hash value
-  // we are going to use that. Typically such values come from a more trusted
-  // source, e.g. the storage system where the data is being read from, and
-  // we want the upload to fail if the data does not match the *source*.
-  return CreateHashFunction(
-      request.GetOption<DisableCrc32cChecksum>().value_or(false) ||
-          !request.GetOption<Crc32cChecksumValue>().value_or("").empty(),
-      request.GetOption<DisableMD5Hash>().value_or(false) ||
-          !request.GetOption<MD5HashValue>().value_or("").empty());
+  return CreateUploadHashFunction(request);
 }
 
 }  // namespace internal

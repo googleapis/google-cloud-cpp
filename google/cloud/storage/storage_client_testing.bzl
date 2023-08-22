@@ -31,6 +31,7 @@ storage_client_testing_hdrs = [
     "testing/retry_tests.h",
     "testing/storage_integration_test.h",
     "testing/temp_file.h",
+    "testing/upload_hash_cases.h",
     "testing/write_base64.h",
 ]
 
@@ -44,5 +45,6 @@ storage_client_testing_srcs = [
     "testing/retry_tests.cc",
     "testing/storage_integration_test.cc",
     "testing/temp_file.cc",
+    "testing/upload_hash_cases.cc",
     "testing/write_base64.cc",
 ]

@@ -17,6 +17,7 @@
 #include "google/cloud/storage/internal/hash_validator_impl.h"
 #include "google/cloud/storage/internal/object_metadata_parser.h"
 #include "google/cloud/storage/internal/object_requests.h"
+#include "google/cloud/storage/testing/upload_hash_cases.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -224,60 +225,9 @@ TEST(HashValidatorImplTest, CreateHashFunctionRead) {
 }
 
 TEST(HashValidatorImplTest, CreateHashFunctionUpload) {
-  struct Test {
-    std::string crc32c_expected;
-    std::string md5_expected;
-    DisableCrc32cChecksum crc32_disabled;
-    Crc32cChecksumValue crc32_value;
-    DisableMD5Hash md5_disabled;
-    MD5HashValue md5_value;
-  } cases[]{
-      {"", "", DisableCrc32cChecksum(true), Crc32cChecksumValue(),
-       DisableMD5Hash(true), MD5HashValue()},
-      {"", "", DisableCrc32cChecksum(true), Crc32cChecksumValue(),
-       DisableMD5Hash(true), MD5HashValue(kEmptyStringMD5Hash)},
-      {"", kQuickFoxMD5Hash, DisableCrc32cChecksum(true), Crc32cChecksumValue(),
-       DisableMD5Hash(false), MD5HashValue()},
-      {"", "", DisableCrc32cChecksum(true), Crc32cChecksumValue(),
-       DisableMD5Hash(false), MD5HashValue(kEmptyStringMD5Hash)},
-      {"", "", DisableCrc32cChecksum(true),
-       Crc32cChecksumValue(kEmptyStringCrc32cChecksum), DisableMD5Hash(true),
-       MD5HashValue()},
-      {"", "", DisableCrc32cChecksum(true),
-       Crc32cChecksumValue(kEmptyStringMD5Hash), DisableMD5Hash(true),
-       MD5HashValue(kEmptyStringMD5Hash)},
-      {"", kQuickFoxMD5Hash, DisableCrc32cChecksum(true),
-       Crc32cChecksumValue(kEmptyStringMD5Hash), DisableMD5Hash(false),
-       MD5HashValue()},
-      {"", "", DisableCrc32cChecksum(true),
-       Crc32cChecksumValue(kEmptyStringMD5Hash), DisableMD5Hash(false),
-       MD5HashValue(kEmptyStringMD5Hash)},
+  auto const upload_cases = testing::UploadHashCases();
 
-      {kQuickFoxCrc32cChecksum, "", DisableCrc32cChecksum(false),
-       Crc32cChecksumValue(), DisableMD5Hash(true), MD5HashValue()},
-      {kQuickFoxCrc32cChecksum, "", DisableCrc32cChecksum(false),
-       Crc32cChecksumValue(), DisableMD5Hash(true),
-       MD5HashValue(kEmptyStringMD5Hash)},
-      {kQuickFoxCrc32cChecksum, kQuickFoxMD5Hash, DisableCrc32cChecksum(false),
-       Crc32cChecksumValue(), DisableMD5Hash(false), MD5HashValue()},
-      {kQuickFoxCrc32cChecksum, "", DisableCrc32cChecksum(false),
-       Crc32cChecksumValue(), DisableMD5Hash(false),
-       MD5HashValue(kEmptyStringMD5Hash)},
-      {"", "", DisableCrc32cChecksum(false),
-       Crc32cChecksumValue(kEmptyStringCrc32cChecksum), DisableMD5Hash(true),
-       MD5HashValue()},
-      {"", "", DisableCrc32cChecksum(false),
-       Crc32cChecksumValue(kEmptyStringCrc32cChecksum), DisableMD5Hash(true),
-       MD5HashValue(kEmptyStringMD5Hash)},
-      {"", kQuickFoxMD5Hash, DisableCrc32cChecksum(false),
-       Crc32cChecksumValue(kEmptyStringCrc32cChecksum), DisableMD5Hash(false),
-       MD5HashValue()},
-      {"", "", DisableCrc32cChecksum(false),
-       Crc32cChecksumValue(kEmptyStringCrc32cChecksum), DisableMD5Hash(false),
-       MD5HashValue(kEmptyStringMD5Hash)},
-  };
-
-  for (auto const& test : cases) {
+  for (auto const& test : upload_cases) {
     auto request =
         ResumableUploadRequest("test-bucket", "test-object")
             .set_multiple_options(test.crc32_disabled, test.crc32_value,
