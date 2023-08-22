@@ -20,7 +20,7 @@ namespace storage {
 namespace testing {
 namespace {
 // These values were obtained using:
-// echo -n '' > foo.txt && gsutil hash foo.txt
+// /bin/echo -n '' > foo.txt && gsutil hash foo.txt
 auto constexpr kEmptyStringCrc32cChecksum = "AAAAAA==";
 auto constexpr kEmptyStringMD5Hash = "1B2M2Y8AsgTpgAmY7PhCfg==";
 
