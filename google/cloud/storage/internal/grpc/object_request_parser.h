@@ -75,6 +75,11 @@ storage::internal::QueryResumableUploadResponse FromProto(
 google::storage::v2::CancelResumableWriteRequest ToProto(
     storage::internal::DeleteResumableUploadRequest const& request);
 
+Status Finalize(google::storage::v2::WriteObjectRequest& write_request,
+                grpc::WriteOptions& options,
+                storage::internal::HashFunction& hash_function,
+                storage::internal::HashValues = {});
+
 Status MaybeFinalize(google::storage::v2::WriteObjectRequest& write_request,
                      grpc::WriteOptions& options,
                      storage::internal::InsertObjectMediaRequest const& request,
