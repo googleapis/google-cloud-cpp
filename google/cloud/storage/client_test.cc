@@ -326,7 +326,7 @@ TEST_F(ClientTest, DeprecatedClientFromMock) {
       ObjectMetadata{}.set_bucket("bucket").set_name("object/2"));
   EXPECT_CALL(*mock, ListObjects)
       .WillOnce(Return(TransientError()))
-      .WillRepeatedly(Return(response));
+      .WillOnce(Return(response));
 
   (void)client.ListObjects("bucket", Prefix("object/"));
 }
