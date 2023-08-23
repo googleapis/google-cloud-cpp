@@ -738,8 +738,8 @@ Status Finalize(google::storage::v2::WriteObjectRequest& write_request,
   // format expected by proto, which is just a 32-bit integer for CRC32C and a
   // byte array for MD5.
   //
-  // This conversions may fail, because the value is provided by the application
-  // in some cases.
+  // These conversions may fail, because the value is provided by the
+  // application in some cases.
   if (!hashes.crc32c.empty()) {
     auto as_proto = storage_internal::Crc32cToProto(hashes.crc32c);
     if (!as_proto) return std::move(as_proto).status();
