@@ -315,6 +315,22 @@ TEST_F(ClientTest, DeprecatedRetryPolicies) {
   (void)client.ListBuckets(OverrideDefaultProject("fake-project"));
 }
 
+TEST_F(ClientTest, DeprecatedClientFromMock) {
+  auto mock = std::make_shared<testing::MockClient>();
+  auto client = testing::ClientFromMock(mock);
+
+  internal::ListObjectsResponse response;
+  response.items.push_back(
+      ObjectMetadata{}.set_bucket("bucket").set_name("object/1"));
+  response.items.push_back(
+      ObjectMetadata{}.set_bucket("bucket").set_name("object/2"));
+  EXPECT_CALL(*mock, ListObjects)
+      .WillOnce(Return(TransientError()))
+      .WillRepeatedly(Return(response));
+
+  (void)client.ListObjects("bucket", Prefix("object/"));
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage
