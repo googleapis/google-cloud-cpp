@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/grpc/configure_client_context.h"
+#include "google/cloud/internal/url_encode.h"
 #include <regex>
 
 namespace google {
@@ -36,8 +37,10 @@ void AddIdempotencyToken(grpc::ClientContext& ctx,
 void ApplyRoutingHeaders(
     grpc::ClientContext& context,
     storage::internal::InsertObjectMediaRequest const& request) {
-  context.AddMetadata("x-goog-request-params",
-                      "bucket=projects/_/buckets/" + request.bucket_name());
+  context.AddMetadata(
+      "x-goog-request-params",
+      "bucket=projects%2F_%2Fbuckets%2F" +
+          google::cloud::internal::UrlEncode(request.bucket_name()));
 }
 
 void ApplyRoutingHeaders(grpc::ClientContext& context,
@@ -49,7 +52,9 @@ void ApplyRoutingHeaders(grpc::ClientContext& context,
   for (auto const* re : {slash_format, colon_format}) {
     std::smatch match;
     if (!std::regex_match(request.upload_session_url(), match, *re)) continue;
-    context.AddMetadata("x-goog-request-params", "bucket=" + match[1].str());
+    context.AddMetadata(
+        "x-goog-request-params",
+        "bucket=" + google::cloud::internal::UrlEncode(match[1].str()));
   }
 }
 
