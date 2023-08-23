@@ -15,6 +15,7 @@
 #include "google/cloud/bigtable/metadata_update_policy.h"
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/internal/api_client_header.h"
+#include "google/cloud/internal/url_encode.h"
 
 namespace google {
 namespace cloud {
@@ -58,8 +59,10 @@ bigtable::MetadataUpdatePolicy MakeMetadataUpdatePolicy(
   // The rule is the same for all RPCs in the Data API. We always include the
   // table name. We append an app profile id only if one was provided.
   return bigtable::MetadataUpdatePolicy(
-      table_name +
-          (app_profile_id.empty() ? "" : "&app_profile_id=" + app_profile_id),
+      internal::UrlEncode(table_name) +
+          (app_profile_id.empty()
+               ? ""
+               : "&app_profile_id=" + internal::UrlEncode(app_profile_id)),
       bigtable::MetadataParamTypes::TABLE_NAME);
 }
 

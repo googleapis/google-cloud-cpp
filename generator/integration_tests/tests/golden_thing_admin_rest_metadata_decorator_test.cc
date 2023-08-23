@@ -216,9 +216,10 @@ TEST(ThingAdminRestMetadataDecoratorTest, DropDatabaseExplicitRoutingMatch) {
             EXPECT_THAT(
                 context.GetHeader("x-goog-request-params")[0],
                 AllOf(
-                    HasSubstr(std::string("project=projects/my_project")),
-                    HasSubstr(std::string("instance=instances/my_instance")),
-                    HasSubstr(std::string("database=databases/my_database"))));
+                    HasSubstr(std::string("project=projects%2Fmy_project")),
+                    HasSubstr(std::string("instance=instances%2Fmy_instance")),
+                    HasSubstr(
+                        std::string("database=databases%2Fmy_database"))));
             return TransientError();
           });
 

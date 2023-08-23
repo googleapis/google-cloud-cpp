@@ -322,7 +322,7 @@ TEST_F(MetadataDecoratorTest, ExplicitRouting) {
   // `google.api.routing` for Example 9:
   //
   // https://github.com/googleapis/googleapis/blob/70147caca58ebf4c8cd7b96f5d569a72723e11c1/google/api/routing.proto#L387-L390
-  std::string expected1 = "table_location=instances/instance_bar";
+  std::string expected1 = "table_location=instances%2Finstance_bar";
   std::string expected2 = "routing_id=prof_qux";
 
   EXPECT_CALL(*mock_, ExplicitRouting1)

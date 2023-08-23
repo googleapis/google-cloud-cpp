@@ -16,6 +16,7 @@
 #include "google/cloud/bigtable/admin_client.h"
 #include "google/cloud/bigtable/table.h"
 #include "google/cloud/bigtable/testing/embedded_server_test_fixture.h"
+#include "google/cloud/internal/url_encode.h"
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 #include <map>
@@ -32,7 +33,8 @@ class MetadataUpdatePolicyTest : public testing::EmbeddedServerTestFixture {};
 using ::testing::HasSubstr;
 
 TEST_F(MetadataUpdatePolicyTest, TableMetadata) {
-  grpc::string expected = "table_name=" + std::string(kTableName);
+  grpc::string expected =
+      "table_name=" + google::cloud::internal::UrlEncode(kTableName);
   auto reader = table_->ReadRows(RowSet("row1"), 1, Filter::PassAllFilter());
   // lets make the RPC call to send metadata
   reader.begin();
@@ -51,8 +53,8 @@ TEST_F(MetadataUpdatePolicyTest, TableWithNewTargetMetadata) {
                                            other_table_id);
 
   grpc::string expected =
-      "table_name=" +
-      TableName(other_project_id, other_instance_id, other_table_id);
+      "table_name=" + google::cloud::internal::UrlEncode(TableName(
+                          other_project_id, other_instance_id, other_table_id));
   auto reader =
       other_table.ReadRows(RowSet("row1"), 1, Filter::PassAllFilter());
   // lets make the RPC call to send metadata
@@ -78,7 +80,8 @@ TEST_F(MetadataUpdatePolicyTest, SimpleDefault) {
 TEST_F(MetadataUpdatePolicyTest, TableAppProfileMetadata) {
   auto table = Table(data_client_, "profile", kTableId);
   grpc::string expected =
-      "table_name=" + std::string(kTableName) + "&app_profile_id=profile";
+      "table_name=" + google::cloud::internal::UrlEncode(kTableName) +
+      "&app_profile_id=profile";
   auto reader = table.ReadRows(RowSet("row1"), 1, Filter::PassAllFilter());
   // lets make the RPC call to send metadata
   reader.begin();
@@ -94,7 +97,8 @@ TEST_F(MetadataUpdatePolicyTest, TableWithNewTargetAppProfileMetadata) {
   auto table =
       table_->WithNewTarget(kProjectId, kInstanceId, "profile", kTableId);
   grpc::string expected =
-      "table_name=" + std::string(kTableName) + "&app_profile_id=profile";
+      "table_name=" + google::cloud::internal::UrlEncode(kTableName) +
+      "&app_profile_id=profile";
   auto reader = table.ReadRows(RowSet("row1"), 1, Filter::PassAllFilter());
   // lets make the RPC call to send metadata
   reader.begin();

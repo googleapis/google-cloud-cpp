@@ -127,8 +127,7 @@ class LegacyRowReaderTest : public bigtable::testing::TableTestFixture {
       : TableTestFixture(CompletionQueue{}),
         retry_policy_(std::make_unique<NiceMock<MockRetryPolicy>>()),
         backoff_policy_(std::make_unique<NiceMock<MockBackoffPolicy>>()),
-        metadata_update_policy_(kTableName,
-                                bigtable::MetadataParamTypes::TABLE_NAME),
+        metadata_update_policy_(MakeMetadataUpdatePolicy(kTableName, "")),
         parser_factory_(
             std::make_unique<NiceMock<ReadRowsParserMockFactory>>()) {}
 

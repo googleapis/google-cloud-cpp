@@ -59,9 +59,9 @@ TEST(RoutingMatcher, MatchesAll) {
       }};
 
   std::vector<std::string> params = {"previous"};
-  auto request = TestRequest{"foo/foo", "bar/bar"};
+  auto request = TestRequest{"foo", "bar"};
   matcher.AppendParam(request, params);
-  EXPECT_THAT(params, UnorderedElementsAre("previous", "routing_id=foo/foo"));
+  EXPECT_THAT(params, UnorderedElementsAre("previous", "routing_id=foo"));
 }
 
 TEST(RoutingMatcher, EmptyFieldIsSkipped) {
@@ -102,6 +102,38 @@ TEST(RoutingMatcher, FirstNonEmptyMatchIsUsed) {
   auto request = TestRequest{"foo/foo", "bar/bar"};
   matcher.AppendParam(request, params);
   EXPECT_THAT(params, UnorderedElementsAre("previous", "routing_id=foo"));
+}
+
+TEST(RoutingMatcher, UrlEncodesMatchAll) {
+  auto matcher = RoutingMatcher<TestRequest>{
+      "routing_id=",
+      {
+          {[](TestRequest const& request) -> std::string const& {
+             return request.foo();
+           },
+           absl::nullopt},
+      }};
+
+  std::vector<std::string> params = {"previous"};
+  auto request = TestRequest{"foo/foo", "bar/bar"};
+  matcher.AppendParam(request, params);
+  EXPECT_THAT(params, UnorderedElementsAre("previous", "routing_id=foo%2Ffoo"));
+}
+
+TEST(RoutingMatcher, UrlEncodesRegex) {
+  auto matcher = RoutingMatcher<TestRequest>{
+      "routing_id=",
+      {
+          {[](TestRequest const& request) -> std::string const& {
+             return request.foo();
+           },
+           std::regex{"(.*)"}},
+      }};
+
+  std::vector<std::string> params = {"previous"};
+  auto request = TestRequest{"foo/foo", "bar/bar"};
+  matcher.AppendParam(request, params);
+  EXPECT_THAT(params, UnorderedElementsAre("previous", "routing_id=foo%2Ffoo"));
 }
 
 }  // namespace

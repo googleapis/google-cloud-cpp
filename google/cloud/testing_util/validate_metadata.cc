@@ -15,6 +15,7 @@
 #include "google/cloud/testing_util/validate_metadata.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/absl_str_replace_quiet.h"
+#include "google/cloud/internal/url_encode.h"
 #include "google/cloud/log.h"
 #include "google/cloud/status_or.h"
 #include "absl/strings/str_split.h"
@@ -136,7 +137,7 @@ RoutingHeaders FromRoutingRule(google::api::RoutingRule const& routing,
     // If the path_template is empty, we use the field's name as the routing
     // param key, and we match the entire value of the field.
     if (path_template.empty()) {
-      headers[rp.field()] = field;
+      headers[rp.field()] = internal::UrlEncode(field);
       continue;
     }
     // First we parse the path_template field to extract the routing param key
@@ -154,7 +155,7 @@ RoutingHeaders FromRoutingRule(google::api::RoutingRule const& routing,
     // Then we parse the field in the given request to see if it matches the
     // pattern we expect.
     if (std::regex_match(field, match, std::regex{pattern})) {
-      headers[std::move(param)] = match[1].str();
+      headers[std::move(param)] = internal::UrlEncode(match[1].str());
     }
   }
   return headers;
