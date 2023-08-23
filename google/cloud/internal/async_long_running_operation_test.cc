@@ -95,14 +95,16 @@ StartOperation MakeStart(std::shared_ptr<MockStub> const& m) {
   };
 }
 
-AsyncPollLongRunningOperation MakePoll(std::shared_ptr<MockStub> const& m) {
+AsyncPollLongRunningOperationImplicitOptions MakePoll(
+    std::shared_ptr<MockStub> const& m) {
   return [m](CompletionQueue& cq, auto context,
              google::longrunning::GetOperationRequest const& request) {
     return m->AsyncGetOperation(cq, std::move(context), request);
   };
 }
 
-AsyncCancelLongRunningOperation MakeCancel(std::shared_ptr<MockStub> const& m) {
+AsyncCancelLongRunningOperationImplicitOptions MakeCancel(
+    std::shared_ptr<MockStub> const& m) {
   return [m](CompletionQueue& cq, auto context,
              google::longrunning::CancelOperationRequest const& request) {
     return m->AsyncCancelOperation(cq, std::move(context), request);
