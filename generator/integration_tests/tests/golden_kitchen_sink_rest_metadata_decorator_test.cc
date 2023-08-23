@@ -246,10 +246,10 @@ TEST(KitchenSinkRestMetadataDecoratorTest, ExplicitRouting) {
             EXPECT_THAT(context.GetHeader("x-goog-quota-user"), IsEmpty());
             EXPECT_THAT(context.GetHeader("x-server-timeout"), IsEmpty());
             EXPECT_THAT(context.GetHeader("x-goog-request-params"),
-                        AnyOf(Contains("table_location=instances/"
+                        AnyOf(Contains("table_location=instances%2F"
                                        "instance_bar&routing_id=prof_qux"),
                               Contains("routing_id=prof_qux&table_location="
-                                       "instances/instance_bar")));
+                                       "instances%2Finstance_bar")));
             return TransientError();
           });
 

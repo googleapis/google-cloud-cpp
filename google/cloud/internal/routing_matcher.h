@@ -15,6 +15,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_ROUTING_MATCHER_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_ROUTING_MATCHER_H
 
+#include "google/cloud/internal/absl_str_cat_quiet.h"
+#include "google/cloud/internal/url_encode.h"
 #include "google/cloud/version.h"
 #include "absl/types/optional.h"
 #include <functional>
@@ -52,11 +54,11 @@ struct RoutingMatcher {
       // When the optional regex is not engaged, it is implied that we should
       // match the whole field.
       if (!pattern.re) {
-        params.push_back(routing_key + field);
+        params.push_back(absl::StrCat(routing_key, UrlEncode(field)));
         return;
       }
       if (std::regex_match(field, match, *pattern.re)) {
-        params.push_back(routing_key + match[1].str());
+        params.push_back(absl::StrCat(routing_key, UrlEncode(match[1].str())));
         return;
       }
     }
