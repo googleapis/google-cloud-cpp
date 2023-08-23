@@ -39,8 +39,8 @@ void ApplyRoutingHeaders(
     storage::internal::InsertObjectMediaRequest const& request) {
   context.AddMetadata(
       "x-goog-request-params",
-      "bucket=projects%2F_%2Fbuckets%2F" +
-          google::cloud::internal::UrlEncode(request.bucket_name()));
+      "bucket=" + google::cloud::internal::UrlEncode("projects/_/buckets/" +
+                                                     request.bucket_name()));
 }
 
 void ApplyRoutingHeaders(grpc::ClientContext& context,
