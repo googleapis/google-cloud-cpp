@@ -142,7 +142,7 @@ TEST_F(GrpcConfigureClientContext, ApplyRoutingHeadersInsertObjectMedia) {
   auto metadata = GetMetadata(context);
   EXPECT_THAT(metadata,
               Contains(Pair("x-goog-request-params",
-                            "bucket=projects/_/buckets/test-bucket")));
+                            "bucket=projects%2F_%2Fbuckets%2Ftest-bucket")));
 }
 
 TEST_F(GrpcConfigureClientContext, ApplyRoutingHeadersUploadChunkMatchSlash) {
@@ -155,7 +155,7 @@ TEST_F(GrpcConfigureClientContext, ApplyRoutingHeadersUploadChunkMatchSlash) {
   auto metadata = GetMetadata(context);
   EXPECT_THAT(metadata,
               Contains(Pair("x-goog-request-params",
-                            "bucket=projects/_/buckets/test-bucket")));
+                            "bucket=projects%2F_%2Fbuckets%2Ftest-bucket")));
 }
 
 TEST_F(GrpcConfigureClientContext, ApplyRoutingHeadersUploadChunkMatchColon) {
@@ -168,7 +168,7 @@ TEST_F(GrpcConfigureClientContext, ApplyRoutingHeadersUploadChunkMatchColon) {
   auto metadata = GetMetadata(context);
   EXPECT_THAT(metadata,
               Contains(Pair("x-goog-request-params",
-                            "bucket=projects/_/buckets/test-bucket")));
+                            "bucket=projects%2F_%2Fbuckets%2Ftest-bucket")));
 }
 
 TEST_F(GrpcConfigureClientContext, ApplyRoutingHeadersUploadChunkNoMatch) {

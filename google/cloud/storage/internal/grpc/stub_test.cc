@@ -203,7 +203,7 @@ TEST_F(GrpcClientTest, UploadChunk) {
                     // Map JSON names to the `resource` subobject
                     Pair("x-goog-fieldmask", "resource(field1,field2)"),
                     Pair("x-goog-request-params",
-                         "bucket=projects/_/buckets/test-bucket")));
+                         "bucket=projects%2F_%2Fbuckets%2Ftest-bucket")));
     ::testing::InSequence sequence;
     auto stream = std::make_unique<MockInsertStream>();
     EXPECT_CALL(*stream, Write).WillOnce(Return(false));
@@ -510,7 +510,7 @@ TEST_F(GrpcClientTest, InsertObjectMedia) {
                     // Map JSON names to the `resource` subobject
                     Pair("x-goog-fieldmask", "resource(field1,field2)"),
                     Pair("x-goog-request-params",
-                         "bucket=projects/_/buckets/test-bucket")));
+                         "bucket=projects%2F_%2Fbuckets%2Ftest-bucket")));
     ::testing::InSequence sequence;
     auto stream = std::make_unique<MockInsertStream>();
     EXPECT_CALL(*stream, Write).WillOnce(Return(false));
