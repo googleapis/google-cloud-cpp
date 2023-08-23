@@ -22,6 +22,7 @@
 #include "google/cloud/testing_util/mock_backoff_policy.h"
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/testing_util/scoped_environment.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <chrono>
 
@@ -33,6 +34,7 @@ namespace {
 
 using ::google::cloud::storage::internal::ClientImplDetails;
 using ::google::cloud::storage::testing::canonical_errors::TransientError;
+using ::google::cloud::testing_util::IsOkAndHolds;
 using ::google::cloud::testing_util::MockBackoffPolicy;
 using ::google::cloud::testing_util::ScopedEnvironment;
 using ::testing::ElementsAre;
@@ -328,7 +330,10 @@ TEST_F(ClientTest, DeprecatedClientFromMock) {
       .WillOnce(Return(TransientError()))
       .WillOnce(Return(response));
 
-  (void)client.ListObjects("bucket", Prefix("object/"));
+  auto stream = client.ListObjects("bucket", Prefix("object/"));
+  std::vector<StatusOr<ObjectMetadata>> objects{stream.begin(), stream.end()};
+  EXPECT_THAT(objects, ElementsAre(IsOkAndHolds(response.items[0]),
+                                   IsOkAndHolds(response.items[1])));
 }
 
 }  // namespace
