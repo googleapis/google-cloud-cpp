@@ -69,13 +69,13 @@ void InsertObject::Write() {
   // Depending on the version of Protobuf the contents may be represented as
   // an absl::Cord or as a std::string.
   auto const n = std::min(data_.size(), kMax);
-  auto content = data_.Subcord(0, n);
+  auto next = data_.Subcord(0, n);
   data_.RemovePrefix(n);
+  auto const crc32c = Crc32c(next);
+  hash_function_->Update(request_.write_offset(), next, crc32c);
   auto& data = *request_.mutable_checksummed_data();
-  SetContent(data, std::move(content));
-  data.set_crc32c(Crc32c(GetContent(data)));
-  hash_function_->Update(request_.write_offset(), GetContent(data),
-                         data.crc32c());
+  SetContent(data, std::move(next));
+  data.set_crc32c(crc32c);
 
   auto wopt = grpc::WriteOptions{};
   auto const last_message = data_.empty();

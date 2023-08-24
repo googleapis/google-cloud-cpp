@@ -47,30 +47,41 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *     std::unique_ptr<StreamingWriteRpc> rpc,
  *     google::storage::v2::WriteObjectRequest request, absl::Cord data,
  *     google::cloud::internal::ImmutableOptions options) {
+ *   auto constexpr kMax = static_cast<std::size_t>(
+ *       google::storage::v2::ServiceConstants::MAX_WRITE_CHUNK_BYTES);
  *   auto rpc_ok = co_await rpc->Start();
  *   while (rpc_ok) {
- *     auto constexpr kMax = static_cast<std::size_t>(
- *         google::storage::v2::ServiceConstants::MAX_WRITE_CHUNK_BYTES);
- *     auto size = std::min(data.size(), kMax);
- *     auto next = data.Subcord(0, size);
- *     data = data.Subcord(size, data.size());
+ *     auto const n = std::min(data.size(), kMax);
+ *     auto next = data.Subcord(0, n);
+ *     data = data.RemovePrefix(n);
  *     auto crc32c = Crc32c(next);
  *     hash_function.Update(request.offset(), next, crc32c);
- *     request.mutable_checksummed_data()->set_content(std::move(next));
- *     request.mutable_checksummed_data()->set_crc32c(crc32c);
- *     if (data.empty()) {
- *       // This is the last block, compute full checksums and set flags
- *       request.set_finish_write(true);
+ *     auto& data = *request.mutable_checksummed_data();
+ *     data.set_content(std::move(next));
+ *     data.set_crc32c(crc32c);
+ *     auto wopt = grpc::WriteOptions{};
+ *     auto const last_message = data_.empty();
+ *     request.set_finish_write(last_message);
+ *     if (last_message) {
+ *       // This is the last block, compute full checksums and set flags.
+ *       auto status = Finalize(request, wopt, *hash_function);
+ *       if (!status.ok()) {
+ *         rpc->Cancel();
+ *         (void)co_await rpc->Finish();
+ *         co_return status;
+ *       }
  *     }
- *     // Write the data, breaking out of the loop or error.
- *     rpc_ok = co_await rpc.Write(request, wopt);
- *     // We need at least one empty Write() for empty objects, only then we
+ *     // Write the data, breaking out of the loop on error.
+ *     rpc_ok = co_await rpc->Write(request, wopt);
+ *     // We need at least one empty Write() for empty objects. Only then we
  *     // can exit the loop.
  *     if (data.empty()) break;
+ *     request.clear_first_message();
+ *     request.set_offset(request.offset() + n);
  *   }
- *   auto response = co_await rpc.Finish();
+ *   auto response = co_await rpc->Finish();
  *   if (!response) co_return std::move(response).status();
- *
+ *   co_return FromProto(*response, options); // convert to gcs::ObjectMetadata
  * }
  * @endcode
  */
@@ -104,13 +115,9 @@ class InsertObject : public std::enable_shared_from_this<InsertObject> {
         options_(std::move(options)) {}
 
   void OnStart(bool ok);
-
   void Write();
-
   void OnError(Status status);
-
   void OnWrite(bool ok);
-
   void OnFinish(StatusOr<google::storage::v2::WriteObjectResponse> response);
 
   std::weak_ptr<InsertObject> WeakFromThis() { return shared_from_this(); }
