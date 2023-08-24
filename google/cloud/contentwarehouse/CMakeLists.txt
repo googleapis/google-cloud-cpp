@@ -37,10 +37,8 @@ endforeach ()
 include(GoogleCloudCppDoxygen)
 set(GOOGLE_CLOUD_CPP_DOXYGEN_EXTRA_INCLUDES
     "${PROJECT_BINARY_DIR}/google/cloud/documentai")
-google_cloud_cpp_doxygen_targets(
-    "contentwarehouse" DEPENDS cloud-docs
-    google-cloud-cpp::contentwarehouse_protos
-    google-cloud-cpp::documentai_protos)
+google_cloud_cpp_doxygen_targets("contentwarehouse" DEPENDS cloud-docs
+                                 google-cloud-cpp::contentwarehouse_protos)
 
 include(GoogleCloudCppCommon)
 
@@ -183,8 +181,7 @@ google_cloud_cpp_add_pkgconfig(
     "Provides C++ APIs to use the Document AI Warehouse API."
     "google_cloud_cpp_grpc_utils"
     "google_cloud_cpp_common"
-    "google_cloud_cpp_contentwarehouse_protos"
-    "google_cloud_cpp_documentai_protos")
+    "google_cloud_cpp_contentwarehouse_protos")
 
 # Create and install the CMake configuration files.
 include(CMakePackageConfigHelpers)
