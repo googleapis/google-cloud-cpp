@@ -54,6 +54,7 @@ else ()
         google_cloud_cpp_storage_grpc # cmake-format: sort
         async_client.cc
         async_client.h
+        async_object_requests.h
         async_object_responses.h
         async_token.h
         grpc_plugin.cc
@@ -67,6 +68,9 @@ else ()
         internal/async/insert_object.h
         internal/async/token_impl.cc
         internal/async/token_impl.h
+        internal/async/write_payload_fwd.h
+        internal/async/write_payload_impl.cc
+        internal/async/write_payload_impl.h
         internal/grpc/bucket_access_control_parser.cc
         internal/grpc/bucket_access_control_parser.h
         internal/grpc/bucket_metadata_parser.cc
@@ -213,6 +217,7 @@ if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
         internal/async/accumulate_read_object_test.cc
         internal/async/connection_impl_test.cc
         internal/async/insert_object_test.cc
+        internal/async/write_payload_impl_test.cc
         internal/grpc/bucket_access_control_parser_test.cc
         internal/grpc/bucket_metadata_parser_test.cc
         internal/grpc/bucket_name_test.cc

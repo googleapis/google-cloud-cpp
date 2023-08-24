@@ -18,6 +18,7 @@
 
 google_cloud_cpp_storage_grpc_hdrs = [
     "async_client.h",
+    "async_object_requests.h",
     "async_object_responses.h",
     "async_token.h",
     "grpc_plugin.h",
@@ -26,6 +27,8 @@ google_cloud_cpp_storage_grpc_hdrs = [
     "internal/async/connection_impl.h",
     "internal/async/insert_object.h",
     "internal/async/token_impl.h",
+    "internal/async/write_payload_fwd.h",
+    "internal/async/write_payload_impl.h",
     "internal/grpc/bucket_access_control_parser.h",
     "internal/grpc/bucket_metadata_parser.h",
     "internal/grpc/bucket_name.h",
@@ -65,6 +68,7 @@ google_cloud_cpp_storage_grpc_srcs = [
     "internal/async/connection_impl.cc",
     "internal/async/insert_object.cc",
     "internal/async/token_impl.cc",
+    "internal/async/write_payload_impl.cc",
     "internal/grpc/bucket_access_control_parser.cc",
     "internal/grpc/bucket_metadata_parser.cc",
     "internal/grpc/bucket_name.cc",
