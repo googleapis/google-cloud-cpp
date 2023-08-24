@@ -21,6 +21,7 @@ storage_client_grpc_unit_tests = [
     "grpc_plugin_test.cc",
     "internal/async/accumulate_read_object_test.cc",
     "internal/async/connection_impl_test.cc",
+    "internal/async/insert_object_test.cc",
     "internal/grpc/bucket_access_control_parser_test.cc",
     "internal/grpc/bucket_metadata_parser_test.cc",
     "internal/grpc/bucket_name_test.cc",
