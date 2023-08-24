@@ -36,9 +36,9 @@ int main(int argc, char* argv[]) try {
 
   auto const parent =
       std::string{"projects/"} + argv[1] + "/locations/" + argv[2];
-  for (auto r : client.ListInstances(parent)) {
-    if (!r) throw std::move(r).status();
-    std::cout << r->DebugString() << "\n";
+  for (auto list_element : client.ListInstances(parent)) {
+    if (!list_element) throw std::move(list_element).status();
+    std::cout << list_element->DebugString() << "\n";
   }
 
   return 0;
