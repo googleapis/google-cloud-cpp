@@ -53,7 +53,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *   while (rpc_ok) {
  *     auto const n = std::min(data.size(), kMax);
  *     auto next = data.Subcord(0, n);
- *     data = data.RemovePrefix(n);
+ *     data.RemovePrefix(n);
  *     auto crc32c = Crc32c(next);
  *     hash_function.Update(request.offset(), next, crc32c);
  *     auto& data = *request.mutable_checksummed_data();
