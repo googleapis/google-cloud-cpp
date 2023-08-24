@@ -21,7 +21,7 @@ top-level [README](/README.md#building-and-installing).
 <!-- inject-quickstart-start -->
 
 ```cc
-#include "google/cloud/notebooks/v1/managed_notebook_client.h"
+#include "google/cloud/notebooks/v2/notebook_client.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
@@ -30,13 +30,13 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
-  namespace notebooks = ::google::cloud::notebooks_v1;
-  auto client = notebooks::ManagedNotebookServiceClient(
-      notebooks::MakeManagedNotebookServiceConnection());
+  namespace notebooks = ::google::cloud::notebooks_v2;
+  auto client = notebooks::NotebookServiceClient(
+      notebooks::MakeNotebookServiceConnection());
 
   auto const parent =
       std::string{"projects/"} + argv[1] + "/locations/" + argv[2];
-  for (auto r : client.ListRuntimes(parent)) {
+  for (auto r : client.ListInstances(parent)) {
     if (!r) throw std::move(r).status();
     std::cout << r->DebugString() << "\n";
   }
