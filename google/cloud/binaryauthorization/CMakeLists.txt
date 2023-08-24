@@ -39,10 +39,8 @@ endforeach ()
 include(GoogleCloudCppDoxygen)
 set(GOOGLE_CLOUD_CPP_DOXYGEN_EXTRA_INCLUDES
     "${PROJECT_BINARY_DIR}/google/cloud/grafeas")
-google_cloud_cpp_doxygen_targets(
-    "binaryauthorization" DEPENDS cloud-docs
-    google-cloud-cpp::binaryauthorization_protos
-    google-cloud-cpp::grafeas_protos)
+google_cloud_cpp_doxygen_targets("binaryauthorization" DEPENDS cloud-docs
+                                 google-cloud-cpp::binaryauthorization_protos)
 
 include(GoogleCloudCppCommon)
 
@@ -186,8 +184,7 @@ google_cloud_cpp_add_pkgconfig(
     "Provides C++ APIs to use the Binary Authorization API."
     "google_cloud_cpp_grpc_utils"
     "google_cloud_cpp_common"
-    "google_cloud_cpp_binaryauthorization_protos"
-    "google_cloud_cpp_grafeas_protos")
+    "google_cloud_cpp_binaryauthorization_protos")
 
 # Create and install the CMake configuration files.
 include(CMakePackageConfigHelpers)
