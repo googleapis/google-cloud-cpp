@@ -377,9 +377,9 @@ external_googleapis_set_version_and_alias(bigtable_protos)
 target_link_libraries(google_cloud_cpp_bigtable_protos PUBLIC ${bigtable_deps})
 
 google_cloud_cpp_load_protolist(cloud_dialogflow_v2_list
-                                "protolists/dialogflow.list")
+                                "protolists/dialogflow_es.list")
 google_cloud_cpp_load_protodeps(cloud_dialogflow_v2_deps
-                                "protodeps/dialogflow.deps")
+                                "protodeps/dialogflow_es.deps")
 google_cloud_cpp_grpcpp_library(
     google_cloud_cpp_cloud_dialogflow_v2_protos ${cloud_dialogflow_v2_list}
     PROTO_PATH_DIRECTORIES "${EXTERNAL_GOOGLEAPIS_SOURCE}"
