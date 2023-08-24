@@ -16,6 +16,7 @@
 #include "google/cloud/pubsub/internal/exactly_once_policies.h"
 #include "google/cloud/pubsub/internal/extend_leases_with_retry.h"
 #include "google/cloud/internal/async_retry_loop.h"
+#include "google/cloud/internal/url_encode.h"
 #include "google/cloud/log.h"
 #include <iterator>
 #include <ostream>
@@ -204,8 +205,9 @@ void StreamingSubscriptionBatchSource::StartStream(
 
   auto request = InitialRequest();
   auto context = std::make_shared<grpc::ClientContext>();
-  context->AddMetadata("x-goog-request-params",
-                       "subscription=" + request.subscription());
+  context->AddMetadata(
+      "x-goog-request-params",
+      "subscription=" + internal::UrlEncode(request.subscription()));
   auto stream = stub_->AsyncStreamingPull(cq_, std::move(context));
   if (!stream) {
     OnRetryFailure(Status(StatusCode::kUnknown, "null stream"));
