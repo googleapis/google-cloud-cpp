@@ -15,6 +15,7 @@ Follow these links to find examples for other \c *Client classes:
 
 - [\c notebooks_v1::ManagedNotebookServiceClient](@ref notebooks_v1::ManagedNotebookServiceClient-service-account-snippet)
 - [\c notebooks_v1::NotebookServiceClient](@ref notebooks_v1::NotebookServiceClient-service-account-snippet)
+- [\c notebooks_v2::NotebookServiceClient](@ref notebooks_v2::NotebookServiceClient-service-account-snippet)
 
 <!-- inject-service-account-snippet-end -->
 
@@ -41,6 +42,12 @@ guide for more details.
 /*! @page notebooks_v1::NotebookServiceClient-service-account-snippet Override notebooks_v1::NotebookServiceClient Authentication Defaults
 
 @snippet google/cloud/notebooks/v1/samples/notebook_client_samples.cc with-service-account
+
+*/
+
+/*! @page notebooks_v2::NotebookServiceClient-service-account-snippet Override notebooks_v2::NotebookServiceClient Authentication Defaults
+
+@snippet google/cloud/notebooks/v2/samples/notebook_client_samples.cc with-service-account
 
 */
 // <!-- inject-authentication-pages-end -->

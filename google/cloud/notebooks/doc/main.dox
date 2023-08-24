@@ -33,6 +33,7 @@ application.
 
 - [\c notebooks_v1::ManagedNotebookServiceClient](@ref google::cloud::notebooks_v1::ManagedNotebookServiceClient)
 - [\c notebooks_v1::NotebookServiceClient](@ref google::cloud::notebooks_v1::NotebookServiceClient)
+- [\c notebooks_v2::NotebookServiceClient](@ref google::cloud::notebooks_v2::NotebookServiceClient)
 <!-- inject-client-list-end -->
 
 ## More Information

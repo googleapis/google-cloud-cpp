@@ -198,7 +198,11 @@ declare -A -r LIBRARIES=(
   ["networkmanagement"]="@com_google_googleapis//google/cloud/networkmanagement/v1:networkmanagement_cc_grpc"
   ["networksecurity"]="@com_google_googleapis//google/cloud/networksecurity/v1:networksecurity_cc_grpc"
   ["networkservices"]="@com_google_googleapis//google/cloud/networkservices/v1:networkservices_cc_grpc"
-  ["notebooks"]="@com_google_googleapis//google/cloud/notebooks/v1:notebooks_cc_grpc"
+  ["notebooks"]="$(
+    printf ",%s" \
+      "@com_google_googleapis//google/cloud/notebooks/v1:notebooks_cc_grpc" \
+      "@com_google_googleapis//google/cloud/notebooks/v2:notebooks_cc_grpc"
+  )"
   ["optimization"]="@com_google_googleapis//google/cloud/optimization/v1:optimization_cc_grpc"
   ["orgpolicy"]="@com_google_googleapis//google/cloud/orgpolicy/v2:orgpolicy_cc_grpc"
   ["osconfig"]="$(
