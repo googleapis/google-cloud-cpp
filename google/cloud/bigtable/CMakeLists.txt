@@ -38,9 +38,19 @@ google_cloud_cpp_doxygen_targets("bigtable" DEPENDS cloud-docs
 
 include(GoogleCloudCppCommon)
 
-# Configure the location of proto files, particularly the googleapis protos.
-list(APPEND PROTOBUF_IMPORT_DIRS "${PROJECT_THIRD_PARTY_DIR}/googleapis"
-     "${PROJECT_SOURCE_DIR}")
+include(CompileProtos)
+google_cloud_cpp_find_proto_include_dir(PROTO_INCLUDE_DIR)
+google_cloud_cpp_load_protolist(
+    bigtable_list
+    "${PROJECT_SOURCE_DIR}/external/googleapis/protolists/bigtable.list")
+google_cloud_cpp_load_protodeps(
+    bigtable_deps
+    "${PROJECT_SOURCE_DIR}/external/googleapis/protodeps/bigtable.deps")
+google_cloud_cpp_grpcpp_library(
+    google_cloud_cpp_bigtable_protos ${bigtable_list} PROTO_PATH_DIRECTORIES
+    "${EXTERNAL_GOOGLEAPIS_SOURCE}" "${PROTO_INCLUDE_DIR}")
+external_googleapis_set_version_and_alias(bigtable_protos)
+target_link_libraries(google_cloud_cpp_bigtable_protos PUBLIC ${bigtable_deps})
 
 # Enable unit tests
 include(CTest)
@@ -481,25 +491,19 @@ install(
     COMPONENT google_cloud_cpp_development)
 
 install(
-    TARGETS google_cloud_cpp_bigtable
+    TARGETS google_cloud_cpp_bigtable google_cloud_cpp_bigtable_protos
     EXPORT google_cloud_cpp_bigtable-targets
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
             COMPONENT google_cloud_cpp_runtime
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
             COMPONENT google_cloud_cpp_runtime
-            NAMELINK_SKIP
-    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-            COMPONENT google_cloud_cpp_development)
-# With CMake-3.12 and higher we could avoid this separate command (and the
-# duplication).
-install(
-    TARGETS google_cloud_cpp_bigtable
-    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-            COMPONENT google_cloud_cpp_development
-            NAMELINK_ONLY
+            NAMELINK_COMPONENT google_cloud_cpp_development
     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
             COMPONENT google_cloud_cpp_development)
 
+google_cloud_cpp_install_proto_library_protos(google_cloud_cpp_bigtable_protos
+                                              "${EXTERNAL_GOOGLEAPIS_SOURCE}")
+google_cloud_cpp_install_proto_library_headers(google_cloud_cpp_bigtable_protos)
 google_cloud_cpp_install_headers("google_cloud_cpp_bigtable"
                                  "include/google/cloud/bigtable")
 google_cloud_cpp_install_headers("google_cloud_cpp_bigtable_mocks"
@@ -527,3 +531,5 @@ install(
         "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_bigtable-config-version.cmake"
     DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_bigtable"
     COMPONENT google_cloud_cpp_development)
+
+external_googleapis_install_pc(google_cloud_cpp_bigtable_protos)
