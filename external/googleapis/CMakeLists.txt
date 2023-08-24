@@ -228,7 +228,6 @@ set(external_googleapis_installed_libraries_list
     google_cloud_cpp_longrunning_operations_protos
     google_cloud_cpp_monitoring_protos
     google_cloud_cpp_pubsub_protos
-    google_cloud_cpp_spanner_protos
     google_cloud_cpp_storage_protos)
 
 # These proto files cannot be added in the foreach() loop because they have
@@ -465,14 +464,6 @@ google_cloud_cpp_grpcpp_library(
     "${EXTERNAL_GOOGLEAPIS_SOURCE}" "${PROTO_INCLUDE_DIR}")
 external_googleapis_set_version_and_alias(pubsub_protos)
 target_link_libraries(google_cloud_cpp_pubsub_protos PUBLIC ${pubsub_deps})
-
-google_cloud_cpp_load_protolist(spanner_list "protolists/spanner.list")
-google_cloud_cpp_load_protodeps(spanner_deps "protodeps/spanner.deps")
-google_cloud_cpp_grpcpp_library(
-    google_cloud_cpp_spanner_protos ${spanner_list} PROTO_PATH_DIRECTORIES
-    "${EXTERNAL_GOOGLEAPIS_SOURCE}" "${PROTO_INCLUDE_DIR}")
-external_googleapis_set_version_and_alias(spanner_protos)
-target_link_libraries(google_cloud_cpp_spanner_protos PUBLIC ${spanner_deps})
 
 google_cloud_cpp_load_protolist(storage_list "protolists/storage.list")
 google_cloud_cpp_load_protodeps(storage_deps "protodeps/storage.deps")
