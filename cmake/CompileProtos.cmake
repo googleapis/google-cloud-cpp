@@ -286,7 +286,6 @@ function (google_cloud_cpp_load_protodeps var file)
         "grafeas_v1_grafeas_protos\;grafeas_protos"
         "identity_accesscontextmanager_v1_accesscontextmanager_protos\;accesscontextmanager_protos"
         "cloud_osconfig_v1_osconfig_protos\;osconfig_protos"
-        "devtools_source_v1_source_protos\;devtools_source_v1_source_context_protos"
         "cloud_documentai_v1_documentai_protos\;documentai_protos")
 
     foreach (line IN LISTS contents)

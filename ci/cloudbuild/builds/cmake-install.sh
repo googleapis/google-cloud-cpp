@@ -124,8 +124,6 @@ expected_dirs+=(
   # no gRPC services in google/cloud/workstations/logging
   ./include/google/cloud/workstations/logging
   ./include/google/cloud/workstations/logging/v1
-  ./include/google/devtools/source
-  ./include/google/devtools/source/v1
   # no gRPC services in google/identity/accesscontextmanager/type
   ./include/google/identity/accesscontextmanager/type
   ./include/google/logging/type
