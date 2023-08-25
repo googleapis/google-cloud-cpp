@@ -21,6 +21,8 @@ if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU" AND CMAKE_CXX_COMPILER_VERSION
     return()
 endif ()
 
+include(GoogleCloudCppLibrary)
+
 set(GOOGLE_CLOUD_CPP_SERVICE_DIRS "" "v1/")
 
 google_cloud_cpp_add_ga_grpc_library(channel "Cloud Channel API")
