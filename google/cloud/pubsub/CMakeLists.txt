@@ -32,6 +32,20 @@ endif ()
 
 include(GoogleCloudCppCommon)
 
+include(CompileProtos)
+google_cloud_cpp_find_proto_include_dir(PROTO_INCLUDE_DIR)
+google_cloud_cpp_load_protolist(
+    pubsub_list
+    "${PROJECT_SOURCE_DIR}/external/googleapis/protolists/pubsub.list")
+google_cloud_cpp_load_protodeps(
+    pubsub_deps
+    "${PROJECT_SOURCE_DIR}/external/googleapis/protodeps/pubsub.deps")
+google_cloud_cpp_grpcpp_library(
+    google_cloud_cpp_pubsub_protos ${pubsub_list} PROTO_PATH_DIRECTORIES
+    "${EXTERNAL_GOOGLEAPIS_SOURCE}" "${PROTO_INCLUDE_DIR}")
+external_googleapis_set_version_and_alias(pubsub_protos)
+target_link_libraries(google_cloud_cpp_pubsub_protos PUBLIC ${pubsub_deps})
+
 add_library(
     google_cloud_cpp_pubsub # cmake-format: sort
     ack_handler.cc
@@ -386,24 +400,19 @@ install(
 # Install the libraries and headers in the locations determined by
 # GNUInstallDirs
 install(
-    TARGETS google_cloud_cpp_pubsub
+    TARGETS google_cloud_cpp_pubsub google_cloud_cpp_pubsub_protos
     EXPORT pubsub-targets
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
             COMPONENT google_cloud_cpp_runtime
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
             COMPONENT google_cloud_cpp_runtime
-            NAMELINK_SKIP
+            NAMELINK_COMPONENT google_cloud_cpp_development
     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
             COMPONENT google_cloud_cpp_development)
-# With CMake-3.12 and higher we could avoid this separate command (and the
-# duplication).
-install(
-    TARGETS google_cloud_cpp_pubsub
-    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-            COMPONENT google_cloud_cpp_development
-            NAMELINK_ONLY
-    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-            COMPONENT google_cloud_cpp_development)
+
+google_cloud_cpp_install_proto_library_protos(google_cloud_cpp_pubsub_protos
+                                              "${EXTERNAL_GOOGLEAPIS_SOURCE}")
+google_cloud_cpp_install_proto_library_headers(google_cloud_cpp_pubsub_protos)
 google_cloud_cpp_install_headers("google_cloud_cpp_pubsub"
                                  "include/google/cloud/pubsub")
 
@@ -445,6 +454,8 @@ install(
         "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_pubsub-config-version.cmake"
     DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_pubsub"
     COMPONENT google_cloud_cpp_development)
+
+external_googleapis_install_pc(google_cloud_cpp_pubsub_protos)
 
 google_cloud_cpp_add_pkgconfig(
     pubsub_mocks "Google Cloud C++ Pub/Sub Mocks"

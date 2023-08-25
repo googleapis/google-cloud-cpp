@@ -224,7 +224,6 @@ set(external_googleapis_installed_libraries_list
     google_cloud_cpp_iam_v1_policy_protos
     google_cloud_cpp_logging_protos
     google_cloud_cpp_longrunning_operations_protos
-    google_cloud_cpp_pubsub_protos
     google_cloud_cpp_storage_protos)
 
 # These proto files cannot be added in the foreach() loop because they have
@@ -440,14 +439,6 @@ set_target_properties(
     PROPERTIES EXPORT_NAME google-cloud-cpp::logging_type_protos)
 target_link_libraries(google_cloud_cpp_logging_type_protos
                       INTERFACE google-cloud-cpp::logging_type_type_protos)
-
-google_cloud_cpp_load_protolist(pubsub_list "protolists/pubsub.list")
-google_cloud_cpp_load_protodeps(pubsub_deps "protodeps/pubsub.deps")
-google_cloud_cpp_grpcpp_library(
-    google_cloud_cpp_pubsub_protos ${pubsub_list} PROTO_PATH_DIRECTORIES
-    "${EXTERNAL_GOOGLEAPIS_SOURCE}" "${PROTO_INCLUDE_DIR}")
-external_googleapis_set_version_and_alias(pubsub_protos)
-target_link_libraries(google_cloud_cpp_pubsub_protos PUBLIC ${pubsub_deps})
 
 google_cloud_cpp_load_protolist(storage_list "protolists/storage.list")
 google_cloud_cpp_load_protodeps(storage_deps "protodeps/storage.deps")
