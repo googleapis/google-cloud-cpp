@@ -33,15 +33,23 @@
 #   `asset` sets this.
 #
 function (google_cloud_cpp_add_ga_grpc_library library display_name)
-    cmake_parse_arguments(_opt "" "" "ADDITIONAL_PROTO_LISTS" ${ARGN})
+    cmake_parse_arguments(_opt "EXPERIMENTAL" "" "ADDITIONAL_PROTO_LISTS"
+                          ${ARGN})
     set(library_target "google_cloud_cpp_${library}")
     set(mocks_target "google_cloud_cpp_${library}_mocks")
     set(protos_target "google_cloud_cpp_${library}_protos")
+    set(library_alias "google-cloud-cpp::${library}")
+    if (_opt_EXPERIMENTAL)
+        set(library_alias "google-cloud-cpp::experimental-${library}")
+    endif ()
 
     include(GoogleapisConfig)
     set(DOXYGEN_PROJECT_NAME "${display_name} C++ Client")
     set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for the ${display_name}")
     set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION}")
+    if (_opt_EXPERIMENTAL)
+        set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION} (Experimental)")
+    endif ()
     set(DOXYGEN_EXCLUDE_SYMBOLS "internal")
     set(DOXYGEN_EXAMPLE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/quickstart")
 
@@ -103,13 +111,13 @@ function (google_cloud_cpp_add_ga_grpc_library library display_name)
     google_cloud_cpp_add_common_options(${library_target})
     set_target_properties(
         ${library_target}
-        PROPERTIES EXPORT_NAME google-cloud-cpp::${library}
+        PROPERTIES EXPORT_NAME ${library_alias}
                    VERSION "${PROJECT_VERSION}"
                    SOVERSION "${PROJECT_VERSION_MAJOR}")
     target_compile_options(${library_target}
                            PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
-    add_library(google-cloud-cpp::${library} ALIAS ${library_target})
+    add_library(${library_alias} ALIAS ${library_target})
 
     # Create a header-only library for the mocks. We use a CMake `INTERFACE`
     # library for these, a regular library would not work on macOS (where the
@@ -127,11 +135,10 @@ function (google_cloud_cpp_add_ga_grpc_library library display_name)
     add_library(${mocks_target} INTERFACE)
     target_sources(${mocks_target} INTERFACE ${mock_files})
     target_link_libraries(
-        ${mocks_target} INTERFACE google-cloud-cpp::${library}
-                                  GTest::gmock_main GTest::gmock GTest::gtest)
-    set_target_properties(
-        ${mocks_target} PROPERTIES EXPORT_NAME
-                                   google-cloud-cpp::${library}_mocks)
+        ${mocks_target} INTERFACE ${library_alias} GTest::gmock_main
+                                  GTest::gmock GTest::gtest)
+    set_target_properties(${mocks_target} PROPERTIES EXPORT_NAME
+                                                     ${library_alias}_mocks)
     target_include_directories(
         ${mocks_target}
         INTERFACE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
@@ -192,8 +199,7 @@ function (google_cloud_cpp_add_ga_grpc_library library display_name)
 
     external_googleapis_install_pc("${protos_target}")
 
-    # google-cloud-cpp::${library} must be defined before we can add the
-    # samples.
+    # ${library_alias} must be defined before we can add the samples.
     if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
         foreach (dir IN LISTS GOOGLE_CLOUD_CPP_SERVICE_DIRS)
             if ("${dir}" STREQUAL "__EMPTY__")

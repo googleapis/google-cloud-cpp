@@ -86,17 +86,10 @@ for lib in "${ga[@]}"; do sed -i 's/^Please note that the Google Cloud C/While t
 
 ### `google/cloud/${library}/CMakeLists.txt`:
 
-Change the definition of the `DOXYGEN_PROJECT_NUMBER` variable from
-`${PROJECT_VERSION} (Experimental)` to `${PROJECT_VERSION}`.
+Remove the EXPERIMENTAL keyword from the library definition.
 
 ```shell
-for lib in "${ga[@]}"; do sed -i 's;"\${PROJECT_VERSION} (Experimental)";"${PROJECT_VERSION}";' google/cloud/${lib}/CMakeLists.txt; done
-```
-
-Change the target name from `google-cloud-cpp::experimental-${library}`:
-
-```shell
-for lib in "${ga[@]}"; do sed -i 's/google-cloud-cpp::experimental-/google-cloud-cpp::/' google/cloud/${lib}/CMakeLists.txt; done
+for lib in "${ga[@]}"; do sed -i 's/EXPERIMENTAL//' google/cloud/${lib}/CMakeLists.txt; done
 ```
 
 ### `google/cloud/${library}/config.cmake.in`:

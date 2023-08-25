@@ -169,7 +169,7 @@ TEST_F(ScaffoldGenerator, Vars) {
             Contains(Pair("product_options_page", "google-cloud-test-options")),
             Contains(Pair("copyright_year", "2034")),
             Contains(Pair("library_prefix", "")),
-            Contains(Pair("doxygen_version_suffix", "")),
+            Contains(Pair("experimental", "")),
             Contains(Pair("construction", "")),
             Contains(Pair("status", HasSubstr("**GA**")))));
 
@@ -184,7 +184,7 @@ TEST_F(ScaffoldGenerator, Vars) {
             Contains(Pair("product_options_page", "google-cloud-test-options")),
             Contains(Pair("copyright_year", "2034")),
             Contains(Pair("library_prefix", "experimental-")),
-            Contains(Pair("doxygen_version_suffix", " (Experimental)")),
+            Contains(Pair("experimental", " EXPERIMENTAL")),
             Contains(Pair("construction", "\n:construction:\n")),
             Contains(Pair("status", HasSubstr("**experimental**")))));
 }
@@ -239,22 +239,12 @@ TEST_F(ScaffoldGenerator, CMakeLists) {
   EXPECT_THAT(actual, HasSubstr("2034"));
   EXPECT_THAT(actual, Not(HasSubstr("$copyright_year$")));
   EXPECT_THAT(actual, Not(HasSubstr("$library_prefix$")));
-  EXPECT_THAT(actual, Not(HasSubstr("$doxygen_version_suffix$")));
-  EXPECT_THAT(actual, HasSubstr(R"""(include(CompileProtos)
-google_cloud_cpp_find_proto_include_dir(PROTO_INCLUDE_DIR)
-google_cloud_cpp_load_protolist(
-    proto_list
-    "${PROJECT_SOURCE_DIR}/external/googleapis/protolists/test.list")
-google_cloud_cpp_load_protodeps(
-    proto_deps
-    "${PROJECT_SOURCE_DIR}/external/googleapis/protodeps/test.deps")
-google_cloud_cpp_grpcpp_library(
-    google_cloud_cpp_test_protos # cmake-format: sort
-    ${proto_list}
-    PROTO_PATH_DIRECTORIES
-    "${EXTERNAL_GOOGLEAPIS_SOURCE}" "${PROTO_INCLUDE_DIR}")
-external_googleapis_set_version_and_alias(test_protos)
-target_link_libraries(google_cloud_cpp_test_protos PUBLIC ${proto_deps})
+  EXPECT_THAT(actual, Not(HasSubstr("$experimental$")));
+  EXPECT_THAT(actual, HasSubstr(R"""(include(GoogleCloudCppLibrary)
+
+set(GOOGLE_CLOUD_CPP_SERVICE_DIRS "v1/")
+
+google_cloud_cpp_add_ga_grpc_library(test "Test Only API")
 )"""));
 
   EXPECT_THAT(actual, HasSubstr(R"""(add_executable(test_quickstart)"""));
