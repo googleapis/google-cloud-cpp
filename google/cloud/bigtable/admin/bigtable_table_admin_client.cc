@@ -290,6 +290,28 @@ BigtableTableAdminClient::RestoreTable(
   return connection_->RestoreTable(request);
 }
 
+future<StatusOr<google::bigtable::admin::v2::Backup>>
+BigtableTableAdminClient::CopyBackup(
+    std::string const& parent, std::string const& backup_id,
+    std::string const& source_backup,
+    google::protobuf::Timestamp const& expire_time, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::bigtable::admin::v2::CopyBackupRequest request;
+  request.set_parent(parent);
+  request.set_backup_id(backup_id);
+  request.set_source_backup(source_backup);
+  *request.mutable_expire_time() = expire_time;
+  return connection_->CopyBackup(request);
+}
+
+future<StatusOr<google::bigtable::admin::v2::Backup>>
+BigtableTableAdminClient::CopyBackup(
+    google::bigtable::admin::v2::CopyBackupRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CopyBackup(request);
+}
+
 StatusOr<google::iam::v1::Policy> BigtableTableAdminClient::GetIamPolicy(
     std::string const& resource, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));

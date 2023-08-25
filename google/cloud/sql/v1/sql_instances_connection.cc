@@ -211,6 +211,12 @@ SqlInstancesServiceConnection::ResetReplicaSize(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StatusOr<google::cloud::sql::v1::SqlInstancesGetLatestRecoveryTimeResponse>
+SqlInstancesServiceConnection::GetLatestRecoveryTime(
+    google::cloud::sql::v1::SqlInstancesGetLatestRecoveryTimeRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace sql_v1
 }  // namespace cloud

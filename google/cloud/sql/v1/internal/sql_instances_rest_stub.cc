@@ -355,6 +355,20 @@ DefaultSqlInstancesServiceRestStub::ResetReplicaSize(
                    "resetReplicaSize"));
 }
 
+StatusOr<google::cloud::sql::v1::SqlInstancesGetLatestRecoveryTimeResponse>
+DefaultSqlInstancesServiceRestStub::GetLatestRecoveryTime(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::sql::v1::SqlInstancesGetLatestRecoveryTimeRequest const&
+        request) {
+  return rest_internal::Get<
+      google::cloud::sql::v1::SqlInstancesGetLatestRecoveryTimeResponse>(
+      *service_, rest_context, request,
+      absl::StrCat("/", "v1", "/", "projects", "/", request.project(), "/",
+                   "instances", "/", request.instance(), "/",
+                   "getLatestRecoveryTime"),
+      {});
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace sql_v1_internal
 }  // namespace cloud

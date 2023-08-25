@@ -141,6 +141,14 @@ BigtableTableAdminConnection::RestoreTable(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+future<StatusOr<google::bigtable::admin::v2::Backup>>
+BigtableTableAdminConnection::CopyBackup(
+    google::bigtable::admin::v2::CopyBackupRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::bigtable::admin::v2::Backup>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 StatusOr<google::iam::v1::Policy> BigtableTableAdminConnection::GetIamPolicy(
     google::iam::v1::GetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");

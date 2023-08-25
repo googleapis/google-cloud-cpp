@@ -284,6 +284,12 @@ class SqlInstancesServiceConnection {
   virtual StatusOr<google::cloud::sql::v1::Operation> ResetReplicaSize(
       google::cloud::sql::v1::SqlInstancesResetReplicaSizeRequest const&
           request);
+
+  virtual StatusOr<
+      google::cloud::sql::v1::SqlInstancesGetLatestRecoveryTimeResponse>
+  GetLatestRecoveryTime(
+      google::cloud::sql::v1::SqlInstancesGetLatestRecoveryTimeRequest const&
+          request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -73,6 +73,12 @@ class TensorboardServiceStub {
       google::cloud::aiplatform::v1::ReadTensorboardUsageRequest const&
           request) = 0;
 
+  virtual StatusOr<google::cloud::aiplatform::v1::ReadTensorboardSizeResponse>
+  ReadTensorboardSize(
+      grpc::ClientContext& context,
+      google::cloud::aiplatform::v1::ReadTensorboardSizeRequest const&
+          request) = 0;
+
   virtual StatusOr<google::cloud::aiplatform::v1::TensorboardExperiment>
   CreateTensorboardExperiment(
       grpc::ClientContext& context,
@@ -277,6 +283,12 @@ class DefaultTensorboardServiceStub : public TensorboardServiceStub {
   ReadTensorboardUsage(
       grpc::ClientContext& client_context,
       google::cloud::aiplatform::v1::ReadTensorboardUsageRequest const& request)
+      override;
+
+  StatusOr<google::cloud::aiplatform::v1::ReadTensorboardSizeResponse>
+  ReadTensorboardSize(
+      grpc::ClientContext& client_context,
+      google::cloud::aiplatform::v1::ReadTensorboardSizeRequest const& request)
       override;
 
   StatusOr<google::cloud::aiplatform::v1::TensorboardExperiment>

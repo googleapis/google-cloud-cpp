@@ -401,7 +401,7 @@ class BareMetalSolutionClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.baremetalsolution.v2.ResetInstanceRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L229}
-  /// [google.cloud.baremetalsolution.v2.ResetInstanceResponse]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L240}
+  /// [google.cloud.baremetalsolution.v2.ResetInstanceResponse]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/baremetalsolution.proto#L563}
   ///
   // clang-format on
   future<StatusOr<google::cloud::baremetalsolution::v2::ResetInstanceResponse>>
@@ -439,7 +439,7 @@ class BareMetalSolutionClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.baremetalsolution.v2.ResetInstanceRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L229}
-  /// [google.cloud.baremetalsolution.v2.ResetInstanceResponse]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L240}
+  /// [google.cloud.baremetalsolution.v2.ResetInstanceResponse]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/baremetalsolution.proto#L563}
   ///
   // clang-format on
   future<StatusOr<google::cloud::baremetalsolution::v2::ResetInstanceResponse>>
@@ -472,8 +472,8 @@ class BareMetalSolutionClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.baremetalsolution.v2.StartInstanceRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L243}
-  /// [google.cloud.baremetalsolution.v2.StartInstanceResponse]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L254}
+  /// [google.cloud.baremetalsolution.v2.StartInstanceRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L240}
+  /// [google.cloud.baremetalsolution.v2.StartInstanceResponse]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L251}
   ///
   // clang-format on
   future<StatusOr<google::cloud::baremetalsolution::v2::StartInstanceResponse>>
@@ -509,8 +509,8 @@ class BareMetalSolutionClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.baremetalsolution.v2.StartInstanceRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L243}
-  /// [google.cloud.baremetalsolution.v2.StartInstanceResponse]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L254}
+  /// [google.cloud.baremetalsolution.v2.StartInstanceRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L240}
+  /// [google.cloud.baremetalsolution.v2.StartInstanceResponse]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L251}
   ///
   // clang-format on
   future<StatusOr<google::cloud::baremetalsolution::v2::StartInstanceResponse>>
@@ -543,8 +543,8 @@ class BareMetalSolutionClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.baremetalsolution.v2.StopInstanceRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L257}
-  /// [google.cloud.baremetalsolution.v2.StopInstanceResponse]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L268}
+  /// [google.cloud.baremetalsolution.v2.StopInstanceRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L254}
+  /// [google.cloud.baremetalsolution.v2.StopInstanceResponse]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L265}
   ///
   // clang-format on
   future<StatusOr<google::cloud::baremetalsolution::v2::StopInstanceResponse>>
@@ -580,8 +580,8 @@ class BareMetalSolutionClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.baremetalsolution.v2.StopInstanceRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L257}
-  /// [google.cloud.baremetalsolution.v2.StopInstanceResponse]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L268}
+  /// [google.cloud.baremetalsolution.v2.StopInstanceRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L254}
+  /// [google.cloud.baremetalsolution.v2.StopInstanceResponse]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L265}
   ///
   // clang-format on
   future<StatusOr<google::cloud::baremetalsolution::v2::StopInstanceResponse>>
@@ -614,8 +614,8 @@ class BareMetalSolutionClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.baremetalsolution.v2.EnableInteractiveSerialConsoleRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L271}
-  /// [google.cloud.baremetalsolution.v2.EnableInteractiveSerialConsoleResponse]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L282}
+  /// [google.cloud.baremetalsolution.v2.EnableInteractiveSerialConsoleRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L268}
+  /// [google.cloud.baremetalsolution.v2.EnableInteractiveSerialConsoleResponse]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L279}
   ///
   // clang-format on
   future<StatusOr<google::cloud::baremetalsolution::v2::
@@ -652,8 +652,8 @@ class BareMetalSolutionClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.baremetalsolution.v2.EnableInteractiveSerialConsoleRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L271}
-  /// [google.cloud.baremetalsolution.v2.EnableInteractiveSerialConsoleResponse]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L282}
+  /// [google.cloud.baremetalsolution.v2.EnableInteractiveSerialConsoleRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L268}
+  /// [google.cloud.baremetalsolution.v2.EnableInteractiveSerialConsoleResponse]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L279}
   ///
   // clang-format on
   future<StatusOr<google::cloud::baremetalsolution::v2::
@@ -688,8 +688,8 @@ class BareMetalSolutionClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.baremetalsolution.v2.DisableInteractiveSerialConsoleRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L285}
-  /// [google.cloud.baremetalsolution.v2.DisableInteractiveSerialConsoleResponse]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L296}
+  /// [google.cloud.baremetalsolution.v2.DisableInteractiveSerialConsoleRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L282}
+  /// [google.cloud.baremetalsolution.v2.DisableInteractiveSerialConsoleResponse]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L293}
   ///
   // clang-format on
   future<StatusOr<google::cloud::baremetalsolution::v2::
@@ -726,8 +726,8 @@ class BareMetalSolutionClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.baremetalsolution.v2.DisableInteractiveSerialConsoleRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L285}
-  /// [google.cloud.baremetalsolution.v2.DisableInteractiveSerialConsoleResponse]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L296}
+  /// [google.cloud.baremetalsolution.v2.DisableInteractiveSerialConsoleRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L282}
+  /// [google.cloud.baremetalsolution.v2.DisableInteractiveSerialConsoleResponse]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L293}
   ///
   // clang-format on
   future<StatusOr<google::cloud::baremetalsolution::v2::
@@ -763,7 +763,7 @@ class BareMetalSolutionClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.baremetalsolution.v2.DetachLunRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L299}
+  /// [google.cloud.baremetalsolution.v2.DetachLunRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L296}
   /// [google.cloud.baremetalsolution.v2.Instance]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L37}
   ///
   // clang-format on
@@ -800,7 +800,7 @@ class BareMetalSolutionClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.baremetalsolution.v2.DetachLunRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L299}
+  /// [google.cloud.baremetalsolution.v2.DetachLunRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L296}
   /// [google.cloud.baremetalsolution.v2.Instance]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L37}
   ///
   // clang-format on
@@ -1308,7 +1308,7 @@ class BareMetalSolutionClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.baremetalsolution.v2.EvictVolumeRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/volume.proto#L309}
-  /// [google.cloud.baremetalsolution.v2.OperationMetadata]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/common.proto#L31}
+  /// [google.cloud.baremetalsolution.v2.OperationMetadata]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/baremetalsolution.proto#L533}
   ///
   // clang-format on
   future<StatusOr<google::cloud::baremetalsolution::v2::OperationMetadata>>
@@ -1346,7 +1346,7 @@ class BareMetalSolutionClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.baremetalsolution.v2.EvictVolumeRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/volume.proto#L309}
-  /// [google.cloud.baremetalsolution.v2.OperationMetadata]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/common.proto#L31}
+  /// [google.cloud.baremetalsolution.v2.OperationMetadata]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/baremetalsolution.proto#L533}
   ///
   // clang-format on
   future<StatusOr<google::cloud::baremetalsolution::v2::OperationMetadata>>
@@ -2198,7 +2198,7 @@ class BareMetalSolutionClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.baremetalsolution.v2.EvictLunRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/lun.proto#L169}
-  /// [google.cloud.baremetalsolution.v2.OperationMetadata]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/common.proto#L31}
+  /// [google.cloud.baremetalsolution.v2.OperationMetadata]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/baremetalsolution.proto#L533}
   ///
   // clang-format on
   future<StatusOr<google::cloud::baremetalsolution::v2::OperationMetadata>>
@@ -2236,7 +2236,7 @@ class BareMetalSolutionClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.baremetalsolution.v2.EvictLunRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/lun.proto#L169}
-  /// [google.cloud.baremetalsolution.v2.OperationMetadata]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/common.proto#L31}
+  /// [google.cloud.baremetalsolution.v2.OperationMetadata]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/baremetalsolution.proto#L533}
   ///
   // clang-format on
   future<StatusOr<google::cloud::baremetalsolution::v2::OperationMetadata>>
@@ -2624,7 +2624,7 @@ class BareMetalSolutionClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.baremetalsolution.v2.DeleteNfsShareRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/nfs_share.proto#L239}
-  /// [google.cloud.baremetalsolution.v2.OperationMetadata]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/common.proto#L31}
+  /// [google.cloud.baremetalsolution.v2.OperationMetadata]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/baremetalsolution.proto#L533}
   ///
   // clang-format on
   future<StatusOr<google::cloud::baremetalsolution::v2::OperationMetadata>>
@@ -2661,7 +2661,7 @@ class BareMetalSolutionClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.baremetalsolution.v2.DeleteNfsShareRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/nfs_share.proto#L239}
-  /// [google.cloud.baremetalsolution.v2.OperationMetadata]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/common.proto#L31}
+  /// [google.cloud.baremetalsolution.v2.OperationMetadata]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/baremetalsolution.proto#L533}
   ///
   // clang-format on
   future<StatusOr<google::cloud::baremetalsolution::v2::OperationMetadata>>

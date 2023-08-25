@@ -83,6 +83,13 @@ class MockTensorboardServiceConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::cloud::aiplatform::v1::ReadTensorboardSizeResponse>,
+      ReadTensorboardSize,
+      (google::cloud::aiplatform::v1::ReadTensorboardSizeRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
       StatusOr<google::cloud::aiplatform::v1::TensorboardExperiment>,
       CreateTensorboardExperiment,
       (google::cloud::aiplatform::v1::CreateTensorboardExperimentRequest const&

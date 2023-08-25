@@ -122,6 +122,19 @@ DefaultTensorboardServiceStub::ReadTensorboardUsage(
   return response;
 }
 
+StatusOr<google::cloud::aiplatform::v1::ReadTensorboardSizeResponse>
+DefaultTensorboardServiceStub::ReadTensorboardSize(
+    grpc::ClientContext& client_context,
+    google::cloud::aiplatform::v1::ReadTensorboardSizeRequest const& request) {
+  google::cloud::aiplatform::v1::ReadTensorboardSizeResponse response;
+  auto status =
+      grpc_stub_->ReadTensorboardSize(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::aiplatform::v1::TensorboardExperiment>
 DefaultTensorboardServiceStub::CreateTensorboardExperiment(
     grpc::ClientContext& client_context,

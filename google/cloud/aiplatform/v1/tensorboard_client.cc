@@ -138,6 +138,23 @@ TensorboardServiceClient::ReadTensorboardUsage(
   return connection_->ReadTensorboardUsage(request);
 }
 
+StatusOr<google::cloud::aiplatform::v1::ReadTensorboardSizeResponse>
+TensorboardServiceClient::ReadTensorboardSize(std::string const& tensorboard,
+                                              Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::aiplatform::v1::ReadTensorboardSizeRequest request;
+  request.set_tensorboard(tensorboard);
+  return connection_->ReadTensorboardSize(request);
+}
+
+StatusOr<google::cloud::aiplatform::v1::ReadTensorboardSizeResponse>
+TensorboardServiceClient::ReadTensorboardSize(
+    google::cloud::aiplatform::v1::ReadTensorboardSizeRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ReadTensorboardSize(request);
+}
+
 StatusOr<google::cloud::aiplatform::v1::TensorboardExperiment>
 TensorboardServiceClient::CreateTensorboardExperiment(
     std::string const& parent,

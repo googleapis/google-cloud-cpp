@@ -115,6 +115,11 @@ Idempotency BigtableTableAdminConnectionIdempotencyPolicy::RestoreTable(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency BigtableTableAdminConnectionIdempotencyPolicy::CopyBackup(
+    google::bigtable::admin::v2::CopyBackupRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency BigtableTableAdminConnectionIdempotencyPolicy::GetIamPolicy(
     google::iam::v1::GetIamPolicyRequest const&) {
   return Idempotency::kIdempotent;

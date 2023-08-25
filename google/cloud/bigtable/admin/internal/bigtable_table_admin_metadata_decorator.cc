@@ -167,6 +167,15 @@ BigtableTableAdminMetadata::AsyncRestoreTable(
   return child_->AsyncRestoreTable(cq, std::move(context), request);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+BigtableTableAdminMetadata::AsyncCopyBackup(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::bigtable::admin::v2::CopyBackupRequest const& request) {
+  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
+  return child_->AsyncCopyBackup(cq, std::move(context), request);
+}
+
 StatusOr<google::iam::v1::Policy> BigtableTableAdminMetadata::GetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::GetIamPolicyRequest const& request) {

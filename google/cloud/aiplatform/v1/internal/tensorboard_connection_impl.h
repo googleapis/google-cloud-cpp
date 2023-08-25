@@ -84,6 +84,11 @@ class TensorboardServiceConnectionImpl
       google::cloud::aiplatform::v1::ReadTensorboardUsageRequest const& request)
       override;
 
+  StatusOr<google::cloud::aiplatform::v1::ReadTensorboardSizeResponse>
+  ReadTensorboardSize(
+      google::cloud::aiplatform::v1::ReadTensorboardSizeRequest const& request)
+      override;
+
   StatusOr<google::cloud::aiplatform::v1::TensorboardExperiment>
   CreateTensorboardExperiment(
       google::cloud::aiplatform::v1::CreateTensorboardExperimentRequest const&

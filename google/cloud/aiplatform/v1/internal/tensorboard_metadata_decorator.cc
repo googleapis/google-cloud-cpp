@@ -89,6 +89,14 @@ TensorboardServiceMetadata::ReadTensorboardUsage(
   return child_->ReadTensorboardUsage(context, request);
 }
 
+StatusOr<google::cloud::aiplatform::v1::ReadTensorboardSizeResponse>
+TensorboardServiceMetadata::ReadTensorboardSize(
+    grpc::ClientContext& context,
+    google::cloud::aiplatform::v1::ReadTensorboardSizeRequest const& request) {
+  SetMetadata(context, absl::StrCat("tensorboard=", request.tensorboard()));
+  return child_->ReadTensorboardSize(context, request);
+}
+
 StatusOr<google::cloud::aiplatform::v1::TensorboardExperiment>
 TensorboardServiceMetadata::CreateTensorboardExperiment(
     grpc::ClientContext& context,

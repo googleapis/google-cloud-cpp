@@ -258,6 +258,15 @@ SqlInstancesServiceClient::ResetReplicaSize(
   return connection_->ResetReplicaSize(request);
 }
 
+StatusOr<google::cloud::sql::v1::SqlInstancesGetLatestRecoveryTimeResponse>
+SqlInstancesServiceClient::GetLatestRecoveryTime(
+    google::cloud::sql::v1::SqlInstancesGetLatestRecoveryTimeRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetLatestRecoveryTime(request);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace sql_v1
 }  // namespace cloud

@@ -93,6 +93,9 @@ class BigtableTableAdminTracingConnection
   future<StatusOr<google::bigtable::admin::v2::Table>> RestoreTable(
       google::bigtable::admin::v2::RestoreTableRequest const& request) override;
 
+  future<StatusOr<google::bigtable::admin::v2::Backup>> CopyBackup(
+      google::bigtable::admin::v2::CopyBackupRequest const& request) override;
+
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
       google::iam::v1::GetIamPolicyRequest const& request) override;
 

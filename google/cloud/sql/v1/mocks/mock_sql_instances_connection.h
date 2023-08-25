@@ -198,6 +198,14 @@ class MockSqlInstancesServiceConnection
       (google::cloud::sql::v1::SqlInstancesResetReplicaSizeRequest const&
            request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<
+          google::cloud::sql::v1::SqlInstancesGetLatestRecoveryTimeResponse>,
+      GetLatestRecoveryTime,
+      (google::cloud::sql::v1::SqlInstancesGetLatestRecoveryTimeRequest const&
+           request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

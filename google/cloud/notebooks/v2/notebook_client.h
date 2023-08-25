@@ -183,7 +183,7 @@ class NotebookServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.notebooks.v2.GetInstanceRequest]: @googleapis_reference_link{google/cloud/notebooks/v2/service.proto#L254}
+  /// [google.cloud.notebooks.v2.GetInstanceRequest]: @googleapis_reference_link{google/cloud/notebooks/v2/service.proto#L261}
   /// [google.cloud.notebooks.v2.Instance]: @googleapis_reference_link{google/cloud/notebooks/v2/instance.proto#L92}
   ///
   // clang-format on
@@ -214,7 +214,7 @@ class NotebookServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.notebooks.v2.GetInstanceRequest]: @googleapis_reference_link{google/cloud/notebooks/v2/service.proto#L254}
+  /// [google.cloud.notebooks.v2.GetInstanceRequest]: @googleapis_reference_link{google/cloud/notebooks/v2/service.proto#L261}
   /// [google.cloud.notebooks.v2.Instance]: @googleapis_reference_link{google/cloud/notebooks/v2/instance.proto#L92}
   ///
   // clang-format on
@@ -250,7 +250,7 @@ class NotebookServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.notebooks.v2.CreateInstanceRequest]: @googleapis_reference_link{google/cloud/notebooks/v2/service.proto#L266}
+  /// [google.cloud.notebooks.v2.CreateInstanceRequest]: @googleapis_reference_link{google/cloud/notebooks/v2/service.proto#L273}
   /// [google.cloud.notebooks.v2.Instance]: @googleapis_reference_link{google/cloud/notebooks/v2/instance.proto#L92}
   ///
   // clang-format on
@@ -289,7 +289,7 @@ class NotebookServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.notebooks.v2.CreateInstanceRequest]: @googleapis_reference_link{google/cloud/notebooks/v2/service.proto#L266}
+  /// [google.cloud.notebooks.v2.CreateInstanceRequest]: @googleapis_reference_link{google/cloud/notebooks/v2/service.proto#L273}
   /// [google.cloud.notebooks.v2.Instance]: @googleapis_reference_link{google/cloud/notebooks/v2/instance.proto#L92}
   ///
   // clang-format on
@@ -324,7 +324,7 @@ class NotebookServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.notebooks.v2.Instance]: @googleapis_reference_link{google/cloud/notebooks/v2/instance.proto#L92}
-  /// [google.cloud.notebooks.v2.UpdateInstanceRequest]: @googleapis_reference_link{google/cloud/notebooks/v2/service.proto#L287}
+  /// [google.cloud.notebooks.v2.UpdateInstanceRequest]: @googleapis_reference_link{google/cloud/notebooks/v2/service.proto#L294}
   ///
   // clang-format on
   future<StatusOr<google::cloud::notebooks::v2::Instance>> UpdateInstance(
@@ -362,7 +362,7 @@ class NotebookServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.notebooks.v2.Instance]: @googleapis_reference_link{google/cloud/notebooks/v2/instance.proto#L92}
-  /// [google.cloud.notebooks.v2.UpdateInstanceRequest]: @googleapis_reference_link{google/cloud/notebooks/v2/service.proto#L287}
+  /// [google.cloud.notebooks.v2.UpdateInstanceRequest]: @googleapis_reference_link{google/cloud/notebooks/v2/service.proto#L294}
   ///
   // clang-format on
   future<StatusOr<google::cloud::notebooks::v2::Instance>> UpdateInstance(
@@ -395,7 +395,7 @@ class NotebookServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.notebooks.v2.DeleteInstanceRequest]: @googleapis_reference_link{google/cloud/notebooks/v2/service.proto#L300}
+  /// [google.cloud.notebooks.v2.DeleteInstanceRequest]: @googleapis_reference_link{google/cloud/notebooks/v2/service.proto#L307}
   /// [google.cloud.notebooks.v2.OperationMetadata]: @googleapis_reference_link{google/cloud/notebooks/v2/service.proto#L189}
   ///
   // clang-format on
@@ -432,7 +432,7 @@ class NotebookServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.notebooks.v2.DeleteInstanceRequest]: @googleapis_reference_link{google/cloud/notebooks/v2/service.proto#L300}
+  /// [google.cloud.notebooks.v2.DeleteInstanceRequest]: @googleapis_reference_link{google/cloud/notebooks/v2/service.proto#L307}
   /// [google.cloud.notebooks.v2.OperationMetadata]: @googleapis_reference_link{google/cloud/notebooks/v2/service.proto#L189}
   ///
   // clang-format on
@@ -472,7 +472,7 @@ class NotebookServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.notebooks.v2.Instance]: @googleapis_reference_link{google/cloud/notebooks/v2/instance.proto#L92}
-  /// [google.cloud.notebooks.v2.StartInstanceRequest]: @googleapis_reference_link{google/cloud/notebooks/v2/service.proto#L315}
+  /// [google.cloud.notebooks.v2.StartInstanceRequest]: @googleapis_reference_link{google/cloud/notebooks/v2/service.proto#L322}
   ///
   // clang-format on
   future<StatusOr<google::cloud::notebooks::v2::Instance>> StartInstance(
@@ -510,7 +510,7 @@ class NotebookServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.notebooks.v2.Instance]: @googleapis_reference_link{google/cloud/notebooks/v2/instance.proto#L92}
-  /// [google.cloud.notebooks.v2.StopInstanceRequest]: @googleapis_reference_link{google/cloud/notebooks/v2/service.proto#L322}
+  /// [google.cloud.notebooks.v2.StopInstanceRequest]: @googleapis_reference_link{google/cloud/notebooks/v2/service.proto#L329}
   ///
   // clang-format on
   future<StatusOr<google::cloud::notebooks::v2::Instance>> StopInstance(
@@ -548,7 +548,7 @@ class NotebookServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.notebooks.v2.Instance]: @googleapis_reference_link{google/cloud/notebooks/v2/instance.proto#L92}
-  /// [google.cloud.notebooks.v2.ResetInstanceRequest]: @googleapis_reference_link{google/cloud/notebooks/v2/service.proto#L329}
+  /// [google.cloud.notebooks.v2.ResetInstanceRequest]: @googleapis_reference_link{google/cloud/notebooks/v2/service.proto#L336}
   ///
   // clang-format on
   future<StatusOr<google::cloud::notebooks::v2::Instance>> ResetInstance(
@@ -579,8 +579,8 @@ class NotebookServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.notebooks.v2.CheckInstanceUpgradabilityRequest]: @googleapis_reference_link{google/cloud/notebooks/v2/service.proto#L336}
-  /// [google.cloud.notebooks.v2.CheckInstanceUpgradabilityResponse]: @googleapis_reference_link{google/cloud/notebooks/v2/service.proto#L343}
+  /// [google.cloud.notebooks.v2.CheckInstanceUpgradabilityRequest]: @googleapis_reference_link{google/cloud/notebooks/v2/service.proto#L343}
+  /// [google.cloud.notebooks.v2.CheckInstanceUpgradabilityResponse]: @googleapis_reference_link{google/cloud/notebooks/v2/service.proto#L350}
   ///
   // clang-format on
   StatusOr<google::cloud::notebooks::v2::CheckInstanceUpgradabilityResponse>
@@ -620,7 +620,7 @@ class NotebookServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.notebooks.v2.Instance]: @googleapis_reference_link{google/cloud/notebooks/v2/instance.proto#L92}
-  /// [google.cloud.notebooks.v2.UpgradeInstanceRequest]: @googleapis_reference_link{google/cloud/notebooks/v2/service.proto#L361}
+  /// [google.cloud.notebooks.v2.UpgradeInstanceRequest]: @googleapis_reference_link{google/cloud/notebooks/v2/service.proto#L368}
   ///
   // clang-format on
   future<StatusOr<google::cloud::notebooks::v2::Instance>> UpgradeInstance(
@@ -658,7 +658,7 @@ class NotebookServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.notebooks.v2.Instance]: @googleapis_reference_link{google/cloud/notebooks/v2/instance.proto#L92}
-  /// [google.cloud.notebooks.v2.RollbackInstanceRequest]: @googleapis_reference_link{google/cloud/notebooks/v2/service.proto#L368}
+  /// [google.cloud.notebooks.v2.RollbackInstanceRequest]: @googleapis_reference_link{google/cloud/notebooks/v2/service.proto#L375}
   ///
   // clang-format on
   future<StatusOr<google::cloud::notebooks::v2::Instance>> RollbackInstance(
@@ -692,7 +692,7 @@ class NotebookServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.notebooks.v2.DiagnoseInstanceRequest]: @googleapis_reference_link{google/cloud/notebooks/v2/service.proto#L390}
+  /// [google.cloud.notebooks.v2.DiagnoseInstanceRequest]: @googleapis_reference_link{google/cloud/notebooks/v2/service.proto#L397}
   /// [google.cloud.notebooks.v2.Instance]: @googleapis_reference_link{google/cloud/notebooks/v2/instance.proto#L92}
   ///
   // clang-format on
@@ -731,7 +731,7 @@ class NotebookServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.notebooks.v2.DiagnoseInstanceRequest]: @googleapis_reference_link{google/cloud/notebooks/v2/service.proto#L390}
+  /// [google.cloud.notebooks.v2.DiagnoseInstanceRequest]: @googleapis_reference_link{google/cloud/notebooks/v2/service.proto#L397}
   /// [google.cloud.notebooks.v2.Instance]: @googleapis_reference_link{google/cloud/notebooks/v2/instance.proto#L92}
   ///
   // clang-format on

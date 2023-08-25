@@ -275,6 +275,15 @@ SqlInstancesServiceRestMetadata::ResetReplicaSize(
   return child_->ResetReplicaSize(rest_context, request);
 }
 
+StatusOr<google::cloud::sql::v1::SqlInstancesGetLatestRecoveryTimeResponse>
+SqlInstancesServiceRestMetadata::GetLatestRecoveryTime(
+    rest_internal::RestContext& rest_context,
+    google::cloud::sql::v1::SqlInstancesGetLatestRecoveryTimeRequest const&
+        request) {
+  SetMetadata(rest_context);
+  return child_->GetLatestRecoveryTime(rest_context, request);
+}
+
 void SqlInstancesServiceRestMetadata::SetMetadata(
     rest_internal::RestContext& rest_context,
     std::vector<std::string> const& params) {

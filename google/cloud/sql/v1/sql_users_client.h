@@ -110,7 +110,7 @@ class SqlUsersServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.sql.v1.Operation]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L687}
+  /// [google.cloud.sql.v1.Operation]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L716}
   /// [google.cloud.sql.v1.SqlUsersDeleteRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_users.proto#L76}
   ///
   // clang-format on
@@ -174,7 +174,7 @@ class SqlUsersServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.sql.v1.Operation]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L687}
+  /// [google.cloud.sql.v1.Operation]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L716}
   /// [google.cloud.sql.v1.SqlUsersInsertRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_users.proto#L105}
   ///
   // clang-format on
@@ -238,7 +238,7 @@ class SqlUsersServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.sql.v1.Operation]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L687}
+  /// [google.cloud.sql.v1.Operation]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L716}
   /// [google.cloud.sql.v1.SqlUsersUpdateRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_users.proto#L123}
   ///
   // clang-format on

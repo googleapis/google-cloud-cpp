@@ -165,6 +165,11 @@ class SqlInstancesServiceRestConnectionImpl
       google::cloud::sql::v1::SqlInstancesResetReplicaSizeRequest const&
           request) override;
 
+  StatusOr<google::cloud::sql::v1::SqlInstancesGetLatestRecoveryTimeResponse>
+  GetLatestRecoveryTime(
+      google::cloud::sql::v1::SqlInstancesGetLatestRecoveryTimeRequest const&
+          request) override;
+
  private:
   static std::unique_ptr<sql_v1::SqlInstancesServiceRetryPolicy> retry_policy(
       Options const& options) {

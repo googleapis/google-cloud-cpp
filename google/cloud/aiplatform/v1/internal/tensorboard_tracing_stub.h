@@ -71,6 +71,12 @@ class TensorboardServiceTracingStub : public TensorboardServiceStub {
       google::cloud::aiplatform::v1::ReadTensorboardUsageRequest const& request)
       override;
 
+  StatusOr<google::cloud::aiplatform::v1::ReadTensorboardSizeResponse>
+  ReadTensorboardSize(
+      grpc::ClientContext& context,
+      google::cloud::aiplatform::v1::ReadTensorboardSizeRequest const& request)
+      override;
+
   StatusOr<google::cloud::aiplatform::v1::TensorboardExperiment>
   CreateTensorboardExperiment(
       grpc::ClientContext& context,

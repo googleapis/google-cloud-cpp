@@ -86,6 +86,9 @@ class BigtableTableAdminConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency RestoreTable(
       google::bigtable::admin::v2::RestoreTableRequest const& request);
 
+  virtual google::cloud::Idempotency CopyBackup(
+      google::bigtable::admin::v2::CopyBackupRequest const& request);
+
   virtual google::cloud::Idempotency GetIamPolicy(
       google::iam::v1::GetIamPolicyRequest const& request);
 

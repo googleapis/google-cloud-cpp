@@ -613,7 +613,7 @@ class VideoStitcherServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.video.stitcher.v1.ListVodStitchDetailsRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L418}
-  /// [google.cloud.video.stitcher.v1.VodStitchDetail]: @googleapis_reference_link{google/cloud/video/stitcher/v1/stitch_details.proto#L30}
+  /// [google.cloud.video.stitcher.v1.VodStitchDetail]: @googleapis_reference_link{google/cloud/video/stitcher/v1/stitch_details.proto#L32}
   ///
   // clang-format on
   StreamRange<google::cloud::video::stitcher::v1::VodStitchDetail>
@@ -654,7 +654,7 @@ class VideoStitcherServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.video.stitcher.v1.ListVodStitchDetailsRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L418}
-  /// [google.cloud.video.stitcher.v1.VodStitchDetail]: @googleapis_reference_link{google/cloud/video/stitcher/v1/stitch_details.proto#L30}
+  /// [google.cloud.video.stitcher.v1.VodStitchDetail]: @googleapis_reference_link{google/cloud/video/stitcher/v1/stitch_details.proto#L32}
   ///
   // clang-format on
   StreamRange<google::cloud::video::stitcher::v1::VodStitchDetail>
@@ -684,7 +684,7 @@ class VideoStitcherServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.video.stitcher.v1.GetVodStitchDetailRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L445}
-  /// [google.cloud.video.stitcher.v1.VodStitchDetail]: @googleapis_reference_link{google/cloud/video/stitcher/v1/stitch_details.proto#L30}
+  /// [google.cloud.video.stitcher.v1.VodStitchDetail]: @googleapis_reference_link{google/cloud/video/stitcher/v1/stitch_details.proto#L32}
   ///
   // clang-format on
   StatusOr<google::cloud::video::stitcher::v1::VodStitchDetail>
@@ -715,7 +715,7 @@ class VideoStitcherServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.video.stitcher.v1.GetVodStitchDetailRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L445}
-  /// [google.cloud.video.stitcher.v1.VodStitchDetail]: @googleapis_reference_link{google/cloud/video/stitcher/v1/stitch_details.proto#L30}
+  /// [google.cloud.video.stitcher.v1.VodStitchDetail]: @googleapis_reference_link{google/cloud/video/stitcher/v1/stitch_details.proto#L32}
   ///
   // clang-format on
   StatusOr<google::cloud::video::stitcher::v1::VodStitchDetail>
@@ -754,7 +754,7 @@ class VideoStitcherServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.video.stitcher.v1.ListVodAdTagDetailsRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L458}
-  /// [google.cloud.video.stitcher.v1.VodAdTagDetail]: @googleapis_reference_link{google/cloud/video/stitcher/v1/ad_tag_details.proto#L44}
+  /// [google.cloud.video.stitcher.v1.VodAdTagDetail]: @googleapis_reference_link{google/cloud/video/stitcher/v1/ad_tag_details.proto#L46}
   ///
   // clang-format on
   StreamRange<google::cloud::video::stitcher::v1::VodAdTagDetail>
@@ -794,7 +794,7 @@ class VideoStitcherServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.video.stitcher.v1.ListVodAdTagDetailsRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L458}
-  /// [google.cloud.video.stitcher.v1.VodAdTagDetail]: @googleapis_reference_link{google/cloud/video/stitcher/v1/ad_tag_details.proto#L44}
+  /// [google.cloud.video.stitcher.v1.VodAdTagDetail]: @googleapis_reference_link{google/cloud/video/stitcher/v1/ad_tag_details.proto#L46}
   ///
   // clang-format on
   StreamRange<google::cloud::video::stitcher::v1::VodAdTagDetail>
@@ -824,7 +824,7 @@ class VideoStitcherServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.video.stitcher.v1.GetVodAdTagDetailRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L485}
-  /// [google.cloud.video.stitcher.v1.VodAdTagDetail]: @googleapis_reference_link{google/cloud/video/stitcher/v1/ad_tag_details.proto#L44}
+  /// [google.cloud.video.stitcher.v1.VodAdTagDetail]: @googleapis_reference_link{google/cloud/video/stitcher/v1/ad_tag_details.proto#L46}
   ///
   // clang-format on
   StatusOr<google::cloud::video::stitcher::v1::VodAdTagDetail>
@@ -855,7 +855,7 @@ class VideoStitcherServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.video.stitcher.v1.GetVodAdTagDetailRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L485}
-  /// [google.cloud.video.stitcher.v1.VodAdTagDetail]: @googleapis_reference_link{google/cloud/video/stitcher/v1/ad_tag_details.proto#L44}
+  /// [google.cloud.video.stitcher.v1.VodAdTagDetail]: @googleapis_reference_link{google/cloud/video/stitcher/v1/ad_tag_details.proto#L46}
   ///
   // clang-format on
   StatusOr<google::cloud::video::stitcher::v1::VodAdTagDetail>
@@ -1383,7 +1383,7 @@ class VideoStitcherServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.video.stitcher.v1.CreateLiveSessionRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L644}
-  /// [google.cloud.video.stitcher.v1.LiveSession]: @googleapis_reference_link{google/cloud/video/stitcher/v1/sessions.proto#L143}
+  /// [google.cloud.video.stitcher.v1.LiveSession]: @googleapis_reference_link{google/cloud/video/stitcher/v1/sessions.proto#L141}
   ///
   // clang-format on
   StatusOr<google::cloud::video::stitcher::v1::LiveSession> CreateLiveSession(
@@ -1416,7 +1416,7 @@ class VideoStitcherServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.video.stitcher.v1.CreateLiveSessionRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L644}
-  /// [google.cloud.video.stitcher.v1.LiveSession]: @googleapis_reference_link{google/cloud/video/stitcher/v1/sessions.proto#L143}
+  /// [google.cloud.video.stitcher.v1.LiveSession]: @googleapis_reference_link{google/cloud/video/stitcher/v1/sessions.proto#L141}
   ///
   // clang-format on
   StatusOr<google::cloud::video::stitcher::v1::LiveSession> CreateLiveSession(
@@ -1445,7 +1445,7 @@ class VideoStitcherServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.video.stitcher.v1.GetLiveSessionRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L659}
-  /// [google.cloud.video.stitcher.v1.LiveSession]: @googleapis_reference_link{google/cloud/video/stitcher/v1/sessions.proto#L143}
+  /// [google.cloud.video.stitcher.v1.LiveSession]: @googleapis_reference_link{google/cloud/video/stitcher/v1/sessions.proto#L141}
   ///
   // clang-format on
   StatusOr<google::cloud::video::stitcher::v1::LiveSession> GetLiveSession(
@@ -1476,7 +1476,7 @@ class VideoStitcherServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.video.stitcher.v1.GetLiveSessionRequest]: @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L659}
-  /// [google.cloud.video.stitcher.v1.LiveSession]: @googleapis_reference_link{google/cloud/video/stitcher/v1/sessions.proto#L143}
+  /// [google.cloud.video.stitcher.v1.LiveSession]: @googleapis_reference_link{google/cloud/video/stitcher/v1/sessions.proto#L141}
   ///
   // clang-format on
   StatusOr<google::cloud::video::stitcher::v1::LiveSession> GetLiveSession(

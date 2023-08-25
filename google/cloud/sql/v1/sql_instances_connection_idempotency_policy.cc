@@ -183,6 +183,12 @@ Idempotency SqlInstancesServiceConnectionIdempotencyPolicy::ResetReplicaSize(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency
+SqlInstancesServiceConnectionIdempotencyPolicy::GetLatestRecoveryTime(
+    google::cloud::sql::v1::SqlInstancesGetLatestRecoveryTimeRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
 std::unique_ptr<SqlInstancesServiceConnectionIdempotencyPolicy>
 MakeDefaultSqlInstancesServiceConnectionIdempotencyPolicy() {
   return std::make_unique<SqlInstancesServiceConnectionIdempotencyPolicy>();

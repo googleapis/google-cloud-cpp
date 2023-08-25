@@ -119,6 +119,19 @@ TensorboardServiceLogging::ReadTensorboardUsage(
       context, request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::aiplatform::v1::ReadTensorboardSizeResponse>
+TensorboardServiceLogging::ReadTensorboardSize(
+    grpc::ClientContext& context,
+    google::cloud::aiplatform::v1::ReadTensorboardSizeRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::aiplatform::v1::ReadTensorboardSizeRequest const&
+                 request) {
+        return child_->ReadTensorboardSize(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::aiplatform::v1::TensorboardExperiment>
 TensorboardServiceLogging::CreateTensorboardExperiment(
     grpc::ClientContext& context,

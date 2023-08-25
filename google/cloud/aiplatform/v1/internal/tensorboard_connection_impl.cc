@@ -227,6 +227,21 @@ TensorboardServiceConnectionImpl::ReadTensorboardUsage(
       request, __func__);
 }
 
+StatusOr<google::cloud::aiplatform::v1::ReadTensorboardSizeResponse>
+TensorboardServiceConnectionImpl::ReadTensorboardSize(
+    google::cloud::aiplatform::v1::ReadTensorboardSizeRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ReadTensorboardSize(request),
+      [this](grpc::ClientContext& context,
+             google::cloud::aiplatform::v1::ReadTensorboardSizeRequest const&
+                 request) {
+        return stub_->ReadTensorboardSize(context, request);
+      },
+      request, __func__);
+}
+
 StatusOr<google::cloud::aiplatform::v1::TensorboardExperiment>
 TensorboardServiceConnectionImpl::CreateTensorboardExperiment(
     google::cloud::aiplatform::v1::CreateTensorboardExperimentRequest const&

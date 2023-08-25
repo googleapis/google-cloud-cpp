@@ -399,7 +399,7 @@ class BudgetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.billing.budgets.v1.DeleteBudgetRequest]: @googleapis_reference_link{google/cloud/billing/budgets/v1/budget_service.proto#L174}
+  /// [google.cloud.billing.budgets.v1.DeleteBudgetRequest]: @googleapis_reference_link{google/cloud/billing/budgets/v1/budget_service.proto#L182}
   ///
   // clang-format on
   Status DeleteBudget(std::string const& name, Options opts = {});
@@ -426,7 +426,7 @@ class BudgetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.billing.budgets.v1.DeleteBudgetRequest]: @googleapis_reference_link{google/cloud/billing/budgets/v1/budget_service.proto#L174}
+  /// [google.cloud.billing.budgets.v1.DeleteBudgetRequest]: @googleapis_reference_link{google/cloud/billing/budgets/v1/budget_service.proto#L182}
   ///
   // clang-format on
   Status DeleteBudget(

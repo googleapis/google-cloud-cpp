@@ -183,6 +183,12 @@ class SqlInstancesServiceRestMetadata : public SqlInstancesServiceRestStub {
       google::cloud::sql::v1::SqlInstancesResetReplicaSizeRequest const&
           request) override;
 
+  StatusOr<google::cloud::sql::v1::SqlInstancesGetLatestRecoveryTimeResponse>
+  GetLatestRecoveryTime(
+      google::cloud::rest_internal::RestContext& rest_context,
+      google::cloud::sql::v1::SqlInstancesGetLatestRecoveryTimeRequest const&
+          request) override;
+
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,
                    std::vector<std::string> const& params = {});

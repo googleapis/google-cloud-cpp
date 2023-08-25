@@ -410,6 +410,20 @@ SqlInstancesServiceRestLogging::ResetReplicaSize(
       rest_context, request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::sql::v1::SqlInstancesGetLatestRecoveryTimeResponse>
+SqlInstancesServiceRestLogging::GetLatestRecoveryTime(
+    rest_internal::RestContext& rest_context,
+    google::cloud::sql::v1::SqlInstancesGetLatestRecoveryTimeRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context,
+             google::cloud::sql::v1::
+                 SqlInstancesGetLatestRecoveryTimeRequest const& request) {
+        return child_->GetLatestRecoveryTime(rest_context, request);
+      },
+      rest_context, request, __func__, tracing_options_);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace sql_v1_internal
 }  // namespace cloud

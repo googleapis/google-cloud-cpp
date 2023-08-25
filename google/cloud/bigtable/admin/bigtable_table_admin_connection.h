@@ -242,6 +242,9 @@ class BigtableTableAdminConnection {
   virtual future<StatusOr<google::bigtable::admin::v2::Table>> RestoreTable(
       google::bigtable::admin::v2::RestoreTableRequest const& request);
 
+  virtual future<StatusOr<google::bigtable::admin::v2::Backup>> CopyBackup(
+      google::bigtable::admin::v2::CopyBackupRequest const& request);
+
   virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
       google::iam::v1::GetIamPolicyRequest const& request);
 
