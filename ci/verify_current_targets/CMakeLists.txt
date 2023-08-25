@@ -70,3 +70,30 @@ foreach (library ${common_libraries} ${ga_libraries} ${experimental_libraries})
                       google_cloud_cpp_${library})
     add_test_case(test_pc_${library} PkgConfig::${library})
 endforeach ()
+
+# Verify backwards compatible proto libraries are installed. See #8022 for more
+# details.
+foreach (library "dialogflow_es" "monitoring" "speech" "trace")
+    find_package(google_cloud_cpp_${library})
+endforeach ()
+
+set(backwards_compat_proto_libraries
+    # cmake-format: sortable
+    "cloud_speech_protos"
+    "cloud_texttospeech_protos"
+    "devtools_cloudtrace_v2_trace_protos"
+    "devtools_cloudtrace_v2_tracing_protos"
+    "logging_type_protos"
+    "logging_type_type_protos")
+
+foreach (library ${backwards_compat_proto_libraries})
+    add_test_case(test_cmake_${library} google-cloud-cpp::common
+                  google-cloud-cpp::${library})
+endforeach ()
+
+foreach (library ${backwards_compat_proto_libraries})
+    message("library=${library}")
+    pkg_check_modules(${library} IMPORTED_TARGET REQUIRED
+                      google_cloud_cpp_${library})
+    add_test_case(test_pc_${library} PkgConfig::common PkgConfig::${library})
+endforeach ()
