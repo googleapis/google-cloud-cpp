@@ -21,8 +21,16 @@ source module ci/cloudbuild/builds/lib/cmake.sh
 source module ci/cloudbuild/builds/lib/features.sh
 source module ci/lib/io.sh
 
-mapfile -t FEATURE_LIST < <(features::list_full)
-read -r ENABLED_FEATURES < <(features::list_full_cmake)
+if [[ "${TRIGGER_TYPE}" == "ci" ]]; then
+  mapfile -t FEATURE_LIST < <(features::list_full)
+  read -r ENABLED_FEATURES < <(features::list_full_cmake)
+elif [[ "${LIBRARIES}" == "all" ]]; then
+  mapfile -t FEATURE_LIST < <(features::list_full | grep -v "^compute$")
+  read -r ENABLED_FEATURES < <(features::list_doxygen_cmake_no_compute)
+else
+  mapfile -t FEATURE_LIST < <(printf '%s' "${LIBRARIES}")
+  ENABLED_FEATURES="compute"
+fi
 
 version=""
 doc_args=(

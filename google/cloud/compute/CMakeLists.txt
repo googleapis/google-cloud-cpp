@@ -130,9 +130,9 @@ foreach (dir IN LISTS service_dirs)
     list(APPEND DOXYGEN_EXCLUDE_SYMBOLS "compute_${ns}internal")
 endforeach ()
 
-# TODO(#11792): Parallelize doxygen processing. include(GoogleCloudCppDoxygen)
-# google_cloud_cpp_doxygen_targets("compute" DEPENDS cloud-docs
-# google-cloud-cpp::compute_protos)
+include(GoogleCloudCppDoxygen)
+google_cloud_cpp_doxygen_targets("compute" THREADED DEPENDS cloud-docs
+                                 google-cloud-cpp::compute_protos)
 
 include(GoogleCloudCppCommon)
 

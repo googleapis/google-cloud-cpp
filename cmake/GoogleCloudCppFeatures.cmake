@@ -174,6 +174,13 @@ function (google_cloud_cpp_enable_deps)
     if (__experimental_libraries__ IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
         list(APPEND enabled_features ${GOOGLE_CLOUD_CPP_EXPERIMENTAL_LIBRARIES})
     endif ()
+    if (__ga_experimental_no_compute_libraries__ IN_LIST
+        GOOGLE_CLOUD_CPP_ENABLE)
+        list(APPEND enabled_features ${GOOGLE_CLOUD_CPP_GA_LIBRARIES})
+        list(APPEND enabled_features ${GOOGLE_CLOUD_CPP_TRANSITION_LIBRARIES})
+        list(APPEND enabled_features ${GOOGLE_CLOUD_CPP_EXPERIMENTAL_LIBRARIES})
+        list(REMOVE_ITEM enabled_features "compute")
+    endif ()
 
     set(disabled_features ${GOOGLE_CLOUD_CPP_ENABLE})
     list(FILTER disabled_features INCLUDE REGEX "^-")
