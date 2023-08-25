@@ -213,7 +213,6 @@ function (google_cloud_cpp_grpc_utils_add_test fname labels)
                 google-cloud-cpp::common
                 google-cloud-cpp::iam_protos
                 google-cloud-cpp::bigtable_protos
-                google-cloud-cpp::spanner_protos
                 absl::variant
                 GTest::gmock_main
                 GTest::gmock

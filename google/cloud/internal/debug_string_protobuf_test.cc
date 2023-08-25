@@ -15,10 +15,10 @@
 #include "google/cloud/internal/debug_string_protobuf.h"
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/tracing_options.h"
+#include <google/iam/v1/policy.pb.h>
 #include <google/protobuf/duration.pb.h>
 #include <google/protobuf/text_format.h>
 #include <google/protobuf/timestamp.pb.h>
-#include <google/spanner/v1/mutation.pb.h>
 #include <gmock/gmock.h>
 
 namespace google {
@@ -27,89 +27,65 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 namespace {
 
-google::spanner::v1::Mutation MakeMutation() {
+google::iam::v1::Policy MakePolicy() {
   auto constexpr kText = R"pb(
-    insert {
-      table: "Singers"
-      columns: "SingerId"
-      columns: "FirstName"
-      columns: "LastName"
-      values {
-        values { string_value: "1" }
-        values { string_value: "test-fname-1" }
-        values { string_value: "test-lname-1" }
-      }
-      values {
-        values { string_value: "2" }
-        values { string_value: "test-fname-2" }
-        values { string_value: "test-lname-2" }
+    bindings {
+      role: "roles/viewer"
+      members: "user:user1@example.com"
+      members: "user:user2@example.com"
+    }
+    audit_configs {
+      audit_log_configs {
+        exempted_members: "user:user3@example.com"
+        exempted_members: "user:user4@example.com"
       }
     }
   )pb";
-  google::spanner::v1::Mutation mutation;
-  EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(kText, &mutation));
-  return mutation;
+  google::iam::v1::Policy policy;
+  EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(kText, &policy));
+  return policy;
 }
 
 TEST(LogWrapperHelpers, DefaultOptions) {
   TracingOptions tracing_options;
   // clang-format off
   std::string const text =
-      R"pb(google.spanner.v1.Mutation { )pb"
-      R"pb(insert { )pb"
-      R"pb(table: "Singers" )pb"
-      R"pb(columns: "SingerId" )pb"
-      R"pb(columns: "FirstName" )pb"
-      R"pb(columns: "LastName" )pb"
-      R"pb(values { values { string_value: "1" } )pb"
-      R"pb(values { string_value: "test-fname-1" } )pb"
-      R"pb(values { string_value: "test-lname-1" } } )pb"
-      R"pb(values { values { string_value: "2" } )pb"
-      R"pb(values { string_value: "test-fname-2" } )pb"
-      R"pb(values { string_value: "test-lname-2" } )pb"
-      R"pb(} )pb"
-      R"pb(} )pb"
-      R"pb(})pb";
+    R"pb(google.iam.v1.Policy { )pb"
+    R"pb(bindings { )pb"
+    R"pb(role: "roles/viewer" )pb"
+    R"pb(members: "user:user1@example.com" )pb"
+    R"pb(members: "user:user2@example.com" )pb"
+    R"pb(} )pb"
+    R"pb(audit_configs { )pb"
+    R"pb(audit_log_configs { )pb"
+    R"pb(exempted_members: "user:user3@example.com" )pb"
+    R"pb(exempted_members: "user:user4@example.com" )pb"
+    R"pb(} )pb"
+    R"pb(} )pb"
+    R"pb(})pb";
   // clang-format on
-  EXPECT_EQ(text, DebugString(MakeMutation(), tracing_options));
+  EXPECT_EQ(text, DebugString(MakePolicy(), tracing_options));
 }
 
 TEST(LogWrapperHelpers, MultiLine) {
   TracingOptions tracing_options;
   tracing_options.SetOptions("single_line_mode=off");
   // clang-format off
-  std::string const text = R"pb(google.spanner.v1.Mutation {
-  insert {
-    table: "Singers"
-    columns: "SingerId"
-    columns: "FirstName"
-    columns: "LastName"
-    values {
-      values {
-        string_value: "1"
-      }
-      values {
-        string_value: "test-fname-1"
-      }
-      values {
-        string_value: "test-lname-1"
-      }
-    }
-    values {
-      values {
-        string_value: "2"
-      }
-      values {
-        string_value: "test-fname-2"
-      }
-      values {
-        string_value: "test-lname-2"
-      }
+  std::string const text = R"pb(google.iam.v1.Policy {
+  bindings {
+    role: "roles/viewer"
+    members: "user:user1@example.com"
+    members: "user:user2@example.com"
+  }
+  audit_configs {
+    audit_log_configs {
+      exempted_members: "user:user3@example.com"
+      exempted_members: "user:user4@example.com"
     }
   }
 })pb";
   // clang-format on
-  EXPECT_EQ(text, DebugString(MakeMutation(), tracing_options));
+  EXPECT_EQ(text, DebugString(MakePolicy(), tracing_options));
 }
 
 TEST(LogWrapperHelpers, Truncate) {
@@ -117,23 +93,21 @@ TEST(LogWrapperHelpers, Truncate) {
   tracing_options.SetOptions("truncate_string_field_longer_than=8");
   // clang-format off
   std::string const text =
-            R"pb(google.spanner.v1.Mutation { )pb"
-            R"pb(insert { )pb"
-            R"pb(table: "Singers" )pb"
-            R"pb(columns: "SingerId" )pb"
-            R"pb(columns: "FirstNam...<truncated>..." )pb"
-            R"pb(columns: "LastName" )pb"
-            R"pb(values { values { string_value: "1" } )pb"
-            R"pb(values { string_value: "test-fna...<truncated>..." } )pb"
-            R"pb(values { string_value: "test-lna...<truncated>..." } } )pb"
-            R"pb(values { values { string_value: "2" } )pb"
-            R"pb(values { string_value: "test-fna...<truncated>..." } )pb"
-            R"pb(values { string_value: "test-lna...<truncated>..." } )pb"
-            R"pb(} )pb"
-            R"pb(} )pb"
-            R"pb(})pb";
+    R"pb(google.iam.v1.Policy { )pb"
+    R"pb(bindings { )pb"
+    R"pb(role: "roles/vi...<truncated>..." )pb"
+    R"pb(members: "user:use...<truncated>..." )pb"
+    R"pb(members: "user:use...<truncated>..." )pb"
+    R"pb(} )pb"
+    R"pb(audit_configs { )pb"
+    R"pb(audit_log_configs { )pb"
+    R"pb(exempted_members: "user:use...<truncated>..." )pb"
+    R"pb(exempted_members: "user:use...<truncated>..." )pb"
+    R"pb(} )pb"
+    R"pb(} )pb"
+    R"pb(})pb";
   // clang-format on
-  EXPECT_EQ(text, DebugString(MakeMutation(), tracing_options));
+  EXPECT_EQ(text, DebugString(MakePolicy(), tracing_options));
 }
 
 TEST(LogWrapperHelpers, Duration) {
