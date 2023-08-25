@@ -536,7 +536,8 @@ set(GOOGLE_CLOUD_CPP_PC_DESCRIPTION
 #
 string(
     CONCAT GOOGLE_CLOUD_CPP_PC_REQUIRES
-           "google_cloud_cpp_cloud_bigquery_protos"
+           "google_cloud_cpp_bigtable_protos"
+           " google_cloud_cpp_cloud_bigquery_protos"
            " google_cloud_cpp_iam_protos"
            " google_cloud_cpp_pubsub_protos"
            " google_cloud_cpp_storage_protos"
