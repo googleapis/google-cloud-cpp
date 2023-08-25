@@ -213,7 +213,6 @@ set(external_googleapis_installed_libraries_list
     # cmake-format: sort
     google_cloud_cpp_cloud_bigquery_protos
     google_cloud_cpp_cloud_common_common_protos
-    google_cloud_cpp_cloud_speech_protos
     google_cloud_cpp_cloud_texttospeech_protos
     google_cloud_cpp_devtools_cloudtrace_v2_trace_protos
     google_cloud_cpp_devtools_cloudtrace_v2_tracing_protos
@@ -374,16 +373,6 @@ target_link_libraries(google_cloud_cpp_cloud_dialogflow_v2_protos
 
 list(APPEND external_googleapis_installed_libraries_list
      google_cloud_cpp_cloud_dialogflow_v2_protos)
-
-google_cloud_cpp_load_protolist(cloud_speech_list "protolists/speech.list")
-google_cloud_cpp_load_protodeps(cloud_speech_deps "protodeps/speech.deps")
-google_cloud_cpp_grpcpp_library(
-    google_cloud_cpp_cloud_speech_protos ${cloud_speech_list}
-    PROTO_PATH_DIRECTORIES "${EXTERNAL_GOOGLEAPIS_SOURCE}"
-    "${PROTO_INCLUDE_DIR}")
-external_googleapis_set_version_and_alias(cloud_speech_protos)
-target_link_libraries(google_cloud_cpp_cloud_speech_protos
-                      PUBLIC ${cloud_speech_deps})
 
 google_cloud_cpp_load_protolist(cloud_texttospeech_list
                                 "protolists/texttospeech.list")

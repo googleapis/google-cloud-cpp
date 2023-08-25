@@ -31,10 +31,15 @@
 #
 # * ADDITIONAL_PROTO_LISTS: a list of proto files that may be used indirectly.
 #   `asset` sets this.
+# * BACKWARDS_COMPAT_PROTO_TARGETS: a list of proto library names (e.g.
+#   `cloud_speech_protos`) that must continue to exist. We add interface
+#   libraries for these, which link to the desired proto library. See #8022 for
+#   more details.
 #
 function (google_cloud_cpp_add_ga_grpc_library library display_name)
-    cmake_parse_arguments(_opt "EXPERIMENTAL" "" "ADDITIONAL_PROTO_LISTS"
-                          ${ARGN})
+    cmake_parse_arguments(
+        _opt "EXPERIMENTAL" ""
+        "ADDITIONAL_PROTO_LISTS;BACKWARDS_COMPAT_PROTO_TARGETS" ${ARGN})
     set(library_target "google_cloud_cpp_${library}")
     set(mocks_target "google_cloud_cpp_${library}_mocks")
     set(protos_target "google_cloud_cpp_${library}_protos")
@@ -92,6 +97,17 @@ function (google_cloud_cpp_add_ga_grpc_library library display_name)
         "${PROTO_INCLUDE_DIR}")
     external_googleapis_set_version_and_alias(${library}_protos)
     target_link_libraries(${protos_target} PUBLIC ${proto_deps})
+
+    # We used to offer the proto library by another name. Maintain backwards
+    # compatibility by providing an interface library with that name. Also make
+    # sure we install it as part of google_cloud_cpp_${library}-targets.
+    unset(backwards_compat_proto_targets)
+    foreach (old_protos IN LISTS _opt_BACKWARDS_COMPAT_PROTO_TARGETS)
+        google_cloud_cpp_backwards_compat_protos_library("${old_protos}"
+                                                         "${library}_protos")
+        list(APPEND backwards_compat_proto_targets
+             "google_cloud_cpp_${old_protos}")
+    endforeach ()
 
     file(
         GLOB source_files
@@ -160,6 +176,7 @@ function (google_cloud_cpp_add_ga_grpc_library library display_name)
     # GNUInstallDirs
     install(
         TARGETS ${library_target} ${protos_target}
+                ${backwards_compat_proto_targets}
         EXPORT ${library_target}-targets
         RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
                 COMPONENT google_cloud_cpp_runtime
