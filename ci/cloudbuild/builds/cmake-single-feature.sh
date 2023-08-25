@@ -54,17 +54,20 @@ check_pkgconfig_absolute() {
 
 for feature in __ga_libraries__ __experimental_libraries__; do
   io::run cmake -S . -B cmake-out/test-only-"${feature}" \
-    -DGOOGLE_CLOUD_CPP_ENABLE="${feature}"
+    -DGOOGLE_CLOUD_CPP_ENABLE="${feature}" \
+    -DBUILD_TESTING=OFF
 done
 
 for feature in "${features[@]}"; do
   io::run cmake -S . -B cmake-out/test-only-"${feature}" \
-    -DGOOGLE_CLOUD_CPP_ENABLE="${feature}"
+    -DGOOGLE_CLOUD_CPP_ENABLE="${feature}" \
+    -DBUILD_TESTING=OFF
   io::run check_pkgconfig_relative cmake-out/test-only-"${feature}"
 
   io::run cmake -S . -B cmake-out/test-only-"${feature}"-absolute-cmake-install \
     -DGOOGLE_CLOUD_CPP_ENABLE="${feature}" \
     -DCMAKE_INSTALL_INCLUDEDIR=/test-only/include \
-    -DCMAKE_INSTALL_LIBDIR=/test-only/lib
+    -DCMAKE_INSTALL_LIBDIR=/test-only/lib \
+    -DBUILD_TESTING=OFF
   io::run check_pkgconfig_absolute cmake-out/test-only-"${feature}"-absolute-cmake-install
 done
