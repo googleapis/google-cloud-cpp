@@ -139,8 +139,8 @@ std::map<std::string, std::string> ScaffoldVars(
   vars["product_options_page"] = OptionsGroup(service.product_path());
   vars["service_subdirectory"] = ServiceSubdirectory(service.product_path());
   vars["site_root"] = SiteRoot(service);
+  vars["experimental"] = experimental ? " EXPERIMENTAL" : "";
   vars["library_prefix"] = experimental ? "experimental-" : "";
-  vars["doxygen_version_suffix"] = experimental ? " (Experimental)" : "";
   vars["construction"] = experimental ? "\n:construction:\n" : "";
   vars["status"] =
       experimental ? "This library is **experimental**. Its APIs are subject "
@@ -487,100 +487,11 @@ void GenerateCMakeLists(std::ostream& os,
 # limitations under the License.
 # ~~~
 
-include(GoogleapisConfig)
-set(DOXYGEN_PROJECT_NAME "$title$ C++ Client")
-set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for the $title$")
-set(DOXYGEN_PROJECT_NUMBER "$${PROJECT_VERSION}$doxygen_version_suffix$")
-set(DOXYGEN_EXCLUDE_SYMBOLS "internal")
-set(DOXYGEN_EXAMPLE_PATH $${CMAKE_CURRENT_SOURCE_DIR}/quickstart)
+include(GoogleCloudCppLibrary)
 
-unset(mocks_globs)
-unset(source_globs)
-set(service_dirs "$service_subdirectory$")
-foreach (dir IN LISTS service_dirs)
-    string(REPLACE "/" "_" ns "$${dir}")
-    list(APPEND source_globs "$${dir}*.h" "$${dir}*.cc" "$${dir}internal/*")
-    list(APPEND mocks_globs "$${dir}mocks/*.h")
-    list(APPEND DOXYGEN_EXAMPLE_PATH
-         "$${CMAKE_CURRENT_SOURCE_DIR}/$${dir}samples")
-    list(APPEND DOXYGEN_EXCLUDE_SYMBOLS "$library$_$${ns}internal")
-endforeach ()
+set(GOOGLE_CLOUD_CPP_SERVICE_DIRS "$service_subdirectory$")
 
-include(GoogleCloudCppDoxygen)
-google_cloud_cpp_doxygen_targets("$library$" DEPENDS cloud-docs
-                                 google-cloud-cpp::$library$_protos)
-
-include(GoogleCloudCppCommon)
-
-include(CompileProtos)
-google_cloud_cpp_find_proto_include_dir(PROTO_INCLUDE_DIR)
-google_cloud_cpp_load_protolist(
-    proto_list
-    "$${PROJECT_SOURCE_DIR}/external/googleapis/protolists/$library$.list")
-google_cloud_cpp_load_protodeps(
-    proto_deps
-    "$${PROJECT_SOURCE_DIR}/external/googleapis/protodeps/$library$.deps")
-google_cloud_cpp_grpcpp_library(
-    google_cloud_cpp_$library$_protos # cmake-format: sort
-    $${proto_list}
-    PROTO_PATH_DIRECTORIES
-    "$${EXTERNAL_GOOGLEAPIS_SOURCE}" "$${PROTO_INCLUDE_DIR}")
-external_googleapis_set_version_and_alias($library$_protos)
-target_link_libraries(google_cloud_cpp_$library$_protos PUBLIC $${proto_deps})
-
-file(GLOB source_files
-     RELATIVE "$${CMAKE_CURRENT_SOURCE_DIR}"
-     $${source_globs})
-list(SORT source_files)
-add_library(google_cloud_cpp_$library$ $${source_files})
-target_include_directories(
-    google_cloud_cpp_$library$
-    PUBLIC $$<BUILD_INTERFACE:$${PROJECT_SOURCE_DIR}>
-           $$<BUILD_INTERFACE:$${PROJECT_BINARY_DIR}>
-           $$<INSTALL_INTERFACE:include>)
-target_link_libraries(
-    google_cloud_cpp_$library$
-    PUBLIC google-cloud-cpp::grpc_utils google-cloud-cpp::common
-           google-cloud-cpp::$library$_protos)
-google_cloud_cpp_add_common_options(google_cloud_cpp_$library$)
-set_target_properties(
-    google_cloud_cpp_$library$
-    PROPERTIES EXPORT_NAME google-cloud-cpp::$library_prefix$$library$
-               VERSION "$${PROJECT_VERSION}"
-               SOVERSION "$${PROJECT_VERSION_MAJOR}")
-target_compile_options(google_cloud_cpp_$library$
-                       PUBLIC $${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
-
-add_library(google-cloud-cpp::$library_prefix$$library$ ALIAS google_cloud_cpp_$library$)
-
-# Create a header-only library for the mocks. We use a CMake `INTERFACE` library
-# for these, a regular library would not work on macOS (where the library needs
-# at least one .o file). Unfortunately INTERFACE libraries are a bit weird in
-# that they need absolute paths for their sources.
-file(GLOB relative_mock_files
-     RELATIVE "$${CMAKE_CURRENT_SOURCE_DIR}"
-     $${mocks_globs})
-list(SORT relative_mock_files)
-set(mock_files)
-foreach (file IN LISTS relative_mock_files)
-  list(APPEND mock_files "$${CMAKE_CURRENT_SOURCE_DIR}/$${file}")
-endforeach ()
-add_library(google_cloud_cpp_$library$_mocks INTERFACE)
-target_sources(google_cloud_cpp_$library$_mocks INTERFACE $${mock_files})
-target_link_libraries(
-    google_cloud_cpp_$library$_mocks
-    INTERFACE google-cloud-cpp::$library_prefix$$library$ GTest::gmock_main
-              GTest::gmock GTest::gtest)
-set_target_properties(
-    google_cloud_cpp_$library$_mocks
-    PROPERTIES EXPORT_NAME google-cloud-cpp::$library_prefix$$library$_mocks)
-target_include_directories(
-    google_cloud_cpp_$library$_mocks
-    INTERFACE $$<BUILD_INTERFACE:$${PROJECT_SOURCE_DIR}>
-              $$<BUILD_INTERFACE:$${PROJECT_BINARY_DIR}>
-              $$<INSTALL_INTERFACE:include>)
-target_compile_options(google_cloud_cpp_$library$_mocks
-                       INTERFACE $${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
+google_cloud_cpp_add_ga_grpc_library($library$ "$title$"$experimental$)
 
 if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
     add_executable($library$_quickstart "quickstart/quickstart.cc")
@@ -596,77 +507,6 @@ if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
     set_tests_properties($library$_quickstart
                          PROPERTIES LABELS "integration-test;quickstart")
 endif ()
-
-# Get the destination directories based on the GNU recommendations.
-include(GNUInstallDirs)
-
-# Export the CMake targets to make it easy to create configuration files.
-install(
-    EXPORT google_cloud_cpp_$library$-targets
-    DESTINATION "$${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_$library$"
-    COMPONENT google_cloud_cpp_development)
-
-# Install the libraries and headers in the locations determined by
-# GNUInstallDirs
-install(
-    TARGETS google_cloud_cpp_$library$ google_cloud_cpp_$library$_protos
-    EXPORT google_cloud_cpp_$library$-targets
-    RUNTIME DESTINATION $${CMAKE_INSTALL_BINDIR}
-            COMPONENT google_cloud_cpp_runtime
-    LIBRARY DESTINATION $${CMAKE_INSTALL_LIBDIR}
-            COMPONENT google_cloud_cpp_runtime
-            NAMELINK_SKIP
-    ARCHIVE DESTINATION $${CMAKE_INSTALL_LIBDIR}
-            COMPONENT google_cloud_cpp_development)
-# With CMake-3.12 and higher we could avoid this separate command (and the
-# duplication).
-install(
-    TARGETS google_cloud_cpp_$library$ google_cloud_cpp_$library$_protos
-    LIBRARY DESTINATION $${CMAKE_INSTALL_LIBDIR}
-            COMPONENT google_cloud_cpp_development
-            NAMELINK_ONLY
-    ARCHIVE DESTINATION $${CMAKE_INSTALL_LIBDIR}
-            COMPONENT google_cloud_cpp_development)
-
-google_cloud_cpp_install_proto_library_protos("google_cloud_cpp_$library$_protos"
-                                              "$${EXTERNAL_GOOGLEAPIS_SOURCE}")
-google_cloud_cpp_install_proto_library_headers("google_cloud_cpp_$library$_protos")
-google_cloud_cpp_install_headers("google_cloud_cpp_$library$"
-                                 "include/google/cloud/$library$")
-google_cloud_cpp_install_headers("google_cloud_cpp_$library$_mocks"
-                                 "include/google/cloud/$library$")
-
-google_cloud_cpp_add_pkgconfig(
-    $library$
-    "The $title$ C++ Client Library"
-    "Provides C++ APIs to use the $title$."
-    "google_cloud_cpp_grpc_utils"
-    "google_cloud_cpp_common"
-    "google_cloud_cpp_$library$_protos")
-
-# Create and install the CMake configuration files.
-include(CMakePackageConfigHelpers)
-configure_file("config.cmake.in" "google_cloud_cpp_$library$-config.cmake" @ONLY)
-write_basic_package_version_file(
-    "google_cloud_cpp_$library$-config-version.cmake"
-    VERSION $${PROJECT_VERSION}
-    COMPATIBILITY ExactVersion)
-
-install(
-    FILES
-        "$${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_$library$-config.cmake"
-        "$${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_$library$-config-version.cmake"
-    DESTINATION "$${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_$library$"
-    COMPONENT google_cloud_cpp_development)
-
-external_googleapis_install_pc("google_cloud_cpp_$library$_protos")
-
-# google-cloud-cpp::$library$ must be defined before we can add the samples.
-foreach (dir IN LISTS service_dirs)
-    if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
-        google_cloud_cpp_add_samples_relative("$library$" "$${dir}samples/")
-    endif ()
-endforeach ()
 )""";
   google::protobuf::io::OstreamOutputStream output(&os);
   google::protobuf::io::Printer printer(&output, '$');
