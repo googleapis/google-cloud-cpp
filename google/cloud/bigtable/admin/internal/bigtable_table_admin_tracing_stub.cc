@@ -231,6 +231,21 @@ BigtableTableAdminTracingStub::AsyncRestoreTable(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+future<StatusOr<google::longrunning::Operation>>
+BigtableTableAdminTracingStub::AsyncCopyBackup(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::bigtable::admin::v2::CopyBackupRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.bigtable.admin.v2.BigtableTableAdmin", "CopyBackup");
+  {
+    auto scope = opentelemetry::trace::Scope(span);
+    internal::InjectTraceContext(*context, internal::CurrentOptions());
+  }
+  auto f = child_->AsyncCopyBackup(cq, context, request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
 StatusOr<google::iam::v1::Policy> BigtableTableAdminTracingStub::GetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::GetIamPolicyRequest const& request) {

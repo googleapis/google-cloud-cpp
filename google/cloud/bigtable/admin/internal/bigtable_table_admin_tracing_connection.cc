@@ -178,6 +178,15 @@ BigtableTableAdminTracingConnection::RestoreTable(
   return internal::EndSpan(std::move(span), child_->RestoreTable(request));
 }
 
+future<StatusOr<google::bigtable::admin::v2::Backup>>
+BigtableTableAdminTracingConnection::CopyBackup(
+    google::bigtable::admin::v2::CopyBackupRequest const& request) {
+  auto span = internal::MakeSpan(
+      "bigtable_admin::BigtableTableAdminConnection::CopyBackup");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->CopyBackup(request));
+}
+
 StatusOr<google::iam::v1::Policy>
 BigtableTableAdminTracingConnection::GetIamPolicy(
     google::iam::v1::GetIamPolicyRequest const& request) {

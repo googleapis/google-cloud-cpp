@@ -8,6 +8,8 @@
 @com_google_googleapis//google/cloud/contentwarehouse/v1:document_service_request.proto
 @com_google_googleapis//google/cloud/contentwarehouse/v1:filters.proto
 @com_google_googleapis//google/cloud/contentwarehouse/v1:histogram.proto
+@com_google_googleapis//google/cloud/contentwarehouse/v1:pipeline_service.proto
+@com_google_googleapis//google/cloud/contentwarehouse/v1:pipelines.proto
 @com_google_googleapis//google/cloud/contentwarehouse/v1:rule_engine.proto
 @com_google_googleapis//google/cloud/contentwarehouse/v1:ruleset_service.proto
 @com_google_googleapis//google/cloud/contentwarehouse/v1:ruleset_service_request.proto

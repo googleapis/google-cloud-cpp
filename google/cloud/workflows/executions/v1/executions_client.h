@@ -25,6 +25,7 @@
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
+#include <map>
 #include <memory>
 
 namespace google {
@@ -115,8 +116,8 @@ class ExecutionsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.workflows.executions.v1.Execution]: @googleapis_reference_link{google/cloud/workflows/executions/v1/executions.proto#L80}
-  /// [google.cloud.workflows.executions.v1.ListExecutionsRequest]: @googleapis_reference_link{google/cloud/workflows/executions/v1/executions.proto#L205}
+  /// [google.cloud.workflows.executions.v1.Execution]: @googleapis_reference_link{google/cloud/workflows/executions/v1/executions.proto#L82}
+  /// [google.cloud.workflows.executions.v1.ListExecutionsRequest]: @googleapis_reference_link{google/cloud/workflows/executions/v1/executions.proto#L279}
   ///
   // clang-format on
   StreamRange<google::cloud::workflows::executions::v1::Execution>
@@ -158,8 +159,8 @@ class ExecutionsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.workflows.executions.v1.Execution]: @googleapis_reference_link{google/cloud/workflows/executions/v1/executions.proto#L80}
-  /// [google.cloud.workflows.executions.v1.ListExecutionsRequest]: @googleapis_reference_link{google/cloud/workflows/executions/v1/executions.proto#L205}
+  /// [google.cloud.workflows.executions.v1.Execution]: @googleapis_reference_link{google/cloud/workflows/executions/v1/executions.proto#L82}
+  /// [google.cloud.workflows.executions.v1.ListExecutionsRequest]: @googleapis_reference_link{google/cloud/workflows/executions/v1/executions.proto#L279}
   ///
   // clang-format on
   StreamRange<google::cloud::workflows::executions::v1::Execution>
@@ -189,8 +190,8 @@ class ExecutionsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.workflows.executions.v1.CreateExecutionRequest]: @googleapis_reference_link{google/cloud/workflows/executions/v1/executions.proto#L249}
-  /// [google.cloud.workflows.executions.v1.Execution]: @googleapis_reference_link{google/cloud/workflows/executions/v1/executions.proto#L80}
+  /// [google.cloud.workflows.executions.v1.CreateExecutionRequest]: @googleapis_reference_link{google/cloud/workflows/executions/v1/executions.proto#L338}
+  /// [google.cloud.workflows.executions.v1.Execution]: @googleapis_reference_link{google/cloud/workflows/executions/v1/executions.proto#L82}
   ///
   // clang-format on
   StatusOr<google::cloud::workflows::executions::v1::Execution> CreateExecution(
@@ -222,8 +223,8 @@ class ExecutionsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.workflows.executions.v1.CreateExecutionRequest]: @googleapis_reference_link{google/cloud/workflows/executions/v1/executions.proto#L249}
-  /// [google.cloud.workflows.executions.v1.Execution]: @googleapis_reference_link{google/cloud/workflows/executions/v1/executions.proto#L80}
+  /// [google.cloud.workflows.executions.v1.CreateExecutionRequest]: @googleapis_reference_link{google/cloud/workflows/executions/v1/executions.proto#L338}
+  /// [google.cloud.workflows.executions.v1.Execution]: @googleapis_reference_link{google/cloud/workflows/executions/v1/executions.proto#L82}
   ///
   // clang-format on
   StatusOr<google::cloud::workflows::executions::v1::Execution> CreateExecution(
@@ -252,8 +253,8 @@ class ExecutionsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.workflows.executions.v1.Execution]: @googleapis_reference_link{google/cloud/workflows/executions/v1/executions.proto#L80}
-  /// [google.cloud.workflows.executions.v1.GetExecutionRequest]: @googleapis_reference_link{google/cloud/workflows/executions/v1/executions.proto#L267}
+  /// [google.cloud.workflows.executions.v1.Execution]: @googleapis_reference_link{google/cloud/workflows/executions/v1/executions.proto#L82}
+  /// [google.cloud.workflows.executions.v1.GetExecutionRequest]: @googleapis_reference_link{google/cloud/workflows/executions/v1/executions.proto#L356}
   ///
   // clang-format on
   StatusOr<google::cloud::workflows::executions::v1::Execution> GetExecution(
@@ -283,8 +284,8 @@ class ExecutionsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.workflows.executions.v1.Execution]: @googleapis_reference_link{google/cloud/workflows/executions/v1/executions.proto#L80}
-  /// [google.cloud.workflows.executions.v1.GetExecutionRequest]: @googleapis_reference_link{google/cloud/workflows/executions/v1/executions.proto#L267}
+  /// [google.cloud.workflows.executions.v1.Execution]: @googleapis_reference_link{google/cloud/workflows/executions/v1/executions.proto#L82}
+  /// [google.cloud.workflows.executions.v1.GetExecutionRequest]: @googleapis_reference_link{google/cloud/workflows/executions/v1/executions.proto#L356}
   ///
   // clang-format on
   StatusOr<google::cloud::workflows::executions::v1::Execution> GetExecution(
@@ -313,8 +314,8 @@ class ExecutionsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.workflows.executions.v1.CancelExecutionRequest]: @googleapis_reference_link{google/cloud/workflows/executions/v1/executions.proto#L286}
-  /// [google.cloud.workflows.executions.v1.Execution]: @googleapis_reference_link{google/cloud/workflows/executions/v1/executions.proto#L80}
+  /// [google.cloud.workflows.executions.v1.CancelExecutionRequest]: @googleapis_reference_link{google/cloud/workflows/executions/v1/executions.proto#L375}
+  /// [google.cloud.workflows.executions.v1.Execution]: @googleapis_reference_link{google/cloud/workflows/executions/v1/executions.proto#L82}
   ///
   // clang-format on
   StatusOr<google::cloud::workflows::executions::v1::Execution> CancelExecution(
@@ -344,8 +345,8 @@ class ExecutionsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.workflows.executions.v1.CancelExecutionRequest]: @googleapis_reference_link{google/cloud/workflows/executions/v1/executions.proto#L286}
-  /// [google.cloud.workflows.executions.v1.Execution]: @googleapis_reference_link{google/cloud/workflows/executions/v1/executions.proto#L80}
+  /// [google.cloud.workflows.executions.v1.CancelExecutionRequest]: @googleapis_reference_link{google/cloud/workflows/executions/v1/executions.proto#L375}
+  /// [google.cloud.workflows.executions.v1.Execution]: @googleapis_reference_link{google/cloud/workflows/executions/v1/executions.proto#L82}
   ///
   // clang-format on
   StatusOr<google::cloud::workflows::executions::v1::Execution> CancelExecution(

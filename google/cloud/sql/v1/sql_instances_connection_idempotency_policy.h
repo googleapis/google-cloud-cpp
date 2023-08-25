@@ -130,6 +130,10 @@ class SqlInstancesServiceConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency ResetReplicaSize(
       google::cloud::sql::v1::SqlInstancesResetReplicaSizeRequest const&
           request);
+
+  virtual google::cloud::Idempotency GetLatestRecoveryTime(
+      google::cloud::sql::v1::SqlInstancesGetLatestRecoveryTimeRequest const&
+          request);
 };
 
 std::unique_ptr<SqlInstancesServiceConnectionIdempotencyPolicy>

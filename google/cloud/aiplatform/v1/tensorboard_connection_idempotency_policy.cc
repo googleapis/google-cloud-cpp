@@ -64,6 +64,11 @@ Idempotency TensorboardServiceConnectionIdempotencyPolicy::ReadTensorboardUsage(
   return Idempotency::kIdempotent;
 }
 
+Idempotency TensorboardServiceConnectionIdempotencyPolicy::ReadTensorboardSize(
+    google::cloud::aiplatform::v1::ReadTensorboardSizeRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
 Idempotency
 TensorboardServiceConnectionIdempotencyPolicy::CreateTensorboardExperiment(
     google::cloud::aiplatform::v1::CreateTensorboardExperimentRequest const&) {

@@ -89,6 +89,15 @@ TensorboardServiceTracingConnection::ReadTensorboardUsage(
   return internal::EndSpan(*span, child_->ReadTensorboardUsage(request));
 }
 
+StatusOr<google::cloud::aiplatform::v1::ReadTensorboardSizeResponse>
+TensorboardServiceTracingConnection::ReadTensorboardSize(
+    google::cloud::aiplatform::v1::ReadTensorboardSizeRequest const& request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::TensorboardServiceConnection::ReadTensorboardSize");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->ReadTensorboardSize(request));
+}
+
 StatusOr<google::cloud::aiplatform::v1::TensorboardExperiment>
 TensorboardServiceTracingConnection::CreateTensorboardExperiment(
     google::cloud::aiplatform::v1::CreateTensorboardExperimentRequest const&

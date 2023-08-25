@@ -172,6 +172,13 @@ class SqlInstancesServiceRestStub {
       google::cloud::rest_internal::RestContext& rest_context,
       google::cloud::sql::v1::SqlInstancesResetReplicaSizeRequest const&
           request) = 0;
+
+  virtual StatusOr<
+      google::cloud::sql::v1::SqlInstancesGetLatestRecoveryTimeResponse>
+  GetLatestRecoveryTime(
+      google::cloud::rest_internal::RestContext& rest_context,
+      google::cloud::sql::v1::SqlInstancesGetLatestRecoveryTimeRequest const&
+          request) = 0;
 };
 
 class DefaultSqlInstancesServiceRestStub : public SqlInstancesServiceRestStub {
@@ -325,6 +332,12 @@ class DefaultSqlInstancesServiceRestStub : public SqlInstancesServiceRestStub {
   StatusOr<google::cloud::sql::v1::Operation> ResetReplicaSize(
       google::cloud::rest_internal::RestContext& rest_context,
       google::cloud::sql::v1::SqlInstancesResetReplicaSizeRequest const&
+          request) override;
+
+  StatusOr<google::cloud::sql::v1::SqlInstancesGetLatestRecoveryTimeResponse>
+  GetLatestRecoveryTime(
+      google::cloud::rest_internal::RestContext& rest_context,
+      google::cloud::sql::v1::SqlInstancesGetLatestRecoveryTimeRequest const&
           request) override;
 
  private:

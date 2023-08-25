@@ -397,6 +397,37 @@ BigtableTableAdminConnectionImpl::RestoreTable(
       polling_policy(*current), __func__);
 }
 
+future<StatusOr<google::bigtable::admin::v2::Backup>>
+BigtableTableAdminConnectionImpl::CopyBackup(
+    google::bigtable::admin::v2::CopyBackupRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::bigtable::admin::v2::Backup>(
+      background_->cq(), request,
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::bigtable::admin::v2::CopyBackupRequest const& request) {
+        return stub->AsyncCopyBackup(cq, std::move(context), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::bigtable::admin::v2::Backup>,
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CopyBackup(request),
+      polling_policy(*current), __func__);
+}
+
 StatusOr<google::iam::v1::Policy>
 BigtableTableAdminConnectionImpl::GetIamPolicy(
     google::iam::v1::GetIamPolicyRequest const& request) {

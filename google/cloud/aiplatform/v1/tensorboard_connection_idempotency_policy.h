@@ -56,6 +56,9 @@ class TensorboardServiceConnectionIdempotencyPolicy {
       google::cloud::aiplatform::v1::ReadTensorboardUsageRequest const&
           request);
 
+  virtual google::cloud::Idempotency ReadTensorboardSize(
+      google::cloud::aiplatform::v1::ReadTensorboardSizeRequest const& request);
+
   virtual google::cloud::Idempotency CreateTensorboardExperiment(
       google::cloud::aiplatform::v1::CreateTensorboardExperimentRequest const&
           request);

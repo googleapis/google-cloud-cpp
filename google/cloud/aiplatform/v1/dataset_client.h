@@ -617,7 +617,7 @@ class DatasetServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.DataItem]: @googleapis_reference_link{google/cloud/aiplatform/v1/data_item.proto#L34}
-  /// [google.cloud.aiplatform.v1.ListDataItemsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L374}
+  /// [google.cloud.aiplatform.v1.ListDataItemsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L388}
   ///
   // clang-format on
   StreamRange<google::cloud::aiplatform::v1::DataItem> ListDataItems(
@@ -657,7 +657,7 @@ class DatasetServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.DataItem]: @googleapis_reference_link{google/cloud/aiplatform/v1/data_item.proto#L34}
-  /// [google.cloud.aiplatform.v1.ListDataItemsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L374}
+  /// [google.cloud.aiplatform.v1.ListDataItemsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L388}
   ///
   // clang-format on
   StreamRange<google::cloud::aiplatform::v1::DataItem> ListDataItems(
@@ -697,8 +697,8 @@ class DatasetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.DataItemView]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L530}
-  /// [google.cloud.aiplatform.v1.SearchDataItemsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L414}
+  /// [google.cloud.aiplatform.v1.DataItemView]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L544}
+  /// [google.cloud.aiplatform.v1.SearchDataItemsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L428}
   ///
   // clang-format on
   StreamRange<google::cloud::aiplatform::v1::DataItemView> SearchDataItems(
@@ -735,7 +735,7 @@ class DatasetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.ListSavedQueriesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L550}
+  /// [google.cloud.aiplatform.v1.ListSavedQueriesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L564}
   /// [google.cloud.aiplatform.v1.SavedQuery]: @googleapis_reference_link{google/cloud/aiplatform/v1/saved_query.proto#L34}
   ///
   // clang-format on
@@ -775,7 +775,7 @@ class DatasetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.ListSavedQueriesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L550}
+  /// [google.cloud.aiplatform.v1.ListSavedQueriesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L564}
   /// [google.cloud.aiplatform.v1.SavedQuery]: @googleapis_reference_link{google/cloud/aiplatform/v1/saved_query.proto#L34}
   ///
   // clang-format on
@@ -811,7 +811,7 @@ class DatasetServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.DeleteOperationMetadata]: @googleapis_reference_link{google/cloud/aiplatform/v1/operation.proto#L52}
-  /// [google.cloud.aiplatform.v1.DeleteSavedQueryRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L590}
+  /// [google.cloud.aiplatform.v1.DeleteSavedQueryRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L604}
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
@@ -848,7 +848,7 @@ class DatasetServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.DeleteOperationMetadata]: @googleapis_reference_link{google/cloud/aiplatform/v1/operation.proto#L52}
-  /// [google.cloud.aiplatform.v1.DeleteSavedQueryRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L590}
+  /// [google.cloud.aiplatform.v1.DeleteSavedQueryRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L604}
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
@@ -878,7 +878,7 @@ class DatasetServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.AnnotationSpec]: @googleapis_reference_link{google/cloud/aiplatform/v1/annotation_spec.proto#L32}
-  /// [google.cloud.aiplatform.v1.GetAnnotationSpecRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L604}
+  /// [google.cloud.aiplatform.v1.GetAnnotationSpecRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L618}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::AnnotationSpec> GetAnnotationSpec(
@@ -909,7 +909,7 @@ class DatasetServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.AnnotationSpec]: @googleapis_reference_link{google/cloud/aiplatform/v1/annotation_spec.proto#L32}
-  /// [google.cloud.aiplatform.v1.GetAnnotationSpecRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L604}
+  /// [google.cloud.aiplatform.v1.GetAnnotationSpecRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L618}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::AnnotationSpec> GetAnnotationSpec(
@@ -947,7 +947,7 @@ class DatasetServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.Annotation]: @googleapis_reference_link{google/cloud/aiplatform/v1/annotation.proto#L35}
-  /// [google.cloud.aiplatform.v1.ListAnnotationsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L621}
+  /// [google.cloud.aiplatform.v1.ListAnnotationsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L635}
   ///
   // clang-format on
   StreamRange<google::cloud::aiplatform::v1::Annotation> ListAnnotations(
@@ -987,7 +987,7 @@ class DatasetServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.Annotation]: @googleapis_reference_link{google/cloud/aiplatform/v1/annotation.proto#L35}
-  /// [google.cloud.aiplatform.v1.ListAnnotationsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L621}
+  /// [google.cloud.aiplatform.v1.ListAnnotationsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L635}
   ///
   // clang-format on
   StreamRange<google::cloud::aiplatform::v1::Annotation> ListAnnotations(

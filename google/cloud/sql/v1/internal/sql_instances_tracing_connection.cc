@@ -300,6 +300,16 @@ SqlInstancesServiceTracingConnection::ResetReplicaSize(
   return internal::EndSpan(*span, child_->ResetReplicaSize(request));
 }
 
+StatusOr<google::cloud::sql::v1::SqlInstancesGetLatestRecoveryTimeResponse>
+SqlInstancesServiceTracingConnection::GetLatestRecoveryTime(
+    google::cloud::sql::v1::SqlInstancesGetLatestRecoveryTimeRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "sql_v1::SqlInstancesServiceConnection::GetLatestRecoveryTime");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetLatestRecoveryTime(request));
+}
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<sql_v1::SqlInstancesServiceConnection>

@@ -114,6 +114,15 @@ TensorboardServiceAuth::ReadTensorboardUsage(
   return child_->ReadTensorboardUsage(context, request);
 }
 
+StatusOr<google::cloud::aiplatform::v1::ReadTensorboardSizeResponse>
+TensorboardServiceAuth::ReadTensorboardSize(
+    grpc::ClientContext& context,
+    google::cloud::aiplatform::v1::ReadTensorboardSizeRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ReadTensorboardSize(context, request);
+}
+
 StatusOr<google::cloud::aiplatform::v1::TensorboardExperiment>
 TensorboardServiceAuth::CreateTensorboardExperiment(
     grpc::ClientContext& context,

@@ -186,6 +186,12 @@ class SqlInstancesServiceRestLogging : public SqlInstancesServiceRestStub {
       google::cloud::sql::v1::SqlInstancesResetReplicaSizeRequest const&
           request) override;
 
+  StatusOr<google::cloud::sql::v1::SqlInstancesGetLatestRecoveryTimeResponse>
+  GetLatestRecoveryTime(
+      google::cloud::rest_internal::RestContext& rest_context,
+      google::cloud::sql::v1::SqlInstancesGetLatestRecoveryTimeRequest const&
+          request) override;
+
  private:
   std::shared_ptr<SqlInstancesServiceRestStub> child_;
   TracingOptions tracing_options_;

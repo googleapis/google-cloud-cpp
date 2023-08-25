@@ -110,6 +110,11 @@ class BigtableTableAdminStub {
       std::shared_ptr<grpc::ClientContext> context,
       google::bigtable::admin::v2::RestoreTableRequest const& request) = 0;
 
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncCopyBackup(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::bigtable::admin::v2::CopyBackupRequest const& request) = 0;
+
   virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
       grpc::ClientContext& context,
       google::iam::v1::GetIamPolicyRequest const& request) = 0;
@@ -223,6 +228,11 @@ class DefaultBigtableTableAdminStub : public BigtableTableAdminStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::bigtable::admin::v2::RestoreTableRequest const& request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncCopyBackup(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::bigtable::admin::v2::CopyBackupRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
       grpc::ClientContext& client_context,

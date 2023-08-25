@@ -112,7 +112,7 @@ class SqlOperationsServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.sql.v1.Operation]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L687}
+  /// [google.cloud.sql.v1.Operation]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L716}
   /// [google.cloud.sql.v1.SqlOperationsGetRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_operations.proto#L62}
   ///
   // clang-format on
@@ -154,7 +154,7 @@ class SqlOperationsServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.sql.v1.Operation]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L687}
+  /// [google.cloud.sql.v1.Operation]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L716}
   /// [google.cloud.sql.v1.SqlOperationsListRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_operations.proto#L71}
   ///
   // clang-format on

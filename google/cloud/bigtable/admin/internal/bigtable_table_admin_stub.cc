@@ -243,6 +243,23 @@ DefaultBigtableTableAdminStub::AsyncRestoreTable(
       request, std::move(context));
 }
 
+future<StatusOr<google::longrunning::Operation>>
+DefaultBigtableTableAdminStub::AsyncCopyBackup(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::bigtable::admin::v2::CopyBackupRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::bigtable::admin::v2::CopyBackupRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::bigtable::admin::v2::CopyBackupRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncCopyBackup(context, request, cq);
+      },
+      request, std::move(context));
+}
+
 StatusOr<google::iam::v1::Policy> DefaultBigtableTableAdminStub::GetIamPolicy(
     grpc::ClientContext& client_context,
     google::iam::v1::GetIamPolicyRequest const& request) {

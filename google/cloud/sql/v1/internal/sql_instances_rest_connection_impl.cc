@@ -485,6 +485,22 @@ SqlInstancesServiceRestConnectionImpl::ResetReplicaSize(
       request, __func__);
 }
 
+StatusOr<google::cloud::sql::v1::SqlInstancesGetLatestRecoveryTimeResponse>
+SqlInstancesServiceRestConnectionImpl::GetLatestRecoveryTime(
+    google::cloud::sql::v1::SqlInstancesGetLatestRecoveryTimeRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::rest_internal::RestRetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetLatestRecoveryTime(request),
+      [this](rest_internal::RestContext& rest_context,
+             google::cloud::sql::v1::
+                 SqlInstancesGetLatestRecoveryTimeRequest const& request) {
+        return stub_->GetLatestRecoveryTime(rest_context, request);
+      },
+      request, __func__);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace sql_v1_internal
 }  // namespace cloud

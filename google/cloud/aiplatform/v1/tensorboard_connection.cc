@@ -80,6 +80,12 @@ TensorboardServiceConnection::ReadTensorboardUsage(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StatusOr<google::cloud::aiplatform::v1::ReadTensorboardSizeResponse>
+TensorboardServiceConnection::ReadTensorboardSize(
+    google::cloud::aiplatform::v1::ReadTensorboardSizeRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 StatusOr<google::cloud::aiplatform::v1::TensorboardExperiment>
 TensorboardServiceConnection::CreateTensorboardExperiment(
     google::cloud::aiplatform::v1::CreateTensorboardExperimentRequest const&) {
