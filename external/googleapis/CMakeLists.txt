@@ -74,7 +74,6 @@ set(EXTERNAL_GOOGLEAPIS_PROTO_FILES
     # does not appear in protolists/asset.list. In addition, it is not compiled
     # by any other library. So, added manually.
     "google/cloud/orgpolicy/v1/orgpolicy.proto"
-    "google/devtools/source/v1/source_context.proto"
     "google/longrunning/operations.proto"
     "google/rpc/code.proto"
     "google/rpc/context/attribute_context.proto"
@@ -219,7 +218,6 @@ set(external_googleapis_installed_libraries_list
     google_cloud_cpp_cloud_texttospeech_protos
     google_cloud_cpp_devtools_cloudtrace_v2_trace_protos
     google_cloud_cpp_devtools_cloudtrace_v2_tracing_protos
-    google_cloud_cpp_devtools_source_v1_source_context_protos
     google_cloud_cpp_iam_protos
     google_cloud_cpp_iam_v1_iam_policy_protos
     google_cloud_cpp_iam_v1_options_protos
@@ -353,9 +351,6 @@ external_googleapis_add_library(
     "google/devtools/cloudtrace/v2/tracing.proto"
     devtools_cloudtrace_v2_trace_protos api_annotations_protos
     api_client_protos api_field_behavior_protos rpc_status_protos)
-
-external_googleapis_add_library("google/devtools/source/v1/source_context.proto"
-                                api_annotations_protos)
 
 google_cloud_cpp_load_protolist(cloud_bigquery_list "protolists/bigquery.list")
 google_cloud_cpp_load_protodeps(cloud_bigquery_deps "protodeps/bigquery.deps")
