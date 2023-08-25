@@ -31,9 +31,10 @@ mapfile -t ctest_args < <(ctest::common_args)
 # Federation, and sometimes BYOID (Bring Your Own ID).
 features=(
   # Enable the smallest set of libraries libraries that will compile gRPC and
-  # REST-based authentication components
+  # REST-based authentication components and tests.
   storage
   iam
+  bigtable
 )
 enable=$(printf ";%s" "${features[@]}")
 enable=${enable:1}
