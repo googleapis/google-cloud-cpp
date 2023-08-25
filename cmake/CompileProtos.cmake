@@ -483,3 +483,22 @@ macro (google_cloud_cpp_find_proto_include_dir VAR)
         list(INSERT PROTOBUF_IMPORT_DIRS 0 "${${VAR}}")
     endif ()
 endmacro ()
+
+# We used to offer the proto library by another name. Maintain backwards
+# compatibility by providing an interface library with that name. See
+# https://github.com/googleapis/google-cloud-cpp/issues/8022 for more details.
+function (google_cloud_cpp_backwards_compat_protos_library old_name new_name)
+    add_library(google_cloud_cpp_${old_name} INTERFACE)
+    set_target_properties(google_cloud_cpp_${old_name}
+                          PROPERTIES EXPORT_NAME google-cloud-cpp::${old_name})
+    add_library(google-cloud-cpp::${old_name} ALIAS
+                google_cloud_cpp_${old_name})
+    target_link_libraries(
+        google_cloud_cpp_${old_name}
+        PUBLIC
+        INTERFACE google-cloud-cpp::${new_name})
+
+    google_cloud_cpp_add_pkgconfig(
+        ${old_name} "The Google APIS C++ ${old_name} Proto Library"
+        "Compiled proto for C++." "google_cloud_cpp_${new_name}")
+endfunction ()
