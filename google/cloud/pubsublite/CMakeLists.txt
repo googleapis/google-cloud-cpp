@@ -24,6 +24,8 @@ set(DOXYGEN_EXAMPLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/samples
                          ${CMAKE_CURRENT_SOURCE_DIR}/quickstart)
 
 include(GoogleCloudCppDoxygen)
+set(GOOGLE_CLOUD_CPP_DOXYGEN_EXTRA_INCLUDES
+    "${PROJECT_BINARY_DIR}/google/cloud/pubsub")
 google_cloud_cpp_doxygen_targets("pubsublite" DEPENDS cloud-docs
                                  google-cloud-cpp::pubsublite_protos)
 
