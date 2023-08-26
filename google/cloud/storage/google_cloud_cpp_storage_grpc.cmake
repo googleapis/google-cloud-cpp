@@ -28,6 +28,12 @@ if (NOT GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
             google_cloud_cpp_storage_grpc
             INTERFACE GOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND)
     endif ()
+    add_library(google_cloud_cpp_storage_protos INTERFACE)
+    add_library(google-cloud-cpp::storage_protos ALIAS
+                google_cloud_cpp_storage_protos)
+    set_target_properties(
+        google_cloud_cpp_storage_protos
+        PROPERTIES EXPORT_NAME "google-cloud-cpp::storage_protos")
 else ()
     include(CompileProtos)
     google_cloud_cpp_find_proto_include_dir(PROTO_INCLUDE_DIR)
@@ -185,6 +191,7 @@ install(
     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
             COMPONENT google_cloud_cpp_development)
 
+include(CompileProtos)
 google_cloud_cpp_install_proto_library_protos(google_cloud_cpp_storage_protos
                                               "${EXTERNAL_GOOGLEAPIS_SOURCE}")
 google_cloud_cpp_install_proto_library_headers(google_cloud_cpp_storage_protos)
