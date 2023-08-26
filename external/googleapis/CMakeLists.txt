@@ -211,7 +211,6 @@ endif ()
 
 set(external_googleapis_installed_libraries_list
     # cmake-format: sort
-    google_cloud_cpp_cloud_bigquery_protos
     google_cloud_cpp_cloud_common_common_protos
     google_cloud_cpp_cloud_texttospeech_protos
     google_cloud_cpp_devtools_cloudtrace_v2_trace_protos
@@ -347,16 +346,6 @@ external_googleapis_add_library(
     "google/devtools/cloudtrace/v2/tracing.proto"
     devtools_cloudtrace_v2_trace_protos api_annotations_protos
     api_client_protos api_field_behavior_protos rpc_status_protos)
-
-google_cloud_cpp_load_protolist(cloud_bigquery_list "protolists/bigquery.list")
-google_cloud_cpp_load_protodeps(cloud_bigquery_deps "protodeps/bigquery.deps")
-google_cloud_cpp_grpcpp_library(
-    google_cloud_cpp_cloud_bigquery_protos ${cloud_bigquery_list}
-    PROTO_PATH_DIRECTORIES "${EXTERNAL_GOOGLEAPIS_SOURCE}"
-    "${PROTO_INCLUDE_DIR}")
-external_googleapis_set_version_and_alias(cloud_bigquery_protos)
-target_link_libraries(google_cloud_cpp_cloud_bigquery_protos
-                      PUBLIC ${cloud_bigquery_deps})
 
 google_cloud_cpp_load_protolist(cloud_dialogflow_v2_list
                                 "protolists/dialogflow_es.list")
