@@ -29,6 +29,21 @@ if (NOT GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
             INTERFACE GOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND)
     endif ()
 else ()
+    include(CompileProtos)
+    google_cloud_cpp_find_proto_include_dir(PROTO_INCLUDE_DIR)
+    google_cloud_cpp_load_protolist(
+        storage_list
+        "${PROJECT_SOURCE_DIR}/external/googleapis/protolists/storage.list")
+    google_cloud_cpp_load_protodeps(
+        storage_deps
+        "${PROJECT_SOURCE_DIR}/external/googleapis/protodeps/storage.deps")
+    google_cloud_cpp_grpcpp_library(
+        google_cloud_cpp_storage_protos ${storage_list} PROTO_PATH_DIRECTORIES
+        "${EXTERNAL_GOOGLEAPIS_SOURCE}" "${PROTO_INCLUDE_DIR}")
+    external_googleapis_set_version_and_alias(storage_protos)
+    target_link_libraries(google_cloud_cpp_storage_protos
+                          PUBLIC ${storage_deps})
+
     add_library(
         google_cloud_cpp_storage_grpc # cmake-format: sort
         async_client.cc
@@ -160,27 +175,23 @@ google_cloud_cpp_add_pkgconfig(
     "openssl")
 
 install(
-    TARGETS google_cloud_cpp_storage_grpc
+    TARGETS google_cloud_cpp_storage_grpc google_cloud_cpp_storage_protos
     EXPORT storage-targets
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
             COMPONENT google_cloud_cpp_runtime
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
             COMPONENT google_cloud_cpp_runtime
-            NAMELINK_SKIP
-    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-            COMPONENT google_cloud_cpp_development)
-# With CMake-3.12 and higher we could avoid this separate command (and the
-# duplication).
-install(
-    TARGETS google_cloud_cpp_storage_grpc
-    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-            COMPONENT google_cloud_cpp_development
-            NAMELINK_ONLY
+            NAMELINK_COMPONENT google_cloud_cpp_development
     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
             COMPONENT google_cloud_cpp_development)
 
+google_cloud_cpp_install_proto_library_protos(google_cloud_cpp_storage_protos
+                                              "${EXTERNAL_GOOGLEAPIS_SOURCE}")
+google_cloud_cpp_install_proto_library_headers(google_cloud_cpp_storage_protos)
 google_cloud_cpp_install_headers(google_cloud_cpp_storage_grpc
                                  include/google/cloud/storage)
+
+external_googleapis_install_pc(google_cloud_cpp_storage_protos)
 
 if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
     # This is a bit weird, we add an additional link library to
