@@ -23,6 +23,8 @@ set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION}")
 set(DOXYGEN_EXCLUDE_SYMBOLS "internal" "otel_internal")
 set(DOXYGEN_EXAMPLE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/quickstart"
                          "${CMAKE_CURRENT_SOURCE_DIR}/samples")
+set(GOOGLE_CLOUD_CPP_DOXYGEN_EXTRA_INCLUDES
+    "${PROJECT_BINARY_DIR}/google/cloud/trace")
 
 include(GoogleCloudCppDoxygen)
 google_cloud_cpp_doxygen_targets("opentelemetry" DEPENDS cloud-docs
