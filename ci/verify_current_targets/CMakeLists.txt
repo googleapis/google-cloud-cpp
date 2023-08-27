@@ -79,6 +79,7 @@ endforeach ()
 
 set(backwards_compat_proto_libraries
     # cmake-format: sortable
+    "cloud_dialogflow_v2_protos"
     "cloud_speech_protos"
     "cloud_texttospeech_protos"
     "devtools_cloudtrace_v2_trace_protos"
