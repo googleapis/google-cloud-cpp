@@ -358,21 +358,6 @@ external_googleapis_set_version_and_alias(cloud_bigquery_protos)
 target_link_libraries(google_cloud_cpp_cloud_bigquery_protos
                       PUBLIC ${cloud_bigquery_deps})
 
-google_cloud_cpp_load_protolist(cloud_dialogflow_v2_list
-                                "protolists/dialogflow_es.list")
-google_cloud_cpp_load_protodeps(cloud_dialogflow_v2_deps
-                                "protodeps/dialogflow_es.deps")
-google_cloud_cpp_grpcpp_library(
-    google_cloud_cpp_cloud_dialogflow_v2_protos ${cloud_dialogflow_v2_list}
-    PROTO_PATH_DIRECTORIES "${EXTERNAL_GOOGLEAPIS_SOURCE}"
-    "${PROTO_INCLUDE_DIR}")
-external_googleapis_set_version_and_alias(cloud_dialogflow_v2_protos)
-target_link_libraries(google_cloud_cpp_cloud_dialogflow_v2_protos
-                      PUBLIC ${cloud_dialogflow_v2_deps})
-
-list(APPEND external_googleapis_installed_libraries_list
-     google_cloud_cpp_cloud_dialogflow_v2_protos)
-
 google_cloud_cpp_load_protolist(cloud_texttospeech_list
                                 "protolists/texttospeech.list")
 google_cloud_cpp_load_protodeps(cloud_texttospeech_deps
