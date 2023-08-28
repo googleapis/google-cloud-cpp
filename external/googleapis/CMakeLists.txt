@@ -212,9 +212,6 @@ endif ()
 set(external_googleapis_installed_libraries_list
     # cmake-format: sort
     google_cloud_cpp_cloud_common_common_protos
-    google_cloud_cpp_cloud_texttospeech_protos
-    google_cloud_cpp_devtools_cloudtrace_v2_trace_protos
-    google_cloud_cpp_devtools_cloudtrace_v2_tracing_protos
     google_cloud_cpp_iam_protos
     google_cloud_cpp_iam_v1_iam_policy_protos
     google_cloud_cpp_iam_v1_options_protos
@@ -338,41 +335,6 @@ google_cloud_cpp_grpcpp_library(
 external_googleapis_set_version_and_alias(cloud_common_common_protos)
 target_link_libraries(google_cloud_cpp_cloud_common_common_protos
                       PUBLIC ${cloud_common_deps})
-
-external_googleapis_add_library(
-    "google/devtools/cloudtrace/v2/trace.proto" api_annotations_protos
-    api_field_behavior_protos api_resource_protos rpc_status_protos)
-external_googleapis_add_library(
-    "google/devtools/cloudtrace/v2/tracing.proto"
-    devtools_cloudtrace_v2_trace_protos api_annotations_protos
-    api_client_protos api_field_behavior_protos rpc_status_protos)
-
-google_cloud_cpp_load_protolist(cloud_dialogflow_v2_list
-                                "protolists/dialogflow_es.list")
-google_cloud_cpp_load_protodeps(cloud_dialogflow_v2_deps
-                                "protodeps/dialogflow_es.deps")
-google_cloud_cpp_grpcpp_library(
-    google_cloud_cpp_cloud_dialogflow_v2_protos ${cloud_dialogflow_v2_list}
-    PROTO_PATH_DIRECTORIES "${EXTERNAL_GOOGLEAPIS_SOURCE}"
-    "${PROTO_INCLUDE_DIR}")
-external_googleapis_set_version_and_alias(cloud_dialogflow_v2_protos)
-target_link_libraries(google_cloud_cpp_cloud_dialogflow_v2_protos
-                      PUBLIC ${cloud_dialogflow_v2_deps})
-
-list(APPEND external_googleapis_installed_libraries_list
-     google_cloud_cpp_cloud_dialogflow_v2_protos)
-
-google_cloud_cpp_load_protolist(cloud_texttospeech_list
-                                "protolists/texttospeech.list")
-google_cloud_cpp_load_protodeps(cloud_texttospeech_deps
-                                "protodeps/texttospeech.deps")
-google_cloud_cpp_grpcpp_library(
-    google_cloud_cpp_cloud_texttospeech_protos ${cloud_texttospeech_list}
-    PROTO_PATH_DIRECTORIES "${EXTERNAL_GOOGLEAPIS_SOURCE}"
-    "${PROTO_INCLUDE_DIR}")
-external_googleapis_set_version_and_alias(cloud_texttospeech_protos)
-target_link_libraries(google_cloud_cpp_cloud_texttospeech_protos
-                      PUBLIC ${cloud_texttospeech_deps})
 
 google_cloud_cpp_load_protolist(iam_list "protolists/iam.list")
 google_cloud_cpp_load_protodeps(iam_deps "protodeps/iam.deps")

@@ -73,12 +73,13 @@ endforeach ()
 
 # Verify backwards compatible proto libraries are installed. See #8022 for more
 # details.
-foreach (library "dialogflow_es" "monitoring" "speech" "trace")
+foreach (library "dialogflow_es" "monitoring" "speech" "texttospeech" "trace")
     find_package(google_cloud_cpp_${library})
 endforeach ()
 
 set(backwards_compat_proto_libraries
     # cmake-format: sortable
+    "cloud_dialogflow_v2_protos"
     "cloud_speech_protos"
     "cloud_texttospeech_protos"
     "devtools_cloudtrace_v2_trace_protos"
