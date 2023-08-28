@@ -118,22 +118,8 @@ function (google_cloud_cpp_add_ga_grpc_library library display_name)
     include(GoogleCloudCppCommon)
 
     include(CompileProtos)
-    google_cloud_cpp_find_proto_include_dir(PROTO_INCLUDE_DIR)
-    google_cloud_cpp_load_protolist(
-        proto_list
-        "${PROJECT_SOURCE_DIR}/external/googleapis/protolists/${library}.list")
-    if (_opt_ADDITIONAL_PROTO_LISTS)
-        list(APPEND proto_list "${_opt_ADDITIONAL_PROTO_LISTS}")
-    endif ()
-    google_cloud_cpp_load_protodeps(
-        proto_deps
-        "${PROJECT_SOURCE_DIR}/external/googleapis/protodeps/${library}.deps")
-    google_cloud_cpp_grpcpp_library(
-        ${protos_target} # cmake-format: sort
-        ${proto_list} PROTO_PATH_DIRECTORIES "${EXTERNAL_GOOGLEAPIS_SOURCE}"
-        "${PROTO_INCLUDE_DIR}")
-    external_googleapis_set_version_and_alias(${library}_protos)
-    target_link_libraries(${protos_target} PUBLIC ${proto_deps})
+    google_cloud_cpp_add_library_protos(${library} ADDITIONAL_PROTO_LISTS
+                                        ${_opt_ADDITIONAL_PROTO_LISTS})
 
     # We used to offer the proto library by another name. Maintain backwards
     # compatibility by providing an interface library with that name. Also make
