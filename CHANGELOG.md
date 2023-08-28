@@ -140,6 +140,47 @@ The library has been expanded to include the v2 service.
 consider this a breaking change, as Bazel 5.x has been in maintenance mode for
 more than 6 months.
 
+**CMake Proto Libraries**: We no longer compile certain protos, unless the
+corresponding client library is enabled, via `-DGOOGLE_CLOUD_CPP_ENABLE=...`.
+
+This change reduces build times with `cmake` for customers who build with
+`cmake` and who are not using **all** of the client libraries listed below.
+
+The impacted libraries are:
+- `bigquery`
+- `bigtable`
+- `dialogflow_es`
+- `iam`
+- `logging`
+- `pubsub`
+- `speech`
+- `storage`
+- `texttospeech`
+- `trace`
+
+If you are dependent on any of these proto libraries **and** you are not
+compiling the corresponding client library, you will need to update your build
+scripts.
+
+For example, if you depend on `google_cloud_cpp_speech_protos`, (e.g. if you
+have been using this library to make calls to Cloud Speech using raw gRPC), add
+`-DGOOGLE_CLOUD_CPP_ENABLE=...,speech,...` to your CMake configure command. If
+you build with `vcpkg`, include `speech` in your install command.
+
+Note that `google_cloud_cpp_storage_protos` are associated with the
+`experimental-storage-grpc` feature, not the `storage` feature.
+
+We do not make changes that can break our customers lightly. We considered it
+[a bug](#8022) that the majority of customers building with `cmake` were forced
+to compile large proto libraries that they did not need. It was needlessly
+[confusing](#10174). And we expect the number of customers who will benefit from
+this change eclipse the number of customers who are affected negatively by it.
+Hence, we think this change is necessary.
+
+We offered many of these proto libraries before we could write and maintain the
+full client libraries. Now that we have full client libraries for these
+services, we do not expect the proto libraries to be very useful.
+
 ## v2.14.0 - 2023-08
 
 ### New Libraries
@@ -4247,6 +4288,7 @@ releases. The relevant notes are:
 - Synchronous API for table admin operations is complete.
 
 [#10170]: https://github.com/googleapis/google-cloud-cpp/issues/10170
+[#10174]: https://github.com/googleapis/google-cloud-cpp/discussions/10174
 [#5726]: https://github.com/googleapis/google-cloud-cpp/issues/5726
 [#5923]: https://github.com/googleapis/google-cloud-cpp/issues/5923
 [#5929]: https://github.com/googleapis/google-cloud-cpp/issues/5929
@@ -4254,6 +4296,7 @@ releases. The relevant notes are:
 [#7356]: https://github.com/googleapis/google-cloud-cpp/issues/7356
 [#7463]: https://github.com/googleapis/google-cloud-cpp/issues/7463
 [#7835]: https://github.com/googleapis/google-cloud-cpp/issues/7835
+[#8022]: https://github.com/googleapis/google-cloud-cpp/issues/8022
 [#8095]: https://github.com/googleapis/google-cloud-cpp/pull/8095
 [#8099]: https://github.com/googleapis/google-cloud-cpp/pull/8099
 [#8234]: https://github.com/googleapis/google-cloud-cpp/issues/8234
