@@ -14,9 +14,9 @@
 # limitations under the License.
 # ~~~
 
-unset(mocks_globs)
-unset(source_globs)
-set(service_dirs
+include(GoogleCloudCppLibrary)
+
+set(GOOGLE_CLOUD_CPP_SERVICE_DIRS
     ""
     "analyticshub/v1/"
     "biglake/v1/"
@@ -26,70 +26,10 @@ set(service_dirs
     "migration/v2/"
     "reservation/v1/"
     "storage/v1/")
-foreach (dir IN LISTS service_dirs)
-    string(REPLACE "/" "_" ns "${dir}")
-    list(APPEND source_globs "${dir}*.h" "${dir}*.cc" "${dir}internal/*")
-    list(APPEND mocks_globs "${dir}mocks/*.h")
-    list(APPEND DOXYGEN_EXCLUDE_SYMBOLS "bigquery_${ns}internal")
-    list(APPEND DOXYGEN_EXAMPLE_PATH
-         "${CMAKE_CURRENT_SOURCE_DIR}/${dir}samples")
-endforeach ()
 
-file(
-    GLOB source_files
-    RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}"
-    ${source_globs})
-list(SORT source_files)
-add_library(google_cloud_cpp_bigquery ${source_files})
-target_include_directories(
-    google_cloud_cpp_bigquery
-    PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
-           $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
-           $<INSTALL_INTERFACE:include>)
-target_link_libraries(
-    google_cloud_cpp_bigquery
-    PUBLIC google-cloud-cpp::grpc_utils google-cloud-cpp::common
-           google-cloud-cpp::cloud_bigquery_protos)
-google_cloud_cpp_add_common_options(google_cloud_cpp_bigquery)
-set_target_properties(
-    google_cloud_cpp_bigquery
-    PROPERTIES EXPORT_NAME google-cloud-cpp::bigquery
-               VERSION "${PROJECT_VERSION}"
-               SOVERSION "${PROJECT_VERSION_MAJOR}")
-target_compile_options(google_cloud_cpp_bigquery
-                       PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
-
-add_library(google-cloud-cpp::bigquery ALIAS google_cloud_cpp_bigquery)
-
-# Create a header-only library for the mocks. We use a CMake `INTERFACE` library
-# for these, a regular library would not work on macOS (where the library needs
-# at least one .o file). Unfortunately INTERFACE libraries are a bit weird in
-# that they need absolute paths for their sources. target_sources example:
-# ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_servicename_v2_connection.h
-file(
-    GLOB relative_mock_files
-    RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}"
-    ${mocks_globs})
-list(SORT relative_mock_files)
-set(mock_files)
-foreach (file IN LISTS relative_mock_files)
-    list(APPEND mock_files "${CMAKE_CURRENT_SOURCE_DIR}/${file}")
-endforeach ()
-add_library(google_cloud_cpp_bigquery_mocks INTERFACE)
-target_sources(google_cloud_cpp_bigquery_mocks INTERFACE ${mock_files})
-target_link_libraries(
-    google_cloud_cpp_bigquery_mocks
-    INTERFACE google-cloud-cpp::bigquery GTest::gmock_main GTest::gmock
-              GTest::gtest)
-set_target_properties(google_cloud_cpp_bigquery_mocks
-                      PROPERTIES EXPORT_NAME google-cloud-cpp::bigquery_mocks)
-target_include_directories(
-    google_cloud_cpp_bigquery_mocks
-    INTERFACE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
-              $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
-              $<INSTALL_INTERFACE:include>)
-target_compile_options(google_cloud_cpp_bigquery_mocks
-                       INTERFACE ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
+google_cloud_cpp_add_ga_grpc_library(
+    bigquery "Google Cloud BigQuery API" BACKWARDS_COMPAT_PROTO_TARGETS
+    "cloud_bigquery_protos")
 
 # Examples are enabled if possible, but package maintainers may want to disable
 # compilation to speed up their builds.
@@ -108,69 +48,10 @@ if (GOOGLE_CLOUD_CPP_ENABLE_EXAMPLES)
                          PROPERTIES LABELS "integration-test;quickstart")
 endif ()
 
-# Get the destination directories based on the GNU recommendations.
-include(GNUInstallDirs)
-
-# Export the CMake targets to make it easy to create configuration files.
-install(
-    EXPORT google_cloud_cpp_bigquery-targets
-    DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_bigquery"
-    COMPONENT google_cloud_cpp_development)
-
-# Install the libraries and headers in the locations determined by
-# GNUInstallDirs
-install(
-    TARGETS google_cloud_cpp_bigquery
-    EXPORT google_cloud_cpp_bigquery-targets
-    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-            COMPONENT google_cloud_cpp_runtime
-    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-            COMPONENT google_cloud_cpp_runtime
-            NAMELINK_SKIP
-    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-            COMPONENT google_cloud_cpp_development)
-# With CMake-3.12 and higher we could avoid this separate command (and the
-# duplication).
-install(
-    TARGETS google_cloud_cpp_bigquery
-    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-            COMPONENT google_cloud_cpp_development
-            NAMELINK_ONLY
-    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-            COMPONENT google_cloud_cpp_development)
-
-google_cloud_cpp_install_headers("google_cloud_cpp_bigquery"
-                                 "include/google/cloud/bigquery")
-google_cloud_cpp_install_headers("google_cloud_cpp_bigquery_mocks"
-                                 "include/google/cloud/bigquery")
-
-google_cloud_cpp_add_pkgconfig(
-    bigquery
-    "The Google Cloud BigQuery C++ Client Library"
-    "Provides C++ APIs to access Google Cloud BigQuery."
-    "google_cloud_cpp_grpc_utils"
-    "google_cloud_cpp_common"
-    "google_cloud_cpp_cloud_bigquery_protos")
-
-# Create and install the CMake configuration files.
-include(CMakePackageConfigHelpers)
-configure_file("config.cmake.in" "google_cloud_cpp_bigquery-config.cmake" @ONLY)
-write_basic_package_version_file(
-    "google_cloud_cpp_bigquery-config-version.cmake"
-    VERSION ${PROJECT_VERSION}
-    COMPATIBILITY ExactVersion)
-
-install(
-    FILES
-        "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_bigquery-config.cmake"
-        "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_bigquery-config-version.cmake"
-    DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_bigquery"
-    COMPONENT google_cloud_cpp_development)
-
+# BigQuery has a handwritten sample that demonstrates mocking. The executable is
+# added by `google_cloud_cpp_add_ga_grpc_library()`. We need to manually link it
+# against Google Mock.
 if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
-    foreach (dir IN LISTS service_dirs)
-        google_cloud_cpp_add_samples_relative("bigquery" "${dir}samples/")
-    endforeach ()
     target_link_libraries(bigquery_samples_mock_bigquery_read
                           PRIVATE GTest::gmock_main)
 endif ()
