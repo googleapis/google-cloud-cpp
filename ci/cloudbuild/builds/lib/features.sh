@@ -67,7 +67,3 @@ function features::list_full() {
 function features::list_full_cmake() {
   echo "__ga_libraries__,__experimental_libraries__,experimental-storage-grpc,experimental-opentelemetry,experimental-bigquery_rest"
 }
-
-function features::list_doxygen_cmake_no_compute() {
-  echo "__ga_experimental_no_compute_libraries__,experimental-storage-grpc,experimental-opentelemetry,experimental-bigquery_rest"
-}

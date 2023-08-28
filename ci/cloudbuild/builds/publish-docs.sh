@@ -26,7 +26,8 @@ if [[ "${TRIGGER_TYPE}" == "ci" ]]; then
   read -r ENABLED_FEATURES < <(features::list_full_cmake)
 elif [[ "${LIBRARIES}" == "all_bar_compute" ]]; then
   mapfile -t FEATURE_LIST < <(features::list_full | grep -v "^compute$")
-  read -r ENABLED_FEATURES < <(features::list_doxygen_cmake_no_compute)
+  read -r ENABLED_FEATURES < <(features::list_full_cmake)
+  ENABLED_FEATURES="${ENABLED_FEATURES},-compute"
 else
   mapfile -t FEATURE_LIST < <(printf '%s' "${LIBRARIES}")
   ENABLED_FEATURES="compute"
