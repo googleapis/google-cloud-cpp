@@ -18,19 +18,8 @@ include(GoogleapisConfig)
 
 include(GoogleCloudCppCommon)
 
-include(CompileProtos)
-google_cloud_cpp_find_proto_include_dir(PROTO_INCLUDE_DIR)
-google_cloud_cpp_load_protolist(
-    grafeas_list
-    "${PROJECT_SOURCE_DIR}/external/googleapis/protolists/grafeas.list")
-google_cloud_cpp_load_protodeps(
-    grafeas_deps
-    "${PROJECT_SOURCE_DIR}/external/googleapis/protodeps/grafeas.deps")
-google_cloud_cpp_grpcpp_library(
-    google_cloud_cpp_grafeas_protos ${grafeas_list} PROTO_PATH_DIRECTORIES
-    "${EXTERNAL_GOOGLEAPIS_SOURCE}" "${PROTO_INCLUDE_DIR}")
-external_googleapis_set_version_and_alias(grafeas_protos)
-target_link_libraries(google_cloud_cpp_grafeas_protos PUBLIC ${grafeas_deps})
+include(GoogleCloudCppLibrary)
+google_cloud_cpp_add_library_protos(grafeas)
 
 # Get the destination directories based on the GNU recommendations.
 include(GNUInstallDirs)
@@ -63,11 +52,6 @@ install(
     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
             COMPONENT google_cloud_cpp_development)
 
-google_cloud_cpp_install_proto_library_protos("google_cloud_cpp_grafeas_protos"
-                                              "${EXTERNAL_GOOGLEAPIS_SOURCE}")
-google_cloud_cpp_install_proto_library_headers(
-    "google_cloud_cpp_grafeas_protos")
-
 # Create and install the CMake configuration files.
 include(CMakePackageConfigHelpers)
 configure_file("config.cmake.in" "google_cloud_cpp_grafeas-config.cmake" @ONLY)
@@ -82,5 +66,3 @@ install(
         "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_grafeas-config-version.cmake"
     DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_grafeas"
     COMPONENT google_cloud_cpp_development)
-
-external_googleapis_install_pc("google_cloud_cpp_grafeas_protos")
