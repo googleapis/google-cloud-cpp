@@ -14,46 +14,6 @@
 # limitations under the License.
 # ~~~
 
-include(GoogleapisConfig)
-
-include(GoogleCloudCppCommon)
-
 include(GoogleCloudCppLibrary)
-google_cloud_cpp_add_library_protos(grafeas)
 
-# Get the destination directories based on the GNU recommendations.
-include(GNUInstallDirs)
-
-# Export the CMake targets to make it easy to create configuration files.
-install(
-    EXPORT google_cloud_cpp_grafeas-targets
-    DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_grafeas"
-    COMPONENT google_cloud_cpp_development)
-
-# Install the libraries and headers in the locations determined by
-# GNUInstallDirs
-install(
-    TARGETS google_cloud_cpp_grafeas_protos
-    EXPORT google_cloud_cpp_grafeas-targets
-    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-            COMPONENT google_cloud_cpp_runtime
-    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-            COMPONENT google_cloud_cpp_runtime
-            NAMELINK_COMPONENT google_cloud_cpp_development
-    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-            COMPONENT google_cloud_cpp_development)
-
-# Create and install the CMake configuration files.
-include(CMakePackageConfigHelpers)
-configure_file("config.cmake.in" "google_cloud_cpp_grafeas-config.cmake" @ONLY)
-write_basic_package_version_file(
-    "google_cloud_cpp_grafeas-config-version.cmake"
-    VERSION ${PROJECT_VERSION}
-    COMPATIBILITY ExactVersion)
-
-install(
-    FILES
-        "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_grafeas-config.cmake"
-        "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_grafeas-config-version.cmake"
-    DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_grafeas"
-    COMPONENT google_cloud_cpp_development)
+google_cloud_cpp_add_library_protos(grafeas EXPORT_TARGET)

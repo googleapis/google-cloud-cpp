@@ -19,7 +19,7 @@ include(GoogleCloudCppLibrary)
 set(GOOGLE_CLOUD_CPP_SERVICE_DIRS "" "v1/")
 
 google_cloud_cpp_add_ga_grpc_library(containeranalysis "Container Analysis API"
-                                     CROSS_LIB_DEPS "grafeas")
+                                     SHARED_PROTO_DEPS "grafeas")
 
 if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
     add_executable(containeranalysis_quickstart "quickstart/quickstart.cc")
