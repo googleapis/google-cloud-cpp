@@ -21,7 +21,11 @@ source module ci/cloudbuild/builds/lib/cmake.sh
 source module ci/cloudbuild/builds/lib/features.sh
 source module ci/lib/io.sh
 
-if [[ "${TRIGGER_TYPE}" == "ci" ]]; then
+if [[ "${TRIGGER_TYPE}" == "manual" && "${LIBRARIES}" == "all" ]]; then
+  LIBRARIES="all_bar_compute"
+fi
+
+if [[ "${LIBRARIES}" == "all" ]]; then
   mapfile -t FEATURE_LIST < <(features::list_full)
   read -r ENABLED_FEATURES < <(features::list_full_cmake)
 elif [[ "${LIBRARIES}" == "all_bar_compute" ]]; then

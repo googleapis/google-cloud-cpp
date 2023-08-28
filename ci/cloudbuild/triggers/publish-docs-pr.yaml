@@ -10,6 +10,7 @@ substitutions:
   _BUILD_NAME: publish-docs
   _DISTRO: fedora-37-cmake
   _TRIGGER_TYPE: pr
+  _LIBRARIES: all_bar_compute
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
 tags:
 - pr

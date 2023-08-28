@@ -9,6 +9,7 @@ substitutions:
   _BUILD_NAME: publish-docs
   _DISTRO: fedora-37-cmake
   _TRIGGER_TYPE: ci
+  _LIBRARIES: all
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
 tags:
 - ci
