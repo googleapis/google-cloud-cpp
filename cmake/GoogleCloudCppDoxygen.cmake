@@ -39,7 +39,8 @@ function (google_cloud_cpp_doxygen_targets_impl library)
         return()
     endif ()
 
-    cmake_parse_arguments(opt "RECURSIVE" "" "INPUTS;TAGFILES;DEPENDS" ${ARGN})
+    cmake_parse_arguments(opt "RECURSIVE;THREADED" "" "INPUTS;TAGFILES;DEPENDS"
+                          ${ARGN})
 
     # Options controlling the inputs into Doxygen
     set(GOOGLE_CLOUD_CPP_DOXYGEN_INPUTS ${_opt_INPUTS})
@@ -48,6 +49,16 @@ function (google_cloud_cpp_doxygen_targets_impl library)
         set(DOXYGEN_RECURSIVE YES)
     else ()
         set(DOXYGEN_RECURSIVE NO)
+    endif ()
+    if (opt_THREADED)
+        set(DOXYGEN_NUM_PROC_THREADS 32)
+        cmake_host_system_information(RESULT NUM_CORES
+                                      QUERY NUMBER_OF_LOGICAL_CORES)
+        if (NUM_CORES LESS DOXYGEN_NUM_PROC_THREADS)
+            set(DOXYGEN_NUM_PROC_THREADS NUM_CORES)
+        endif ()
+    else ()
+        set(DOXYGEN_NUM_PROC_THREADS 1)
     endif ()
     set(DOXYGEN_FILE_PATTERNS "*.dox" "*.h")
     set(DOXYGEN_EXCLUDE_PATTERNS
@@ -182,7 +193,10 @@ function (google_cloud_cpp_doxygen_targets_impl library)
 endfunction ()
 
 function (google_cloud_cpp_doxygen_targets library)
-    cmake_parse_arguments(opt "" "" "DEPENDS" ${ARGN})
+    cmake_parse_arguments(opt "THREADED" "" "DEPENDS" ${ARGN})
+    if (opt_THREADED)
+        set(DOXYGEN_THREADED THREADED)
+    endif ()
 
     google_cloud_cpp_doxygen_deploy_version(VERSION)
     set(GOOGLE_CLOUD_CPP_COMMON_TAG
@@ -190,6 +204,7 @@ function (google_cloud_cpp_doxygen_targets library)
     google_cloud_cpp_doxygen_targets_impl(
         "${library}"
         RECURSIVE
+        ${DOXYGEN_THREADED}
         INPUTS
         "${CMAKE_CURRENT_SOURCE_DIR}"
         DEPENDS

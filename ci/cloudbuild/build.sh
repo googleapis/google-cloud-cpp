@@ -181,6 +181,7 @@ fi
 : "${TRIGGER_TYPE:=manual}"
 : "${BRANCH_NAME:=$(git branch --show-current)}"
 : "${COMMIT_SHA:=$(git rev-parse HEAD)}"
+: "${LIBRARIES:=all}"
 CODECOV_TOKEN="$(tr -d '[:space:]' <<<"${CODECOV_TOKEN:-}")"
 
 export CODECOV_TOKEN
@@ -188,6 +189,7 @@ export BRANCH_NAME
 export COMMIT_SHA
 export TRIGGER_TYPE
 export VERBOSE_FLAG
+export LIBRARIES
 
 # --local is the most fundamental build mode, in that all other builds
 # eventually call this one. For example, a --docker build will build the
@@ -331,6 +333,7 @@ if [[ "${DOCKER_FLAG}" = "true" ]]; then
     "--env=TRIGGER_TYPE=${TRIGGER_TYPE:-}"
     "--env=VERBOSE_FLAG=${VERBOSE_FLAG:-}"
     "--env=USE_BAZEL_VERSION=${USE_BAZEL_VERSION:-}"
+    "--env=LIBRARIES=${LIBRARIES:-}"
     # Mounts an empty volume over "build-out" to isolate builds from each
     # other. Doesn't affect GCB builds, but it helps our local docker builds.
     "--volume=/workspace/build-out"
