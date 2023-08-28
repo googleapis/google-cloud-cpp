@@ -15,9 +15,11 @@
 #include "google/cloud/storage/benchmarks/throughput_experiment.h"
 #include "google/cloud/storage/benchmarks/benchmark_utils.h"
 #include "google/cloud/storage/client.h"
+#if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
 #include "google/cloud/storage/internal/grpc/ctype_cord_workaround.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include <google/storage/v2/storage.grpc.pb.h>
+#endif  // GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
 #include <curl/curl.h>
 #include <iterator>
 #include <vector>
@@ -335,6 +337,7 @@ class DownloadObjectLibcurl : public ThroughputExperiment {
   std::shared_ptr<google::cloud::storage::oauth2::Credentials> creds_;
 };
 
+#if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
 std::shared_ptr<grpc::ChannelInterface> CreateGcsChannel(
     ThroughputOptions const& options, int thread_id,
     ExperimentTransport transport) {
@@ -409,6 +412,7 @@ class DownloadObjectRawGrpc : public ThroughputExperiment {
   std::unique_ptr<google::storage::v2::Storage::StubInterface> stub_;
   ExperimentTransport transport_;
 };
+#endif  // GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
 
 }  // namespace
 
@@ -451,10 +455,14 @@ std::vector<std::unique_ptr<ThroughputExperiment>> CreateDownloadExperiments(
       if (t != ExperimentTransport::kGrpc &&
           t != ExperimentTransport::kDirectPath) {
         result.push_back(std::make_unique<DownloadObjectLibcurl>(options));
-      } else {
-        result.push_back(
-            std::make_unique<DownloadObjectRawGrpc>(options, thread_id, t));
+        continue;
       }
+#if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
+      result.push_back(
+          std::make_unique<DownloadObjectRawGrpc>(options, thread_id, t));
+#else
+      (void)thread_id;
+#endif  // GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
     }
   }
   return result;
