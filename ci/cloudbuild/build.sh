@@ -181,7 +181,7 @@ fi
 : "${TRIGGER_TYPE:=manual}"
 : "${BRANCH_NAME:=$(git branch --show-current)}"
 : "${COMMIT_SHA:=$(git rev-parse HEAD)}"
-: "${LIBRARIES:=all}"
+: "${LIBRARIES:=all_bar_compute}"
 CODECOV_TOKEN="$(tr -d '[:space:]' <<<"${CODECOV_TOKEN:-}")"
 
 export CODECOV_TOKEN
