@@ -60,7 +60,7 @@ function features::libraries() {
 function features::list_full() {
   local feature_list
   mapfile -t feature_list < <(features::libraries)
-  feature_list+=(experimental-opentelemetry experimental-storage-grpc grafeas)
+  feature_list+=(experimental-opentelemetry experimental-storage-grpc)
   printf "%s\n" "${feature_list[@]}" | sort -u
 }
 

@@ -139,7 +139,7 @@ io::log "bucket:  gs://${docfx_bucket}"
 
 # Upload the documents for all features, including common. We need to
 # rename `experimental-opentelemetry`. Some features do not have documentation,
-# such as `grafeas` and `experimental-storage-grpc`. These are harmless, as the
+# such as `experimental-storage-grpc`. These are harmless, as the
 # `stage_docfx()`` function skips missing directories without an error.
 uploaded=(common)
 uploaded+=("${FEATURE_LIST[@]/experimental-opentelemetry/opentelemetry}")

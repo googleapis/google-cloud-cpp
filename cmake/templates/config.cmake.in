@@ -1,5 +1,4 @@
-# ~~~
-# Copyright 2022 Google LLC
+# Copyright 2023 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,8 +11,12 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-# ~~~
 
-include(GoogleCloudCppLibrary)
+include(CMakeFindDependencyMacro)
+# google_cloud_cpp_googleapis finds both gRPC and Protobuf, no need to load them here.
+find_dependency(google_cloud_cpp_googleapis)
+find_dependency(google_cloud_cpp_common)
+find_dependency(google_cloud_cpp_grpc_utils)
+find_dependency(absl)
 
-google_cloud_cpp_add_library_protos(grafeas EXPORT_TARGET)
+include("${CMAKE_CURRENT_LIST_DIR}/google_cloud_cpp_@GOOGLE_CLOUD_CPP_CONFIG_LIBRARY@-targets.cmake")

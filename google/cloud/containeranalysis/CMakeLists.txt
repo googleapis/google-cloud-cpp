@@ -21,6 +21,9 @@ set(GOOGLE_CLOUD_CPP_SERVICE_DIRS "" "v1/")
 set(GOOGLE_CLOUD_CPP_DOXYGEN_EXTRA_INCLUDES
     "${PROJECT_BINARY_DIR}/google/cloud/grafeas")
 
+# There is a cross dependency on grafeas.
+google_cloud_cpp_add_library_protos(grafeas EXPORT_TARGET)
+
 google_cloud_cpp_add_ga_grpc_library(containeranalysis "Container Analysis API")
 
 if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)

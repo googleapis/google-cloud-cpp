@@ -14,6 +14,101 @@
 # limitations under the License.
 # ~~~
 
+# A function to add proto libraries, as defined by their protolists and
+# protodeps.
+#
+# * library:      the short name of the associated client library, e.g. `kms`.
+#
+# The function also respects the following boolean keyword:
+#
+# * EXPORT_TARGET: Export the targets. This function will install a config file
+#   named `google_cloud_cpp_${library}-targets.cmake`.
+#
+# Note that if this keyword is supplied, we will only create new targets for
+# this proto **if they do not already exist**. This logic allows us to add
+# common proto dependencies across multiple client libraries.
+#
+# For example, both `binaryauthorization` and `contentanalysis` depend on
+# `grafeas`. So they use EXPORT_TARGET, to only add `grafeas_protos` if
+# necessary.
+function (google_cloud_cpp_add_library_protos library)
+    cmake_parse_arguments(_opt "EXPORT_TARGET" "" "ADDITIONAL_PROTO_LISTS"
+                          ${ARGN})
+
+    set(protos_target "google_cloud_cpp_${library}_protos")
+    # If this function is responsible for exporting the target, make sure the
+    # target has not been defined before. This simplifies the logic to compile
+    # protos shared across multiple client libraries.
+    if (_opt_EXPORT_TARGET AND TARGET ${protos_target})
+        message(STATUS "${protos_target} has already been defined. Skipping.")
+        return()
+    endif ()
+
+    include(CompileProtos)
+    google_cloud_cpp_find_proto_include_dir(PROTO_INCLUDE_DIR)
+    google_cloud_cpp_load_protolist(
+        proto_list
+        "${PROJECT_SOURCE_DIR}/external/googleapis/protolists/${library}.list")
+    if (_opt_ADDITIONAL_PROTO_LISTS)
+        list(APPEND proto_list "${_opt_ADDITIONAL_PROTO_LISTS}")
+    endif ()
+    google_cloud_cpp_load_protodeps(
+        proto_deps
+        "${PROJECT_SOURCE_DIR}/external/googleapis/protodeps/${library}.deps")
+    google_cloud_cpp_grpcpp_library(
+        ${protos_target} # cmake-format: sort
+        ${proto_list} PROTO_PATH_DIRECTORIES "${EXTERNAL_GOOGLEAPIS_SOURCE}"
+        "${PROTO_INCLUDE_DIR}")
+    external_googleapis_set_version_and_alias(${library}_protos)
+    target_link_libraries(${protos_target} PUBLIC ${proto_deps})
+
+    google_cloud_cpp_install_proto_library_protos(
+        "${protos_target}" "${EXTERNAL_GOOGLEAPIS_SOURCE}")
+    google_cloud_cpp_install_proto_library_headers("${protos_target}")
+
+    external_googleapis_install_pc("${protos_target}")
+
+    if (NOT _opt_EXPORT_TARGET)
+        return()
+    endif ()
+
+    # Export the CMake targets to make it easy to create configuration files.
+    install(
+        EXPORT google_cloud_cpp_${library}-targets
+        DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_${library}"
+        COMPONENT google_cloud_cpp_development)
+
+    # Install the libraries and headers in the locations determined by
+    # GNUInstallDirs
+    install(
+        TARGETS google_cloud_cpp_${library}_protos
+        EXPORT google_cloud_cpp_${library}-targets
+        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+                COMPONENT google_cloud_cpp_runtime
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+                COMPONENT google_cloud_cpp_runtime
+                NAMELINK_COMPONENT google_cloud_cpp_development
+        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+                COMPONENT google_cloud_cpp_development)
+
+    # Create and install the CMake configuration files.
+    include(CMakePackageConfigHelpers)
+    set(GOOGLE_CLOUD_CPP_CONFIG_LIBRARY "${library}")
+    configure_file("${PROJECT_SOURCE_DIR}/cmake/templates/config.cmake.in"
+                   "google_cloud_cpp_${library}-config.cmake" @ONLY)
+    write_basic_package_version_file(
+        "google_cloud_cpp_${library}-config-version.cmake"
+        VERSION ${PROJECT_VERSION}
+        COMPATIBILITY ExactVersion)
+
+    install(
+        FILES
+            "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_${library}-config.cmake"
+            "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_${library}-config-version.cmake"
+        DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_${library}"
+        COMPONENT google_cloud_cpp_development)
+endfunction ()
+
 # A function to add targets for GA libraries that use gRPC for transport.
 #
 # * library:      the short name of the library, e.g. `kms`.
@@ -81,22 +176,8 @@ function (google_cloud_cpp_add_ga_grpc_library library display_name)
     include(GoogleCloudCppCommon)
 
     include(CompileProtos)
-    google_cloud_cpp_find_proto_include_dir(PROTO_INCLUDE_DIR)
-    google_cloud_cpp_load_protolist(
-        proto_list
-        "${PROJECT_SOURCE_DIR}/external/googleapis/protolists/${library}.list")
-    if (_opt_ADDITIONAL_PROTO_LISTS)
-        list(APPEND proto_list "${_opt_ADDITIONAL_PROTO_LISTS}")
-    endif ()
-    google_cloud_cpp_load_protodeps(
-        proto_deps
-        "${PROJECT_SOURCE_DIR}/external/googleapis/protodeps/${library}.deps")
-    google_cloud_cpp_grpcpp_library(
-        ${protos_target} # cmake-format: sort
-        ${proto_list} PROTO_PATH_DIRECTORIES "${EXTERNAL_GOOGLEAPIS_SOURCE}"
-        "${PROTO_INCLUDE_DIR}")
-    external_googleapis_set_version_and_alias(${library}_protos)
-    target_link_libraries(${protos_target} PUBLIC ${proto_deps})
+    google_cloud_cpp_add_library_protos(${library} ADDITIONAL_PROTO_LISTS
+                                        ${_opt_ADDITIONAL_PROTO_LISTS})
 
     # We used to offer the proto library by another name. Maintain backwards
     # compatibility by providing an interface library with that name. Also make
@@ -186,9 +267,6 @@ function (google_cloud_cpp_add_ga_grpc_library library display_name)
         ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
                 COMPONENT google_cloud_cpp_development)
 
-    google_cloud_cpp_install_proto_library_protos(
-        "${protos_target}" "${EXTERNAL_GOOGLEAPIS_SOURCE}")
-    google_cloud_cpp_install_proto_library_headers("${protos_target}")
     google_cloud_cpp_install_headers("${library_target}"
                                      "include/google/cloud/${library}")
     google_cloud_cpp_install_headers("${mocks_target}"
@@ -213,8 +291,6 @@ function (google_cloud_cpp_add_ga_grpc_library library display_name)
             "${CMAKE_CURRENT_BINARY_DIR}/${library_target}-config-version.cmake"
         DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/${library_target}"
         COMPONENT google_cloud_cpp_development)
-
-    external_googleapis_install_pc("${protos_target}")
 
     # ${library_alias} must be defined before we can add the samples.
     if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
