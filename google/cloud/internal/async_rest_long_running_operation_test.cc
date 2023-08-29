@@ -20,7 +20,8 @@
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/mock_completion_queue_impl.h"
 #include "google/cloud/testing_util/status_matchers.h"
-#include <google/bigtable/admin/v2/bigtable_instance_admin.pb.h>
+#include <google/protobuf/duration.pb.h>
+#include <google/protobuf/timestamp.pb.h>
 #include <gmock/gmock.h>
 
 namespace google {
@@ -29,8 +30,6 @@ namespace rest_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-using ::google::bigtable::admin::v2::CreateInstanceRequest;
-using ::google::bigtable::admin::v2::Instance;
 using ::google::cloud::testing_util::AsyncSequencer;
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::IsProtoEqual;
@@ -39,15 +38,18 @@ using ::google::cloud::testing_util::StatusIs;
 using ::google::longrunning::Operation;
 using ::testing::Return;
 
+using Response = google::protobuf::Timestamp;
+using Request = google::protobuf::Duration;
+
 struct StringOption {
   using Type = std::string;
 };
 
 class MockRestStub {
  public:
-  MOCK_METHOD(future<StatusOr<Operation>>, AsyncCreateInstance,
+  MOCK_METHOD(future<StatusOr<Operation>>, AsyncCreateResponse,
               (CompletionQueue & cq, std::unique_ptr<RestContext> context,
-               CreateInstanceRequest const&),
+               Request const&),
               ());
   MOCK_METHOD(future<StatusOr<Operation>>, AsyncGetOperation,
               (CompletionQueue & cq, std::unique_ptr<RestContext> context,
@@ -84,13 +86,12 @@ std::unique_ptr<BackoffPolicy> TestBackoffPolicy() {
 
 using StartOperation =
     std::function<future<StatusOr<google::longrunning::Operation>>(
-        CompletionQueue&, std::unique_ptr<RestContext>,
-        CreateInstanceRequest const&)>;
+        CompletionQueue&, std::unique_ptr<RestContext>, Request const&)>;
 
 StartOperation MakeStart(std::shared_ptr<MockRestStub> const& m) {
   return [m](CompletionQueue& cq, std::unique_ptr<RestContext> context,
-             CreateInstanceRequest const& request) {
-    return m->AsyncCreateInstance(cq, std::move(context), request);
+             Request const& request) {
+    return m->AsyncCreateResponse(cq, std::move(context), request);
   };
 }
 
@@ -112,8 +113,8 @@ MakeCancel(std::shared_ptr<MockRestStub> const& m) {
 }
 
 TEST(AsyncLongRunningTest, RequestPollThenSuccessMetadata) {
-  Instance expected;
-  expected.set_name("test-instance-name");
+  Response expected;
+  expected.set_seconds(123456);
   google::longrunning::Operation starting_op;
   starting_op.set_name("test-op-name");
   google::longrunning::Operation done_op = starting_op;
@@ -129,13 +130,13 @@ TEST(AsyncLongRunningTest, RequestPollThenSuccessMetadata) {
   CompletionQueue cq(mock_cq);
 
   auto mock = std::make_shared<MockRestStub>();
-  EXPECT_CALL(*mock, AsyncCreateInstance)
-      .WillOnce([&](CompletionQueue&, std::unique_ptr<RestContext>,
-                    CreateInstanceRequest const&) {
-        EXPECT_EQ(internal::CurrentOptions().get<StringOption>(),
-                  "RequestPollThenSuccessMetadata");
-        return make_ready_future(make_status_or(starting_op));
-      });
+  EXPECT_CALL(*mock, AsyncCreateResponse)
+      .WillOnce(
+          [&](CompletionQueue&, std::unique_ptr<RestContext>, Request const&) {
+            EXPECT_EQ(internal::CurrentOptions().get<StringOption>(),
+                      "RequestPollThenSuccessMetadata");
+            return make_ready_future(make_status_or(starting_op));
+          });
   EXPECT_CALL(*mock, AsyncGetOperation)
       .WillOnce([&](CompletionQueue&, std::unique_ptr<RestContext>,
                     google::longrunning::GetOperationRequest const&) {
@@ -148,16 +149,16 @@ TEST(AsyncLongRunningTest, RequestPollThenSuccessMetadata) {
   EXPECT_CALL(*policy, OnFailure).Times(0);
   EXPECT_CALL(*policy, WaitPeriod)
       .WillRepeatedly(Return(std::chrono::milliseconds(1)));
-  CreateInstanceRequest request;
-  request.set_parent("test-parent");
-  request.set_instance_id("test-instance-id");
+  Request request;
+  request.set_seconds(123456);
+  request.set_nanos(456789);
   internal::OptionsSpan span(
       Options{}.set<StringOption>("RequestPollThenSuccessMetadata"));
   auto actual =
-      AsyncRestLongRunningOperation<Instance>(
+      AsyncRestLongRunningOperation<Response>(
           cq, std::move(request), MakeStart(mock), MakePoll(mock),
           MakeCancel(mock),
-          &internal::ExtractLongRunningResultMetadata<Instance>,
+          &internal::ExtractLongRunningResultMetadata<Response>,
           TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kIdempotent,
           std::move(policy), "test-function")
           .get();
@@ -167,8 +168,8 @@ TEST(AsyncLongRunningTest, RequestPollThenSuccessMetadata) {
 }
 
 TEST(AsyncLongRunningTest, RequestPollThenSuccessResponse) {
-  Instance expected;
-  expected.set_name("test-instance-name");
+  Response expected;
+  expected.set_seconds(123456);
   google::longrunning::Operation starting_op;
   starting_op.set_name("test-op-name");
   google::longrunning::Operation done_op = starting_op;
@@ -184,13 +185,13 @@ TEST(AsyncLongRunningTest, RequestPollThenSuccessResponse) {
   CompletionQueue cq(mock_cq);
 
   auto mock = std::make_shared<MockRestStub>();
-  EXPECT_CALL(*mock, AsyncCreateInstance)
-      .WillOnce([&](CompletionQueue&, std::unique_ptr<RestContext>,
-                    CreateInstanceRequest const&) {
-        EXPECT_EQ(internal::CurrentOptions().get<StringOption>(),
-                  "RequestPollThenSuccessResponse");
-        return make_ready_future(make_status_or(starting_op));
-      });
+  EXPECT_CALL(*mock, AsyncCreateResponse)
+      .WillOnce(
+          [&](CompletionQueue&, std::unique_ptr<RestContext>, Request const&) {
+            EXPECT_EQ(internal::CurrentOptions().get<StringOption>(),
+                      "RequestPollThenSuccessResponse");
+            return make_ready_future(make_status_or(starting_op));
+          });
   EXPECT_CALL(*mock, AsyncGetOperation)
       .WillOnce([&](CompletionQueue&, std::unique_ptr<RestContext>,
                     google::longrunning::GetOperationRequest const&) {
@@ -203,16 +204,16 @@ TEST(AsyncLongRunningTest, RequestPollThenSuccessResponse) {
   EXPECT_CALL(*policy, OnFailure).Times(0);
   EXPECT_CALL(*policy, WaitPeriod)
       .WillRepeatedly(Return(std::chrono::milliseconds(1)));
-  CreateInstanceRequest request;
-  request.set_parent("test-parent");
-  request.set_instance_id("test-instance-id");
+  Request request;
+  request.set_seconds(123456);
+  request.set_nanos(456789);
   internal::OptionsSpan span(
       Options{}.set<StringOption>("RequestPollThenSuccessResponse"));
   auto actual =
-      AsyncRestLongRunningOperation<Instance>(
+      AsyncRestLongRunningOperation<Response>(
           cq, std::move(request), MakeStart(mock), MakePoll(mock),
           MakeCancel(mock),
-          &internal::ExtractLongRunningResultResponse<Instance>,
+          &internal::ExtractLongRunningResultResponse<Response>,
           TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kIdempotent,
           std::move(policy), "test-function")
           .get();
@@ -236,13 +237,13 @@ TEST(AsyncLongRunningTest, RequestPollThenCancel) {
   CompletionQueue cq(mock_cq);
 
   auto mock = std::make_shared<MockRestStub>();
-  EXPECT_CALL(*mock, AsyncCreateInstance)
-      .WillOnce([&](CompletionQueue&, std::unique_ptr<RestContext>,
-                    CreateInstanceRequest const&) {
-        EXPECT_EQ(internal::CurrentOptions().get<StringOption>(),
-                  "RequestPollThenCancel");
-        return make_ready_future(make_status_or(starting_op));
-      });
+  EXPECT_CALL(*mock, AsyncCreateResponse)
+      .WillOnce(
+          [&](CompletionQueue&, std::unique_ptr<RestContext>, Request const&) {
+            EXPECT_EQ(internal::CurrentOptions().get<StringOption>(),
+                      "RequestPollThenCancel");
+            return make_ready_future(make_status_or(starting_op));
+          });
   EXPECT_CALL(*mock, AsyncGetOperation)
       .WillOnce([&](CompletionQueue&, std::unique_ptr<RestContext>,
                     google::longrunning::GetOperationRequest const&) {
@@ -271,14 +272,14 @@ TEST(AsyncLongRunningTest, RequestPollThenCancel) {
   });
   EXPECT_CALL(*policy, WaitPeriod)
       .WillRepeatedly(Return(std::chrono::milliseconds(1)));
-  CreateInstanceRequest request;
-  request.set_parent("test-parent");
-  request.set_instance_id("test-instance-id");
+  Request request;
+  request.set_seconds(123456);
+  request.set_nanos(456789);
   internal::OptionsSpan span(
       Options{}.set<StringOption>("RequestPollThenCancel"));
-  auto pending = AsyncRestLongRunningOperation<Instance>(
+  auto pending = AsyncRestLongRunningOperation<Response>(
       cq, std::move(request), MakeStart(mock), MakePoll(mock), MakeCancel(mock),
-      &internal::ExtractLongRunningResultMetadata<Instance>, TestRetryPolicy(),
+      &internal::ExtractLongRunningResultMetadata<Response>, TestRetryPolicy(),
       TestBackoffPolicy(), Idempotency::kIdempotent, std::move(policy),
       "test-function");
 
@@ -333,9 +334,9 @@ class BespokeCancelOperationRequestType {
 
 class MockBespokeOperationStub {
  public:
-  MOCK_METHOD(future<StatusOr<BespokeOperationType>>, AsyncCreateInstance,
+  MOCK_METHOD(future<StatusOr<BespokeOperationType>>, AsyncCreateResponse,
               (CompletionQueue & cq, std::unique_ptr<RestContext> context,
-               CreateInstanceRequest const&),
+               Request const&),
               ());
 
   MOCK_METHOD(future<StatusOr<BespokeOperationType>>, AsyncGetOperation,
@@ -351,14 +352,13 @@ class MockBespokeOperationStub {
 
 using StartBespokeOperation =
     std::function<future<StatusOr<BespokeOperationType>>(
-        CompletionQueue&, std::unique_ptr<RestContext>,
-        CreateInstanceRequest const&)>;
+        CompletionQueue&, std::unique_ptr<RestContext>, Request const&)>;
 
 StartBespokeOperation MakeBespokeStart(
     std::shared_ptr<MockBespokeOperationStub> const& m) {
   return [m](CompletionQueue& cq, std::unique_ptr<RestContext> context,
-             CreateInstanceRequest const& request) {
-    return m->AsyncCreateInstance(cq, std::move(context), request);
+             Request const& request) {
+    return m->AsyncCreateResponse(cq, std::move(context), request);
   };
 }
 
@@ -381,8 +381,8 @@ MakeBespokeCancel(std::shared_ptr<MockBespokeOperationStub> const& mock) {
 
 TEST(AsyncLongRunningTest,
      RequestPollThenSuccessResponseWithBespokeOperationTypes) {
-  Instance expected;
-  expected.set_name("test-instance-name");
+  Response expected;
+  expected.set_seconds(123456);
   BespokeOperationType starting_op;
   starting_op.set_name("test-op-name");
   starting_op.set_is_done(false);
@@ -398,13 +398,13 @@ TEST(AsyncLongRunningTest,
   CompletionQueue cq(mock_cq);
 
   auto mock = std::make_shared<MockBespokeOperationStub>();
-  EXPECT_CALL(*mock, AsyncCreateInstance)
-      .WillOnce([&](CompletionQueue&, std::unique_ptr<RestContext>,
-                    CreateInstanceRequest const&) {
-        EXPECT_EQ(internal::CurrentOptions().get<StringOption>(),
-                  "RequestPollThenSuccessResponse");
-        return make_ready_future(make_status_or(starting_op));
-      });
+  EXPECT_CALL(*mock, AsyncCreateResponse)
+      .WillOnce(
+          [&](CompletionQueue&, std::unique_ptr<RestContext>, Request const&) {
+            EXPECT_EQ(internal::CurrentOptions().get<StringOption>(),
+                      "RequestPollThenSuccessResponse");
+            return make_ready_future(make_status_or(starting_op));
+          });
   EXPECT_CALL(*mock, AsyncGetOperation)
       .WillOnce([&](CompletionQueue&, std::unique_ptr<RestContext>,
                     BespokeGetOperationRequestType const&) {
@@ -417,19 +417,19 @@ TEST(AsyncLongRunningTest,
   EXPECT_CALL(*policy, OnFailure).Times(0);
   EXPECT_CALL(*policy, WaitPeriod)
       .WillRepeatedly(Return(std::chrono::milliseconds(1)));
-  CreateInstanceRequest request;
-  request.set_parent("test-parent");
-  request.set_instance_id("test-instance-id");
+  Request request;
+  request.set_seconds(123456);
+  request.set_nanos(456789);
   internal::OptionsSpan span(
       Options{}.set<StringOption>("RequestPollThenSuccessResponse"));
   auto actual =
-      AsyncRestLongRunningOperation<Instance, BespokeOperationType,
+      AsyncRestLongRunningOperation<Response, BespokeOperationType,
                                     BespokeGetOperationRequestType,
                                     BespokeCancelOperationRequestType>(
           cq, std::move(request), MakeBespokeStart(mock), MakeBespokePoll(mock),
           MakeBespokeCancel(mock),
           [&](StatusOr<BespokeOperationType> const&,
-              std::string const&) -> StatusOr<Instance> { return expected; },
+              std::string const&) -> StatusOr<Response> { return expected; },
           TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kIdempotent,
           std::move(policy), "test-function",
           [](BespokeOperationType const& op) { return op.is_done(); },

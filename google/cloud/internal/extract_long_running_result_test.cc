@@ -16,7 +16,7 @@
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/mock_completion_queue_impl.h"
 #include "google/cloud/testing_util/status_matchers.h"
-#include <google/bigtable/admin/v2/bigtable_instance_admin.pb.h>
+#include <google/protobuf/timestamp.pb.h>
 #include <gmock/gmock.h>
 
 namespace google {
@@ -25,20 +25,21 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 namespace {
 
-using ::google::bigtable::admin::v2::Instance;
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::HasSubstr;
 
+using Response = google::protobuf::Timestamp;
+
 TEST(ExtractLongRunningResultTest, MetadataDoneWithSuccess) {
-  Instance expected;
-  expected.set_name("test-instance-admin");
+  Response expected;
+  expected.set_seconds(123456);
   google::longrunning::Operation op;
   op.set_done(true);
   op.mutable_metadata()->PackFrom(expected);
   auto const actual =
-      ExtractLongRunningResultMetadata<Instance>(op, "test-function");
+      ExtractLongRunningResultMetadata<Response>(op, "test-function");
   ASSERT_STATUS_OK(actual);
   EXPECT_THAT(*actual, IsProtoEqual(expected));
 }
@@ -49,7 +50,7 @@ TEST(ExtractLongRunningResultTest, MetadataDoneWithError) {
   op.mutable_error()->set_code(grpc::StatusCode::PERMISSION_DENIED);
   op.mutable_error()->set_message("uh-oh");
   auto const actual =
-      ExtractLongRunningResultMetadata<Instance>(op, "test-function");
+      ExtractLongRunningResultMetadata<Response>(op, "test-function");
   EXPECT_THAT(actual,
               StatusIs(StatusCode::kPermissionDenied, HasSubstr("uh-oh")));
 }
@@ -58,7 +59,7 @@ TEST(ExtractLongRunningResultTest, MetadataDoneWithoutResult) {
   google::longrunning::Operation op;
   op.set_done(true);
   auto const actual =
-      ExtractLongRunningResultMetadata<Instance>(op, "test-function");
+      ExtractLongRunningResultMetadata<Response>(op, "test-function");
   EXPECT_THAT(actual, StatusIs(StatusCode::kInternal));
 }
 
@@ -67,7 +68,7 @@ TEST(ExtractLongRunningResultTest, MetadataDoneWithInvalidContent) {
   op.set_done(true);
   op.mutable_metadata()->PackFrom(google::protobuf::Empty{});
   auto const actual =
-      ExtractLongRunningResultMetadata<Instance>(op, "test-function");
+      ExtractLongRunningResultMetadata<Response>(op, "test-function");
   EXPECT_THAT(actual, StatusIs(StatusCode::kInternal,
                                AllOf(HasSubstr("test-function"),
                                      HasSubstr("invalid metadata type"))));
@@ -76,19 +77,19 @@ TEST(ExtractLongRunningResultTest, MetadataDoneWithInvalidContent) {
 TEST(ExtractLongRunningResultTest, MetadataError) {
   auto const expected = Status{StatusCode::kPermissionDenied, "uh-oh"};
   auto const actual =
-      ExtractLongRunningResultMetadata<Instance>(expected, "test-function");
+      ExtractLongRunningResultMetadata<Response>(expected, "test-function");
   ASSERT_THAT(actual, Not(IsOk()));
   EXPECT_EQ(expected, actual.status());
 }
 
 TEST(ExtractLongRunningResultTest, ResponseDoneWithSuccess) {
-  Instance expected;
-  expected.set_name("test-instance-admin");
+  Response expected;
+  expected.set_seconds(123456);
   google::longrunning::Operation op;
   op.set_done(true);
   op.mutable_response()->PackFrom(expected);
   auto const actual =
-      ExtractLongRunningResultResponse<Instance>(op, "test-function");
+      ExtractLongRunningResultResponse<Response>(op, "test-function");
   ASSERT_STATUS_OK(actual);
   EXPECT_THAT(*actual, IsProtoEqual(expected));
 }
@@ -99,7 +100,7 @@ TEST(ExtractLongRunningResultTest, ResponseDoneWithError) {
   op.mutable_error()->set_code(grpc::StatusCode::PERMISSION_DENIED);
   op.mutable_error()->set_message("uh-oh");
   auto const actual =
-      ExtractLongRunningResultResponse<Instance>(op, "test-function");
+      ExtractLongRunningResultResponse<Response>(op, "test-function");
   EXPECT_THAT(actual,
               StatusIs(StatusCode::kPermissionDenied, HasSubstr("uh-oh")));
 }
@@ -108,7 +109,7 @@ TEST(ExtractLongRunningResultTest, ResponseDoneWithoutResult) {
   google::longrunning::Operation op;
   op.set_done(true);
   auto const actual =
-      ExtractLongRunningResultResponse<Instance>(op, "test-function");
+      ExtractLongRunningResultResponse<Response>(op, "test-function");
   EXPECT_THAT(actual, StatusIs(StatusCode::kInternal));
 }
 
@@ -117,7 +118,7 @@ TEST(ExtractLongRunningResultTest, ResponseDoneWithInvalidContent) {
   op.set_done(true);
   op.mutable_response()->PackFrom(google::protobuf::Empty{});
   auto const actual =
-      ExtractLongRunningResultResponse<Instance>(op, "test-function");
+      ExtractLongRunningResultResponse<Response>(op, "test-function");
   EXPECT_THAT(actual, StatusIs(StatusCode::kInternal,
                                AllOf(HasSubstr("test-function"),
                                      HasSubstr("invalid response type"))));
@@ -126,7 +127,7 @@ TEST(ExtractLongRunningResultTest, ResponseDoneWithInvalidContent) {
 TEST(ExtractLongRunningResultTest, ResponseError) {
   auto const expected = Status{StatusCode::kPermissionDenied, "uh-oh"};
   auto const actual =
-      ExtractLongRunningResultResponse<Instance>(expected, "test-function");
+      ExtractLongRunningResultResponse<Response>(expected, "test-function");
   ASSERT_THAT(actual, Not(IsOk()));
   EXPECT_EQ(expected, actual.status());
 }
