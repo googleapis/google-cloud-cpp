@@ -189,19 +189,6 @@ TEST_F(ScaffoldGenerator, Vars) {
             Contains(Pair("status", HasSubstr("**experimental**")))));
 }
 
-TEST_F(ScaffoldGenerator, CmakeConfigIn) {
-  auto const vars = ScaffoldVars(path(), MockIndex(), service(), false);
-  std::ostringstream os;
-  GenerateCmakeConfigIn(os, vars);
-  auto const actual = std::move(os).str();
-  EXPECT_THAT(actual, HasSubstr("2034"));
-  EXPECT_THAT(actual, Not(HasSubstr("$copyright_year$")));
-  EXPECT_THAT(
-      actual,
-      HasSubstr(
-          R"""(include("${CMAKE_CURRENT_LIST_DIR}/google_cloud_cpp_test-targets.cmake"))"""));
-}
-
 TEST_F(ScaffoldGenerator, Readme) {
   auto const vars = ScaffoldVars(path(), MockIndex(), service(), false);
   std::ostringstream os;
