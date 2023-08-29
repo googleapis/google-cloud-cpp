@@ -147,34 +147,6 @@ TYPED_TEST(Typed, MakeWritePayloadFromVector) {
   EXPECT_EQ(full, expected);
 }
 
-TEST(WritePayloadImpl, MakeWritePayloadVectorCord) {
-  auto const expected =
-      std::string{"The quick brown fox jumps over the lazy dog"};
-
-  auto const actual = MakeWritePayload(std::vector<absl::Cord>{
-      absl::Cord("The quick brown fox"), absl::Cord(" jumps over"),
-      absl::Cord(" the lazy dog")});
-  EXPECT_FALSE(actual.empty());
-  EXPECT_EQ(actual.size(), expected.size());
-  EXPECT_THAT(actual.payload(), Not(IsEmpty()));
-  auto full = absl::StrJoin(actual.payload(), "");
-  EXPECT_EQ(full, expected);
-}
-
-TEST(WritePayloadImpl, MakeWritePayloadString) {
-  auto const expected =
-      std::string{"The quick brown fox jumps over the lazy dog"};
-
-  auto const actual = MakeWritePayload(std::vector<absl::Cord>{
-      absl::Cord("The quick brown fox"), absl::Cord(" jumps over"),
-      absl::Cord(" the lazy dog")});
-  EXPECT_FALSE(actual.empty());
-  EXPECT_EQ(actual.size(), expected.size());
-  EXPECT_THAT(actual.payload(), Not(IsEmpty()));
-  auto full = absl::StrJoin(actual.payload(), "");
-  EXPECT_EQ(full, expected);
-}
-
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal

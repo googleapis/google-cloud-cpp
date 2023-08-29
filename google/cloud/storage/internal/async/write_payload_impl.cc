@@ -30,27 +30,19 @@ absl::Cord MakeCord(std::string p) {
                                     [b = std::move(holder)]() mutable {});
 }
 
-storage_experimental::WritePayload MakeWritePayload(std::vector<absl::Cord> p) {
-  auto full = std::accumulate(std::make_move_iterator(p.begin()),
-                              std::make_move_iterator(p.end()), absl::Cord(),
-                              [](absl::Cord a, absl::Cord b) {
-                                a.Append(std::move(b));
-                                return a;
-                              });
-  return WritePayloadImpl::Make(std::move(full));
-}
-
 storage_experimental::WritePayload MakeWritePayload(std::string p) {
   return WritePayloadImpl::Make(MakeCord(std::move(p)));
 }
 
 storage_experimental::WritePayload MakeWritePayload(
     std::vector<std::string> p) {
-  std::vector<absl::Cord> cords(p.size());
-  std::transform(std::make_move_iterator(p.begin()),
-                 std::make_move_iterator(p.end()), cords.begin(),
-                 [](std::string v) { return MakeCord(std::move(v)); });
-  return MakeWritePayload(std::move(cords));
+  auto full = std::accumulate(std::make_move_iterator(p.begin()),
+                              std::make_move_iterator(p.end()), absl::Cord(),
+                              [](absl::Cord a, std::string b) {
+                                a.Append(MakeCord(std::move(b)));
+                                return a;
+                              });
+  return WritePayloadImpl::Make(std::move(full));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -68,17 +68,18 @@ storage_experimental::WritePayload MakeWritePayload(std::vector<T> s) {
   return WritePayloadImpl::Make(MakeCord(std::move(s)));
 }
 
-storage_experimental::WritePayload MakeWritePayload(std::vector<absl::Cord> p);
 storage_experimental::WritePayload MakeWritePayload(std::vector<std::string> p);
 template <typename T,
           typename std::enable_if<IsPayloadType<T>::value, int>::type = 0>
 storage_experimental::WritePayload MakeWritePayload(
     std::vector<std::vector<T>> p) {
-  std::vector<absl::Cord> cords(p.size());
-  std::transform(std::make_move_iterator(p.begin()),
-                 std::make_move_iterator(p.end()), cords.begin(),
-                 [](std::vector<T> v) { return MakeCord(std::move(v)); });
-  return MakeWritePayload(std::move(cords));
+  auto full = std::accumulate(std::make_move_iterator(p.begin()),
+                              std::make_move_iterator(p.end()), absl::Cord(),
+                              [](absl::Cord a, std::vector<T> b) {
+                                a.Append(MakeCord(std::move(b)));
+                                return a;
+                              });
+  return WritePayloadImpl::Make(std::move(full));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
