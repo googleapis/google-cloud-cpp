@@ -292,7 +292,6 @@ void GenerateScaffold(
     std::string name;
     Generator generator;
   } files[] = {
-      {"config.cmake.in", GenerateCmakeConfigIn},
       {"README.md", GenerateReadme},
       {"BUILD.bazel", GenerateBuild},
       {"CMakeLists.txt", GenerateCMakeLists},
@@ -324,37 +323,6 @@ void GenerateScaffold(
   auto const contents = std::string{std::istreambuf_iterator<char>(is), {}};
   std::ofstream os(destination + "quickstart/WORKSPACE.bazel");
   GenerateQuickstartWorkspace(os, vars, contents);
-}
-
-void GenerateCmakeConfigIn(
-    std::ostream& os, std::map<std::string, std::string> const& variables) {
-  auto constexpr kText =
-      R"""(# Copyright $copyright_year$ Google LLC
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     https://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-
-include(CMakeFindDependencyMacro)
-# google_cloud_cpp_googleapis finds both gRPC and Protobuf, no need to load them here.
-find_dependency(google_cloud_cpp_googleapis)
-find_dependency(google_cloud_cpp_common)
-find_dependency(google_cloud_cpp_grpc_utils)
-find_dependency(absl)
-
-include("$${CMAKE_CURRENT_LIST_DIR}/google_cloud_cpp_$library$-targets.cmake")
-)""";
-  google::protobuf::io::OstreamOutputStream output(&os);
-  google::protobuf::io::Printer printer(&output, '$');
-  printer.Print(variables, kText);
 }
 
 void GenerateReadme(std::ostream& os,
