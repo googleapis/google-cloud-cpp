@@ -17,6 +17,7 @@
 #include "generator/internal/printer.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/algorithm.h"
+#include "google/cloud/internal/url_encode.h"
 #include "google/cloud/log.h"
 #include "absl/strings/str_format.h"
 #include "absl/strings/str_split.h"
@@ -108,9 +109,9 @@ void SetHttpDerivedMethodVars(
       method_vars["method_request_params"] = absl::StrJoin(
           info.field_substitutions, ", \"&\",",
           [&](std::string* out, std::pair<std::string, std::string> const& p) {
-            out->append(
-                absl::StrFormat("\"%s=\", request.%s()", p.first,
-                                FormatFieldAccessorCall(method, p.first)));
+            out->append(absl::StrFormat(
+                "\"%s=\", request.%s()", internal::UrlEncode(p.first),
+                FormatFieldAccessorCall(method, p.first)));
           });
       method_vars["method_request_body"] = info.body;
       method_vars["method_http_verb"] = info.http_verb;

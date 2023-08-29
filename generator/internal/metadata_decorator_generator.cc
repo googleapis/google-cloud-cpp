@@ -20,6 +20,7 @@
 #include "generator/internal/printer.h"
 #include "generator/internal/routing.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
+#include "google/cloud/internal/url_encode.h"
 #include "absl/strings/str_split.h"
 #include <google/protobuf/descriptor.h>
 #include <algorithm>
@@ -72,7 +73,7 @@ std::string SetMetadataText(google::protobuf::MethodDescriptor const& method,
     }
     text += "  static auto* " + kv.first + "_matcher = []{\n";
     text += "    return new google::cloud::internal::RoutingMatcher<$request_type$>{\n";
-    text += "      \"" + kv.first + "=\", {\n";
+    text += "      \"" + internal::UrlEncode(kv.first) + "=\", {\n";
     for (auto const& rp : kv.second) {
       text += "      {[]($request_type$ const& request) -> std::string const& {\n";
       text += "        return request." + rp.field_name + "();\n";
