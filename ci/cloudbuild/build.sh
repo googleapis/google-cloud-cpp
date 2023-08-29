@@ -273,6 +273,7 @@ if [[ -n "${CLOUD_FLAG}" ]]; then
   subs+=("_LOGS_BUCKET=${CLOUD_FLAG}_cloudbuild")
   subs+=("BRANCH_NAME=${BRANCH_NAME}")
   subs+=("COMMIT_SHA=${COMMIT_SHA}")
+  subs+=("_LIBRARIES=${LIBRARIES}")
   printf "Substitutions:\n"
   printf "  %s\n" "${subs[@]}"
   args=(
