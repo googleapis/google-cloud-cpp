@@ -19,7 +19,8 @@
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/mock_completion_queue_impl.h"
 #include "google/cloud/testing_util/status_matchers.h"
-#include <google/bigtable/admin/v2/bigtable_instance_admin.pb.h>
+#include <google/protobuf/duration.pb.h>
+#include <google/protobuf/timestamp.pb.h>
 #include <gmock/gmock.h>
 
 namespace google {
@@ -28,8 +29,6 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 namespace {
 
-using ::google::bigtable::admin::v2::CreateInstanceRequest;
-using ::google::bigtable::admin::v2::Instance;
 using ::google::cloud::testing_util::AsyncSequencer;
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::IsProtoEqual;
@@ -38,15 +37,18 @@ using ::google::cloud::testing_util::StatusIs;
 using ::google::longrunning::Operation;
 using ::testing::Return;
 
+using Request = google::protobuf::Duration;
+using Response = google::protobuf::Timestamp;
+
 struct StringOption {
   using Type = std::string;
 };
 
 class MockStub {
  public:
-  MOCK_METHOD(future<StatusOr<Operation>>, AsyncCreateInstance,
+  MOCK_METHOD(future<StatusOr<Operation>>, AsyncCreateResponse,
               (CompletionQueue & cq, std::shared_ptr<grpc::ClientContext>,
-               CreateInstanceRequest const&),
+               Request const&),
               ());
   MOCK_METHOD(future<StatusOr<Operation>>, AsyncGetOperation,
               (CompletionQueue & cq, std::shared_ptr<grpc::ClientContext>,
@@ -84,12 +86,11 @@ std::unique_ptr<BackoffPolicy> TestBackoffPolicy() {
 using StartOperation =
     std::function<future<StatusOr<google::longrunning::Operation>>(
         CompletionQueue&, std::shared_ptr<grpc::ClientContext>,
-        CreateInstanceRequest const&)>;
+        Request const&)>;
 
 StartOperation MakeStart(std::shared_ptr<MockStub> const& m) {
-  return [m](CompletionQueue& cq, auto context,
-             CreateInstanceRequest const& request) {
-    return m->AsyncCreateInstance(cq, std::move(context), request);
+  return [m](CompletionQueue& cq, auto context, Request const& request) {
+    return m->AsyncCreateResponse(cq, std::move(context), request);
   };
 }
 
@@ -108,8 +109,8 @@ AsyncCancelLongRunningOperation MakeCancel(std::shared_ptr<MockStub> const& m) {
 }
 
 TEST(AsyncLongRunningTest, RequestPollThenSuccessMetadata) {
-  Instance expected;
-  expected.set_name("test-instance-name");
+  Response expected;
+  expected.set_seconds(123456);
   google::longrunning::Operation starting_op;
   starting_op.set_name("test-op-name");
   google::longrunning::Operation done_op = starting_op;
@@ -125,8 +126,8 @@ TEST(AsyncLongRunningTest, RequestPollThenSuccessMetadata) {
   CompletionQueue cq(mock_cq);
 
   auto mock = std::make_shared<MockStub>();
-  EXPECT_CALL(*mock, AsyncCreateInstance)
-      .WillOnce([&](CompletionQueue&, auto, CreateInstanceRequest const&) {
+  EXPECT_CALL(*mock, AsyncCreateResponse)
+      .WillOnce([&](CompletionQueue&, auto, Request const&) {
         EXPECT_EQ(CurrentOptions().get<StringOption>(),
                   "RequestPollThenSuccessMetadata");
         return make_ready_future(make_status_or(starting_op));
@@ -143,15 +144,15 @@ TEST(AsyncLongRunningTest, RequestPollThenSuccessMetadata) {
   EXPECT_CALL(*policy, OnFailure).Times(0);
   EXPECT_CALL(*policy, WaitPeriod)
       .WillRepeatedly(Return(std::chrono::milliseconds(1)));
-  CreateInstanceRequest request;
-  request.set_parent("test-parent");
-  request.set_instance_id("test-instance-id");
+  Request request;
+  request.set_seconds(123456);
+  request.set_nanos(456789);
   OptionsSpan span(
       Options{}.set<StringOption>("RequestPollThenSuccessMetadata"));
   auto actual =
-      AsyncLongRunningOperation<Instance>(
+      AsyncLongRunningOperation<Response>(
           cq, std::move(request), MakeStart(mock), MakePoll(mock),
-          MakeCancel(mock), &ExtractLongRunningResultMetadata<Instance>,
+          MakeCancel(mock), &ExtractLongRunningResultMetadata<Response>,
           TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kIdempotent,
           std::move(policy), "test-function")
           .get();
@@ -161,8 +162,8 @@ TEST(AsyncLongRunningTest, RequestPollThenSuccessMetadata) {
 }
 
 TEST(AsyncLongRunningTest, RequestPollThenSuccessResponse) {
-  Instance expected;
-  expected.set_name("test-instance-name");
+  Response expected;
+  expected.set_seconds(123456);
   google::longrunning::Operation starting_op;
   starting_op.set_name("test-op-name");
   google::longrunning::Operation done_op = starting_op;
@@ -178,8 +179,8 @@ TEST(AsyncLongRunningTest, RequestPollThenSuccessResponse) {
   CompletionQueue cq(mock_cq);
 
   auto mock = std::make_shared<MockStub>();
-  EXPECT_CALL(*mock, AsyncCreateInstance)
-      .WillOnce([&](CompletionQueue&, auto, CreateInstanceRequest const&) {
+  EXPECT_CALL(*mock, AsyncCreateResponse)
+      .WillOnce([&](CompletionQueue&, auto, Request const&) {
         EXPECT_EQ(CurrentOptions().get<StringOption>(),
                   "RequestPollThenSuccessResponse");
         return make_ready_future(make_status_or(starting_op));
@@ -196,15 +197,15 @@ TEST(AsyncLongRunningTest, RequestPollThenSuccessResponse) {
   EXPECT_CALL(*policy, OnFailure).Times(0);
   EXPECT_CALL(*policy, WaitPeriod)
       .WillRepeatedly(Return(std::chrono::milliseconds(1)));
-  CreateInstanceRequest request;
-  request.set_parent("test-parent");
-  request.set_instance_id("test-instance-id");
+  Request request;
+  request.set_seconds(123456);
+  request.set_nanos(456789);
   OptionsSpan span(
       Options{}.set<StringOption>("RequestPollThenSuccessResponse"));
   auto actual =
-      AsyncLongRunningOperation<Instance>(
+      AsyncLongRunningOperation<Response>(
           cq, std::move(request), MakeStart(mock), MakePoll(mock),
-          MakeCancel(mock), &ExtractLongRunningResultResponse<Instance>,
+          MakeCancel(mock), &ExtractLongRunningResultResponse<Response>,
           TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kIdempotent,
           std::move(policy), "test-function")
           .get();
@@ -228,8 +229,8 @@ TEST(AsyncLongRunningTest, RequestPollThenCancel) {
   CompletionQueue cq(mock_cq);
 
   auto mock = std::make_shared<MockStub>();
-  EXPECT_CALL(*mock, AsyncCreateInstance)
-      .WillOnce([&](CompletionQueue&, auto, CreateInstanceRequest const&) {
+  EXPECT_CALL(*mock, AsyncCreateResponse)
+      .WillOnce([&](CompletionQueue&, auto, Request const&) {
         EXPECT_EQ(CurrentOptions().get<StringOption>(),
                   "RequestPollThenCancel");
         return make_ready_future(make_status_or(starting_op));
@@ -262,13 +263,13 @@ TEST(AsyncLongRunningTest, RequestPollThenCancel) {
   });
   EXPECT_CALL(*policy, WaitPeriod)
       .WillRepeatedly(Return(std::chrono::milliseconds(1)));
-  CreateInstanceRequest request;
-  request.set_parent("test-parent");
-  request.set_instance_id("test-instance-id");
+  Request request;
+  request.set_seconds(123456);
+  request.set_nanos(456789);
   OptionsSpan span(Options{}.set<StringOption>("RequestPollThenCancel"));
-  auto pending = AsyncLongRunningOperation<Instance>(
+  auto pending = AsyncLongRunningOperation<Response>(
       cq, std::move(request), MakeStart(mock), MakePoll(mock), MakeCancel(mock),
-      &ExtractLongRunningResultMetadata<Instance>, TestRetryPolicy(),
+      &ExtractLongRunningResultMetadata<Response>, TestRetryPolicy(),
       TestBackoffPolicy(), Idempotency::kIdempotent, std::move(policy),
       "test-function");
 

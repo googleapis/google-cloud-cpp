@@ -203,7 +203,6 @@ function (google_cloud_cpp_grpc_utils_add_test fname labels)
                 google_cloud_cpp_testing
                 google-cloud-cpp::common
                 google-cloud-cpp::iam_protos
-                google-cloud-cpp::bigtable_protos
                 absl::variant
                 GTest::gmock_main
                 GTest::gmock
@@ -287,8 +286,25 @@ if (BUILD_TESTING)
     endforeach ()
 
     foreach (fname ${google_cloud_cpp_grpc_utils_integration_tests})
-        google_cloud_cpp_grpc_utils_add_test("${fname}"
-                                             "integration-test-production")
+        google_cloud_cpp_add_executable(target "common" "${fname}")
+        target_link_libraries(
+            ${target}
+            PRIVATE google-cloud-cpp::grpc_utils
+                    google_cloud_cpp_testing_grpc
+                    google_cloud_cpp_testing
+                    google-cloud-cpp::common
+                    google-cloud-cpp::bigtable_protos
+                    google-cloud-cpp::iam_protos
+                    absl::variant
+                    GTest::gmock_main
+                    GTest::gmock
+                    GTest::gtest
+                    gRPC::grpc++
+                    gRPC::grpc)
+        google_cloud_cpp_add_common_options(${target})
+        add_test(NAME ${target} COMMAND ${target})
+        set_tests_properties(${target} PROPERTIES LABELS
+                                                  "integration-test-production")
     endforeach ()
 
     set(google_cloud_cpp_grpc_utils_benchmarks # cmake-format: sortable
