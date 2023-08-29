@@ -18,5 +18,6 @@ find_dependency(google_cloud_cpp_googleapis)
 find_dependency(google_cloud_cpp_common)
 find_dependency(google_cloud_cpp_grpc_utils)
 find_dependency(absl)
+@GOOGLE_CLOUD_CPP_ADDITIONAL_FIND_DEPENDENCIES@
 
-include("${CMAKE_CURRENT_LIST_DIR}/google_cloud_cpp_networkservices-targets.cmake")
+include("${CMAKE_CURRENT_LIST_DIR}/@GOOGLE_CLOUD_CPP_CONFIG_LIBRARY@-targets.cmake")

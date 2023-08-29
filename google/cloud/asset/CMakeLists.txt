@@ -18,10 +18,6 @@ include(GoogleCloudCppLibrary)
 
 set(GOOGLE_CLOUD_CPP_SERVICE_DIRS "" "v1/")
 
-set(GOOGLE_CLOUD_CPP_DOXYGEN_EXTRA_INCLUDES
-    "${PROJECT_BINARY_DIR}/google/cloud/accesscontextmanager"
-    "${PROJECT_BINARY_DIR}/google/cloud/osconfig")
-
 google_cloud_cpp_add_ga_grpc_library(
     asset
     "Cloud Asset API"
@@ -29,7 +25,10 @@ google_cloud_cpp_add_ga_grpc_library(
     # does not appear in protolists/asset.list. In addition, it is not compiled
     # by any other library. So, added manually.
     ADDITIONAL_PROTO_LISTS
-    "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/orgpolicy/v1/orgpolicy.proto")
+    "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/orgpolicy/v1/orgpolicy.proto"
+    CROSS_LIB_DEPS
+    "accesscontextmanager"
+    "osconfig")
 
 if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
     add_executable(asset_quickstart "quickstart/quickstart.cc")
