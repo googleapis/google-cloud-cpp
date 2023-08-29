@@ -48,11 +48,11 @@ class MockClient {
  public:
   MOCK_METHOD(
       std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<Response>>,
-      AsyncGetTable,
+      AsyncGetResponse,
       (grpc::ClientContext*, Request const&, grpc::CompletionQueue* cq));
 
   MOCK_METHOD(std::unique_ptr<::grpc::ClientAsyncReaderInterface<Response>>,
-              AsyncReadRows,
+              AsyncResponseStream,
               (grpc::ClientContext*, Request const&,
                grpc::CompletionQueue* cq));
 };
@@ -224,7 +224,7 @@ TEST(CompletionQueueTest, MakeUnaryRpc) {
         *status = grpc::Status::OK;
       });
   MockClient mock_client;
-  EXPECT_CALL(mock_client, AsyncGetTable)
+  EXPECT_CALL(mock_client, AsyncGetResponse)
       .WillOnce([&mock_reader](grpc::ClientContext*, Request const& request,
                                grpc::CompletionQueue*) {
         EXPECT_EQ(request.seconds(), 123);
@@ -244,7 +244,7 @@ TEST(CompletionQueueTest, MakeUnaryRpc) {
       cq.MakeUnaryRpc(
             [&mock_client](grpc::ClientContext* context, Request const& request,
                            grpc::CompletionQueue* cq) {
-              return mock_client.AsyncGetTable(context, request, cq);
+              return mock_client.AsyncGetResponse(context, request, cq);
             },
             request, std::make_unique<grpc::ClientContext>())
           .then([](auto f) {
@@ -276,7 +276,7 @@ TEST(CompletionQueueTest, MakeUnaryRpcImpl) {
         *status = grpc::Status::OK;
       });
   MockClient mock_client;
-  EXPECT_CALL(mock_client, AsyncGetTable)
+  EXPECT_CALL(mock_client, AsyncGetResponse)
       .WillOnce([&mock_reader](grpc::ClientContext*, Request const& request,
                                grpc::CompletionQueue*) {
         EXPECT_EQ(request.seconds(), 123);
@@ -297,7 +297,7 @@ TEST(CompletionQueueTest, MakeUnaryRpcImpl) {
           cq,
           [&mock_client](grpc::ClientContext* context, Request const& request,
                          grpc::CompletionQueue* cq) {
-            return mock_client.AsyncGetTable(context, request, cq);
+            return mock_client.AsyncGetResponse(context, request, cq);
           },
           request, std::make_shared<grpc::ClientContext>())
           .then([](future<StatusOr<Response>> f) {
@@ -325,7 +325,7 @@ TEST(CompletionQueueTest, MakeStreamingReadRpc) {
   EXPECT_CALL(*mock_reader, Finish).Times(1);
 
   MockClient mock_client;
-  EXPECT_CALL(mock_client, AsyncReadRows)
+  EXPECT_CALL(mock_client, AsyncResponseStream)
       .WillOnce([&mock_reader](grpc::ClientContext*, Request const& request,
                                grpc::CompletionQueue*) {
         EXPECT_EQ(request.seconds(), 123);
@@ -343,7 +343,7 @@ TEST(CompletionQueueTest, MakeStreamingReadRpc) {
   (void)cq.MakeStreamingReadRpc(
       [&mock_client](grpc::ClientContext* context, Request const& request,
                      grpc::CompletionQueue* cq) {
-        return mock_client.AsyncReadRows(context, request, cq);
+        return mock_client.AsyncResponseStream(context, request, cq);
       },
       request, std::make_unique<grpc::ClientContext>(),
       [&on_read_counter](Response const&) {
@@ -391,7 +391,7 @@ TEST(CompletionQueueTest, MakeRpcsAfterShutdown) {
           cq,
           [&mock_client](grpc::ClientContext* context, Request const& request,
                          grpc::CompletionQueue* cq) {
-            return mock_client.AsyncGetTable(context, request, cq);
+            return mock_client.AsyncGetResponse(context, request, cq);
           },
           r1, std::make_unique<grpc::ClientContext>())
           .then([](future<StatusOr<Response>> f) {
@@ -403,7 +403,7 @@ TEST(CompletionQueueTest, MakeRpcsAfterShutdown) {
   (void)cq.MakeStreamingReadRpc(
       [&mock_client](grpc::ClientContext* context, Request const& request,
                      grpc::CompletionQueue* cq) {
-        return mock_client.AsyncReadRows(context, request, cq);
+        return mock_client.AsyncResponseStream(context, request, cq);
       },
       r2, std::make_unique<grpc::ClientContext>(),
       [](Response const&) {

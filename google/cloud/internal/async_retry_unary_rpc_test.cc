@@ -51,13 +51,13 @@ class MockStub {
  public:
   MOCK_METHOD(
       std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<Response>>,
-      AsyncGetTable,
+      AsyncGetResponse,
       (grpc::ClientContext*, Request const&, grpc::CompletionQueue* cq));
 
   MOCK_METHOD(
       std::unique_ptr<
           grpc::ClientAsyncResponseReaderInterface<google::protobuf::Empty>>,
-      AsyncDeleteTable,
+      AsyncDeleteResponse,
       (grpc::ClientContext*, Request const&, grpc::CompletionQueue* cq));
 };
 
@@ -94,7 +94,7 @@ TEST(AsyncRetryUnaryRpcTest, ImmediatelySucceeds) {
         *status = grpc::Status::OK;
       });
 
-  EXPECT_CALL(mock, AsyncGetTable)
+  EXPECT_CALL(mock, AsyncGetResponse)
       .WillOnce([&reader](grpc::ClientContext*, Request const& request,
                           grpc::CompletionQueue*) {
         EXPECT_EQ(request.seconds(), 123456);
@@ -117,7 +117,7 @@ TEST(AsyncRetryUnaryRpcTest, ImmediatelySucceeds) {
       Idempotency::kIdempotent,
       [&mock](grpc::ClientContext* context, Request const& request,
               grpc::CompletionQueue* cq) {
-        return mock.AsyncGetTable(context, request, cq);
+        return mock.AsyncGetResponse(context, request, cq);
       },
       request);
 
@@ -141,7 +141,7 @@ TEST(AsyncRetryUnaryRpcTest, VoidImmediatelySucceeds) {
         *status = grpc::Status::OK;
       });
 
-  EXPECT_CALL(mock, AsyncDeleteTable)
+  EXPECT_CALL(mock, AsyncDeleteResponse)
       .WillOnce([&reader](grpc::ClientContext*, Request const& request,
                           grpc::CompletionQueue*) {
         EXPECT_EQ(request.seconds(), 123456);
@@ -164,7 +164,7 @@ TEST(AsyncRetryUnaryRpcTest, VoidImmediatelySucceeds) {
       Idempotency::kNonIdempotent,
       [&mock](grpc::ClientContext* context, Request const& request,
               grpc::CompletionQueue* cq) {
-        return mock.AsyncDeleteTable(context, request, cq);
+        return mock.AsyncDeleteResponse(context, request, cq);
       },
       request);
 
@@ -187,7 +187,7 @@ TEST(AsyncRetryUnaryRpcTest, PermanentFailure) {
         *status = grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh-oh");
       });
 
-  EXPECT_CALL(mock, AsyncGetTable)
+  EXPECT_CALL(mock, AsyncGetResponse)
       .WillOnce([&reader](grpc::ClientContext*, Request const& request,
                           grpc::CompletionQueue*) {
         EXPECT_EQ(request.seconds(), 123456);
@@ -210,7 +210,7 @@ TEST(AsyncRetryUnaryRpcTest, PermanentFailure) {
       Idempotency::kIdempotent,
       [&mock](grpc::ClientContext* context, Request const& request,
               grpc::CompletionQueue* cq) {
-        return mock.AsyncGetTable(context, request, cq);
+        return mock.AsyncGetResponse(context, request, cq);
       },
       request);
 
@@ -241,7 +241,7 @@ TEST(AsyncRetryUnaryRpcTest, TooManyTransientFailures) {
   auto r3 = std::make_unique<ReaderType>();
   EXPECT_CALL(*r3, Finish).WillOnce(finish_failure);
 
-  EXPECT_CALL(mock, AsyncGetTable)
+  EXPECT_CALL(mock, AsyncGetResponse)
       .WillOnce([&r1](grpc::ClientContext*, Request const& request,
                       grpc::CompletionQueue*) {
         EXPECT_EQ(request.seconds(), 123456);
@@ -275,7 +275,7 @@ TEST(AsyncRetryUnaryRpcTest, TooManyTransientFailures) {
       Idempotency::kIdempotent,
       [&mock](grpc::ClientContext* context, Request const& request,
               grpc::CompletionQueue* cq) {
-        return mock.AsyncGetTable(context, request, cq);
+        return mock.AsyncGetResponse(context, request, cq);
       },
       request);
 
@@ -313,7 +313,7 @@ TEST(AsyncRetryUnaryRpcTest, TransientOnNonIdempotent) {
             grpc::Status(grpc::StatusCode::UNAVAILABLE, "maybe-try-again");
       });
 
-  EXPECT_CALL(mock, AsyncDeleteTable)
+  EXPECT_CALL(mock, AsyncDeleteResponse)
       .WillOnce([&reader](grpc::ClientContext*, Request const& request,
                           grpc::CompletionQueue*) {
         EXPECT_EQ(request.seconds(), 123456);
@@ -336,7 +336,7 @@ TEST(AsyncRetryUnaryRpcTest, TransientOnNonIdempotent) {
       Idempotency::kNonIdempotent,
       [&mock](grpc::ClientContext* context, Request const& request,
               grpc::CompletionQueue* cq) {
-        return mock.AsyncDeleteTable(context, request, cq);
+        return mock.AsyncDeleteResponse(context, request, cq);
       },
       request);
 
