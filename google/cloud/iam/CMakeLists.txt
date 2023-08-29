@@ -34,8 +34,11 @@ foreach (dir IN LISTS service_dirs)
 endforeach ()
 
 include(GoogleCloudCppDoxygen)
-google_cloud_cpp_doxygen_targets("iam" DEPENDS cloud-docs
-                                 google-cloud-cpp::iam_protos)
+set(GOOGLE_CLOUD_CPP_DOXYGEN_EXTRA_INCLUDES
+    "${PROJECT_BINARY_DIR}/google/cloud/iam_policy")
+google_cloud_cpp_doxygen_targets(
+    "iam" DEPENDS cloud-docs google-cloud-cpp::iam_protos
+    google-cloud-cpp::iam_v1_policy_protos google-cloud-cpp::iam_policy_protos)
 
 include(GoogleCloudCppCommon)
 
@@ -53,7 +56,8 @@ target_include_directories(
 target_link_libraries(
     google_cloud_cpp_iam
     PUBLIC google-cloud-cpp::grpc_utils google-cloud-cpp::common
-           google-cloud-cpp::iam_protos google-cloud-cpp::iam_v1_policy_protos)
+           google-cloud-cpp::iam_protos google-cloud-cpp::iam_v1_policy_protos
+           google-cloud-cpp::iam_policy_protos)
 google_cloud_cpp_add_common_options(google_cloud_cpp_iam)
 set_target_properties(
     google_cloud_cpp_iam
@@ -125,16 +129,7 @@ install(
             COMPONENT google_cloud_cpp_runtime
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
             COMPONENT google_cloud_cpp_runtime
-            NAMELINK_SKIP
-    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-            COMPONENT google_cloud_cpp_development)
-# With CMake-3.12 and higher we could avoid this separate command (and the
-# duplication).
-install(
-    TARGETS google_cloud_cpp_iam
-    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-            COMPONENT google_cloud_cpp_development
-            NAMELINK_ONLY
+            NAMELINK_COMPONENT google_cloud_cpp_runtime
     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
             COMPONENT google_cloud_cpp_development)
 
@@ -149,7 +144,8 @@ google_cloud_cpp_add_pkgconfig(
     "Provides C++ APIs to access Google Cloud IAM."
     "google_cloud_cpp_grpc_utils"
     "google_cloud_cpp_common"
-    "google_cloud_cpp_iam_protos")
+    "google_cloud_cpp_iam_protos"
+    "google_cloud_cpp_iam_policy_protos")
 
 # Create and install the CMake configuration files.
 include(CMakePackageConfigHelpers)
