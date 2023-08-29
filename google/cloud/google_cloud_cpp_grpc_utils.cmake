@@ -285,6 +285,12 @@ if (BUILD_TESTING)
         google_cloud_cpp_grpc_utils_add_test("${fname}" "")
     endforeach ()
 
+    # TODO(#12485) - remove dependency on bigtable in this integration test.
+    if (NOT bigtable IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
+        list(REMOVE_ITEM google_cloud_cpp_grpc_utils_integration_tests
+             "internal/grpc_impersonate_service_account_integration_test.cc")
+    endif ()
+
     foreach (fname ${google_cloud_cpp_grpc_utils_integration_tests})
         google_cloud_cpp_add_executable(target "common" "${fname}")
         target_link_libraries(
@@ -293,7 +299,6 @@ if (BUILD_TESTING)
                     google_cloud_cpp_testing_grpc
                     google_cloud_cpp_testing
                     google-cloud-cpp::common
-                    google-cloud-cpp::bigtable_protos
                     google-cloud-cpp::iam_protos
                     absl::variant
                     GTest::gmock_main
@@ -305,6 +310,11 @@ if (BUILD_TESTING)
         add_test(NAME ${target} COMMAND ${target})
         set_tests_properties(${target} PROPERTIES LABELS
                                                   "integration-test-production")
+        # TODO(12485) - remove dep on bigtable_protos
+        if (bigtable IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
+            target_link_libraries(${target}
+                                  PRIVATE google-cloud-cpp::bigtable_protos)
+        endif ()
     endforeach ()
 
     set(google_cloud_cpp_grpc_utils_benchmarks # cmake-format: sortable
