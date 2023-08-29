@@ -16,7 +16,10 @@
 
 include(GoogleCloudCppLibrary)
 
-set(GOOGLE_CLOUD_CPP_SERVICE_DIRS "" "v1/")
+set(GOOGLE_CLOUD_CPP_SERVICE_DIRS "" "v1/" "iam/v3/")
+
+set(GOOGLE_CLOUD_CPP_DOXYGEN_EXTRA_INCLUDES
+    "${PROJECT_BINARY_DIR}/google/cloud/iam_policy")
 
 google_cloud_cpp_add_ga_grpc_library(policytroubleshooter
                                      "Policy Troubleshooter API")
