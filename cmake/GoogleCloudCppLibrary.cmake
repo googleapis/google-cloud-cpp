@@ -59,11 +59,9 @@ function (google_cloud_cpp_add_ga_grpc_library library display_name)
     endif ()
     set(DOXYGEN_EXCLUDE_SYMBOLS "internal")
     set(DOXYGEN_EXAMPLE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/quickstart")
-    unset(GOOGLE_CLOUD_CPP_DOXYGEN_EXTRA_INCLUDES)
-    foreach (lib IN LISTS _opt_CROSS_LIB_DEPS)
-        list(APPEND GOOGLE_CLOUD_CPP_DOXYGEN_EXTRA_INCLUDES
-             "${PROJECT_BINARY_DIR}/google/cloud/${lib}")
-    endforeach ()
+    set(GOOGLE_CLOUD_CPP_DOXYGEN_EXTRA_INCLUDES "${_opt_CROSS_LIB_DEPS}")
+    list(TRANSFORM GOOGLE_CLOUD_CPP_DOXYGEN_EXTRA_INCLUDES
+         PREPEND "${PROJECT_BINARY_DIR}/google/cloud/")
 
     unset(mocks_globs)
     unset(source_globs)
@@ -209,11 +207,10 @@ function (google_cloud_cpp_add_ga_grpc_library library display_name)
     # Create and install the CMake configuration files.
     include(CMakePackageConfigHelpers)
     set(GOOGLE_CLOUD_CPP_CONFIG_LIBRARY "${library_target}")
-    unset(find_dependencies)
-    foreach (lib IN LISTS _opt_CROSS_LIB_DEPS)
-        list(APPEND find_dependencies
-             "find_dependency(google_cloud_cpp_${lib})")
-    endforeach ()
+    set(find_dependencies "${_opt_CROSS_LIB_DEPS}")
+    list(TRANSFORM find_dependencies
+         PREPEND "find_dependency(google_cloud_cpp_")
+    list(TRANSFORM find_dependencies APPEND ")")
     string(JOIN "\n" GOOGLE_CLOUD_CPP_ADDITIONAL_FIND_DEPENDENCIES
            ${find_dependencies})
     configure_file("${PROJECT_SOURCE_DIR}/cmake/templates/config.cmake.in"
