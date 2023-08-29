@@ -46,7 +46,8 @@ Status StorageMetadata::DeleteBucket(
   params.reserve(1);
 
   if (!request.name().empty()) {
-    params.push_back("bucket=" + request.name());
+    params.push_back(
+        absl::StrCat("bucket=", internal::UrlEncode(request.name())));
   }
 
   if (params.empty()) {
@@ -64,7 +65,8 @@ StatusOr<google::storage::v2::Bucket> StorageMetadata::GetBucket(
   params.reserve(1);
 
   if (!request.name().empty()) {
-    params.push_back("bucket=" + request.name());
+    params.push_back(
+        absl::StrCat("bucket=", internal::UrlEncode(request.name())));
   }
 
   if (params.empty()) {
@@ -82,9 +84,11 @@ StatusOr<google::storage::v2::Bucket> StorageMetadata::CreateBucket(
   params.reserve(1);
 
   if (!request.bucket().project().empty()) {
-    params.push_back("project=" + request.bucket().project());
+    params.push_back(absl::StrCat(
+        "project=", internal::UrlEncode(request.bucket().project())));
   } else if (!request.parent().empty()) {
-    params.push_back("project=" + request.parent());
+    params.push_back(
+        absl::StrCat("project=", internal::UrlEncode(request.parent())));
   }
 
   if (params.empty()) {
@@ -102,7 +106,8 @@ StatusOr<google::storage::v2::ListBucketsResponse> StorageMetadata::ListBuckets(
   params.reserve(1);
 
   if (!request.parent().empty()) {
-    params.push_back("project=" + request.parent());
+    params.push_back(
+        absl::StrCat("project=", internal::UrlEncode(request.parent())));
   }
 
   if (params.empty()) {
@@ -121,7 +126,8 @@ StorageMetadata::LockBucketRetentionPolicy(
   params.reserve(1);
 
   if (!request.bucket().empty()) {
-    params.push_back("bucket=" + request.bucket());
+    params.push_back(
+        absl::StrCat("bucket=", internal::UrlEncode(request.bucket())));
   }
 
   if (params.empty()) {
@@ -230,7 +236,8 @@ StatusOr<google::storage::v2::Bucket> StorageMetadata::UpdateBucket(
   params.reserve(1);
 
   if (!request.bucket().name().empty()) {
-    params.push_back("bucket=" + request.bucket().name());
+    params.push_back(
+        absl::StrCat("bucket=", internal::UrlEncode(request.bucket().name())));
   }
 
   if (params.empty()) {
@@ -304,7 +311,8 @@ StorageMetadata::CreateNotificationConfig(
   params.reserve(1);
 
   if (!request.parent().empty()) {
-    params.push_back("bucket=" + request.parent());
+    params.push_back(
+        absl::StrCat("bucket=", internal::UrlEncode(request.parent())));
   }
 
   if (params.empty()) {
@@ -323,7 +331,8 @@ StorageMetadata::ListNotificationConfigs(
   params.reserve(1);
 
   if (!request.parent().empty()) {
-    params.push_back("bucket=" + request.parent());
+    params.push_back(
+        absl::StrCat("bucket=", internal::UrlEncode(request.parent())));
   }
 
   if (params.empty()) {
@@ -341,7 +350,8 @@ StatusOr<google::storage::v2::Object> StorageMetadata::ComposeObject(
   params.reserve(1);
 
   if (!request.destination().bucket().empty()) {
-    params.push_back("bucket=" + request.destination().bucket());
+    params.push_back(absl::StrCat(
+        "bucket=", internal::UrlEncode(request.destination().bucket())));
   }
 
   if (params.empty()) {
@@ -359,7 +369,8 @@ Status StorageMetadata::DeleteObject(
   params.reserve(1);
 
   if (!request.bucket().empty()) {
-    params.push_back("bucket=" + request.bucket());
+    params.push_back(
+        absl::StrCat("bucket=", internal::UrlEncode(request.bucket())));
   }
 
   if (params.empty()) {
@@ -405,7 +416,8 @@ StatusOr<google::storage::v2::Object> StorageMetadata::GetObject(
   params.reserve(1);
 
   if (!request.bucket().empty()) {
-    params.push_back("bucket=" + request.bucket());
+    params.push_back(
+        absl::StrCat("bucket=", internal::UrlEncode(request.bucket())));
   }
 
   if (params.empty()) {
@@ -425,7 +437,8 @@ StorageMetadata::ReadObject(
   params.reserve(1);
 
   if (!request.bucket().empty()) {
-    params.push_back("bucket=" + request.bucket());
+    params.push_back(
+        absl::StrCat("bucket=", internal::UrlEncode(request.bucket())));
   }
 
   if (params.empty()) {
@@ -443,7 +456,8 @@ StatusOr<google::storage::v2::Object> StorageMetadata::UpdateObject(
   params.reserve(1);
 
   if (!request.object().bucket().empty()) {
-    params.push_back("bucket=" + request.object().bucket());
+    params.push_back(absl::StrCat(
+        "bucket=", internal::UrlEncode(request.object().bucket())));
   }
 
   if (params.empty()) {
@@ -469,7 +483,8 @@ StatusOr<google::storage::v2::ListObjectsResponse> StorageMetadata::ListObjects(
   params.reserve(1);
 
   if (!request.parent().empty()) {
-    params.push_back("bucket=" + request.parent());
+    params.push_back(
+        absl::StrCat("bucket=", internal::UrlEncode(request.parent())));
   }
 
   if (params.empty()) {
@@ -487,11 +502,13 @@ StatusOr<google::storage::v2::RewriteResponse> StorageMetadata::RewriteObject(
   params.reserve(2);
 
   if (!request.source_bucket().empty()) {
-    params.push_back("source_bucket=" + request.source_bucket());
+    params.push_back(absl::StrCat(
+        "source_bucket=", internal::UrlEncode(request.source_bucket())));
   }
 
   if (!request.destination_bucket().empty()) {
-    params.push_back("bucket=" + request.destination_bucket());
+    params.push_back(absl::StrCat(
+        "bucket=", internal::UrlEncode(request.destination_bucket())));
   }
 
   if (params.empty()) {
@@ -510,8 +527,9 @@ StorageMetadata::StartResumableWrite(
   params.reserve(1);
 
   if (!request.write_object_spec().resource().bucket().empty()) {
-    params.push_back("bucket=" +
-                     request.write_object_spec().resource().bucket());
+    params.push_back(absl::StrCat(
+        "bucket=",
+        internal::UrlEncode(request.write_object_spec().resource().bucket())));
   }
 
   if (params.empty()) {
@@ -558,7 +576,8 @@ StorageMetadata::GetServiceAccount(
   params.reserve(1);
 
   if (!request.project().empty()) {
-    params.push_back("project=" + request.project());
+    params.push_back(
+        absl::StrCat("project=", internal::UrlEncode(request.project())));
   }
 
   if (params.empty()) {
@@ -577,7 +596,8 @@ StorageMetadata::CreateHmacKey(
   params.reserve(1);
 
   if (!request.project().empty()) {
-    params.push_back("project=" + request.project());
+    params.push_back(
+        absl::StrCat("project=", internal::UrlEncode(request.project())));
   }
 
   if (params.empty()) {
@@ -595,7 +615,8 @@ Status StorageMetadata::DeleteHmacKey(
   params.reserve(1);
 
   if (!request.project().empty()) {
-    params.push_back("project=" + request.project());
+    params.push_back(
+        absl::StrCat("project=", internal::UrlEncode(request.project())));
   }
 
   if (params.empty()) {
@@ -613,7 +634,8 @@ StatusOr<google::storage::v2::HmacKeyMetadata> StorageMetadata::GetHmacKey(
   params.reserve(1);
 
   if (!request.project().empty()) {
-    params.push_back("project=" + request.project());
+    params.push_back(
+        absl::StrCat("project=", internal::UrlEncode(request.project())));
   }
 
   if (params.empty()) {
@@ -632,7 +654,8 @@ StorageMetadata::ListHmacKeys(
   params.reserve(1);
 
   if (!request.project().empty()) {
-    params.push_back("project=" + request.project());
+    params.push_back(
+        absl::StrCat("project=", internal::UrlEncode(request.project())));
   }
 
   if (params.empty()) {
@@ -650,7 +673,8 @@ StatusOr<google::storage::v2::HmacKeyMetadata> StorageMetadata::UpdateHmacKey(
   params.reserve(1);
 
   if (!request.hmac_key().project().empty()) {
-    params.push_back("project=" + request.hmac_key().project());
+    params.push_back(absl::StrCat(
+        "project=", internal::UrlEncode(request.hmac_key().project())));
   }
 
   if (params.empty()) {
@@ -670,7 +694,8 @@ StorageMetadata::AsyncComposeObject(
   params.reserve(1);
 
   if (!request.destination().bucket().empty()) {
-    params.push_back("bucket=" + request.destination().bucket());
+    params.push_back(absl::StrCat(
+        "bucket=", internal::UrlEncode(request.destination().bucket())));
   }
 
   if (params.empty()) {
@@ -689,7 +714,8 @@ future<Status> StorageMetadata::AsyncDeleteObject(
   params.reserve(1);
 
   if (!request.bucket().empty()) {
-    params.push_back("bucket=" + request.bucket());
+    params.push_back(
+        absl::StrCat("bucket=", internal::UrlEncode(request.bucket())));
   }
 
   if (params.empty()) {
@@ -710,7 +736,8 @@ StorageMetadata::AsyncReadObject(
   params.reserve(1);
 
   if (!request.bucket().empty()) {
-    params.push_back("bucket=" + request.bucket());
+    params.push_back(
+        absl::StrCat("bucket=", internal::UrlEncode(request.bucket())));
   }
 
   if (params.empty()) {
@@ -740,8 +767,9 @@ StorageMetadata::AsyncStartResumableWrite(
   params.reserve(1);
 
   if (!request.write_object_spec().resource().bucket().empty()) {
-    params.push_back("bucket=" +
-                     request.write_object_spec().resource().bucket());
+    params.push_back(absl::StrCat(
+        "bucket=",
+        internal::UrlEncode(request.write_object_spec().resource().bucket())));
   }
 
   if (params.empty()) {

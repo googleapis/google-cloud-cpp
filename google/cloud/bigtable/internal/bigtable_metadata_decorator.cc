@@ -61,7 +61,8 @@ BigtableMetadata::ReadRows(
   table_name_matcher->AppendParam(request, params);
 
   if (!request.app_profile_id().empty()) {
-    params.push_back("app_profile_id=" + request.app_profile_id());
+    params.push_back(absl::StrCat(
+        "app_profile_id=", internal::UrlEncode(request.app_profile_id())));
   }
 
   if (params.empty()) {
@@ -94,7 +95,8 @@ BigtableMetadata::SampleRowKeys(
   table_name_matcher->AppendParam(request, params);
 
   if (!request.app_profile_id().empty()) {
-    params.push_back("app_profile_id=" + request.app_profile_id());
+    params.push_back(absl::StrCat(
+        "app_profile_id=", internal::UrlEncode(request.app_profile_id())));
   }
 
   if (params.empty()) {
@@ -125,7 +127,8 @@ StatusOr<google::bigtable::v2::MutateRowResponse> BigtableMetadata::MutateRow(
   table_name_matcher->AppendParam(request, params);
 
   if (!request.app_profile_id().empty()) {
-    params.push_back("app_profile_id=" + request.app_profile_id());
+    params.push_back(absl::StrCat(
+        "app_profile_id=", internal::UrlEncode(request.app_profile_id())));
   }
 
   if (params.empty()) {
@@ -158,7 +161,8 @@ BigtableMetadata::MutateRows(
   table_name_matcher->AppendParam(request, params);
 
   if (!request.app_profile_id().empty()) {
-    params.push_back("app_profile_id=" + request.app_profile_id());
+    params.push_back(absl::StrCat(
+        "app_profile_id=", internal::UrlEncode(request.app_profile_id())));
   }
 
   if (params.empty()) {
@@ -190,7 +194,8 @@ BigtableMetadata::CheckAndMutateRow(
   table_name_matcher->AppendParam(request, params);
 
   if (!request.app_profile_id().empty()) {
-    params.push_back("app_profile_id=" + request.app_profile_id());
+    params.push_back(absl::StrCat(
+        "app_profile_id=", internal::UrlEncode(request.app_profile_id())));
   }
 
   if (params.empty()) {
@@ -222,7 +227,8 @@ BigtableMetadata::PingAndWarm(
   name_matcher->AppendParam(request, params);
 
   if (!request.app_profile_id().empty()) {
-    params.push_back("app_profile_id=" + request.app_profile_id());
+    params.push_back(absl::StrCat(
+        "app_profile_id=", internal::UrlEncode(request.app_profile_id())));
   }
 
   if (params.empty()) {
@@ -254,7 +260,8 @@ BigtableMetadata::ReadModifyWriteRow(
   table_name_matcher->AppendParam(request, params);
 
   if (!request.app_profile_id().empty()) {
-    params.push_back("app_profile_id=" + request.app_profile_id());
+    params.push_back(absl::StrCat(
+        "app_profile_id=", internal::UrlEncode(request.app_profile_id())));
   }
 
   if (params.empty()) {
@@ -288,7 +295,8 @@ BigtableMetadata::AsyncReadRows(
   table_name_matcher->AppendParam(request, params);
 
   if (!request.app_profile_id().empty()) {
-    params.push_back("app_profile_id=" + request.app_profile_id());
+    params.push_back(absl::StrCat(
+        "app_profile_id=", internal::UrlEncode(request.app_profile_id())));
   }
 
   if (params.empty()) {
@@ -322,7 +330,8 @@ BigtableMetadata::AsyncSampleRowKeys(
   table_name_matcher->AppendParam(request, params);
 
   if (!request.app_profile_id().empty()) {
-    params.push_back("app_profile_id=" + request.app_profile_id());
+    params.push_back(absl::StrCat(
+        "app_profile_id=", internal::UrlEncode(request.app_profile_id())));
   }
 
   if (params.empty()) {
@@ -355,7 +364,8 @@ BigtableMetadata::AsyncMutateRow(
   table_name_matcher->AppendParam(request, params);
 
   if (!request.app_profile_id().empty()) {
-    params.push_back("app_profile_id=" + request.app_profile_id());
+    params.push_back(absl::StrCat(
+        "app_profile_id=", internal::UrlEncode(request.app_profile_id())));
   }
 
   if (params.empty()) {
@@ -389,7 +399,8 @@ BigtableMetadata::AsyncMutateRows(
   table_name_matcher->AppendParam(request, params);
 
   if (!request.app_profile_id().empty()) {
-    params.push_back("app_profile_id=" + request.app_profile_id());
+    params.push_back(absl::StrCat(
+        "app_profile_id=", internal::UrlEncode(request.app_profile_id())));
   }
 
   if (params.empty()) {
@@ -422,7 +433,8 @@ BigtableMetadata::AsyncCheckAndMutateRow(
   table_name_matcher->AppendParam(request, params);
 
   if (!request.app_profile_id().empty()) {
-    params.push_back("app_profile_id=" + request.app_profile_id());
+    params.push_back(absl::StrCat(
+        "app_profile_id=", internal::UrlEncode(request.app_profile_id())));
   }
 
   if (params.empty()) {
@@ -455,7 +467,8 @@ BigtableMetadata::AsyncReadModifyWriteRow(
   table_name_matcher->AppendParam(request, params);
 
   if (!request.app_profile_id().empty()) {
-    params.push_back("app_profile_id=" + request.app_profile_id());
+    params.push_back(absl::StrCat(
+        "app_profile_id=", internal::UrlEncode(request.app_profile_id())));
   }
 
   if (params.empty()) {
