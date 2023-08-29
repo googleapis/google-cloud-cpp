@@ -392,18 +392,7 @@ install(
             COMPONENT google_cloud_cpp_runtime
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
             COMPONENT google_cloud_cpp_runtime
-            NAMELINK_SKIP
-    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-            COMPONENT google_cloud_cpp_development)
-# With CMake-3.12 and higher we could avoid this separate command (and the
-# duplication).
-install(
-    TARGETS ${external_googleapis_installed_libraries_list}
-            google_cloud_cpp_logging_type_type_protos
-            google_cloud_cpp_logging_type_protos
-    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-            COMPONENT google_cloud_cpp_development
-            NAMELINK_ONLY
+            NAMELINK_COMPONENT google_cloud_cpp_development
     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
             COMPONENT google_cloud_cpp_development)
 
