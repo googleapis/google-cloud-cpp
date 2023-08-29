@@ -57,55 +57,6 @@ class PolicyTroubleshooterConnectionImpl
           TroubleshootIamPolicyRequest const& request) override;
 
  private:
-  std::unique_ptr<policytroubleshooter_iam_v3::PolicyTroubleshooterRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<policytroubleshooter_iam_v3::
-                        PolicyTroubleshooterRetryPolicyOption>()) {
-      return options
-          .get<policytroubleshooter_iam_v3::
-                   PolicyTroubleshooterRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<policytroubleshooter_iam_v3::
-                 PolicyTroubleshooterRetryPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<policytroubleshooter_iam_v3::
-                        PolicyTroubleshooterBackoffPolicyOption>()) {
-      return options
-          .get<policytroubleshooter_iam_v3::
-                   PolicyTroubleshooterBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<policytroubleshooter_iam_v3::
-                 PolicyTroubleshooterBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<policytroubleshooter_iam_v3::
-                      PolicyTroubleshooterConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<policytroubleshooter_iam_v3::
-                     PolicyTroubleshooterConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<policytroubleshooter_iam_v3::
-                   PolicyTroubleshooterConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<policytroubleshooter_iam_v3::
-                 PolicyTroubleshooterConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<
       policytroubleshooter_iam_v3_internal::PolicyTroubleshooterStub>
