@@ -467,6 +467,41 @@ TEST_F(MetadataDecoratorTest, ExplicitRoutingNestedField) {
   (void)stub.ExplicitRouting2(context2, request);
 }
 
+TEST_F(MetadataDecoratorTest, UrlEncodeRoutingParam) {
+  EXPECT_CALL(*mock_, ExplicitRouting2)
+      .WillOnce([this](grpc::ClientContext& context,
+                       google::test::admin::database::v1::
+                           ExplicitRoutingRequest const& request) {
+        IsContextMDValid(
+            context,
+            "google.test.admin.database.v1.GoldenKitchenSink.ExplicitRouting2",
+            request);
+        return Status();
+      })
+      .WillOnce([this](grpc::ClientContext& context,
+                       google::test::admin::database::v1::
+                           ExplicitRoutingRequest const&) {
+        auto headers = GetMetadata(context);
+        EXPECT_THAT(headers, Contains(Pair("x-goog-request-params",
+                                           "routing_id=%2Fvalue")));
+        return Status();
+      });
+
+  GoldenKitchenSinkMetadata stub(mock_, {});
+  grpc::ClientContext context1;
+  grpc::ClientContext context2;
+  google::test::admin::database::v1::ExplicitRoutingRequest request;
+  request.mutable_nested1()->mutable_nested2()->set_value("/value");
+  // We make the same call twice. In the first call, we use `IsContextMDValid`
+  // to verify expectations. In the second call, we verify the routing
+  // parameters by hand. This gives us extra confidence in `IsContextMDValid`
+  // which is reasonably complex, but untested. (We cannot do them both in the
+  // same call, because the `grpc::ClientContext` is consumed in order to
+  // extract its metadata).
+  (void)stub.ExplicitRouting2(context1, request);
+  (void)stub.ExplicitRouting2(context2, request);
+}
+
 TEST_F(MetadataDecoratorTest, FixedMetadata) {
   // We use knowledge of the implementation to assert that testing a single RPC
   // is sufficient.
