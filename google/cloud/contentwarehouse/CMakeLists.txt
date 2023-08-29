@@ -18,11 +18,8 @@ include(GoogleCloudCppLibrary)
 
 set(GOOGLE_CLOUD_CPP_SERVICE_DIRS "v1/")
 
-set(GOOGLE_CLOUD_CPP_DOXYGEN_EXTRA_INCLUDES
-    "${PROJECT_BINARY_DIR}/google/cloud/documentai")
-
-google_cloud_cpp_add_ga_grpc_library(contentwarehouse
-                                     "Document AI Warehouse API")
+google_cloud_cpp_add_ga_grpc_library(
+    contentwarehouse "Document AI Warehouse API" CROSS_LIB_DEPS "documentai")
 
 if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
     add_executable(contentwarehouse_quickstart "quickstart/quickstart.cc")

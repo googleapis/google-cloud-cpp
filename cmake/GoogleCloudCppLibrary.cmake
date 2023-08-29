@@ -35,11 +35,13 @@
 #   `cloud_speech_protos`) that must continue to exist. We add interface
 #   libraries for these, which link to the desired proto library. See #8022 for
 #   more details.
+# * CROSS_LIB_DEPS: a list of client libraries which this library depends on.
 #
 function (google_cloud_cpp_add_ga_grpc_library library display_name)
     cmake_parse_arguments(
         _opt "EXPERIMENTAL" ""
-        "ADDITIONAL_PROTO_LISTS;BACKWARDS_COMPAT_PROTO_TARGETS" ${ARGN})
+        "ADDITIONAL_PROTO_LISTS;BACKWARDS_COMPAT_PROTO_TARGETS;CROSS_LIB_DEPS"
+        ${ARGN})
     set(library_target "google_cloud_cpp_${library}")
     set(mocks_target "google_cloud_cpp_${library}_mocks")
     set(protos_target "google_cloud_cpp_${library}_protos")
@@ -57,6 +59,11 @@ function (google_cloud_cpp_add_ga_grpc_library library display_name)
     endif ()
     set(DOXYGEN_EXCLUDE_SYMBOLS "internal")
     set(DOXYGEN_EXAMPLE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/quickstart")
+    unset(GOOGLE_CLOUD_CPP_DOXYGEN_EXTRA_INCLUDES)
+    foreach (lib IN LISTS _opt_CROSS_LIB_DEPS)
+        list(APPEND GOOGLE_CLOUD_CPP_DOXYGEN_EXTRA_INCLUDES
+             "${PROJECT_BINARY_DIR}/google/cloud/${lib}")
+    endforeach ()
 
     unset(mocks_globs)
     unset(source_globs)
@@ -201,7 +208,16 @@ function (google_cloud_cpp_add_ga_grpc_library library display_name)
 
     # Create and install the CMake configuration files.
     include(CMakePackageConfigHelpers)
-    configure_file("config.cmake.in" "${library_target}-config.cmake" @ONLY)
+    set(GOOGLE_CLOUD_CPP_CONFIG_LIBRARY "${library_target}")
+    unset(find_dependencies)
+    foreach (lib IN LISTS _opt_CROSS_LIB_DEPS)
+        list(APPEND find_dependencies
+             "find_dependency(google_cloud_cpp_${lib})")
+    endforeach ()
+    string(JOIN "\n" GOOGLE_CLOUD_CPP_ADDITIONAL_FIND_DEPENDENCIES
+           ${find_dependencies})
+    configure_file("${PROJECT_SOURCE_DIR}/cmake/templates/config.cmake.in"
+                   "${library_target}-config.cmake" @ONLY)
     write_basic_package_version_file(
         "${library_target}-config-version.cmake"
         VERSION ${PROJECT_VERSION}
