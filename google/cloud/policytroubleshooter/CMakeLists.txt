@@ -16,10 +16,14 @@
 
 include(GoogleCloudCppLibrary)
 
-set(GOOGLE_CLOUD_CPP_SERVICE_DIRS "" "v1/")
+set(GOOGLE_CLOUD_CPP_SERVICE_DIRS "" "v1/" "iam/v3/")
 
-google_cloud_cpp_add_ga_grpc_library(policytroubleshooter
-                                     "Policy Troubleshooter API")
+set(GOOGLE_CLOUD_CPP_DOXYGEN_EXTRA_INCLUDES
+    "${PROJECT_BINARY_DIR}/google/cloud/iam_policy")
+
+google_cloud_cpp_add_ga_grpc_library(
+    policytroubleshooter "Policy Troubleshooter API" CROSS_LIB_DEPS
+    "iam_policy")
 
 if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
     add_executable(policytroubleshooter_quickstart "quickstart/quickstart.cc")

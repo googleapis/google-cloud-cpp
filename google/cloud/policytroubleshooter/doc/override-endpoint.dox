@@ -7,15 +7,33 @@ library. Use the
 client library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `policytroubleshooter_v1::IamCheckerClient`:
+For example, this will override the default endpoint for `policytroubleshooter_iam_v3::PoliciesClient`:
 
-@snippet iam_checker_client_samples.cc set-client-endpoint
+@snippet policies_client_samples.cc set-client-endpoint
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c policytroubleshooter_iam_v3::PoliciesClient](@ref policytroubleshooter_iam_v3::PoliciesClient-endpoint-snippet)
+- [\c policytroubleshooter_iam_v3::PolicyTroubleshooterClient](@ref policytroubleshooter_iam_v3::PolicyTroubleshooterClient-endpoint-snippet)
+- [\c policytroubleshooter_v1::IamCheckerClient](@ref policytroubleshooter_v1::IamCheckerClient-endpoint-snippet)
 
 <!-- inject-endpoint-snippet-end -->
 
 */
 
 // <!-- inject-endpoint-pages-start -->
+
+/*! @page policytroubleshooter_iam_v3::PoliciesClient-endpoint-snippet Override policytroubleshooter_iam_v3::PoliciesClient Endpoint Configuration
+
+@snippet google/cloud/policytroubleshooter/iam/v3/samples/policies_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page policytroubleshooter_iam_v3::PolicyTroubleshooterClient-endpoint-snippet Override policytroubleshooter_iam_v3::PolicyTroubleshooterClient Endpoint Configuration
+
+@snippet google/cloud/policytroubleshooter/iam/v3/samples/policy_troubleshooter_client_samples.cc set-client-endpoint
+
+*/
 
 /*! @page policytroubleshooter_v1::IamCheckerClient-endpoint-snippet Override policytroubleshooter_v1::IamCheckerClient Endpoint Configuration
 

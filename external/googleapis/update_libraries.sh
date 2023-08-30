@@ -211,7 +211,11 @@ declare -A -r LIBRARIES=(
       "@com_google_googleapis//google/cloud/oslogin/common:common_cc_grpc"
   )"
   ["policysimulator"]="@com_google_googleapis//google/cloud/policysimulator/v1:policysimulator_cc_grpc"
-  ["policytroubleshooter"]="@com_google_googleapis//google/cloud/policytroubleshooter/v1:policytroubleshooter_cc_grpc"
+  ["policytroubleshooter"]="$(
+    printf ",%s" \
+      "@com_google_googleapis//google/cloud/policytroubleshooter/v1:policytroubleshooter_cc_grpc" \
+      "@com_google_googleapis//google/cloud/policytroubleshooter/iam/v3:iam_cc_grpc"
+  )"
   ["privateca"]="@com_google_googleapis//google/cloud/security/privateca/v1:privateca_cc_grpc"
   ["profiler"]="@com_google_googleapis//google/devtools/cloudprofiler/v2:cloudprofiler_cc_grpc"
   ["pubsub"]="@com_google_googleapis//google/pubsub/v1:pubsub_cc_grpc"
