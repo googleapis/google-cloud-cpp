@@ -425,7 +425,7 @@ TEST_F(HttpOptionUtilsTest, SetHttpDerivedMethodVarsExtensionInfoSingleParam) {
   VarsDictionary vars;
   SetHttpDerivedMethodVars(ParseHttpExtension(*method), *method, vars);
   EXPECT_THAT(vars.at("method_request_params"),
-              Eq("\"parent=\", request.parent()"));
+              Eq("\"parent=\", internal::UrlEncode(request.parent())"));
   EXPECT_THAT(vars.at("method_request_body"), Eq("*"));
   EXPECT_THAT(vars.at("method_http_verb"), Eq("Post"));
   EXPECT_THAT(
@@ -442,8 +442,9 @@ TEST_F(HttpOptionUtilsTest,
   VarsDictionary vars;
   SetHttpDerivedMethodVars(ParseHttpExtension(*method), *method, vars);
   EXPECT_THAT(vars.at("method_request_params"),
-              Eq("\"project=\", request.project(), \"&\",\"instance=\", "
-                 "request.instance()"));
+              Eq("\"project=\", internal::UrlEncode(request.project()), "
+                 "\"&\",\"instance=\", "
+                 "internal::UrlEncode(request.instance())"));
   EXPECT_THAT(vars.at("method_request_body"), Eq("*"));
   EXPECT_THAT(vars.at("method_http_verb"), Eq("Post"));
   EXPECT_THAT(
