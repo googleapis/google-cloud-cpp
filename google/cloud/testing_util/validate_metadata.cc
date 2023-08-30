@@ -89,7 +89,13 @@ RoutingHeaders ExtractMDFromHeader(std::string header) {
  */
 MATCHER_P(MatchesGlob, glob, "matches the glob: \"" + glob + "\"") {
   // Translate the glob into a regex pattern.
-  std::regex regex(absl::StrReplaceAll(glob, {{"*", "[^/]+"}}));
+  auto matcher1 = absl::StrReplaceAll(glob, {{"*", "[^/]+"}});
+  // Create a second matcher that replaces all "/" with "%2F" to match the
+  // character replacement in `internal::UrlEncode`.
+  auto decoded_glob = absl::StrReplaceAll(glob, {{"/", "%2F"}});
+  auto matcher2 = absl::StrReplaceAll(decoded_glob, {{"*", "[^/]+"}});
+  auto regex_string = absl::StrCat(matcher1, "|", matcher2);
+  std::regex regex(regex_string);
   return std::regex_match(arg, regex);
 }
 
