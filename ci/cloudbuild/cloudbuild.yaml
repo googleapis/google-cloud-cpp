@@ -103,6 +103,7 @@ steps:
   secretEnv: ['CODECOV_TOKEN']
   env: [
     'BAZEL_REMOTE_CACHE=https://storage.googleapis.com/${_CACHE_BUCKET}/bazel-cache/${_DISTRO}-${_BUILD_NAME}',
+    'LIBRARIES=${_LIBRARIES}',
     'SCCACHE_GCS_BUCKET=${_CACHE_BUCKET}',
     'SCCACHE_GCS_KEY_PREFIX=sccache/${_DISTRO}-${_BUILD_NAME}',
     'SCCACHE_GCS_RW_MODE=READ_WRITE',
