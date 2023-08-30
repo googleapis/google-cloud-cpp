@@ -162,6 +162,10 @@ while true; do
   esac
 done
 
+io::log_h2 "Executing build.sh"
+io::log_h2 "build.sh BAZEL_REMOTE_CACHE=${BAZEL_REMOTE_CACHE}"
+io::log_h2 "build.sh LIBRARIES=${LIBRARIES}"
+
 # If `--trigger=name` was specified, use the _BUILD_NAME and _DISTRO in the
 # trigger file as defaults.
 if [[ -n "${TRIGGER_FLAG}" ]]; then
@@ -181,7 +185,7 @@ fi
 : "${TRIGGER_TYPE:=manual}"
 : "${BRANCH_NAME:=$(git branch --show-current)}"
 : "${COMMIT_SHA:=$(git rev-parse HEAD)}"
-: "${LIBRARIES:=all}"
+#: "${LIBRARIES:=all}"
 CODECOV_TOKEN="$(tr -d '[:space:]' <<<"${CODECOV_TOKEN:-}")"
 
 export CODECOV_TOKEN
@@ -189,7 +193,6 @@ export BRANCH_NAME
 export COMMIT_SHA
 export TRIGGER_TYPE
 export VERBOSE_FLAG
-export LIBRARIES
 
 # --local is the most fundamental build mode, in that all other builds
 # eventually call this one. For example, a --docker build will build the

@@ -21,11 +21,15 @@ source module ci/cloudbuild/builds/lib/cmake.sh
 source module ci/cloudbuild/builds/lib/features.sh
 source module ci/lib/io.sh
 
+io::log_h2 "Executing public-docs.sh"
+
+io::log_h2 "pre manual check LIBRARIES=${LIBRARIES}"
+
 if [[ "${TRIGGER_TYPE}" == "manual" && "${LIBRARIES}" == "all" ]]; then
   LIBRARIES="all_bar_compute"
 fi
 
-io::log_h2 "LIBRARIES=${LIBRARIES}"
+io::log_h2 "post manual check LIBRARIES=${LIBRARIES}"
 
 if [[ "${LIBRARIES}" == "all" ]]; then
   mapfile -t FEATURE_LIST < <(features::list_full)
