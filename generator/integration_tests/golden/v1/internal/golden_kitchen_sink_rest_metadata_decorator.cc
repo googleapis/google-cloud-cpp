@@ -139,15 +139,15 @@ GoldenKitchenSinkRestMetadata::ExplicitRouting2(
   params.reserve(2);
 
   if (!request.app_profile_id().empty()) {
-    params.push_back("no_regex_needed=" + request.app_profile_id());
+    params.push_back(absl::StrCat("no_regex_needed=", internal::UrlEncode(request.app_profile_id())));
   } else if (!request.table_name().empty()) {
-    params.push_back("no_regex_needed=" + request.table_name());
+    params.push_back(absl::StrCat("no_regex_needed=", internal::UrlEncode(request.table_name())));
   } else if (!request.no_regex_needed().empty()) {
-    params.push_back("no_regex_needed=" + request.no_regex_needed());
+    params.push_back(absl::StrCat("no_regex_needed=", internal::UrlEncode(request.no_regex_needed())));
   }
 
   if (!request.nested1().nested2().value().empty()) {
-    params.push_back("routing_id=" + request.nested1().nested2().value());
+    params.push_back(absl::StrCat("routing_id=", internal::UrlEncode(request.nested1().nested2().value())));
   }
 
   SetMetadata(rest_context, params);

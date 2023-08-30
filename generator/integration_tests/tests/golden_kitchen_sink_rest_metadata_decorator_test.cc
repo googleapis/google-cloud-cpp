@@ -345,6 +345,33 @@ TEST(KitchenSinkRestMetadataDecoratorTest, ExplicitRoutingNestedField) {
   EXPECT_EQ(TransientError(), status);
 }
 
+TEST(KitchenSinkRestMetadataDecoratorTest, UrlEncodeRoutingParam) {
+  auto mock = std::make_shared<MockGoldenKitchenSinkRestStub>();
+  EXPECT_CALL(*mock, ExplicitRouting2)
+      .WillOnce(
+          [](rest_internal::RestContext& context,
+             google::test::admin::database::v1::ExplicitRoutingRequest const&) {
+            EXPECT_THAT(context.GetHeader("x-goog-api-client"),
+                        Contains(google::cloud::internal::ApiClientHeader(
+                            "generator")));
+            EXPECT_THAT(context.GetHeader("x-goog-user-project"), IsEmpty());
+            EXPECT_THAT(context.GetHeader("x-goog-quota-user"), IsEmpty());
+            EXPECT_THAT(context.GetHeader("x-server-timeout"), IsEmpty());
+            EXPECT_THAT(context.GetHeader("x-goog-request-params"),
+                        Contains("no_regex_needed=%2Fused"));
+            return TransientError();
+          });
+
+  internal::OptionsSpan span(Options{});
+  GoldenKitchenSinkRestMetadata stub(mock);
+  rest_internal::RestContext context;
+  google::test::admin::database::v1::ExplicitRoutingRequest request;
+  request.set_table_name("/used");
+  request.set_no_regex_needed("ignored");
+  auto status = stub.ExplicitRouting2(context, request);
+  EXPECT_EQ(TransientError(), status);
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace golden_v1_internal
