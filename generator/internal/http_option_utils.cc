@@ -110,7 +110,7 @@ void SetHttpDerivedMethodVars(
           info.field_substitutions, ", \"&\",",
           [&](std::string* out, std::pair<std::string, std::string> const& p) {
             out->append(
-                absl::StrFormat("\"%s=\",  internal::UrlEncode(request.%s())",
+                absl::StrFormat("\"%s=\", internal::UrlEncode(request.%s())",
                                 internal::UrlEncode(p.first),
                                 FormatFieldAccessorCall(method, p.first)));
           });
