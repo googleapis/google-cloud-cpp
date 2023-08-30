@@ -46,11 +46,13 @@ StatusOr<google::datastore::v1::LookupResponse> DatastoreMetadata::Lookup(
   params.reserve(2);
 
   if (!request.project_id().empty()) {
-    params.push_back("project_id=" + request.project_id());
+    params.push_back(
+        absl::StrCat("project_id=", internal::UrlEncode(request.project_id())));
   }
 
   if (!request.database_id().empty()) {
-    params.push_back("database_id=" + request.database_id());
+    params.push_back(absl::StrCat("database_id=",
+                                  internal::UrlEncode(request.database_id())));
   }
 
   if (params.empty()) {
@@ -68,11 +70,13 @@ StatusOr<google::datastore::v1::RunQueryResponse> DatastoreMetadata::RunQuery(
   params.reserve(2);
 
   if (!request.project_id().empty()) {
-    params.push_back("project_id=" + request.project_id());
+    params.push_back(
+        absl::StrCat("project_id=", internal::UrlEncode(request.project_id())));
   }
 
   if (!request.database_id().empty()) {
-    params.push_back("database_id=" + request.database_id());
+    params.push_back(absl::StrCat("database_id=",
+                                  internal::UrlEncode(request.database_id())));
   }
 
   if (params.empty()) {
@@ -91,11 +95,13 @@ DatastoreMetadata::RunAggregationQuery(
   params.reserve(2);
 
   if (!request.project_id().empty()) {
-    params.push_back("project_id=" + request.project_id());
+    params.push_back(
+        absl::StrCat("project_id=", internal::UrlEncode(request.project_id())));
   }
 
   if (!request.database_id().empty()) {
-    params.push_back("database_id=" + request.database_id());
+    params.push_back(absl::StrCat("database_id=",
+                                  internal::UrlEncode(request.database_id())));
   }
 
   if (params.empty()) {
@@ -114,11 +120,13 @@ DatastoreMetadata::BeginTransaction(
   params.reserve(2);
 
   if (!request.project_id().empty()) {
-    params.push_back("project_id=" + request.project_id());
+    params.push_back(
+        absl::StrCat("project_id=", internal::UrlEncode(request.project_id())));
   }
 
   if (!request.database_id().empty()) {
-    params.push_back("database_id=" + request.database_id());
+    params.push_back(absl::StrCat("database_id=",
+                                  internal::UrlEncode(request.database_id())));
   }
 
   if (params.empty()) {
@@ -136,11 +144,13 @@ StatusOr<google::datastore::v1::CommitResponse> DatastoreMetadata::Commit(
   params.reserve(2);
 
   if (!request.project_id().empty()) {
-    params.push_back("project_id=" + request.project_id());
+    params.push_back(
+        absl::StrCat("project_id=", internal::UrlEncode(request.project_id())));
   }
 
   if (!request.database_id().empty()) {
-    params.push_back("database_id=" + request.database_id());
+    params.push_back(absl::StrCat("database_id=",
+                                  internal::UrlEncode(request.database_id())));
   }
 
   if (params.empty()) {
@@ -158,11 +168,13 @@ StatusOr<google::datastore::v1::RollbackResponse> DatastoreMetadata::Rollback(
   params.reserve(2);
 
   if (!request.project_id().empty()) {
-    params.push_back("project_id=" + request.project_id());
+    params.push_back(
+        absl::StrCat("project_id=", internal::UrlEncode(request.project_id())));
   }
 
   if (!request.database_id().empty()) {
-    params.push_back("database_id=" + request.database_id());
+    params.push_back(absl::StrCat("database_id=",
+                                  internal::UrlEncode(request.database_id())));
   }
 
   if (params.empty()) {
@@ -181,11 +193,13 @@ DatastoreMetadata::AllocateIds(
   params.reserve(2);
 
   if (!request.project_id().empty()) {
-    params.push_back("project_id=" + request.project_id());
+    params.push_back(
+        absl::StrCat("project_id=", internal::UrlEncode(request.project_id())));
   }
 
   if (!request.database_id().empty()) {
-    params.push_back("database_id=" + request.database_id());
+    params.push_back(absl::StrCat("database_id=",
+                                  internal::UrlEncode(request.database_id())));
   }
 
   if (params.empty()) {
@@ -204,11 +218,13 @@ DatastoreMetadata::ReserveIds(
   params.reserve(2);
 
   if (!request.project_id().empty()) {
-    params.push_back("project_id=" + request.project_id());
+    params.push_back(
+        absl::StrCat("project_id=", internal::UrlEncode(request.project_id())));
   }
 
   if (!request.database_id().empty()) {
-    params.push_back("database_id=" + request.database_id());
+    params.push_back(absl::StrCat("database_id=",
+                                  internal::UrlEncode(request.database_id())));
   }
 
   if (params.empty()) {
