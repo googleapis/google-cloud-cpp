@@ -42,7 +42,7 @@ StatusOr<google::test::admin::database::v1::ListDatabasesResponse>
 GoldenThingAdminMetadata::ListDatabases(
     grpc::ClientContext& context,
     google::test::admin::database::v1::ListDatabasesRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=",  internal::UrlEncode(request.parent()()));
+  SetMetadata(context, absl::StrCat("parent=",  internal::UrlEncode(request.parent())));
   return child_->ListDatabases(context, request);
 }
 
@@ -51,7 +51,7 @@ GoldenThingAdminMetadata::AsyncCreateDatabase(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::test::admin::database::v1::CreateDatabaseRequest const& request) {
-  SetMetadata(*context, absl::StrCat("parent=",  internal::UrlEncode(request.parent()()));
+  SetMetadata(*context, absl::StrCat("parent=",  internal::UrlEncode(request.parent())));
   return child_->AsyncCreateDatabase(cq, std::move(context), request);
 }
 
@@ -59,7 +59,7 @@ StatusOr<google::test::admin::database::v1::Database>
 GoldenThingAdminMetadata::GetDatabase(
     grpc::ClientContext& context,
     google::test::admin::database::v1::GetDatabaseRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=",  internal::UrlEncode(request.name()()));
+  SetMetadata(context, absl::StrCat("name=",  internal::UrlEncode(request.name())));
   return child_->GetDatabase(context, request);
 }
 
@@ -68,7 +68,7 @@ GoldenThingAdminMetadata::AsyncUpdateDatabaseDdl(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request) {
-  SetMetadata(*context, absl::StrCat("database=",  internal::UrlEncode(request.database()()));
+  SetMetadata(*context, absl::StrCat("database=",  internal::UrlEncode(request.database())));
   return child_->AsyncUpdateDatabaseDdl(cq, std::move(context), request);
 }
 
@@ -124,7 +124,7 @@ StatusOr<google::test::admin::database::v1::GetDatabaseDdlResponse>
 GoldenThingAdminMetadata::GetDatabaseDdl(
     grpc::ClientContext& context,
     google::test::admin::database::v1::GetDatabaseDdlRequest const& request) {
-  SetMetadata(context, absl::StrCat("database=",  internal::UrlEncode(request.database()()));
+  SetMetadata(context, absl::StrCat("database=",  internal::UrlEncode(request.database())));
   return child_->GetDatabaseDdl(context, request);
 }
 
@@ -132,7 +132,7 @@ StatusOr<google::iam::v1::Policy>
 GoldenThingAdminMetadata::SetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::SetIamPolicyRequest const& request) {
-  SetMetadata(context, absl::StrCat("resource=",  internal::UrlEncode(request.resource()()));
+  SetMetadata(context, absl::StrCat("resource=",  internal::UrlEncode(request.resource())));
   return child_->SetIamPolicy(context, request);
 }
 
@@ -140,7 +140,7 @@ StatusOr<google::iam::v1::Policy>
 GoldenThingAdminMetadata::GetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::GetIamPolicyRequest const& request) {
-  SetMetadata(context, absl::StrCat("resource=",  internal::UrlEncode(request.resource()()));
+  SetMetadata(context, absl::StrCat("resource=",  internal::UrlEncode(request.resource())));
   return child_->GetIamPolicy(context, request);
 }
 
@@ -148,7 +148,7 @@ StatusOr<google::iam::v1::TestIamPermissionsResponse>
 GoldenThingAdminMetadata::TestIamPermissions(
     grpc::ClientContext& context,
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  SetMetadata(context, absl::StrCat("resource=",  internal::UrlEncode(request.resource()()));
+  SetMetadata(context, absl::StrCat("resource=",  internal::UrlEncode(request.resource())));
   return child_->TestIamPermissions(context, request);
 }
 
@@ -157,7 +157,7 @@ GoldenThingAdminMetadata::AsyncCreateBackup(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::test::admin::database::v1::CreateBackupRequest const& request) {
-  SetMetadata(*context, absl::StrCat("parent=",  internal::UrlEncode(request.parent()()));
+  SetMetadata(*context, absl::StrCat("parent=",  internal::UrlEncode(request.parent())));
   return child_->AsyncCreateBackup(cq, std::move(context), request);
 }
 
@@ -165,7 +165,7 @@ StatusOr<google::test::admin::database::v1::Backup>
 GoldenThingAdminMetadata::GetBackup(
     grpc::ClientContext& context,
     google::test::admin::database::v1::GetBackupRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=",  internal::UrlEncode(request.name()()));
+  SetMetadata(context, absl::StrCat("name=",  internal::UrlEncode(request.name())));
   return child_->GetBackup(context, request);
 }
 
@@ -173,7 +173,7 @@ StatusOr<google::test::admin::database::v1::Backup>
 GoldenThingAdminMetadata::UpdateBackup(
     grpc::ClientContext& context,
     google::test::admin::database::v1::UpdateBackupRequest const& request) {
-  SetMetadata(context, absl::StrCat("backup.name=",  internal::UrlEncode(request.backup().name()()));
+  SetMetadata(context, absl::StrCat("backup.name=",  internal::UrlEncode(request.backup().name())));
   return child_->UpdateBackup(context, request);
 }
 
@@ -181,7 +181,7 @@ Status
 GoldenThingAdminMetadata::DeleteBackup(
     grpc::ClientContext& context,
     google::test::admin::database::v1::DeleteBackupRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=",  internal::UrlEncode(request.name()()));
+  SetMetadata(context, absl::StrCat("name=",  internal::UrlEncode(request.name())));
   return child_->DeleteBackup(context, request);
 }
 
@@ -189,7 +189,7 @@ StatusOr<google::test::admin::database::v1::ListBackupsResponse>
 GoldenThingAdminMetadata::ListBackups(
     grpc::ClientContext& context,
     google::test::admin::database::v1::ListBackupsRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=",  internal::UrlEncode(request.parent()()));
+  SetMetadata(context, absl::StrCat("parent=",  internal::UrlEncode(request.parent())));
   return child_->ListBackups(context, request);
 }
 
@@ -198,7 +198,7 @@ GoldenThingAdminMetadata::AsyncRestoreDatabase(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::test::admin::database::v1::RestoreDatabaseRequest const& request) {
-  SetMetadata(*context, absl::StrCat("parent=",  internal::UrlEncode(request.parent()()));
+  SetMetadata(*context, absl::StrCat("parent=",  internal::UrlEncode(request.parent())));
   return child_->AsyncRestoreDatabase(cq, std::move(context), request);
 }
 
@@ -206,7 +206,7 @@ StatusOr<google::test::admin::database::v1::ListDatabaseOperationsResponse>
 GoldenThingAdminMetadata::ListDatabaseOperations(
     grpc::ClientContext& context,
     google::test::admin::database::v1::ListDatabaseOperationsRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=",  internal::UrlEncode(request.parent()()));
+  SetMetadata(context, absl::StrCat("parent=",  internal::UrlEncode(request.parent())));
   return child_->ListDatabaseOperations(context, request);
 }
 
@@ -214,7 +214,7 @@ StatusOr<google::test::admin::database::v1::ListBackupOperationsResponse>
 GoldenThingAdminMetadata::ListBackupOperations(
     grpc::ClientContext& context,
     google::test::admin::database::v1::ListBackupOperationsRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=",  internal::UrlEncode(request.parent()()));
+  SetMetadata(context, absl::StrCat("parent=",  internal::UrlEncode(request.parent())));
   return child_->ListBackupOperations(context, request);
 }
 
@@ -232,7 +232,7 @@ GoldenThingAdminMetadata::AsyncGetDatabase(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::test::admin::database::v1::GetDatabaseRequest const& request) {
-  SetMetadata(*context, absl::StrCat("name=",  internal::UrlEncode(request.name()()));
+  SetMetadata(*context, absl::StrCat("name=",  internal::UrlEncode(request.name())));
   return child_->AsyncGetDatabase(cq, std::move(context), request);
 }
 

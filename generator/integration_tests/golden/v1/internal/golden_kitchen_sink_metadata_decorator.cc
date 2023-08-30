@@ -42,7 +42,7 @@ StatusOr<google::test::admin::database::v1::GenerateAccessTokenResponse>
 GoldenKitchenSinkMetadata::GenerateAccessToken(
     grpc::ClientContext& context,
     google::test::admin::database::v1::GenerateAccessTokenRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=",  internal::UrlEncode(request.name()()));
+  SetMetadata(context, absl::StrCat("name=",  internal::UrlEncode(request.name())));
   return child_->GenerateAccessToken(context, request);
 }
 
@@ -66,7 +66,7 @@ StatusOr<google::test::admin::database::v1::ListLogsResponse>
 GoldenKitchenSinkMetadata::ListLogs(
     grpc::ClientContext& context,
     google::test::admin::database::v1::ListLogsRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=",  internal::UrlEncode(request.parent()()));
+  SetMetadata(context, absl::StrCat("parent=",  internal::UrlEncode(request.parent())));
   return child_->ListLogs(context, request);
 }
 
@@ -74,7 +74,7 @@ StatusOr<google::test::admin::database::v1::ListServiceAccountKeysResponse>
 GoldenKitchenSinkMetadata::ListServiceAccountKeys(
     grpc::ClientContext& context,
     google::test::admin::database::v1::ListServiceAccountKeysRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=",  internal::UrlEncode(request.name()()));
+  SetMetadata(context, absl::StrCat("name=",  internal::UrlEncode(request.name())));
   return child_->ListServiceAccountKeys(context, request);
 }
 
