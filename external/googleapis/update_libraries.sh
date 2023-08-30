@@ -120,6 +120,7 @@ declare -A -r LIBRARIES=(
   ["deploy"]="@com_google_googleapis//google/cloud/deploy/v1:deploy_cc_grpc"
   ["dialogflow_es"]="@com_google_googleapis//google/cloud/dialogflow/v2:dialogflow_cc_grpc"
   ["dialogflow_cx"]="@com_google_googleapis//google/cloud/dialogflow/cx/v3:cx_cc_grpc"
+  ["discoveryengine"]="@com_google_googleapis//google/cloud/discoveryengine/v1:discoveryengine_cc_grpc"
   ["dlp"]="@com_google_googleapis//google/privacy/dlp/v2:dlp_cc_grpc"
   ["documentai"]="@com_google_googleapis//google/cloud/documentai/v1:documentai_cc_grpc"
   ["domains"]="@com_google_googleapis//google/cloud/domains/v1:domains_cc_grpc"
