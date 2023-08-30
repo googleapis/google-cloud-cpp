@@ -169,6 +169,7 @@ if [[ -n "${TRIGGER_FLAG}" ]]; then
   test -r "${trigger_file}" || die "Cannot open ${trigger_file}"
   : "${BUILD_FLAG:="$(grep _BUILD_NAME "${trigger_file}" | awk '{print $2}')"}"
   : "${DISTRO_FLAG:="$(grep _DISTRO "${trigger_file}" | awk '{print $2}')"}"
+  : "${LIBRARIES:="$(grep _LIBRARIES "${trigger_file}" | awk '{print $2}')"}"
 fi
 
 if [[ -z "${BUILD_FLAG}" ]]; then
