@@ -222,8 +222,6 @@ set(external_googleapis_installed_libraries_list
     google_cloud_cpp_iam_v1_iam_policy_protos
     google_cloud_cpp_iam_v1_options_protos
     google_cloud_cpp_iam_v1_policy_protos
-    google_cloud_cpp_iam_v2_deny_protos
-    google_cloud_cpp_iam_v2_policy_protos
     google_cloud_cpp_longrunning_operations_protos)
 
 # These proto files cannot be added in the foreach() loop because they have
@@ -334,12 +332,6 @@ external_googleapis_add_library(
     api_resource_protos
     iam_v1_options_protos
     iam_v1_policy_protos)
-
-external_googleapis_add_library("google/iam/v2/deny.proto" type_expr_protos)
-
-external_googleapis_add_library(
-    "google/iam/v2/policy.proto" api_annotations_protos api_client_protos
-    api_field_behavior_protos iam_v2_deny_protos longrunning_operations_protos)
 
 google_cloud_cpp_load_protolist(cloud_common_list "protolists/common.list")
 google_cloud_cpp_load_protodeps(cloud_common_deps "protodeps/common.deps")
