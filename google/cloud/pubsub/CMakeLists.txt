@@ -32,19 +32,8 @@ endif ()
 
 include(GoogleCloudCppCommon)
 
-include(CompileProtos)
-google_cloud_cpp_find_proto_include_dir(PROTO_INCLUDE_DIR)
-google_cloud_cpp_load_protolist(
-    pubsub_list
-    "${PROJECT_SOURCE_DIR}/external/googleapis/protolists/pubsub.list")
-google_cloud_cpp_load_protodeps(
-    pubsub_deps
-    "${PROJECT_SOURCE_DIR}/external/googleapis/protodeps/pubsub.deps")
-google_cloud_cpp_grpcpp_library(
-    google_cloud_cpp_pubsub_protos ${pubsub_list} PROTO_PATH_DIRECTORIES
-    "${EXTERNAL_GOOGLEAPIS_SOURCE}" "${PROTO_INCLUDE_DIR}")
-external_googleapis_set_version_and_alias(pubsub_protos)
-target_link_libraries(google_cloud_cpp_pubsub_protos PUBLIC ${pubsub_deps})
+include(GoogleCloudCppLibrary)
+google_cloud_cpp_add_library_protos(pubsub)
 
 add_library(
     google_cloud_cpp_pubsub # cmake-format: sort
@@ -410,9 +399,6 @@ install(
     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
             COMPONENT google_cloud_cpp_development)
 
-google_cloud_cpp_install_proto_library_protos(google_cloud_cpp_pubsub_protos
-                                              "${EXTERNAL_GOOGLEAPIS_SOURCE}")
-google_cloud_cpp_install_proto_library_headers(google_cloud_cpp_pubsub_protos)
 google_cloud_cpp_install_headers("google_cloud_cpp_pubsub"
                                  "include/google/cloud/pubsub")
 
@@ -454,8 +440,6 @@ install(
         "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_pubsub-config-version.cmake"
     DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_pubsub"
     COMPONENT google_cloud_cpp_development)
-
-external_googleapis_install_pc(google_cloud_cpp_pubsub_protos)
 
 google_cloud_cpp_add_pkgconfig(
     pubsub_mocks "Google Cloud C++ Pub/Sub Mocks"

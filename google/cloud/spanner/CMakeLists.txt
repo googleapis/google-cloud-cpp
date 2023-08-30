@@ -31,19 +31,8 @@ google_cloud_cpp_doxygen_targets("spanner" DEPENDS cloud-docs
 
 include(GoogleCloudCppCommon)
 
-include(CompileProtos)
-google_cloud_cpp_find_proto_include_dir(PROTO_INCLUDE_DIR)
-google_cloud_cpp_load_protolist(
-    spanner_list
-    "${PROJECT_SOURCE_DIR}/external/googleapis/protolists/spanner.list")
-google_cloud_cpp_load_protodeps(
-    spanner_deps
-    "${PROJECT_SOURCE_DIR}/external/googleapis/protodeps/spanner.deps")
-google_cloud_cpp_grpcpp_library(
-    google_cloud_cpp_spanner_protos ${spanner_list} PROTO_PATH_DIRECTORIES
-    "${EXTERNAL_GOOGLEAPIS_SOURCE}" "${PROTO_INCLUDE_DIR}")
-external_googleapis_set_version_and_alias(spanner_protos)
-target_link_libraries(google_cloud_cpp_spanner_protos PUBLIC ${spanner_deps})
+include(GoogleCloudCppLibrary)
+google_cloud_cpp_add_library_protos(spanner)
 
 add_library(
     google_cloud_cpp_spanner # cmake-format: sort
@@ -550,9 +539,6 @@ install(
     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
             COMPONENT google_cloud_cpp_development)
 
-google_cloud_cpp_install_proto_library_protos(google_cloud_cpp_spanner_protos
-                                              "${EXTERNAL_GOOGLEAPIS_SOURCE}")
-google_cloud_cpp_install_proto_library_headers(google_cloud_cpp_spanner_protos)
 google_cloud_cpp_install_headers("google_cloud_cpp_spanner"
                                  "include/google/cloud/spanner")
 google_cloud_cpp_install_headers("google_cloud_cpp_spanner_mocks"
@@ -583,5 +569,3 @@ install(
         "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_spanner-config-version.cmake"
     DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_spanner"
     COMPONENT google_cloud_cpp_development)
-
-external_googleapis_install_pc(google_cloud_cpp_spanner_protos)

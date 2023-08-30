@@ -31,20 +31,8 @@ google_cloud_cpp_doxygen_targets("pubsublite" DEPENDS cloud-docs
 
 include(GoogleCloudCppCommon)
 
-include(CompileProtos)
-google_cloud_cpp_find_proto_include_dir(PROTO_INCLUDE_DIR)
-google_cloud_cpp_load_protolist(
-    proto_list
-    "${PROJECT_SOURCE_DIR}/external/googleapis/protolists/pubsublite.list")
-google_cloud_cpp_load_protodeps(
-    proto_deps
-    "${PROJECT_SOURCE_DIR}/external/googleapis/protodeps/pubsublite.deps")
-google_cloud_cpp_grpcpp_library(
-    google_cloud_cpp_pubsublite_protos # cmake-format: sort
-    ${proto_list} PROTO_PATH_DIRECTORIES "${EXTERNAL_GOOGLEAPIS_SOURCE}"
-    "${PROTO_INCLUDE_DIR}")
-external_googleapis_set_version_and_alias(pubsublite_protos)
-target_link_libraries(google_cloud_cpp_pubsublite_protos PUBLIC ${proto_deps})
+include(GoogleCloudCppLibrary)
+google_cloud_cpp_add_library_protos(pubsublite)
 
 add_library(
     google_cloud_cpp_pubsublite # cmake-format: sort
@@ -347,23 +335,10 @@ install(
             COMPONENT google_cloud_cpp_runtime
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
             COMPONENT google_cloud_cpp_runtime
-            NAMELINK_SKIP
-    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-            COMPONENT google_cloud_cpp_development)
-# With CMake-3.12 and higher we could avoid this separate command (and the
-# duplication).
-install(
-    TARGETS google_cloud_cpp_pubsublite google_cloud_cpp_pubsublite_protos
-    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-            COMPONENT google_cloud_cpp_development
-            NAMELINK_ONLY
+            NAMELINK_COMPONENT google_cloud_cpp_development
     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
             COMPONENT google_cloud_cpp_development)
 
-google_cloud_cpp_install_proto_library_protos(
-    "google_cloud_cpp_pubsublite_protos" "${EXTERNAL_GOOGLEAPIS_SOURCE}")
-google_cloud_cpp_install_proto_library_headers(
-    "google_cloud_cpp_pubsublite_protos")
 google_cloud_cpp_install_headers("google_cloud_cpp_pubsublite"
                                  "include/google/cloud/pubsublite")
 google_cloud_cpp_install_headers("google_cloud_cpp_pubsublite_mocks"
@@ -392,5 +367,3 @@ install(
         "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_pubsublite-config-version.cmake"
     DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_pubsublite"
     COMPONENT google_cloud_cpp_development)
-
-external_googleapis_install_pc("google_cloud_cpp_pubsublite_protos")
