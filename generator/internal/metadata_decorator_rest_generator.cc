@@ -57,7 +57,7 @@ std::string SetMetadataText(google::protobuf::MethodDescriptor const& method,
       for (auto const& rp : kv.second){
         text += sep;
         text += "if (!request." + rp.field_name + "().empty()) {\n";
-        text += "    params.push_back(\"" + kv.first + "=\" + request." + rp.field_name + "());\n";
+        text += "    params.push_back(absl::StrCat(\"" + kv.first + "=\", internal::UrlEncode(request." + rp.field_name + "())));\n";
         text += "  }";
         sep = " else ";
       }
