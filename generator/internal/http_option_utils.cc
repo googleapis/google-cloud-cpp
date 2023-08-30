@@ -109,9 +109,10 @@ void SetHttpDerivedMethodVars(
       method_vars["method_request_params"] = absl::StrJoin(
           info.field_substitutions, ", \"&\",",
           [&](std::string* out, std::pair<std::string, std::string> const& p) {
-            out->append(absl::StrFormat(
-                "\"%s=\", request.%s()", internal::UrlEncode(p.first),
-                FormatFieldAccessorCall(method, p.first)));
+            out->append(
+                absl::StrFormat("\"%s=\",  internal::UrlEncode(request.%s()()",
+                                internal::UrlEncode(p.first),
+                                FormatFieldAccessorCall(method, p.first)));
           });
       method_vars["method_request_body"] = info.body;
       method_vars["method_http_verb"] = info.http_verb;
