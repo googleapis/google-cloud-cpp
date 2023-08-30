@@ -14,6 +14,8 @@
 # limitations under the License.
 # ~~~
 
+include(GoogleCloudCppLibrary)
+
 set(GOOGLE_CLOUD_CPP_SERVICE_DIRS "" "v2/")
 
 google_cloud_cpp_add_ga_grpc_library(
