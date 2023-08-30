@@ -35,8 +35,7 @@ google_cloud_cpp_doxygen_targets_impl(
     "${CMAKE_CURRENT_SOURCE_DIR}/mocks"
     "${CMAKE_CURRENT_SOURCE_DIR}/doc"
     DEPENDS
-    google-cloud-cpp::rpc_status_protos
-    google-cloud-cpp::bigtable_protos)
+    google-cloud-cpp::rpc_status_protos)
 
 include(GoogleCloudCppCommon)
 include(CreateBazelConfig)
