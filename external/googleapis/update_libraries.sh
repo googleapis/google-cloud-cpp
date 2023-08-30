@@ -52,9 +52,7 @@ declare -A -r LIBRARIES=(
     printf ",%s" \
       "@com_google_googleapis//google/cloud/beyondcorp/appconnections/v1:appconnections_cc_grpc" \
       "@com_google_googleapis//google/cloud/beyondcorp/appconnectors/v1:appconnectors_cc_grpc" \
-      "@com_google_googleapis//google/cloud/beyondcorp/appgateways/v1:appgateways_cc_grpc" \
-      "@com_google_googleapis//google/cloud/beyondcorp/clientconnectorservices/v1:clientconnectorservices_cc_grpc" \
-      "@com_google_googleapis//google/cloud/beyondcorp/clientgateways/v1:clientgateways_cc_grpc"
+      "@com_google_googleapis//google/cloud/beyondcorp/appgateways/v1:appgateways_cc_grpc"
   )"
   ["bigquery"]="$(
     # This is long enough that it needs to be kept in alphabetical order

@@ -16,8 +16,6 @@ Follow these links to find examples for other \c *Client classes:
 - [\c beyondcorp_appconnections_v1::AppConnectionsServiceClient](@ref beyondcorp_appconnections_v1::AppConnectionsServiceClient-service-account-snippet)
 - [\c beyondcorp_appconnectors_v1::AppConnectorsServiceClient](@ref beyondcorp_appconnectors_v1::AppConnectorsServiceClient-service-account-snippet)
 - [\c beyondcorp_appgateways_v1::AppGatewaysServiceClient](@ref beyondcorp_appgateways_v1::AppGatewaysServiceClient-service-account-snippet)
-- [\c beyondcorp_clientconnectorservices_v1::ClientConnectorServicesServiceClient](@ref beyondcorp_clientconnectorservices_v1::ClientConnectorServicesServiceClient-service-account-snippet)
-- [\c beyondcorp_clientgateways_v1::ClientGatewaysServiceClient](@ref beyondcorp_clientgateways_v1::ClientGatewaysServiceClient-service-account-snippet)
 
 <!-- inject-service-account-snippet-end -->
 
@@ -50,18 +48,6 @@ guide for more details.
 /*! @page beyondcorp_appgateways_v1::AppGatewaysServiceClient-service-account-snippet Override beyondcorp_appgateways_v1::AppGatewaysServiceClient Authentication Defaults
 
 @snippet google/cloud/beyondcorp/appgateways/v1/samples/app_gateways_client_samples.cc with-service-account
-
-*/
-
-/*! @page beyondcorp_clientconnectorservices_v1::ClientConnectorServicesServiceClient-service-account-snippet Override beyondcorp_clientconnectorservices_v1::ClientConnectorServicesServiceClient Authentication Defaults
-
-@snippet google/cloud/beyondcorp/clientconnectorservices/v1/samples/client_connector_services_client_samples.cc with-service-account
-
-*/
-
-/*! @page beyondcorp_clientgateways_v1::ClientGatewaysServiceClient-service-account-snippet Override beyondcorp_clientgateways_v1::ClientGatewaysServiceClient Authentication Defaults
-
-@snippet google/cloud/beyondcorp/clientgateways/v1/samples/client_gateways_client_samples.cc with-service-account
 
 */
 // <!-- inject-authentication-pages-end -->

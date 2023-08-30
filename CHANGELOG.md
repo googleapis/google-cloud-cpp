@@ -122,6 +122,13 @@ the APIs in these libraries are stable, and are ready for production use.
 The Cloud IoT Core service has been [shutdown][cloud-iot-shutdown]. We removed
 the corresponding C++ client library as it is no longer usable.
 
+### [BeyondCorp API](google/cloud/beyondcorp/README.md)
+
+Parts of the BeyondCorp API are restricted to only existing customers and will
+be decommissioned. No C++ customers are affected, so we are removing the
+unusable components from the C++ libraries. More information in the BeyondCorp
+[announcement](https://cloud.google.com/beyondcorp-enterprise/docs/release-notes#March_31_2023).
+
 ### [Natural Language AI](/google/cloud/language/README.md)
 
 The library has been expanded to include the v2 service.
