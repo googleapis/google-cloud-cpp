@@ -138,6 +138,7 @@ expected_dirs+=(
   ./lib64/cmake/google_cloud_cpp_googleapis
   ./lib64/cmake/google_cloud_cpp_grafeas
   ./lib64/cmake/google_cloud_cpp_grpc_utils
+  ./lib64/cmake/google_cloud_cpp_logging_type
   ./lib64/cmake/google_cloud_cpp_iam_policy
   ./lib64/cmake/google_cloud_cpp_mocks
   ./lib64/cmake/google_cloud_cpp_oauth2

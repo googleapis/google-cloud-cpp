@@ -224,7 +224,6 @@ set(external_googleapis_installed_libraries_list
     google_cloud_cpp_iam_v1_policy_protos
     google_cloud_cpp_iam_v2_deny_protos
     google_cloud_cpp_iam_v2_policy_protos
-    google_cloud_cpp_logging_protos
     google_cloud_cpp_longrunning_operations_protos)
 
 # These proto files cannot be added in the foreach() loop because they have
@@ -360,41 +359,12 @@ google_cloud_cpp_grpcpp_library(
 external_googleapis_set_version_and_alias(iam_protos)
 target_link_libraries(google_cloud_cpp_iam_protos PUBLIC ${iam_deps})
 
-google_cloud_cpp_load_protolist(logging_type_list
-                                "protolists/logging_type.list")
-google_cloud_cpp_load_protodeps(logging_type_deps "protodeps/logging_type.deps")
-google_cloud_cpp_grpcpp_library(
-    google_cloud_cpp_logging_type_type_protos ${logging_type_list}
-    PROTO_PATH_DIRECTORIES "${EXTERNAL_GOOGLEAPIS_SOURCE}"
-    "${PROTO_INCLUDE_DIR}")
-external_googleapis_set_version_and_alias(logging_type_type_protos)
-target_link_libraries(google_cloud_cpp_logging_type_type_protos
-                      PUBLIC ${logging_type_deps})
-
-google_cloud_cpp_load_protolist(logging_list "protolists/logging.list")
-google_cloud_cpp_load_protodeps(logging_deps "protodeps/logging.deps")
-google_cloud_cpp_grpcpp_library(
-    google_cloud_cpp_logging_protos ${logging_list} PROTO_PATH_DIRECTORIES
-    "${EXTERNAL_GOOGLEAPIS_SOURCE}" "${PROTO_INCLUDE_DIR}")
-external_googleapis_set_version_and_alias(logging_protos)
-target_link_libraries(google_cloud_cpp_logging_protos PUBLIC ${logging_deps})
-
-# This is just for backwards compatibility.
-add_library(google_cloud_cpp_logging_type_protos INTERFACE)
-set_target_properties(
-    "google_cloud_cpp_logging_type_protos"
-    PROPERTIES EXPORT_NAME google-cloud-cpp::logging_type_protos)
-target_link_libraries(google_cloud_cpp_logging_type_protos
-                      INTERFACE google-cloud-cpp::logging_type_type_protos)
-
 # Install the libraries and headers in the locations determined by
 # GNUInstallDirs
 include(GNUInstallDirs)
 
 install(
     TARGETS ${external_googleapis_installed_libraries_list}
-            google_cloud_cpp_logging_type_type_protos
-            google_cloud_cpp_logging_type_protos
     EXPORT googleapis-targets
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
             COMPONENT google_cloud_cpp_runtime
@@ -404,30 +374,20 @@ install(
     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
             COMPONENT google_cloud_cpp_development)
 
-foreach (target ${external_googleapis_installed_libraries_list}
-                google_cloud_cpp_logging_type_type_protos)
+foreach (target ${external_googleapis_installed_libraries_list})
     google_cloud_cpp_install_proto_library_headers("${target}")
     google_cloud_cpp_install_proto_library_protos(
         "${target}" "${EXTERNAL_GOOGLEAPIS_SOURCE}")
 endforeach ()
 
 # Create and install the pkg-config files.
-foreach (target ${external_googleapis_installed_libraries_list}
-                google_cloud_cpp_logging_type_type_protos)
+foreach (target ${external_googleapis_installed_libraries_list})
     external_googleapis_install_pc("${target}")
 endforeach ()
 
-external_googleapis_install_pc_common(google_cloud_cpp_logging_type_protos)
+# Create and install the googleapis pkg-config file for backwards compatibility.
 set(GOOGLE_CLOUD_CPP_PC_LIBS "")
 google_cloud_cpp_set_pkgconfig_paths()
-configure_file("${PROJECT_SOURCE_DIR}/cmake/templates/config.pc.in"
-               "google_cloud_cpp_logging_type_protos.pc" @ONLY)
-install(
-    FILES "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_logging_type_protos.pc"
-    DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig"
-    COMPONENT google_cloud_cpp_development)
-
-# Create and install the googleapis pkg-config file for backwards compatibility.
 set(GOOGLE_CLOUD_CPP_PC_NAME "The Google APIS C++ Proto Library")
 set(GOOGLE_CLOUD_CPP_PC_DESCRIPTION
     "Provides C++ APIs to access Google Cloud Platforms.")
