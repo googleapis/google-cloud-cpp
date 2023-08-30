@@ -310,10 +310,8 @@ TEST(HashFunctionImplTest, CreateHashFunctionInsertObjectMedia) {
   auto const upload_cases = testing::UploadHashCases();
 
   for (auto const& test : upload_cases) {
-    auto function = CreateHashFunction(
-        InsertObjectMediaRequest("test-bucket", "test-object", kQuickFox)
-            .set_multiple_options(test.crc32_disabled, test.crc32_value,
-                                  test.md5_disabled, test.md5_value));
+    auto function = CreateHashFunction(test.crc32_value, test.crc32_disabled,
+                                       test.md5_value, test.md5_disabled);
     ASSERT_STATUS_OK(function->Update(/*offset=*/0, kQuickFox));
     auto const actual = function->Finish();
     EXPECT_EQ(test.crc32c_expected, actual.crc32c);

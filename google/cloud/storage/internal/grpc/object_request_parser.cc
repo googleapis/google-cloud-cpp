@@ -209,6 +209,29 @@ Status PatchTemporaryHold(Object& o, nlohmann::json const& p) {
   return Status{};
 }
 
+template <typename Request>
+StatusOr<google::storage::v2::WriteObjectRequest> ToProtoImpl(
+    Request const& request) {
+  google::storage::v2::WriteObjectRequest r;
+  auto& object_spec = *r.mutable_write_object_spec();
+  auto& resource = *object_spec.mutable_resource();
+  SetResourceOptions(resource, request);
+  auto status = SetObjectMetadata(resource, request);
+  if (!status.ok()) return status;
+  SetStorageClass(resource, request);
+  SetPredefinedAcl(object_spec, request);
+  SetGenerationConditions(object_spec, request);
+  SetMetagenerationConditions(object_spec, request);
+  status = SetCommonObjectParameters(r, request);
+  if (!status.ok()) return status;
+
+  resource.set_bucket(GrpcBucketIdToName(request.bucket_name()));
+  resource.set_name(request.object_name());
+  r.set_write_offset(0);
+
+  return r;
+}
+
 }  // namespace
 
 StatusOr<google::storage::v2::ComposeObjectRequest> ToProto(
@@ -455,25 +478,13 @@ StatusOr<google::storage::v2::UpdateObjectRequest> ToProto(
 }
 
 StatusOr<google::storage::v2::WriteObjectRequest> ToProto(
+    storage_experimental::InsertObjectRequest const& request) {
+  return ToProtoImpl(request);
+}
+
+StatusOr<google::storage::v2::WriteObjectRequest> ToProto(
     storage::internal::InsertObjectMediaRequest const& request) {
-  google::storage::v2::WriteObjectRequest r;
-  auto& object_spec = *r.mutable_write_object_spec();
-  auto& resource = *object_spec.mutable_resource();
-  SetResourceOptions(resource, request);
-  auto status = SetObjectMetadata(resource, request);
-  if (!status.ok()) return status;
-  SetStorageClass(resource, request);
-  SetPredefinedAcl(object_spec, request);
-  SetGenerationConditions(object_spec, request);
-  SetMetagenerationConditions(object_spec, request);
-  status = SetCommonObjectParameters(r, request);
-  if (!status.ok()) return status;
-
-  resource.set_bucket(GrpcBucketIdToName(request.bucket_name()));
-  resource.set_name(request.object_name());
-  r.set_write_offset(0);
-
-  return r;
+  return ToProtoImpl(request);
 }
 
 storage::internal::QueryResumableUploadResponse FromProto(

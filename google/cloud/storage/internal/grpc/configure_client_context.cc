@@ -43,6 +43,15 @@ void ApplyRoutingHeaders(
                                                      request.bucket_name()));
 }
 
+void ApplyRoutingHeaders(
+    grpc::ClientContext& context,
+    storage_experimental::InsertObjectRequest const& request) {
+  context.AddMetadata(
+      "x-goog-request-params",
+      "bucket=" + google::cloud::internal::UrlEncode("projects/_/buckets/" +
+                                                     request.bucket_name()));
+}
+
 void ApplyRoutingHeaders(grpc::ClientContext& context,
                          storage::internal::UploadChunkRequest const& request) {
   static auto* slash_format =
