@@ -67,6 +67,7 @@ GOOGLE_CLOUD_CPP_GA_LIBRARIES = [
     "deploy",
     "dialogflow_cx",
     "dialogflow_es",
+    "discoveryengine",
     "dlp",
     "documentai",
     "domains",
