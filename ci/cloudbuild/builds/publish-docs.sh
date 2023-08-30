@@ -25,6 +25,8 @@ if [[ "${TRIGGER_TYPE}" == "manual" && "${LIBRARIES}" == "all" ]]; then
   LIBRARIES="all_bar_compute"
 fi
 
+io::log_h2 "LIBRARIES=${LIBRARIES}"
+
 if [[ "${LIBRARIES}" == "all" ]]; then
   mapfile -t FEATURE_LIST < <(features::list_full)
   read -r ENABLED_FEATURES < <(features::list_full_cmake)
