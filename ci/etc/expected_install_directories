@@ -103,14 +103,6 @@
 ./include/google/cloud/beyondcorp/appgateways/v1
 ./include/google/cloud/beyondcorp/appgateways/v1/internal
 ./include/google/cloud/beyondcorp/appgateways/v1/mocks
-./include/google/cloud/beyondcorp/clientconnectorservices
-./include/google/cloud/beyondcorp/clientconnectorservices/v1
-./include/google/cloud/beyondcorp/clientconnectorservices/v1/internal
-./include/google/cloud/beyondcorp/clientconnectorservices/v1/mocks
-./include/google/cloud/beyondcorp/clientgateways
-./include/google/cloud/beyondcorp/clientgateways/v1
-./include/google/cloud/beyondcorp/clientgateways/v1/internal
-./include/google/cloud/beyondcorp/clientgateways/v1/mocks
 ./include/google/cloud/beyondcorp/mocks
 ./include/google/cloud/bigquery
 ./include/google/cloud/bigquery/analyticshub

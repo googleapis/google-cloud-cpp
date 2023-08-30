@@ -22,14 +22,6 @@ environment variables are convenient when troubleshooting problems.
   `EndpointOption` (which defaults to "beyondcorp.googleapis.com")
   used by `MakeAppGatewaysServiceConnection()`.
 
-- `GOOGLE_CLOUD_CPP_CLIENT_CONNECTOR_SERVICES_SERVICE_ENDPOINT=...` overrides the
-  `EndpointOption` (which defaults to "beyondcorp.googleapis.com")
-  used by `MakeClientConnectorServicesServiceConnection()`.
-
-- `GOOGLE_CLOUD_CPP_CLIENT_GATEWAYS_SERVICE_ENDPOINT=...` overrides the
-  `EndpointOption` (which defaults to "beyondcorp.googleapis.com")
-  used by `MakeClientGatewaysServiceConnection()`.
-
 <!-- inject-endpoint-env-vars-end -->
 
 @see google::cloud::EndpointOption

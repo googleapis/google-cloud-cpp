@@ -16,9 +16,8 @@
 
 include(GoogleCloudCppLibrary)
 
-set(GOOGLE_CLOUD_CPP_SERVICE_DIRS
-    "" "appconnections/v1/" "appconnectors/v1/" "appgateways/v1/"
-    "clientconnectorservices/v1/" "clientgateways/v1/")
+set(GOOGLE_CLOUD_CPP_SERVICE_DIRS "" "appconnections/v1/" "appconnectors/v1/"
+                                  "appgateways/v1/")
 
 google_cloud_cpp_add_ga_grpc_library(beyondcorp "BeyondCorp API")
 

@@ -21,8 +21,6 @@ service_dirs = [
     "appconnections/v1/",
     "appconnectors/v1/",
     "appgateways/v1/",
-    "clientconnectorservices/v1/",
-    "clientgateways/v1/",
 ]
 
 src_dirs = service_dirs + [d + "internal/" for d in service_dirs]
