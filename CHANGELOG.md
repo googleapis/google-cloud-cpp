@@ -171,7 +171,7 @@ If you are dependent on any of these proto libraries **and** you are not
 compiling the corresponding client library, you will need to update your build
 scripts.
 
-For example, if you depend on `google_cloud_cpp_speech_protos`, (e.g., if you
+For example, if you depend on `google_cloud_cpp_speech_protos` (e.g., if you
 have been using this library to make calls to Cloud Speech using raw gRPC), add
 `-DGOOGLE_CLOUD_CPP_ENABLE=...,speech,...` to your CMake configure command. If
 you build with `vcpkg`, include `speech` in your install command.
