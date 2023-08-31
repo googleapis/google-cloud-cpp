@@ -140,11 +140,19 @@ The library has been expanded to include the v2 service.
 consider this a breaking change, as Bazel 5.x has been in maintenance mode for
 more than 6 months.
 
-**CMake Proto Libraries**: We no longer compile certain protos, unless the
+**CMake Proto Libraries**: We only compile service-specific protos if the
 corresponding client library is enabled, via `-DGOOGLE_CLOUD_CPP_ENABLE=...`.
 
-This change reduces build times with `cmake` for customers who build with
-`cmake` and who are not using **all** of the client libraries listed below.
+This change reduces build times for customers who use CMake but who are not
+using **all** of the client libraries listed below.
+
+We considered it [a bug][#8022] that customers building with CMake were forced
+to compile large proto libraries that they did not need. It was certainly
+[confusing][#10174].
+
+Any change in behavior, including fixing bugs, can be considered "breaking". By
+policy we don't consider bug fixes to be breaking changes. We applied that
+policy in this case.
 
 The impacted libraries are:
 
@@ -170,17 +178,6 @@ you build with `vcpkg`, include `speech` in your install command.
 
 Note that `google_cloud_cpp_storage_protos` are associated with the
 `experimental-storage-grpc` feature, not the `storage` feature.
-
-We do not make changes that can break our customers lightly. We considered it
-[a bug][#8022] that the majority of customers building with `cmake` were forced
-to compile large proto libraries that they did not need. It was needlessly
-[confusing][#10174]. And we expect the number of customers who will benefit from
-this change eclipse the number of customers who are affected negatively by it.
-Hence, we think this change is necessary.
-
-We offered many of these proto libraries before we could write and maintain the
-full client libraries. Now that we have full client libraries for these
-services, we do not expect the proto libraries to be very useful.
 
 ## v2.14.0 - 2023-08
 
