@@ -211,6 +211,11 @@ class ServiceCodeGenerator : public GeneratorInterface {
    */
   std::string GetPbIncludeByTransport() const;
 
+  /**
+   * If the service defining protos exist as part of this repository.
+   */
+  bool IsDiscoveryDocumentProto() const;
+
  private:
   void SetMethods();
 

@@ -475,6 +475,11 @@ std::string ServiceCodeGenerator::GetPbIncludeByTransport() const {
   return vars("proto_header_path");
 }
 
+bool ServiceCodeGenerator::IsDiscoveryDocumentProto() const {
+  auto iter = service_vars_.find("proto_file_source");
+  return (iter != service_vars_.end() && iter->second == "discovery_document");
+}
+
 }  // namespace generator_internal
 }  // namespace cloud
 }  // namespace google

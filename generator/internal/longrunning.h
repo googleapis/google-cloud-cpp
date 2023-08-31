@@ -49,6 +49,14 @@ bool IsGRPCLongrunningOperation(
     google::protobuf::MethodDescriptor const& method);
 
 /**
+ * Determines if the method definition contains the
+ * `google::cloud::operation_service` extension which defines the endpoint to
+ * poll.
+ */
+bool IsHttpLongrunningOperation(
+    google::protobuf::MethodDescriptor const& method);
+
+/**
  * Sets longrunning operation related key/value pairs in service_vars.
  */
 void SetLongrunningOperationServiceVars(

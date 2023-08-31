@@ -76,7 +76,7 @@ Status PrintMethod(google::protobuf::MethodDescriptor const& method,
  */
 std::string FormatMethodCommentsMethodSignature(
     google::protobuf::MethodDescriptor const& method,
-    std::string const& signature);
+    std::string const& signature, bool is_discovery_document_proto);
 
 /**
  * Formats comments from the source .proto file into Doxygen compatible
@@ -84,7 +84,8 @@ std::string FormatMethodCommentsMethodSignature(
  * call using the raw request proto type as input.
  */
 std::string FormatMethodCommentsProtobufRequest(
-    google::protobuf::MethodDescriptor const& method);
+    google::protobuf::MethodDescriptor const& method,
+    bool is_discovery_document_proto);
 
 /**
  * If there were any parameter comment substitutions that went unused, log

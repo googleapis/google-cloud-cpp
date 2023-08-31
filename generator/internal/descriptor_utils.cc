@@ -592,14 +592,16 @@ std::string FormatDoxygenLink(
 
 std::string FormatMethodCommentsMethodSignature(
     google::protobuf::MethodDescriptor const& method,
-    std::string const& signature) {
+    std::string const& signature, bool is_discovery_document_proto) {
   auto parameter_comments =
       FormatApiMethodSignatureParameters(method, signature);
-  return FormatMethodComments(method, std::move(parameter_comments));
+  return FormatMethodComments(method, std::move(parameter_comments),
+                              is_discovery_document_proto);
 }
 
 std::string FormatMethodCommentsProtobufRequest(
-    google::protobuf::MethodDescriptor const& method) {
+    google::protobuf::MethodDescriptor const& method,
+    bool is_discovery_document_proto) {
   auto constexpr kRequestParam =
       R"""(  /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -609,7 +611,8 @@ std::string FormatMethodCommentsProtobufRequest(
   ///     [Protobuf mapping rules].
 )""";
   return FormatMethodComments(
-      method, absl::StrFormat(kRequestParam, method.input_type()->full_name()));
+      method, absl::StrFormat(kRequestParam, method.input_type()->full_name()),
+      is_discovery_document_proto);
 }
 
 bool CheckParameterCommentSubstitutions() {
