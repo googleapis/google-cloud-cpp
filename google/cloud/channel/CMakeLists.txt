@@ -14,10 +14,13 @@
 # limitations under the License.
 # ~~~
 
-# TODO(#8125): enable on GCC < 8.0
-if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU" AND CMAKE_CXX_COMPILER_VERSION
-                                                  VERSION_LESS 8.0)
-    message(WARNING "Cannot build google/cloud/channel with GCC < 8.0.")
+if (("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
+     AND (CMAKE_CXX_COMPILER_VERSION VERSION_LESS 8.0)
+     AND (Protobuf_VERSION VERSION_LESS 24.0))
+    message(WARNING "Cannot build google/cloud/channel with "
+            " Protobuf < 24.0 and GCC < 8.0 - the protos have enum names that"
+            " conflict with some system / language macros. Protobuf < 24.0"
+            " does not include the workarounds for these conflicts.")
     return()
 endif ()
 
