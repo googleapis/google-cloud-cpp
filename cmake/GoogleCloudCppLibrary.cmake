@@ -210,7 +210,7 @@ function (google_cloud_cpp_add_ga_grpc_library library display_name)
                                         ${_opt_ADDITIONAL_PROTO_LISTS})
 
     set(shared_proto_dep_targets "${_opt_SHARED_PROTO_DEPS}")
-    list(TRANSFORM shared_proto_dep_targets PREPEND "google-cloud-cpp::")
+    list(TRANSFORM shared_proto_dep_targets PREPEND "google_cloud_cpp_")
     list(TRANSFORM shared_proto_dep_targets APPEND "_protos")
 
     # We used to offer the proto library by another name. Maintain backwards
@@ -307,9 +307,12 @@ function (google_cloud_cpp_add_ga_grpc_library library display_name)
                                      "include/google/cloud/${library}")
 
     google_cloud_cpp_add_pkgconfig(
-        ${library} "The ${display_name} C++ Client Library"
+        ${library}
+        "The ${display_name} C++ Client Library"
         "Provides C++ APIs to use the ${display_name}"
-        "google_cloud_cpp_grpc_utils" "${protos_target}")
+        "google_cloud_cpp_grpc_utils"
+        "${protos_target}"
+        ${shared_proto_dep_targets})
 
     # Create and install the CMake configuration files.
     include(CMakePackageConfigHelpers)
