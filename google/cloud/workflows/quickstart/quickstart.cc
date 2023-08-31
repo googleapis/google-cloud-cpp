@@ -12,8 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-//! [all]
-// [START workflows_client_library]
+//! [START workflows_client_library] [all]
 #include "google/cloud/workflows/v1/workflows_client.h"
 #include "google/cloud/project.h"
 #include <iostream>
