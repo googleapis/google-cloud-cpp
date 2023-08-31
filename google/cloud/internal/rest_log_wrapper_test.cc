@@ -16,7 +16,8 @@
 #include "google/cloud/internal/rest_context.h"
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/tracing_options.h"
-#include <google/iam/admin/v1/iam.pb.h>
+#include <google/protobuf/duration.pb.h>
+#include <google/protobuf/timestamp.pb.h>
 #include <gmock/gmock.h>
 
 namespace google {
@@ -29,16 +30,18 @@ using ::testing::AllOf;
 using ::testing::Contains;
 using ::testing::HasSubstr;
 
+using Request = google::protobuf::Duration;
+using Response = google::protobuf::Timestamp;
+
 /// @test the overload for functions returning Status
 TEST(RestLogWrapper, StatusValue) {
-  auto mock = [](rest_internal::RestContext&,
-                 google::iam::admin::v1::DeleteServiceAccountRequest const&) {
+  auto mock = [](rest_internal::RestContext&, Request const&) {
     return Status{};
   };
 
   testing_util::ScopedLog log;
   rest_internal::RestContext context;
-  google::iam::admin::v1::DeleteServiceAccountRequest request;
+  Request request;
   auto const r =
       LogWrapper(mock, context, request, "in-test", TracingOptions{});
   EXPECT_TRUE(r.ok());
@@ -50,15 +53,13 @@ TEST(RestLogWrapper, StatusValue) {
 /// @test the overload for functions returning erroneous Status
 TEST(RestLogWrapper, StatusValueError) {
   auto status = Status(StatusCode::kPermissionDenied, "uh-oh");
-  auto mock = [&status](
-                  rest_internal::RestContext&,
-                  google::iam::admin::v1::DeleteServiceAccountRequest const&) {
+  auto mock = [&status](rest_internal::RestContext&, Request const&) {
     return status;
   };
 
   testing_util::ScopedLog log;
   rest_internal::RestContext context;
-  google::iam::admin::v1::DeleteServiceAccountRequest request;
+  Request request;
   auto const r = LogWrapper(mock, context, request, "in-test", {});
   EXPECT_EQ(r.code(), status.code());
   EXPECT_EQ(r.message(), status.message());
@@ -76,14 +77,11 @@ TEST(RestLogWrapper, StatusValueError) {
 /// @test the overload for functions returning StatusOr
 TEST(RestLogWrapper, StatusOrValue) {
   auto mock = [](rest_internal::RestContext&,
-                 google::iam::admin::v1::ListServiceAccountsRequest const&)
-      -> StatusOr<google::iam::admin::v1::ListServiceAccountsResponse> {
-    return google::iam::admin::v1::ListServiceAccountsResponse{};
-  };
+                 Request const&) -> StatusOr<Response> { return Response{}; };
 
   testing_util::ScopedLog log;
   rest_internal::RestContext context;
-  google::iam::admin::v1::ListServiceAccountsRequest request;
+  Request request;
   auto const r =
       LogWrapper(mock, context, request, "in-test", TracingOptions{});
   EXPECT_TRUE(r.ok());
@@ -95,15 +93,13 @@ TEST(RestLogWrapper, StatusOrValue) {
 /// @test the overload for functions returning erroneous StatusOr
 TEST(RestLogWrapper, StatusOrValueError) {
   auto status = Status(StatusCode::kPermissionDenied, "uh-oh");
-  auto mock = [&status](
-                  rest_internal::RestContext&,
-                  google::iam::admin::v1::ListServiceAccountsRequest const&) {
+  auto mock = [&status](rest_internal::RestContext&, Request const&) {
     return status;
   };
 
   testing_util::ScopedLog log;
   rest_internal::RestContext context;
-  google::iam::admin::v1::ListServiceAccountsRequest request;
+  Request request;
   auto const r = LogWrapper(mock, context, request, "in-test", {});
   EXPECT_EQ(r.code(), status.code());
   EXPECT_EQ(r.message(), status.message());
