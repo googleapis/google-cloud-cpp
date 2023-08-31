@@ -38,6 +38,7 @@ using ::testing::HasSubstr;
 using ::testing::Return;
 using Request = google::protobuf::Timestamp;
 using Response = google::protobuf::Duration;
+using namespace std::chrono_literals;
 
 /**
  * A class to test the retry loop.
