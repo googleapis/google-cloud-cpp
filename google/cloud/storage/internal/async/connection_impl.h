@@ -17,12 +17,17 @@
 
 #include "google/cloud/storage/idempotency_policy.h"
 #include "google/cloud/storage/internal/async/connection.h"
+#include "google/cloud/storage/internal/invocation_id_generator.h"
 #include "google/cloud/storage/options.h"
 #include "google/cloud/storage/retry_policy.h"
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/future.h"
 #include "google/cloud/version.h"
+#include "absl/strings/cord.h"
+#include "absl/strings/string_view.h"
 #include <memory>
+#include <string>
+#include <vector>
 
 namespace google {
 namespace cloud {
@@ -40,6 +45,9 @@ class AsyncConnectionImpl : public AsyncConnection {
   ~AsyncConnectionImpl() override = default;
 
   Options options() const override { return options_; }
+
+  future<StatusOr<storage::ObjectMetadata>> AsyncInsertObject(
+      InsertObjectParams p) override;
 
   future<storage_experimental::AsyncReadObjectRangeResponse>
   AsyncReadObjectRange(
@@ -59,6 +67,7 @@ class AsyncConnectionImpl : public AsyncConnection {
   std::shared_ptr<GrpcChannelRefresh> refresh_;
   std::shared_ptr<StorageStub> stub_;
   Options options_;
+  storage::internal::InvocationIdGenerator invocation_id_generator_;
 };
 
 /// Create a connection with the default stub.

@@ -14,8 +14,12 @@
 
 #include "google/cloud/storage/internal/async/connection_impl.h"
 #include "google/cloud/storage/internal/async/accumulate_read_object.h"
+#include "google/cloud/storage/internal/async/insert_object.h"
+#include "google/cloud/storage/internal/async/write_payload_impl.h"
+#include "google/cloud/storage/internal/crc32c.h"
 #include "google/cloud/storage/internal/grpc/channel_refresh.h"
 #include "google/cloud/storage/internal/grpc/configure_client_context.h"
+#include "google/cloud/storage/internal/grpc/ctype_cord_workaround.h"
 #include "google/cloud/storage/internal/grpc/object_metadata_parser.h"
 #include "google/cloud/storage/internal/grpc/object_request_parser.h"
 #include "google/cloud/storage/internal/grpc/stub.h"
@@ -78,6 +82,50 @@ AsyncConnectionImpl::AsyncReadObjectRange(
                 future<storage_internal::AsyncAccumulateReadObjectResult> f) {
         return ToResponse(f.get(), *current);
       });
+}
+
+future<StatusOr<storage::ObjectMetadata>>
+AsyncConnectionImpl::AsyncInsertObject(InsertObjectParams p) {
+  auto proto = ToProto(p.request);
+  if (!proto) {
+    return make_ready_future(
+        StatusOr<storage::ObjectMetadata>(std::move(proto).status()));
+  }
+  // We are using request ids, so the request is always idempotent.
+  auto const idempotency = Idempotency::kIdempotent;
+  auto const current = internal::MakeImmutableOptions(std::move(p.options));
+  auto call = [stub = stub_, params = std::move(p), current,
+               id = invocation_id_generator_.MakeInvocationId()](
+                  CompletionQueue& cq,
+                  std::shared_ptr<grpc::ClientContext> context,
+                  Options const& options,
+                  google::storage::v2::WriteObjectRequest const& proto) {
+    auto hash_function =
+        [](storage_experimental::InsertObjectRequest const& r) {
+          return storage::internal::CreateHashFunction(
+              r.GetOption<storage::Crc32cChecksumValue>(),
+              r.GetOption<storage::DisableCrc32cChecksum>(),
+              r.GetOption<storage::MD5HashValue>(),
+              r.GetOption<storage::DisableMD5Hash>());
+        };
+
+    ApplyQueryParameters(*context, options, params.request);
+    ApplyRoutingHeaders(*context, params.request);
+    context->AddMetadata("x-goog-gcs-idempotency-token", id);
+    // TODO(#12359) - pass the `options` parameter
+    google::cloud::internal::OptionsSpan span(current);
+    auto rpc = stub->AsyncWriteObject(cq, std::move(context));
+    auto running =
+        InsertObject::Call(std::move(rpc), hash_function(params.request), proto,
+                           WritePayloadImpl::GetImpl(params.payload), current);
+    return running->Start().then([running](auto f) mutable {
+      running.reset();  // extend the life of the co-routine until it co-returns
+      return f.get();
+    });
+  };
+  return google::cloud::internal::AsyncRetryLoop(
+      retry_policy(*current), backoff_policy(*current), idempotency, cq_,
+      std::move(call), current, *std::move(proto), __func__);
 }
 
 future<StatusOr<storage::ObjectMetadata>>
