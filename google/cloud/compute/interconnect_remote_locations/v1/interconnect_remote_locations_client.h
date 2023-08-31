@@ -109,13 +109,12 @@ class InterconnectRemoteLocationsClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnect_remote_locations.v1.GetInterconnectRemoteLocationsRequest]: @googleapis_reference_link{google/cloud/compute/interconnect_remote_locations/v1/interconnect_remote_locations.proto#L61}
-  /// [google.cloud.cpp.compute.v1.InterconnectRemoteLocation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_067.proto#L29}
+  /// [google.cloud.cpp.compute.interconnect_remote_locations.v1.GetInterconnectRemoteLocationsRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_remote_locations/v1/interconnect_remote_locations.proto#L61}
+  /// [google.cloud.cpp.compute.v1.InterconnectRemoteLocation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_067.proto#L29}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::InterconnectRemoteLocation>
@@ -143,13 +142,12 @@ class InterconnectRemoteLocationsClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnect_remote_locations.v1.GetInterconnectRemoteLocationsRequest]: @googleapis_reference_link{google/cloud/compute/interconnect_remote_locations/v1/interconnect_remote_locations.proto#L61}
-  /// [google.cloud.cpp.compute.v1.InterconnectRemoteLocation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_067.proto#L29}
+  /// [google.cloud.cpp.compute.interconnect_remote_locations.v1.GetInterconnectRemoteLocationsRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_remote_locations/v1/interconnect_remote_locations.proto#L61}
+  /// [google.cloud.cpp.compute.v1.InterconnectRemoteLocation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_067.proto#L29}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::InterconnectRemoteLocation>
@@ -182,13 +180,12 @@ class InterconnectRemoteLocationsClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnect_remote_locations.v1.ListInterconnectRemoteLocationsRequest]: @googleapis_reference_link{google/cloud/compute/interconnect_remote_locations/v1/interconnect_remote_locations.proto#L71}
-  /// [google.cloud.cpp.compute.v1.InterconnectRemoteLocation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_067.proto#L29}
+  /// [google.cloud.cpp.compute.interconnect_remote_locations.v1.ListInterconnectRemoteLocationsRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_remote_locations/v1/interconnect_remote_locations.proto#L71}
+  /// [google.cloud.cpp.compute.v1.InterconnectRemoteLocation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_067.proto#L29}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::InterconnectRemoteLocation>
@@ -224,13 +221,12 @@ class InterconnectRemoteLocationsClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnect_remote_locations.v1.ListInterconnectRemoteLocationsRequest]: @googleapis_reference_link{google/cloud/compute/interconnect_remote_locations/v1/interconnect_remote_locations.proto#L71}
-  /// [google.cloud.cpp.compute.v1.InterconnectRemoteLocation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_067.proto#L29}
+  /// [google.cloud.cpp.compute.interconnect_remote_locations.v1.ListInterconnectRemoteLocationsRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_remote_locations/v1/interconnect_remote_locations.proto#L71}
+  /// [google.cloud.cpp.compute.v1.InterconnectRemoteLocation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_067.proto#L29}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::InterconnectRemoteLocation>

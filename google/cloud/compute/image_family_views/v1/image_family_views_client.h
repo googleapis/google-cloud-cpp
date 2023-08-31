@@ -104,13 +104,12 @@ class ImageFamilyViewsClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.image_family_views.v1.GetImageFamilyViewsRequest]: @googleapis_reference_link{google/cloud/compute/image_family_views/v1/image_family_views.proto#L50}
-  /// [google.cloud.cpp.compute.v1.ImageFamilyView]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_055.proto#L26}
+  /// [google.cloud.cpp.compute.image_family_views.v1.GetImageFamilyViewsRequest]: @cloud_cpp_reference_link{google/cloud/compute/image_family_views/v1/image_family_views.proto#L50}
+  /// [google.cloud.cpp.compute.v1.ImageFamilyView]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_055.proto#L26}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::ImageFamilyView>
@@ -137,13 +136,12 @@ class ImageFamilyViewsClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.image_family_views.v1.GetImageFamilyViewsRequest]: @googleapis_reference_link{google/cloud/compute/image_family_views/v1/image_family_views.proto#L50}
-  /// [google.cloud.cpp.compute.v1.ImageFamilyView]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_055.proto#L26}
+  /// [google.cloud.cpp.compute.image_family_views.v1.GetImageFamilyViewsRequest]: @cloud_cpp_reference_link{google/cloud/compute/image_family_views/v1/image_family_views.proto#L50}
+  /// [google.cloud.cpp.compute.v1.ImageFamilyView]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_055.proto#L26}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::ImageFamilyView>

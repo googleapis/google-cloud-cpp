@@ -102,13 +102,12 @@ class MachineTypesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.machine_types.v1.AggregatedListMachineTypesRequest]: @googleapis_reference_link{google/cloud/compute/machine_types/v1/machine_types.proto#L67}
-  /// [google.cloud.cpp.compute.v1.MachineTypeAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_072.proto#L101}
+  /// [google.cloud.cpp.compute.machine_types.v1.AggregatedListMachineTypesRequest]: @cloud_cpp_reference_link{google/cloud/compute/machine_types/v1/machine_types.proto#L67}
+  /// [google.cloud.cpp.compute.v1.MachineTypeAggregatedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_072.proto#L101}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::MachineTypeAggregatedList>
@@ -133,13 +132,12 @@ class MachineTypesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.machine_types.v1.AggregatedListMachineTypesRequest]: @googleapis_reference_link{google/cloud/compute/machine_types/v1/machine_types.proto#L67}
-  /// [google.cloud.cpp.compute.v1.MachineTypeAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_072.proto#L101}
+  /// [google.cloud.cpp.compute.machine_types.v1.AggregatedListMachineTypesRequest]: @cloud_cpp_reference_link{google/cloud/compute/machine_types/v1/machine_types.proto#L67}
+  /// [google.cloud.cpp.compute.v1.MachineTypeAggregatedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_072.proto#L101}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::MachineTypeAggregatedList>
@@ -164,13 +162,12 @@ class MachineTypesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.machine_types.v1.GetMachineTypesRequest]: @googleapis_reference_link{google/cloud/compute/machine_types/v1/machine_types.proto#L141}
-  /// [google.cloud.cpp.compute.v1.MachineType]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_072.proto#L29}
+  /// [google.cloud.cpp.compute.machine_types.v1.GetMachineTypesRequest]: @cloud_cpp_reference_link{google/cloud/compute/machine_types/v1/machine_types.proto#L141}
+  /// [google.cloud.cpp.compute.v1.MachineType]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_072.proto#L29}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::MachineType> GetMachineTypes(
@@ -196,13 +193,12 @@ class MachineTypesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.machine_types.v1.GetMachineTypesRequest]: @googleapis_reference_link{google/cloud/compute/machine_types/v1/machine_types.proto#L141}
-  /// [google.cloud.cpp.compute.v1.MachineType]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_072.proto#L29}
+  /// [google.cloud.cpp.compute.machine_types.v1.GetMachineTypesRequest]: @cloud_cpp_reference_link{google/cloud/compute/machine_types/v1/machine_types.proto#L141}
+  /// [google.cloud.cpp.compute.v1.MachineType]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_072.proto#L29}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::MachineType> GetMachineTypes(
@@ -234,13 +230,12 @@ class MachineTypesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.machine_types.v1.ListMachineTypesRequest]: @googleapis_reference_link{google/cloud/compute/machine_types/v1/machine_types.proto#L153}
-  /// [google.cloud.cpp.compute.v1.MachineType]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_072.proto#L29}
+  /// [google.cloud.cpp.compute.machine_types.v1.ListMachineTypesRequest]: @cloud_cpp_reference_link{google/cloud/compute/machine_types/v1/machine_types.proto#L153}
+  /// [google.cloud.cpp.compute.v1.MachineType]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_072.proto#L29}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::MachineType> ListMachineTypes(
@@ -274,13 +269,12 @@ class MachineTypesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.machine_types.v1.ListMachineTypesRequest]: @googleapis_reference_link{google/cloud/compute/machine_types/v1/machine_types.proto#L153}
-  /// [google.cloud.cpp.compute.v1.MachineType]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_072.proto#L29}
+  /// [google.cloud.cpp.compute.machine_types.v1.ListMachineTypesRequest]: @cloud_cpp_reference_link{google/cloud/compute/machine_types/v1/machine_types.proto#L153}
+  /// [google.cloud.cpp.compute.v1.MachineType]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_072.proto#L29}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::MachineType> ListMachineTypes(

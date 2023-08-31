@@ -110,12 +110,12 @@ class RegionInstancesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_instances.v1.BulkInsertRequest]: @googleapis_reference_link{google/cloud/compute/region_instances/v1/region_instances.proto#L54}
+  /// [google.cloud.cpp.compute.region_instances.v1.BulkInsertRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instances/v1/region_instances.proto#L54}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> BulkInsert(
@@ -150,12 +150,12 @@ class RegionInstancesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_instances.v1.BulkInsertRequest]: @googleapis_reference_link{google/cloud/compute/region_instances/v1/region_instances.proto#L54}
+  /// [google.cloud.cpp.compute.region_instances.v1.BulkInsertRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instances/v1/region_instances.proto#L54}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> BulkInsert(
