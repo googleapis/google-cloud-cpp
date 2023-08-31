@@ -110,12 +110,12 @@ class InterconnectsClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnects.v1.DeleteInterconnectsRequest]: @googleapis_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L127}
+  /// [google.cloud.cpp.compute.interconnects.v1.DeleteInterconnectsRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L127}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -148,12 +148,12 @@ class InterconnectsClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnects.v1.DeleteInterconnectsRequest]: @googleapis_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L127}
+  /// [google.cloud.cpp.compute.interconnects.v1.DeleteInterconnectsRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L127}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -178,13 +178,12 @@ class InterconnectsClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnects.v1.GetInterconnectsRequest]: @googleapis_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L160}
-  /// [google.cloud.cpp.compute.v1.Interconnect]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_063.proto#L27}
+  /// [google.cloud.cpp.compute.interconnects.v1.GetInterconnectsRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L160}
+  /// [google.cloud.cpp.compute.v1.Interconnect]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_063.proto#L27}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Interconnect> GetInterconnects(
@@ -212,13 +211,12 @@ class InterconnectsClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnects.v1.GetInterconnectsRequest]: @googleapis_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L160}
-  /// [google.cloud.cpp.compute.v1.Interconnect]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_063.proto#L27}
+  /// [google.cloud.cpp.compute.interconnects.v1.GetInterconnectsRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L160}
+  /// [google.cloud.cpp.compute.v1.Interconnect]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_063.proto#L27}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Interconnect> GetInterconnects(
@@ -242,13 +240,12 @@ class InterconnectsClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnects.v1.GetDiagnosticsRequest]: @googleapis_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L151}
-  /// [google.cloud.cpp.compute.v1.InterconnectsGetDiagnosticsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_063.proto#L480}
+  /// [google.cloud.cpp.compute.interconnects.v1.GetDiagnosticsRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L151}
+  /// [google.cloud.cpp.compute.v1.InterconnectsGetDiagnosticsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_063.proto#L480}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::InterconnectsGetDiagnosticsResponse>
@@ -275,13 +272,12 @@ class InterconnectsClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnects.v1.GetDiagnosticsRequest]: @googleapis_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L151}
-  /// [google.cloud.cpp.compute.v1.InterconnectsGetDiagnosticsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_063.proto#L480}
+  /// [google.cloud.cpp.compute.interconnects.v1.GetDiagnosticsRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L151}
+  /// [google.cloud.cpp.compute.v1.InterconnectsGetDiagnosticsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_063.proto#L480}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::InterconnectsGetDiagnosticsResponse>
@@ -312,12 +308,12 @@ class InterconnectsClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnects.v1.InsertInterconnectsRequest]: @googleapis_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L169}
+  /// [google.cloud.cpp.compute.interconnects.v1.InsertInterconnectsRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L169}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -353,12 +349,12 @@ class InterconnectsClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnects.v1.InsertInterconnectsRequest]: @googleapis_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L169}
+  /// [google.cloud.cpp.compute.interconnects.v1.InsertInterconnectsRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L169}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -390,13 +386,12 @@ class InterconnectsClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnects.v1.ListInterconnectsRequest]: @googleapis_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L194}
-  /// [google.cloud.cpp.compute.v1.Interconnect]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_063.proto#L27}
+  /// [google.cloud.cpp.compute.interconnects.v1.ListInterconnectsRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L194}
+  /// [google.cloud.cpp.compute.v1.Interconnect]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_063.proto#L27}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::Interconnect> ListInterconnects(
@@ -431,13 +426,12 @@ class InterconnectsClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnects.v1.ListInterconnectsRequest]: @googleapis_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L194}
-  /// [google.cloud.cpp.compute.v1.Interconnect]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_063.proto#L27}
+  /// [google.cloud.cpp.compute.interconnects.v1.ListInterconnectsRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L194}
+  /// [google.cloud.cpp.compute.v1.Interconnect]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_063.proto#L27}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::Interconnect> ListInterconnects(
@@ -470,12 +464,12 @@ class InterconnectsClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnects.v1.PatchInterconnectsRequest]: @googleapis_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L259}
+  /// [google.cloud.cpp.compute.interconnects.v1.PatchInterconnectsRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L259}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -513,12 +507,12 @@ class InterconnectsClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnects.v1.PatchInterconnectsRequest]: @googleapis_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L259}
+  /// [google.cloud.cpp.compute.interconnects.v1.PatchInterconnectsRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L259}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -550,12 +544,12 @@ class InterconnectsClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnects.v1.SetLabelsRequest]: @googleapis_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L287}
+  /// [google.cloud.cpp.compute.interconnects.v1.SetLabelsRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L287}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
@@ -591,12 +585,12 @@ class InterconnectsClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnects.v1.SetLabelsRequest]: @googleapis_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L287}
+  /// [google.cloud.cpp.compute.interconnects.v1.SetLabelsRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L287}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(

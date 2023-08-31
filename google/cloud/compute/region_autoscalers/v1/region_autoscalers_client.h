@@ -111,12 +111,12 @@ class RegionAutoscalersClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_autoscalers.v1.DeleteRegionAutoscalersRequest]: @googleapis_reference_link{google/cloud/compute/region_autoscalers/v1/region_autoscalers.proto#L114}
+  /// [google.cloud.cpp.compute.region_autoscalers.v1.DeleteRegionAutoscalersRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_autoscalers/v1/region_autoscalers.proto#L114}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -149,12 +149,12 @@ class RegionAutoscalersClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_autoscalers.v1.DeleteRegionAutoscalersRequest]: @googleapis_reference_link{google/cloud/compute/region_autoscalers/v1/region_autoscalers.proto#L114}
+  /// [google.cloud.cpp.compute.region_autoscalers.v1.DeleteRegionAutoscalersRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_autoscalers/v1/region_autoscalers.proto#L114}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -179,13 +179,12 @@ class RegionAutoscalersClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_autoscalers.v1.GetRegionAutoscalersRequest]: @googleapis_reference_link{google/cloud/compute/region_autoscalers/v1/region_autoscalers.proto#L144}
-  /// [google.cloud.cpp.compute.v1.Autoscaler]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_007.proto#L34}
+  /// [google.cloud.cpp.compute.region_autoscalers.v1.GetRegionAutoscalersRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_autoscalers/v1/region_autoscalers.proto#L144}
+  /// [google.cloud.cpp.compute.v1.Autoscaler]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_007.proto#L34}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Autoscaler> GetRegionAutoscalers(
@@ -212,13 +211,12 @@ class RegionAutoscalersClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_autoscalers.v1.GetRegionAutoscalersRequest]: @googleapis_reference_link{google/cloud/compute/region_autoscalers/v1/region_autoscalers.proto#L144}
-  /// [google.cloud.cpp.compute.v1.Autoscaler]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_007.proto#L34}
+  /// [google.cloud.cpp.compute.region_autoscalers.v1.GetRegionAutoscalersRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_autoscalers/v1/region_autoscalers.proto#L144}
+  /// [google.cloud.cpp.compute.v1.Autoscaler]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_007.proto#L34}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Autoscaler> GetRegionAutoscalers(
@@ -250,12 +248,12 @@ class RegionAutoscalersClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_autoscalers.v1.InsertRegionAutoscalersRequest]: @googleapis_reference_link{google/cloud/compute/region_autoscalers/v1/region_autoscalers.proto#L156}
+  /// [google.cloud.cpp.compute.region_autoscalers.v1.InsertRegionAutoscalersRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_autoscalers/v1/region_autoscalers.proto#L156}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -291,12 +289,12 @@ class RegionAutoscalersClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_autoscalers.v1.InsertRegionAutoscalersRequest]: @googleapis_reference_link{google/cloud/compute/region_autoscalers/v1/region_autoscalers.proto#L156}
+  /// [google.cloud.cpp.compute.region_autoscalers.v1.InsertRegionAutoscalersRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_autoscalers/v1/region_autoscalers.proto#L156}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -329,13 +327,12 @@ class RegionAutoscalersClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_autoscalers.v1.ListRegionAutoscalersRequest]: @googleapis_reference_link{google/cloud/compute/region_autoscalers/v1/region_autoscalers.proto#L187}
-  /// [google.cloud.cpp.compute.v1.Autoscaler]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_007.proto#L34}
+  /// [google.cloud.cpp.compute.region_autoscalers.v1.ListRegionAutoscalersRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_autoscalers/v1/region_autoscalers.proto#L187}
+  /// [google.cloud.cpp.compute.v1.Autoscaler]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_007.proto#L34}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::Autoscaler>
@@ -371,13 +368,12 @@ class RegionAutoscalersClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_autoscalers.v1.ListRegionAutoscalersRequest]: @googleapis_reference_link{google/cloud/compute/region_autoscalers/v1/region_autoscalers.proto#L187}
-  /// [google.cloud.cpp.compute.v1.Autoscaler]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_007.proto#L34}
+  /// [google.cloud.cpp.compute.region_autoscalers.v1.ListRegionAutoscalersRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_autoscalers/v1/region_autoscalers.proto#L187}
+  /// [google.cloud.cpp.compute.v1.Autoscaler]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_007.proto#L34}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::Autoscaler>
@@ -410,12 +406,12 @@ class RegionAutoscalersClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_autoscalers.v1.PatchRegionAutoscalersRequest]: @googleapis_reference_link{google/cloud/compute/region_autoscalers/v1/region_autoscalers.proto#L255}
+  /// [google.cloud.cpp.compute.region_autoscalers.v1.PatchRegionAutoscalersRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_autoscalers/v1/region_autoscalers.proto#L255}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -452,12 +448,12 @@ class RegionAutoscalersClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_autoscalers.v1.PatchRegionAutoscalersRequest]: @googleapis_reference_link{google/cloud/compute/region_autoscalers/v1/region_autoscalers.proto#L255}
+  /// [google.cloud.cpp.compute.region_autoscalers.v1.PatchRegionAutoscalersRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_autoscalers/v1/region_autoscalers.proto#L255}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -489,12 +485,12 @@ class RegionAutoscalersClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_autoscalers.v1.UpdateRegionAutoscalersRequest]: @googleapis_reference_link{google/cloud/compute/region_autoscalers/v1/region_autoscalers.proto#L289}
+  /// [google.cloud.cpp.compute.region_autoscalers.v1.UpdateRegionAutoscalersRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_autoscalers/v1/region_autoscalers.proto#L289}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -530,12 +526,12 @@ class RegionAutoscalersClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_autoscalers.v1.UpdateRegionAutoscalersRequest]: @googleapis_reference_link{google/cloud/compute/region_autoscalers/v1/region_autoscalers.proto#L289}
+  /// [google.cloud.cpp.compute.region_autoscalers.v1.UpdateRegionAutoscalersRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_autoscalers/v1/region_autoscalers.proto#L289}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

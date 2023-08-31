@@ -111,12 +111,12 @@ class SecurityPoliciesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.security_policies.v1.AddRuleRequest]: @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L190}
+  /// [google.cloud.cpp.compute.security_policies.v1.AddRuleRequest]: @cloud_cpp_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L190}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddRule(
@@ -151,12 +151,12 @@ class SecurityPoliciesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.security_policies.v1.AddRuleRequest]: @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L190}
+  /// [google.cloud.cpp.compute.security_policies.v1.AddRuleRequest]: @cloud_cpp_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L190}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddRule(
@@ -180,13 +180,12 @@ class SecurityPoliciesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.security_policies.v1.AggregatedListSecurityPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L209}
-  /// [google.cloud.cpp.compute.v1.SecurityPoliciesAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_086.proto#L31}
+  /// [google.cloud.cpp.compute.security_policies.v1.AggregatedListSecurityPoliciesRequest]: @cloud_cpp_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L209}
+  /// [google.cloud.cpp.compute.v1.SecurityPoliciesAggregatedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_086.proto#L31}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::SecurityPoliciesAggregatedList>
@@ -213,13 +212,12 @@ class SecurityPoliciesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.security_policies.v1.AggregatedListSecurityPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L209}
-  /// [google.cloud.cpp.compute.v1.SecurityPoliciesAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_086.proto#L31}
+  /// [google.cloud.cpp.compute.security_policies.v1.AggregatedListSecurityPoliciesRequest]: @cloud_cpp_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L209}
+  /// [google.cloud.cpp.compute.v1.SecurityPoliciesAggregatedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_086.proto#L31}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::SecurityPoliciesAggregatedList>
@@ -250,12 +248,12 @@ class SecurityPoliciesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.security_policies.v1.DeleteSecurityPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L283}
+  /// [google.cloud.cpp.compute.security_policies.v1.DeleteSecurityPoliciesRequest]: @cloud_cpp_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L283}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -288,12 +286,12 @@ class SecurityPoliciesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.security_policies.v1.DeleteSecurityPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L283}
+  /// [google.cloud.cpp.compute.security_policies.v1.DeleteSecurityPoliciesRequest]: @cloud_cpp_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L283}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -317,13 +315,12 @@ class SecurityPoliciesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.security_policies.v1.GetSecurityPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L319}
-  /// [google.cloud.cpp.compute.v1.SecurityPolicy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_106.proto#L29}
+  /// [google.cloud.cpp.compute.security_policies.v1.GetSecurityPoliciesRequest]: @cloud_cpp_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L319}
+  /// [google.cloud.cpp.compute.v1.SecurityPolicy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_106.proto#L29}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::SecurityPolicy> GetSecurityPolicies(
@@ -350,13 +347,12 @@ class SecurityPoliciesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.security_policies.v1.GetSecurityPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L319}
-  /// [google.cloud.cpp.compute.v1.SecurityPolicy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_106.proto#L29}
+  /// [google.cloud.cpp.compute.security_policies.v1.GetSecurityPoliciesRequest]: @cloud_cpp_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L319}
+  /// [google.cloud.cpp.compute.v1.SecurityPolicy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_106.proto#L29}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::SecurityPolicy> GetSecurityPolicies(
@@ -380,13 +376,12 @@ class SecurityPoliciesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.security_policies.v1.GetRuleRequest]: @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L307}
-  /// [google.cloud.cpp.compute.v1.SecurityPolicyRule]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_106.proto#L289}
+  /// [google.cloud.cpp.compute.security_policies.v1.GetRuleRequest]: @cloud_cpp_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L307}
+  /// [google.cloud.cpp.compute.v1.SecurityPolicyRule]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_106.proto#L289}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::SecurityPolicyRule> GetRule(
@@ -413,13 +408,12 @@ class SecurityPoliciesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.security_policies.v1.GetRuleRequest]: @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L307}
-  /// [google.cloud.cpp.compute.v1.SecurityPolicyRule]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_106.proto#L289}
+  /// [google.cloud.cpp.compute.security_policies.v1.GetRuleRequest]: @cloud_cpp_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L307}
+  /// [google.cloud.cpp.compute.v1.SecurityPolicyRule]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_106.proto#L289}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::SecurityPolicyRule> GetRule(
@@ -450,12 +444,12 @@ class SecurityPoliciesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.security_policies.v1.InsertSecurityPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L328}
+  /// [google.cloud.cpp.compute.security_policies.v1.InsertSecurityPoliciesRequest]: @cloud_cpp_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L328}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -491,12 +485,12 @@ class SecurityPoliciesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.security_policies.v1.InsertSecurityPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L328}
+  /// [google.cloud.cpp.compute.security_policies.v1.InsertSecurityPoliciesRequest]: @cloud_cpp_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L328}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -528,13 +522,12 @@ class SecurityPoliciesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.security_policies.v1.ListSecurityPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L421}
-  /// [google.cloud.cpp.compute.v1.SecurityPolicy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_106.proto#L29}
+  /// [google.cloud.cpp.compute.security_policies.v1.ListSecurityPoliciesRequest]: @cloud_cpp_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L421}
+  /// [google.cloud.cpp.compute.v1.SecurityPolicy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_106.proto#L29}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::SecurityPolicy>
@@ -569,13 +562,12 @@ class SecurityPoliciesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.security_policies.v1.ListSecurityPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L421}
-  /// [google.cloud.cpp.compute.v1.SecurityPolicy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_106.proto#L29}
+  /// [google.cloud.cpp.compute.security_policies.v1.ListSecurityPoliciesRequest]: @cloud_cpp_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L421}
+  /// [google.cloud.cpp.compute.v1.SecurityPolicy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_106.proto#L29}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::SecurityPolicy>
@@ -599,13 +591,12 @@ class SecurityPoliciesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.security_policies.v1.ListPreconfiguredExpressionSetsRequest]: @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L356}
-  /// [google.cloud.cpp.compute.v1.SecurityPoliciesListPreconfiguredExpressionSetsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_086.proto#L142}
+  /// [google.cloud.cpp.compute.security_policies.v1.ListPreconfiguredExpressionSetsRequest]: @cloud_cpp_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L356}
+  /// [google.cloud.cpp.compute.v1.SecurityPoliciesListPreconfiguredExpressionSetsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_086.proto#L142}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::
@@ -634,13 +625,12 @@ class SecurityPoliciesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.security_policies.v1.ListPreconfiguredExpressionSetsRequest]: @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L356}
-  /// [google.cloud.cpp.compute.v1.SecurityPoliciesListPreconfiguredExpressionSetsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_086.proto#L142}
+  /// [google.cloud.cpp.compute.security_policies.v1.ListPreconfiguredExpressionSetsRequest]: @cloud_cpp_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L356}
+  /// [google.cloud.cpp.compute.v1.SecurityPoliciesListPreconfiguredExpressionSetsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_086.proto#L142}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::
@@ -677,12 +667,12 @@ class SecurityPoliciesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.security_policies.v1.PatchSecurityPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L508}
+  /// [google.cloud.cpp.compute.security_policies.v1.PatchSecurityPoliciesRequest]: @cloud_cpp_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L508}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -722,12 +712,12 @@ class SecurityPoliciesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.security_policies.v1.PatchSecurityPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L508}
+  /// [google.cloud.cpp.compute.security_policies.v1.PatchSecurityPoliciesRequest]: @cloud_cpp_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L508}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -759,12 +749,12 @@ class SecurityPoliciesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.security_policies.v1.PatchRuleRequest]: @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L486}
+  /// [google.cloud.cpp.compute.security_policies.v1.PatchRuleRequest]: @cloud_cpp_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L486}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchRule(
@@ -800,12 +790,12 @@ class SecurityPoliciesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.security_policies.v1.PatchRuleRequest]: @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L486}
+  /// [google.cloud.cpp.compute.security_policies.v1.PatchRuleRequest]: @cloud_cpp_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L486}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchRule(
@@ -835,12 +825,12 @@ class SecurityPoliciesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.security_policies.v1.RemoveRuleRequest]: @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L536}
+  /// [google.cloud.cpp.compute.security_policies.v1.RemoveRuleRequest]: @cloud_cpp_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L536}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> RemoveRule(
@@ -873,12 +863,12 @@ class SecurityPoliciesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.security_policies.v1.RemoveRuleRequest]: @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L536}
+  /// [google.cloud.cpp.compute.security_policies.v1.RemoveRuleRequest]: @cloud_cpp_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L536}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> RemoveRule(
@@ -910,12 +900,12 @@ class SecurityPoliciesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.security_policies.v1.SetLabelsRequest]: @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L551}
+  /// [google.cloud.cpp.compute.security_policies.v1.SetLabelsRequest]: @cloud_cpp_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L551}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
@@ -951,12 +941,12 @@ class SecurityPoliciesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.security_policies.v1.SetLabelsRequest]: @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L551}
+  /// [google.cloud.cpp.compute.security_policies.v1.SetLabelsRequest]: @cloud_cpp_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L551}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(

@@ -107,12 +107,12 @@ class FirewallsClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.firewalls.v1.DeleteFirewallsRequest]: @googleapis_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L115}
+  /// [google.cloud.cpp.compute.firewalls.v1.DeleteFirewallsRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L115}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteFirewalls(
@@ -145,12 +145,12 @@ class FirewallsClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.firewalls.v1.DeleteFirewallsRequest]: @googleapis_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L115}
+  /// [google.cloud.cpp.compute.firewalls.v1.DeleteFirewallsRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L115}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteFirewalls(
@@ -174,13 +174,12 @@ class FirewallsClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.firewalls.v1.GetFirewallsRequest]: @googleapis_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L139}
-  /// [google.cloud.cpp.compute.v1.Firewall]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_034.proto#L27}
+  /// [google.cloud.cpp.compute.firewalls.v1.GetFirewallsRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L139}
+  /// [google.cloud.cpp.compute.v1.Firewall]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_034.proto#L27}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Firewall> GetFirewalls(
@@ -207,13 +206,12 @@ class FirewallsClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.firewalls.v1.GetFirewallsRequest]: @googleapis_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L139}
-  /// [google.cloud.cpp.compute.v1.Firewall]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_034.proto#L27}
+  /// [google.cloud.cpp.compute.firewalls.v1.GetFirewallsRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L139}
+  /// [google.cloud.cpp.compute.v1.Firewall]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_034.proto#L27}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Firewall> GetFirewalls(
@@ -244,12 +242,12 @@ class FirewallsClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.firewalls.v1.InsertFirewallsRequest]: @googleapis_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L148}
+  /// [google.cloud.cpp.compute.firewalls.v1.InsertFirewallsRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L148}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertFirewalls(
@@ -284,12 +282,12 @@ class FirewallsClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.firewalls.v1.InsertFirewallsRequest]: @googleapis_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L148}
+  /// [google.cloud.cpp.compute.firewalls.v1.InsertFirewallsRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L148}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertFirewalls(
@@ -321,13 +319,12 @@ class FirewallsClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.firewalls.v1.ListFirewallsRequest]: @googleapis_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L173}
-  /// [google.cloud.cpp.compute.v1.Firewall]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_034.proto#L27}
+  /// [google.cloud.cpp.compute.firewalls.v1.ListFirewallsRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L173}
+  /// [google.cloud.cpp.compute.v1.Firewall]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_034.proto#L27}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::Firewall> ListFirewalls(
@@ -362,13 +359,12 @@ class FirewallsClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.firewalls.v1.ListFirewallsRequest]: @googleapis_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L173}
-  /// [google.cloud.cpp.compute.v1.Firewall]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_034.proto#L27}
+  /// [google.cloud.cpp.compute.firewalls.v1.ListFirewallsRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L173}
+  /// [google.cloud.cpp.compute.v1.Firewall]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_034.proto#L27}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::Firewall> ListFirewalls(
@@ -400,12 +396,12 @@ class FirewallsClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.firewalls.v1.PatchFirewallsRequest]: @googleapis_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L238}
+  /// [google.cloud.cpp.compute.firewalls.v1.PatchFirewallsRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L238}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchFirewalls(
@@ -441,12 +437,12 @@ class FirewallsClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.firewalls.v1.PatchFirewallsRequest]: @googleapis_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L238}
+  /// [google.cloud.cpp.compute.firewalls.v1.PatchFirewallsRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L238}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchFirewalls(
@@ -479,12 +475,12 @@ class FirewallsClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.firewalls.v1.UpdateFirewallsRequest]: @googleapis_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L266}
+  /// [google.cloud.cpp.compute.firewalls.v1.UpdateFirewallsRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L266}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateFirewalls(
@@ -520,12 +516,12 @@ class FirewallsClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.firewalls.v1.UpdateFirewallsRequest]: @googleapis_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L266}
+  /// [google.cloud.cpp.compute.firewalls.v1.UpdateFirewallsRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L266}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateFirewalls(

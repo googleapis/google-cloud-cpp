@@ -110,13 +110,12 @@ class NetworkEdgeSecurityServicesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_edge_security_services.v1.AggregatedListNetworkEdgeSecurityServicesRequest]: @googleapis_reference_link{google/cloud/compute/network_edge_security_services/v1/network_edge_security_services.proto#L107}
-  /// [google.cloud.cpp.compute.v1.NetworkEdgeSecurityServiceAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_077.proto#L74}
+  /// [google.cloud.cpp.compute.network_edge_security_services.v1.AggregatedListNetworkEdgeSecurityServicesRequest]: @cloud_cpp_reference_link{google/cloud/compute/network_edge_security_services/v1/network_edge_security_services.proto#L107}
+  /// [google.cloud.cpp.compute.v1.NetworkEdgeSecurityServiceAggregatedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_077.proto#L74}
   ///
   // clang-format on
   StatusOr<
@@ -145,13 +144,12 @@ class NetworkEdgeSecurityServicesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_edge_security_services.v1.AggregatedListNetworkEdgeSecurityServicesRequest]: @googleapis_reference_link{google/cloud/compute/network_edge_security_services/v1/network_edge_security_services.proto#L107}
-  /// [google.cloud.cpp.compute.v1.NetworkEdgeSecurityServiceAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_077.proto#L74}
+  /// [google.cloud.cpp.compute.network_edge_security_services.v1.AggregatedListNetworkEdgeSecurityServicesRequest]: @cloud_cpp_reference_link{google/cloud/compute/network_edge_security_services/v1/network_edge_security_services.proto#L107}
+  /// [google.cloud.cpp.compute.v1.NetworkEdgeSecurityServiceAggregatedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_077.proto#L74}
   ///
   // clang-format on
   StatusOr<
@@ -184,12 +182,12 @@ class NetworkEdgeSecurityServicesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_edge_security_services.v1.DeleteNetworkEdgeSecurityServicesRequest]: @googleapis_reference_link{google/cloud/compute/network_edge_security_services/v1/network_edge_security_services.proto#L181}
+  /// [google.cloud.cpp.compute.network_edge_security_services.v1.DeleteNetworkEdgeSecurityServicesRequest]: @cloud_cpp_reference_link{google/cloud/compute/network_edge_security_services/v1/network_edge_security_services.proto#L181}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -223,12 +221,12 @@ class NetworkEdgeSecurityServicesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_edge_security_services.v1.DeleteNetworkEdgeSecurityServicesRequest]: @googleapis_reference_link{google/cloud/compute/network_edge_security_services/v1/network_edge_security_services.proto#L181}
+  /// [google.cloud.cpp.compute.network_edge_security_services.v1.DeleteNetworkEdgeSecurityServicesRequest]: @cloud_cpp_reference_link{google/cloud/compute/network_edge_security_services/v1/network_edge_security_services.proto#L181}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -254,13 +252,12 @@ class NetworkEdgeSecurityServicesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_edge_security_services.v1.GetNetworkEdgeSecurityServicesRequest]: @googleapis_reference_link{google/cloud/compute/network_edge_security_services/v1/network_edge_security_services.proto#L212}
-  /// [google.cloud.cpp.compute.v1.NetworkEdgeSecurityService]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_077.proto#L25}
+  /// [google.cloud.cpp.compute.network_edge_security_services.v1.GetNetworkEdgeSecurityServicesRequest]: @cloud_cpp_reference_link{google/cloud/compute/network_edge_security_services/v1/network_edge_security_services.proto#L212}
+  /// [google.cloud.cpp.compute.v1.NetworkEdgeSecurityService]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_077.proto#L25}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::NetworkEdgeSecurityService>
@@ -288,13 +285,12 @@ class NetworkEdgeSecurityServicesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_edge_security_services.v1.GetNetworkEdgeSecurityServicesRequest]: @googleapis_reference_link{google/cloud/compute/network_edge_security_services/v1/network_edge_security_services.proto#L212}
-  /// [google.cloud.cpp.compute.v1.NetworkEdgeSecurityService]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_077.proto#L25}
+  /// [google.cloud.cpp.compute.network_edge_security_services.v1.GetNetworkEdgeSecurityServicesRequest]: @cloud_cpp_reference_link{google/cloud/compute/network_edge_security_services/v1/network_edge_security_services.proto#L212}
+  /// [google.cloud.cpp.compute.v1.NetworkEdgeSecurityService]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_077.proto#L25}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::NetworkEdgeSecurityService>
@@ -327,12 +323,12 @@ class NetworkEdgeSecurityServicesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_edge_security_services.v1.InsertNetworkEdgeSecurityServicesRequest]: @googleapis_reference_link{google/cloud/compute/network_edge_security_services/v1/network_edge_security_services.proto#L225}
+  /// [google.cloud.cpp.compute.network_edge_security_services.v1.InsertNetworkEdgeSecurityServicesRequest]: @cloud_cpp_reference_link{google/cloud/compute/network_edge_security_services/v1/network_edge_security_services.proto#L225}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -369,12 +365,12 @@ class NetworkEdgeSecurityServicesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_edge_security_services.v1.InsertNetworkEdgeSecurityServicesRequest]: @googleapis_reference_link{google/cloud/compute/network_edge_security_services/v1/network_edge_security_services.proto#L225}
+  /// [google.cloud.cpp.compute.network_edge_security_services.v1.InsertNetworkEdgeSecurityServicesRequest]: @cloud_cpp_reference_link{google/cloud/compute/network_edge_security_services/v1/network_edge_security_services.proto#L225}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -407,12 +403,12 @@ class NetworkEdgeSecurityServicesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_edge_security_services.v1.PatchNetworkEdgeSecurityServicesRequest]: @googleapis_reference_link{google/cloud/compute/network_edge_security_services/v1/network_edge_security_services.proto#L260}
+  /// [google.cloud.cpp.compute.network_edge_security_services.v1.PatchNetworkEdgeSecurityServicesRequest]: @cloud_cpp_reference_link{google/cloud/compute/network_edge_security_services/v1/network_edge_security_services.proto#L260}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -449,12 +445,12 @@ class NetworkEdgeSecurityServicesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_edge_security_services.v1.PatchNetworkEdgeSecurityServicesRequest]: @googleapis_reference_link{google/cloud/compute/network_edge_security_services/v1/network_edge_security_services.proto#L260}
+  /// [google.cloud.cpp.compute.network_edge_security_services.v1.PatchNetworkEdgeSecurityServicesRequest]: @cloud_cpp_reference_link{google/cloud/compute/network_edge_security_services/v1/network_edge_security_services.proto#L260}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

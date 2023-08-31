@@ -114,12 +114,12 @@ class RegionSslCertificatesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_ssl_certificates.v1.DeleteRegionSslCertificatesRequest]: @googleapis_reference_link{google/cloud/compute/region_ssl_certificates/v1/region_ssl_certificates.proto#L89}
+  /// [google.cloud.cpp.compute.region_ssl_certificates.v1.DeleteRegionSslCertificatesRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_ssl_certificates/v1/region_ssl_certificates.proto#L89}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -154,12 +154,12 @@ class RegionSslCertificatesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_ssl_certificates.v1.DeleteRegionSslCertificatesRequest]: @googleapis_reference_link{google/cloud/compute/region_ssl_certificates/v1/region_ssl_certificates.proto#L89}
+  /// [google.cloud.cpp.compute.region_ssl_certificates.v1.DeleteRegionSslCertificatesRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_ssl_certificates/v1/region_ssl_certificates.proto#L89}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -186,13 +186,12 @@ class RegionSslCertificatesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_ssl_certificates.v1.GetRegionSslCertificatesRequest]: @googleapis_reference_link{google/cloud/compute/region_ssl_certificates/v1/region_ssl_certificates.proto#L119}
-  /// [google.cloud.cpp.compute.v1.SslCertificate]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_112.proto#L36}
+  /// [google.cloud.cpp.compute.region_ssl_certificates.v1.GetRegionSslCertificatesRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_ssl_certificates/v1/region_ssl_certificates.proto#L119}
+  /// [google.cloud.cpp.compute.v1.SslCertificate]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_112.proto#L36}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::SslCertificate>
@@ -222,13 +221,12 @@ class RegionSslCertificatesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_ssl_certificates.v1.GetRegionSslCertificatesRequest]: @googleapis_reference_link{google/cloud/compute/region_ssl_certificates/v1/region_ssl_certificates.proto#L119}
-  /// [google.cloud.cpp.compute.v1.SslCertificate]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_112.proto#L36}
+  /// [google.cloud.cpp.compute.region_ssl_certificates.v1.GetRegionSslCertificatesRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_ssl_certificates/v1/region_ssl_certificates.proto#L119}
+  /// [google.cloud.cpp.compute.v1.SslCertificate]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_112.proto#L36}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::SslCertificate>
@@ -261,12 +259,12 @@ class RegionSslCertificatesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_ssl_certificates.v1.InsertRegionSslCertificatesRequest]: @googleapis_reference_link{google/cloud/compute/region_ssl_certificates/v1/region_ssl_certificates.proto#L131}
+  /// [google.cloud.cpp.compute.region_ssl_certificates.v1.InsertRegionSslCertificatesRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_ssl_certificates/v1/region_ssl_certificates.proto#L131}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -303,12 +301,12 @@ class RegionSslCertificatesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_ssl_certificates.v1.InsertRegionSslCertificatesRequest]: @googleapis_reference_link{google/cloud/compute/region_ssl_certificates/v1/region_ssl_certificates.proto#L131}
+  /// [google.cloud.cpp.compute.region_ssl_certificates.v1.InsertRegionSslCertificatesRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_ssl_certificates/v1/region_ssl_certificates.proto#L131}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -343,13 +341,12 @@ class RegionSslCertificatesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_ssl_certificates.v1.ListRegionSslCertificatesRequest]: @googleapis_reference_link{google/cloud/compute/region_ssl_certificates/v1/region_ssl_certificates.proto#L162}
-  /// [google.cloud.cpp.compute.v1.SslCertificate]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_112.proto#L36}
+  /// [google.cloud.cpp.compute.region_ssl_certificates.v1.ListRegionSslCertificatesRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_ssl_certificates/v1/region_ssl_certificates.proto#L162}
+  /// [google.cloud.cpp.compute.v1.SslCertificate]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_112.proto#L36}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::SslCertificate>
@@ -386,13 +383,12 @@ class RegionSslCertificatesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_ssl_certificates.v1.ListRegionSslCertificatesRequest]: @googleapis_reference_link{google/cloud/compute/region_ssl_certificates/v1/region_ssl_certificates.proto#L162}
-  /// [google.cloud.cpp.compute.v1.SslCertificate]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_112.proto#L36}
+  /// [google.cloud.cpp.compute.region_ssl_certificates.v1.ListRegionSslCertificatesRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_ssl_certificates/v1/region_ssl_certificates.proto#L162}
+  /// [google.cloud.cpp.compute.v1.SslCertificate]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_112.proto#L36}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::SslCertificate>

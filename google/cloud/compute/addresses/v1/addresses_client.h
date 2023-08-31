@@ -101,13 +101,12 @@ class AddressesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.addresses.v1.AggregatedListAddressesRequest]: @googleapis_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L124}
-  /// [google.cloud.cpp.compute.v1.AddressAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_004.proto#L26}
+  /// [google.cloud.cpp.compute.addresses.v1.AggregatedListAddressesRequest]: @cloud_cpp_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L124}
+  /// [google.cloud.cpp.compute.v1.AddressAggregatedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_004.proto#L26}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::AddressAggregatedList>
@@ -133,13 +132,12 @@ class AddressesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.addresses.v1.AggregatedListAddressesRequest]: @googleapis_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L124}
-  /// [google.cloud.cpp.compute.v1.AddressAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_004.proto#L26}
+  /// [google.cloud.cpp.compute.addresses.v1.AggregatedListAddressesRequest]: @cloud_cpp_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L124}
+  /// [google.cloud.cpp.compute.v1.AddressAggregatedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_004.proto#L26}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::AddressAggregatedList>
@@ -170,12 +168,12 @@ class AddressesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.addresses.v1.DeleteAddressesRequest]: @googleapis_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L198}
+  /// [google.cloud.cpp.compute.addresses.v1.DeleteAddressesRequest]: @cloud_cpp_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L198}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteAddresses(
@@ -208,12 +206,12 @@ class AddressesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.addresses.v1.DeleteAddressesRequest]: @googleapis_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L198}
+  /// [google.cloud.cpp.compute.addresses.v1.DeleteAddressesRequest]: @cloud_cpp_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L198}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteAddresses(
@@ -238,13 +236,12 @@ class AddressesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.addresses.v1.GetAddressesRequest]: @googleapis_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L228}
-  /// [google.cloud.cpp.compute.v1.Address]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_003.proto#L30}
+  /// [google.cloud.cpp.compute.addresses.v1.GetAddressesRequest]: @cloud_cpp_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L228}
+  /// [google.cloud.cpp.compute.v1.Address]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_003.proto#L30}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Address> GetAddresses(
@@ -271,13 +268,12 @@ class AddressesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.addresses.v1.GetAddressesRequest]: @googleapis_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L228}
-  /// [google.cloud.cpp.compute.v1.Address]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_003.proto#L30}
+  /// [google.cloud.cpp.compute.addresses.v1.GetAddressesRequest]: @cloud_cpp_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L228}
+  /// [google.cloud.cpp.compute.v1.Address]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_003.proto#L30}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Address> GetAddresses(
@@ -309,12 +305,12 @@ class AddressesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.addresses.v1.InsertAddressesRequest]: @googleapis_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L240}
+  /// [google.cloud.cpp.compute.addresses.v1.InsertAddressesRequest]: @cloud_cpp_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L240}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertAddresses(
@@ -349,12 +345,12 @@ class AddressesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.addresses.v1.InsertAddressesRequest]: @googleapis_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L240}
+  /// [google.cloud.cpp.compute.addresses.v1.InsertAddressesRequest]: @cloud_cpp_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L240}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertAddresses(
@@ -387,13 +383,12 @@ class AddressesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.addresses.v1.ListAddressesRequest]: @googleapis_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L271}
-  /// [google.cloud.cpp.compute.v1.Address]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_003.proto#L30}
+  /// [google.cloud.cpp.compute.addresses.v1.ListAddressesRequest]: @cloud_cpp_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L271}
+  /// [google.cloud.cpp.compute.v1.Address]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_003.proto#L30}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::Address> ListAddresses(
@@ -428,13 +423,12 @@ class AddressesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.addresses.v1.ListAddressesRequest]: @googleapis_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L271}
-  /// [google.cloud.cpp.compute.v1.Address]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_003.proto#L30}
+  /// [google.cloud.cpp.compute.addresses.v1.ListAddressesRequest]: @cloud_cpp_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L271}
+  /// [google.cloud.cpp.compute.v1.Address]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_003.proto#L30}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::Address> ListAddresses(
@@ -465,12 +459,12 @@ class AddressesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.addresses.v1.MoveRequest]: @googleapis_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L339}
+  /// [google.cloud.cpp.compute.addresses.v1.MoveRequest]: @cloud_cpp_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L339}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Move(
@@ -506,12 +500,12 @@ class AddressesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.addresses.v1.MoveRequest]: @googleapis_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L339}
+  /// [google.cloud.cpp.compute.addresses.v1.MoveRequest]: @cloud_cpp_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L339}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Move(
@@ -543,12 +537,12 @@ class AddressesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.addresses.v1.SetLabelsRequest]: @googleapis_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L374}
+  /// [google.cloud.cpp.compute.addresses.v1.SetLabelsRequest]: @cloud_cpp_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L374}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
@@ -585,12 +579,12 @@ class AddressesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.addresses.v1.SetLabelsRequest]: @googleapis_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L374}
+  /// [google.cloud.cpp.compute.addresses.v1.SetLabelsRequest]: @cloud_cpp_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L374}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(

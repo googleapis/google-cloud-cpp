@@ -112,12 +112,12 @@ class SnapshotsClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.snapshots.v1.DeleteSnapshotsRequest]: @googleapis_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L148}
+  /// [google.cloud.cpp.compute.snapshots.v1.DeleteSnapshotsRequest]: @cloud_cpp_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L148}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteSnapshots(
@@ -154,12 +154,12 @@ class SnapshotsClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.snapshots.v1.DeleteSnapshotsRequest]: @googleapis_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L148}
+  /// [google.cloud.cpp.compute.snapshots.v1.DeleteSnapshotsRequest]: @cloud_cpp_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L148}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteSnapshots(
@@ -183,13 +183,12 @@ class SnapshotsClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.snapshots.v1.GetSnapshotsRequest]: @googleapis_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L184}
-  /// [google.cloud.cpp.compute.v1.Snapshot]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_110.proto#L29}
+  /// [google.cloud.cpp.compute.snapshots.v1.GetSnapshotsRequest]: @cloud_cpp_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L184}
+  /// [google.cloud.cpp.compute.v1.Snapshot]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_110.proto#L29}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Snapshot> GetSnapshots(
@@ -216,13 +215,12 @@ class SnapshotsClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.snapshots.v1.GetSnapshotsRequest]: @googleapis_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L184}
-  /// [google.cloud.cpp.compute.v1.Snapshot]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_110.proto#L29}
+  /// [google.cloud.cpp.compute.snapshots.v1.GetSnapshotsRequest]: @cloud_cpp_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L184}
+  /// [google.cloud.cpp.compute.v1.Snapshot]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_110.proto#L29}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Snapshot> GetSnapshots(
@@ -247,13 +245,12 @@ class SnapshotsClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.snapshots.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L172}
-  /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_006.proto#L262}
+  /// [google.cloud.cpp.compute.snapshots.v1.GetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L172}
+  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_006.proto#L262}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
@@ -281,13 +278,12 @@ class SnapshotsClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.snapshots.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L172}
-  /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_006.proto#L262}
+  /// [google.cloud.cpp.compute.snapshots.v1.GetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L172}
+  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_006.proto#L262}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
@@ -320,12 +316,12 @@ class SnapshotsClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.snapshots.v1.InsertSnapshotsRequest]: @googleapis_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L193}
+  /// [google.cloud.cpp.compute.snapshots.v1.InsertSnapshotsRequest]: @cloud_cpp_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L193}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertSnapshots(
@@ -362,12 +358,12 @@ class SnapshotsClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.snapshots.v1.InsertSnapshotsRequest]: @googleapis_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L193}
+  /// [google.cloud.cpp.compute.snapshots.v1.InsertSnapshotsRequest]: @cloud_cpp_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L193}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertSnapshots(
@@ -400,13 +396,12 @@ class SnapshotsClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.snapshots.v1.ListSnapshotsRequest]: @googleapis_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L218}
-  /// [google.cloud.cpp.compute.v1.Snapshot]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_110.proto#L29}
+  /// [google.cloud.cpp.compute.snapshots.v1.ListSnapshotsRequest]: @cloud_cpp_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L218}
+  /// [google.cloud.cpp.compute.v1.Snapshot]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_110.proto#L29}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::Snapshot> ListSnapshots(
@@ -442,13 +437,12 @@ class SnapshotsClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.snapshots.v1.ListSnapshotsRequest]: @googleapis_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L218}
-  /// [google.cloud.cpp.compute.v1.Snapshot]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_110.proto#L29}
+  /// [google.cloud.cpp.compute.snapshots.v1.ListSnapshotsRequest]: @cloud_cpp_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L218}
+  /// [google.cloud.cpp.compute.v1.Snapshot]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_110.proto#L29}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::Snapshot> ListSnapshots(
@@ -473,13 +467,12 @@ class SnapshotsClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.snapshots.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L283}
-  /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_006.proto#L262}
+  /// [google.cloud.cpp.compute.snapshots.v1.SetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L283}
+  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_006.proto#L262}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
@@ -509,13 +502,12 @@ class SnapshotsClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.snapshots.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L283}
-  /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_006.proto#L262}
+  /// [google.cloud.cpp.compute.snapshots.v1.SetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L283}
+  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_006.proto#L262}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
@@ -547,12 +539,12 @@ class SnapshotsClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.snapshots.v1.SetLabelsRequest]: @googleapis_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L297}
+  /// [google.cloud.cpp.compute.snapshots.v1.SetLabelsRequest]: @cloud_cpp_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L297}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
@@ -588,12 +580,12 @@ class SnapshotsClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.snapshots.v1.SetLabelsRequest]: @googleapis_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L297}
+  /// [google.cloud.cpp.compute.snapshots.v1.SetLabelsRequest]: @cloud_cpp_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L297}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
@@ -618,13 +610,12 @@ class SnapshotsClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.snapshots.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L314}
-  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_130.proto#L30}
+  /// [google.cloud.cpp.compute.snapshots.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L314}
+  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_130.proto#L30}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
@@ -654,13 +645,12 @@ class SnapshotsClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.snapshots.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L314}
-  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_130.proto#L30}
+  /// [google.cloud.cpp.compute.snapshots.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L314}
+  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_130.proto#L30}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>

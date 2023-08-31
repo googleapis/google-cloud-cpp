@@ -103,13 +103,12 @@ class NodeTemplatesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.node_templates.v1.AggregatedListNodeTemplatesRequest]: @googleapis_reference_link{google/cloud/compute/node_templates/v1/node_templates.proto#L136}
-  /// [google.cloud.cpp.compute.v1.NodeTemplateAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_080.proto#L100}
+  /// [google.cloud.cpp.compute.node_templates.v1.AggregatedListNodeTemplatesRequest]: @cloud_cpp_reference_link{google/cloud/compute/node_templates/v1/node_templates.proto#L136}
+  /// [google.cloud.cpp.compute.v1.NodeTemplateAggregatedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_080.proto#L100}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::NodeTemplateAggregatedList>
@@ -135,13 +134,12 @@ class NodeTemplatesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.node_templates.v1.AggregatedListNodeTemplatesRequest]: @googleapis_reference_link{google/cloud/compute/node_templates/v1/node_templates.proto#L136}
-  /// [google.cloud.cpp.compute.v1.NodeTemplateAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_080.proto#L100}
+  /// [google.cloud.cpp.compute.node_templates.v1.AggregatedListNodeTemplatesRequest]: @cloud_cpp_reference_link{google/cloud/compute/node_templates/v1/node_templates.proto#L136}
+  /// [google.cloud.cpp.compute.v1.NodeTemplateAggregatedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_080.proto#L100}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::NodeTemplateAggregatedList>
@@ -173,12 +171,12 @@ class NodeTemplatesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.node_templates.v1.DeleteNodeTemplatesRequest]: @googleapis_reference_link{google/cloud/compute/node_templates/v1/node_templates.proto#L210}
+  /// [google.cloud.cpp.compute.node_templates.v1.DeleteNodeTemplatesRequest]: @cloud_cpp_reference_link{google/cloud/compute/node_templates/v1/node_templates.proto#L210}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -211,12 +209,12 @@ class NodeTemplatesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.node_templates.v1.DeleteNodeTemplatesRequest]: @googleapis_reference_link{google/cloud/compute/node_templates/v1/node_templates.proto#L210}
+  /// [google.cloud.cpp.compute.node_templates.v1.DeleteNodeTemplatesRequest]: @cloud_cpp_reference_link{google/cloud/compute/node_templates/v1/node_templates.proto#L210}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -241,13 +239,12 @@ class NodeTemplatesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.node_templates.v1.GetNodeTemplatesRequest]: @googleapis_reference_link{google/cloud/compute/node_templates/v1/node_templates.proto#L255}
-  /// [google.cloud.cpp.compute.v1.NodeTemplate]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_080.proto#L30}
+  /// [google.cloud.cpp.compute.node_templates.v1.GetNodeTemplatesRequest]: @cloud_cpp_reference_link{google/cloud/compute/node_templates/v1/node_templates.proto#L255}
+  /// [google.cloud.cpp.compute.v1.NodeTemplate]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_080.proto#L30}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::NodeTemplate> GetNodeTemplates(
@@ -274,13 +271,12 @@ class NodeTemplatesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.node_templates.v1.GetNodeTemplatesRequest]: @googleapis_reference_link{google/cloud/compute/node_templates/v1/node_templates.proto#L255}
-  /// [google.cloud.cpp.compute.v1.NodeTemplate]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_080.proto#L30}
+  /// [google.cloud.cpp.compute.node_templates.v1.GetNodeTemplatesRequest]: @cloud_cpp_reference_link{google/cloud/compute/node_templates/v1/node_templates.proto#L255}
+  /// [google.cloud.cpp.compute.v1.NodeTemplate]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_080.proto#L30}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::NodeTemplate> GetNodeTemplates(
@@ -306,13 +302,12 @@ class NodeTemplatesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.node_templates.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/node_templates/v1/node_templates.proto#L240}
-  /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_006.proto#L262}
+  /// [google.cloud.cpp.compute.node_templates.v1.GetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/node_templates/v1/node_templates.proto#L240}
+  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_006.proto#L262}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
@@ -340,13 +335,12 @@ class NodeTemplatesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.node_templates.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/node_templates/v1/node_templates.proto#L240}
-  /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_006.proto#L262}
+  /// [google.cloud.cpp.compute.node_templates.v1.GetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/node_templates/v1/node_templates.proto#L240}
+  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_006.proto#L262}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
@@ -378,12 +372,12 @@ class NodeTemplatesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.node_templates.v1.InsertNodeTemplatesRequest]: @googleapis_reference_link{google/cloud/compute/node_templates/v1/node_templates.proto#L267}
+  /// [google.cloud.cpp.compute.node_templates.v1.InsertNodeTemplatesRequest]: @cloud_cpp_reference_link{google/cloud/compute/node_templates/v1/node_templates.proto#L267}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -419,12 +413,12 @@ class NodeTemplatesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.node_templates.v1.InsertNodeTemplatesRequest]: @googleapis_reference_link{google/cloud/compute/node_templates/v1/node_templates.proto#L267}
+  /// [google.cloud.cpp.compute.node_templates.v1.InsertNodeTemplatesRequest]: @cloud_cpp_reference_link{google/cloud/compute/node_templates/v1/node_templates.proto#L267}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -457,13 +451,12 @@ class NodeTemplatesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.node_templates.v1.ListNodeTemplatesRequest]: @googleapis_reference_link{google/cloud/compute/node_templates/v1/node_templates.proto#L298}
-  /// [google.cloud.cpp.compute.v1.NodeTemplate]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_080.proto#L30}
+  /// [google.cloud.cpp.compute.node_templates.v1.ListNodeTemplatesRequest]: @cloud_cpp_reference_link{google/cloud/compute/node_templates/v1/node_templates.proto#L298}
+  /// [google.cloud.cpp.compute.v1.NodeTemplate]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_080.proto#L30}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::NodeTemplate> ListNodeTemplates(
@@ -498,13 +491,12 @@ class NodeTemplatesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.node_templates.v1.ListNodeTemplatesRequest]: @googleapis_reference_link{google/cloud/compute/node_templates/v1/node_templates.proto#L298}
-  /// [google.cloud.cpp.compute.v1.NodeTemplate]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_080.proto#L30}
+  /// [google.cloud.cpp.compute.node_templates.v1.ListNodeTemplatesRequest]: @cloud_cpp_reference_link{google/cloud/compute/node_templates/v1/node_templates.proto#L298}
+  /// [google.cloud.cpp.compute.v1.NodeTemplate]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_080.proto#L30}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::NodeTemplate> ListNodeTemplates(
@@ -531,13 +523,12 @@ class NodeTemplatesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.node_templates.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/node_templates/v1/node_templates.proto#L366}
-  /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_006.proto#L262}
+  /// [google.cloud.cpp.compute.node_templates.v1.SetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/node_templates/v1/node_templates.proto#L366}
+  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_006.proto#L262}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
@@ -568,13 +559,12 @@ class NodeTemplatesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.node_templates.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/node_templates/v1/node_templates.proto#L366}
-  /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_006.proto#L262}
+  /// [google.cloud.cpp.compute.node_templates.v1.SetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/node_templates/v1/node_templates.proto#L366}
+  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_006.proto#L262}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
@@ -600,13 +590,12 @@ class NodeTemplatesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.node_templates.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/node_templates/v1/node_templates.proto#L383}
-  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_130.proto#L30}
+  /// [google.cloud.cpp.compute.node_templates.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/node_templates/v1/node_templates.proto#L383}
+  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_130.proto#L30}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
@@ -637,13 +626,12 @@ class NodeTemplatesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.node_templates.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/node_templates/v1/node_templates.proto#L383}
-  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_130.proto#L30}
+  /// [google.cloud.cpp.compute.node_templates.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/node_templates/v1/node_templates.proto#L383}
+  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_130.proto#L30}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>

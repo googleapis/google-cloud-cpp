@@ -110,12 +110,12 @@ class MachineImagesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.machine_images.v1.DeleteMachineImagesRequest]: @googleapis_reference_link{google/cloud/compute/machine_images/v1/machine_images.proto#L129}
+  /// [google.cloud.cpp.compute.machine_images.v1.DeleteMachineImagesRequest]: @cloud_cpp_reference_link{google/cloud/compute/machine_images/v1/machine_images.proto#L129}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -149,12 +149,12 @@ class MachineImagesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.machine_images.v1.DeleteMachineImagesRequest]: @googleapis_reference_link{google/cloud/compute/machine_images/v1/machine_images.proto#L129}
+  /// [google.cloud.cpp.compute.machine_images.v1.DeleteMachineImagesRequest]: @cloud_cpp_reference_link{google/cloud/compute/machine_images/v1/machine_images.proto#L129}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -178,13 +178,12 @@ class MachineImagesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.machine_images.v1.GetMachineImagesRequest]: @googleapis_reference_link{google/cloud/compute/machine_images/v1/machine_images.proto#L165}
-  /// [google.cloud.cpp.compute.v1.MachineImage]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_071.proto#L34}
+  /// [google.cloud.cpp.compute.machine_images.v1.GetMachineImagesRequest]: @cloud_cpp_reference_link{google/cloud/compute/machine_images/v1/machine_images.proto#L165}
+  /// [google.cloud.cpp.compute.v1.MachineImage]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_071.proto#L34}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::MachineImage> GetMachineImages(
@@ -211,13 +210,12 @@ class MachineImagesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.machine_images.v1.GetMachineImagesRequest]: @googleapis_reference_link{google/cloud/compute/machine_images/v1/machine_images.proto#L165}
-  /// [google.cloud.cpp.compute.v1.MachineImage]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_071.proto#L34}
+  /// [google.cloud.cpp.compute.machine_images.v1.GetMachineImagesRequest]: @cloud_cpp_reference_link{google/cloud/compute/machine_images/v1/machine_images.proto#L165}
+  /// [google.cloud.cpp.compute.v1.MachineImage]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_071.proto#L34}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::MachineImage> GetMachineImages(
@@ -242,13 +240,12 @@ class MachineImagesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.machine_images.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/machine_images/v1/machine_images.proto#L153}
-  /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_006.proto#L262}
+  /// [google.cloud.cpp.compute.machine_images.v1.GetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/machine_images/v1/machine_images.proto#L153}
+  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_006.proto#L262}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
@@ -276,13 +273,12 @@ class MachineImagesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.machine_images.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/machine_images/v1/machine_images.proto#L153}
-  /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_006.proto#L262}
+  /// [google.cloud.cpp.compute.machine_images.v1.GetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/machine_images/v1/machine_images.proto#L153}
+  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_006.proto#L262}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
@@ -315,12 +311,12 @@ class MachineImagesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.machine_images.v1.InsertMachineImagesRequest]: @googleapis_reference_link{google/cloud/compute/machine_images/v1/machine_images.proto#L174}
+  /// [google.cloud.cpp.compute.machine_images.v1.InsertMachineImagesRequest]: @cloud_cpp_reference_link{google/cloud/compute/machine_images/v1/machine_images.proto#L174}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -358,12 +354,12 @@ class MachineImagesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.machine_images.v1.InsertMachineImagesRequest]: @googleapis_reference_link{google/cloud/compute/machine_images/v1/machine_images.proto#L174}
+  /// [google.cloud.cpp.compute.machine_images.v1.InsertMachineImagesRequest]: @cloud_cpp_reference_link{google/cloud/compute/machine_images/v1/machine_images.proto#L174}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -396,13 +392,12 @@ class MachineImagesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.machine_images.v1.ListMachineImagesRequest]: @googleapis_reference_link{google/cloud/compute/machine_images/v1/machine_images.proto#L202}
-  /// [google.cloud.cpp.compute.v1.MachineImage]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_071.proto#L34}
+  /// [google.cloud.cpp.compute.machine_images.v1.ListMachineImagesRequest]: @cloud_cpp_reference_link{google/cloud/compute/machine_images/v1/machine_images.proto#L202}
+  /// [google.cloud.cpp.compute.v1.MachineImage]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_071.proto#L34}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::MachineImage> ListMachineImages(
@@ -438,13 +433,12 @@ class MachineImagesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.machine_images.v1.ListMachineImagesRequest]: @googleapis_reference_link{google/cloud/compute/machine_images/v1/machine_images.proto#L202}
-  /// [google.cloud.cpp.compute.v1.MachineImage]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_071.proto#L34}
+  /// [google.cloud.cpp.compute.machine_images.v1.ListMachineImagesRequest]: @cloud_cpp_reference_link{google/cloud/compute/machine_images/v1/machine_images.proto#L202}
+  /// [google.cloud.cpp.compute.v1.MachineImage]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_071.proto#L34}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::MachineImage> ListMachineImages(
@@ -470,13 +464,12 @@ class MachineImagesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.machine_images.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/machine_images/v1/machine_images.proto#L267}
-  /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_006.proto#L262}
+  /// [google.cloud.cpp.compute.machine_images.v1.SetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/machine_images/v1/machine_images.proto#L267}
+  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_006.proto#L262}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
@@ -506,13 +499,12 @@ class MachineImagesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.machine_images.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/machine_images/v1/machine_images.proto#L267}
-  /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_006.proto#L262}
+  /// [google.cloud.cpp.compute.machine_images.v1.SetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/machine_images/v1/machine_images.proto#L267}
+  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_006.proto#L262}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
@@ -537,13 +529,12 @@ class MachineImagesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.machine_images.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/machine_images/v1/machine_images.proto#L281}
-  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_130.proto#L30}
+  /// [google.cloud.cpp.compute.machine_images.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/machine_images/v1/machine_images.proto#L281}
+  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_130.proto#L30}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
@@ -573,13 +564,12 @@ class MachineImagesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.machine_images.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/machine_images/v1/machine_images.proto#L281}
-  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_130.proto#L30}
+  /// [google.cloud.cpp.compute.machine_images.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/machine_images/v1/machine_images.proto#L281}
+  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_130.proto#L30}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>

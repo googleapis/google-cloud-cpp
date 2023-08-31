@@ -109,12 +109,12 @@ class TargetGrpcProxiesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_grpc_proxies.v1.DeleteTargetGrpcProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto#L101}
+  /// [google.cloud.cpp.compute.target_grpc_proxies.v1.DeleteTargetGrpcProxiesRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto#L101}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -148,12 +148,12 @@ class TargetGrpcProxiesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_grpc_proxies.v1.DeleteTargetGrpcProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto#L101}
+  /// [google.cloud.cpp.compute.target_grpc_proxies.v1.DeleteTargetGrpcProxiesRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto#L101}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -177,13 +177,12 @@ class TargetGrpcProxiesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_grpc_proxies.v1.GetTargetGrpcProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto#L125}
-  /// [google.cloud.cpp.compute.v1.TargetGrpcProxy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_118.proto#L29}
+  /// [google.cloud.cpp.compute.target_grpc_proxies.v1.GetTargetGrpcProxiesRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto#L125}
+  /// [google.cloud.cpp.compute.v1.TargetGrpcProxy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_118.proto#L29}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TargetGrpcProxy>
@@ -210,13 +209,12 @@ class TargetGrpcProxiesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_grpc_proxies.v1.GetTargetGrpcProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto#L125}
-  /// [google.cloud.cpp.compute.v1.TargetGrpcProxy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_118.proto#L29}
+  /// [google.cloud.cpp.compute.target_grpc_proxies.v1.GetTargetGrpcProxiesRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto#L125}
+  /// [google.cloud.cpp.compute.v1.TargetGrpcProxy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_118.proto#L29}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TargetGrpcProxy>
@@ -247,12 +245,12 @@ class TargetGrpcProxiesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_grpc_proxies.v1.InsertTargetGrpcProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto#L134}
+  /// [google.cloud.cpp.compute.target_grpc_proxies.v1.InsertTargetGrpcProxiesRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto#L134}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -289,12 +287,12 @@ class TargetGrpcProxiesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_grpc_proxies.v1.InsertTargetGrpcProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto#L134}
+  /// [google.cloud.cpp.compute.target_grpc_proxies.v1.InsertTargetGrpcProxiesRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto#L134}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -326,13 +324,12 @@ class TargetGrpcProxiesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_grpc_proxies.v1.ListTargetGrpcProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto#L159}
-  /// [google.cloud.cpp.compute.v1.TargetGrpcProxy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_118.proto#L29}
+  /// [google.cloud.cpp.compute.target_grpc_proxies.v1.ListTargetGrpcProxiesRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto#L159}
+  /// [google.cloud.cpp.compute.v1.TargetGrpcProxy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_118.proto#L29}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::TargetGrpcProxy>
@@ -367,13 +364,12 @@ class TargetGrpcProxiesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_grpc_proxies.v1.ListTargetGrpcProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto#L159}
-  /// [google.cloud.cpp.compute.v1.TargetGrpcProxy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_118.proto#L29}
+  /// [google.cloud.cpp.compute.target_grpc_proxies.v1.ListTargetGrpcProxiesRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto#L159}
+  /// [google.cloud.cpp.compute.v1.TargetGrpcProxy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_118.proto#L29}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::TargetGrpcProxy>
@@ -406,12 +402,12 @@ class TargetGrpcProxiesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_grpc_proxies.v1.PatchTargetGrpcProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto#L224}
+  /// [google.cloud.cpp.compute.target_grpc_proxies.v1.PatchTargetGrpcProxiesRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto#L224}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -449,12 +445,12 @@ class TargetGrpcProxiesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_grpc_proxies.v1.PatchTargetGrpcProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto#L224}
+  /// [google.cloud.cpp.compute.target_grpc_proxies.v1.PatchTargetGrpcProxiesRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto#L224}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

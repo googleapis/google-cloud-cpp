@@ -106,12 +106,11 @@ class GlobalOrganizationOperationsClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.global_organization_operations.v1.DeleteGlobalOrganizationOperationsRequest]: @googleapis_reference_link{google/cloud/compute/global_organization_operations/v1/global_organization_operations.proto#L75}
+  /// [google.cloud.cpp.compute.global_organization_operations.v1.DeleteGlobalOrganizationOperationsRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_organization_operations/v1/global_organization_operations.proto#L75}
   ///
   // clang-format on
   Status DeleteGlobalOrganizationOperations(std::string const& operation,
@@ -135,12 +134,11 @@ class GlobalOrganizationOperationsClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.global_organization_operations.v1.DeleteGlobalOrganizationOperationsRequest]: @googleapis_reference_link{google/cloud/compute/global_organization_operations/v1/global_organization_operations.proto#L75}
+  /// [google.cloud.cpp.compute.global_organization_operations.v1.DeleteGlobalOrganizationOperationsRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_organization_operations/v1/global_organization_operations.proto#L75}
   ///
   // clang-format on
   Status DeleteGlobalOrganizationOperations(
@@ -164,13 +162,12 @@ class GlobalOrganizationOperationsClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.global_organization_operations.v1.GetGlobalOrganizationOperationsRequest]: @googleapis_reference_link{google/cloud/compute/global_organization_operations/v1/global_organization_operations.proto#L84}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_029.proto#L98}
+  /// [google.cloud.cpp.compute.global_organization_operations.v1.GetGlobalOrganizationOperationsRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_organization_operations/v1/global_organization_operations.proto#L84}
+  /// [google.cloud.cpp.compute.v1.Operation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_029.proto#L98}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation>
@@ -198,13 +195,12 @@ class GlobalOrganizationOperationsClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.global_organization_operations.v1.GetGlobalOrganizationOperationsRequest]: @googleapis_reference_link{google/cloud/compute/global_organization_operations/v1/global_organization_operations.proto#L84}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_029.proto#L98}
+  /// [google.cloud.cpp.compute.global_organization_operations.v1.GetGlobalOrganizationOperationsRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_organization_operations/v1/global_organization_operations.proto#L84}
+  /// [google.cloud.cpp.compute.v1.Operation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_029.proto#L98}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation>
@@ -243,13 +239,12 @@ class GlobalOrganizationOperationsClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.global_organization_operations.v1.ListGlobalOrganizationOperationsRequest]: @googleapis_reference_link{google/cloud/compute/global_organization_operations/v1/global_organization_operations.proto#L93}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_029.proto#L98}
+  /// [google.cloud.cpp.compute.global_organization_operations.v1.ListGlobalOrganizationOperationsRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_organization_operations/v1/global_organization_operations.proto#L93}
+  /// [google.cloud.cpp.compute.v1.Operation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_029.proto#L98}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::Operation>

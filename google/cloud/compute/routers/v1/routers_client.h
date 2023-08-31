@@ -101,13 +101,12 @@ class RoutersClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.routers.v1.AggregatedListRoutersRequest]: @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L160}
-  /// [google.cloud.cpp.compute.v1.RouterAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_013.proto#L285}
+  /// [google.cloud.cpp.compute.routers.v1.AggregatedListRoutersRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L160}
+  /// [google.cloud.cpp.compute.v1.RouterAggregatedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_013.proto#L285}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::RouterAggregatedList>
@@ -133,13 +132,12 @@ class RoutersClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.routers.v1.AggregatedListRoutersRequest]: @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L160}
-  /// [google.cloud.cpp.compute.v1.RouterAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_013.proto#L285}
+  /// [google.cloud.cpp.compute.routers.v1.AggregatedListRoutersRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L160}
+  /// [google.cloud.cpp.compute.v1.RouterAggregatedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_013.proto#L285}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::RouterAggregatedList>
@@ -170,12 +168,12 @@ class RoutersClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.routers.v1.DeleteRoutersRequest]: @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L234}
+  /// [google.cloud.cpp.compute.routers.v1.DeleteRoutersRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L234}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteRouters(
@@ -208,12 +206,12 @@ class RoutersClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.routers.v1.DeleteRoutersRequest]: @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L234}
+  /// [google.cloud.cpp.compute.routers.v1.DeleteRoutersRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L234}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteRouters(
@@ -238,13 +236,12 @@ class RoutersClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.routers.v1.GetRoutersRequest]: @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L353}
-  /// [google.cloud.cpp.compute.v1.Router]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_013.proto#L216}
+  /// [google.cloud.cpp.compute.routers.v1.GetRoutersRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L353}
+  /// [google.cloud.cpp.compute.v1.Router]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_013.proto#L216}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Router> GetRouters(
@@ -271,13 +268,12 @@ class RoutersClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.routers.v1.GetRoutersRequest]: @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L353}
-  /// [google.cloud.cpp.compute.v1.Router]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_013.proto#L216}
+  /// [google.cloud.cpp.compute.routers.v1.GetRoutersRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L353}
+  /// [google.cloud.cpp.compute.v1.Router]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_013.proto#L216}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Router> GetRouters(
@@ -303,13 +299,12 @@ class RoutersClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.routers.v1.GetNatMappingInfoRequest]: @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L264}
-  /// [google.cloud.cpp.compute.v1.VmEndpointNatMappingsList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_013.proto#L1260}
+  /// [google.cloud.cpp.compute.routers.v1.GetNatMappingInfoRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L264}
+  /// [google.cloud.cpp.compute.v1.VmEndpointNatMappingsList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_013.proto#L1260}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::VmEndpointNatMappingsList>
@@ -336,13 +331,12 @@ class RoutersClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.routers.v1.GetNatMappingInfoRequest]: @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L264}
-  /// [google.cloud.cpp.compute.v1.VmEndpointNatMappingsList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_013.proto#L1260}
+  /// [google.cloud.cpp.compute.routers.v1.GetNatMappingInfoRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L264}
+  /// [google.cloud.cpp.compute.v1.VmEndpointNatMappingsList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_013.proto#L1260}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::VmEndpointNatMappingsList>
@@ -368,13 +362,12 @@ class RoutersClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.routers.v1.GetRouterStatusRequest]: @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L341}
-  /// [google.cloud.cpp.compute.v1.RouterStatusResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_013.proto#L1088}
+  /// [google.cloud.cpp.compute.routers.v1.GetRouterStatusRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L341}
+  /// [google.cloud.cpp.compute.v1.RouterStatusResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_013.proto#L1088}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::RouterStatusResponse>
@@ -401,13 +394,12 @@ class RoutersClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.routers.v1.GetRouterStatusRequest]: @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L341}
-  /// [google.cloud.cpp.compute.v1.RouterStatusResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_013.proto#L1088}
+  /// [google.cloud.cpp.compute.routers.v1.GetRouterStatusRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L341}
+  /// [google.cloud.cpp.compute.v1.RouterStatusResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_013.proto#L1088}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::RouterStatusResponse>
@@ -440,12 +432,12 @@ class RoutersClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.routers.v1.InsertRoutersRequest]: @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L365}
+  /// [google.cloud.cpp.compute.routers.v1.InsertRoutersRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L365}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertRouters(
@@ -480,12 +472,12 @@ class RoutersClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.routers.v1.InsertRoutersRequest]: @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L365}
+  /// [google.cloud.cpp.compute.routers.v1.InsertRoutersRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L365}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertRouters(
@@ -518,13 +510,12 @@ class RoutersClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.routers.v1.ListRoutersRequest]: @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L396}
-  /// [google.cloud.cpp.compute.v1.Router]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_013.proto#L216}
+  /// [google.cloud.cpp.compute.routers.v1.ListRoutersRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L396}
+  /// [google.cloud.cpp.compute.v1.Router]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_013.proto#L216}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::Router> ListRouters(
@@ -559,13 +550,12 @@ class RoutersClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.routers.v1.ListRoutersRequest]: @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L396}
-  /// [google.cloud.cpp.compute.v1.Router]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_013.proto#L216}
+  /// [google.cloud.cpp.compute.routers.v1.ListRoutersRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L396}
+  /// [google.cloud.cpp.compute.v1.Router]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_013.proto#L216}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::Router> ListRouters(
@@ -598,12 +588,12 @@ class RoutersClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.routers.v1.PatchRoutersRequest]: @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L464}
+  /// [google.cloud.cpp.compute.routers.v1.PatchRoutersRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L464}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchRouters(
@@ -640,12 +630,12 @@ class RoutersClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.routers.v1.PatchRoutersRequest]: @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L464}
+  /// [google.cloud.cpp.compute.routers.v1.PatchRoutersRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L464}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchRouters(
@@ -672,13 +662,12 @@ class RoutersClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.routers.v1.PreviewRequest]: @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L498}
-  /// [google.cloud.cpp.compute.v1.RoutersPreviewResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_013.proto#L1095}
+  /// [google.cloud.cpp.compute.routers.v1.PreviewRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L498}
+  /// [google.cloud.cpp.compute.v1.RoutersPreviewResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_013.proto#L1095}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::RoutersPreviewResponse> Preview(
@@ -708,13 +697,12 @@ class RoutersClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.routers.v1.PreviewRequest]: @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L498}
-  /// [google.cloud.cpp.compute.v1.RoutersPreviewResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_013.proto#L1095}
+  /// [google.cloud.cpp.compute.routers.v1.PreviewRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L498}
+  /// [google.cloud.cpp.compute.v1.RoutersPreviewResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_013.proto#L1095}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::RoutersPreviewResponse> Preview(
@@ -748,12 +736,12 @@ class RoutersClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.routers.v1.UpdateRoutersRequest]: @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L514}
+  /// [google.cloud.cpp.compute.routers.v1.UpdateRoutersRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L514}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateRouters(
@@ -791,12 +779,12 @@ class RoutersClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.routers.v1.UpdateRoutersRequest]: @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L514}
+  /// [google.cloud.cpp.compute.routers.v1.UpdateRoutersRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L514}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateRouters(

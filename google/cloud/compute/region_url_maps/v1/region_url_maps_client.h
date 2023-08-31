@@ -110,12 +110,12 @@ class RegionUrlMapsClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_url_maps.v1.DeleteRegionUrlMapsRequest]: @googleapis_reference_link{google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L131}
+  /// [google.cloud.cpp.compute.region_url_maps.v1.DeleteRegionUrlMapsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L131}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -148,12 +148,12 @@ class RegionUrlMapsClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_url_maps.v1.DeleteRegionUrlMapsRequest]: @googleapis_reference_link{google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L131}
+  /// [google.cloud.cpp.compute.region_url_maps.v1.DeleteRegionUrlMapsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L131}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -178,13 +178,12 @@ class RegionUrlMapsClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_url_maps.v1.GetRegionUrlMapsRequest]: @googleapis_reference_link{google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L153}
-  /// [google.cloud.cpp.compute.v1.UrlMap]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_018.proto#L713}
+  /// [google.cloud.cpp.compute.region_url_maps.v1.GetRegionUrlMapsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L153}
+  /// [google.cloud.cpp.compute.v1.UrlMap]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_018.proto#L713}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::UrlMap> GetRegionUrlMaps(
@@ -211,13 +210,12 @@ class RegionUrlMapsClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_url_maps.v1.GetRegionUrlMapsRequest]: @googleapis_reference_link{google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L153}
-  /// [google.cloud.cpp.compute.v1.UrlMap]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_018.proto#L713}
+  /// [google.cloud.cpp.compute.region_url_maps.v1.GetRegionUrlMapsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L153}
+  /// [google.cloud.cpp.compute.v1.UrlMap]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_018.proto#L713}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::UrlMap> GetRegionUrlMaps(
@@ -249,12 +247,12 @@ class RegionUrlMapsClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_url_maps.v1.InsertRegionUrlMapsRequest]: @googleapis_reference_link{google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L165}
+  /// [google.cloud.cpp.compute.region_url_maps.v1.InsertRegionUrlMapsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L165}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -290,12 +288,12 @@ class RegionUrlMapsClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_url_maps.v1.InsertRegionUrlMapsRequest]: @googleapis_reference_link{google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L165}
+  /// [google.cloud.cpp.compute.region_url_maps.v1.InsertRegionUrlMapsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L165}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -329,13 +327,12 @@ class RegionUrlMapsClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_url_maps.v1.ListRegionUrlMapsRequest]: @googleapis_reference_link{google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L188}
-  /// [google.cloud.cpp.compute.v1.UrlMap]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_018.proto#L713}
+  /// [google.cloud.cpp.compute.region_url_maps.v1.ListRegionUrlMapsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L188}
+  /// [google.cloud.cpp.compute.v1.UrlMap]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_018.proto#L713}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::UrlMap> ListRegionUrlMaps(
@@ -371,13 +368,12 @@ class RegionUrlMapsClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_url_maps.v1.ListRegionUrlMapsRequest]: @googleapis_reference_link{google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L188}
-  /// [google.cloud.cpp.compute.v1.UrlMap]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_018.proto#L713}
+  /// [google.cloud.cpp.compute.region_url_maps.v1.ListRegionUrlMapsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L188}
+  /// [google.cloud.cpp.compute.v1.UrlMap]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_018.proto#L713}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::UrlMap> ListRegionUrlMaps(
@@ -411,12 +407,12 @@ class RegionUrlMapsClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_url_maps.v1.PatchRegionUrlMapsRequest]: @googleapis_reference_link{google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L256}
+  /// [google.cloud.cpp.compute.region_url_maps.v1.PatchRegionUrlMapsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L256}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -454,12 +450,12 @@ class RegionUrlMapsClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_url_maps.v1.PatchRegionUrlMapsRequest]: @googleapis_reference_link{google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L256}
+  /// [google.cloud.cpp.compute.region_url_maps.v1.PatchRegionUrlMapsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L256}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -492,12 +488,12 @@ class RegionUrlMapsClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_url_maps.v1.UpdateRegionUrlMapsRequest]: @googleapis_reference_link{google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L282}
+  /// [google.cloud.cpp.compute.region_url_maps.v1.UpdateRegionUrlMapsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L282}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -534,12 +530,12 @@ class RegionUrlMapsClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_url_maps.v1.UpdateRegionUrlMapsRequest]: @googleapis_reference_link{google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L282}
+  /// [google.cloud.cpp.compute.region_url_maps.v1.UpdateRegionUrlMapsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L282}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -567,13 +563,12 @@ class RegionUrlMapsClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_url_maps.v1.ValidateRequest]: @googleapis_reference_link{google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L308}
-  /// [google.cloud.cpp.compute.v1.UrlMapsValidateResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_018.proto#L979}
+  /// [google.cloud.cpp.compute.region_url_maps.v1.ValidateRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L308}
+  /// [google.cloud.cpp.compute.v1.UrlMapsValidateResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_018.proto#L979}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::UrlMapsValidateResponse> Validate(
@@ -605,13 +600,12 @@ class RegionUrlMapsClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_url_maps.v1.ValidateRequest]: @googleapis_reference_link{google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L308}
-  /// [google.cloud.cpp.compute.v1.UrlMapsValidateResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_018.proto#L979}
+  /// [google.cloud.cpp.compute.region_url_maps.v1.ValidateRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L308}
+  /// [google.cloud.cpp.compute.v1.UrlMapsValidateResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_018.proto#L979}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::UrlMapsValidateResponse> Validate(

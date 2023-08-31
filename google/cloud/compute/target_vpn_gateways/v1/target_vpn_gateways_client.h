@@ -103,13 +103,12 @@ class TargetVpnGatewaysClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_vpn_gateways.v1.AggregatedListTargetVpnGatewaysRequest]: @googleapis_reference_link{google/cloud/compute/target_vpn_gateways/v1/target_vpn_gateways.proto#L113}
-  /// [google.cloud.cpp.compute.v1.TargetVpnGatewayAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_129.proto#L97}
+  /// [google.cloud.cpp.compute.target_vpn_gateways.v1.AggregatedListTargetVpnGatewaysRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_vpn_gateways/v1/target_vpn_gateways.proto#L113}
+  /// [google.cloud.cpp.compute.v1.TargetVpnGatewayAggregatedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_129.proto#L97}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TargetVpnGatewayAggregatedList>
@@ -136,13 +135,12 @@ class TargetVpnGatewaysClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_vpn_gateways.v1.AggregatedListTargetVpnGatewaysRequest]: @googleapis_reference_link{google/cloud/compute/target_vpn_gateways/v1/target_vpn_gateways.proto#L113}
-  /// [google.cloud.cpp.compute.v1.TargetVpnGatewayAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_129.proto#L97}
+  /// [google.cloud.cpp.compute.target_vpn_gateways.v1.AggregatedListTargetVpnGatewaysRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_vpn_gateways/v1/target_vpn_gateways.proto#L113}
+  /// [google.cloud.cpp.compute.v1.TargetVpnGatewayAggregatedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_129.proto#L97}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TargetVpnGatewayAggregatedList>
@@ -174,12 +172,12 @@ class TargetVpnGatewaysClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_vpn_gateways.v1.DeleteTargetVpnGatewaysRequest]: @googleapis_reference_link{google/cloud/compute/target_vpn_gateways/v1/target_vpn_gateways.proto#L187}
+  /// [google.cloud.cpp.compute.target_vpn_gateways.v1.DeleteTargetVpnGatewaysRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_vpn_gateways/v1/target_vpn_gateways.proto#L187}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -213,12 +211,12 @@ class TargetVpnGatewaysClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_vpn_gateways.v1.DeleteTargetVpnGatewaysRequest]: @googleapis_reference_link{google/cloud/compute/target_vpn_gateways/v1/target_vpn_gateways.proto#L187}
+  /// [google.cloud.cpp.compute.target_vpn_gateways.v1.DeleteTargetVpnGatewaysRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_vpn_gateways/v1/target_vpn_gateways.proto#L187}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -243,13 +241,12 @@ class TargetVpnGatewaysClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_vpn_gateways.v1.GetTargetVpnGatewaysRequest]: @googleapis_reference_link{google/cloud/compute/target_vpn_gateways/v1/target_vpn_gateways.proto#L217}
-  /// [google.cloud.cpp.compute.v1.TargetVpnGateway]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_129.proto#L27}
+  /// [google.cloud.cpp.compute.target_vpn_gateways.v1.GetTargetVpnGatewaysRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_vpn_gateways/v1/target_vpn_gateways.proto#L217}
+  /// [google.cloud.cpp.compute.v1.TargetVpnGateway]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_129.proto#L27}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TargetVpnGateway>
@@ -277,13 +274,12 @@ class TargetVpnGatewaysClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_vpn_gateways.v1.GetTargetVpnGatewaysRequest]: @googleapis_reference_link{google/cloud/compute/target_vpn_gateways/v1/target_vpn_gateways.proto#L217}
-  /// [google.cloud.cpp.compute.v1.TargetVpnGateway]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_129.proto#L27}
+  /// [google.cloud.cpp.compute.target_vpn_gateways.v1.GetTargetVpnGatewaysRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_vpn_gateways/v1/target_vpn_gateways.proto#L217}
+  /// [google.cloud.cpp.compute.v1.TargetVpnGateway]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_129.proto#L27}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TargetVpnGateway>
@@ -315,12 +311,12 @@ class TargetVpnGatewaysClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_vpn_gateways.v1.InsertTargetVpnGatewaysRequest]: @googleapis_reference_link{google/cloud/compute/target_vpn_gateways/v1/target_vpn_gateways.proto#L229}
+  /// [google.cloud.cpp.compute.target_vpn_gateways.v1.InsertTargetVpnGatewaysRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_vpn_gateways/v1/target_vpn_gateways.proto#L229}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -357,12 +353,12 @@ class TargetVpnGatewaysClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_vpn_gateways.v1.InsertTargetVpnGatewaysRequest]: @googleapis_reference_link{google/cloud/compute/target_vpn_gateways/v1/target_vpn_gateways.proto#L229}
+  /// [google.cloud.cpp.compute.target_vpn_gateways.v1.InsertTargetVpnGatewaysRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_vpn_gateways/v1/target_vpn_gateways.proto#L229}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -396,13 +392,12 @@ class TargetVpnGatewaysClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_vpn_gateways.v1.ListTargetVpnGatewaysRequest]: @googleapis_reference_link{google/cloud/compute/target_vpn_gateways/v1/target_vpn_gateways.proto#L260}
-  /// [google.cloud.cpp.compute.v1.TargetVpnGateway]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_129.proto#L27}
+  /// [google.cloud.cpp.compute.target_vpn_gateways.v1.ListTargetVpnGatewaysRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_vpn_gateways/v1/target_vpn_gateways.proto#L260}
+  /// [google.cloud.cpp.compute.v1.TargetVpnGateway]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_129.proto#L27}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::TargetVpnGateway>
@@ -439,13 +434,12 @@ class TargetVpnGatewaysClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_vpn_gateways.v1.ListTargetVpnGatewaysRequest]: @googleapis_reference_link{google/cloud/compute/target_vpn_gateways/v1/target_vpn_gateways.proto#L260}
-  /// [google.cloud.cpp.compute.v1.TargetVpnGateway]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_129.proto#L27}
+  /// [google.cloud.cpp.compute.target_vpn_gateways.v1.ListTargetVpnGatewaysRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_vpn_gateways/v1/target_vpn_gateways.proto#L260}
+  /// [google.cloud.cpp.compute.v1.TargetVpnGateway]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_129.proto#L27}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::TargetVpnGateway>
@@ -478,12 +472,12 @@ class TargetVpnGatewaysClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_vpn_gateways.v1.SetLabelsRequest]: @googleapis_reference_link{google/cloud/compute/target_vpn_gateways/v1/target_vpn_gateways.proto#L328}
+  /// [google.cloud.cpp.compute.target_vpn_gateways.v1.SetLabelsRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_vpn_gateways/v1/target_vpn_gateways.proto#L328}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
@@ -520,12 +514,12 @@ class TargetVpnGatewaysClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_vpn_gateways.v1.SetLabelsRequest]: @googleapis_reference_link{google/cloud/compute/target_vpn_gateways/v1/target_vpn_gateways.proto#L328}
+  /// [google.cloud.cpp.compute.target_vpn_gateways.v1.SetLabelsRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_vpn_gateways/v1/target_vpn_gateways.proto#L328}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(

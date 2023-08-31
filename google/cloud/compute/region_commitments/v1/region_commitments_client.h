@@ -103,13 +103,12 @@ class RegionCommitmentsClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_commitments.v1.AggregatedListRegionCommitmentsRequest]: @googleapis_reference_link{google/cloud/compute/region_commitments/v1/region_commitments.proto#L100}
-  /// [google.cloud.cpp.compute.v1.CommitmentAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_017.proto#L143}
+  /// [google.cloud.cpp.compute.region_commitments.v1.AggregatedListRegionCommitmentsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_commitments/v1/region_commitments.proto#L100}
+  /// [google.cloud.cpp.compute.v1.CommitmentAggregatedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_017.proto#L143}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::CommitmentAggregatedList>
@@ -136,13 +135,12 @@ class RegionCommitmentsClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_commitments.v1.AggregatedListRegionCommitmentsRequest]: @googleapis_reference_link{google/cloud/compute/region_commitments/v1/region_commitments.proto#L100}
-  /// [google.cloud.cpp.compute.v1.CommitmentAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_017.proto#L143}
+  /// [google.cloud.cpp.compute.region_commitments.v1.AggregatedListRegionCommitmentsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_commitments/v1/region_commitments.proto#L100}
+  /// [google.cloud.cpp.compute.v1.CommitmentAggregatedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_017.proto#L143}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::CommitmentAggregatedList>
@@ -168,13 +166,12 @@ class RegionCommitmentsClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_commitments.v1.GetRegionCommitmentsRequest]: @googleapis_reference_link{google/cloud/compute/region_commitments/v1/region_commitments.proto#L174}
-  /// [google.cloud.cpp.compute.v1.Commitment]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_017.proto#L31}
+  /// [google.cloud.cpp.compute.region_commitments.v1.GetRegionCommitmentsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_commitments/v1/region_commitments.proto#L174}
+  /// [google.cloud.cpp.compute.v1.Commitment]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_017.proto#L31}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Commitment> GetRegionCommitments(
@@ -201,13 +198,12 @@ class RegionCommitmentsClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_commitments.v1.GetRegionCommitmentsRequest]: @googleapis_reference_link{google/cloud/compute/region_commitments/v1/region_commitments.proto#L174}
-  /// [google.cloud.cpp.compute.v1.Commitment]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_017.proto#L31}
+  /// [google.cloud.cpp.compute.region_commitments.v1.GetRegionCommitmentsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_commitments/v1/region_commitments.proto#L174}
+  /// [google.cloud.cpp.compute.v1.Commitment]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_017.proto#L31}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Commitment> GetRegionCommitments(
@@ -239,12 +235,12 @@ class RegionCommitmentsClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_commitments.v1.InsertRegionCommitmentsRequest]: @googleapis_reference_link{google/cloud/compute/region_commitments/v1/region_commitments.proto#L186}
+  /// [google.cloud.cpp.compute.region_commitments.v1.InsertRegionCommitmentsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_commitments/v1/region_commitments.proto#L186}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -280,12 +276,12 @@ class RegionCommitmentsClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_commitments.v1.InsertRegionCommitmentsRequest]: @googleapis_reference_link{google/cloud/compute/region_commitments/v1/region_commitments.proto#L186}
+  /// [google.cloud.cpp.compute.region_commitments.v1.InsertRegionCommitmentsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_commitments/v1/region_commitments.proto#L186}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -318,13 +314,12 @@ class RegionCommitmentsClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_commitments.v1.ListRegionCommitmentsRequest]: @googleapis_reference_link{google/cloud/compute/region_commitments/v1/region_commitments.proto#L217}
-  /// [google.cloud.cpp.compute.v1.Commitment]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_017.proto#L31}
+  /// [google.cloud.cpp.compute.region_commitments.v1.ListRegionCommitmentsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_commitments/v1/region_commitments.proto#L217}
+  /// [google.cloud.cpp.compute.v1.Commitment]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_017.proto#L31}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::Commitment>
@@ -360,13 +355,12 @@ class RegionCommitmentsClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_commitments.v1.ListRegionCommitmentsRequest]: @googleapis_reference_link{google/cloud/compute/region_commitments/v1/region_commitments.proto#L217}
-  /// [google.cloud.cpp.compute.v1.Commitment]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_017.proto#L31}
+  /// [google.cloud.cpp.compute.region_commitments.v1.ListRegionCommitmentsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_commitments/v1/region_commitments.proto#L217}
+  /// [google.cloud.cpp.compute.v1.Commitment]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_017.proto#L31}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::Commitment>
@@ -400,12 +394,12 @@ class RegionCommitmentsClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_commitments.v1.UpdateRegionCommitmentsRequest]: @googleapis_reference_link{google/cloud/compute/region_commitments/v1/region_commitments.proto#L285}
+  /// [google.cloud.cpp.compute.region_commitments.v1.UpdateRegionCommitmentsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_commitments/v1/region_commitments.proto#L285}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -443,12 +437,12 @@ class RegionCommitmentsClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_commitments.v1.UpdateRegionCommitmentsRequest]: @googleapis_reference_link{google/cloud/compute/region_commitments/v1/region_commitments.proto#L285}
+  /// [google.cloud.cpp.compute.region_commitments.v1.UpdateRegionCommitmentsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_commitments/v1/region_commitments.proto#L285}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

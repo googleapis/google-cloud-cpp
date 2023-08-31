@@ -108,13 +108,12 @@ class InterconnectLocationsClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnect_locations.v1.GetInterconnectLocationsRequest]: @googleapis_reference_link{google/cloud/compute/interconnect_locations/v1/interconnect_locations.proto#L62}
-  /// [google.cloud.cpp.compute.v1.InterconnectLocation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_066.proto#L28}
+  /// [google.cloud.cpp.compute.interconnect_locations.v1.GetInterconnectLocationsRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_locations/v1/interconnect_locations.proto#L62}
+  /// [google.cloud.cpp.compute.v1.InterconnectLocation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_066.proto#L28}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::InterconnectLocation>
@@ -143,13 +142,12 @@ class InterconnectLocationsClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnect_locations.v1.GetInterconnectLocationsRequest]: @googleapis_reference_link{google/cloud/compute/interconnect_locations/v1/interconnect_locations.proto#L62}
-  /// [google.cloud.cpp.compute.v1.InterconnectLocation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_066.proto#L28}
+  /// [google.cloud.cpp.compute.interconnect_locations.v1.GetInterconnectLocationsRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_locations/v1/interconnect_locations.proto#L62}
+  /// [google.cloud.cpp.compute.v1.InterconnectLocation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_066.proto#L28}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::InterconnectLocation>
@@ -183,13 +181,12 @@ class InterconnectLocationsClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnect_locations.v1.ListInterconnectLocationsRequest]: @googleapis_reference_link{google/cloud/compute/interconnect_locations/v1/interconnect_locations.proto#L71}
-  /// [google.cloud.cpp.compute.v1.InterconnectLocation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_066.proto#L28}
+  /// [google.cloud.cpp.compute.interconnect_locations.v1.ListInterconnectLocationsRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_locations/v1/interconnect_locations.proto#L71}
+  /// [google.cloud.cpp.compute.v1.InterconnectLocation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_066.proto#L28}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::InterconnectLocation>
@@ -225,13 +222,12 @@ class InterconnectLocationsClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnect_locations.v1.ListInterconnectLocationsRequest]: @googleapis_reference_link{google/cloud/compute/interconnect_locations/v1/interconnect_locations.proto#L71}
-  /// [google.cloud.cpp.compute.v1.InterconnectLocation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_066.proto#L28}
+  /// [google.cloud.cpp.compute.interconnect_locations.v1.ListInterconnectLocationsRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_locations/v1/interconnect_locations.proto#L71}
+  /// [google.cloud.cpp.compute.v1.InterconnectLocation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_066.proto#L28}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::InterconnectLocation>

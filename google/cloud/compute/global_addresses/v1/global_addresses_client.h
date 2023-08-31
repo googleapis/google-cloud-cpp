@@ -110,12 +110,12 @@ class GlobalAddressesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.global_addresses.v1.DeleteGlobalAddressesRequest]: @googleapis_reference_link{google/cloud/compute/global_addresses/v1/global_addresses.proto#L114}
+  /// [google.cloud.cpp.compute.global_addresses.v1.DeleteGlobalAddressesRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_addresses/v1/global_addresses.proto#L114}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -148,12 +148,12 @@ class GlobalAddressesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.global_addresses.v1.DeleteGlobalAddressesRequest]: @googleapis_reference_link{google/cloud/compute/global_addresses/v1/global_addresses.proto#L114}
+  /// [google.cloud.cpp.compute.global_addresses.v1.DeleteGlobalAddressesRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_addresses/v1/global_addresses.proto#L114}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -177,13 +177,12 @@ class GlobalAddressesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.global_addresses.v1.GetGlobalAddressesRequest]: @googleapis_reference_link{google/cloud/compute/global_addresses/v1/global_addresses.proto#L138}
-  /// [google.cloud.cpp.compute.v1.Address]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_003.proto#L30}
+  /// [google.cloud.cpp.compute.global_addresses.v1.GetGlobalAddressesRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_addresses/v1/global_addresses.proto#L138}
+  /// [google.cloud.cpp.compute.v1.Address]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_003.proto#L30}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Address> GetGlobalAddresses(
@@ -210,13 +209,12 @@ class GlobalAddressesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.global_addresses.v1.GetGlobalAddressesRequest]: @googleapis_reference_link{google/cloud/compute/global_addresses/v1/global_addresses.proto#L138}
-  /// [google.cloud.cpp.compute.v1.Address]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_003.proto#L30}
+  /// [google.cloud.cpp.compute.global_addresses.v1.GetGlobalAddressesRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_addresses/v1/global_addresses.proto#L138}
+  /// [google.cloud.cpp.compute.v1.Address]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_003.proto#L30}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Address> GetGlobalAddresses(
@@ -247,12 +245,12 @@ class GlobalAddressesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.global_addresses.v1.InsertGlobalAddressesRequest]: @googleapis_reference_link{google/cloud/compute/global_addresses/v1/global_addresses.proto#L147}
+  /// [google.cloud.cpp.compute.global_addresses.v1.InsertGlobalAddressesRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_addresses/v1/global_addresses.proto#L147}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -288,12 +286,12 @@ class GlobalAddressesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.global_addresses.v1.InsertGlobalAddressesRequest]: @googleapis_reference_link{google/cloud/compute/global_addresses/v1/global_addresses.proto#L147}
+  /// [google.cloud.cpp.compute.global_addresses.v1.InsertGlobalAddressesRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_addresses/v1/global_addresses.proto#L147}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -325,13 +323,12 @@ class GlobalAddressesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.global_addresses.v1.ListGlobalAddressesRequest]: @googleapis_reference_link{google/cloud/compute/global_addresses/v1/global_addresses.proto#L172}
-  /// [google.cloud.cpp.compute.v1.Address]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_003.proto#L30}
+  /// [google.cloud.cpp.compute.global_addresses.v1.ListGlobalAddressesRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_addresses/v1/global_addresses.proto#L172}
+  /// [google.cloud.cpp.compute.v1.Address]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_003.proto#L30}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::Address> ListGlobalAddresses(
@@ -366,13 +363,12 @@ class GlobalAddressesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.global_addresses.v1.ListGlobalAddressesRequest]: @googleapis_reference_link{google/cloud/compute/global_addresses/v1/global_addresses.proto#L172}
-  /// [google.cloud.cpp.compute.v1.Address]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_003.proto#L30}
+  /// [google.cloud.cpp.compute.global_addresses.v1.ListGlobalAddressesRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_addresses/v1/global_addresses.proto#L172}
+  /// [google.cloud.cpp.compute.v1.Address]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_003.proto#L30}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::Address> ListGlobalAddresses(
@@ -403,12 +399,12 @@ class GlobalAddressesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.global_addresses.v1.MoveRequest]: @googleapis_reference_link{google/cloud/compute/global_addresses/v1/global_addresses.proto#L237}
+  /// [google.cloud.cpp.compute.global_addresses.v1.MoveRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_addresses/v1/global_addresses.proto#L237}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Move(
@@ -443,12 +439,12 @@ class GlobalAddressesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.global_addresses.v1.MoveRequest]: @googleapis_reference_link{google/cloud/compute/global_addresses/v1/global_addresses.proto#L237}
+  /// [google.cloud.cpp.compute.global_addresses.v1.MoveRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_addresses/v1/global_addresses.proto#L237}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Move(
@@ -480,12 +476,12 @@ class GlobalAddressesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.global_addresses.v1.SetLabelsRequest]: @googleapis_reference_link{google/cloud/compute/global_addresses/v1/global_addresses.proto#L266}
+  /// [google.cloud.cpp.compute.global_addresses.v1.SetLabelsRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_addresses/v1/global_addresses.proto#L266}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
@@ -521,12 +517,12 @@ class GlobalAddressesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.global_addresses.v1.SetLabelsRequest]: @googleapis_reference_link{google/cloud/compute/global_addresses/v1/global_addresses.proto#L266}
+  /// [google.cloud.cpp.compute.global_addresses.v1.SetLabelsRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_addresses/v1/global_addresses.proto#L266}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(

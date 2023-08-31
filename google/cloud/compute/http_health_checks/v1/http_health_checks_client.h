@@ -109,12 +109,12 @@ class HttpHealthChecksClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.http_health_checks.v1.DeleteHttpHealthChecksRequest]: @googleapis_reference_link{google/cloud/compute/http_health_checks/v1/http_health_checks.proto#L116}
+  /// [google.cloud.cpp.compute.http_health_checks.v1.DeleteHttpHealthChecksRequest]: @cloud_cpp_reference_link{google/cloud/compute/http_health_checks/v1/http_health_checks.proto#L116}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -148,12 +148,12 @@ class HttpHealthChecksClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.http_health_checks.v1.DeleteHttpHealthChecksRequest]: @googleapis_reference_link{google/cloud/compute/http_health_checks/v1/http_health_checks.proto#L116}
+  /// [google.cloud.cpp.compute.http_health_checks.v1.DeleteHttpHealthChecksRequest]: @cloud_cpp_reference_link{google/cloud/compute/http_health_checks/v1/http_health_checks.proto#L116}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -177,13 +177,12 @@ class HttpHealthChecksClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.http_health_checks.v1.GetHttpHealthChecksRequest]: @googleapis_reference_link{google/cloud/compute/http_health_checks/v1/http_health_checks.proto#L140}
-  /// [google.cloud.cpp.compute.v1.HttpHealthCheck]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_052.proto#L29}
+  /// [google.cloud.cpp.compute.http_health_checks.v1.GetHttpHealthChecksRequest]: @cloud_cpp_reference_link{google/cloud/compute/http_health_checks/v1/http_health_checks.proto#L140}
+  /// [google.cloud.cpp.compute.v1.HttpHealthCheck]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_052.proto#L29}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::HttpHealthCheck>
@@ -210,13 +209,12 @@ class HttpHealthChecksClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.http_health_checks.v1.GetHttpHealthChecksRequest]: @googleapis_reference_link{google/cloud/compute/http_health_checks/v1/http_health_checks.proto#L140}
-  /// [google.cloud.cpp.compute.v1.HttpHealthCheck]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_052.proto#L29}
+  /// [google.cloud.cpp.compute.http_health_checks.v1.GetHttpHealthChecksRequest]: @cloud_cpp_reference_link{google/cloud/compute/http_health_checks/v1/http_health_checks.proto#L140}
+  /// [google.cloud.cpp.compute.v1.HttpHealthCheck]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_052.proto#L29}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::HttpHealthCheck>
@@ -247,12 +245,12 @@ class HttpHealthChecksClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.http_health_checks.v1.InsertHttpHealthChecksRequest]: @googleapis_reference_link{google/cloud/compute/http_health_checks/v1/http_health_checks.proto#L149}
+  /// [google.cloud.cpp.compute.http_health_checks.v1.InsertHttpHealthChecksRequest]: @cloud_cpp_reference_link{google/cloud/compute/http_health_checks/v1/http_health_checks.proto#L149}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -288,12 +286,12 @@ class HttpHealthChecksClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.http_health_checks.v1.InsertHttpHealthChecksRequest]: @googleapis_reference_link{google/cloud/compute/http_health_checks/v1/http_health_checks.proto#L149}
+  /// [google.cloud.cpp.compute.http_health_checks.v1.InsertHttpHealthChecksRequest]: @cloud_cpp_reference_link{google/cloud/compute/http_health_checks/v1/http_health_checks.proto#L149}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -326,13 +324,12 @@ class HttpHealthChecksClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.http_health_checks.v1.ListHttpHealthChecksRequest]: @googleapis_reference_link{google/cloud/compute/http_health_checks/v1/http_health_checks.proto#L174}
-  /// [google.cloud.cpp.compute.v1.HttpHealthCheck]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_052.proto#L29}
+  /// [google.cloud.cpp.compute.http_health_checks.v1.ListHttpHealthChecksRequest]: @cloud_cpp_reference_link{google/cloud/compute/http_health_checks/v1/http_health_checks.proto#L174}
+  /// [google.cloud.cpp.compute.v1.HttpHealthCheck]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_052.proto#L29}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::HttpHealthCheck>
@@ -368,13 +365,12 @@ class HttpHealthChecksClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.http_health_checks.v1.ListHttpHealthChecksRequest]: @googleapis_reference_link{google/cloud/compute/http_health_checks/v1/http_health_checks.proto#L174}
-  /// [google.cloud.cpp.compute.v1.HttpHealthCheck]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_052.proto#L29}
+  /// [google.cloud.cpp.compute.http_health_checks.v1.ListHttpHealthChecksRequest]: @cloud_cpp_reference_link{google/cloud/compute/http_health_checks/v1/http_health_checks.proto#L174}
+  /// [google.cloud.cpp.compute.v1.HttpHealthCheck]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_052.proto#L29}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::HttpHealthCheck>
@@ -407,12 +403,12 @@ class HttpHealthChecksClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.http_health_checks.v1.PatchHttpHealthChecksRequest]: @googleapis_reference_link{google/cloud/compute/http_health_checks/v1/http_health_checks.proto#L239}
+  /// [google.cloud.cpp.compute.http_health_checks.v1.PatchHttpHealthChecksRequest]: @cloud_cpp_reference_link{google/cloud/compute/http_health_checks/v1/http_health_checks.proto#L239}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -450,12 +446,12 @@ class HttpHealthChecksClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.http_health_checks.v1.PatchHttpHealthChecksRequest]: @googleapis_reference_link{google/cloud/compute/http_health_checks/v1/http_health_checks.proto#L239}
+  /// [google.cloud.cpp.compute.http_health_checks.v1.PatchHttpHealthChecksRequest]: @cloud_cpp_reference_link{google/cloud/compute/http_health_checks/v1/http_health_checks.proto#L239}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -487,12 +483,12 @@ class HttpHealthChecksClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.http_health_checks.v1.UpdateHttpHealthChecksRequest]: @googleapis_reference_link{google/cloud/compute/http_health_checks/v1/http_health_checks.proto#L267}
+  /// [google.cloud.cpp.compute.http_health_checks.v1.UpdateHttpHealthChecksRequest]: @cloud_cpp_reference_link{google/cloud/compute/http_health_checks/v1/http_health_checks.proto#L267}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -529,12 +525,12 @@ class HttpHealthChecksClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.http_health_checks.v1.UpdateHttpHealthChecksRequest]: @googleapis_reference_link{google/cloud/compute/http_health_checks/v1/http_health_checks.proto#L267}
+  /// [google.cloud.cpp.compute.http_health_checks.v1.UpdateHttpHealthChecksRequest]: @cloud_cpp_reference_link{google/cloud/compute/http_health_checks/v1/http_health_checks.proto#L267}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
