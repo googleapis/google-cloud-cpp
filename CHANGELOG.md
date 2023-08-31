@@ -147,6 +147,7 @@ This change reduces build times with `cmake` for customers who build with
 `cmake` and who are not using **all** of the client libraries listed below.
 
 The impacted libraries are:
+
 - `bigquery`
 - `bigtable`
 - `dialogflow_es`
@@ -171,9 +172,9 @@ Note that `google_cloud_cpp_storage_protos` are associated with the
 `experimental-storage-grpc` feature, not the `storage` feature.
 
 We do not make changes that can break our customers lightly. We considered it
-[a bug](#8022) that the majority of customers building with `cmake` were forced
+[a bug][#8022] that the majority of customers building with `cmake` were forced
 to compile large proto libraries that they did not need. It was needlessly
-[confusing](#10174). And we expect the number of customers who will benefit from
+[confusing][#10174]. And we expect the number of customers who will benefit from
 this change eclipse the number of customers who are affected negatively by it.
 Hence, we think this change is necessary.
 
