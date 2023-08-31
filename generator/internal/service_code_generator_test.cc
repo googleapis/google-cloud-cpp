@@ -57,6 +57,7 @@ class TestGenerator : public ServiceCodeGenerator {
   using ServiceCodeGenerator::HasPaginatedMethod;
   using ServiceCodeGenerator::HasStreamingReadMethod;
   using ServiceCodeGenerator::HasStreamingWriteMethod;
+  using ServiceCodeGenerator::IsDiscoveryDocumentProto;
   using ServiceCodeGenerator::IsExperimental;
   using ServiceCodeGenerator::MethodSignatureWellKnownProtobufTypeIncludes;
 
@@ -911,6 +912,38 @@ TEST(GetPbIncludeByTransport, ReturnsCorrectIncludeByTransport) {
       }());
   EXPECT_THAT(both_rest_and_grpc.GetPbIncludeByTransport(),
               Eq("foo.grpc.pb.h"));
+}
+
+TEST(PredicateUtilsTest, IsDiscoveryDocumentProto) {
+  FileDescriptorProto service_file;
+  /// @cond
+  auto constexpr kServiceText = R"pb(
+    name: "google/foo/v1/service.proto"
+    package: "google.foo.v1"
+    service { name: "Service" }
+  )pb";
+  /// @endcond
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(kServiceText,
+                                                            &service_file));
+  DescriptorPool pool;
+  FileDescriptor const* service_file_descriptor = pool.BuildFile(service_file);
+  auto generator_context = std::make_unique<MockGeneratorContext>();
+  EXPECT_CALL(*generator_context, Open("header_path"))
+      .WillRepeatedly(Return(nullptr));
+
+  TestGenerator g1(service_file_descriptor->service(0),
+                   generator_context.get());
+  EXPECT_FALSE(g1.IsDiscoveryDocumentProto());
+
+  TestGenerator g2(service_file_descriptor->service(0), generator_context.get(),
+                   {{"header_path_key", "header_path"},
+                    {"proto_file_source", "discovery_document"}});
+  EXPECT_TRUE(g2.IsDiscoveryDocumentProto());
+
+  TestGenerator g3(service_file_descriptor->service(0), generator_context.get(),
+                   {{"header_path_key", "header_path"},
+                    {"proto_file_source", "googleapis"}});
+  EXPECT_FALSE(g3.IsDiscoveryDocumentProto());
 }
 
 }  // namespace

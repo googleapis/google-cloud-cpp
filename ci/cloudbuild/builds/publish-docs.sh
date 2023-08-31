@@ -47,6 +47,7 @@ doc_args=(
   "-DGOOGLE_CLOUD_CPP_ENABLE_CCACHE=OFF"
   "-DGOOGLE_CLOUD_CPP_ENABLE_WERROR=ON"
   "-DGOOGLE_CLOUD_CPP_DOXYGEN_CLANG_OPTIONS=-resource-dir=$(clang -print-resource-dir)"
+  "-DGOOGLE_CLOUD_CPP_COMMIT_SHA=${COMMIT_SHA}"
 )
 if command -v /usr/local/bin/sccache >/dev/null 2>&1; then
   doc_args+=(

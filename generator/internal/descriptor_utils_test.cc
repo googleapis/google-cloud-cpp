@@ -565,6 +565,58 @@ char const* const kServiceProto =
     "  }\n"
     "}\n";
 
+auto constexpr kExtendedOperationsProto = R"""(
+syntax = "proto3";
+package google.cloud;
+import "google/protobuf/descriptor.proto";
+
+extend google.protobuf.FieldOptions {
+  OperationResponseMapping operation_field = 1149;
+  string operation_request_field = 1150;
+  string operation_response_field = 1151;
+}
+
+extend google.protobuf.MethodOptions {
+  string operation_service = 1249;
+  bool operation_polling_method = 1250;
+}
+
+enum OperationResponseMapping {
+  UNDEFINED = 0;
+  NAME = 1;
+  STATUS = 2;
+  ERROR_CODE = 3;
+  ERROR_MESSAGE = 4;
+}
+)""";
+
+auto constexpr kHttpServiceProto = R"""(
+syntax = "proto3";
+package google.protobuf;
+import "google/api/annotations.proto";
+import "google/api/client.proto";
+import "google/api/http.proto";
+import "google/cloud/extended_operations.proto";
+// Leading comments about message Bar.
+message Bar {
+  int32 number = 1;
+  string name = 2;
+}
+// Leading comments about message Operation.
+message Operation {}
+// Leading comments about service Service.
+service Service {
+  // Leading comments about rpc Method0.
+  rpc Method0(Bar) returns (Operation) {
+    option (google.api.http) = {
+       patch: "/v1/{parent=projects/*/instances/*}/databases"
+       body: "*"
+    };
+    option (google.cloud.operation_service) = "ZoneOperations";
+  }
+}
+)""";
+
 char const* const kMethod6Deprecated1 =  // name,not_used_anymore
     "Method6(std::string const&, std::string const&)";
 char const* const kMethod6Deprecated2 =  // not_used_anymore,labels
@@ -591,8 +643,12 @@ class CreateMethodVarsTest
             {std::string("google/iam/v1/fake_iam.proto"), kIamProto},
             {std::string("google/longrunning/operation.proto"),
              kLongrunningOperationsProto},
+            {std::string("google/cloud/extended_operations.proto"),
+             kExtendedOperationsProto},
             {std::string("test/test.proto"), kSourceLocationTestInput},
-            {std::string("google/foo/v1/service.proto"), kServiceProto}}),
+            {std::string("google/foo/v1/service.proto"), kServiceProto},
+            {std::string("google/foo/v1/http_service.proto"),
+             kHttpServiceProto}}),
         source_tree_db_(&source_tree_),
         merged_db_(&simple_db_, &source_tree_db_),
         pool_(&merged_db_, &collector_) {
@@ -632,7 +688,7 @@ TEST_F(CreateMethodVarsTest, FormatMethodCommentsProtobufRequest) {
       pool_.FindFileByName("google/foo/v1/service.proto");
 
   auto const actual = FormatMethodCommentsProtobufRequest(
-      *service_file_descriptor->service(0)->method(0));
+      *service_file_descriptor->service(0)->method(0), false);
   EXPECT_EQ(actual, R"""(  // clang-format off
   ///
   /// Leading comments about rpc Method0$$.
@@ -650,7 +706,6 @@ TEST_F(CreateMethodVarsTest, FormatMethodCommentsProtobufRequest) {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
@@ -661,12 +716,13 @@ TEST_F(CreateMethodVarsTest, FormatMethodCommentsProtobufRequest) {
 )""");
 }
 
-TEST_F(CreateMethodVarsTest, FormatMethodCommentsProtobufRequestLongRunning) {
+TEST_F(CreateMethodVarsTest,
+       FormatMethodCommentsProtobufRequestGRPCLongRunning) {
   FileDescriptor const* service_file_descriptor =
       pool_.FindFileByName("google/foo/v1/service.proto");
 
   auto const actual = FormatMethodCommentsProtobufRequest(
-      *service_file_descriptor->service(0)->method(7));
+      *service_file_descriptor->service(0)->method(7), false);
   EXPECT_EQ(actual, R"""(  // clang-format off
   ///
   /// Leading comments about rpc Method7.
@@ -703,12 +759,55 @@ TEST_F(CreateMethodVarsTest, FormatMethodCommentsProtobufRequestLongRunning) {
 )""");
 }
 
+TEST_F(CreateMethodVarsTest,
+       FormatMethodCommentsProtobufRequestHttpLongRunning) {
+  FileDescriptor const* service_file_descriptor =
+      pool_.FindFileByName("google/foo/v1/http_service.proto");
+
+  auto const actual = FormatMethodCommentsProtobufRequest(
+      *service_file_descriptor->service(0)->method(0), true);
+  EXPECT_EQ(actual, R"""(  // clang-format off
+  ///
+  /// Leading comments about rpc Method0.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.protobuf.Bar].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [$longrunning_deduced_response_message_type$] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.protobuf.Bar]: @cloud_cpp_reference_link{google/foo/v1/http_service.proto#L9}
+  ///
+  // clang-format on
+)""");
+}
+
 TEST_F(CreateMethodVarsTest, FormatMethodCommentsMethodSignature) {
   FileDescriptor const* service_file_descriptor =
       pool_.FindFileByName("google/foo/v1/service.proto");
 
   auto const actual = FormatMethodCommentsMethodSignature(
-      *service_file_descriptor->service(0)->method(6), "labels");
+      *service_file_descriptor->service(0)->method(6), "labels", false);
   EXPECT_EQ(actual, R"""(  // clang-format off
   ///
   /// Leading comments about rpc $$Method6.
@@ -721,7 +820,6 @@ TEST_F(CreateMethodVarsTest, FormatMethodCommentsMethodSignature) {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr

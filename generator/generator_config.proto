@@ -148,6 +148,12 @@ message ServiceConfiguration {
   // If set to `true` the generator will *NOT* create a .repo-metadata.json
   // file. This is useful when multiple services target the same directory.
   bool omit_repo_metadata = 23;
+
+  enum ProtoFileSource {
+    GOOGLEAPIS = 0;
+    DISCOVERY_DOCUMENT = 1;
+  }
+  ProtoFileSource proto_file_source = 24;
 }
 
 message DiscoveryDocumentDefinedProduct {

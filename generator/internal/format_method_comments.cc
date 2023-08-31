@@ -112,11 +112,32 @@ std::string ReturnCommentString(
       method.output_type()->full_name());
 }
 
+auto constexpr kTrailerBeginning =
+    R"""(  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+)""";
+auto constexpr kTrailerGRPCLRO =
+    R"""(  /// [Long Running Operation]: https://google.aip.dev/151
+)""";
+
+auto constexpr kTrailerComputeLRO =
+    R"""(  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
+)""";
+
+auto constexpr kTrailerEnding =
+    R"""(  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+)""";
+
 }  // namespace
 
 std::string FormatMethodComments(
     google::protobuf::MethodDescriptor const& method,
-    std::string const& variable_parameter_comments) {
+    std::string const& variable_parameter_comments,
+    bool is_discovery_document_proto) {
   google::protobuf::SourceLocation method_source_location;
   if (!method.GetSourceLocation(&method_source_location) ||
       method_source_location.leading_comments.empty()) {
@@ -148,20 +169,22 @@ std::string FormatMethodComments(
   auto method_return = ResolveMethodReturn(method);
   if (method_return) references.insert(*std::move(method_return));
 
-  auto trailer = std::string(
-      R"""(  ///
-  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
-  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
-  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
-  /// [`future`]: @ref google::cloud::future
-  /// [`StatusOr`]: @ref google::cloud::StatusOr
-  /// [`Status`]: @ref google::cloud::Status
-)""");
+  std::string lro_link;
+  if (IsGRPCLongrunningOperation(method)) {
+    lro_link = kTrailerGRPCLRO;
+  } else if (IsHttpLongrunningOperation(method)) {
+    lro_link = kTrailerComputeLRO;
+  }
+
+  auto trailer =
+      absl::StrCat(kTrailerBeginning, std::move(lro_link), kTrailerEnding);
+
   for (auto const& kv : references) {
-    absl::StrAppend(&trailer, "  /// [", kv.first,
-                    "]: @googleapis_reference_link{", kv.second.filename, "#L",
-                    kv.second.lineno, "}\n");
+    absl::StrAppend(
+        &trailer, "  /// [", kv.first,
+        (is_discovery_document_proto ? "]: @cloud_cpp_reference_link{"
+                                     : "]: @googleapis_reference_link{"),
+        kv.second.filename, "#L", kv.second.lineno, "}\n");
   }
 
   // Disable clang-format formatting in the generated comments. Some comments

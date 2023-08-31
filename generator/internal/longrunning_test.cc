@@ -65,6 +65,8 @@ TEST(LongrunningTest, IsGRPCLongrunningOperation) {
       IsLongrunningOperation(*service_file_descriptor->service(0)->method(0)));
   EXPECT_TRUE(IsGRPCLongrunningOperation(
       *service_file_descriptor->service(0)->method(0)));
+  EXPECT_FALSE(IsHttpLongrunningOperation(
+      *service_file_descriptor->service(0)->method(0)));
   EXPECT_FALSE(
       IsLongrunningOperation(*service_file_descriptor->service(0)->method(1)));
 }
@@ -561,7 +563,7 @@ TEST_F(LongrunningVarsTest,
                         "service.proto#L9}")));
 }
 
-TEST_F(LongrunningVarsTest, SetLongrunningOperationMethodVarsBespokseLRO) {
+TEST_F(LongrunningVarsTest, SetLongrunningOperationMethodVarsBespokeLRO) {
   FileDescriptor const* service_file_descriptor =
       pool_.FindFileByName("google/foo/v1/service.proto");
   MethodDescriptor const* method =
@@ -569,6 +571,7 @@ TEST_F(LongrunningVarsTest, SetLongrunningOperationMethodVarsBespokseLRO) {
   VarsDictionary vars;
   EXPECT_TRUE(IsLongrunningOperation(*method));
   EXPECT_FALSE(IsGRPCLongrunningOperation(*method));
+  EXPECT_TRUE(IsHttpLongrunningOperation(*method));
   SetLongrunningOperationMethodVars(*method, vars);
   EXPECT_THAT(vars, Contains(Pair("longrunning_response_type",
                                   "google::protobuf::Operation")));

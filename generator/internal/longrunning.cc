@@ -146,6 +146,12 @@ bool IsGRPCLongrunningOperation(MethodDescriptor const& method) {
   return method.output_type()->full_name() == "google.longrunning.Operation";
 }
 
+bool IsHttpLongrunningOperation(MethodDescriptor const& method) {
+  auto operation_service_extension =
+      method.options().GetExtension(google::cloud::operation_service);
+  return !operation_service_extension.empty();
+}
+
 void SetLongrunningOperationServiceVars(
     google::protobuf::ServiceDescriptor const& service,
     VarsDictionary& service_vars) {

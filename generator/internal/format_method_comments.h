@@ -28,7 +28,8 @@ namespace generator_internal {
  */
 std::string FormatMethodComments(
     google::protobuf::MethodDescriptor const& method,
-    std::string const& variable_parameter_comments);
+    std::string const& variable_parameter_comments,
+    bool is_discovery_document_proto);
 
 }  // namespace generator_internal
 }  // namespace cloud
