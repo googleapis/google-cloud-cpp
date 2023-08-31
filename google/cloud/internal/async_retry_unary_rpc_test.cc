@@ -33,11 +33,11 @@ namespace {
 using ::google::cloud::testing_util::FakeCompletionQueueImpl;
 using ::google::cloud::testing_util::MockAsyncResponseReader;
 using ::google::cloud::testing_util::StatusIs;
-using ::google::cloud::testing_util::chrono_literals::operator"" _us;  // NOLINT
 using ::testing::HasSubstr;
 using ::testing::Return;
 using Request = google::protobuf::Timestamp;
 using Response = google::protobuf::Duration;
+using us = std::chrono::microseconds;
 
 /**
  * A class to test the retry loop.
@@ -113,7 +113,7 @@ TEST(AsyncRetryUnaryRpcTest, ImmediatelySucceeds) {
 
   auto fut = StartRetryAsyncUnaryRpc(
       cq, __func__, RpcLimitedErrorCountRetryPolicy(3).clone(),
-      RpcExponentialBackoffPolicy(10_us, 40_us, 2.0).clone(),
+      RpcExponentialBackoffPolicy(us(10), us(40), 2.0).clone(),
       Idempotency::kIdempotent,
       [&mock](grpc::ClientContext* context, Request const& request,
               grpc::CompletionQueue* cq) {
@@ -125,7 +125,7 @@ TEST(AsyncRetryUnaryRpcTest, ImmediatelySucceeds) {
   impl->SimulateCompletion(true);
 
   EXPECT_TRUE(impl->empty());
-  ASSERT_EQ(std::future_status::ready, fut.wait_for(0_us));
+  ASSERT_EQ(std::future_status::ready, fut.wait_for(us(0)));
   auto result = fut.get();
   ASSERT_STATUS_OK(result);
   EXPECT_EQ(result->seconds(), 123456);
@@ -160,7 +160,7 @@ TEST(AsyncRetryUnaryRpcTest, VoidImmediatelySucceeds) {
 
   auto fut = StartRetryAsyncUnaryRpc(
       cq, __func__, RpcLimitedErrorCountRetryPolicy(3).clone(),
-      RpcExponentialBackoffPolicy(10_us, 40_us, 2.0).clone(),
+      RpcExponentialBackoffPolicy(us(10), us(40), 2.0).clone(),
       Idempotency::kNonIdempotent,
       [&mock](grpc::ClientContext* context, Request const& request,
               grpc::CompletionQueue* cq) {
@@ -172,7 +172,7 @@ TEST(AsyncRetryUnaryRpcTest, VoidImmediatelySucceeds) {
   impl->SimulateCompletion(true);
 
   EXPECT_TRUE(impl->empty());
-  ASSERT_EQ(std::future_status::ready, fut.wait_for(0_us));
+  ASSERT_EQ(std::future_status::ready, fut.wait_for(us(0)));
   auto result = fut.get();
   ASSERT_STATUS_OK(result);
 }
@@ -206,7 +206,7 @@ TEST(AsyncRetryUnaryRpcTest, PermanentFailure) {
 
   auto fut = StartRetryAsyncUnaryRpc(
       cq, __func__, RpcLimitedErrorCountRetryPolicy(3).clone(),
-      RpcExponentialBackoffPolicy(10_us, 40_us, 2.0).clone(),
+      RpcExponentialBackoffPolicy(us(10), us(40), 2.0).clone(),
       Idempotency::kIdempotent,
       [&mock](grpc::ClientContext* context, Request const& request,
               grpc::CompletionQueue* cq) {
@@ -218,7 +218,7 @@ TEST(AsyncRetryUnaryRpcTest, PermanentFailure) {
   impl->SimulateCompletion(true);
 
   EXPECT_TRUE(impl->empty());
-  ASSERT_EQ(std::future_status::ready, fut.wait_for(0_us));
+  ASSERT_EQ(std::future_status::ready, fut.wait_for(us(0)));
   auto result = fut.get();
   EXPECT_FALSE(result);
   EXPECT_EQ(StatusCode::kPermissionDenied, result.status().code());
@@ -271,7 +271,7 @@ TEST(AsyncRetryUnaryRpcTest, TooManyTransientFailures) {
 
   auto fut = StartRetryAsyncUnaryRpc(
       cq, __func__, RpcLimitedErrorCountRetryPolicy(2).clone(),
-      RpcExponentialBackoffPolicy(10_us, 40_us, 2.0).clone(),
+      RpcExponentialBackoffPolicy(us(10), us(40), 2.0).clone(),
       Idempotency::kIdempotent,
       [&mock](grpc::ClientContext* context, Request const& request,
               grpc::CompletionQueue* cq) {
@@ -294,7 +294,7 @@ TEST(AsyncRetryUnaryRpcTest, TooManyTransientFailures) {
   impl->SimulateCompletion(true);
   EXPECT_TRUE(impl->empty());
 
-  ASSERT_EQ(std::future_status::ready, fut.wait_for(0_us));
+  ASSERT_EQ(std::future_status::ready, fut.wait_for(us(0)));
   auto result = fut.get();
   EXPECT_FALSE(result);
   EXPECT_EQ(StatusCode::kUnavailable, result.status().code());
@@ -332,7 +332,7 @@ TEST(AsyncRetryUnaryRpcTest, TransientOnNonIdempotent) {
 
   auto fut = StartRetryAsyncUnaryRpc(
       cq, __func__, RpcLimitedErrorCountRetryPolicy(3).clone(),
-      RpcExponentialBackoffPolicy(10_us, 40_us, 2.0).clone(),
+      RpcExponentialBackoffPolicy(us(10), us(40), 2.0).clone(),
       Idempotency::kNonIdempotent,
       [&mock](grpc::ClientContext* context, Request const& request,
               grpc::CompletionQueue* cq) {
@@ -344,7 +344,7 @@ TEST(AsyncRetryUnaryRpcTest, TransientOnNonIdempotent) {
   impl->SimulateCompletion(true);
 
   EXPECT_TRUE(impl->empty());
-  ASSERT_EQ(std::future_status::ready, fut.wait_for(0_us));
+  ASSERT_EQ(std::future_status::ready, fut.wait_for(us(0)));
   auto result = fut.get();
   EXPECT_EQ(StatusCode::kUnavailable, result.status().code());
   EXPECT_THAT(result.status().message(), HasSubstr("non-idempotent"));
@@ -384,7 +384,7 @@ TEST(AsyncRetryUnaryRpcTest, SetsTimeout) {
   CompletionQueue cq(impl);
   auto fut = StartRetryAsyncUnaryRpc(
       cq, __func__, std::move(mock),
-      RpcExponentialBackoffPolicy(10_us, 40_us, 2.0).clone(),
+      RpcExponentialBackoffPolicy(us(10), us(40), 2.0).clone(),
       Idempotency::kIdempotent,
       [&](grpc::ClientContext*, Request const&, grpc::CompletionQueue*) {
         auto finish_failure = [](Response*, grpc::Status* status, void*) {
