@@ -209,6 +209,10 @@ function (google_cloud_cpp_add_ga_grpc_library library display_name)
     google_cloud_cpp_add_library_protos(${library} ADDITIONAL_PROTO_LISTS
                                         ${_opt_ADDITIONAL_PROTO_LISTS})
 
+    set(shared_proto_dep_targets "${_opt_SHARED_PROTO_DEPS}")
+    list(TRANSFORM shared_proto_dep_targets PREPEND "google-cloud-cpp::")
+    list(TRANSFORM shared_proto_dep_targets APPEND "_protos")
+
     # We used to offer the proto library by another name. Maintain backwards
     # compatibility by providing an interface library with that name. Also make
     # sure we install it as part of google_cloud_cpp_${library}-targets.
@@ -234,7 +238,7 @@ function (google_cloud_cpp_add_ga_grpc_library library display_name)
     target_link_libraries(
         ${library_target}
         PUBLIC google-cloud-cpp::grpc_utils google-cloud-cpp::common
-               google-cloud-cpp::${library}_protos)
+               google-cloud-cpp::${library}_protos ${shared_proto_dep_targets})
     google_cloud_cpp_add_common_options(${library_target})
     set_target_properties(
         ${library_target}
