@@ -39,5 +39,4 @@ int main(int argc, char* argv[]) try {
   std::cerr << "google::cloud::Status thrown: " << status << "\n";
   return 1;
 }
-// [END workflows_client_library]
-//! [all]
+//! [END workflows_client_library] [all]
