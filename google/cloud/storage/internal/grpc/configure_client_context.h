@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_GRPC_CONFIGURE_CLIENT_CONTEXT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_GRPC_CONFIGURE_CLIENT_CONTEXT_H
 
+#include "google/cloud/storage/async_object_requests.h"
 #include "google/cloud/storage/internal/generic_request.h"
 #include "google/cloud/storage/internal/object_requests.h"
 #include "google/cloud/storage/version.h"
@@ -75,6 +76,11 @@ void ApplyQueryParameters(grpc::ClientContext& ctx, Options const& options,
 void ApplyRoutingHeaders(
     grpc::ClientContext& context,
     storage::internal::InsertObjectMediaRequest const& request);
+
+/// @copydoc ApplyRoutingHeaders(grpc::ClientContext&,)
+void ApplyRoutingHeaders(
+    grpc::ClientContext& context,
+    storage_experimental::InsertObjectRequest const& request);
 
 /**
  * The generated `StorageMetadata` stub can not handle dynamic routing headers

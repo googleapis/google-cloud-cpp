@@ -161,18 +161,21 @@ std::ostream& operator<<(std::ostream& os, GetObjectMetadataRequest const& r) {
   return os << "}";
 }
 
-InsertObjectMediaRequest::InsertObjectMediaRequest()
-    : hash_function_(CreateHashFunction(*this)) {}
+InsertObjectMediaRequest::InsertObjectMediaRequest() { reset_hash_function(); }
 
 InsertObjectMediaRequest::InsertObjectMediaRequest(std::string bucket_name,
                                                    std::string object_name,
                                                    absl::string_view payload)
-    : GenericObjectRequest(std::move(bucket_name), std::move(object_name)),
-      payload_(payload),
-      hash_function_(CreateHashFunction(*this)) {}
+    : InsertObjectRequestImpl<InsertObjectMediaRequest>(std::move(bucket_name),
+                                                        std::move(object_name)),
+      payload_(payload) {
+  reset_hash_function();
+}
 
 void InsertObjectMediaRequest::reset_hash_function() {
-  hash_function_ = CreateHashFunction(*this);
+  hash_function_ = CreateHashFunction(
+      GetOption<Crc32cChecksumValue>(), GetOption<DisableCrc32cChecksum>(),
+      GetOption<MD5HashValue>(), GetOption<DisableMD5Hash>());
 }
 
 void InsertObjectMediaRequest::set_payload(absl::string_view payload) {

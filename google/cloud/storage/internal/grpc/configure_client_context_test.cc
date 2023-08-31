@@ -145,6 +145,17 @@ TEST_F(GrpcConfigureClientContext, ApplyRoutingHeadersInsertObjectMedia) {
                             "bucket=projects%2F_%2Fbuckets%2Ftest-bucket")));
 }
 
+TEST_F(GrpcConfigureClientContext, ApplyRoutingHeadersInsertObject) {
+  storage_experimental::InsertObjectRequest req("test-bucket", "test-object");
+
+  grpc::ClientContext context;
+  ApplyRoutingHeaders(context, req);
+  auto metadata = GetMetadata(context);
+  EXPECT_THAT(metadata,
+              Contains(Pair("x-goog-request-params",
+                            "bucket=projects%2F_%2Fbuckets%2Ftest-bucket")));
+}
+
 TEST_F(GrpcConfigureClientContext, ApplyRoutingHeadersUploadChunkMatchSlash) {
   storage::internal::UploadChunkRequest req(
       "projects/_/buckets/test-bucket/blah/blah", 0, {},

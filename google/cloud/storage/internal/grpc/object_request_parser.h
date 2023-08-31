@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_GRPC_OBJECT_REQUEST_PARSER_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_GRPC_OBJECT_REQUEST_PARSER_H
 
+#include "google/cloud/storage/async_object_requests.h"
 #include "google/cloud/storage/internal/storage_connection.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/internal/grpc_request_metadata.h"
@@ -42,6 +43,8 @@ StatusOr<google::storage::v2::UpdateObjectRequest> ToProto(
 StatusOr<google::storage::v2::UpdateObjectRequest> ToProto(
     storage::internal::UpdateObjectRequest const& request);
 
+StatusOr<google::storage::v2::WriteObjectRequest> ToProto(
+    storage_experimental::InsertObjectRequest const& request);
 StatusOr<google::storage::v2::WriteObjectRequest> ToProto(
     storage::internal::InsertObjectMediaRequest const& request);
 storage::internal::QueryResumableUploadResponse FromProto(

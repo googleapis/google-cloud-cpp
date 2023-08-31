@@ -95,6 +95,17 @@ class GetObjectMetadataRequest
 std::ostream& operator<<(std::ostream& os, GetObjectMetadataRequest const& r);
 
 /**
+ * Refactors common attributes for `InsertObject*` requests.
+ */
+template <typename Derived>
+using InsertObjectRequestImpl = GenericObjectRequest<
+    Derived, ContentEncoding, ContentType, Crc32cChecksumValue,
+    DisableCrc32cChecksum, DisableMD5Hash, EncryptionKey, IfGenerationMatch,
+    IfGenerationNotMatch, IfMetagenerationMatch, IfMetagenerationNotMatch,
+    KmsKeyName, MD5HashValue, PredefinedAcl, Projection, UserProject,
+    UploadFromOffset, UploadLimit, WithObjectMetadata>;
+
+/**
  * Represents a request to the `Objects: insert` API with a string for the
  * media.
  *
@@ -103,13 +114,7 @@ std::ostream& operator<<(std::ostream& os, GetObjectMetadataRequest const& r);
  * objects.
  */
 class InsertObjectMediaRequest
-    : public GenericObjectRequest<
-          InsertObjectMediaRequest, ContentEncoding, ContentType,
-          Crc32cChecksumValue, DisableCrc32cChecksum, DisableMD5Hash,
-          EncryptionKey, IfGenerationMatch, IfGenerationNotMatch,
-          IfMetagenerationMatch, IfMetagenerationNotMatch, KmsKeyName,
-          MD5HashValue, PredefinedAcl, Projection, UserProject,
-          UploadFromOffset, UploadLimit, WithObjectMetadata> {
+    : public InsertObjectRequestImpl<InsertObjectMediaRequest> {
  public:
   InsertObjectMediaRequest();
   InsertObjectMediaRequest(std::string bucket_name, std::string object_name,
@@ -120,7 +125,8 @@ class InsertObjectMediaRequest
 
   template <typename... O>
   InsertObjectMediaRequest& set_multiple_options(O&&... o) {
-    GenericObjectRequest::set_multiple_options(std::forward<O>(o)...);
+    InsertObjectRequestImpl<InsertObjectMediaRequest>::set_multiple_options(
+        std::forward<O>(o)...);
     reset_hash_function();
     return *this;
   }
