@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_ASYNC_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_ASYNC_CONNECTION_H
 
+#include "google/cloud/storage/async_object_requests.h"
 #include "google/cloud/storage/async_object_responses.h"
 #include "google/cloud/storage/internal/object_requests.h"
 #include "google/cloud/completion_queue.h"
@@ -47,6 +48,26 @@ class AsyncConnection {
   virtual ~AsyncConnection() = default;
 
   virtual Options options() const = 0;
+
+  /**
+   * A thin wrapper around the `InsertObject()` parameters.
+   *
+   * We use a single struct as the input parameter for this function to
+   * prevent breaking any mocks when additional parameters are needed.
+   */
+  struct InsertObjectParams {
+    /// The metadata attributes to create the object.
+    storage_experimental::InsertObjectRequest request;
+    /// The bulk payload, sometimes called the "media" or "contents".
+    storage_experimental::WritePayload payload;
+    /// Any options modifying the RPC behavior, including per-client and
+    /// per-connection options.
+    Options options;
+  };
+
+  /// Insert a new object.
+  virtual future<StatusOr<storage::ObjectMetadata>> AsyncInsertObject(
+      InsertObjectParams p) = 0;
 
   virtual future<storage_experimental::AsyncReadObjectRangeResponse>
   AsyncReadObjectRange(storage::internal::ReadObjectRangeRequest request) = 0;
