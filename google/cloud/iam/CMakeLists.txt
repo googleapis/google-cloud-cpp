@@ -14,88 +14,12 @@
 # limitations under the License.
 # ~~~
 
-include(GoogleapisConfig)
-set(DOXYGEN_PROJECT_NAME "Google Cloud IAM C++ Client")
-set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for Google Cloud IAM")
-set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION}")
-set(DOXYGEN_EXCLUDE_SYMBOLS "internal")
-set(DOXYGEN_EXAMPLE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/quickstart")
+include(GoogleCloudCppLibrary)
 
-unset(mocks_globs)
-unset(source_globs)
-set(service_dirs "" "admin/v1/" "credentials/v1/" "v1/" "v2/")
-foreach (dir IN LISTS service_dirs)
-    string(REPLACE "/" "_" ns "${dir}")
-    list(APPEND source_globs "${dir}*.h" "${dir}*.cc" "${dir}internal/*")
-    list(APPEND mocks_globs "${dir}mocks/*.h")
-    list(APPEND DOXYGEN_EXAMPLE_PATH
-         "${CMAKE_CURRENT_SOURCE_DIR}/${dir}samples")
-    list(APPEND DOXYGEN_EXCLUDE_SYMBOLS "iam_${ns}internal")
-endforeach ()
+set(GOOGLE_CLOUD_CPP_SERVICE_DIRS "" "admin/v1/" "credentials/v1/" "v1/" "v2/")
 
-include(GoogleCloudCppDoxygen)
-set(GOOGLE_CLOUD_CPP_DOXYGEN_EXTRA_INCLUDES
-    "${PROJECT_BINARY_DIR}/google/cloud/iam_policy")
-google_cloud_cpp_doxygen_targets(
-    "iam" DEPENDS cloud-docs google-cloud-cpp::iam_protos
-    google-cloud-cpp::iam_v1_policy_protos google-cloud-cpp::iam_policy_protos)
-
-include(GoogleCloudCppCommon)
-
-file(
-    GLOB source_files
-    RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}"
-    ${source_globs})
-list(SORT source_files)
-add_library(google_cloud_cpp_iam ${source_files})
-target_include_directories(
-    google_cloud_cpp_iam
-    PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
-           $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
-           $<INSTALL_INTERFACE:include>)
-target_link_libraries(
-    google_cloud_cpp_iam
-    PUBLIC google-cloud-cpp::grpc_utils google-cloud-cpp::common
-           google-cloud-cpp::iam_protos google-cloud-cpp::iam_v1_policy_protos
-           google-cloud-cpp::iam_policy_protos)
-google_cloud_cpp_add_common_options(google_cloud_cpp_iam)
-set_target_properties(
-    google_cloud_cpp_iam
-    PROPERTIES EXPORT_NAME google-cloud-cpp::iam
-               VERSION "${PROJECT_VERSION}"
-               SOVERSION "${PROJECT_VERSION_MAJOR}")
-target_compile_options(google_cloud_cpp_iam
-                       PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
-add_library(google-cloud-cpp::iam ALIAS google_cloud_cpp_iam)
-
-# Create a header-only library for the mocks. We use a CMake `INTERFACE` library
-# for these, a regular library would not work on macOS (where the library needs
-# at least one .o file). Unfortunately INTERFACE libraries are a bit weird in
-# that they need absolute paths for their sources.
-file(
-    GLOB relative_mock_files
-    RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}"
-    ${mocks_globs})
-list(SORT relative_mock_files)
-set(mock_files)
-foreach (file IN LISTS relative_mock_files)
-    list(APPEND mock_files "${CMAKE_CURRENT_SOURCE_DIR}/${file}")
-endforeach ()
-add_library(google_cloud_cpp_iam_mocks INTERFACE)
-target_sources(google_cloud_cpp_iam_mocks INTERFACE ${mock_files})
-target_link_libraries(
-    google_cloud_cpp_iam_mocks
-    INTERFACE google-cloud-cpp::iam_mocks google-cloud-cpp::iam
-              GTest::gmock_main GTest::gmock GTest::gtest)
-set_target_properties(google_cloud_cpp_iam_mocks
-                      PROPERTIES EXPORT_NAME google-cloud-cpp::iam_mocks)
-target_include_directories(
-    google_cloud_cpp_iam_mocks
-    INTERFACE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
-              $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
-              $<INSTALL_INTERFACE:include>)
-target_compile_options(google_cloud_cpp_iam_mocks
-                       INTERFACE ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
+google_cloud_cpp_add_ga_grpc_library(iam "Google Cloud IAM API"
+                                     SHARED_PROTO_DEPS "iam_v2")
 
 # Examples are enabled if possible, but package maintainers may want to disable
 # compilation to speed up their builds.
@@ -111,62 +35,10 @@ if (GOOGLE_CLOUD_CPP_ENABLE_EXAMPLES)
                          PROPERTIES LABELS "integration-test;quickstart")
 endif ()
 
-# Get the destination directories based on the GNU recommendations.
-include(GNUInstallDirs)
-
-# Export the CMake targets to make it easy to create configuration files.
-install(
-    EXPORT google_cloud_cpp_iam-targets
-    DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_iam"
-    COMPONENT google_cloud_cpp_development)
-
-# Install the libraries and headers in the locations determined by
-# GNUInstallDirs
-install(
-    TARGETS google_cloud_cpp_iam
-    EXPORT google_cloud_cpp_iam-targets
-    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-            COMPONENT google_cloud_cpp_runtime
-    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-            COMPONENT google_cloud_cpp_runtime
-            NAMELINK_COMPONENT google_cloud_cpp_runtime
-    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-            COMPONENT google_cloud_cpp_development)
-
-google_cloud_cpp_install_headers("google_cloud_cpp_iam"
-                                 "include/google/cloud/iam")
-google_cloud_cpp_install_headers("google_cloud_cpp_iam_mocks"
-                                 "include/google/cloud/iam")
-
-google_cloud_cpp_add_pkgconfig(
-    iam
-    "The Google Cloud IAM C++ Client Library"
-    "Provides C++ APIs to access Google Cloud IAM."
-    "google_cloud_cpp_grpc_utils"
-    "google_cloud_cpp_common"
-    "google_cloud_cpp_iam_protos"
-    "google_cloud_cpp_iam_policy_protos")
-
-# Create and install the CMake configuration files.
-include(CMakePackageConfigHelpers)
-configure_file("config.cmake.in" "google_cloud_cpp_iam-config.cmake" @ONLY)
-write_basic_package_version_file(
-    "google_cloud_cpp_iam-config-version.cmake"
-    VERSION ${PROJECT_VERSION}
-    COMPATIBILITY ExactVersion)
-
-install(
-    FILES
-        "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_iam-config.cmake"
-        "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_iam-config-version.cmake"
-    DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_iam"
-    COMPONENT google_cloud_cpp_development)
-
-# google-cloud-cpp::iam must be defined before we can add the samples.
+# IAM has some handwritten samples that demonstrate mocking. The executables are
+# added by `google_cloud_cpp_add_ga_grpc_library()`. We need to manually link
+# them against Google Mock.
 if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
-    foreach (dir IN LISTS service_dirs)
-        google_cloud_cpp_add_samples_relative("iam" "${dir}samples/")
-    endforeach ()
     target_link_libraries(iam_samples_mock_iam PRIVATE GTest::gmock_main)
     target_link_libraries(iam_samples_mock_iam_credentials
                           PRIVATE GTest::gmock_main)

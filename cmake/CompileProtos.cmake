@@ -298,7 +298,7 @@ function (google_cloud_cpp_load_protodeps var file)
     # such dependencies, but they do happen.
     set(target_substitutions
         "grafeas_v1_grafeas_protos\;grafeas_protos"
-        "iam_v2_policy_protos\;iam_policy_protos"
+        "iam_v2_policy_protos\;iam_v2_protos"
         "logging_type_type_protos\;logging_type_protos"
         "identity_accesscontextmanager_v1_accesscontextmanager_protos\;accesscontextmanager_protos"
         "cloud_osconfig_v1_osconfig_protos\;osconfig_protos"

@@ -112,7 +112,8 @@ target_link_libraries(
            absl::memory
            absl::time
            absl::variant
-           google-cloud-cpp::iam_protos
+           google-cloud-cpp::iam_credentials_v1_iamcredentials_protos
+           google-cloud-cpp::iam_v1_policy_protos
            google-cloud-cpp::longrunning_operations_protos
            google-cloud-cpp::rpc_error_details_protos
            google-cloud-cpp::rpc_status_protos
@@ -169,7 +170,8 @@ google_cloud_cpp_add_pkgconfig(
     "gRPC Utilities for the Google Cloud C++ Client Library"
     "Provides gRPC Utilities for the Google Cloud C++ Client Library."
     "google_cloud_cpp_common"
-    "google_cloud_cpp_iam_protos"
+    "google_cloud_cpp_iam_credentials_v1_iamcredentials_protos"
+    "google_cloud_cpp_iam_v1_policy_protos"
     "google_cloud_cpp_longrunning_operations_protos"
     "google_cloud_cpp_rpc_status_protos"
     "absl_function_ref"
@@ -202,7 +204,6 @@ function (google_cloud_cpp_grpc_utils_add_test fname labels)
                 google_cloud_cpp_testing_grpc
                 google_cloud_cpp_testing
                 google-cloud-cpp::common
-                google-cloud-cpp::iam_protos
                 absl::variant
                 GTest::gmock_main
                 GTest::gmock
@@ -299,7 +300,7 @@ if (BUILD_TESTING)
                     google_cloud_cpp_testing_grpc
                     google_cloud_cpp_testing
                     google-cloud-cpp::common
-                    google-cloud-cpp::iam_protos
+                    google-cloud-cpp::iam_credentials_v1_iamcredentials_protos
                     absl::variant
                     GTest::gmock_main
                     GTest::gmock
