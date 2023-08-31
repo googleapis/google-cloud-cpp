@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_ASYNC_CLIENT_H
 
 #include "google/cloud/storage/internal/async/connection.h"
+#include "google/cloud/storage/internal/async/write_payload_impl.h"
 #include "google/cloud/storage/internal/object_requests.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/background_threads.h"
@@ -105,6 +106,46 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class AsyncClient {
  public:
   ~AsyncClient() = default;
+
+  /**
+   * Creates an object given its name and contents.
+   *
+   * @param bucket_name the name of the bucket that will contain the object.
+   * @param object_name the name of the object to be created.
+   * @param contents the contents (media) for the new object.
+   * @param args a list of optional query parameters and/or request headers.
+   *     Valid types for this operation include `ContentEncoding`,
+   *     `ContentType`, `Crc32cChecksumValue`, `DisableCrc32cChecksum`,
+   *     `DisableMD5Hash`, `EncryptionKey`, `IfGenerationMatch`,
+   *     `IfGenerationNotMatch`, `IfMetagenerationMatch`,
+   *     `IfMetagenerationNotMatch`, `KmsKeyName`, `MD5HashValue`,
+   *     `PredefinedAcl`, `Projection`, `UserProject`, and `WithObjectMetadata`.
+   * @tparam Collection the type for the payload. This must be convertible to
+   *   `std::string`, `std::vector<CharType>`, `std::vector<std::string>`, or
+   *   `std::vector<std::vector<ChartType>>`. Where `ChartType` is a `char`,
+   *   `signed char`, `unsigned char`, or `std::uint8_t`.
+   * @tparam Args the types of any optional arguments.
+   *
+   * @par Idempotency
+   * This operation is only idempotent if restricted by pre-conditions, in this
+   * case, `IfGenerationMatch`.
+   *
+   * @par Example
+   * @snippet storage_async_samples.cc insert-object
+   */
+  template <typename Collection, typename... Args>
+  future<StatusOr<storage::ObjectMetadata>> InsertObject(
+      std::string bucket_name, std::string object_name, Collection&& contents,
+      Args&&... args) {
+    auto options = SpanOptions(std::forward<Args>(args)...);
+    return connection_->AsyncInsertObject(
+        {/*.request=*/InsertObjectRequest(std::move(bucket_name),
+                                          std::move(object_name))
+             .set_multiple_options(std::forward<Args>(args)...),
+         /*.payload=*/
+         storage_internal::MakeWritePayload(std::forward<Collection>(contents)),
+         /*.options=*/std::move(options)});
+  }
 
   /**
    * Reads the contents of an object.
@@ -210,6 +251,9 @@ class AsyncClient {
    * This operation is only idempotent if:
    * - restricted by pre-conditions, in this case, `IfGenerationMatch`
    * - or, if it applies to only one object version via `Generation`.
+   *
+   * @par Example
+   * @snippet storage_async_samples.cc delete-object
    */
   template <typename... RequestOptions>
   future<Status> DeleteObject(std::string const& bucket_name,
