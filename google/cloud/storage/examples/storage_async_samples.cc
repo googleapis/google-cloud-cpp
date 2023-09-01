@@ -140,7 +140,7 @@ void InsertObjectVectorVectors(
   (client, argv.at(0), argv.at(1));
 }
 
-// The name is redundant, but worksaround a conflict with the global
+// The name is redundant, but works around a conflict with the global
 // `DeleteObject()` function on Windows.
 void AsyncDeleteObject(google::cloud::storage_experimental::AsyncClient& client,
                        std::vector<std::string> const& argv) {
